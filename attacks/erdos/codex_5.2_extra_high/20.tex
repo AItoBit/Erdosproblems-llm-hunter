@@ -1,0 +1,332 @@
+\section{Problem 20 (Sunflowers): fixed-window entropy ledger framework}
+
+\subsection{1) FORMAL RESTATEMENT}
+
+For integers $n\ge 1$ and $k\ge 2$, a \emph{$k$-sunflower} is a collection of
+distinct sets $S_1,\ldots,S_k$ for which there is a common kernel $K$ such that
+\[
+  S_i\cap S_j=K\qquad (i\ne j).
+\]
+Let $f(n,k)$ be the least integer such that every $n$-uniform family
+$\mathcal F$ with $|\mathcal F|\ge f(n,k)$ contains a $k$-sunflower.
+Problem 20 asks whether, for every fixed $k$, there is a constant $C_k$ such
+that
+\[
+  f(n,k)\le C_k^n\qquad\text{for all }n.
+\]
+
+This attempt focuses on the three-petal case after the standard reduction to
+balanced two-collision codes.  It does \emph{not} claim a complete proof of the
+sunflower conjecture.
+
+\subsection{2) QUICK LITERATURE/CONTEXT CHECK}
+
+The classical Erdos--Rado sunflower lemma gives a superexponential-in-$n$
+bound for fixed $k$.  The modern line of work of Alweiss--Lovett--Wu--Zhang,
+Rao, Tao, and Bell--Chueluecha--Warnke gives the current logarithmic-base
+improvements through spread or robust-sunflower methods.  Entropy arguments
+are therefore already standard in this problem.  Collision estimates are also
+standard local tools, and potential/amortized accounting is a standard proof
+technique.
+
+The proposed novelty of this attempt is architectural rather than a new
+standalone inequality.  It asks whether the reusable spread invariant in
+ALWZ/Rao/Tao-type arguments can be replaced by a coordinate-level
+collision/accounting invariant.
+
+\subsection{3) ATTACK PLAN}
+
+\textbf{Reduction target.}
+Reduce the three-petal sunflower problem to bounding balanced two-collision
+codes:
+\[
+  \mathcal C\subseteq \prod_{i=1}^n \Omega_i,
+\]
+where every three distinct codewords have a coordinate in which exactly two of
+the three symbols agree.  A bound $|\mathcal C|\le D^n$ with $D$ independent
+of the alphabets would imply a constant-base sunflower bound after the
+standard random-coloring reduction.
+
+\textbf{Proposed replacement for spread refinement.}
+Instead of maintaining a spread subfamily, maintain:
+\begin{itemize}
+\item per-coordinate collision information,
+\item a fixed labelled hash window for low-collision coordinates,
+\item terminal cylinder shadows for high-mass values,
+\item fresh/old/scale potentials that pay for repeated use.
+\end{itemize}
+
+\textbf{Audit target.}
+The attempt succeeds only if every nonterminal transition can be assigned to a
+finite list of local account inequalities, with constants independent of $n$
+and independent of the alphabet sizes.
+
+\subsection{4) WORK}
+
+\subsubsection*{4.1. Standard reduction to balanced two-collision codes}
+
+Pad a rank-$n$ sunflower-free family to an $n$-uniform family by adding private
+dummy elements.  Randomly color the ground set by colors $1,\ldots,n$ and keep
+the colorful sets.  Some coloring keeps at least $(n!/n^n)|\mathcal F|$ sets.
+Encoding a colorful set by its unique element of each color gives a code
+\[
+  \mathcal C\subseteq \prod_i\Omega_i .
+\]
+If three codewords have no coordinate with exactly two equal symbols, then in
+each color class the corresponding set-elements are either all equal or all
+distinct, so the three pairwise intersections are equal and the original three
+sets form a sunflower.  Thus the resulting code is balanced two-collision.
+
+Therefore an alphabet-free estimate $|\mathcal C|\le D^n$ implies
+$|\mathcal F|\le (eD)^n$.
+
+\subsubsection*{4.2. Terminal entropy descent}
+
+Let $\mu$ be the uniform law on a balanced two-collision code $\mathcal C$.
+The proof tree samples one or more independent codewords from $\mu$, but the
+terminal object is only a projected cylinder:
+\[
+  \theta=((J_s,a_s))_{s\in S},
+\]
+meaning $X^s_{J_s}=a_s$ for each sample label $s$.  Write
+\[
+  T(\theta)=\sum_s |J_s|,\qquad R(\theta)=|S|.
+\]
+If a terminal cylinder has mass
+\[
+  \Pr[\theta]\ge \exp(-\lambda T(\theta)-cR(\theta)),
+\]
+then the usual induction on rank gives $|\mathcal C|\le D^n$ whenever
+$\log D\ge \lambda+c$.  Indeed, each cylinder
+$\{x:x_{J_s}=a_s\}$ is again a balanced two-collision code after deleting the
+fixed coordinates.
+
+Thus the goal is to produce a random terminal projected cylinder $\Theta$ with
+\[
+  \mathbf H(\Theta)
+  \le
+  \mathbb E[\lambda T(\Theta)+cR(\Theta)]
+\]
+for absolute constants $\lambda,c$.
+
+\subsubsection*{4.3. Fixed labelled hash window}
+
+For a one-coordinate law $p$, write
+\[
+  \operatorname{Coll}(p)=\sum_a p(a)^2.
+\]
+If $X,Y,Z$ are independent samples and coordinate $i$ has collision at most
+$\beta$, then
+\[
+  \Pr[i\in \operatorname{Split}(X,Y,Z)]\le 3\beta.
+\]
+Hence a block $H$ of $h$ low-collision coordinates satisfies
+\[
+  \Pr\bigl[|\operatorname{Split}_H(X,Y,Z)|\le 6\beta h\bigr]\ge 1/2.
+\]
+
+The proposed mechanism collects low-collision coordinates in a fixed labelled
+hash window.  The label is one of the active sample labels.  The window has a
+fixed transcript budget $B_{\rm win}$ and stops before exceeding that budget.
+High-mass values are not exposed recursively: if a coordinate develops an atom
+of mass at least $\beta$, the branch terminalizes by pinning that value as a
+projected shadow.
+
+If a nonterminal labelled window obtains $h$ surviving coordinates, three
+conditioned copies under the same public transcript produce a near-sunflower
+block.  The transcript key has Renyi-3 copy cost
+\[
+  2\mathbf H_3(K)+O(1)\le 2\mathbf H(K)+O(1)\le O(B_{\rm win}).
+\]
+The sparse split exposure costs $O(h)$.  Thus the local hash-return cost is
+\[
+  C_{\rm hash}=O(B_{\rm win}+h),
+\]
+with $B_{\rm win}$ and $h$ fixed constants.
+
+\subsubsection*{4.4. Product-KL routing}
+
+In a close-pair node, one has a block $J$ on which two sampled codewords agree
+and the third differs:
+\[
+  X_J=Y_J=A_J,\qquad Z_J=B_J\ne A_J .
+\]
+The intended product-KL branch theorem scans the actual tuple-coordinate list
+\[
+  (A_{j_1},B_{j_1},A_{j_2},B_{j_2},\ldots).
+\]
+Every branch must route to exactly one of:
+\begin{enumerate}
+\item an amortized terminal prefix;
+\item a one-coordinate heavy value pin;
+\item a charged pruning event not inherited by descendants;
+\item a genuine low-collision law of an actual sample coordinate $X_j$, $Y_j$,
+or $Z_j$, sent to the labelled hash window.
+\end{enumerate}
+The critical requirement is that the low-collision law is the actual
+conditional sample-coordinate law, not a law on the pair alphabet $(A_j,B_j)$
+and not the auxiliary reference product law.
+
+\subsubsection*{4.5. Global account inequality}
+
+The fixed hash window gives only a one-time near-sunflower block.  It does not
+produce a reusable spread subfamily.  The proposed replacement invariant is a
+state with potential
+\[
+  \Phi
+  =
+  B_f |[n]\setminus U|
+  +(B_o|U|-N_{\rm old})
+  +B_s\sum_{\text{active }J}|J|.
+\]
+Here $U$ is the old support, $N_{\rm old}$ is a weighted count of registered
+old incidences, and the last term pays active scale/rank bookkeeping.
+
+The desired branch inequality is
+\[
+  \operatorname{spent}(\pi)
+  + C_{\rm hash}q(\pi)
+  + \Phi(S_\pi)
+  \le
+  \Phi(S_0)+\operatorname{terminal\ shadow\ charge}(\pi),
+\]
+where $q(\pi)$ is the number of completed hash windows on the branch.
+
+At the one-step level, the required inequalities have the form
+\[
+  (B_f-B_o)|F|
+  \ge
+  \text{fresh selector cost}+\text{child deposit}+\text{possible hash token},
+\]
+\[
+  \omega_{\rm old}m
+  \ge
+  \text{old transcript cost}+\text{child deposit}+\text{possible hash token},
+\]
+and
+\[
+  \text{rank/scale drop}
+  \ge
+  \text{new active-block deposit}+\text{selector cost}.
+\]
+If all transition modes are exhaustive and these inequalities cover every
+selector, the entropy criterion above would close with constants independent
+of the alphabet.
+
+\subsection{5) VERIFICATION / ATTEMPTED BREAKS}
+
+\textbf{Known verification obligations.}
+The following are the main places where the attempt can fail:
+\begin{enumerate}
+\item The fixed-window hash return must really have per-window cost
+$O(B_{\rm win}+h)$, not a hidden per-branch or alphabet-dependent cost.
+\item The product-KL branch theorem must output actual sample-coordinate laws.
+\item Completed hash-window tokens must be matched injectively to hard exits;
+tokens cannot pile up along a nested chain.
+\item The residual repair procedure must immediately route every returned
+near-sunflower block to fresh, old, scale, or terminal progress.
+\item The transition system must be exhaustive; no branch may continue without
+a terminal shadow or a potential drop.
+\end{enumerate}
+
+\textbf{Falsification tests performed in the associated public repository.}
+The public repository
+\[
+  \texttt{https://github.com/yurika1030sakura/sunflower-public-normal-form}
+\]
+contains executable smoke tests for:
+\begin{itemize}
+\item alphabet stretching of toy balanced two-collision codes;
+\item multi-label hash-token matching;
+\item terminal cylinder potential compatibility;
+\item transition-exhaustiveness signatures;
+\item constant-hierarchy acyclicity;
+\item old-window queue refinement;
+\item hash-prefix budget handling;
+\item Renyi copy-tax accounting;
+\item collision-to-split estimates;
+\item high-revisit branch exhaustiveness;
+\item randomized ledger walks.
+\end{itemize}
+These tests are not formal proofs.  They are only attempts to catch common
+bookkeeping failures.
+
+\textbf{Internal LLM audit status.}
+Several long GPT Pro, Claude Opus, and Codex adversarial-checking passes
+reported that the current interface-level ledger appears closed and did not
+identify a remaining bookkeeping counterexample.  This is recorded only as
+provenance for the attempt.  It is not expert verification, not a formal proof,
+and not a claim that the sunflower conjecture is solved.
+
+\subsection{6) FINAL}
+
+\textbf{PARTIAL / UNRESOLVED.}
+
+This is not a complete proof of the Erdos--Rado sunflower conjecture.  The
+main contribution of the attempt is a proposed conditional framework:
+if the product-KL routing, fixed-window hash return, residual repair, and
+global account inequality are all correct with alphabet-free constants, then
+the usual terminal-cylinder entropy descent would yield a constant-base bound
+for balanced two-collision codes, and hence for three-petal sunflower-free
+families after the standard reduction.
+
+The exact open gap is:
+\[
+  \text{prove, without ``by inspection'', that every transition branch is
+  covered by the one-step account inequalities above.}
+\]
+
+\subsection{7) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION ESTIMATE: 20\%.}
+
+This percentage reflects that the approach has a defined reduction, candidate
+local mechanisms, and executable falsification tests, but still lacks an
+independent verification of the full transition-system exhaustiveness and
+global charge inequality.
+
+\subsection{8) DISCLOSURE / PROVENANCE}
+
+This file is not the transcript of a single model run.  It is a Codex-organized
+summary of a much longer LLM-assisted research attempt.  The underlying
+framework was developed through many extended conversations with frontier LLMs,
+including GPT Pro, Claude Opus, and Codex.  Some of those conversations became
+too long to open reliably, some are no longer accessible in full, and the Codex
+continuation itself used compressed conversation summaries.  Consequently this
+submission should be read as a reconstructed and organized record of the LLM
+attempt, not as a verbatim complete transcript.
+
+The public PDF and repository linked above collect the current organized form
+of the attempt: the longer draft, a short roadmap, audit notes, and smoke-test
+scripts.  No part of this submission should be treated as expert-verified.
+
+\subsection{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{ALWZ}
+R. Alweiss, S. Lovett, K. Wu, and J. Zhang,
+\emph{Improved bounds for the sunflower lemma},
+Ann. of Math. (2) \textbf{194} (2021), no. 3, 795--815.
+
+\bibitem{Rao}
+A. Rao,
+\emph{Coding for sunflowers},
+Discrete Anal. (2020), Paper No. 2.
+
+\bibitem{Tao}
+T. Tao,
+\emph{The sunflower lemma via Shannon entropy},
+blog post, 2020.
+
+\bibitem{BCW}
+T. Bell, S. Chueluecha, and L. Warnke,
+\emph{Note on sunflowers},
+Discrete Math. \textbf{344} (2021), no. 7, 112367.
+
+\bibitem{ER}
+P. Erdos and R. Rado,
+\emph{Intersection theorems for systems of sets},
+J. London Math. Soc. \textbf{35} (1960), 85--90.
+
+\end{thebibliography}
