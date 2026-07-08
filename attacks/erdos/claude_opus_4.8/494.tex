@@ -1,0 +1,54 @@
+
+OUTPUT
+
+MODEL: Claude Opus 4.8 (agentic session in Claude Code; Lean 4 + Mathlib compile-verify loop)
+PROMPT STRATEGY: autonomous prover loop; accepted only on `lake env lean` exit 0 + clean
+`#print axioms`. Public artifact (kernel-verified Lean, pinned commit):
+https://github.com/Mnehmos/llm-driven-proof-search/blob/745090ac8644c90a4b9dd40171984af6b381af4e/lean-checker/LeanChecker/Erdos/Erdos494.lean
+Upstream link PR: https://github.com/google-deepmind/formal-conjectures/pull/4407
+
+1) FORMAL RESTATEMENT
+Erdős Problem 494 (with Selfridge and Straus) asks whether a finite set of complex numbers
+is determined by its multiset of $k$-subset sums. This attack targets the research-solved
+PRODUCT variant shipped as `sorry` in formal-conjectures: the product version is FALSE
+(Steinerberger) — there exist $A \ne B$ with equal cardinality and equal multisets of
+3-subset products. Lean statement (prodMultiset verbatim from the corpus):
+\begin{verbatim}
+theorem product :
+    exists (A B : Finset C), A.card = B.card /\
+      prodMultiset A 3 = prodMultiset B 3 /\ A != B
+\end{verbatim}
+
+2) LITERATURE/CONTEXT CHECK
+Steinerberger's counterexample (recorded in the corpus): scale a set by a root of unity.
+The sum version for $k=3$, $|A|>6$ etc. (Selfridge–Straus) is separate and untouched.
+
+3) ATTACK PLAN
+Explicit witness via ALGEBRAIC SYMMETRY, avoiding all computation on the noncomputable
+$\mathbb{C}$-Finset: take $A = \{1, \omega, \omega^2, 2\}$ ($\omega$ a primitive cube
+root of unity) and $B = \omega\cdot A$. Every 3-subset product of $B$ is
+$\omega^3 = 1$ times the corresponding product of $A$, so the product multisets are
+EQUAL as multisets (not merely equal after evaluation). $A \ne B$ since
+$2\omega \notin A$. Cardinality via Finset.card_map — element distinctness never needed.
+
+4) WORK
+Key kernel-verified lemma:
+\begin{verbatim}
+theorem prodMultiset_map_mul (A : Finset C) (c : C) (k : N)
+    (hc : c ^ k = 1) (emb : C -> C) (hemb : emb = (c * .)) :
+    prodMultiset (A.map emb) k = prodMultiset A k
+\end{verbatim}
+via Finset.powersetCard_map and $\prod_{x\in s}(c\cdot x) = c^{|s|}\prod_{x \in s} x$;
+with $|s| = 3$ and $\omega^3 = 1$ each 3-subset product is preserved. Witness assembly
+with IsPrimitiveRoot (Complex.isPrimitiveRoot_exp 3).
+
+5) VERIFICATION
+`lake env lean` exit 0, 0 errors, 0 warnings, 0 sorry (lean4 v4.32.0-rc1 + Mathlib).
+`#print axioms` = [propext, Classical.choice, Quot.sound].
+Tracked pipeline episode 2913e364 (kernel_verified). Proof snapshot sha256
+9fd75fcfe16f863a341387c48f5ec77d019ddc1e3b8191e232f6d70da0b0cdb1.
+
+6) FINAL STATUS: SOLVED (the research-solved product variant; known counterexample of
+Steinerberger, now with a machine-checked proof). The main sum-version question of
+Problem 494 is untouched. Subject to expert review; the kernel check is the
+verification story.

@@ -1,0 +1,48 @@
+
+OUTPUT
+
+MODEL: Claude Opus 4.8 (agentic session in Claude Code; Lean 4 + Mathlib compile-verify loop)
+PROMPT STRATEGY: autonomous prover loop; accepted only on `lake env lean` exit 0 + clean
+`#print axioms`. Public artifact (kernel-verified Lean, pinned commit):
+https://github.com/Mnehmos/llm-driven-proof-search/blob/745090ac8644c90a4b9dd40171984af6b381af4e/lean-checker/LeanChecker/Erdos/Erdos399.lean
+Upstream link PR: https://github.com/google-deepmind/formal-conjectures/pull/4407
+
+1) FORMAL RESTATEMENT
+Erdős Problem 399 concerns representations $n! = x^k \pm y^k$. This attack targets the
+research-solved Cambie variant shipped as `sorry` in formal-conjectures: for coprime
+$x, y$ with $xy > 1$,
+\[
+n! \ne x^4 + y^4 .
+\]
+Lean statement:
+\begin{verbatim}
+theorem cambie {n x y : N} (hxy : x.Coprime y) (h1 : 1 < x * y) :
+    n ! != x ^ 4 + y ^ 4
+\end{verbatim}
+
+2) LITERATURE/CONTEXT CHECK
+Cambie's observation (recorded in the corpus): considerations modulo 8 rule out all
+solutions. Fourth powers mod 8 lie in $\{0,1\}$; coprimality forbids both $x,y$ even;
+so $x^4+y^4 \equiv 1$ or $2 \pmod 8$, while $8 \mid n!$ for $n \ge 4$.
+
+3) ATTACK PLAN
+Two regimes: $n \ge 4$ — the mod-8 argument ($a^4 \bmod 8$ determined by parity;
+coprime $x,y$ cannot both be even; sum is 1 or 2 mod 8, but $n! \equiv 0$);
+$n \le 3$ — size: $xy > 1$ with coprimality forces $x^4 + y^4 \ge 17 > 6 = 3!$.
+
+4) WORK
+Kernel-verified: parity lemma for fourth powers mod 8; case split on parities of $x,y$
+(both-even excluded by coprimality); $8 \mid n!$ for $n \ge 4$ by factorial divisibility;
+small-$n$ cases closed by the bound $17 \le x^4+y^4$. No axioms beyond the standard trio;
+no decide-scale computation needed.
+
+5) VERIFICATION
+`lake env lean` exit 0, 0 errors, 0 sorry (lean4 v4.32.0-rc1 + Mathlib).
+`#print axioms` = [propext, Classical.choice, Quot.sound].
+Tracked pipeline episode 4f6b38ec (kernel_verified). Statement matches the corpus
+verbatim (binder form).
+
+6) FINAL STATUS: SOLVED (the research-solved Cambie variant; known observation, now with
+a machine-checked proof). The main question of Problem 399 and its other variants
+(Erdős–Obláth, Pollack–Shapiro) are untouched. Subject to expert review; the kernel
+check is the verification story.

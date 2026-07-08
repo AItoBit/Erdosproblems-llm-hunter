@@ -1,0 +1,66 @@
+
+OUTPUT
+
+MODEL: Claude Opus 4.8 (agentic session in Claude Code; Lean 4 + Mathlib compile-verify loop)
+PROMPT STRATEGY: autonomous prover loop; covering data computed externally (python), then
+kernel-verified in Lean; accepted only on `lake env lean` exit 0 + clean `#print axioms`.
+Public artifact (kernel-verified Lean, pinned commit):
+https://github.com/Mnehmos/llm-driven-proof-search/blob/745090ac8644c90a4b9dd40171984af6b381af4e/lean-checker/LeanChecker/Erdos/Erdos1113.lean
+Upstream link PR: https://github.com/google-deepmind/formal-conjectures/pull/4407
+
+1) FORMAL RESTATEMENT
+Erdős Problem 1113 asks whether there exist Sierpiński numbers with no finite covering set
+of primes — that headline question is OPEN and is NOT addressed here. This attack targets
+the associated research-solved variant shipped as `sorry` in formal-conjectures:
+\[
+\{\,k : k \text{ is a Sierpiński number}\,\}\ \text{is infinite}
+\]
+(Sierpiński 1960), where $k$ is a Sierpiński number iff $k$ is odd and $k\cdot 2^n+1$ is
+composite for every $n\ge 1$. Lean statement (defs verbatim from the corpus):
+\begin{verbatim}
+theorem infinitely_many_sierpinski :
+    Set.Infinite {k : N | IsSierpinskiNumber k}
+\end{verbatim}
+
+2) LITERATURE/CONTEXT CHECK
+Sierpiński (1960): infinitely many such $k$, via covering congruences. Selfridge:
+$78557$ is Sierpiński with covering set $\{3,5,7,13,19,37,73\}$. The formal-conjectures
+corpus already contained a single-number proof (selfridge_78557) — reading the corpus for
+existing machinery was the unlock.
+
+3) ATTACK PLAN
+Generalize the corpus's single-case covering: each covering prime $p$ divides
+$M = 3\cdot5\cdot7\cdot13\cdot19\cdot37\cdot73 = 70050435$, and the covering argument for
+$78557$ uses only $k \bmod p$ (via $2^{36} \equiv 1 \bmod p$). Hence ANY odd
+$k \equiv 78557 \pmod{M}$ inherits the full covering. Take the arithmetic progression
+$k_j = 78557 + j\cdot 2M$ (odd, correct residue, injective in $j$) to get infinitude.
+
+4) WORK
+Key lemma (kernel-verified):
+\begin{verbatim}
+theorem sierpinski_of_congr (k : N) (hodd : not (2 | k))
+    (hk : k = 78557 [MOD 70050435]) : IsSierpinskiNumber k
+\end{verbatim}
+For each $n$, pick the covering prime $p$ by $n \bmod 36$; $k\cdot2^n+1 \equiv
+78557\cdot2^n+1 \equiv 0 \pmod p$ via Nat.ModEq transfer; compositeness since
+$k\cdot2^n+1 > p$. The residue arithmetic avoids omega on the 8-digit modulus
+(Nat.mod_le / Nat.mod_eq_of_lt / Nat.ModEq.add_left / modEq_zero_iff_dvd), and the
+finite covering checks are pure kernel `decide` (maxHeartbeats 4000000) — deliberately
+NOT native_decide, so the axiom footprint stays minimal. Then:
+\begin{verbatim}
+theorem infinitely_many_sierpinski :
+    Set.Infinite {k : N | IsSierpinskiNumber k} :=
+  via Set.infinite_of_injective_forall_mem
+      (f := fun j => 78557 + j * (2 * 70050435))
+\end{verbatim}
+
+5) VERIFICATION
+`lake env lean` exit 0, 0 errors, 0 sorry (toolchain lean4 v4.32.0-rc1 + Mathlib).
+`#print axioms infinitely_many_sierpinski` = [propext, Classical.choice, Quot.sound].
+Local defs (Composite, IsSierpinskiNumber) are verbatim copies of the corpus definitions
+(FormalConjecturesForMathlib), so the proved statement is exactly the corpus statement.
+
+6) FINAL STATUS: SOLVED (the research-solved variant; known result of Sierpiński 1960,
+now with a machine-checked proof). The headline open question of Problem 1113
+(covering-free Sierpiński numbers) is untouched and remains open. Subject to expert review;
+the kernel check is the verification story.

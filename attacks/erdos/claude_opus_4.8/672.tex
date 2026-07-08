@@ -1,0 +1,86 @@
+
+OUTPUT
+
+MODEL: Claude Opus 4.8 (agentic session in Claude Code; Lean 4 + Mathlib compile-verify loop)
+PROMPT STRATEGY: autonomous "prover loop" — multi-hour agentic session; every claimed step
+compiled with `lake env lean` against Mathlib and accepted only on exit 0; final theorems
+checked with `#print axioms`. Public artifacts (all kernel-verified Lean, pinned commit):
+https://github.com/Mnehmos/llm-driven-proof-search/blob/745090ac8644c90a4b9dd40171984af6b381af4e/lean-checker/LeanChecker/Erdos/Erdos672.lean
+
+1) FORMAL RESTATEMENT
+Erdős Problem 672 (Euler's theorem, arithmetic core): for $n, d \ge 1$ with $\gcd(n,d)=1$,
+\[
+n(n+d)(n+2d)(n+3d) \ne q^2 \quad \text{for all } q \in \mathbb{N}.
+\]
+(The product of a four-term arithmetic progression with coprime parameters is never a perfect
+square.) In Lean (matching the shape needed for the formal-conjectures statement
+$\mathrm{Erdos672With}\ 4\ 2$):
+\begin{verbatim}
+theorem euler_four_ap (n d : N) (hn : 0 < n) (hd : 0 < d)
+    (hnd : n.Coprime d) (q : N) :
+    n * (n + d) * (n + 2 * d) * (n + 3 * d) != q ^ 2
+\end{verbatim}
+
+2) LITERATURE/CONTEXT CHECK
+Classical result of Euler (1780). Modern reference used: Keith Conrad, "Arithmetic
+Progressions of Four Squares" and "Proofs by Descent" (UConn expository blurbs). Key facts
+from Conrad: (i) "no four rational squares in AP" is equivalent to the elliptic curve
+$y^2=x^3-x^2-4x+4$ (j-invariant $35152/9$) having rank 0; (ii) Fermat's
+$x^4-y^4\ne z^2$ is equivalent to rank 0 of the DIFFERENT curve $y^2=x^3-x$ (j = 1728);
+(iii) Euler's elementary proof is an intricate descent on the pair
+$a^2+c^2=2b^2,\ b^2+d^2=2c^2$, which Conrad does not reproduce (he uses Kolyvagin/L-values).
+Mathlib has PythagoreanTriple.coprime_classification and not_fermat_42 ($a^4+b^4\ne c^2$)
+but NOT $x^4-y^4\ne z^2$, and no congruent-number/rank machinery.
+
+3) ATTACK PLAN
+Backbone identities (all ring-verified): with $P=n(n+d)(n+2d)(n+3d)$, $A=n(n+3d)$,
+$B=(n+d)(n+2d)$, $X=n^2+3nd+d^2$: $P=AB$, $B=A+2d^2$, $P+d^4=X^2$.
+So $P=q^2$ makes $(q, d^2, X)$ a Pythagorean triple; prove it is primitive; classify;
+reduce each branch to a fourth-power Diophantine obstruction. Expected crux: Fermat-style
+descent for $x^4-y^4\ne z^2$ (not in Mathlib — must be built from scratch).
+
+4) WORK (everything below is machine-verified Lean 4 unless marked as the open remainder)
+(a) CRUX PROVED FROM SCRATCH — Fermat's right-triangle theorem:
+\begin{verbatim}
+theorem no_fermat_sub : forall (a b c : Z),
+    IsCoprime a b -> b != 0 -> c != 0 -> a^4 != b^4 + c^2
+\end{verbatim}
+~200 lines, strong induction on a.natAbs. b-odd case: classification gives
+$a^2 b^2 = m^4 - n^4$, i.e. $m^4 = n^4 + (ab)^2$, a strictly smaller instance. b-even case:
+a second-level double classification (helper lemmas beven_factor, beven_step) lands on
+$u^4 = v^4 + n_0^2$. This theorem is NOT in Mathlib (companion to not_fermat_42).
+(b) VERIFIED REDUCTION of euler_four_ap: cast to $\mathbb{Z}$; $(q,d^2,X)$ is a primitive
+Pythagorean triple (coprimality of $q$ and $d$ proved from $\gcd(n,d)=1$); classification
+splits into case (i) $d^2=2MN$: $A=(M-N)^2$, $B=(M+N)^2$, hence (with $\gcd(n,3)=1$)
+FOUR SQUARES IN ARITHMETIC PROGRESSION $n=e^2, n+d=g^2, n+2d=h^2, n+3d=f^2$; and case (ii)
+$d^2=M^2-N^2$: $A=2N^2$, $B=2M^2$. Both cases compile; the two case-descents remain sorry.
+(c) OBSTRUCTION DISCOVERED (the honest wall): case (i) terminates at "no four squares in
+AP" = rank 0 of $y^2=x^3-x^2-4x+4$. This curve is non-isogenous to $y^2=x^3-x$
+(different j-invariants), so the crux (a) CANNOT close it — no elementary reduction exists
+between the two rank-0 facts. An earlier belief that (a) was "the hard 60% of 672" was
+WRONG and is explicitly corrected in the project records.
+(d) SALVAGED COROLLARY (fully kernel-verified, independent of the open part): the only
+triangular number that is a perfect fourth power is 1:
+\begin{verbatim}
+theorem triangular_not_fourth_power (m n : N)
+    (h : m * (m + 1) = 2 * n ^ 4) : m = 0 \/ m = 1
+\end{verbatim}
+(even case via Mathlib's not_fermat_42; odd case via no_fermat_sub). Also a standalone
+Mathlib-ready extraction: Int.sq_ne_fourth_sub_fourth : $x^4-y^4=z^2 \Rightarrow y=0 \lor z=0$.
+
+5) VERIFICATION
+All completed theorems compile with `lake env lean` (exit 0, no errors) against Mathlib
+(toolchain lean4 v4.32.0-rc1), and `#print axioms` reports exactly
+[propext, Classical.choice, Quot.sound] — no sorry, no native_decide — for:
+no_fermat_sub, beven_factor, beven_step, triangular_not_fourth_power,
+Int.not_fermat_sub_coprime, Int.sq_ne_fourth_sub_fourth.
+The single remaining sorry is euler_four_ap itself (after the verified reduction).
+Machine verification replaces self-assessment: the gap is exactly delimited, not estimated.
+
+6) FINAL STATUS: PARTIAL
+Problem 672 is NOT solved here. Proven and banked: Fermat's $x^4-y^4\ne z^2$ (new to the
+Lean ecosystem), the full structural reduction of Euler's statement to the four-squares-in-AP
+core, and the triangular-number corollary. Remaining: the four-squares-in-AP descent
+(Euler's pair-descent $a^2+c^2=2b^2$, $b^2+d^2=2c^2$, or elliptic-curve rank machinery),
+neither of which exists in Mathlib. All claims are machine-checked; the blocker is recorded,
+not papered over.
