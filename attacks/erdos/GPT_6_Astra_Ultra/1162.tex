@@ -1,30 +1,48 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1162", "https://www.erdosproblems.com/latex/1162"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1162 --- collection record}
+\section*{Erd\H{o}s Problem 1162 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1162
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For the symmetric group $S_n$, seek an asymptotic formula for the number $|\operatorname{Sub}(S_n)|$ of its subgroups. Also seek a statistical description of the orders of those subgroups.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The question asks for an asymptotic formula for the subgroup count, not merely its leading logarithmic exponent. Its statistical clause does not specify a probability model, so none is imposed here.
+
+\subsection*{ATTACK PLAN AND WORK}
+Put $k=\lfloor n/2\rfloor$. The disjoint transpositions
+$(1\ 2),(3\ 4),\ldots,(2k-1\ 2k)$ generate a subgroup
+$E\cong\mathbb F_2^k$ of $S_n$. Split $E=U\oplus V$ with
+$\dim U=\lfloor k/2\rfloor$ and $\dim V=\lceil k/2\rceil$.
+Every linear map $T:U\to V$ gives a distinct graph subgroup
+$\{(u,Tu):u\in U\}$. Consequently
+\[|\operatorname{Sub}(S_n)|\ge2^{\lfloor k^2/4\rfloor}
+=2^{n^2/16-O(n)}.\tag{1}\]
+All of these many subgroups even have the same order $2^{\lfloor k/2\rfloor}$.
+
+There is also a crude universal upper bound requiring no permutation-group
+structure. Every subgroup of a finite group $G$ has a generating set of size
+at most $\lfloor\log_2|G|\rfloor$: whenever a chosen element enlarges the subgroup
+generated so far, its order at least doubles. Pad shorter generating lists with
+identities. Counting all lists then yields
+\[|\operatorname{Sub}(S_n)|\le(n!)^{\lfloor\log_2(n!)\rfloor}
+\le2^{n^2(\log_2 n)^2}.\tag{2}\]
+Neither (1) nor (2) is presented as a new or sharp literature bound. They are
+independent baseline proofs identifying a large explicit family and the very
+substantial precision still missing from this attempt.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Determine an asymptotic formula rather than bounds on different quadratic
+logarithmic scales. Counting one elementary abelian family also does not describe
+the order distribution of all subgroups of $S_n$.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1162
 
 https://www.erdosproblems.com/latex/1162
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$7\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

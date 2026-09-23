@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1144", "https://www.erdosproblems.com/history/1144"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1144 --- collection record}
+\section*{Erd\H{o}s Problem 1144 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1144
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Independently assign each prime $p$ a sign $f(p)\in\{-1,1\}$ with equal probabilities, and extend $f$ completely multiplicatively to positive integers. Does
@@ -17,18 +8,56 @@ Independently assign each prime $p$ a sign $f(p)\in\{-1,1\}$ with equal probabil
 \]
 hold with probability one?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 Complete multiplicativity is essential: this is not the squarefree-supported random multiplicative model.
+
+\subsection*{ATTACK PLAN AND WORK}
+Write $S_N=\sum_{n\le N}f(n)$. Independence of the prime signs implies
+$\mathbb E f(n)=1$ for a square and zero otherwise, and
+$\mathbb E[f(m)f(n)]=1$ precisely when $mn$ is a square. Grouping integers
+by their squarefree parts gives the exact identities
+\[
+\mathbb E S_N=\lfloor\sqrt N\rfloor,\qquad
+\mathbb E S_N^2=\sum_{\substack{a\le N\\a\ {
+m squarefree}}}
+                  \lfloor\sqrt{N/a}\rfloor^2.\tag{1}
+\]
+Here a squarefree part $a$ contributes pairs $(au^2,av^2)$.
+
+These identities already force logarithmically growing second moments after
+normalization. Let $Q(t)$ count squarefree positive integers at most $t$.
+The union bound over all possible square divisors gives, for integral $t$,
+$Q(t)\ge t-t\sum_{j\ge2}j^{-2}\ge t/4$, since
+$\sum_{j\ge2}j^{-2}\le1/4+\int_2^\infty x^{-2}\,dx=3/4$.
+Partial summation consequently gives
+$\sum_{a\le N,\ a\ {
+m squarefree}}1/a\ge H_N/4$.
+Using $\lfloor y\rfloor\ge y/2$ for $y\ge1$ in (1),
+\[NH_N/16\le\mathbb E S_N^2\le NH_N.\tag{2}\]
+In particular the variance is unbounded relative to $N$.
+
+This is not an almost-sure positive-limsup argument. Large second moments can
+come from rare events, and a signed random variable need not have a large
+positive tail merely because its variance is large. Temporal dependence also
+prevents applying independent-event Borel--Cantelli to a sequence of $S_N$.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+Every assignment of prime signs was enumerated for each $1\le N\le16$. Exact rational averages agree with both moment identities and satisfy the harmonic-number bounds.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Obtain quantitative positive-tail events at infinitely many scales with
+enough control of their dependence. Moment growth alone does not establish
+the almost-sure one-sided assertion.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1144
 
 https://www.erdosproblems.com/history/1144
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

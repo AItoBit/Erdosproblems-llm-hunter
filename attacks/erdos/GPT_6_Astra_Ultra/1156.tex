@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1156"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1156 --- collection record}
+\section*{Erd\H{o}s Problem 1156 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1156
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $G_n$ have distribution $G(n,1/2)$. Can an absolute constant $C$ bound the number of possible chromatic-number values needed to capture probability tending to one as $n\to\infty$? The problem also asks whether a sufficiently slowly diverging $\omega(n)\to\infty$ satisfies, for every centering function $a(n)$,
@@ -17,16 +8,42 @@ Let $G_n$ have distribution $G(n,1/2)$. Can an absolute constant $C$ bound the n
 \]
 for all sufficiently large $n$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 This record preserves both questions from the official statement. Its remarks already report results obstructing bounded-width concentration; the stronger eventual anti-concentration question must not be silently replaced by an infinitely-often assertion.
+
+\subsection*{ATTACK PLAN AND WORK}
+Expose the independent random blocks consisting of the edges from vertex $j$
+to vertices $1,\ldots,j-1$, for $j=1,\ldots,n$. Changing one block changes only
+edges incident with one vertex. For the two resulting graphs, deleting that
+vertex leaves the same graph, so their chromatic numbers differ by at most one.
+
+This gives a self-contained martingale route to a coarse concentration bound.
+The conditional ranges of the corresponding Doob increments have length at most
+one, by coupling the unexposed blocks. For a centered variable with range length
+one, the exponential bound $\mathbb E e^{tX}\le e^{t^2/8}$ follows from convexity
+of the exponential (the elementary bounded-range exponential inequality).
+Iterating the conditional inequality and applying Markov's inequality gives
+\[\Pr(|\chi(G_n)-\mathbb E\chi(G_n)|\ge t)\le2e^{-2t^2/n}.\tag{1}\]
+For example, an interval of radius $\sqrt{n\log n}$ captures probability at least
+$1-2n^{-2}$. No independence of vertex colors is being assumed here.
+
+This is an upper concentration estimate on a much larger scale than the question.
+It is logically compatible both with bounded-width concentration and with
+slowly growing unavoidable fluctuations. It cannot be inverted to obtain the
+requested eventual lower bound on the spread.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Prove anti-concentration at every sufficiently large size, with the quantifiers
+over centers and slowly diverging widths in the source statement. The exposure
+martingale only bounds large deviations from above.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1156
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

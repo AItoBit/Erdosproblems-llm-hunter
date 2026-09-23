@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1157"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1157 --- collection record}
+\section*{Erd\H{o}s Problem 1157 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1157
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Fix parameters $r,k,s\geq2$, and let $\mathcal F_{r,k,s}$ consist of all $r$-uniform hypergraphs on $k$ vertices with $s$ edges. Determine
@@ -17,16 +8,41 @@ Fix parameters $r,k,s\geq2$, and let $\mathcal F_{r,k,s}$ consist of all $r$-uni
 \]
 the largest edge count of an $n$-vertex $r$-uniform hypergraph containing no member of that family as a subhypergraph.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The indexed official opening says t,k,r>=2 but subsequently uses s for the number of edges. This paraphrase consistently names that edge parameter s; it does not repeat the separate conjectural formula in the remarks, where another uniformity-index typo appears.
+
+\subsection*{ATTACK PLAN AND WORK}
+Assume $n\ge k\ge r$ and $2\le s\le\binom kr$; outside the feasible range
+the forbidden family may be empty. Being free of this family is equivalent to
+every $k$-vertex set containing at most $s-1$ edges. Double counting pairs
+$(e,U)$ with $e\subseteq U$ and $|U|=k$ gives the exact upper bound
+\[e(H)\binom{n-r}{k-r}\le(s-1)\binom nk,
+\qquad e(H)\le\frac{s-1}{\binom kr}\binom nr.\tag{1}\]
+
+An alteration argument gives a complementary, usually much smaller, lower bound.
+Choose each $r$-set independently with probability $p$. There are $\binom nr p$
+expected edges. The expected number of forbidden configurations is at most
+$\binom nk\binom{\binom kr}{s}p^s$. Delete one edge from each surviving forbidden
+configuration; this destroys all of them, since deletion cannot create a new one.
+For $a=(k-r)/(s-1)$ and $p=c n^{-a}$ with a sufficiently small fixed $c>0$,
+both expectation terms have power $n^{r-a}$, with coefficients proportional
+to $c$ and $c^s$. Their difference is positive. Hence, when $r-a>0$,
+\[\operatorname{ex}_r(n,\mathcal F_{r,k,s})\gg n^{r-(k-r)/(s-1)}.\tag{2}\]
+The constants depend on the fixed parameters. A nonpositive exponent is not
+being interpreted as a growing lower bound.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Close the exponent and constant gaps between (1) and (2) in the nontrivial
+parameter regimes. These are elementary general bounds, not a determination
+of the requested extremal function.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1157
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

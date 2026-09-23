@@ -1,32 +1,50 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1207", "https://www.erdosproblems.com/history/1207"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1207 --- collection record}
+\section*{Erd\H{o}s Problem 1207 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1207
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For fixed dimension $d$, define $P_d(n)$ as the greatest integer $m$ such that every $n$-point subset of $\mathbb R^d$ contains an $m$-point subset without an isosceles triple. Estimate $P_d(n)$. In particular, does some absolute $c>0$ satisfy
 \[P_2(n)<n^{1-c}\]
 for every sufficiently large $n$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The discussion identifies the one-dimensional case with avoidance of three-term arithmetic progressions. Thus isosceles triple includes three distinct collinear points when two of their mutual distances coincide; it is not restricted to nondegenerate triangles. The current official remarks credit Lee, Pohoata, and Zhu [LPZ26] with proving $P_2(n)<n^{1-c}$ for some $c>0$: this highlighted subquestion is resolved, while the general estimation problem remains open.
+
+\subsection*{ATTACK PLAN AND WORK}
+The collinear case admits a direct greedy lower bound. Identify a line with
+the real numbers and let $S$ be an isosceles-triple-free subset of size $m$.
+For each pair $a,b\in S$, a new point creates a three-term arithmetic progression
+only at
+\[x=(a+b)/2,\qquad x=2a-b,qquad x=2b-a.\tag{1}\]
+These are exactly the collinear isosceles possibilities for three distinct points.
+If $S$ is maximal in an $n$-point collinear set, (1) therefore gives
+\[n\le m+3\binom m2,\qquad
+m\ge\frac{1+\sqrt{1+24n}}6.\tag{2}\]
+The bound follows by solving the resulting quadratic inequality, with integer
+rounding understood. It proves a square-root lower bound for $P_1(n)$ and for
+any higher-dimensional input set that happens to lie on a line.
+
+This point-count argument cannot be copied unchanged in the plane. Equal
+distances from a new point to two old ones constrain it to a whole perpendicular
+bisector; equal distances from an old point constrain it to a circle. Either
+curve can contain many points of the original set, so the three-forbidden-points
+bound per pair is no longer valid. The official page already records a solution
+of the highlighted planar upper-bound subquestion; this restricted lower-bound
+argument makes no claim to reprove that result.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Estimate the extremal function for unrestricted configurations in fixed
+dimension, dealing with concentration on circles and bisectors. The proved
+one-dimensional bound does not resolve the general estimation problem.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1207
 
 https://www.erdosproblems.com/history/1207
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

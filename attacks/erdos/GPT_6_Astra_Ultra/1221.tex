@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1221", "https://www.erdosproblems.com/latex/1221", "https://github.com/teorth/erdosproblems/issues/414", "https://www.renyi.hu/~p_erdos/1949-13.pdf", "https://arxiv.org/abs/2609.07196"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1221 --- collection record}
+\section*{Erd\H{o}s Problem 1221 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1221
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For a sequence $a=(a_j)_{j\geq1}$ of points on a circle of circumference $1$, arrange each prefix of $n$ points in circular order. Write $M_{n,r}(a)$ and $m_{n,r}(a)$ for the greatest and least sums of $r$ successive circular gaps. The published definitions are
@@ -17,8 +8,47 @@ For a sequence $a=(a_j)_{j\geq1}$ of points on a circle of circumference $1$, ar
 \mu_r=\inf_a\limsup_{n\to\infty}\frac{M_{n,r}(a)}{m_{n,r}(a)}.\]
 The page asks whether $r(\Lambda_r-1)$, $r(1-\lambda_r)$, and $r(\mu_r-1)$ each tend to infinity with $r$. This literal statement has a recorded normalisation ambiguity; it is not being treated here as a verified corrected conjecture.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
-The page writes max_r/min_r although the varying index must be i. Gap sums and circular ordering of each prefix are clarified by the original 1949 paper. Upstream issue 414, acknowledged by merged PR 416, identifies missing 1/r factors in the first two normalisations: proposed intended quantities use (n/r)M and (n/r)m. The mu ratio is unchanged. Point sequences should be distinct to avoid zero minimum gaps. The original paper conjectures unboundedness of r(mu_r-1), while the website asks divergence to infinity. A new arXiv preprint, 2609.07196, claims a resolution of the consecutive-gap conjecture; its proof was not reviewed for this statement-only record and no completed solution is claimed.
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+The page writes max_r/min_r although the varying index must be i. Gap sums and circular ordering of each prefix are clarified by the original 1949 paper. Upstream issue 414, acknowledged by merged PR 416, identifies missing 1/r factors in the first two normalisations: proposed intended quantities use (n/r)M and (n/r)m. The mu ratio is unchanged. Point sequences should be distinct to avoid zero minimum gaps. The original paper conjectures unboundedness of r(mu_r-1), while the website asks divergence to infinity. A new arXiv preprint, 2609.07196, claims a resolution of the consecutive-gap conjecture; its proof was not reviewed for this attempt and no completed solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+There is a definite normalization calculation before any asymptotic conjecture
+can be attacked. For $n\ge r$, let the circular gaps be $g_1,\ldots,g_n>0$,
+with sum one, and let $s_i=g_i+\cdots+g_{i+r-1}$ cyclically.
+Each gap occurs $r$ times, so $\sum_i s_i=r$ and
+\[m_{n,r}\le r/n\le M_{n,r}.\tag{1}\]
+Thus the literal unnormalized $\Lambda_r$ is at least $r$; its displayed
+quantity $r(\Lambda_r-1)$ already tends to infinity trivially.
+
+For the second literal quantity there is a stronger diagnostic. Enumerate
+points by dyadic subdivision: start with zero, then insert the midpoint of
+each existing equal dyadic gap in successive rounds. At every prefix of size
+$n$, gap lengths differ by at most a factor two. The smallest gap is at least
+$1/(2n)$ and the largest at most $2/n$. Therefore, for each fixed $r$,
+\[nm_{n,r}\ge r/2,\qquad nM_{n,r}\le2r,\qquad M_{n,r}/m_{n,r}\le2.\tag{2}\]
+The last inequality follows directly by comparing the largest and smallest
+individual gaps before summing $r$ of them.
+It follows that the unnormalized quantities obey
+\[r\le\Lambda_r\le2r,\qquad r/2\le\lambda_r\le r,\qquad1\le\mu_r\le2.\]
+In particular $r(1-\lambda_r)\le r(1-r/2)\to-\infty$.
+So the literal second positive-divergence claim is false under the published
+unnormalized definitions; this supports the already recorded missing-$1/r$
+diagnosis. It does not disprove the intended normalized conjecture.
+
+After dividing the first two definitions by $r$, these elementary bounds only
+place their values in $[1,2]$ and $[1/2,1]$. They give no divergence result for
+the corrected small deviations or for $r(\mu_r-1)$. The cited recent preprint's
+claim remains an external claim whose proof is not adopted here.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+The first 256 dyadic prefixes were checked with exact integer-scaled gaps. All 3,976 windows indexed by prefix size and $1\le r\le\min(16,n)$ satisfy the averaging identity and the three bounds in (2). The inequalities are proved for every prefix by the subdivision argument, not inferred from this finite check.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Resolve the intended normalized asymptotics, with unboundedness and divergence
+kept distinct. The literal normalization inconsistency is demonstrated, but
+the corrected mathematical problem remains unresolved in this attempt.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1221
@@ -31,10 +61,8 @@ https://www.renyi.hu/~p_erdos/1949-13.pdf
 
 https://arxiv.org/abs/2609.07196
 
-The statement was recovered from the cited official page. Consult that page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

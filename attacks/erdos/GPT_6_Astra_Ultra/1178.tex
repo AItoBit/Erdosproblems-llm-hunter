@@ -1,27 +1,48 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1178"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1178 --- collection record}
+\section*{Erd\H{o}s Problem 1178 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1178
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For integers $r,e\geq3$, let $\mathcal F_{r,d,e}$ comprise the $r$-uniform hypergraphs having $d$ vertices and $e$ edges. Write $\operatorname{ex}_r(n,\mathcal F)$ for the largest number of edges in an $n$-vertex $r$-uniform hypergraph containing no member of $\mathcal F$ as a subhypergraph. Define
 \[d_r(e)=\min\{d:\operatorname{ex}_r(n,\mathcal F_{r,d,e})=o(n^2)\text{ as }n\to\infty\}.\]
 The Brown--Erd\H{o}s--S\'os conjecture asks whether $d_r(e)=(r-2)e+3$ for every $r,e\geq3$.
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+An elementary packing gives a useful lower obstruction. A linear $r$-uniform
+hypergraph is one in which two different edges meet in at most one vertex.
+A greedy packing of $r$-sets on $n$ vertices can select at least
+\[\frac{\binom nr}{\binom r2\binom{n-2}{r-2}}
+=\frac{\binom n2}{\binom r2^2}\]
+edges up to rounding: each selected edge rules out at most
+$\binom r2\binom{n-2}{r-2}$ candidates sharing a pair with it.
+Thus linear examples with $\gg_r n^2$ edges exist.
+
+Any $e$ edges in a linear hypergraph have union size at least
+\[re-\binom e2.\tag{1}\]
+To verify this without an unjustified full inclusion-exclusion truncation,
+sum vertex multiplicities $m_v$. The overcount $\sum_v(m_v-1)$ is at most
+$\sum_v\binom{m_v}{2}$, which is at most $\binom e2$ by linearity.
+Hence, whenever the right side is positive, no collection of $e$ edges fits
+on fewer vertices, and
+\[d_r(e)\ge re-\binom e2.\tag{2}\]
+For $e=3$, this is exactly the conjectured necessary lower bound $3r-3$.
+It does not prove the matching upper bound. A crude general upper bound is
+$d_r(e)\le re$, because any $e$ edges occupy at most $re$ vertices; when
+$n\ge re$, a hypergraph avoiding every $re$-vertex $e$-edge configuration
+therefore has at most $e-1$ edges.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Prove the sharp subquadratic upper bound at $(r-2)e+3$ vertices and the
+matching lower obstruction for general $e$. The elementary linear packing
+only reaches the stated weaker range.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1178
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

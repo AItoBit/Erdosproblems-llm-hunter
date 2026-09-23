@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1150", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1150.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1150 --- collection record}
+\section*{Erd\H{o}s Problem 1150 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1150
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Does there exist an absolute constant $c>0$ and an integer $n_0$ such that, whenever $n\geq n_0$ and
@@ -17,15 +8,46 @@ P(z)=\sum_{j=0}^n\epsilon_jz^j,\qquad \epsilon_j\in\{-1,1\},
 \]
 one has $\max_{|z|=1}|P(z)|>(1+c)\sqrt n$?
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Let $N=n+1$ and $c_k=\sum_{j=0}^{n-k}\epsilon_j\epsilon_{j+k}$ for $1\le k\le n$.
+Orthogonality on the unit circle gives
+\[
+\int |P|^2=N,\qquad \int |P|^4=N^2+2\sum_{k=1}^n c_k^2,
+\tag{1}
+\]
+where both integrals use normalized arc measure. Indeed
+$|P(e^{it})|^2=N+\sum_{k=1}^n c_k(e^{ikt}+e^{-ikt})$, so (1) follows by taking
+the constant Fourier coefficients. If $M=\max_{|z|=1}|P(z)|$, then
+$\int|P|^4\le M^2\int|P|^2$, and hence
+\[M^2\ge N+\frac2N\sum_{k=1}^n c_k^2.\tag{2}\]
+The parity relation $c_k\equiv N-k\pmod2$ forces at least $\lceil n/2\rceil$
+of these integer correlations to have square at least one. Thus
+$M^2\ge N+2\lceil n/2\rceil/N$.
+
+This improves the bare $L^2$ bound only additively. A sufficient new input would
+be a uniform bound $\sum c_k^2\ge\eta n^2$ for an absolute $\eta>0$;
+(2) would then give a fixed multiplicative improvement over $\sqrt n$.
+No such bound is proved here. It is a sufficient route, not an equivalence:
+a large supremum can also be concentrated on a small arc without large fourth moment.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+All sign polynomials of degrees 1 through 8 were enumerated. Expanding the square polynomial and summing its squared coefficients agrees with the fourth-moment identity, and every autocorrelation energy satisfies the parity lower bound.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Obtain a uniform multiplicative improvement, either through quadratic
+autocorrelation energy or by directly locating a large value of the polynomial.
+The proved parity bound vanishes in the requested relative scale.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1150
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1150.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

@@ -1,30 +1,51 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1189"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1189 --- collection record}
+\section*{Erd\H{o}s Problem 1189 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1189
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 A finite set $D=\{1<n_1<\cdots<n_k\}$ is a covering set if residues $a_i\pmod{n_i}$ can be chosen to cover $\mathbb Z$. Call $D$ irreducible if no proper subset admits any such covering choice. Determine the number of irreducible covering sets with $k$ elements, the smallest and largest possible $n_k$, and
 \[\max_D\sum_{i=1}^k\frac1{n_i}.\]
 Also, do infinitely many integers $m$ have the property that all their divisors greater than $1$ form an irreducible covering set?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The last subquestion is already affirmative in the official remarks (Sun: m=2^(p-1)p for odd primes p). The remaining estimation questions keep the entry open.
+
+\subsection*{ATTACK PLAN AND WORK}
+Every covering set of moduli must satisfy
+\[\sum_{i=1}^k\frac1{n_i}\ge1.\tag{1}\]
+Indeed average the covering multiplicity over one common period; its average
+is the left side, while pointwise coverage forces it to be at least one.
+In particular $n_1\le k$, and two different moduli greater than one cannot
+suffice because $1/2+1/3<1$.
+
+Equation (1) gives a sufficient, though restrictive, irreducibility test:
+if a modulus set has a covering assignment and deleting any one modulus makes
+the reciprocal sum less than one, then it is irreducible. Every proper subset
+then has reciprocal sum less than one, independently of how its residues are chosen.
+This is stronger than merely finding private witnesses for one assignment.
+
+For a general finite $D$, irreducibility is decidable by a completely explicit
+finite search. For each $D\setminus\{d\}$, enumerate its $\prod_{m\ne d}m$
+residue choices and check coverage of its least-common-multiple period.
+It suffices to check these one-element deletions: any smaller covering subset
+would remain a covering after arbitrary extra classes are added.
+The local check applies this exhaustive test to $D=\{2,3,4,6,12\}$, separately
+from the minimality certificate in 1188.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+For $D=\{2,3,4,6,12\}$, the covering assignment in problem 1188 supplies existence. Exhaustive residue enumeration for each of the five one-element deletions found zero covering assignments. Thus this concrete modulus set is irreducible. The exhaustive procedure tests each integer in the least-common-multiple period, with no sampling.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+The finite criterion supplies examples and necessary inequalities, not the
+number of irreducible sets with $k$ moduli or their extreme largest moduli.
+The already resolved divisor-family subquestion is not claimed as a new result.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1189
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$6\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

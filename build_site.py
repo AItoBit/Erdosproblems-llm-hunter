@@ -114,7 +114,7 @@ def extract_completion(content):
         )
 
     for idx, line in enumerate(lines):
-        if not re.search(r'COMPLETION\s*ESTIMATE', line, re.IGNORECASE):
+        if not re.search(r'COMPLETION\s*(?:RATE\s*)?ESTIMATE', line, re.IGNORECASE):
             continue
 
         window = lines[idx:idx + 4]

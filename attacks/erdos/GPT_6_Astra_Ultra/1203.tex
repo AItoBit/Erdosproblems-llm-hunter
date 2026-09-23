@@ -1,30 +1,45 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1203"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1203 --- collection record}
+\section*{Erd\H{o}s Problem 1203 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1203
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 With $\omega(m)$ equal to the number of different primes dividing $m$, the problem defines
 \[F(n)=\max_k\left(\omega(n+k)\frac{\log\log k}{\log k}\right)\]
 and asks whether $F(n)\to\infty$ as $n\to\infty$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The displayed official definition does not state the range of k or justify attainment of the maximum. At minimum k must avoid the logarithmic singularities. The intended divergence formulation can be stated as: for every M, every sufficiently large n has some integer k>=3 with omega(n+k) log(log k)/log k > M. No claim about attainment is needed for that formulation.
+
+\subsection*{ATTACK PLAN AND WORK}
+There is a baseline obtainable by deliberately placing $n+k$ at a primorial.
+Let $p_j$ be the $j$th prime and $Q_t=p_1\cdots p_t$. For fixed $n$ and large $t$,
+choose $k_t=Q_t-n\ge3$. Then
+\[\omega(n+k_t)=t,\qquad
+\omega(n+k_t)\frac{\log\log k_t}{\log k_t}
+=t\frac{\log\log(Q_t-n)}{\log(Q_t-n)}.\tag{1}\]
+The classical prime number theorem gives $\log Q_t\sim t\log t$; hence the
+right side tends to one as $t\to\infty$. This uses that theorem as an explicit
+external asymptotic input, not as a new result proved here.
+Consequently the supremum over admissible $k$ is at least one for every fixed $n$.
+
+This argument also respects the source's maximum-attainment issue: it supplies
+a sequence of values approaching one and does not assert that a maximum is
+attained. If the maximum in the literal definition exists, it too is at least one.
+The construction permits astronomically large $k$ relative to the fixed shift
+$n$; it therefore largely erases the effect of $n$, explaining why it does not
+make the lower bound grow as $n$ grows.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Find shifts with normalized factor counts tending to infinity uniformly in
+large $n$. The primorial construction yields only the fixed baseline one and
+does not settle either divergence or attainment of the displayed maximum.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1203
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$6\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

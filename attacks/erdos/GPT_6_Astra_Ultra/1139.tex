@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1139", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1139.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1139 --- collection record}
+\section*{Erd\H{o}s Problem 1139 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1139
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 List in increasing order all positive integers having at most two prime factors, counted with multiplicity, as $u_1<u_2<\cdots$. Is
@@ -16,15 +7,40 @@ List in increasing order all positive integers having at most two prime factors,
 \limsup_{k\to\infty}\frac{u_{k+1}-u_k}{\log k}=+\infty?
 \]
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Arbitrarily long intervals missing all the $u_i$ can be constructed directly.
+Fix $L$ and choose $3L$ different primes, grouped into triples
+$(p_j,q_j,r_j)$ for $1\le j\le L$. The Chinese remainder theorem supplies $T$ with
+\[T\equiv-j\pmod{p_jq_jr_j}\qquad(1\le j\le L).\]
+Choose a positive representative, adding the product $Q$ of the $3L$ primes
+if necessary. Each $T+j$ is divisible by three different primes, so it has more
+than two prime factors even under the multiplicity convention. Thus no $u_i$
+belongs to $[T+1,T+L]$.
+
+Since primes alone give infinitely many $u_i$, there are consecutive members
+$u_k\le T<T+L<u_{k+1}$, and $u_{k+1}-u_k\ge L+1$. This proves unbounded gaps,
+but does not prove the requested logarithmically normalized assertion.
+The construction gives a representative $T\le Q$ (or $T=Q$), hence
+$k\le T\le Q$ and a certified ratio at least $(L+1)/\log Q$ when $k>1$.
+Its modulus is costly: $\log Q$ is the sum of $3L$ positive prime logarithms.
+Using disjoint triples therefore gives no lower bound tending to infinity
+from this certificate. One must cover much longer intervals with substantially
+more economical congruence constraints, or use a different mechanism.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Unbounded gaps are weaker than gaps much larger than the logarithm of their
+index. The independent-prime CRT construction does not close that quantitative gap.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1139
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1139.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

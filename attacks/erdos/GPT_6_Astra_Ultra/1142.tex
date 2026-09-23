@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1142", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1142.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1142 --- collection record}
+\section*{Erd\H{o}s Problem 1142 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1142
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Is the set
@@ -17,15 +8,45 @@ Is the set
 \]
 infinite? The problem also asks the weaker question whether there is even one such integer $n>105$.
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+For $n>4$ a qualifying $n$ must be odd: otherwise $n-2$ is an even integer
+greater than two. For $n>7$ it must also satisfy $3\mid n$. If $n\equiv2\pmod3$,
+then $n-2>3$ is divisible by three; if $n\equiv1\pmod3$, then $n-4>3$ is.
+For $n>21$, moreover, $5\mid n$: the four powers $2,4,8,16$ meet every
+nonzero residue modulo five, and the matching difference is greater than five.
+Consequently every candidate beyond 105 is an odd multiple of 15.
+
+More generally, let $q$ be an odd prime and let $h$ be the multiplicative order
+of 2 modulo $q$. If $n>q+2^h$, primality of all the differences implies
+\[n\bmod q\notin\langle2\rangle\subseteq(\mathbb Z/q\mathbb Z)^\times.\tag{1}\]
+Otherwise some $1\le k\le h$ makes $q\mid n-2^k$ and $n-2^k>q$.
+In particular, when 2 generates the multiplicative group, (1) forces $q\mid n$.
+The size condition matters: omitting it would wrongly reject the permitted
+exception in which the difference equals $q$ itself.
+
+These restrictions give a rigorous sieve, not a covering proof for all $n$.
+The local computation checks every candidate up to $10^6$, tests all required
+powers, and records the survivors. Its output is explicitly finite; increasingly
+large thresholds in (1) prevent treating these congruences as a completed disproof.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+An exact Eratosthenes sieve and exhaustive testing of every integer $3\le n\le10^6$ found precisely $4,7,15,21,45,75,105$. No qualifying integer above 105 occurs in this finite range. The search tests every power $2^k<n$, including cases with difference one.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Neither existence beyond 105 nor infinitude follows from the congruence sieve.
+A complete argument must handle candidates escaping every applicable finite set
+of obstructions, or produce a new candidate with all of its differences certified prime.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1142
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1142.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

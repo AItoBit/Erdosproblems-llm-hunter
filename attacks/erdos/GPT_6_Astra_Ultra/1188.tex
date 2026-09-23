@@ -1,28 +1,49 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1188"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1188 --- collection record}
+\section*{Erd\H{o}s Problem 1188 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1188
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 A distinct covering system consists of residue classes $a_i\pmod{n_i}$ with distinct integers $1<n_1<\cdots<n_k$, whose union covers $\mathbb Z$. It is minimal when deleting any nonempty collection of its classes destroys that covering property. Let $F(x)$ count these minimal systems whose moduli are at most $x$. Determine the growth of $F(x)$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 Systems include the chosen residue classes; this differs from counting only sets of moduli. Residues are understood modulo their moduli.
+
+\subsection*{ATTACK PLAN AND WORK}
+For integral $X\ge2$, each modulus $m\in[2,X]$ is absent or has one of its $m$
+residues selected. Ignoring coverage and minimality gives the explicit upper bound
+\[F(X)\le\prod_{m=2}^X(m+1)=\frac{(X+1)!}{2}.\tag{1}\]
+There is a finite exact minimality certificate. Work modulo the least common
+multiple $Q$ of the chosen moduli. A covering is minimal if and only if every
+class has a residue of $\mathbb Z/Q\mathbb Z$ covered by that class alone.
+Necessity follows by deleting that class if it has no such witness; sufficiency
+follows because deleting any class loses its witness.
+
+For example the five classes
+\[0\pmod2,\quad0\pmod3,\quad1\pmod4,\quad5\pmod6,\quad7\pmod{12}\]
+cover all residues modulo 12. Private witnesses, in the listed order, are
+$2,3,1,11,7$. This proves minimality directly. Translating all classes by each
+of the twelve residues gives twelve different minimal systems, since the
+modulus-12 residue distinguishes them. Thus $F(12)\ge12$ under the source's
+convention of counting residue choices, without identifying translations.
+
+This certificate tests minimality of a particular assignment. It must not be
+confused with irreducibility of its moduli, which also rules out different
+assignments to proper subsets and is addressed separately in problem 1189.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+Direct enumeration of the twelve residue positions verifies coverage, each of the five private witnesses, and distinctness of the twelve translated systems.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Estimate the total number on a sharp scale as $X$ grows. The factorial
+upper bound and the explicit twelve examples are elementary benchmarks and
+do not recover the stronger growth bounds cited on the official page.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1188
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

@@ -1,30 +1,47 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1151", "https://www.erdosproblems.com/forum/thread/1151?order=newest"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1151 --- collection record}
+\section*{Erd\H{o}s Problem 1151 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1151
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $L_nf$ be the polynomial of degree at most $n-1$ interpolating a continuous real function $f$ at the $n$ Chebyshev nodes in $[-1,1]$. For a prescribed closed set $A\subseteq[-1,1]$, can one choose $f$ so that the set of subsequential limits of the values $L_nf(x)$ is precisely $A$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The official statement does not specify the quantifier on x. Its commentary expressly asks whether x is fixed and arbitrary and discusses special x=cos(pi*p/q) with odd p,q. No choice of that missing quantifier is asserted here; it must be settled before a proof target is fixed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Every singleton target is realizable: the constant function $f\equiv a$ has
+$L_nf(x)=a$ for every $n$ and every $x$, so its cluster set is exactly $\{a\}$.
+For the standard roots-of-$T_n$ Chebyshev nodes, zero is an interpolation node
+for every odd $n$. At $x=0$ this gives $L_{2j+1}f(0)=f(0)$, so the cluster set
+must contain $f(0)$. This is a necessary condition at that point, not a disproof
+of realizing an arbitrary nonempty closed target, since $f(0)$ can be chosen.
+
+A useful operator obstruction is more general. Put
+$\Lambda_n(x)=\sum_i|\ell_{i,n}(x)|$. If $\sup_n\Lambda_n(x)=M<\infty$, then
+interpolation converges to $f(x)$ at this $x$ for every continuous $f$.
+To see this, approximate $f$ uniformly by a polynomial $q$ within $\delta$.
+For $n>\deg q$, $L_nq=q$, and
+\[|L_nf(x)-f(x)|\le(M+1)\delta.\]
+Letting $\delta\downarrow0$ proves the assertion, using polynomial approximation
+of continuous functions on a compact interval. Thus a target with several cluster
+points requires unbounded evaluation norms at the chosen $x$.
+
+The missing quantifier on $x$ is preserved. Neither this argument nor the zero-node
+observation silently identifies the special evaluation points intended by the source.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+For a specified evaluation point and node convention, construct a continuous
+function with exactly the prescribed nonsingleton cluster set. Unbounded norms
+alone do not prescribe that cluster set or exclude unwanted subsequential limits.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1151
 
 https://www.erdosproblems.com/forum/thread/1151?order=newest
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

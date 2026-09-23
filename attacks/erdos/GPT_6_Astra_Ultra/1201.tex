@@ -1,30 +1,50 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1201"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1201 --- collection record}
+\section*{Erd\H{o}s Problem 1201 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1201
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $P(m)$ denote the greatest prime factor of $m$. For each $\epsilon,\eta>0$, does some integer $k\geq0$ make the set
 \[\{n\in\mathbb N:P(n(n+1)\cdots(n+k))>n^{1-\epsilon}\}\]
 have density at least $1-\eta$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The page does not specify lower density versus existence of natural density; this paraphrase preserves its word density without silently choosing a stronger convention. The official remarks record the epsilon=1/2 case.
+
+\subsection*{ATTACK PLAN AND WORK}
+The failure condition has a useful exact finite-word formulation. Fix
+$0<\epsilon<1$, an integer $k\ge0$, and a dyadic block of starting points
+$N\le n<2N$. Put $y=(2N+k)^{1-\epsilon}$ and mark each integer in
+$[N,2N+k-1]$ whose prime factors are all at most $y$.
+If a starting point fails the desired prime-factor inequality, then all
+$n,n+1,\ldots,n+k$ are marked, because their prime factors are at most
+$n^{1-\epsilon}\le y$.
+
+If the maximal consecutive runs of marked entries have lengths $L_1,L_2,\ldots$,
+the exact number of fully marked windows of length $k+1$ is
+\[\sum_j\max(0,L_j-k).\tag{1}\]
+Every such window lies inside one run and there are $L_j-k$ possible starts
+in a run of length at least $k+1$. The word has length $N+k$, so its $N$
+possible window starts are exactly the desired dyadic block.
+Thus the proportion of actual failures is at most (1) divided by $N$.
+
+This identifies a sufficient quantitative route: make the normalized excess
+mass of long smooth runs arbitrarily small, with one fixed $k$ working in
+every sufficiently large block. Marginal smooth-number density alone gives
+no such run-length estimate. For $\epsilon\ge1$ the question is trivial with
+$k=0$ and $n\ge2$, since the threshold is at most one; that observation does
+not address the difficult small-$\epsilon$ regime.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Bound the long-run statistic uniformly enough to obtain the requested
+density conclusion with fixed $k$. The reduction does not assume independence
+of neighboring smooth integers and proves no such statistical bound.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1201
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

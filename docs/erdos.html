@@ -185,23 +185,10 @@
                 }
 
                 tbody.innerHTML = problems.map(p => {
-                    // Shorten model names and limit to 2, prioritizing GPT Pro
-                    const shortenModel = (name) => {
-                        if (name.toLowerCase().includes('gpt pro')) return 'GPT Pro';
-                        if (name.toLowerCase().includes('gpt 5.2') || name.toLowerCase().includes('gpt_5.2')) return 'GPT 5.2';
-                        if (name.toLowerCase().includes('codex')) return 'Codex';
-                        if (name.toLowerCase().includes('claude') || name.toLowerCase().includes('opus')) return 'Opus 4.5';
-                        if (name.toLowerCase().includes('gemini')) return 'Gemini';
-                        return name.split(' ').slice(0, 2).join(' ');
-                    };
-                    let uniqueModels = [...new Set(window.ProblemHunting.getUniqueModels(p.attacks).map(shortenModel))];
-                    // Prioritize GPT Pro - if present, put it first
-                    if (uniqueModels.includes('GPT Pro')) {
-                        uniqueModels = ['GPT Pro', ...uniqueModels.filter(m => m !== 'GPT Pro')];
-                    }
-                    const models = uniqueModels.slice(0, 2).join(', ') ||
+                    const uniqueModels = window.ProblemHunting.getModelLabels(p.attacks);
+                    const models = uniqueModels.join(', ') ||
                         (p.attacks.some(a => a.entry_kind === 'statement_only') ? 'Awaiting attempt' : '-');
-                    const modelsLabel = models === '-' ? models : models.toLowerCase();
+                    const modelsLabel = window.ProblemHunting.escapeHtml(models);
 
                     // Legacy fallback; current builds supply the database-derived display label.
                     const determineStatus = (attacks) => {

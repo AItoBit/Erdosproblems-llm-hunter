@@ -106,11 +106,30 @@ function getMathematicalAttempts(attacks) {
 }
 
 function getUniqueModels(attacks) {
-    return [...new Set(getMathematicalAttempts(attacks).map(a =>
-        a.entry_kind === 'reused_writeup'
-            ? a.provenance.source_model.replace(/_/g, ' ')
-            : a.model
-    ))];
+    const attempts = getMathematicalAttempts(attacks);
+    const authoredModels = new Set(attempts.filter(a => a.entry_kind !== 'reused_writeup').map(a => a.model));
+    return [...new Set(attempts.flatMap(a => {
+        if (a.entry_kind !== 'reused_writeup') return [a.model];
+        const sourceModel = a.provenance.source_model.replace(/_/g, ' ');
+        return authoredModels.has(a.model) ? [sourceModel] : [sourceModel, `${a.model} (collection)`];
+    }))];
+}
+
+function getModelLabels(attacks) {
+    const shorten = name => {
+        if (/gpt[ _]6[ _]astra[ _]ultra/i.test(name)) {
+            return name.includes('(collection)') ? 'GPT Astra Ultra (collection)' : 'GPT Astra Ultra';
+        }
+        if (/gpt[ _]pro/i.test(name)) return 'GPT Pro';
+        if (/gpt[ _]5\.2/i.test(name)) return 'GPT 5.2';
+        if (/codex/i.test(name)) return 'Codex';
+        if (/claude|opus/i.test(name)) return 'Opus 4.5';
+        if (/gemini/i.test(name)) return 'Gemini';
+        return name;
+    };
+    return [...new Set(getUniqueModels(attacks).map(shorten))].sort((a, b) =>
+        Number(b.startsWith('GPT Astra Ultra')) - Number(a.startsWith('GPT Astra Ultra')) || a.localeCompare(b)
+    );
 }
 
 /**
@@ -434,6 +453,7 @@ window.ProblemHunting = {
     sortByNumber,
     sortByScore,
     getUniqueModels,
+    getModelLabels,
     getMathematicalAttempts,
     countWithAttacks,
     formatDate,

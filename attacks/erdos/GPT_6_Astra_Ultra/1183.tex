@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1183", "https://www.erdosproblems.com/forum/thread/1183"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1183 --- collection record}
+\section*{Erd\H{o}s Problem 1183 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1183
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For every red--blue colouring of $\mathcal P([n])$, consider the largest monochromatic subfamily closed under both binary union and binary intersection. Let $f(n)$ be the minimum of this largest size over all such colourings. Define $F(n)$ in the same way with only closure under union required. Estimate both functions. In particular, are the inequalities
@@ -16,18 +7,47 @@ For every red--blue colouring of $\mathcal P([n])$, consider the largest monochr
 \qquad F(n)=\exp(o(n))\]
 valid?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The exponential question paraphrases the page's F(n)<(1+o(1))^n notation. Indexed comments report partial results but are not being adopted as verified proofs.
+
+\subsection*{ATTACK PLAN AND WORK}
+Take the chain
+$\varnothing\subset\{1\}\subset\{1,2\}\subset\cdots\subset[n]$.
+At least $\lceil(n+1)/2\rceil$ of its members have the same color.
+Any subfamily of a chain is closed under binary union and intersection:
+these operations simply select the larger and smaller of their two inputs.
+Consequently
+\[\lceil(n+1)/2\rceil\le f(n)\le F(n).\tag{1}\]
+No closure under the empty union is being inserted into the problem.
+
+There is a structural certificate useful for searches beyond this bound.
+For a nonempty finite union-closed family $\mathcal A$, the union $U$ of all
+its members belongs to $\mathcal A$, by repeatedly applying binary closure.
+If it is also intersection-closed, the intersection $I$ belongs as well, and
+every member lies in the interval $[I,U]$ of the Boolean lattice. Hence
+\[|\mathcal A|\le2^{|U\setminus I|}.\tag{2}\]
+The converse would be false: having same-colored endpoints does not force
+the intervening interval to be monochromatic or closed in a chosen subfamily.
+
+Thus a large two-operation family needs a large interval between its extremal
+sets, but proving such an interval exists cannot be replaced by a count of
+same-colored endpoints. For union closure alone, even the common intersection
+need not be a family member.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Force monochromatic union-closed families of superpolynomial size and find
+matching subexponential upper constructions. The chain argument and interval
+certificate are linear-scale baseline tools only.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1183
 
 https://www.erdosproblems.com/forum/thread/1183
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

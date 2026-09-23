@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1160"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1160 --- collection record}
+\section*{Erd\H{o}s Problem 1160 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1160
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $g(n)$ count the isomorphism classes of groups of order $n$. Must
@@ -17,13 +8,40 @@ g(n)\leq g(2^m)
 \]
 hold for every positive integer $n\leq2^m$?
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+A useful comparison is available at odd orders. If $n$ is odd, the assignment
+$G\mapsto G\times C_2$ embeds isomorphism classes of groups of order $n$ into
+those of order $2n$. The subgroup of all odd-order elements in this direct
+product is exactly $G\times\{1\}$: the second coordinate is nontrivial precisely
+when the element has even order. It is characteristic, so an isomorphism of
+the products recovers an isomorphism of the original groups. Thus
+\[g(n)\le g(2n)\qquad(n\text{ odd}).\tag{1}\]
+This does not compare $n$ with a nearby power of two.
+
+One can also exhibit many different groups at the target order without invoking
+classification. For $0\le j\le\lfloor m/2\rfloor$, the groups
+$C_{2^{m-j}}\times C_{2^j}$ have order $2^m$ and distinct exponents
+$2^{m-j}$, hence
+\[g(2^m)\ge\lfloor m/2\rfloor+1.\tag{2}\]
+In particular the desired comparison holds for $n$ prime, where a nonidentity
+element generates the whole group and $g(n)=1$. It also holds for prime-square
+orders when $m\ge2$: a group of order $p^2$ is abelian (its nontrivial center and
+the fact that a cyclic central quotient forces commutativity prove this), and
+the only two possibilities are $C_{p^2}$ and $C_p\times C_p$.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Control the number of groups at arbitrary mixed-prime orders below $2^m$.
+The recoverable-product injection changes the order in the wrong way for the
+full comparison, and the explicit abelian family is only a lower bound.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1160
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

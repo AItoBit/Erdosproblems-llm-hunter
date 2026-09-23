@@ -1,26 +1,45 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1210"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1210 --- collection record}
+\section*{Erd\H{o}s Problem 1210 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1210
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Does an absolute constant $C$ exist such that for every integer $n\geq2$ and every set $A\subseteq\{1,\ldots,n-1\}$ whose distinct elements are pairwise coprime,
 \[\sum_{a\in A}\frac1{n-a}\leq\sum_{\substack{p<n\\p\text{ prime}}}\frac1p+C?\]
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Change variables to $D=\{n-a:a\in A\}\subseteq[1,n-1]$. Pairwise coprimality
+has the exact consequence
+\[|D\cap(n+p\mathbb Z)|\le1\qquad\text{for every prime }p.\tag{1}\]
+Indeed two members of that residue class would correspond to two distinct
+elements of $A$ divisible by $p$. Thus the small denominators cannot be chosen
+arbitrarily: for each prime, one residue class has occupancy at most one.
+
+For example, if $n$ is even, at most one denominator is even. Bounding its
+contribution by $1/2$ and allowing all odd denominators gives
+\[\sum_{a\in A}\frac1{n-a}
+\le H_{n-1}-\tfrac12H_{\lfloor(n-1)/2\rfloor}+\tfrac12
+=\tfrac12\log n+O(1).\tag{2}\]
+More generally, for a fixed squarefree $Q\mid n$, at most one denominator is
+divisible by each prime of $Q$. After deleting at most $\omega(Q)$ exceptional
+denominators, the rest are coprime to $Q$; summing by residue classes yields
+\[\sum_{a\in A}\frac1{n-a}
+\le\frac{\varphi(Q)}Q\log n+O_Q(1)+\omega(Q).\tag{3}\]
+The residue-class estimate in (3) follows by comparing each progression's
+harmonic sum with its integral. The dependence of the error on $Q$ cannot
+be ignored when allowing $Q$ to grow with $n$.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Obtain the prime-harmonic scale with an absolute additive constant uniformly
+in $n$. The available occupancy constraints only yield the weaker bounds above;
+there is no uniform large divisor $Q$ available for arbitrary $n$.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1210
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$6\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

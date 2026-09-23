@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1152"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1152 --- collection record}
+\section*{Erd\H{o}s Problem 1152 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1152
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For each $n\geq1$, choose $n$ distinct interpolation nodes $x_{1n},\ldots,x_{nn}$ in $[-1,1]$, and let $\epsilon(n)\to0$. Must there be a continuous $f:[-1,1]\to\mathbb R$ such that every polynomial sequence satisfying
@@ -17,13 +8,41 @@ For each $n\geq1$, choose $n$ distinct interpolation nodes $x_{1n},\ldots,x_{nn}
 \]
 fails to converge to $f(x)$ for almost every $x\in[-1,1]$?
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+There is an exact algebraic description of the extra freedom. Set
+$w_n(x)=\prod_{j=1}^n(x-x_{jn})$ and let $L_nf$ be the degree-at-most-$n-1$
+interpolant. Every interpolating polynomial has the unique form
+\[p_n=L_nf+w_nq_n.\tag{1}\]
+Indeed its difference from $L_nf$ vanishes at $n$ different points and is therefore
+divisible by $w_n$; polynomial division gives uniqueness.
+For $q_n\ne0$, the two summands in (1) have different degree ranges, so there is
+no leading-term cancellation and
+\[\deg p_n=n+\deg q_n<(1+\epsilon(n))n
+\quad\Longleftrightarrow\quad \deg q_n<\epsilon(n)n.\tag{2}\]
+For nonnegative $\epsilon(n)$ this leaves $\lceil\epsilon(n)n\rceil=o(n)$ free
+coefficients, with zero free coefficients when $\epsilon(n)=0$.
+If a negative degree allowance excludes $L_nf$ itself, existence of admissible
+interpolants must first be checked; a vacuous universal statement proves no
+interpolation phenomenon.
+
+The desired result therefore requires one $f$ whose interpolation errors cannot
+be repaired almost everywhere by any of the low-degree multipliers in (1).
+Simply showing divergence of the unique degree-$n-1$ interpolants only handles
+$q_n=0$, and does not address the quantifier over all correction sequences.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Construct one continuous function defeating every permitted multiplier
+sequence. The dimension count $o(n)$ is not a measure-theoretic obstruction by
+itself and supplies no almost-everywhere divergence conclusion.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1152
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

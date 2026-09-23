@@ -1,30 +1,48 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1181"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1181 --- collection record}
+\section*{Erd\H{o}s Problem 1181 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1181
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For $n\in\mathbb N$ and $k\geq1$, define $q(n,k)$ as the smallest prime not dividing $\prod_{1\leq i\leq k}(n+i)$, with $i$ integral. Is there an absolute constant $c>0$ such that
 \[q(n,\log n)<(1-c)(\log n)^2\]
 for every sufficiently large integer $n$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The product over integral i interprets the nonintegral argument k=log n using floor(log n).
+
+\subsection*{ATTACK PLAN AND WORK}
+Let $k=\lfloor\log n\rfloor$ and $M=\prod_{i=1}^k(n+i)$.
+Every prime at most $k$ divides $M$, since any $k$ consecutive integers contain
+a multiple of it. Thus $q(n,k)>k$.
+At the other end, put $\vartheta(y)=\sum_{p\le y}\log p$.
+If $q(n,k)>y$, then the squarefree product of all primes at most $y$ divides $M$,
+so
+\[\vartheta(y)\le\log M\le k\log(n+k).\tag{1}\]
+This is an exact obstruction, with no assumption of independence among the factors.
+
+Using the classical prime number theorem $\vartheta(y)\sim y$ as an external
+input, (1) immediately gives
+\[q(n,\lfloor\log n\rfloor)\le(1+o(1))(\log n)^2.\tag{2}\]
+Indeed for each fixed $\delta>0$, the choice
+$y=(1+\delta)k\log(n+k)$ eventually makes $\vartheta(y)>k\log(n+k)$,
+forcing a missing prime at or below $y$. The prime number theorem is not
+reproved in this attempt.
+
+This exposes the exact constant problem: taking logarithms counts each forced
+prime only once but counts all multiplicities in $M$. A fixed-factor saving
+would need to show a positive proportion of this logarithmic budget is spent
+on repetitions or on primes outside the forced initial segment.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Turn the coefficient $1+o(1)$ into $1-c$ with a uniform positive $c$.
+The product-size obstruction alone cannot produce that saving.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1181
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

@@ -1,0 +1,63 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#109; partial reconstruction of a known theorem, 2026-09-23.}
+If $A\subseteq\mathbb N$ has positive upper asymptotic density, prove that there are infinite $B,C\subseteq\mathbb N$ with $B+C\subseteq A$. We use $\overline d(A)=\limsup_{N\to\infty}|A\cap[1,N]|/N$. The problem is known to be solved; the independent argument here establishes finite-by-infinite sumsets of arbitrarily large finite width, the full density-one case, and a precise sufficient condition for the infinite-by-infinite step.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Moreira, Richter, and Robertson proved the general sumset theorem. Host subsequently gave a shorter dynamical proof, whose final combinatorial extraction motivates the criterion proved below. This attempt does not reconstruct the ergodic argument that supplies that criterion for every positive-density set. That missing step is substantial and is not supplied by finite intersection arguments alone.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First prove a translation-intersection lemma directly by counting. Iterate it to obtain increasingly wide finite sumsets. Then identify why passage to two infinite sets is not automatic, and state an exact additional convergence property that makes a two-sided induction work.
+
+\section{WORK}
+\subsection{Positive-density intersections at arbitrarily large shifts}
+Let $D\subseteq\mathbb N$ have $\overline d(D)=\delta>0$, and prescribe $L\geq1$. Choose an integer $M$ with $M\delta>1$. Along a sequence of $N$ witnessing the upper density, each of the finitely many translates $D-iL$, $1\leq i\leq M$, contains $(\delta+o(1))N$ elements of $[1,N]$: a fixed translation changes an interval count by only $O(ML)$.
+
+For $x\in[1,N]$, let $t(x)$ count how many of these translates contain $x$. The elementary inequality $\binom t2\geq t-1$ for integers $t\geq0$ gives
+\[
+\sum_{1\leq i<j\leq M}|(D-iL)\cap(D-jL)\cap[1,N]|
+\geq (M\delta-1+o(1))N.
+\]
+For infinitely many of these $N$, some fixed pair $i<j$ contributes a positive fixed proportion of $N$, by finite pigeonholing. Translating back, we obtain
+\[
+\overline d(D\cap(D-h))>0,\qquad h=(j-i)L\geq L.
+\tag{1}
+\]
+
+Start with $F=\{1\}$ and $D=A-1$. Maintain $D=\bigcap_{b\in F}(A-b)$ with positive upper density. Apply (1) with $L>\max F-\min F$. Replacing $F$ by $F\cup(F+h)$ replaces $D$ by $D\cap(D-h)$ and doubles $|F|$, since the two copies of $F$ are disjoint. Iterating finitely many times proves: for every $r$ there is $F\subseteq\mathbb N$ with $|F|\geq r$ and an infinite, indeed positive-upper-density, set $C$ such that $F+C\subseteq A$.
+
+This does not yet prove the question. Each new $F$ can force us to replace $C$ by a smaller set; an infinite decreasing family of infinite sets can have empty intersection, as with $\{j:j\geq m\}$ for $m=1,2,\ldots$. No uniform positive lower density survives the iteration above.
+
+\subsection{The full theorem under the stronger density-one hypothesis}
+Suppose $A$ has asymptotic density one. Every finite intersection of fixed translates $A-b$ also has density one, by the union bound for the complements. The set $\{b:2b\in A\}$ has density one, since its complement in $[1,N]$ has size at most $|A^c\cap[1,2N]|=o(N)$.
+
+Choose $b_1<b_2<\cdots$ inductively. At stage $r+1$, choose $b_{r+1}>b_r$ from
+\[
+\{b:2b\in A\}\cap\bigcap_{i=1}^r(A-b_i),
+\]
+which is infinite because it has density one. Then $2b_i\in A$ for every $i$ and $b_i+b_j\in A$ for $i<j$. Thus $B=\{b_i:i\geq1\}$ satisfies the stronger conclusion $B+B\subseteq A$.
+
+\subsection{An exact criterion for the missing infinite step}
+Here is a set-theoretic form of the last extraction in Host's proof. Suppose there are distinct $m_1<m_2<\cdots$ and an infinite set $L\subseteq\mathbb N$ such that
+\[
+\begin{array}{ll}
+\text{(i)}&\text{for every finite }F\subseteq L,\ m_i+F\subseteq A\text{ for all sufficiently large }i;\\
+\text{(ii)}&L\cap\bigcap_{i=1}^r(A-m_i)\text{ is infinite for every }r.
+\end{array}
+\tag{2}
+\]
+Then the desired conclusion follows. Choose $c_1\in L$, then choose $b_1$ among the $m_i$ so that $b_1+c_1\in A$, using (i). Given increasing $b_1,\ldots,b_r$ from the sequence $(m_i)$ and increasing $c_1,\ldots,c_r$ in $L$ with all the cross-sums in $A$, choose $c_{r+1}>c_r$ from $L\cap\bigcap_{j=1}^r(A-b_j)$. This set is infinite by (ii), since it contains the intersection for an initial segment of $(m_i)$ long enough to include all the chosen $b_j$. Then (i) supplies $b_{r+1}>b_r$ among the $m_i$ with $b_{r+1}+c_j\in A$ for all $j\leq r+1$. The induction proves that $B=\{b_j\}$ and $C=\{c_j\}$ are infinite and $B+C\subseteq A$.
+
+Condition (i) is a convergence condition on translates; condition (ii) guarantees an infinite supply for the other coordinate. Host obtains compatible objects of this kind from a joining, the Kronecker factor, and positive-measure intersections. This file proves the deduction from (2), but does not prove that general positive upper density supplies (2).
+
+\section{VERIFICATION AND SCOPE}
+Every finite-width construction and the density-one result above is proved without an external density theorem. The distinction between positive upper density and density one is essential: the union-bound argument only closes under arbitrarily many fixed translates in the latter case. The known general resolution is not being reported as an independent achievement of this incomplete reconstruction.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and original attribution: \url{https://www.erdosproblems.com/109}.
+\item B. Host, \emph{A short proof of a conjecture of Erd\H{o}s proved by Moreira, Richter and Robertson}, particularly Theorem 3 and its extraction argument: \url{https://arxiv.org/html/1904.09952}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved as an independent reconstruction of the full known theorem.} Arbitrarily large finite-by-infinite sumsets, the density-one case, and criterion (2) are established. Deriving the criterion from arbitrary positive upper density remains missing here; no novelty is claimed.
+\textbf{Completion rate estimate: 40\%.}

@@ -1,25 +1,46 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1212"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1212 --- collection record}
+\section*{Erd\H{o}s Problem 1212 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1212
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Consider the graph on pairs $(x,y)\in\mathbb N^2$ with $\gcd(x,y)=1$, joining two pairs when exactly one coordinate changes by $1$ or $-1$. Is there a path escaping every bounded region whose vertices all satisfy $x,y>1$ and have at least one composite coordinate? Further variants ask for such a monotone path, and for a monotone path whose straight runs have uniformly bounded lengths.
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+A path cannot stay forever in the strip $|x-y|\le2$ with $x,y>1$.
+The diagonal has no allowed vertices, since $\gcd(x,x)=x>1$.
+A unit-step path cannot cross from above to below it without visiting it.
+Above the diagonal, write
+\[v_k=(k,k+1),\qquad w_k=(k,k+2).\]
+All $v_k$ are coprime, while $w_k$ is coprime exactly when $k$ is odd.
+Within the strip, $w_k$ is joined only to $v_k$ and $v_{k+1}$; no other
+edges connect these layers. The possible bridges occur only at odd $k$,
+so components are single vertices or triples
+$v_k,w_k,v_{k+1}$. The reflected argument handles the lower strip.
+Removing vertices whose two coordinates are prime can only make these
+components smaller. Therefore any escaping admissible path visits
+$|x-y|\ge3$ infinitely often.
+
+Likewise no fixed horizontal or vertical line with its constant coordinate
+greater than one supports an escaping path: multiples of any prime divisor
+of that coordinate periodically interrupt the coprime vertices.
+These are geometric obstructions to simple proposed constructions, and they
+hold even before imposing the composite-coordinate requirement.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+Exact graph enumeration for $2\le x,y\le101$ confirms that every coprime component in the strip has at most three vertices. The proof above supplies the infinite-strip statement; the finite computation alone does not.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Construct an escaping path using wider excursions, then separately address
+monotonicity and bounded straight-run length. Excluding narrow-strip and fixed-line
+strategies does not decide whether such a path exists.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1212
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$6\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

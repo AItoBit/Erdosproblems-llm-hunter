@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1143", "https://www.erdosproblems.com/forum/thread/1143?order=newest"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1143 --- collection record}
+\section*{Erd\H{o}s Problem 1143 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1143
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For primes $p_1<\cdots<p_u$ and an integer $k\geq1$, define the guaranteed number of covered integers in an interval by
@@ -17,18 +8,48 @@ F_k(p_1,\ldots,p_u)=\min_{m\geq0}\bigl|\{a\in\{m+1,\ldots,m+k\}:p_i\mid a\text{ 
 \]
 Estimate this quantity, especially when $k=\alpha p_u$ for a fixed $\alpha>2$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The minimum makes explicit the largest guaranteed bound intended by 'at least F_k' in the official statement. A number divisible by several selected primes is counted once.
+
+\subsection*{ATTACK PLAN AND WORK}
+Let $Q=p_1\cdots p_u$, let $w(a)$ be the indicator that some $p_i$ divides $a$,
+and put $C=Q-\varphi(Q)$. The indicator is $Q$-periodic and has $C$ ones per period.
+Writing $k=tQ+r$ with $0\le r<Q$ therefore gives the exact reduction
+\[F_k=tC+F_r,\qquad
+F_r=\min_{0\le m<Q}\sum_{j=1}^r w(m+j),\quad F_0=0.\tag{1}\]
+Thus there are only $Q$ interval starts to check, independently of $k$.
+Averaging those $Q$ starts counts each covered residue exactly $r$ times;
+in particular $F_k\le\lfloor kC/Q\rfloor$.
+
+Inclusion-exclusion gives a complementary uniform lower bound. For each
+nonempty subset $S$ of the selected primes, the count of multiples of
+$d_S=\prod_{p\in S}p$ in an interval of length $k$ differs from $k/d_S$ by less
+than one. Adding with the inclusion-exclusion signs yields
+\[
+\max\{0,k(1-\prod_i(1-1/p_i))-(2^u-1)\}
+\le F_k\le\lfloor k(1-\prod_i(1-1/p_i))\rfloor.\tag{2}
+\]
+For one prime this specializes to the sharper exact formula $F_k(p)=\lfloor k/p\rfloor$.
+Equations (1)--(2) are proved without independence assumptions about divisibility.
+The local finite check compares (1) with direct interval enumeration for primes 2,3,5.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+For primes $2,3,5$, exhaustive starts modulo 30 verify (1)--(2) for every $0\le k\le90$. Sample values are $F_{6}=4$, $F_{10}=6$, $F_{30}=22$, $F_{60}=44$, $F_{90}=66$.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+When $u$ grows and $k$ is comparable to the largest prime, the exponential
+error in (2) and the product-sized period in (1) are too expensive. A useful
+asymptotic estimate requires cancellation or a more efficient covering argument.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1143
 
 https://www.erdosproblems.com/forum/thread/1143?order=newest
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$12\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

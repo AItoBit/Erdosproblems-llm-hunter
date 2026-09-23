@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1167", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1167.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1167 --- collection record}
+\section*{Erd\H{o}s Problem 1167 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1167
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $r\geq2$ be a finite integer, let $\lambda$ be an infinite cardinal, and index a family of cardinals $\kappa_\alpha>r$ by an ordinal $\gamma\geq2$. Does
@@ -19,18 +10,44 @@ Let $r\geq2$ be a finite integer, let $\lambda$ be an infinite cardinal, and ind
 \]
 always hold? The partition relation means that every coloring of the relevant finite subsets has a homogeneous set of the prescribed size in some color $\alpha$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The linked formalization restores gamma>=2 and kappa_alpha>r from the original Erdos-Hajnal list and explains counterexamples if they are omitted. It interprets +1 as cardinal addition, so kappa_alpha+1=kappa_alpha for infinite kappa_alpha. This is the explicitly qualified formalization target, not an assertion that all ambiguous versions agree.
+
+\subsection*{ATTACK PLAN AND WORK}
+There is a complete elementary subcase: finitely many colors and all target
+cardinals at most $\aleph_0$. For any infinite $\lambda$, restrict the coloring
+of $[\lambda]^r$ to a countable subset. Infinite Ramsey induction gives a
+countably infinite homogeneous subset, which contains a subset of the target
+size for its color. Thus the conclusion holds here independently of the antecedent.
+
+For clarity, the induction proceeds as follows. For singletons it is infinite
+pigeonholing. For $(r+1)$-sets, select a point $x_0$ and use the induction
+hypothesis on the coloring of $r$-sets obtained by adjoining $x_0$; retain an
+infinite tail on which this coloring is constant. Select $x_1$ from that tail
+and repeat, keeping the tails nested. Infinitely many selected points have the
+same associated color. Every $(r+1)$-set from those points has that color,
+because its least-selected point determines it and all later points lie in its tail.
+
+The two restrictions are genuine. With countably many colors, coloring a pair
+of natural numbers by its smaller member gives no homogeneous triple. And a
+countable homogeneous set does not reach an uncountable target cardinal.
+This pair coloring is only a counterexample to an overextended auxiliary lemma;
+it does not satisfy the original antecedent and is not a counterexample to the problem.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Use the power-set-sized antecedent to handle uncountable targets or infinitely
+many colors. The finite-color Ramsey subcase bypasses, rather than establishes,
+the difficult stepping-down implication.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1167
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1167.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$4\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

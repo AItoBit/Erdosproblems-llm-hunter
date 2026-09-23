@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1145", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1145.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1145 --- collection record}
+\section*{Erd\H{o}s Problem 1145 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1145
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Suppose $A=\{a_1<a_2<\cdots\}$ and $B=\{b_1<b_2<\cdots\}$ are infinite sets of positive integers, $a_n/b_n\to1$, and every sufficiently large integer belongs to $A+B$. With
@@ -17,18 +8,45 @@ r_{A,B}(m)=|\{(a,b)\in A\times B:a+b=m\}|,
 \]
 must $\limsup_{m\to\infty}r_{A,B}(m)=+\infty$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The prose version uses positive integers; the linked Lean statement permits zero in the sets and explicitly documents that convention. Both use eventual coverage, not equality A+B=N.
+
+\subsection*{ATTACK PLAN AND WORK}
+Assume, toward the difficult alternative, that $r_{A,B}(m)\le C$ for all
+sufficiently large $m$, where $C\ge1$ is fixed. Put
+$R(X)=\sum_{m\le X}r_{A,B}(m)$. There is a constant $K$ with
+\[X-K\le R(X)\le CX+K\tag{1}\]
+for all sufficiently large integral $X$: the lower bound uses eventual coverage.
+The first $j$ members of each set give $j^2$ different ordered pairs, whose sums
+are at most $a_j+b_j$. Hence
+\[j^2\le R(a_j+b_j)\le C(a_j+b_j)+K.\tag{2}\]
+Since $a_j/b_j\to1$, (2) implies
+$a_j\ge(1-o(1))j^2/(2C)$ and the same lower bound for $b_j$.
+
+Conversely take $X=\min(a_j,b_j)-1$. Both coordinates of a representation of
+an integer at most $X$ must occur among the first $j-1$ terms. Thus
+$R(X)\le(j-1)^2$, and (1) gives $\min(a_j,b_j)\le(j-1)^2+K+1$.
+The ratio hypothesis now yields
+\[
+\frac{1-o(1)}{2C}j^2\le a_j,b_j\le(1+o(1))j^2.\tag{3}\]
+So any bounded-representation counterexample is confined to a quadratic-growth
+regime. This proof does not assume that $A(X)/B(X)\to1$: same-index closeness
+alone would not justify that assertion near large counting-function jumps.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+The necessary quadratic regime (3) is compatible with the hypotheses and
+is not a contradiction. One must rule out bounded additive multiplicities
+inside that regime, using finer information than these counting bounds.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1145
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1145.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

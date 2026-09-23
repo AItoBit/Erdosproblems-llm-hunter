@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1155"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1155 --- collection record}
+\section*{Erd\H{o}s Problem 1155 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1155
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Starting from $K_n$, repeatedly select uniformly among the triangles currently present and remove the selected triangle's three edges. Stop when no triangle remains, and denote the final number of edges by $f(n)$. Determine the typical structure and parameters of the terminal graph. In particular, are
@@ -17,16 +8,40 @@ Starting from $K_n$, repeatedly select uniformly among the triangles currently p
 \]
 valid, with the latter holding asymptotically almost surely?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The source uses 'almost surely' in the random-graph asymptotic sense, as its discussion of probabilities tending to one makes explicit; no coupling of all graph sizes is specified.
+
+\subsection*{ATTACK PLAN AND WORK}
+Every triangle removal lowers the degree of each of its three vertices by two.
+Thus every terminal graph $H$ satisfies
+\[d_H(v)\equiv n-1\pmod2,\qquad e(H)\equiv\binom n2\pmod3.\tag{1}\]
+In particular, when $n$ is even, every terminal degree is odd and positive, so
+$e(H)\ge n/2$ deterministically. These constraints hold for every removal order.
+
+One also has the elementary upper bound $e(H)\le\lfloor n^2/4\rfloor$.
+For completeness, if $uv$ is an edge in a triangle-free graph then its two
+neighborhoods are disjoint, so $d(u)+d(v)\le n$. Summing over edges gives
+$\sum_vd(v)^2\le ne(H)$. Cauchy--Schwarz gives
+$4e(H)^2/n\le\sum_vd(v)^2$, proving the bound when $e(H)>0$; the empty case is immediate.
+
+These invariants provide useful checks for any simulation and show why termination
+cannot be equated with an empty graph. But the interval from a linear lower bound
+to a quadratic upper bound includes the proposed $n^{3/2}$ scale. Establishing
+that scale needs information about the random process before termination, not
+just constraints on its possible terminal states.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Control the evolving triangle counts and their fluctuations far enough into
+the process to determine the residual edge scale and expectation. The deterministic
+invariants above do not supply either typical behavior or uniform integrability.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1155
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

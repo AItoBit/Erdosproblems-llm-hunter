@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1191"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1191 --- collection record}
+\section*{Erd\H{o}s Problem 1191 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1191
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Write $A(x)=|A\cap[1,x]|$ for an infinite Sidon subset $A$ of the positive integers; Sidon means that $a+b=c+d$ forces equality of the unordered pairs. Must every such $A$ satisfy
@@ -16,13 +7,39 @@ Write $A(x)=|A\cap[1,x]|$ for an infinite Sidon subset $A$ of the positive integ
 Conversely, is there an infinite Sidon set $A$ and a constant $c>0$ such that
 \[\liminf_{x\to\infty}\frac{A(x)(\log x)^c}{\sqrt x}>0?\]
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+For a finite truncation $A\cap[1,X]$ of size $m$, all its positive differences
+are distinct. If $a-b=c-d>0$, then $a+d=c+b$; the Sidon property forces
+the same unordered summand pair, and the positive-difference condition excludes
+the reversed degeneracy. Thus $(a,b)=(c,d)$. Consequently
+\[\binom m2\le\lfloor X\rfloor-1,\qquad A(X)\le\sqrt{2X}+1.\tag{1}\]
+This is the basic square-root scale, but has no logarithmic saving.
+
+There are elementary infinite examples for the sparse side: $A=\{4^j:j\ge0\}$
+is Sidon because the base-four expansion of a sum has either two digits equal
+to one or one digit equal to two, with no carries. Its counting function is
+$\lfloor\log_4 X\rfloor+1$, so it satisfies the first displayed liminf assertion
+and fails the positive lower liminf in the second for every fixed exponent $c$.
+This proves those facts for this one family only.
+
+The first question is universal over all infinite Sidon sets, whereas the
+second seeks one much denser example. Neither can be settled by taking a large
+finite Sidon subset separately for each $X$: choices at different scales must
+be nested compatibly in a single infinite set.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Produce the required logarithmic improvement for arbitrary infinite sets,
+or construct one infinite set maintaining nearly square-root density at every
+large scale. The finite difference count and sparse explicit example do neither.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1191
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

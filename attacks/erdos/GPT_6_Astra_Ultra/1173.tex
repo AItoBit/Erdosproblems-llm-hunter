@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1173", "https://www.erdosproblems.com/history/1173"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1173 --- collection record}
+\section*{Erd\H{o}s Problem 1173 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1173
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Assume GCH. Suppose
@@ -18,18 +9,45 @@ f:\omega_{\omega+1}\longrightarrow[\omega_{\omega+1}]^{\leq\aleph_\omega},
 \]
 Must there be a free set $H\subseteq\omega_{\omega+1}$ of size $\aleph_{\omega+1}$, meaning that $\beta\notin f(\alpha)$ whenever $\alpha,\beta\in H$ are distinct?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The free-set condition is stated for distinct points, so no unmentioned assumption about whether alpha belongs to f(alpha) is needed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Set $\kappa=\aleph_{\omega+1}$ and view membership in the values of $f$ as a
+directed conflict graph. A free set is an independent set in the symmetrized
+conflict graph. This gives a sufficient extra hypothesis: if every point belongs
+to fewer than $\kappa$ of the sets $f(\alpha)$, then a free set of size $\kappa$
+exists. Indeed each vertex has fewer than $\kappa$ outgoing neighbors by the
+size assumption and fewer than $\kappa$ incoming neighbors by the extra hypothesis.
+Regularity of $\kappa$ lets one recursively choose $\kappa$ vertices, avoiding
+all previous vertices and their incoming and outgoing neighbors.
+
+The original intersection hypothesis does not give this incoming-degree bound.
+For example $f(\alpha)=\{0\}$ for $\alpha\ne0$ and $f(0)=\varnothing$ has tiny
+pairwise intersections while zero has $\kappa$ incoming neighbors. In this
+example deleting zero is enough; the example refutes the proposed inference,
+not the free-set conclusion.
+
+Conversely, dropping the intersection hypothesis entirely makes the conclusion
+false. Set $f(\alpha)=\alpha$ on the initial ordinal $\kappa$. Every value has
+cardinality at most $\aleph_\omega$, but no two distinct points are free.
+For sufficiently large $\alpha<\beta$, the intersection has size $\aleph_\omega$,
+which is exactly why this is not a counterexample to the stated problem.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Exploit the strict pairwise-intersection bound to remove or organize the
+large incoming-degree obstruction. The additional degree hypothesis proved
+sufficient above is not established from the actual assumptions.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1173
 
 https://www.erdosproblems.com/history/1173
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

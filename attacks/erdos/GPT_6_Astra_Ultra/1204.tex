@@ -1,30 +1,51 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1204"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1204 --- collection record}
+\section*{Erd\H{o}s Problem 1204 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1204
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 A $k$-tuple of integers $0\leq a_1<\cdots<a_k$ is admissible when its residues omit some class modulo each prime. Minimise, over these tuples, the quantities
 \[A(k)=\min a_k,\qquad B(k)=\min\frac1k\sum_{i=1}^k a_i.\]
 Estimate both functions; in particular, is $A(k)\sim k\log k$? The accompanying remarks also ask about the growth of the greedy admissible sequence beginning at $0$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The source's description of the greedy recurrence has indexing slips; no recurrence with those slips is reproduced.
+
+\subsection*{ATTACK PLAN AND WORK}
+Only primes at most $k$ need be checked for admissibility: a $k$-element tuple
+cannot occupy all residue classes of a larger prime. Translation preserves
+admissibility, so minimizing either quantity permits normalization $a_1=0$.
+For $k\ge2$, omission of a residue modulo two then forces all elements to be
+even. Thus
+\[A(k)\ge2(k-1),\qquad B(k)\ge k-1.\tag{1}\]
+
+An explicit upper construction is also immediate. Put
+$Q_k=\prod_{p\le k}p$ and take $a_i=(i-1)Q_k$.
+For primes at most $k$ this tuple occupies only residue zero; for larger
+primes it occupies fewer than all residues. Hence
+\[A(k)\le(k-1)Q_k,\qquad B(k)\le\tfrac12(k-1)Q_k.\tag{2}\]
+These upper bounds are far from the conjectured scale.
+
+The finite-prime reduction gives an exact small-$k$ search for $A(k)$:
+enumerate increasing even tuples starting at zero by increasing final element,
+checking residues only for primes at most $k$. The first success is minimal,
+since every smaller normalized endpoint was exhaustively tested. The local
+check performs this search for $2\le k\le6$; it does not claim to minimize
+$B(k)$ by simply using the tuple that minimizes its last element.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+Exhaustive normalized tuple searches give $A(2)=2$, $A(3)=6$, $A(4)=8$, $A(5)=12$, $A(6)=16$. Examples at the last three sizes are $(0,2,6,8)$, $(0,2,6,8,12)$, and $(0,4,6,10,12,16)$. These are exact small cases, not estimates of $B(k)$.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Replace the primorial-sized construction with the required sharp asymptotic
+scale and control the mean-position and greedy-sequence questions separately.
+Exact small tuples and the parity bound are not asymptotic evidence sufficient for a proof.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1204
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

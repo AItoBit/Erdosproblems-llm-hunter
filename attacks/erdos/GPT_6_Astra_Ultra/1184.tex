@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1184"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1184 --- collection record}
+\section*{Erd\H{o}s Problem 1184 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1184
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Put $P(m)=\max\{p:p\text{ prime},\ p\mid m\}$, and set
@@ -17,16 +8,46 @@ For every fixed $\alpha>1$ and every integer sequence $n=n(k)$ satisfying $n=k^{
 \[f(n,k)=(1-\rho(\alpha)+o(1))k\quad(k\to\infty)\]
 hold? Here $\rho$ is the Dickman function.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The current statement uses rho(alpha); a superseded revision incorrectly used rho(1/alpha).
+
+\subsection*{ATTACK PLAN AND WORK}
+The large-prime contributions have an exact separation property: a prime
+$p>k$ divides at most one of $n+1,\ldots,n+k$, since it would otherwise divide
+a nonzero difference smaller than $p$. Let $R_i$ be the part of $n+i$ supported
+on primes greater than $k$, including their full multiplicities, and put
+$L=\sum_{i=1}^k\log R_i$. The number of indices with $R_i>1$ is exactly $f(n,k)$.
+For each such index $\log k<\log R_i\le\log(n+k)$, whence
+\[\frac{L}{\log(n+k)}\le f(n,k)\le\frac{L}{\log k}\qquad(k>1).\tag{1}\]
+
+The weighted quantity $L$ itself can be written without factoring each integer:
+\[
+L=\sum_{i=1}^k\log(n+i)-
+\sum_{p\le k}\log p\sum_{a\ge1}
+\left(\left\lfloor\frac{n+k}{p^a}\right\rfloor-
+      \left\lfloor\frac n{p^a}\right\rfloor\right).\tag{2}
+\]
+The inner sum is finite because the floor difference vanishes once $p^a>n+k$.
+Equation (2) follows by separating prime-power valuations of the full product.
+
+For $n=k^{\alpha+o(1)}$, the two denominators in (1) differ asymptotically by
+the factor $\alpha$. Thus even a precise estimate of this weighted logarithmic
+mass would not by itself determine the unweighted count with Dickman coefficient.
+The remaining problem is distribution of that mass among individual integers,
+not an unproved independence of their large prime factors.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Control short-interval smooth-number counts uniformly for every allowed
+sequence $n(k)$, beyond the weighted bounds (1)--(2). No Dickman asymptotic
+in such intervals is established here.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1184
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

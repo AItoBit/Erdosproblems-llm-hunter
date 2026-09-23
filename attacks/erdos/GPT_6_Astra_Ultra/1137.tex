@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1137", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1137.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1137 --- collection record}
+\section*{Erd\H{o}s Problem 1137 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1137
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Write $p_n$ for the $n$th prime and $d_n=p_{n+1}-p_n$. Determine whether
@@ -17,18 +8,51 @@ Write $p_n$ for the $n$th prime and $d_n=p_{n+1}-p_n$. Determine whether
 \qquad(x\to\infty).
 \]
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The displayed lower index bounds make the adjacent gaps defined under one-based prime indexing; finite initial-index conventions do not affect the limiting question.
+
+\subsection*{ATTACK PLAN AND WORK}
+Put $D_N=\max_{1\le j\le N}d_j$ and introduce
+\[
+A_N=D_N^{-2}\max_{2\le j\le N}d_{j-1}d_j,
+\qquad B_N=D_N^{-1}\max_{2\le j\le N}\min(d_{j-1},d_j).
+\]
+Then the following exact comparison holds:
+\[ B_N^2\le A_N\le B_N. \tag{1}\]
+Indeed, for positive $u,v\le D_N$, $\min(u,v)^2\le uv\le D_N\min(u,v)$;
+taking maxima gives (1). Consequently the original limit is zero if and only
+if $B_N\to0$. Equivalently, for every $\epsilon>0$, all sufficiently long prime
+prefixes have no adjacent gaps both at least $\epsilon D_N$.
+
+This isolates the required local exclusion. A bound on the frequency of large
+gaps alone cannot give it: even one exceptional adjacent pair affects the maximum.
+Nor does divergence of $D_N$ suffice for arbitrary sequences. For the positive
+sequence $g_{2j-1}=g_{2j}=j$, the corresponding ratio is exactly one at every even
+prefix. This example is not a model of prime gaps or a counterexample to the
+problem; it identifies precisely what an argument using only maxima would miss.
+
+An exact finite check can compute $D_N$, the largest adjacent product, and the
+largest adjacent minimum simultaneously with one pass through a prime list.
+The accompanying local check verifies (1) on sieved prime prefixes; no finite
+range establishes the limit.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+For successive prime-value cutoffs $10^3,10^4,10^5,10^6$, the numbers of complete gaps are $167,1228,9591,78497$; the maximum gaps are $20,36,72,114$. The adjacent-product ratios are respectively $9/25,32/81,203/432,50/171$. Their variation is not evidence of monotonicity or a proof of a limit.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Prove the adjacent record-scale exclusion for prime gaps. Known or computed
+large individual gaps do not supply this exclusion. The next useful input must
+control two neighboring gaps relative to the largest gap in the entire prefix.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1137
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1137.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

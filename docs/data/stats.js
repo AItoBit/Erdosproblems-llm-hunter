@@ -1,7 +1,7 @@
 var siteStats = {
   "erdos": {
     "total_problems": 1221,
-    "with_attacks": 735,
+    "with_attacks": 786,
     "solved_problems": 579,
     "models": [
       "GPT 6 Astra Ultra",

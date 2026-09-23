@@ -1,30 +1,45 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1186"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1186 --- collection record}
+\section*{Erd\H{o}s Problem 1186 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1186
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Fix $k\geq2$. Among all red--blue colourings of $[n]$, minimise the number of monochromatic arithmetic progressions of length $k$, counting each progression with positive common difference once. Determine or sharply estimate the optimal asymptotic coefficient $\delta_k$ in the universal lower bound
 \[\#\{\text{monochromatic }k\text{-term progressions}\}\geq (\delta_k+o(1))n^2.\]
 An asymptotic description of $\delta_k$ as $k$ grows is requested.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The page leaves the counting convention implicit; its displayed random-colouring bound 1/((k-1)2^k) identifies the convention used here.
+
+\subsection*{ATTACK PLAN AND WORK}
+For fixed $k\ge2$, the number of $k$-term progressions in $[n]$, with positive
+common difference counted once, is
+\[T_k(n)=\sum_{d=1}^{\lfloor(n-1)/(k-1)\rfloor}(n-(k-1)d)
+=\frac{n^2}{2(k-1)}+O_k(n).\tag{1}\]
+In an independent fair coloring each progression is monochromatic with
+probability $2^{1-k}$. Linearity of expectation, which requires no independence
+between different progressions, therefore gives a coloring with at most
+\[\frac{n^2}{(k-1)2^k}+O_k(n)\]
+monochromatic progressions. In particular the optimal coefficient satisfies
+$\delta_k\le1/((k-1)2^k)$.
+
+For $k=2$ this calculation is sharp. If the color classes have sizes $a,n-a$,
+every unordered pair is a 2-term progression, and their monochromatic count is
+\[\binom a2+\binom{n-a}2
+=\left(a-\frac n2\right)^2+\frac{n^2}{4}-\frac n2.\]
+Balanced classes attain the minimum up to integer rounding, so $\delta_2=1/4$.
+The square term proves the lower bound directly; averaging alone would not.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+For $k\ge3$, correlations can improve on random colorings, and no matching
+lower bound or asymptotic description as $k$ grows is supplied here. The exact
+2-term case must not be extrapolated to longer progressions.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1186
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$7\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

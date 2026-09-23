@@ -1,30 +1,50 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1208"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1208 --- collection record}
+\section*{Erd\H{o}s Problem 1208 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1208
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For fixed $d\geq2$, determine the largest size of a subset with all pairwise distances different that can be guaranteed in every $n$-point set in $\mathbb R^d$. Equivalently, for the intended extremal quantity,
 \[F_d(n)=\min_{\substack{X\subset\mathbb R^d\\|X|=n}}\ \max\{|Y|:Y\subseteq X,\ \text{distinct unordered pairs in }Y\text{ have distinct distances}\},\]
 estimate $F_d(n)$ as $n\to\infty$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The official statement says minimal guaranteed size, which literally makes the definition trivial. The min-max formulation explicitly states the intended maximum guaranteed size, as supported by all the nontrivial bounds in its remarks. This is an interpretation of that typo, not a silently exact transcription.
+
+\subsection*{ATTACK PLAN AND WORK}
+Here is an elementary, nonsharp lower bound for the intended planar quantity:
+\[F_2(n)\gg n^{1/6}.\tag{1}\]
+For a selected set $S$ of size $m$ with all distances different, forbidden new
+points lie on circles centered at $a\in S$ with radii equal to an existing
+distance $|b-c|$, or on perpendicular bisectors of pairs in $S$.
+There are at most $m\binom m2+\binom m2\le m^3$ such curves, in addition
+to the $m$ already selected points. These cover all collisions between an old
+and a new distance and between two new distances.
+
+Put $L=\lceil\sqrt n\rceil$. If no line or circle contains at least $L$ input
+points, a maximal selected set has
+$n\le m+m^3L\le2m^3L$, giving $m\gg n^{1/6}$.
+Otherwise restrict to $L$ points on one such curve $C$. Each forbidden curve
+intersects $C$ in at most two points. The possible coincident-curve cases do
+not occur: a circle centered at a selected point on $C$ cannot be $C$ itself;
+and if $C$ is a line, the perpendicular bisector of two selected points on it
+is not that line. A maximal selection inside $C$ consequently satisfies
+$L\le m+2m^3\le3m^3$, again giving $m\gg n^{1/6}$.
+
+This dichotomy proves (1) without a general incidence theorem. It applies to
+distinct unordered pairs and excludes repeated distances even when the two
+pairs share a vertex. It is a weak baseline and is not presented as a best known bound.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Improve the exponent and determine the sharp growth, and address dimensions
+above two. Intersections of higher-dimensional spheres are not bounded finite
+sets, so the planar proof does not automatically generalize.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1208
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

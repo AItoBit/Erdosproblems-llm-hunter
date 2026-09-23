@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1158"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1158 --- collection record}
+\section*{Erd\H{o}s Problem 1158 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1158
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For fixed integers $t,r\geq2$, let $K_t(r)$ have $t$ vertex classes of size $r$, with every transversal $t$-set an edge. Is
@@ -18,16 +9,41 @@ For fixed integers $t,r\geq2$, let $K_t(r)$ have $t$ vertex classes of size $r$,
 \]
 always true?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The parameter range t,r>=2 is the nondegenerate Turan-problem range; the official wording says 'for all t,r' without spelling it out.
+
+\subsection*{ATTACK PLAN AND WORK}
+The elementary random construction quantifies a specific exponent gap. Write
+$v=tr$ and $e=r^t$ for the vertex and edge counts of the forbidden hypergraph.
+In a random $t$-uniform hypergraph on $n$ vertices with edge probability $p$,
+the expected numbers of edges and labeled forbidden copies are respectively
+$\binom nt p$ and at most $n^{tr}p^{r^t}$. Remove one edge per surviving copy.
+The resulting graph is forbidden-copy-free and retains at least the original
+edge count minus the original copy count.
+
+Put $a=(tr-t)/(r^t-1)$ and $p=c n^{-a}$. The two expectations both have exponent
+$t-a$, since $tr-ar^t=t-a$. For a sufficiently small constant $c=c(t,r)>0$,
+the positive term, of order $c n^{t-a}$, dominates the negative term of order
+$c^{r^t}n^{t-a}$. Some outcome therefore gives
+\[\operatorname{ex}_t(n,K_t(r))\gg n^{t-(tr-t)/(r^t-1)}.\tag{1}\]
+
+The loss in (1) is strictly larger than the requested $r^{1-t}$, because
+$t(r-1)r^{t-1}>r^t-1$ for $t,r\ge2$. For $t=r=2$, for instance, this method
+gives exponent $4/3$ rather than $3/2$. This comparison is about this construction,
+not a claim that $4/3$ is the best known bound in that special case.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+A construction with correlated edges or algebraic structure is needed to
+beat the deletion cost of independent random edges and reach the conjectured
+exponent. The elementary alteration does not do so.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1158
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$8\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

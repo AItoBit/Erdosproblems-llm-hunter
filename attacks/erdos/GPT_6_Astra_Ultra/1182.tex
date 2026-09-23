@@ -1,28 +1,47 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1182"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1182 --- collection record}
+\section*{Erd\H{o}s Problem 1182 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1182
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Let $R(H,G)$ denote the two-colour Ramsey number. For each $n$, define $f(n)$ as the greatest edge count of a connected $n$-vertex graph $G$ satisfying $R(K_3,G)=2n-1$. Define $F(n)$ as the greatest threshold such that every connected $n$-vertex graph with at most $F(n)$ edges satisfies this equality. Determine the asymptotic sizes of $f(n)$ and $F(n)$. The original questions include whether $F(n)/n\to\infty$.
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The official remarks already answer the final subquestion negatively via Brandt's bound F(n)<=84n; the estimation problem remains open. Definitions are intended in the nontrivial large-n regime.
+
+\subsection*{ATTACK PLAN AND WORK}
+Every connected $n$-vertex graph has Ramsey number at least $2n-1$ against a
+triangle. On $2n-2$ vertices, make the red graph complete bipartite with two
+parts of size $n-1$. It has no red triangle, while the blue graph consists of
+two disjoint cliques, neither large enough to contain a connected $n$-vertex graph.
+
+For every tree $T$ on $n$ vertices the lower bound is attained. Consider any
+coloring on $2n-1$ vertices with no red triangle. If a vertex has at least $n$
+red neighbors, those neighbors form a blue clique, which contains $T$.
+Otherwise every vertex has red degree at most $n-1$, hence blue degree at least
+$n-1$. A graph of minimum degree at least $n-1$ contains every $n$-vertex tree:
+root the tree and embed vertices in parent-before-child order; whenever a new
+child is needed, its already embedded parent has at most $n-2$ other occupied
+vertices to avoid and at least $n-1$ neighbors.
+Thus
+\[R(K_3,T)=2n-1.\tag{1}\]
+
+Every connected graph with $n-1$ edges is a tree, so (1) gives the baseline
+$F(n)\ge n-1$ and $f(n)\ge n-1$. These are independently proved elementary
+benchmarks, not a claim of a new tree Ramsey theorem. The source's cited
+linear upper bound for $F$ answers its superlinear subquestion negatively;
+that external upper-bound proof is not reconstructed here.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Determine how many cycles can be added while preserving the exact Ramsey
+value, and obtain the requested sharp growth estimates for both extremal
+functions. The tree case alone only gives their linear baseline.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1182
 
-The statement was recovered from search-indexed official page text because direct page access was restricted. Consult the linked page for subsequent changes.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

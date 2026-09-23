@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1146", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1146.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1146 --- collection record}
+\section*{Erd\H{o}s Problem 1146 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1146
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For $E\subseteq\mathbb N$, put
@@ -21,18 +12,42 @@ d_s\bigl((A\cup\{0\})+(B\cup\{0\})\bigr)>d_s(B)
 \]
 hold?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 The adjoined zero terms are the sumset convention explicitly used by the formalization for Schnirelmann density.
+
+\subsection*{ATTACK PLAN AND WORK}
+Since $1\in A$, the target sumset contains $B\cup(B+1)$, as well as zero.
+This proves the essential-component inequality for a concrete infinite family
+of test sets. For $q\ge2$ let $B_q$ be the positive integers not divisible by $q$.
+Then
+\[d_s(B_q)=\inf_{N\ge1}\left(1-\frac{\lfloor N/q\rfloor}{N}\right)=1-1/q.\]
+Every positive integer outside $B_q$ is a positive multiple of $q$; its predecessor
+lies in $B_q$. Therefore $B_q\cup(B_q+1)=\mathbb N_{\ge1}$ and
+\[d_s((A\cup\{0\})+(B_q\cup\{0\}))=1>d_s(B_q).\tag{1}\]
+More generally (1) holds for any $B$ of density strictly below one whose complement
+contains no two consecutive positive integers, provided $1\in B$.
+Positive Schnirelmann density itself forces $1\in B$ by considering $N=1$.
+
+This also explains a limitation of the elementary shift argument. For a general
+$B$, long consecutive missing blocks can remain after adding the single element
+1. The full question requires the extra shifts $2^m3^n$, with a strict improvement
+uniform over all initial intervals in the infimum, not just an improvement in
+asymptotic density along selected intervals.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Establish a strict increase for every positive-Schnirelmann-density set.
+The proved family has particularly simple missing residues; no reduction of
+arbitrary $B$ to that family is supplied.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1146
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1146.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$5\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

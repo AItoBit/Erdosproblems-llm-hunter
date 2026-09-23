@@ -1,14 +1,5 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1159", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1159.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1159 --- collection record}
+\section*{Erd\H{o}s Problem 1159 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1159
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 Is there an integer $C>1$, independent of the plane, such that every finite projective plane has a point set $S$ satisfying
@@ -17,15 +8,48 @@ Is there an integer $C>1$, independent of the plane, such that every finite proj
 \]
 for each line $\ell$ of that plane?
 
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
+\subsection*{ATTACK PLAN AND WORK}
+Consider a projective plane of order $q\ge2$, with $N=q^2+q+1$ points and lines.
+Let $s=|S|$ and $k_\ell=|S\cap\ell|$. Counting incidences and pairs of selected
+points gives
+\[\sum_\ell k_\ell=(q+1)s,\qquad
+\sum_\ell k_\ell(k_\ell-1)=s(s-1).\tag{1}\]
+If $1\le k_\ell\le C$, these imply
+$s\ge q+1$ and $s\le(C-1)(q+1)+1$.
+There is a stronger exclusion for $C=2$. In that case
+$k(k-1)=2(k-1)$ for each permitted value $k=1,2$, so (1) forces
+\[s^2-(2q+3)s+2(q^2+q+1)=0.\]
+Its discriminant is $-4q^2+4q+1<0$ for $q\ge2$. Thus the universal constant,
+if it exists, must be at least three.
+
+For comparison, a logarithmic bound follows by independent sampling.
+For large $q$, choose each point with probability $p=4\log N/(q+1)\le1$.
+A fixed line is missed with probability at most $N^{-4}$.
+For $t=\lceil16\log N\rceil$, its upper tail is bounded by
+$(e(q+1)p/t)^t\le(e/4)^t\le N^{-6}$, using the standard binomial union bound
+$\Pr(X\ge t)\le\binom{q+1}{t}p^t\le(e(q+1)p/t)^t$.
+The union of the two bad events over all $N$ lines has probability less than one.
+Hence some set meets every line between one and $O(\log q)$ times. The finitely
+many small orders can be handled by taking all points.
+
+\subsection*{FINITE COMPUTATIONAL CHECK}
+All 128 subsets of the seven-point projective plane were enumerated. Among subsets meeting every line, the smallest possible maximum line intersection is three, consistent with the general exclusion of two.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+Replace the logarithmically growing upper bound by an absolute constant
+uniform over all projective planes. The moment identities rule out two but
+do not decide whether any larger constant works.
+
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1159
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1159.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$10\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.

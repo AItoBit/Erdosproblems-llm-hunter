@@ -9,7 +9,7 @@ A collection of attempts by advanced Large Language Models (LLMs), mostly by GPT
 
 This project documents and tracks LLM attempts to solve challenging open mathematical problems. The website automatically updates when new TeX files are added to the repository.
 
-The Erdos index includes all **1,221 problems** in the saved collaborative database. The [expanded GPT_6_Astra_Ultra collection](attacks/erdos/GPT_6_Astra_Ultra/) covers all **642 unresolved database entries**, including 433 attributed imports and 50 statement-only records awaiting an attempt. Reused work retains its original model attribution and unverified completion claims. The directly checked official tags page reports 635 unresolved; the collection preserves the broader database scope. Only `.tex` writeups are published from this collection; working notes, manifests, and verification reports are kept outside the repository.
+The Erdos index includes all **1,221 problems** in the saved collaborative database. The [expanded GPT_6_Astra_Ultra collection](attacks/erdos/GPT_6_Astra_Ultra/) covers all **642 unresolved database entries**, including 433 attributed imports. Its 50 former statement-only entries now contain individual partial mathematical attempts with explicit remaining gaps and completion estimates. Reused work retains its original model attribution and unverified completion claims; the Models column labels its Astra collection membership separately. The directly checked official tags page reports 635 unresolved; the collection preserves the broader database scope. Only `.tex` writeups are published from this collection; working notes, manifests, and verification reports are kept outside the repository.
 
 ### Problem Sources
 
@@ -59,7 +59,7 @@ Erdosproblems-llm-hunter/
 
 ## How It Works
 
-1. **Problem Statements**: Canonical statements remain at the external sources below. The expanded Erdos collection also includes 50 sourced statement-only records where no local attempt was available:
+1. **Problem Statements**: Canonical statements remain at the external sources below. Each new Astra partial attempt includes a sourced restatement:
    - Erdos problems: [erdosproblems.com/X](https://www.erdosproblems.com/) for problem X
    - MO problems: Original MathOverflow question links
 2. **LLM Attempts**: Stored as TeX files in `Attacks/` directory

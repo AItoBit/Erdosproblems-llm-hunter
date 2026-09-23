@@ -39,6 +39,10 @@ are incorrect for the original open problem.
             with self.subTest(content=content):
                 self.assertEqual(extract_completion(content), expected)
 
+    def test_completion_rate_estimate_heading_used_by_astra_attempts(self):
+        content = r'\textbf{Completion rate estimate: 40\%.}'
+        self.assertEqual(extract_completion(content), 40)
+
     def test_rejected_decimal_is_not_reinterpreted_as_a_fraction(self):
         for content in [
             r'COMPLETION ESTIMATE: 0.50\% is false.',

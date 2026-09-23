@@ -1,30 +1,48 @@
-% COLLECTION_METADATA: {"schema_version": 1, "kind": "statement_only", "source_urls": ["https://www.erdosproblems.com/1175", "https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1175.lean"], "independently_reviewed": false}
-\section*{Erd\H{o}s Problem 1175 --- collection record}
+\section*{Erd\H{o}s Problem 1175 --- GPT 6 Astra Ultra partial attempt}
 
-\subsection*{PROVENANCE AND STATUS}
-Official problem: https://www.erdosproblems.com/1175
-
-Saved collaborative-database status: open.
-Snapshot checked: 2026-09-23T17:22:24Z.
-Latest status and formalization links: https://teorth.github.io/erdosproblems/
-
-Entry type: statement only; awaiting a mathematical attempt. No numbered writeup was found in the repository or the supplied local archive. This record paraphrases the cited statement and supplies no proof or claimed advance.
 
 \subsection*{FORMAL RESTATEMENT}
 For every uncountable cardinal $\kappa$, is there a cardinal $\lambda$ such that each graph of chromatic number exactly $\lambda$ contains a triangle-free subgraph of chromatic number exactly $\kappa$?
 
-\subsection*{SOURCE CONVENTIONS AND OPEN DETAILS}
+\subsection*{CONTEXT AND SCOPE}
+This replaces the earlier statement-only record with an elementary mathematical attempt. The arguments below establish only their stated partial results; no novelty or full solution is claimed.
+
 Subgraph means an arbitrary subgraph, not necessarily induced. The quantifier allows lambda larger than kappa; a consistency obstruction at lambda=kappa=aleph_1 alone does not settle it.
+
+\subsection*{ATTACK PLAN AND WORK}
+The usual finite chromatic escalation has a precise ceiling here. Starting with
+a triangle-free graph $H$ with vertices $v_i$, form a new graph with the original
+vertices, copies $u_i$, and a new vertex $w$. Retain the original edges, join
+$u_i$ to every original neighbor of $v_i$, and join $w$ to every $u_i$.
+This graph remains triangle-free: copies are independent, a triangle through
+$w$ is impossible, and a triangle through one copy would give a triangle in $H$.
+
+If $\chi(H)=k<\infty$, the new graph has chromatic number $k+1$.
+The upper bound colors $u_i$ like $v_i$ and gives $w$ a new color.
+For the lower bound, suppose there were $k$ colors and call the color of $w$
+color $c$. Recolor each original vertex of color $c$ by its copy's color.
+No copy has color $c$; and on an original edge only one endpoint could originally
+have color $c$, while its copy is adjacent to the other endpoint. This would
+give a proper $(k-1)$-coloring of $H$, a contradiction.
+
+Iterating from $K_2$ and taking the disjoint union produces a countable
+triangle-free graph of chromatic number exactly $\aleph_0$. Any infinite complete
+host contains this graph as a subgraph. But the construction stays countable,
+so it cannot supply the uncountable chromatic target in the problem. Also an
+arbitrary high-chromatic host need not contain a large complete graph.
+
+\subsection*{VERIFICATION AND REMAINING GAP}
+An uncountable construction and a theorem for arbitrary hosts are both missing.
+Finite chromatic escalation inside complete hosts establishes neither of those
+requirements; the parameter $\lambda$ remains unchosen for the full problem.
 
 \subsection*{SOURCES}
 https://www.erdosproblems.com/1175
 
 https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/1175.lean
 
-The linked Lean source formalizes a statement. Its presence is not evidence of a proved theorem or a solution to this problem.
-
 \subsection*{FINAL}
-UNRESOLVED: awaiting an attempt.
+\textbf{UNRESOLVED.} The full source problem remains outside the scope of the proved partial results.
 
 \subsection*{COMPLETION ESTIMATE}
-$0\%$: this entry records the statement only; no solution progress is claimed.
+$3\%$. This is a conservative subjective estimate toward the whole problem, not a probability that the argument is correct or a claim that a fixed fraction of the problem has been solved.
