@@ -118,17 +118,17 @@ function getUniqueModels(attacks) {
 function getModelLabels(attacks) {
     const shorten = name => {
         if (/gpt[ _]6[ _]astra[ _]ultra/i.test(name)) {
-            return name.includes('(collection)') ? 'GPT Astra Ultra (collection)' : 'GPT Astra Ultra';
+            return name.includes('(collection)') ? 'gpt 6 (collection)' : 'gpt 6';
         }
-        if (/gpt[ _]pro/i.test(name)) return 'GPT Pro';
-        if (/gpt[ _]5\.2/i.test(name)) return 'GPT 5.2';
-        if (/codex/i.test(name)) return 'Codex';
-        if (/claude|opus/i.test(name)) return 'Opus 4.5';
-        if (/gemini/i.test(name)) return 'Gemini';
-        return name;
+        if (/gpt[ _]pro/i.test(name)) return 'gpt pro';
+        if (/gpt[ _]5\.2/i.test(name)) return 'gpt 5.2';
+        if (/codex/i.test(name)) return 'codex';
+        if (/claude|opus/i.test(name)) return 'opus 4.5';
+        if (/gemini/i.test(name)) return 'gemini';
+        return name.toLowerCase();
     };
     return [...new Set(getUniqueModels(attacks).map(shorten))].sort((a, b) =>
-        Number(b.startsWith('GPT Astra Ultra')) - Number(a.startsWith('GPT Astra Ultra')) || a.localeCompare(b)
+        Number(b.startsWith('gpt 6')) - Number(a.startsWith('gpt 6')) || a.localeCompare(b)
     );
 }
 
