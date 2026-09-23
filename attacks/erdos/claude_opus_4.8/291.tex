@@ -1,0 +1,51 @@
+
+OUTPUT
+
+MODEL: Claude Opus 4.8 (agentic session in Claude Code; Lean 4 + Mathlib compile-verify loop)
+PROMPT STRATEGY: autonomous prover loop; accepted only on `lake env lean` exit 0 + clean
+`#print axioms`. Verification claims below are reported by the contributor;
+Lean proof artifacts are not included in this submission.
+
+1) FORMAL RESTATEMENT
+Erdős Problem 291 concerns $a_n/L_n = \sum_{k\le n} 1/k$ in lowest-terms-free form:
+$L_n = \mathrm{lcm}(1,\dots,n)$ and $a_n = \sum_{k\le n} L_n/k$. Part (ii)
+(research solved; Steinerberger): the set $\{\,n : \gcd(a_n, L_n) > 1\,\}$ is infinite.
+Lean statement (defs a, L verbatim from the formal-conjectures corpus):
+\begin{verbatim}
+theorem erdos_291_parts_ii :
+    True <-> {n : N | Nat.gcd (a n) (L n) > 1}.Infinite
+\end{verbatim}
+
+2) LITERATURE/CONTEXT CHECK
+Steinerberger's observation (recorded in the corpus): any $n$ whose base-3 expansion
+begins with digit 2 has $3 \mid \gcd(a_n, L_n)$. The general criterion (a prime
+$p \le n$ divides $\gcd(a_n,L_n)$ iff $p$ divides the numerator of a truncated harmonic
+sum) is a separate, harder variant not attempted here.
+
+3) ATTACK PLAN
+Explicit infinite family: $n = 2\cdot 3^k$ (base-3 leading digit 2). Show
+$3 \mid \gcd(a_n, L_n)$ for each member: $v_3(L_n) = k$ suffices to make every summand
+$L_n/j$ except the critical block divisible by 3, and the critical block contributes a
+multiple of 3. Infinitude via injectivity of $k \mapsto 2\cdot3^k$
+(Set.infinite_of_injective_forall_mem).
+
+4) WORK
+Kernel-verified chain: (i) $v_3$ lower bound on $L_n$ for $n = 2\cdot3^{k+1}$;
+(ii) $3 \mid a_n$ and $3 \mid L_n$ for the family, hence
+$1 < \gcd(a_n, L_n)$; (iii) injectivity of the family map; (iv) assembly:
+\begin{verbatim}
+theorem infinite_gcd_gt_one :
+    {n : N | 1 < Nat.gcd (a n) (L n)}.Infinite
+\end{verbatim}
+Local defs sanity-checked against the corpus's own test evaluations
+(L 1..4 = 1,2,6,12 and a 1..4 = 1,3,11,25 by decide).
+
+5) VERIFICATION
+`lake env lean` exit 0, 0 errors, 0 sorry (lean4 v4.32.0-rc1 + Mathlib).
+`#print axioms` = [propext, Classical.choice, Quot.sound].
+Tracked pipeline episode e2320b06 (kernel_verified).
+
+6) FINAL STATUS: SOLVED (the research-solved part (ii); known observation of
+Steinerberger, now with a machine-checked proof). The other parts/variants of
+Problem 291 are untouched. Subject to expert review; the kernel check is the
+verification story.
