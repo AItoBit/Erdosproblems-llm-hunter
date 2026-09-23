@@ -1,0 +1,236 @@
+\section{Erd\H{o}s Problem \#44 --- Round 4}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (A): proof.}
+Given the Round-3 status, the most promising direction is not to restart the global problem, but to close the \emph{cutoff-quantifier gap} left by Round 2 and Round 3.  Round 2 proved that every finite Sidon set extends to a Sidon superset of density $(1/\sqrt2-o(1))$ for \emph{some} cutoff $M$, and Round 3 upgraded this to an infinite perfect-difference completion with the same \emph{limsup} density.  In this round I prove a strictly stronger finite theorem:
+\[
+\textit{for every sufficiently large } M, \textit{ not merely for some } M,
+\]
+there is a Sidon extension of size at least $(1/\sqrt2-\varepsilon)\sqrt M$.
+This does not settle the original constant-$1$ target, but it eliminates the remaining ``sporadic $M$'' weakness in the Round-2 construction.
+
+\subsection*{2) ROUND-3 FOUNDATION USED}
+I use the following previously established ingredient, which Round 3 explicitly preserved as valid progress from Round 2.
+
+\medskip
+\noindent
+\textbf{Round-2 block-extension construction.}
+Fix a finite Sidon set $A\subset [N]$ and a prime power $q$.  Put
+\[
+L:=q^2+q+1.
+\]
+Whenever $L>N$, the Round-2 Singer-block + forbidden-difference pruning + sum-range separation argument produces a set
+\[
+B\subset [N+L+1,\,N+2L]
+\]
+such that $A\cup B$ is Sidon and
+\[
+|A\cup B|\ge q-N+2.
+\]
+I use this construction as a black box; I do \emph{not} re-prove it here.
+
+\medskip
+\noindent
+The unresolved issue after Round 3 was therefore \emph{not} how to build one dense block, but how to choose the block order $q$ so that the resulting cutoff lands at a \emph{prescribed} large $M$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new ingredient is a \textbf{prime-near-target selection lemma}.  By the prime number theorem, for every fixed $\delta>0$, every sufficiently large interval
+\[
+[(1-\delta)x,\,x]
+\]
+contains a prime.  Since a prime is a prime power, this lets us choose the Singer parameter $q$ very close to the target value
+\[
+\sqrt{\frac{M-N}{2}},
+\]
+so that the Round-2 block occupies almost exactly half of $[1,M]$.  This upgrades ``there exists some $M$'' to ``every sufficiently large $M$'' without changing the constant $1/\sqrt2$.
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+\textbf{Exact gap left after Round 3.}
+Round 3 supplied infinitely many dense cutoffs, but not a theorem for a \emph{given} large $M$.
+
+\textbf{Precise claim to prove now.}
+For every finite Sidon set $A\subset [N]$ and every $\varepsilon>0$, there exists $M_0=M_0(A,\varepsilon)$ such that for every $M\ge M_0$ there exists
+\[
+B\subset \{N+1,\dots,M\}
+\]
+with $A\cup B\subset [M]$ Sidon and
+\[
+|A\cup B|\ge \Bigl(\frac1{\sqrt2}-\varepsilon\Bigr)\sqrt M.
+\]
+
+\textbf{Why this plan works.}
+The Round-2 construction already gives the right density once $q$ is chosen.  The only missing step is to ensure simultaneously that
+\[
+q^2+q+1\le \frac{M-N}{2}
+\]
+and
+\[
+q=(1-o(1))\sqrt{\frac M2}.
+\]
+A prime in a short relative interval does exactly this.
+
+\subsection*{5) WORK (ROUND-4)}
+\subsubsection*{5.1\; Prime near a prescribed target}
+\begin{lemma}[Prime in a short relative interval]
+\label{lem:prime-near-target}
+For every $\delta\in(0,1)$ there exists $x_0=x_0(\delta)$ such that every real $x\ge x_0$ admits a prime $q$ with
+\[
+(1-\delta)x\le q\le x.
+\]
+\end{lemma}
+\begin{proof}
+By the prime number theorem,
+\[
+\pi(x)\sim \frac{x}{\log x}
+\qquad (x\to\infty).
+\]
+Hence for fixed $\delta\in(0,1)$,
+\[
+\pi(x)-\pi((1-\delta)x)
+\sim \frac{x}{\log x}-\frac{(1-\delta)x}{\log((1-\delta)x)}
+\sim \frac{\delta x}{\log x}>0.
+\]
+Therefore $\pi(x)-\pi((1-\delta)x)\ge 1$ for all sufficiently large $x$, which means that the interval $[(1-\delta)x,x]$ contains a prime.
+\end{proof}
+
+\subsubsection*{5.2\; Main theorem: every sufficiently large cutoff is admissible}
+\begin{theorem}[Cofinite-cutoff extension at constant $1/\sqrt2$]
+\label{thm:cofinite-M}
+Let $N\ge 1$ and let $A\subset [N]$ be a Sidon set.  Then for every $\varepsilon>0$ there exists $M_0=M_0(A,\varepsilon)$ such that for every integer $M\ge M_0$ there exists a set
+\[
+B\subset \{N+1,\dots,M\}
+\]
+for which $A\cup B\subset [M]$ is Sidon and
+\[
+|A\cup B|\ge \Bigl(\frac1{\sqrt2}-\varepsilon\Bigr)\sqrt M.
+\]
+\end{theorem}
+\begin{proof}
+If $\varepsilon\ge 1/\sqrt2$, then the target lower bound is nonpositive and the statement is trivial.  So assume
+\[
+0<\varepsilon<\frac1{\sqrt2}.
+\]
+Choose $\delta\in(0,1/2)$ so small that
+\begin{equation}
+\label{eq:delta-choice}
+\frac{1-\delta}{\sqrt2}>\frac1{\sqrt2}-\frac\varepsilon2.
+\end{equation}
+Apply Lemma~\ref{lem:prime-near-target} with this $\delta$, and let $x_0=x_0(\delta)$ be the corresponding threshold.
+
+For $M>N$, define
+\[
+X(M):=\sqrt{\frac{M-N}{2}}-1.
+\]
+Then
+\[
+\frac{X(M)}{\sqrt M}\longrightarrow \frac1{\sqrt2}
+\qquad (M\to\infty),
+\]
+so by \eqref{eq:delta-choice},
+\[
+\frac{(1-\delta)X(M)-N+2}{\sqrt M}\longrightarrow \frac{1-\delta}{\sqrt2}>\frac1{\sqrt2}-\frac\varepsilon2.
+\]
+Hence there exists $M_1$ such that for every $M\ge M_1$,
+\begin{equation}
+\label{eq:size-target}
+(1-\delta)X(M)-N+2\ge \Bigl(\frac1{\sqrt2}-\varepsilon\Bigr)\sqrt M.
+\end{equation}
+Choose also $M_2$ so large that for every $M\ge M_2$,
+\begin{equation}
+\label{eq:aux-thresholds}
+X(M)\ge x_0,
+\qquad
+(1-\delta)X(M)\ge N,
+\qquad
+M\ge N+2.
+\end{equation}
+Set
+\[
+M_0:=\max\{M_1,M_2\}.
+\]
+Now fix any integer $M\ge M_0$.
+By \eqref{eq:aux-thresholds} and Lemma~\ref{lem:prime-near-target}, there exists a prime $q$ such that
+\[
+(1-\delta)X(M)\le q\le X(M).
+\]
+In particular $q\ge N$, so with
+\[
+L:=q^2+q+1
+\]
+we have $L>N$.
+
+We next check that the Round-2 block fits inside $[M]$.
+Since $q\le X(M)$ and $X(M)=\sqrt{(M-N)/2}-1$, writing $Y:=\sqrt{(M-N)/2}$ gives $q\le Y-1$, and therefore
+\[
+L=q^2+q+1\le (Y-1)^2+(Y-1)+1=Y^2-Y+1.
+\]
+Because $M\ge N+2$, one has $Y\ge 1$, so $Y^2-Y+1\le Y^2=(M-N)/2$.  Hence
+\[
+L\le \frac{M-N}{2},
+\qquad\text{so}\qquad
+N+2L\le M.
+\]
+
+Now invoke the Round-2 block-extension construction with this prime power $q$.  It yields a set
+\[
+B\subset [N+L+1,\,N+2L]\subset [N+1,\,M]
+\]
+such that $A\cup B$ is Sidon and
+\[
+|A\cup B|\ge q-N+2.
+\]
+Finally,
+\[
+|A\cup B|\ge q-N+2\ge (1-\delta)X(M)-N+2
+\]
+and so by \eqref{eq:size-target},
+\[
+|A\cup B|\ge \Bigl(\frac1{\sqrt2}-\varepsilon\Bigr)\sqrt M.
+\]
+This proves the theorem.
+\end{proof}
+
+\subsubsection*{5.3\; Reformulation of the advance}
+Theorem~\ref{thm:cofinite-M} strictly strengthens the Round-2 theorem.
+Round 2 gave, for fixed $(A,\varepsilon)$, \emph{existence of at least one} suitable cutoff $M$.
+Round 4 gives \emph{every sufficiently large} cutoff $M$.
+Thus the remaining gap to Erd\H{o}s Problem \#44 is no longer a quantifier problem about which $M$ are reachable; it is purely the density constant $1$ versus $1/\sqrt2$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Did I accidentally use more than Round 2 proved?}
+No.  The only imported fact is the explicit Round-2 construction: for each prime power $q$ with $L=q^2+q+1>N$, it produces a block $B\subset [N+L+1,N+2L]$ and the lower bound $|A\cup B|\ge q-N+2$.
+
+\item \textbf{Does the block really lie inside the prescribed ambient interval $[M]$?}
+Yes.  The estimate $L\le (M-N)/2$ gives $N+2L\le M$, so the entire Round-2 block sits inside $[N+1,M]$.
+
+\item \textbf{Could $q$ be too small, invalidating the Round-2 separation argument?}
+No.  By construction $q\ge N$, hence $L=q^2+q+1>N$.
+
+\item \textbf{Is the prime-selection lemma strong enough?}
+Yes.  We only need a prime in a fixed relative interval $[(1-\delta)x,x]$, and the prime number theorem implies this for all sufficiently large $x$.
+
+\item \textbf{Boundary cases.}
+If $\varepsilon\ge 1/\sqrt2$, the theorem is trivial.  If $A=\varnothing$, the same proof works verbatim with any $N\ge 1$ such that $A\subset [N]$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+This round does not settle the original constant-$1$ conjecture.  However, it proves a genuinely stronger theorem than any previous round:
+\[
+\textit{for every finite Sidon set }A\subset [N]\textit{ and every }\varepsilon>0,\textit{ every sufficiently large }M
+\]
+admits a Sidon extension inside $[M]$ of size at least
+\[
+\Bigl(\frac1{\sqrt2}-\varepsilon\Bigr)\sqrt M.
+\]
+So the Round-2 / Round-3 constant $1/\sqrt2$ is now available with the \emph{correct cofinite quantifier in $M$}; the only unresolved issue is whether the constant can be pushed all the way from $1/\sqrt2$ to $1$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 78\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item G. H. Hardy and E. M. Wright, \emph{An Introduction to the Theory of Numbers}, 6th ed., Oxford University Press, 2008.  (Prime number theorem.)
+\item J. Singer, \emph{A theorem in finite projective geometry and some applications to number theory}, Trans. Amer. Math. Soc. \textbf{43} (1938), 377--385.  (Underlying finite-geometric Sidon block used in Round 2.)
+\end{itemize}

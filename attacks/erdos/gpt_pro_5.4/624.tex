@@ -1,0 +1,274 @@
+\section{Erd\H{o}s Problem 624 --- ROUND-2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (C) obstruction / gap-isolation.}
+
+Round-1 gave only lower-bound information:
+the counting lower bound $H(n)\ge \log_2 n$, Alon's argument that $H(2^k)\ge k+1$,
+and the observation that fixed-size collision arguments leave too much slack when
+$h=\log_2 n + C$.
+In this round I do two things:
+
+\begin{itemize}
+\item I prove a \emph{barrier theorem} showing that a broad class of first-moment / averaging arguments
+can never beat the trivial bound $n\le 2^h$.
+\item I prove a new unconditional \emph{upper bound}
+\[
+H(n)\le \log_2 n + 2\log_2\log_2 n + O(1),
+\]
+which is strictly stronger than the Round-1 quoted $(3+o(1))\log_2\log_2 n$ upper bound.
+\end{itemize}
+
+So Round-2 both sharpens the obstruction on the lower-bound side and advances the upper-bound side.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results as fixed background:
+
+\begin{itemize}
+\item the restatement of $H(n)$;
+\item the basic counting lower bound $H(n)\ge \lceil\log_2 n\rceil$;
+\item Alon's argument that $H(2^k)\ge k+1$;
+\item the Round-1 diagnosis that the naive ``many collisions in one fibre'' idea does not by itself force
+an unbounded additive gap.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two new tools.
+
+\begin{itemize}
+\item \textbf{Boolean-lattice colouring viewpoint.}
+A witness $f:\mathcal P(X)\to X$ is exactly an $n$-colouring of the Boolean lattice $2^X$ such that
+every principal ideal $2^Y$ with $|Y|=h$ is rainbow.
+
+\item \textbf{Random-colouring upper bound plus an LP/first-moment barrier.}
+The random-colouring argument yields the upper bound
+$H(n)\le \log_2 n + 2\log_2\log_2 n + O(1)$.
+Separately, any lower-bound argument obtained by taking nonnegative linear combinations of the basic
+surjectivity inequalities for $h$-sets collapses to the trivial counting bound $n\le 2^h$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap after Round-1 was:
+
+\begin{quote}
+How can one go beyond the trivial bound $n\le 2^h$ and the constant-gap argument $H(2^k)\ge k+1$?
+\end{quote}
+
+Round-2 attacks this in two directions.
+
+\begin{enumerate}
+\item Prove that the most obvious first-moment averaging strategy is \emph{provably incapable}
+of giving anything stronger than $n\le 2^h$.
+\item Compensate by strengthening the known upper bound through a direct random construction.
+\end{enumerate}
+
+This does not solve the original problem, but it cleanly separates what still needs to happen:
+any eventual proof of $H(n)-\log_2 n\to\infty$ must use structure beyond these first-moment inequalities.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Reformulation.}
+Let $X$ be an $n$-element set, and let $h$ be such that there exists
+$f:\mathcal P(X)\to X$ with the property that every $Y\subseteq X$ of size $h$ satisfies
+\[
+\{f(A):A\subseteq Y\}=X.
+\]
+For each $x\in X$, define
+\[
+\mathcal F_x:=\{A\subseteq X:f(A)=x\}.
+\]
+Then $(\mathcal F_x)_{x\in X}$ is a partition of $\mathcal P(X)$, and the defining property of $H(n)$ is:
+
+\begin{quote}
+for every $x\in X$ and every $Y\in \binom{X}{h}$, there exists $A\in \mathcal F_x$ with $A\subseteq Y$.
+\end{quote}
+
+Equivalently, each colour class $\mathcal F_x$ hits every principal ideal $2^Y$ with $|Y|=h$.
+
+\paragraph{Barrier theorem (first-moment / averaging methods).}
+Fix $h$.
+For each $x\in X$ and $Y\in \binom{X}{h}$ we have the basic surjectivity inequality
+\[
+\sum_{A\subseteq Y}\mathbf 1_{\{f(A)=x\}}\ge 1.
+\tag{1}
+\]
+Take any family of nonnegative coefficients $(c_Y)_{Y\in \binom{X}{h}}$ that do \emph{not} depend on $x$.
+Multiply (1) by $c_Y$ and sum over all $Y\in \binom{X}{h}$.
+For a fixed $x$, this gives
+\[
+\sum_{A\subseteq X}\left(\sum_{\substack{Y\in \binom{X}{h}\\ A\subseteq Y}} c_Y\right)\mathbf 1_{\{f(A)=x\}}
+\ \ge\ 
+\sum_{Y\in \binom{X}{h}} c_Y.
+\tag{2}
+\]
+Now sum (2) over all $x\in X$.
+Because the sets $\mathcal F_x$ partition $\mathcal P(X)$, each subset $A\subseteq X$ contributes exactly once.
+Hence
+\[
+n\sum_{Y\in \binom{X}{h}} c_Y
+\le
+\sum_{Y\in \binom{X}{h}} c_Y\sum_{A\subseteq Y}1
+=
+2^h\sum_{Y\in \binom{X}{h}} c_Y.
+\]
+If not all $c_Y$ vanish, we may divide by the positive scalar $\sum_Y c_Y$ and obtain
+\[
+n\le 2^h.
+\]
+
+Therefore:
+
+\begin{quote}
+\emph{Any lower-bound argument that is obtained solely by taking nonnegative linear combinations
+of the basic inequalities (1), with coefficients independent of the colour $x$, can recover at most
+the trivial counting bound $n\le 2^h$.}
+\end{quote}
+
+This rigorously rules out an entire first-moment class of approaches.
+
+\paragraph{New upper bound.}
+I now prove
+\[
+H(n)\le \log_2 n + 2\log_2\log_2 n + O(1).
+\]
+
+\paragraph{Theorem.}
+For all sufficiently large $n$,
+\[
+H(n)\le \left\lceil \log_2 n + 2\log_2\log_2 n + 2\right\rceil.
+\]
+
+\paragraph{Proof.}
+Let $X$ be an $n$-element set, and put
+\[
+L:=\log_2 n,\qquad
+h:=\left\lceil L+2\log_2 L+2\right\rceil.
+\]
+Choose a random map $f:\mathcal P(X)\to X$ by assigning to each subset $A\subseteq X$
+an independent uniformly distributed value $f(A)\in X$.
+
+Fix $x\in X$ and $Y\in \binom{X}{h}$.
+The event that $x$ is \emph{missing} from the image $\{f(A):A\subseteq Y\}$ is exactly the event that
+all $2^h$ subsets of $Y$ avoid the value $x$, and therefore has probability
+\[
+\Pr\bigl(x\notin \{f(A):A\subseteq Y\}\bigr)
+=
+\left(1-\frac1n\right)^{2^h}
+\le e^{-2^h/n}.
+\]
+By the union bound, the probability that \emph{some} pair $(x,Y)$ is bad is at most
+\[
+n\binom{n}{h}e^{-2^h/n}.
+\tag{3}
+\]
+So it is enough to show that the quantity in (3) is $<1$.
+
+Now $h\le 2L$ for all sufficiently large $n$.
+Using the standard bound $\binom{n}{h}\le (en/h)^h$, we get
+\[
+\ln\!\left(n\binom{n}{h}\right)
+\le
+\ln n + h\ln\!\left(\frac{en}{h}\right)
+\le
+\ln n + 2L(\ln n+1)
+=
+2(\ln 2)L^2 + O(L).
+\tag{4}
+\]
+Here the last inequality uses only $h\le 2L$ and the elementary bound
+$\ln(en/h)\le \ln n+1$.
+On the other hand, by the definition of $h$,
+\[
+\frac{2^h}{n}\ge 4L^2.
+\tag{5}
+\]
+Since $4>2\ln 2$, the right-hand side of (5) is larger than the right-hand side of (4) for all sufficiently large $n$.
+Hence
+\[
+\ln\!\left(n\binom{n}{h}\right) < \frac{2^h}{n},
+\]
+which implies
+\[
+n\binom{n}{h}e^{-2^h/n}<1.
+\]
+Therefore the bad-event probability in (3) is strictly less than $1$, so there exists a map
+$f:\mathcal P(X)\to X$ for which no pair $(x,Y)$ is bad.
+
+Thus every $h$-subset $Y$ satisfies $\{f(A):A\subseteq Y\}=X$, and therefore
+\[
+H(n)\le h=\left\lceil \log_2 n + 2\log_2\log_2 n + 2\right\rceil
+\]
+for all sufficiently large $n$. \hfill $\square$
+
+\paragraph{Corollary.}
+\[
+H(n)\le \log_2 n + (2+o(1))\log_2\log_2 n.
+\]
+
+This is strictly stronger than the Round-1 quoted upper bound
+\[
+H(n)<\log_2 n + (3+o(1))\log_2\log_2 n.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Do larger sets $Y$ with $|Y|>h$ also work?}
+Yes. If every $h$-subset sees all colours, then every larger set does too, since it contains an $h$-subset.
+
+\item \emph{Did the random proof use independence correctly?}
+Yes. For a fixed pair $(x,Y)$, the values $\{f(A):A\subseteq Y\}$ are independent by construction,
+so the missing-colour probability is exactly $(1-\frac1n)^{2^h}$.
+
+\item \emph{Is the barrier theorem too strong?}
+No. It is intentionally limited: it rules out only the class of arguments obtained from nonnegative
+linear combinations of the elementary inequalities (1) with coefficients independent of the colour.
+It does \emph{not} rule out more sophisticated multi-colour or higher-order arguments.
+Indeed, Alon's $H(2^k)\ge k+1$ argument from Round-1 already lies outside this purely first-moment framework.
+
+\item \emph{Does the new upper bound contradict the conjectured lower bound?}
+No. The original problem asks whether $H(n)-\log_2 n\to\infty$.
+The theorem above merely shows that the excess above $\log_2 n$ is at most $2\log_2\log_2 n+O(1)$.
+The conjectured divergence could still hold inside that window.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 gives two genuine advances beyond Round-1:
+
+\begin{enumerate}
+\item a new unconditional upper bound
+\[
+H(n)\le \log_2 n + 2\log_2\log_2 n + O(1),
+\]
+which improves the Round-1 quoted $(3+o(1))\log_2\log_2 n$ upper bound;
+
+\item a rigorous barrier theorem showing that a broad first-moment / averaging class of lower-bound
+arguments can never beat the trivial bound $n\le 2^h$.
+\end{enumerate}
+
+So the unresolved part of Problem 624 is now sharper:
+to prove $H(n)-\log_2 n\to\infty$, one needs a genuinely structural lower-bound mechanism.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#624}, \texttt{erdosproblems.com/624}, accessed 2026-03-07.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This section is written in drop-in \LaTeX\ form and starts directly from \verb|\section{}|, with no preamble.
+
+\bigskip
+

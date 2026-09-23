@@ -1,0 +1,127 @@
+\section*{Round 2 continuation for Erd\H{o}s Problems \#282, \#283, \#287}
+
+\subsection*{Erd\H{o}s Problem \#283}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(A) proof} for the \emph{constant admissible case} $p(n)\equiv 1$. Round 1 produced only a general infinite-family theorem for arbitrary positive-leading-coefficient $p$, but not a cofinite result. The constant case is the cleanest place where the remaining cofinite gap can actually be closed completely by the Round-1 splitting move.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use two Round-1 ingredients.
+\begin{enumerate}
+\item The splitting identity
+\[
+\frac1n=\frac1{n+1}+\frac1{n(n+1)}.
+\]
+\item The fact that if one applies this identity to the \emph{largest} denominator in a distinct Egyptian fraction expansion, then distinctness is preserved.
+\end{enumerate}
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+For $p(n)\equiv 1$, the target quantity is simply
+\[
+ m=\sum_i p(n_i)=k,
+\]
+namely the \emph{number of terms}. Thus the general polynomial problem collapses to a pure length-realisation problem for Egyptian fraction decompositions of $1$. The Round-1 splitting move increments the number of terms by exactly $1$ while preserving distinctness and the reciprocal sum, so it becomes an exact ``length-raising gadget''.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+I prove the exact set of attainable lengths.
+\begin{enumerate}
+\item Show that $1$ term is possible: $\{1\}$.
+\item Show that $2$ terms are impossible.
+\item Show inductively that every length $k\ge 3$ is possible by repeatedly splitting the current largest denominator.
+\end{enumerate}
+Since the only admissible constant polynomial is $p\equiv 1$, this completely settles the constant-polynomial case.
+
+\subsubsection*{5) WORK (ROUND-2)}
+
+\paragraph{5.1. The only admissible constant polynomial.}
+Let $p(n)\equiv c$ be constant. The problem assumes that there is no integer $d\ge 2$ dividing all values $p(n)$. For a constant polynomial this means exactly that $c=1$. Thus the only admissible constant case is
+\[
+ p(n)\equiv 1.
+\]
+
+\paragraph{5.2. Exact classification of attainable lengths.}
+Let $\mathcal{L}$ be the set of all integers $k\ge 1$ for which there exist distinct positive integers
+\[
+1\le n_1<\cdots<n_k,
+\qquad
+1=\frac1{n_1}+\cdots+\frac1{n_k}.
+\]
+I claim that
+\[
+ \mathcal{L}=\{1\}\cup\{3,4,5,\dots\}.
+\]
+
+First, $1\in\mathcal{L}$ because
+\[
+1=\frac11.
+\]
+Second, $3\in\mathcal{L}$ because
+\[
+1=\frac12+\frac13+\frac16.
+\]
+Now suppose $k\in\mathcal{L}$ with $k\ge 3$. Choose a corresponding decomposition and let $N$ be its largest denominator. Replace the term $1/N$ by
+\[
+\frac1{N+1}+\frac1{N(N+1)}.
+\]
+The reciprocal sum is unchanged. Both new denominators are strictly larger than $N$, hence strictly larger than every previously occurring denominator, and they are distinct from each other. So we obtain a distinct Egyptian fraction expansion of $1$ with exactly $k+1$ terms. Therefore $k+1\in\mathcal{L}$.
+
+By induction, every integer $k\ge 3$ lies in $\mathcal{L}$.
+
+It remains to rule out $k=2$. If
+\[
+1=\frac1a+\frac1b
+\qquad (1\le a<b),
+\]
+then
+\[
+ab=a+b,
+\]
+so
+\[
+(a-1)(b-1)=1.
+\]
+This has no solution in distinct positive integers. Hence $2\notin\mathcal{L}$.
+
+Thus the classification is proved.
+
+\paragraph{5.3. Consequence for Problem \#283 with $p\equiv 1$.}
+For $p(n)\equiv 1$, one has
+\[
+ m=\sum_i p(n_i)=k.
+\]
+Hence the attainable $m$ are exactly the attainable lengths. Therefore
+\[
+ m=1 \text{ is attainable},\qquad m=2 \text{ is not attainable},\qquad m\ge 3 \text{ are all attainable}.
+\]
+In particular the original ``for all sufficiently large $m$'' statement holds, with exact threshold $M=3$.
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Does the induction accidentally reuse denominators?} No. The split is applied to the current largest denominator $N$, and both $N+1$ and $N(N+1)$ are $>N$, so they cannot coincide with any previous denominator.
+\item \textbf{Does the split work when $N=1$?} I never use it starting from the one-term decomposition $\{1\}$. The induction starts from the three-term decomposition $\{2,3,6\}$.
+\item \textbf{Could there be a hidden two-term solution involving $1$?} No. If $a=1$, then $1=1+1/b$ is impossible. The algebraic reduction to $(a-1)(b-1)=1$ also rules this out.
+\item \textbf{Does this solve the full polynomial problem?} No. It completely settles only the unique admissible constant case $p\equiv 1$.
+\end{enumerate}
+
+\subsubsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The general polynomial conjecture remains open, but Round 2 fully closes one genuine subclass that Round 1 did not settle: the admissible constant-polynomial case. For
+\[
+ p(n)\equiv 1,
+\]
+one has an exact answer:
+\[
+ m \text{ is attainable } \Longleftrightarrow m=1 \text{ or } m\ge 3.
+\]
+So the constant case is completely solved, with exact threshold $M=3$.
+
+\subsubsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 40\%}
+
+\subsubsection*{9) REFERENCES}
+Checked or used in this round:
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#283}, webpage accessed 2026-03-07.
+\end{enumerate}
+

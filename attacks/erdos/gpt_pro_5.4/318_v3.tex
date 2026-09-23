@@ -1,0 +1,355 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setlist[enumerate]{itemsep=0.35em, topsep=0.35em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{inputthm}[theorem]{Input}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\overd}{\overline d}
+\newcommand{\underd}{\underline d}
+
+\begin{document}
+
+\begin{center}
+{\LARGE Erd\H{o}s Problem \#318}\\[0.5em]
+{\large Clean write-up from two explicit external inputs}
+\end{center}
+
+\begin{quote}
+\small
+This note is not self-contained in the sense of reproving Bloom's theorem or Larsen's theorem.
+Those two results are stated explicitly as inputs and then used to deduce all three answers to
+Erd\H{o}s Problem \#318. Apart from those two inputs, the argument is elementary.
+\end{quote}
+
+\section*{Problem statement}
+Let $A\subseteq \N$ be an infinite arithmetic progression and let $f\colon A\to\{-1,1\}$ be non-constant.
+Must there exist a finite nonempty set $S\subseteq A$ such that
+\[
+\sum_{n\in S}\frac{f(n)}{n}=0?
+\]
+What happens if $A$ is merely a set of positive density? What happens if
+\[
+A=\{4,9,16,25,\dots\}
+\]
+is the set of perfect squares greater than $1$?
+
+\section*{Density notation}
+For any $B\subseteq \N$, write
+\[
+\overd(B):=\limsup_{x\to\infty}\frac{|B\cap[1,x]|}{x},
+\qquad
+\underd(B):=\liminf_{x\to\infty}\frac{|B\cap[1,x]|}{x}.
+\]
+
+\section*{External inputs}
+We use the following two results as black boxes.
+
+\begin{inputthm}[Bloom]
+If $B\subseteq \N$ has positive upper density, then there exists a finite set $T\subseteq B$ such that
+\[
+\sum_{t\in T}\frac1t=1.
+\]
+\end{inputthm}
+
+\begin{inputthm}[Larsen]
+If $X$ and $Y$ form a partition of the set of perfect squares greater than $1$ into two nonempty parts,
+then there exist finite nonempty sets $X'\subseteq X$ and $Y'\subseteq Y$ such that
+\[
+\sum_{x\in X'}\frac1x=\sum_{y\in Y'}\frac1y.
+\]
+\end{inputthm}
+
+\section*{Main theorem}
+
+\begin{theorem}
+For Erd\H{o}s Problem \#318, the answers are:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item for an infinite arithmetic progression $A$, \textbf{yes};
+\item for an arbitrary set $A$ of positive density, \textbf{no};
+\item for the set $A=\{4,9,16,25,\dots\}$ of squares excluding $1$, \textbf{yes}.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove the three assertions in order.
+
+\textbf{1. Arithmetic progressions.}
+Let
+\[
+A=\{a+kd:k\ge 0\}
+\]
+with $a,d\in\N$, and let $f\colon A\to\{-1,1\}$ be non-constant.
+Define
+\[
+P:=\{n\in A:f(n)=1\},
+\qquad
+N:=\{n\in A:f(n)=-1\}.
+\]
+Since $A$ has natural density $1/d$, at least one of $P$ and $N$ has positive upper density.
+
+We first need a simple lemma.
+
+\begin{lemma}
+For every $n_0\in A$, the set
+\[
+A_{n_0}:=\{m\in A:n_0\mid m\}
+\]
+is an infinite arithmetic progression, and hence has positive natural density.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+n_0=a+k_0d
+\]
+for some $k_0\ge 0$.
+An element $m=a+kd\in A$ belongs to $A_{n_0}$ if and only if
+\[
+n_0\mid a+kd.
+\]
+Since $n_0=a+k_0d$, this is equivalent to
+\[
+n_0\mid d(k-k_0).
+\]
+Let $g=\gcd(d,n_0)$. Then
+\[
+n_0\mid d(k-k_0)
+\iff
+\frac{n_0}{g}\mid (k-k_0).
+\]
+Hence the admissible values of $k$ form an infinite arithmetic progression with common difference $n_0/g$.
+Therefore the corresponding values of $m=a+kd$ form an arithmetic progression with common difference
+\[
+d\cdot\frac{n_0}{g}=\frac{dn_0}{g}=\operatorname{lcm}(d,n_0).
+\]
+So $A_{n_0}$ is an infinite arithmetic progression and in particular has positive natural density.
+\end{proof}
+
+We now consider two cases.
+
+\emph{Case 1: both $P$ and $N$ have positive upper density.}
+By Bloom's theorem, there exist finite sets
+\[
+S_+\subseteq P,
+\qquad
+S_-\subseteq N
+\]
+such that
+\[
+\sum_{n\in S_+}\frac1n=1,
+\qquad
+\sum_{n\in S_-}\frac1n=1.
+\]
+Since $P\cap N=\varnothing$, the set $S:=S_+\cup S_-$ is finite and nonempty, and
+\[
+\sum_{n\in S}\frac{f(n)}{n}
+=\sum_{n\in S_+}\frac1n-\sum_{n\in S_-}\frac1n
+=1-1=0.
+\]
+This proves the claim in Case~1.
+
+\emph{Case 2: one sign class has upper density $0$.}
+Without loss of generality, assume
+\[
+\overd(N)=0.
+\]
+Because $f$ is non-constant and takes values only in $\{-1,1\}$, the set $N$ is nonempty; choose $n_0\in N$.
+By the lemma, $A_{n_0}$ has positive natural density; denote this density by $\delta>0$.
+Set
+\[
+M:=P\cap A_{n_0}.
+\]
+Then
+\[
+M=A_{n_0}\setminus (N\cap A_{n_0}).
+\]
+Since $N\cap A_{n_0}\subseteq N$, we have
+\[
+\overd(N\cap A_{n_0})\le \overd(N)=0.
+\]
+Also $A_{n_0}$ has natural density $\delta$, so
+\[
+\underd(M)
+\ge \underd(A_{n_0})-\overd(N\cap A_{n_0})
+=\delta-0
+=\delta>0.
+\]
+Thus $M$ has positive lower density.
+
+Now define
+\[
+B:=\left\{\frac{m}{n_0}:m\in M\right\}\subseteq \N.
+\]
+Because $M=n_0B$, for every $x\ge 1$ we have
+\[
+|B\cap[1,x]|=|M\cap[1,n_0x]|.
+\]
+Hence
+\[
+\underd(B)
+=\liminf_{x\to\infty}\frac{|B\cap[1,x]|}{x}
+= n_0\liminf_{x\to\infty}\frac{|M\cap[1,n_0x]|}{n_0x}
+\ge n_0\,\underd(M)>0.
+\]
+In particular, $B$ has positive upper density.
+By Bloom's theorem, there exists a finite set $T\subseteq B$ such that
+\[
+\sum_{t\in T}\frac1t=1.
+\]
+Define
+\[
+S_+:=\{n_0t:t\in T\}.
+\]
+Then $S_+\subseteq M\subseteq P$, and
+\[
+\sum_{m\in S_+}\frac1m
+=\sum_{t\in T}\frac{1}{n_0t}
+=\frac1{n_0}\sum_{t\in T}\frac1t
+=\frac1{n_0}.
+\]
+Now set
+\[
+S:=S_+\cup\{n_0\}.
+\]
+Since $f(n_0)=-1$ and $f(m)=1$ for every $m\in S_+$, we obtain
+\[
+\sum_{n\in S}\frac{f(n)}{n}
+=\sum_{m\in S_+}\frac1m-\frac1{n_0}
+=\frac1{n_0}-\frac1{n_0}
+=0.
+\]
+This proves the arithmetic-progression case.
+
+\textbf{2. Arbitrary positive-density sets.}
+Here the statement is false.
+Take
+\[
+A:=\{2\}\cup\{\text{odd positive integers}\}.
+\]
+This set has natural density $1/2$.
+Define $f\colon A\to\{-1,1\}$ by
+\[
+f(2)=-1,
+\qquad
+f(n)=1 \quad\text{for every odd } n.
+\]
+Let $S\subseteq A$ be finite and nonempty.
+
+If $2\notin S$, then
+\[
+\sum_{n\in S}\frac{f(n)}{n}=\sum_{n\in S}\frac1n>0.
+\]
+
+If $2\in S$, write
+\[
+T:=S\setminus\{2\}.
+\]
+Then every element of $T$ is odd, and
+\[
+\sum_{n\in S}\frac{f(n)}{n}
+=\sum_{n\in T}\frac1n-\frac12.
+\]
+Now $\sum_{n\in T}1/n$ is a rational number whose reduced denominator is odd: indeed, with common denominator
+\[
+D:=\prod_{n\in T} n,
+\]
+which is odd, we can write
+\[
+\sum_{n\in T}\frac1n=\frac{M}{D}
+\]
+for some integer $M$; cancelling common factors cannot introduce a factor $2$ into the denominator.
+Therefore
+\[
+\sum_{n\in T}\frac1n\ne \frac12.
+\]
+So in this case as well,
+\[
+\sum_{n\in S}\frac{f(n)}{n}\ne 0.
+\]
+Hence there exists a set of positive density for which no such finite set $S$ exists.
+
+\textbf{3. The set of squares greater than $1$.}
+Let
+\[
+A=\{4,9,16,25,\dots\},
+\]
+and let $f\colon A\to\{-1,1\}$ be non-constant.
+Define
+\[
+X:=\{n\in A:f(n)=1\},
+\qquad
+Y:=\{n\in A:f(n)=-1\}.
+\]
+Because $f$ is non-constant and its codomain is exactly $\{-1,1\}$, both $X$ and $Y$ are nonempty, and they form a partition of $A$.
+By Larsen's theorem, there exist finite nonempty sets
+\[
+X'\subseteq X,
+\qquad
+Y'\subseteq Y
+\]
+such that
+\[
+\sum_{x\in X'}\frac1x=\sum_{y\in Y'}\frac1y.
+\]
+Let
+\[
+S:=X'\cup Y'.
+\]
+Then $S\subseteq A$ is finite and nonempty, and
+\[
+\sum_{n\in S}\frac{f(n)}{n}
+=\sum_{x\in X'}\frac1x-\sum_{y\in Y'}\frac1y
+=0.
+\]
+This proves the squares case.
+
+Combining the three parts, the answers to Erd\H{o}s Problem \#318 are:
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item arithmetic progressions: \textbf{yes};
+\item arbitrary positive-density sets: \textbf{no};
+\item squares greater than $1$: \textbf{yes}.
+\end{enumerate}
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{BloomJEMS}
+Thomas F. Bloom,
+\emph{On a density conjecture about unit fractions (with an appendix by Thomas F. Bloom and Bhavik Mehta)},
+Journal of the European Mathematical Society \textbf{27} (2025), no.~11, 4563--4589.
+DOI: \href{https://doi.org/10.4171/JEMS/1456}{10.4171/JEMS/1456}.
+
+\bibitem{ErdosGraham}
+Paul Erd\H{o}s and Ronald L. Graham,
+\emph{Old and New Problems and Results in Combinatorial Number Theory},
+Monographies de L'Enseignement Math\'ematique, vol.~28,
+L'Enseignement Math\'ematique, Geneva, 1980.
+
+\bibitem{Larsen}
+Daniel Larsen,
+\emph{Sufficiently abundant numbers are pseudoperfect},
+2026 note.
+The theorem on partitions of the perfect squares greater than $1$ appears in the public source file
+\href{https://github.com/Larsen-Daniel/Erdos-318/blob/main/318.tex}{GitHub source file}.
+
+\bibitem{Sattler}
+R. Sattler,
+\emph{On Erd\H{o}s property $P_1$ for the arithmetical sequence},
+Indagationes Mathematicae (Proceedings) \textbf{85} (1982), 347--352.
+DOI: \href{https://doi.org/10.1016/1385-7258(82)90026-9}{10.1016/1385-7258(82)90026-9}.
+
+\end{thebibliography}
+
+\end{document}

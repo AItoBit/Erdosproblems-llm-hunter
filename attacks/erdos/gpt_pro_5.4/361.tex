@@ -1,0 +1,264 @@
+
+\section*{Round 2 continuation for Erd\H{o}s problems \#319, \#359, \#361}
+
+This file is written as a continuation of the Round-1 write-up.  I explicitly indicate below whenever I use a Round-1 result as a black box.
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Problem \#361}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}  Round 1 completely solved the case $c\ge 1$, but left the whole range $0<c<1$ open.  The most promising Round-2 direction is therefore to give genuinely new \emph{rigorous constructions} for $c<1$, especially constructions that explain why arithmetic properties of $n$ should matter.
+
+I will prove two new lower-bound mechanisms:
+
+\begin{itemize}
+\item an interval construction valid for all $c<1$;
+\item a new \emph{hybrid modular/large-element construction} for $1/2<c<1$.
+\end{itemize}
+
+The hybrid construction depends explicitly on the smallest integer $q>1$ not dividing $n$, and this gives a rigorous arithmetic obstruction that was absent from Round 1.
+
+\subsection*{2) ROUND-1 FOUNDATION USED}
+I use one Round-1 theorem as a black box.
+
+\begin{itemize}
+\item Round 1 proved that if $m\ge n$, then the maximum size of $A\subseteq \{1,\dots,m\}$ with $n\notin \Sigma(A)$ is exactly
+\[
+m-\left\lceil \frac n2\right\rceil.
+\]
+In particular, for fixed $c\ge 1$ and $m=\lfloor cn\rfloor$,
+\[
+G_c(n)=\lfloor cn\rfloor-\left\lceil \frac n2\right\rceil
+= \left(c-\frac12\right)n+O(1).
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is that, when $m<n$, two different obstructions can be superimposed:
+
+\begin{itemize}
+\item \textbf{size obstruction:} if all chosen elements lie in a short interval $(n/b,m]$, then any $(b-1)$-term sum is too small and any $b$-term sum is too large;
+\item \textbf{modular obstruction plus one-large-element principle:} if all elements above $n/2$ avoid the residue class $n \pmod q$, while all elements at most $n/2$ are multiples of $q$, then any subset summing to $n$ is impossible.
+\end{itemize}
+
+The second point is genuinely new in this write-up and produces a clean arithmetic lower bound depending on the smallest $q>1$ with $q\nmid n$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the complete absence of rigorous theorems for $c<1$.
+
+I will now prove:
+
+\begin{itemize}
+\item[(i)] a general interval-construction lower bound for $m<n$;
+\item[(ii)] a new hybrid lower bound for $m>n/2$;
+\item[(iii)] the asymptotic form of the hybrid lower bound
+\[
+G_c(n)\ge \left(c-\frac12+\frac{1-c}{q(n)}\right)n+O(1),
+\]
+where $q(n)$ is the smallest integer $>1$ not dividing $n$.
+\end{itemize}
+
+This does not settle the problem for $c<1$, but it gives a sharply formulated obstruction: below $c=1$, the extremal behaviour already depends on the arithmetic of $n$ at the level of explicit linear constructions.
+
+\subsection*{5) WORK (ROUND-2)}
+
+For this section write
+\[
+G(n,m):=\max\{|A|:\ A\subseteq \{1,\dots,m\},\ n\notin \Sigma(A)\}.
+\]
+Thus $G_c(n)=G(n,\lfloor cn\rfloor)$.
+
+\paragraph{Proposition 361.1 (interval construction).}
+Let $b\ge 2$ be an integer and suppose
+\[
+m<\frac{n}{b-1}.
+\]
+Define
+\[
+A_b:=\left\{\left\lfloor \frac nb\right\rfloor+1,\ \left\lfloor \frac nb\right\rfloor+2,\ \dots,\ m\right\}.
+\]
+Then $n\notin \Sigma(A_b)$.  Consequently,
+\[
+G(n,m)\ge \max\!\left(0,\ m-\left\lfloor \frac nb\right\rfloor\right).
+\]
+
+\paragraph{Proof.}
+Every element of $A_b$ is strictly larger than $n/b$.  Therefore any sum of $b$ elements of $A_b$ is strictly larger than $n$.
+
+On the other hand, every element of $A_b$ is at most $m$, and by assumption
+\[
+(b-1)m<n.
+\]
+So any sum of at most $b-1$ elements of $A_b$ is strictly smaller than $n$.
+
+Hence no subset of $A_b$ can sum to $n$.  The cardinality statement is immediate.
+\hfill $\square$
+
+\paragraph{Remark.}
+If $1/b\le c<1/(b-1)$ and $m=\lfloor cn\rfloor$, Proposition 361.1 gives
+\[
+G_c(n)\ge \left(c-\frac1b\right)n+O(1).
+\]
+
+\paragraph{Proposition 361.2 (hybrid modular/large-element construction).}
+Assume
+\[
+\frac n2 < m < n.
+\]
+Let $q>1$ be any integer with $q\nmid n$, and define
+\[
+A_q(n,m):=
+\{a\in \{1,\dots,\lfloor n/2\rfloor\}: q\mid a\}
+\ \cup\
+\{a\in \{\lfloor n/2\rfloor+1,\dots,m\}: a\not\equiv n \pmod q\}.
+\]
+Then
+\[
+n\notin \Sigma(A_q(n,m)).
+\]
+
+\paragraph{Proof.}
+Let $S\subseteq A_q(n,m)$ be any subset.
+
+\smallskip
+\noindent
+\emph{Case 1: $S$ contains no element greater than $n/2$.}
+Then every element of $S$ is divisible by $q$, so
+\[
+\sum_{a\in S} a \equiv 0 \pmod q.
+\]
+Since $q\nmid n$, we have $n\not\equiv 0\pmod q$, so $\sum_{a\in S}\neq n$.
+
+\smallskip
+\noindent
+\emph{Case 2: $S$ contains at least two elements greater than $n/2$.}
+Then
+\[
+\sum_{a\in S} a > \frac n2 + \frac n2 = n,
+\]
+so again $\sum_{a\in S}\neq n$.
+
+\smallskip
+\noindent
+\emph{Case 3: $S$ contains exactly one element $y>n/2$.}
+Every other element of $S$ is divisible by $q$, so
+\[
+\sum_{a\in S} a \equiv y \pmod q.
+\]
+But by construction $y\not\equiv n\pmod q$.  Hence $\sum_{a\in S}\neq n$.
+
+These three cases exhaust all possibilities, so indeed $n\notin \Sigma(A_q(n,m))$.
+\hfill $\square$
+
+\paragraph{Corollary 361.3.}
+Let $q(n)$ denote the smallest integer $>1$ that does not divide $n$.  If $1/2<c<1$ and $m=\lfloor cn\rfloor$, then
+\[
+G_c(n)\ge \left(c-\frac12+\frac{1-c}{q(n)}\right)n+O(1).
+\]
+
+\paragraph{Proof.}
+Apply Proposition 361.2 with $q=q(n)$.  The size of the constructed set is
+\[
+|A_{q(n)}(n,m)|
+=
+\#\{a\le \lfloor n/2\rfloor:\ q(n)\mid a\}
++
+\#\{\lfloor n/2\rfloor<a\le m:\ a\not\equiv n\pmod{q(n)}\}.
+\]
+The first term is
+\[
+\frac{n}{2q(n)}+O(1),
+\]
+and the second term is
+\[
+\left(m-\frac n2\right)\left(1-\frac1{q(n)}\right)+O(1)
+=
+\left(c-\frac12\right)\left(1-\frac1{q(n)}\right)n+O(1).
+\]
+Adding,
+\[
+|A_{q(n)}(n,m)|
+=
+\left(c-\frac12+\frac{1-c}{q(n)}\right)n+O(1).
+\]
+Therefore
+\[
+G_c(n)\ge \left(c-\frac12+\frac{1-c}{q(n)}\right)n+O(1).
+\]
+\hfill $\square$
+
+\paragraph{Examples when $c=3/4$.}
+The new lower bound gives the following explicit infinite families.
+
+\begin{itemize}
+\item If $n$ is odd, then $q(n)=2$, so
+\[
+G_{3/4}(n)\ge \frac{3}{8}n+O(1).
+\]
+This is exactly the ``all even numbers'' construction.
+
+\item If $n$ is even and $3\nmid n$, then $q(n)=3$, so
+\[
+G_{3/4}(n)\ge \frac13 n+O(1).
+\]
+
+\item If $6\mid n$ but $4\nmid n$, then $q(n)=4$, so
+\[
+G_{3/4}(n)\ge \frac{5}{16}n+O(1).
+\]
+\end{itemize}
+
+Thus, already at the level of clean explicit constructions, the lower-bound constant changes with the divisibility pattern of $n$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check both new constructions carefully.
+
+\begin{itemize}
+\item \textbf{Interval construction:}  
+The strict inequalities are essential.  I used $m<n/(b-1)$ to force every $(b-1)$-term sum to be $<n$, and I used the lower endpoint $\lfloor n/b\rfloor+1$ to force every $b$-term sum to be $>n$.  No boundary case has been glossed over.
+
+\item \textbf{Hybrid construction:}  
+The only subtle point is possible overlap between the ``lower multiples of $q$'' and the upper interval.  I avoided this by defining the two pieces on disjoint ranges:
+\[
+[1,\lfloor n/2\rfloor]
+\quad\text{and}\quad
+[\lfloor n/2\rfloor+1,m].
+\]
+So the case distinction by number of upper elements is exact.
+
+\item \textbf{Could one upper element plus lower multiples of $q$ still sum to $n$?}  
+No.  Modulo $q$, such a sum would be congruent to the upper element itself, and by construction every upper element avoids the residue class $n \pmod q$.
+
+\item \textbf{Does the new lower bound really interpolate correctly between known constructions?}  
+Yes.  When $q(n)=2$ (for odd $n$), the hybrid set is exactly the set of even numbers, giving the parity construction.  When $q(n)$ is large, the gain over the pure interval construction becomes small, as expected.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 adds genuine new mathematics below the previously solved threshold $c=1$:
+
+\begin{itemize}
+\item a general interval lower bound for all $c<1$;
+\item a new hybrid modular/large-element construction for $1/2<c<1$;
+\item an explicit arithmetic lower bound
+\[
+G_c(n)\ge \left(c-\frac12+\frac{1-c}{q(n)}\right)n+O(1),
+\]
+where $q(n)$ is the smallest integer $>1$ not dividing $n$.
+\end{itemize}
+
+So the Round-1 exact formula for $c\ge 1$ does \emph{not} extend below $1$ by any naive uniform mechanism: already the best explicit constructions for $c<1$ depend on the arithmetic of $n$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 78\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#361}, \texttt{erdosproblems.com/361} (checked in this round).
+\item T. F. Bloom, \emph{Discussion thread for Erd\H{o}s Problem \#361}, \texttt{erdosproblems.com/forum/thread/361} (checked in this round; used only as motivation, not as a proof source).
+\item P. Erd\H{o}s and R. L. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographie de L'Enseignement Math\'ematique 28, Geneva, 1980.
+\end{itemize}

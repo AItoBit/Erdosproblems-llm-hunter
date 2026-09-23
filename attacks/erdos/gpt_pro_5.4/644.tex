@@ -1,0 +1,204 @@
+\section{Problem 644 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: correct a quantifier subtlety in the Round-1 finite-family restatement, then prove substantially sharper bounds for $f(k,7)$.  A full solution still seems out of reach, but Round 2 can narrow the problem to the interval
+\[
+\frac34 k + O(1) \le f(k,7) \le \frac78 k + O(1),
+\]
+with an explicit lower bound valid for all $k\ge 2$ and a literature-based upper bound.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 items.
+
+\begin{itemize}
+\item The hypergraph reformulation: $f(k,7)$ is the largest possible transversal number $\tau(H)$ among $k$-uniform hypergraphs in which every $7$ edges admit a $2$-point transversal.
+\item The Round-1 baseline bound $f(k,r)\le k(r-1)$, obtained from the matching number.
+\item The Round-1 status: exact values for $r=3,4,5,6$ were known, while $r=7$ remained open.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new ingredients.
+
+\begin{itemize}
+\item \textbf{Quantifier correction.}  The classical problem is stated for an arbitrarily long family $A_1,A_2,\dots$ (in particular, one may always enlarge a bad subfamily to size $7$).  The finite-family Round-1 restatement is harmless for asymptotics, but for exact upper-bound arguments one should either assume the family has at least $7$ members or require the local property for all subfamilies of size at most $7$.
+\item \textbf{New lower bound valid for all $k\ge 2$.}  The complete $k$-uniform hypergraph on $\lceil 7k/4\rceil-1$ vertices already has property $(7,2)$, yielding
+\[
+ f(k,7)\ge \left\lceil\frac{3k}{4}\right\rceil.
+\]
+This sharpens the Round-1 lower information considerably.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The Round-1 gap was enormous: only the very weak bound $f(k,7)\le 6k$ was available there.
+Round 2 closes much of this gap by proving or importing three precise claims:
+
+\begin{enumerate}
+\item a corrected formulation under which the modern upper-bound theorem applies;
+\item a direct lower bound from complete hypergraphs, valid for all $k\ge 2$;
+\item the best currently accessible sandwich bound
+\[
+\left\lceil\frac{3k}{4}\right\rceil
+\le f(k,7)
+\le \left\lceil\frac{7k}{8}\right\rceil,
+\]
+plus the stronger residue-class lower bound $f(4q,7)\ge 3q+1$ for $q\ge 4$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+\paragraph{Minimal correction of the formulation.}
+The original Erd\H{o}s problem is phrased for a family $A_1,A_2,\dots$ of $k$-sets.  For the upper-bound theorem below, what matters is that whenever a subfamily $\mathcal F$ with $|\mathcal F|\le 7$ has transversal number $>2$, one can enlarge $\mathcal F$ to a $7$-member subfamily with the same property.  This is automatic in the original infinite-family formulation, and also automatic for any finite family with at least $7$ members.
+
+Thus the only correction needed to the Round-1 finite-family restatement is: for exact upper bounds, either work with the original arbitrarily long family, or explicitly restrict to families with at least $7$ members.  This does not affect the asymptotic question.
+
+\paragraph{Claim 644.1.}
+For every integer $k\ge 2$, the complete $k$-uniform hypergraph on
+\[
+ n_k:=\left\lceil \frac{7k}{4}\right\rceil-1
+\]
+vertices has property $(7,2)$.
+
+\paragraph{Proof.}
+Let $\mathcal H=K^{(k)}_{n_k}$, and choose any seven edges $E_1,\dots,E_7$ of $\mathcal H$.
+Each $E_i$ has size $k$, so the total incidence count is $7k$.
+Since
+\[
+ n_k < \frac{7k}{4},
+\]
+we have
+\[
+ 7k > 4n_k.
+\]
+Hence some vertex $x$ belongs to at least five of the seven sets $E_i$.
+At most two of the seven sets do not contain $x$.
+If there are zero or one such sets, then any second point $y$ gives a $2$-point transversal $\{x,y\}$.
+If there are two such sets, call them $F$ and $G$.
+Because
+\[
+ n_k < 2k,
+\]
+any two $k$-subsets of an $n_k$-element ground set must intersect.  Therefore $F\cap G\neq\varnothing$.
+Choose $y\in F\cap G$.
+Then $\{x,y\}$ meets all seven edges.
+So every seven edges of $\mathcal H$ have a transversal of size at most $2$, i.e. $\mathcal H$ has property $(7,2)$.
+
+\hfill$\square$
+
+\paragraph{Corollary 644.2.}
+For every $k\ge 2$,
+\[
+ f(k,7)\ge \left\lceil \frac{3k}{4}\right\rceil.
+\]
+
+\paragraph{Proof.}
+The transversal number of the complete $k$-uniform hypergraph on $n_k$ vertices is $n_k-k+1$.
+Using Claim 644.1,
+\[
+ f(k,7)\ge n_k-k+1
+ = \left(\left\lceil \frac{7k}{4}\right\rceil-1\right)-k+1
+ = \left\lceil \frac{3k}{4}\right\rceil.
+\]
+
+\hfill$\square$
+
+\paragraph{External Theorem 644.3 (Fon-Der-Flaass--Kostochka--Woodall).}
+If $\mathcal B$ is an $r$-uniform family with
+\[
+\tau(\mathcal B) > \left\lceil \frac{7r}{8}\right\rceil,
+\]
+then there exists a subfamily $\mathcal F\subseteq \mathcal B$ with $|\mathcal F|\le 7$ and $\tau(\mathcal F)>2$.
+
+\paragraph{Corollary 644.4.}
+Under the original arbitrarily-long-family formulation of the problem,
+\[
+ f(k,7)\le \left\lceil \frac{7k}{8}\right\rceil.
+\]
+
+\paragraph{Proof.}
+Assume to the contrary that some $k$-uniform family $\mathcal B$ has property $(7,2)$ and yet
+\[
+\tau(\mathcal B) > \left\lceil \frac{7k}{8}\right\rceil.
+\]
+By External Theorem 644.3, there exists $\mathcal F\subseteq \mathcal B$ with $|\mathcal F|\le 7$ and $\tau(\mathcal F)>2$.
+If $|\mathcal F|=7$, this directly contradicts property $(7,2)$.
+If $|\mathcal F|<7$, enlarge $\mathcal F$ by adding arbitrary further members of $\mathcal B$ until it has size exactly $7$; call the enlarged family $\mathcal F'$.
+Since adding sets cannot decrease transversal number,
+\[
+\tau(\mathcal F')\ge \tau(\mathcal F)>2,
+\]
+again contradicting property $(7,2)$.
+Therefore no such $\mathcal B$ exists, and the upper bound follows.
+
+\hfill$\square$
+
+\paragraph{External Theorem 644.5 (same paper, lower-bound construction).}
+For every integer $q\ge 4$, there exists a $(4q)$-uniform family with property $(7,2)$ and transversal number $3q+1$.
+Consequently,
+\[
+ f(4q,7)\ge 3q+1
+\qquad (q\ge 4).
+\]
+
+\paragraph{Combined Round-2 bound.}
+From Corollaries 644.2 and 644.4 and External Theorem 644.5 we obtain
+\[
+\left\lceil \frac{3k}{4}\right\rceil
+\le f(k,7)
+\le \left\lceil \frac{7k}{8}\right\rceil
+\qquad (k\ge 2),
+\]
+and in addition
+\[
+ f(4q,7)\ge 3q+1
+\qquad (q\ge 4).
+\]
+So the conjectured asymptotic constant, if it exists, lies in the interval
+\[
+\frac34 \le c_7 \le \frac78.
+\]
+Round 2 therefore cuts the Round-1 upper bound from $6k$ down to $(7/8)k+O(1)$ and simultaneously proves the lower bound $(3/4)k+O(1)$ for all $k\ge 2$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The possible failure points are as follows.
+
+\begin{itemize}
+\item \textbf{Quantifier issue.}  If one works with a finite family of fewer than $7$ sets and interprets property $(7,2)$ literally, the condition is vacuous.  That is why I stated the minimal correction explicitly before using the upper-bound theorem.  The original Erd\H{o}s problem uses an arbitrarily long family, so the extension-to-$7$ step is legitimate.
+\item \textbf{Claim 644.1.}  The incidence argument gives a vertex in at least five of the seven sets because $7k>4n_k$.  The remaining two sets intersect because $n_k<2k$.  No hidden assumption is used.
+\item \textbf{Lower-bound arithmetic.}  The identity
+\[
+\left(\left\lceil\frac{7k}{4}\right\rceil-1\right)-k+1
+=\left\lceil\frac{3k}{4}\right\rceil
+\]
+is correct since subtracting the integer $k$ commutes with taking ceilings.
+\item \textbf{Use of External Theorem 644.3.}  The hypotheses match exactly after the quantifier correction.
+\end{itemize}
+
+No contradiction or hidden gap remains in the Round-2 deductions.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The exact asymptotic of $f(k,7)$ remains open, but Round 2 gives the corrected formulation needed for the sharp known upper bound and proves the explicit lower bound valid for all $k\ge 2$
+\[
+\left\lceil \frac{3k}{4}\right\rceil \le f(k,7).
+\]
+Together with the literature upper bound this yields
+\[
+\left\lceil \frac{3k}{4}\right\rceil
+\le f(k,7)
+\le \left\lceil \frac{7k}{8}\right\rceil,
+\]
+plus the stronger residue-class lower bound $f(4q,7)\ge 3q+1$ for $q\ge 4$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 68\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#644}, accessed 2026-03-07.
+\item D. G. Fon-Der-Flaass, A. V. Kostochka, and D. R. Woodall, \emph{Transversals in uniform hypergraphs with property $(7,2)$}, Discrete Mathematics 207 (1999), 277--284.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This section is part of the combined drop-in file \texttt{643\_644\_650\_solutions.tex}; no preamble is used.
+
+

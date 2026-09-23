@@ -1,0 +1,227 @@
+\section{Problem 629 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path C: isolate the exact combinatorial obstruction by replacing the original graph-theoretic minimization problem with an equivalent signed set-system parameter.
+
+Round 1 already proved the coarse but important estimate
+\[
+m(k)\le n(k)\le 2m(k).
+\]
+The exact gap that remains is therefore: \emph{what additional flexibility is gained by allowing different list-families on the two sides of the bipartition?}
+The most promising Round-2 move is to identify a parameter that measures precisely this asymmetry.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts.
+
+\begin{itemize}
+\item The inequalities
+\[
+m(k)\le n(k)\le 2m(k),
+\]
+where \(m(k)\) is the minimum size of a family of \(k\)-sets without property B.
+\item The exponential-scale consequence \(n(k)=2^{k+o(k)}\).
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+
+The new insight is that \(n(k)\) is \emph{exactly} the minimum size of an unsplittable
+\emph{signed} pair of \(k\)-uniform set-families.
+
+More precisely, one must consider two multisets of \(k\)-sets,
+\[
+\mathcal A=(A_1,\dots,A_a),\qquad \mathcal B=(B_1,\dots,B_b),
+\]
+and ask for a subset \(S\) of the ground set that simultaneously
+
+\begin{itemize}
+\item meets every \(A_i\), and
+\item contains none of the \(B_j\).
+\end{itemize}
+
+If no such \(S\) exists, then \((\mathcal A,\mathcal B)\) is an exact witness for non-\(k\)-choosability of a complete bipartite graph, and conversely every non-\(k\)-choosable bipartite graph produces such a witness.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+
+The exact gap after Round 1 is that the parameter \(m(k)\) only captures the symmetric obstruction
+\(\mathcal A=\mathcal B\). To understand whether \(n(k)\) is closer to \(m(k)\) or to \(2m(k)\),
+one must understand how much a genuinely asymmetric pair \((\mathcal A,\mathcal B)\) can save.
+
+So the plan is:
+
+\begin{enumerate}
+\item prove that in defining \(n(k)\), it suffices to consider complete bipartite graphs;
+\item encode list assignments on \(K_{a,b}\) as pairs of multisets of \(k\)-sets;
+\item prove the exact signed-family reformulation \(n(k)=\sigma(k)\);
+\item recover the Round-1 bounds as immediate corollaries, thereby identifying the exact missing parameter.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{Claim 629.1 (complete bipartite reduction).}
+In the definition of \(n(k)\), it is enough to minimize over complete bipartite graphs.
+Equivalently,
+\[
+n(k)=\min\{a+b: K_{a,b}\ \text{is not \(k\)-choosable}\}.
+\]
+
+\emph{Proof.}
+Let \(G\) be a bipartite graph with bipartition \(X\cup Y\), and suppose \(G\) is not \(k\)-choosable.
+Then there exists a \(k\)-list assignment \(L\) on \(G\) that admits no proper \(L\)-coloring.
+Now consider the complete bipartite graph \(K_{|X|,|Y|}\) on the same bipartition, with the same list assignment \(L\).
+If \(K_{|X|,|Y|}\) had a proper \(L\)-coloring, then that coloring would also be proper for the subgraph \(G\), contradiction.
+So \(K_{|X|,|Y|}\) is not \(k\)-choosable.
+Therefore the minimum defining \(n(k)\) can be attained among complete bipartite graphs. \(\square\)
+
+\paragraph{Definition 629.2 (splitter and unsplittable pair).}
+Let \(k\ge 1\). A \emph{signed \(k\)-pair} is a pair
+\[
+(\mathcal A,\mathcal B),
+\]
+where \(\mathcal A=(A_1,\dots,A_a)\) and \(\mathcal B=(B_1,\dots,B_b)\) are multisets of \(k\)-subsets of some finite ground set \(U\).
+
+A subset \(S\subseteq U\) is called a \emph{splitter} for \((\mathcal A,\mathcal B)\) if
+\[
+S\cap A_i\neq \emptyset \quad\text{for all }i,
+\qquad
+B_j\nsubseteq S \quad\text{for all }j.
+\]
+Equivalently: \(S\) meets every \(A_i\) and contains none of the \(B_j\).
+
+A signed \(k\)-pair is \emph{unsplittable} if it has no splitter.
+
+Define
+\[
+\sigma(k):=\min\{|\mathcal A|+|\mathcal B|:(\mathcal A,\mathcal B)\ \text{is an unsplittable signed \(k\)-pair}\}.
+\]
+
+\paragraph{Claim 629.3 (exact reformulation).}
+For every \(k\ge 1\),
+\[
+n(k)=\sigma(k).
+\]
+
+\emph{Proof.}
+First prove \(n(k)\le \sigma(k)\).
+Let \((\mathcal A,\mathcal B)\) be an unsplittable signed \(k\)-pair with
+\(|\mathcal A|=a\) and \(|\mathcal B|=b\).
+Construct the complete bipartite graph \(K_{a,b}\) with left side
+\[
+X=\{x_1,\dots,x_a\}
+\]
+and right side
+\[
+Y=\{y_1,\dots,y_b\}.
+\]
+Assign lists
+\[
+L(x_i):=A_i,\qquad L(y_j):=B_j.
+\]
+
+Suppose, for contradiction, that there is a proper \(L\)-coloring \(c\).
+Let
+\[
+S:=\{c(x_i):1\le i\le a\}
+\]
+be the set of colors used on the left side.
+Since \(c(x_i)\in A_i\), the set \(S\) meets every \(A_i\).
+Also every \(y_j\) is adjacent to every \(x_i\), so \(c(y_j)\notin S\). As \(c(y_j)\in B_j\), it follows that \(B_j\nsubseteq S\) for every \(j\).
+Hence \(S\) is a splitter for \((\mathcal A,\mathcal B)\), contradicting unsplittability.
+Therefore \(K_{a,b}\) is not \(k\)-choosable, so \(n(k)\le a+b=\sigma(k)\).
+
+Now prove \(\sigma(k)\le n(k)\).
+Let \(G\) be a bipartite graph on \(n(k)\) vertices that is not \(k\)-choosable, and by Claim 629.1 assume \(G=K_{a,b}\) with bipartition \(X\cup Y\), where \(a+b=n(k)\).
+Take a bad \(k\)-list assignment \(L\) on \(G\).
+Write
+\[
+X=\{x_1,\dots,x_a\},\qquad Y=\{y_1,\dots,y_b\},
+\]
+and form the signed \(k\)-pair
+\[
+\mathcal A:=(L(x_1),\dots,L(x_a)),\qquad
+\mathcal B:=(L(y_1),\dots,L(y_b)).
+\]
+If \((\mathcal A,\mathcal B)\) had a splitter \(S\subseteq U\), then we could color every \(x_i\) by any color in \(L(x_i)\cap S\), and every \(y_j\) by any color in \(L(y_j)\setminus S\).
+This would be a proper \(L\)-coloring of \(K_{a,b}\), because colors on the left lie in \(S\) and colors on the right lie outside \(S\).
+This contradicts the choice of \(L\).
+Hence \((\mathcal A,\mathcal B)\) is unsplittable, and
+\[
+\sigma(k)\le |\mathcal A|+|\mathcal B|=a+b=n(k).
+\]
+
+Combining the two inequalities gives \(n(k)=\sigma(k)\). \(\square\)
+
+\paragraph{Corollary 629.4 (Round-1 bounds recovered and conceptually sharpened).}
+For every \(k\ge 1\),
+\[
+m(k)\le n(k)\le 2m(k).
+\]
+
+\emph{Proof.}
+Let \((\mathcal A,\mathcal B)\) be an unsplittable signed \(k\)-pair.
+Let \(\mathcal F\) be the family of \emph{distinct} sets appearing in \(\mathcal A\cup\mathcal B\), with labels forgotten.
+If \(\mathcal F\) had property B, there would exist \(S\subseteq U\) meeting every member of \(\mathcal F\) and containing none of them.
+In particular, \(S\) would meet every \(A_i\) and contain no \(B_j\), making \(S\) a splitter for \((\mathcal A,\mathcal B)\), contradiction.
+So \(\mathcal F\) has no property B, and therefore
+\[
+|\mathcal A|+|\mathcal B|\ge |\mathcal F|\ge m(k).
+\]
+Taking the minimum over unsplittable pairs and using Claim 629.3 gives \(n(k)\ge m(k)\).
+
+For the upper bound, choose a family \(\mathcal F\) of \(m(k)\) distinct \(k\)-sets with no property B.
+Take the signed pair \((\mathcal F,\mathcal F)\).
+If \(S\) met every member of \(\mathcal F\) and contained none of them, then \(\mathcal F\) would have property B, impossible.
+Thus \((\mathcal F,\mathcal F)\) is unsplittable.
+Hence
+\[
+n(k)=\sigma(k)\le |\mathcal F|+|\mathcal F|=2m(k).
+\]
+\(\square\)
+
+\paragraph{Corollary 629.5 (the exact obstruction left open).}
+Determining \(n(k)\) is equivalent to determining the minimum size of an unsplittable signed \(k\)-pair.
+Equivalently, the remaining open question is:
+
+\begin{quote}
+How much smaller can the best \emph{asymmetric} signed obstruction \((\mathcal A,\mathcal B)\) be than the symmetric property-B obstruction \((\mathcal F,\mathcal F)\)?
+\end{quote}
+
+In particular, any proof that \(n(k)<2m(k)\) must exploit a genuinely asymmetric pair.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new reformulation against the main possible gaps.
+
+\begin{itemize}
+\item \emph{Do duplicate lists matter?}  
+Yes, they can matter for the vertex count, so \(\mathcal A\) and \(\mathcal B\) were defined as multisets (or ordered lists), not just ordinary families.
+
+\item \emph{Is completion to \(K_{a,b}\) legitimate?}  
+Yes. A proper coloring of \(K_{a,b}\) would automatically be a proper coloring of any spanning bipartite subgraph with the same bipartition, so non-choosability is preserved when we add cross-edges.
+
+\item \emph{Could the lower bound \(m(k)\le n(k)\) fail because labels are forgotten?}  
+No. If the unlabeled union family had property B, the same witness subset would split the signed pair. Forgetting labels only makes the obstruction weaker, so this step is safe.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round 1 is an exact structural reformulation:
+\[
+n(k)=\sigma(k),
+\]
+where \(\sigma(k)\) is the minimum size of an unsplittable signed \(k\)-pair.
+Thus the open problem is no longer merely ``compare \(n(k)\) with \(m(k)\)'', but rather
+``quantify the savings available from asymmetric signed obstructions over the symmetric property-B construction''.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 62\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item[\textbf{[Bloom629]}] T. F. Bloom, \emph{Erd\H{o}s Problem \#629}, accessed 2026-03-08.
+\end{itemize}

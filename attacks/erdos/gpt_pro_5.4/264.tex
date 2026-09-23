@@ -1,0 +1,349 @@
+\section*{Erd\H{o}s Problem \#264 (Round 2)}
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+
+I pursue \textbf{(C) obstruction/correction}.  Round~1 already gave a negative answer for
+$a_n=2^n$, but the factorial case remained open.  The most promising genuine advance is to
+(i) sharpen the $2^n$ construction, and
+(ii) prove a structural theorem showing that for every superexponential skeleton, and in particular
+for $a_n=n!$, the set of all bounded-perturbation sums is extremely thin: it has Hausdorff dimension $0$.
+This gives a rigorous barrier against any ``interval-filling'' strategy in the factorial case.
+
+\subsection*{2. Round-1 FOUNDATION USED}
+
+I use the following Round~1 facts.
+
+\begin{enumerate}
+\item Round~1 already established that $a_n=2^n$ is \emph{not} Type~3 by an interval-overlap argument with perturbations $b_n\in\{1,2,3,4,5\}$.
+\item Round~1 observed heuristically that the same interval method cannot work uniformly for $a_n=n!$, because one-step gaps are of order $(n!)^{-2}$ while the remaining tail flexibility is only of order $((n+1)!)^{-2}$.
+\item Round~1 left the exact factorial question unresolved.
+\end{enumerate}
+
+I will reuse the Round~1 coding idea for $2^n$, but with a sharper overlap estimate, and I will replace the factorial heuristic by a theorem.
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item The Round~1 bound $b_n\in\{1,2,3,4,5\}$ for the $2^n$ counterexample is not optimal for that argument: one can already work with
+\[
+ b_n\in\{1,2,3,4\}.
+\]
+\item More importantly, for \emph{every} strictly increasing positive integer sequence $(a_n)$ with
+\[
+ \frac{a_{n+1}}{a_n}\to\infty,
+\]
+and every fixed perturbation bound $B$, the set of values
+\[
+ \sum \frac{1}{a_n+b_n},\qquad |b_n|\le B,
+\]
+has Hausdorff dimension $0$.  In particular, the full set of bounded-perturbation sums for $a_n=n!$ is a countable union of Hausdorff-dimension-zero sets.
+\end{enumerate}
+
+This is a strict advance beyond Round~1: it turns the earlier ``the overlap method should fail'' heuristic into a precise geometric obstruction.
+
+\subsection*{4. ATTACK PLAN (ROUND-2)}
+
+The exact gaps left after Round~1 were:
+
+\begin{enumerate}
+\item the Round~1 $2^n$ counterexample was existence-only with perturbation bound $5$;
+\item the factorial case had no rigorous structural theorem, only a size comparison heuristic.
+\end{enumerate}
+
+I now prove the following two claims.
+
+\medskip
+\noindent
+\textbf{Claim A.}
+For $a_n=2^n$, perturbations in $\{1,2,3,4\}$ already suffice to realize the rational value $3/4$.
+
+\medskip
+\noindent
+\textbf{Claim B.}
+If $a_{n+1}/a_n\to\infty$, then every fixed bounded perturbation family gives a value set of Hausdorff dimension $0$; hence for $a_n=n!$ the bounded-perturbation value set has empty interior.
+
+\medskip
+These two claims together sharpen the negative half of \#264 and isolate a real obstruction in the positive half.
+
+\subsection*{5. WORK (ROUND-2)}
+
+\paragraph{5.1. Sharpening the $2^n$ counterexample from bound $5$ to bound $4$.}
+
+Define
+\[
+L_n:=\sum_{k=n}^{\infty}\frac{1}{2^k+4},
+\qquad
+U_n:=\sum_{k=n}^{\infty}\frac{1}{2^k+1},
+\]
+and, for $b\in\{1,2,3,4\}$,
+\[
+I_n(b):=\left[\frac{1}{2^n+b}+L_{n+1},\ \frac{1}{2^n+b}+U_{n+1}\right].
+\]
+As in Round~1, $I_n(b)$ is the set of all possible total sums once the $n$th perturbation is fixed to be $b$.
+
+\medskip
+\noindent
+\textbf{Lemma 5.1.}
+For every $n\ge 1$ one has
+\[
+\bigcup_{b=1}^4 I_n(b)=[L_n,U_n].
+\]
+
+\medskip
+\noindent
+\textbf{Proof.}
+The endpoints agree:
+\[
+\min I_n(4)=\frac{1}{2^n+4}+L_{n+1}=L_n,
+\qquad
+\max I_n(1)=\frac{1}{2^n+1}+U_{n+1}=U_n.
+\]
+So it suffices to prove overlap of consecutive intervals.
+Because $b\mapsto 1/(2^n+b)$ is decreasing, it is enough to show that
+\[
+U_{n+1}-L_{n+1}\ge
+\frac{1}{2^n+b}-\frac{1}{2^n+b+1}
+\]
+for $b=1,2,3$; the right-hand side is largest at $b=1$, so it is enough to prove
+\[
+U_{n+1}-L_{n+1}\ge \frac{1}{(2^n+1)(2^n+2)}.
+\]
+Now
+\[
+U_{n+1}-L_{n+1}
+=\sum_{k=n+1}^{\infty}\left(\frac{1}{2^k+1}-\frac{1}{2^k+4}\right)
+=\sum_{k=n+1}^{\infty}\frac{3}{(2^k+1)(2^k+4)}.
+\]
+Write $x:=2^{-(n+1)}$.  For every $k\ge n+1$ we have $2^{-k}\le x$, hence
+\[
+(2^k+1)(2^k+4)
+=2^{2k}(1+2^{-k})(1+4\cdot 2^{-k})
+\le 2^{2k}(1+x)(1+4x),
+\]
+so
+\[
+\frac{3}{(2^k+1)(2^k+4)}
+\ge \frac{3\cdot 4^{-k}}{(1+x)(1+4x)}.
+\]
+Summing over $k\ge n+1$ gives
+\[
+U_{n+1}-L_{n+1}
+\ge \frac{3}{(1+x)(1+4x)}\sum_{k=n+1}^{\infty}4^{-k}
+=\frac{4^{-n}}{(1+x)(1+4x)}.
+\]
+On the other hand,
+\[
+\frac{1}{(2^n+1)(2^n+2)}
+=\frac{4^{-n}}{(1+2x)(1+4x)}.
+\]
+Since $1+x\le 1+2x$, the lower bound above is at least this target quantity.  Thus all consecutive intervals overlap, and the union is exactly $[L_n,U_n]$.
+\hfill $\square$
+
+\medskip
+\noindent
+\textbf{Lemma 5.2.}
+Every $x\in [L_1,U_1]$ can be written in the form
+\[
+x=\sum_{n=1}^{\infty}\frac{1}{2^n+b_n}
+\qquad\mbox{with } b_n\in\{1,2,3,4\}.
+\]
+
+\medskip
+\noindent
+\textbf{Proof.}
+Exactly as in Round~1: recursively choose $b_n$ so that the current remainder lies in one of the intervals $I_n(b_n)$, and use Lemma~5.1 at each step.  The tail remainders tend to $0$ because $U_n\to 0$.
+\hfill $\square$
+
+\medskip
+\noindent
+\textbf{Lemma 5.3.}
+The rational number $3/4$ belongs to $[L_1,U_1]$.
+
+\medskip
+\noindent
+\textbf{Proof.}
+For the lower endpoint,
+\[
+L_1=\sum_{n=1}^{\infty}\frac{1}{2^n+4}
+\le \frac16+\sum_{n=2}^{\infty}\frac{1}{2^n}
+=\frac16+\frac12=\frac23<\frac34.
+\]
+For the upper endpoint,
+\[
+U_1\ge \sum_{n=1}^{7}\frac{1}{2^n+1}
+=\frac{3559541}{4703985}>\frac34.
+\]
+Hence $3/4\in[L_1,U_1]$.
+\hfill $\square$
+
+\medskip
+\noindent
+\textbf{Corollary 5.4.}
+There exists a bounded sequence $b_n\in\{1,2,3,4\}$ such that
+\[
+\sum_{n=1}^{\infty}\frac{1}{2^n+b_n}=\frac34.
+\]
+Therefore $a_n=2^n$ is not a Type~3 irrationality sequence.
+
+\medskip
+This improves the explicit perturbation bound from Round~1.
+
+\paragraph{5.2. A general thin-set theorem for bounded perturbations of superexponential sequences.}
+
+Let $(a_n)$ be a strictly increasing sequence of positive integers with
+\[
+\frac{a_{n+1}}{a_n}\to\infty.
+\]
+Fix $B\ge 1$, and let
+\[
+D_B:=\{-B,-B+1,\dots,-1,1,\dots,B-1,B\}.
+\]
+Choose $n_0=n_0(B)$ so large that
+\[
+a_n>2B
+\qquad\mbox{and}\qquad
+a_{n+1}\ge 2a_n
+\quad\mbox{for all } n\ge n_0.
+\]
+Define the tail value set
+\[
+E_{B}(a;n_0):=
+\left\{
+\sum_{n=n_0}^{\infty}\frac{1}{a_n+b_n}
+:\ b_n\in D_B\ \mbox{for all }n\ge n_0
+\right\}.
+\]
+
+\medskip
+\noindent
+\textbf{Lemma 5.5.}
+If the digits $b_{n_0},\dots,b_M$ are fixed, then all sums in $E_B(a;n_0)$ with this prefix lie in an interval of length at most
+\[
+W_M:=\sum_{k=M+1}^{\infty}
+\left(\frac{1}{a_k-B}-\frac{1}{a_k+B}\right)
+\le \frac{32B}{9a_{M+1}^2}.
+\]
+
+\medskip
+\noindent
+\textbf{Proof.}
+For $k\ge n_0$,
+\[
+\frac{1}{a_k-B}-\frac{1}{a_k+B}
+=\frac{2B}{a_k^2-B^2}
+\le \frac{2B}{a_k^2-a_k^2/4}
+=\frac{8B}{3a_k^2},
+\]
+because $a_k>2B$.  Hence
+\[
+W_M\le \frac{8B}{3}\sum_{k=M+1}^{\infty}\frac{1}{a_k^2}.
+\]
+Since $a_{k+1}\ge 2a_k$ for $k\ge n_0$, the tail of $(a_k^{-2})$ is dominated by a geometric series with ratio at most $1/4$:
+\[
+\sum_{k=M+1}^{\infty}\frac{1}{a_k^2}
+\le \frac{1}{a_{M+1}^2}\sum_{j=0}^{\infty}4^{-j}
+=\frac{4}{3a_{M+1}^2}.
+\]
+Combining these estimates gives the claim.
+\hfill $\square$
+
+\medskip
+\noindent
+\textbf{Theorem 5.6.}
+For every fixed $B\ge 1$,
+\[
+\dim_{\rm H} E_B(a;n_0)=0.
+\]
+Consequently the full bounded-perturbation value set
+\[
+E(a):=
+\left\{
+\sum_{n=1}^{\infty}\frac{1}{a_n+b_n}
+:\ (b_n)\ \mbox{is a bounded integer sequence},\ b_n\ne 0,\ a_n+b_n\ne 0
+\right\}
+\]
+is a countable union of sets of Hausdorff dimension $0$, and in particular has Hausdorff dimension $0$ and empty interior.
+
+\medskip
+\noindent
+\textbf{Proof.}
+At level $M\ge n_0$, the set $E_B(a;n_0)$ is covered by at most
+\[
+(2B)^{M-n_0+1}
+\]
+intervals, one for each choice of the prefix $(b_{n_0},\dots,b_M)$, and Lemma~5.5 shows that every such interval has length at most $W_M\le 32B/(9a_{M+1}^2)$.
+
+Fix $s>0$.  Choose a real number $\lambda>(2B)^{1/(2s)}$.  Since $a_{n+1}/a_n\to\infty$, we have $a_{n+1}\ge \lambda a_n$ for all sufficiently large $n$, hence for some constant $C=C(s,B)>0$,
+\[
+a_{M+1}\ge C\lambda^M
+\qquad\mbox{for all large }M.
+\]
+Therefore the total $s$-content of the above cover is bounded by
+\[
+(2B)^{M-n_0+1}\left(\frac{32B}{9a_{M+1}^2}\right)^s
+\le C'\left(\frac{2B}{\lambda^{2s}}\right)^M,
+\]
+which tends to $0$ because $\lambda^{2s}>2B$.  Since this holds for every $s>0$, the Hausdorff dimension is $0$.
+
+Now fix $B$ and consider all bounded perturbation sequences with $|b_n|\le B$.  The terms with $n<n_0(B)$ contribute only finitely many possibilities, so this larger set is a finite union of translates of $E_B(a;n_0(B))$ and still has Hausdorff dimension $0$.  Finally,
+\[
+E(a)=\bigcup_{B=1}^{\infty} E_B(a)
+\]
+is a countable union of Hausdorff-dimension-zero sets, so it also has Hausdorff dimension $0$.
+\hfill $\square$
+
+\medskip
+\noindent
+\textbf{Corollary 5.7.}
+For $a_n=n!$, the full set of all sums
+\[
+\sum_{n=2}^{\infty}\frac{1}{n!+b_n}
+\qquad ((b_n)\ \mbox{bounded},\ b_n\ne 0,\ n!+b_n\ne 0)
+\]
+has Hausdorff dimension $0$.
+
+\medskip
+\noindent
+\textbf{Proof.}
+Here $a_{n+1}/a_n=n+1\to\infty$, so Theorem~5.6 applies.
+\hfill $\square$
+
+\medskip
+Thus the factorial case has a rigorous geometric obstruction: unlike the $2^n$ case, bounded perturbations of $n!$ do not generate intervals at all.
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Small-index issues.}  In Theorem~5.6 I started at $n_0(B)$ precisely to avoid accidental zeros or sign changes in $a_n+b_n$ and to guarantee $a_n>2B$ and $a_{n+1}\ge 2a_n$.
+\item \textbf{Countable union issue.}  The full bounded-perturbation set is not itself a single fixed-$B$ set, so I explicitly decomposed it as a countable union over $B$ and finite initial prefixes.
+\item \textbf{No contradiction with the $2^n$ half.}  The superexponential theorem requires $a_{n+1}/a_n\to\infty$, which fails for $a_n=2^n$.  So there is no inconsistency with the interval phenomenon proved above for $2^n$.
+\item \textbf{Is Hausdorff dimension really enough to rule out the old strategy?}  Yes.  Any set containing a non-degenerate interval has Hausdorff dimension $1$, so dimension $0$ completely forbids the interval-overlap mechanism.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+\medskip
+Round~2 makes two substantive advances:
+
+\begin{enumerate}
+\item the negative $2^n$ result is sharpened to an explicit perturbation range $b_n\in\{1,2,3,4\}$;
+\item the factorial side is no longer supported only by a heuristic obstruction: for every superexponential skeleton, and hence for $n!$, the bounded-perturbation value set has Hausdorff dimension $0$.
+\end{enumerate}
+
+The exact Type~3 status of $a_n=n!$ remains open, but one now knows that any eventual resolution cannot come from an interval-filling argument of the sort that works for $2^n$.
+
+\subsection*{8. COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 62\%}
+
+\subsection*{9. REFERENCES}
+
+\begin{enumerate}
+\item V. Kova\v c and T. Tao, \emph{On several irrationality problems for Ahmes series}, arXiv:2406.17593.
+\end{enumerate}
+
+

@@ -1,0 +1,348 @@
+\section{ROUND-2 OBJECTIVE}
+
+We pursue path \textbf{(C) obstruction/correction}. The strongest Round-1 progress isolated the main unresolved issue as a \emph{stability problem} for deletion-based constructions. In this round I sharpen that point and prove that the currently proposed dyadic deletion argument is \emph{not valid as written}: there are two independent fatal obstructions.
+
+\begin{enumerate}
+\item The ``capacity-constrained hitting set'' lemma used in the January 16, 2026 draft is false.
+\item Even if one deletes a hitting set for all \emph{currently visible} collisions at a dyadic stage $[X,2X)$, that deletion can create \emph{new} collisions whose maximal value still lies in $[X,2X)$.
+\end{enumerate}
+
+Thus the current continuation strategy does not yet yield a proof of Erd\H{o}s problem \#421. The natural corrected statement is a stronger dyadic implication theorem, proved below, which isolates exactly what a future construction must establish.
+
+\section{Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without reproving them.
+
+\begin{enumerate}
+\item \textbf{Collision normal form.} Any collision can be rewritten as an equality of products of two disjoint consecutive blocks
+\[
+\prod_{i=M-\ell+1}^{M} d_i = \prod_{i=N}^{N+k} d_i,
+\qquad M<N,
+\]
+after cancelling overlap.
+
+\item \textbf{Deletion is non-monotone.} Round-1 already proved that deleting terms can create new collisions.
+
+\item \textbf{Analytic input is not the current bottleneck.} Round-1 verified a uniform polylogarithmic point-count for the non-line separated-variable curves in the logarithmic-degree regime, and also proved that affine line components are harmless in the collision region $x<y$, $x,y>0$.
+\end{enumerate}
+
+The new work below strengthens item 2 in a way that directly breaks the dyadic stage argument, and separates the true combinatorial obstruction from the already-treated Diophantine point-counting input.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a precise decomposition of the stability issue.
+
+\begin{enumerate}
+\item \textbf{Future-scale deletions are harmless.} Once a dyadic stage has produced a set with no collisions whose values are $<2X$, later deletions above $2X$ cannot change that fact.
+
+\item \textbf{Same-scale deletions are dangerous.} A deletion inside $[X,2X)$ can create a brand-new collision whose maximal value is still in $[X,2X)$. Hence a one-shot ``hit all current collisions in $[X,2X)$'' rule is insufficient.
+
+\item \textbf{The hitting-set lemma used in the draft is false.} The lemma is false as a pure combinatorial statement, and the probabilistic proof also contains two separate errors.
+\end{enumerate}
+
+This strictly advances the Round-1 analysis: the gap is no longer a vague ``prefix-stability problem'', but a concrete obstruction with explicit counterexamples and a corrected conditional theorem.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The Round-1 gap was:
+
+\begin{quote}
+Give a rigorous stagewise construction showing that deleting a sparse set in each dyadic interval both preserves local deficiency and eliminates all collisions permanently.
+\end{quote}
+
+The exact subclaims that must be checked are now:
+
+\begin{enumerate}
+\item[(G1)] Does there exist a low-capacity hitting set $B_X\subset [X,2X)$ for the relevant collision family?
+\item[(G2)] If such a set is chosen from the \emph{current} collision family, does deleting it actually guarantee that no collisions with maximal value in $[X,2X)$ remain afterwards?
+\end{enumerate}
+
+I prove:
+
+\begin{enumerate}
+\item a positive lemma showing that later scales are harmless;
+\item an explicit same-scale counterexample disproving the naive stagewise stability needed for (G2);
+\item an explicit combinatorial counterexample disproving the hitting-set lemma used for (G1);
+\item a corrected dyadic implication theorem that states the minimal property a future construction would need.
+\end{enumerate}
+
+\section{WORK (ROUND-2)}
+
+\subsection{Future-scale deletions do not affect earlier collisions}
+
+\textbf{Lemma 1 (future-scale immutability).}
+Let $A\subset \mathbb N$ be infinite, let $X\ge 1$, and let $B\subset [2X,\infty)$. Let
+\[
+a_1<a_2<\cdots
+\qquad\text{and}\qquad
+ a'_1<a'_2<\cdots
+\]
+be the increasing enumerations of $A$ and $A\setminus B$, respectively. Then the elements of $A$ below $2X$ and the elements of $A\setminus B$ below $2X$ coincide in the same order. Consequently every consecutive block product involving only values $<2X$ is identical in the two sequences. In particular, the existence or nonexistence of collisions all of whose values are $<2X$ is unchanged by deleting $B$.
+
+\textbf{Proof.}
+Since every element of $B$ is at least $2X$, deleting $B$ removes no element of $A\cap [1,2X)$. Therefore
+\[
+A\cap [1,2X)=(A\setminus B)\cap [1,2X)
+\]
+as sets. Because both sequences are increasing enumerations, their values below $2X$ appear in exactly the same order. Hence if
+\[
+a_i,a_{i+1},\dots,a_j < 2X,
+\]
+then these same values form a consecutive block in the enumeration of $A\setminus B$ as well, with the same product, and conversely. Thus every consecutive block product formed entirely from values $<2X$ is the same before and after deleting $B$.
+
+Therefore a collision whose participating values are all $<2X$ exists in the sequence enumerating $A$ if and only if it exists in the sequence enumerating $A\setminus B$. \hfill$\square$
+
+\medskip
+
+This lemma shows that the only genuine stability problem is \emph{within the current dyadic scale}. Later dyadic stages cannot revive a collision already eliminated below $2X$.
+
+\subsection{A same-scale instability counterexample}
+
+The next proposition strengthens Round-1's non-monotonicity example. It shows that deleting inside one dyadic block can create a new collision whose maximal value remains in that very same dyadic block.
+
+\textbf{Proposition 2 (same-scale instability).}
+There exists a finite strictly increasing sequence with pairwise distinct consecutive-block products such that deleting a single term $b\in [X,2X)$ creates a new collision whose maximal value also lies in $[X,2X)$.
+
+\textbf{Proof.}
+Take
+\[
+A=(2,8,9,10,12,15).
+\]
+Its $\frac{6\cdot 7}{2}=21$ consecutive-block products are:
+\[
+\begin{array}{llllll}
+2, & 8, & 9, & 10, & 12, & 15,\\
+16, & 72, & 90, & 120, & 180,\\
+144, & 720, & 1080, & 1800,\\
+1440, & 8640, & 16200,\\
+17280, & 129600,\\
+259200.
+\end{array}
+\]
+When listed in increasing order these are
+\[
+2<8<9<10<12<15<16<72<90<120<144<180<720<1080<1440<1800<8640<16200<17280<129600<259200,
+\]
+so they are pairwise distinct. Hence $A$ has the distinct consecutive products property.
+
+Now delete the element $8$. The resulting sequence is
+\[
+A'=(2,9,10,12,15).
+\]
+In $A'$ we have the collision
+\[
+2\cdot 9\cdot 10 = 180 = 12\cdot 15.
+\]
+So the intervals $[1,3]$ and $[4,5]$ in $A'$ have equal products.
+
+The deleted value is $8\in [8,16)$, and the maximal value occurring in the new collision is $15\in [8,16)$. Thus the new collision lies in the same dyadic scale as the deletion. \hfill$\square$
+
+\medskip
+
+\textbf{Consequence.}
+A dyadic algorithm cannot justify stage $X$ by saying ``choose $B_X$ to hit all collisions currently visible with maximal value in $[X,2X)$'' and then conclude that no such collisions remain after deleting $B_X$. Proposition~2 gives a direct counterexample to that inference.
+
+\subsection{The capacity-constrained hitting-set lemma in the 2026 draft is false}
+
+The January 16, 2026 draft introduces the following statement at dyadic scale $X$:
+
+\begin{quote}
+If $\mathcal E_X$ is a family of subsets $V(E)\subset [X,2X)$ with $|V(E)|\le L(X)$ and $|\mathcal E_X|=o(X)$, then there exists a hitting set $B_X\subset [X,2X)$ such that every interval $I\subset [X,2X)$ of length $L(X)$ satisfies $|B_X\cap I|\le T(X)/2$.
+\end{quote}
+
+Here $L(X)=\lceil C_0\log X\rceil$ and $T(X)=\lceil (\log X)^{2/3}\rceil$.
+
+\textbf{Proposition 3 (the hitting-set lemma is false).}
+For all sufficiently large $X$, the above statement is false.
+
+\textbf{Proof.}
+Fix a large $X$ and an interval $I\subset [X,2X)$ of length exactly $L(X)$. Since
+\[
+L(X)=\lceil C_0\log X\rceil \quad\text{and}\quad T(X)=\lceil (\log X)^{2/3}\rceil,
+\]
+we have $L(X)\ge T(X)$ for all large $X$. Choose $T(X)$ distinct points
+\[
+v_1,\dots,v_{T(X)}\in I.
+\]
+Define a family $\mathcal E_X$ by taking $T(X)$ singleton vertex sets:
+\[
+V(E_r):=\{v_r\},\qquad r=1,\dots,T(X).
+\]
+Then every $V(E_r)$ has size $1\le L(X)$, and
+\[
+|\mathcal E_X|=T(X)=O((\log X)^{2/3})=o(X).
+\]
+So the hypotheses of the stated lemma are satisfied.
+
+But any hitting set $B_X$ for $\mathcal E_X$ must meet every singleton $\{v_r\}$, hence must contain all the points $v_1,\dots,v_{T(X)}$. Therefore
+\[
+|B_X\cap I|\ge T(X)>T(X)/2,
+\]
+which violates the required capacity bound.
+
+Thus the lemma is false. \hfill$\square$
+
+\subsection{Two independent errors in the probabilistic proof of that lemma}
+
+The same draft gives a probabilistic proof by choosing one random point $v(E)\in V(E)$ for each $E\in \mathcal E_X$. There are two separate problems.
+
+\textbf{Proposition 4 (the probability estimate used in the draft is false).}
+In the notation above, the draft's estimate
+\[
+\mathbb P\bigl(v(E)\in I\bigr)\le \frac{|I|}{X}=\frac{L(X)}{X}
+\]
+is false in general.
+
+\textbf{Proof.}
+Take the family from Proposition~3. For each $r$ one has $V(E_r)=\{v_r\}\subset I$. Since $v(E_r)$ is chosen uniformly from the singleton $V(E_r)$, it is forced that
+\[
+\mathbb P\bigl(v(E_r)\in I\bigr)=1.
+\]
+But $L(X)/X<1$ for every sufficiently large $X$. Hence the claimed upper bound fails. \hfill$\square$
+
+\textbf{Proposition 5 (the union-bound asymptotic in the draft is false).}
+Even if one had a tail estimate of the form
+\[
+\mathbb P\bigl(|B_X\cap I|>T(X)/2\bigr)\le e^{-cT(X)}
+\]
+for each interval $I$ of length $L(X)$, the subsequent claim
+\[
+2X e^{-cT(X)}\to 0
+\qquad (X\to\infty)
+\]
+with $T(X)=(\log X)^{2/3}$ is false.
+
+\textbf{Proof.}
+We have
+\[
+2X e^{-cT(X)}=
+\exp\!\bigl(\log(2X)-c(\log X)^{2/3}\bigr).
+\]
+As $X\to\infty$, the exponent tends to $+\infty$ because $\log X$ dominates $(\log X)^{2/3}$. Therefore
+\[
+2X e^{-cT(X)}\to \infty,
+\]
+not to $0$. \hfill$\square$
+
+\medskip
+
+So the hitting-set step fails at three levels:
+\begin{enumerate}
+\item the combinatorial statement is false,
+\item the probability estimate used to prove it is false,
+\item the final union-bound asymptotic is false.
+\end{enumerate}
+
+\subsection{Minimal corrected dyadic implication}
+
+The previous propositions do not disprove the original Erd\H{o}s problem. They show that the current stagewise deletion argument is incomplete. The right correction is to formulate exactly what a dyadic construction would actually need to prove.
+
+\textbf{Theorem 6 (corrected dyadic implication).}
+Let $L(X)$ and $T(X)$ be positive functions on dyadic integers $X=2^t$. Suppose one can choose sets
+\[
+B_X\subset [X,2X)\cap \mathbb Z
+\qquad (X=2,4,8,\dots)
+\]
+such that:
+
+\begin{enumerate}
+\item[(i)] for every interval $I\subset [X,2X)$ of length $L(X)$,
+\[
+|B_X\cap I|\le T(X)/2;
+\]
+
+\item[(ii)] if
+\[
+A_{\le X}:=\mathbb N\setminus \bigcup_{Y\le X} B_Y,
+\]
+then in the increasing enumeration of $A_{\le X}$ there is \emph{no} collision all of whose values are $<2X$;
+
+\item[(iii)] $|B_X|=o(X)$ as $X\to\infty$ through dyadic values.
+\end{enumerate}
+
+Then the final set
+\[
+A:=\mathbb N\setminus \bigcup_X B_X
+\]
+has asymptotic density $1$, and the increasing enumeration of $A$ has pairwise distinct consecutive-block products.
+
+\textbf{Proof.}
+First we prove density $1$. Write $X_j=2^j$ and $\varepsilon_j:=|B_{X_j}|/X_j$. By hypothesis, $\varepsilon_j\to 0$. Let $N\ge 1$ and choose $m$ with $2^m\le N<2^{m+1}$. Then
+\[
+\#\bigl(([1,N]\cap \mathbb N)\setminus A\bigr)
+\le \sum_{j\le m} |B_{2^j}|
+=\sum_{j\le m} \varepsilon_j 2^j.
+\]
+Fix $\eta>0$. Choose $j_0$ so that $\varepsilon_j\le \eta$ for all $j\ge j_0$. Then
+\[
+\sum_{j\le m} \varepsilon_j 2^j
+\le \sum_{j<j_0} \varepsilon_j 2^j + \eta \sum_{j=j_0}^{m}2^j
+\le C(\eta)+2\eta N.
+\]
+Dividing by $N$ and letting $N\to\infty$ gives
+\[
+\frac{\#(([1,N]\cap \mathbb N)\setminus A)}{N}\le 2\eta+o(1).
+\]
+Since $\eta>0$ is arbitrary, the complement of $A$ has density $0$, so $A$ has density $1$.
+
+Now suppose, for contradiction, that the increasing enumeration of $A$ has a collision. Let $M$ be the maximal value among all entries occurring in the two equal consecutive blocks. Choose dyadic $X$ with
+\[
+X\le M<2X.
+\]
+All values appearing in the collision are then $<2X$. By Lemma~1, deleting elements above $2X$ cannot affect any collision all of whose values are $<2X$. Therefore the same collision already exists in the increasing enumeration of $A_{\le X}$. This contradicts property (ii).
+
+Hence no collision exists in $A$. \hfill$\square$
+
+\medskip
+
+\textbf{Interpretation.}
+Theorem~6 shows exactly what a dyadic construction must establish. The difficult part is not merely counting current collisions. One must choose $B_X$ so that \emph{after the deletion is performed}, no collision with maximal value in $[X,2X)$ remains. Proposition~2 shows that hitting only the currently visible collisions is not enough.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now try to break the new work.
+
+\begin{enumerate}
+\item \textbf{Does Lemma~1 overlook index changes?} No. The statement is about collisions whose \emph{values} are below $2X$. Deleting only values $\ge 2X$ leaves the list of surviving values below $2X$ unchanged and in the same order, so every consecutive block among those values is unchanged.
+
+\item \textbf{Could Proposition~2 fail because I missed a duplicate in the original sequence?} No. All $21$ consecutive-block products were written explicitly, and when sorted they form a strictly increasing list. Therefore the original sequence has no collision.
+
+\item \textbf{Could the new collision in Proposition~2 already have existed before deletion in some disguised form?} No. The original sequence had no collision at all. After deletion, the equality $2\cdot 9\cdot 10=12\cdot 15$ is a genuinely new equality of consecutive-block products.
+
+\item \textbf{Does Proposition~3 use a family of vertex sets too special to matter?} It does not need to model actual collisions. The draft's lemma was stated for \emph{all} families of subsets $V(E)\subset [X,2X)$ with $|V(E)|\le L(X)$ and $|\mathcal E_X|=o(X)$. A single counterexample therefore disproves the lemma exactly as stated.
+
+\item \textbf{Could Proposition~5 be repaired by changing constants?} No. For any fixed $c>0$,
+\[
+\log(2X)-c(\log X)^{2/3}\to +\infty,
+\]
+so the claimed limit cannot hold with $T(X)=(\log X)^{2/3}$.
+
+\item \textbf{Does Theorem~6 smuggle in the conclusion?} No. It is a genuine implication theorem. Condition (ii) is strictly stronger than the invalid ``hit all currently visible collisions'' rule, and Proposition~2 proves that such strengthening is genuinely necessary.
+\end{enumerate}
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round-2 does not solve Erd\H{o}s problem \#421, but it makes a mathematically substantive advance:
+
+\begin{enumerate}
+\item it proves that the currently proposed dyadic deletion proof is not valid as written;
+\item it exhibits an explicit same-scale instability counterexample, showing that deleting a hitting set for the current collision family can create new collisions in the same dyadic block;
+\item it disproves the draft's capacity-constrained hitting-set lemma by an explicit combinatorial counterexample;
+\item it supplies the minimal corrected dyadic implication theorem (Theorem~6), which isolates the exact combinatorial task still required.
+\end{enumerate}
+
+So the analytic point-counting side may be in good shape, but the combinatorial deletion mechanism remains unresolved and is now sharply formulated.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 62\%}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#421}, problem page and discussion thread, accessed March 7, 2026.
+\item P. Chojecki, \emph{Density-One Sequences with Distinct Consecutive Products}, draft dated January 16, 2026.
+\item W. Castryck, R. Cluckers, Ph. Dittmann, and K. H. Nguyen, \emph{The dimension growth conjecture, polynomial in the degree and without logarithmic factors}, Algebra \& Number Theory \textbf{14} (2020), no.~8, 2261--2294.
+\end{enumerate}

@@ -1,0 +1,289 @@
+\section{ROUND-3 OBJECTIVE}
+
+We pursue path \textbf{(C) obstruction/correction}. Round-2 already ruled out the original dyadic ``hit the current collision family'' argument. The most promising continuation is therefore to audit the \emph{revised} January 2026 Moser--Tardos formulation, because that is the latest publicly described route claiming to overcome the Round-2 instability.
+
+The new goal of this round is to prove a \emph{sharper, theorem-level obstruction}: the revised collision-cylinder encoding still fails near the left boundary of each dyadic block. More precisely, the admissible pattern sets used to define the bad events are automatically empty for endpoints in a boundary strip $[X,X+2T(X)]$. Hence the bad-event family cannot possibly encode all logarithmic collisions with maximal element in $[X,2X)$. This is not the same as the Round-2 same-scale deletion obstruction; it is a separate defect in the revised local-pattern/LLL module.
+
+I also isolate the minimal correction needed to make that module logically coherent.
+
+\section{Round-2 FOUNDATION USED}
+
+I use the following Round-2 results as fixed inputs.
+
+\begin{enumerate}
+\item \textbf{Future-scale immutability.} Deleting elements $\ge 2X$ cannot create or destroy collisions all of whose values are $<2X$.
+\item \textbf{Same-scale instability.} Deleting inside $[X,2X)$ can create a new collision whose maximal value still lies in $[X,2X)$.
+\item \textbf{Corrected dyadic implication theorem.} If one can choose dyadic deletion sets $B_X\subset[X,2X)$ so that after stage $X$ there are no collisions with values $<2X$, and if $|B_X|=o(X)$, then the final set has density $1$ and no collisions.
+\end{enumerate}
+
+I also use the Round-1 collision normal form, which rewrites any collision as an equality of products of two disjoint consecutive blocks.
+
+\section{NEW INSIGHT / TOOL (ROUND-3)}
+
+The new ingredient is a \textbf{boundary-strip emptiness lemma} for current-scale-only local pattern encodings.
+
+The revised January 2026 proof introduces, for each dyadic $X$, a variable set
+\[
+V_X=[X,2X)\cap A_0,
+\]
+windowed local patterns near an endpoint $u$, and an admissibility condition requiring that \emph{every} integer interval $J$ of length $L(X)$ inside the local window contain at least a positive proportion of currently deleted points from $V_X$. The collision bad events are indexed only by such admissible patterns.
+
+I prove that any such scheme is automatically empty on the boundary strip $u\in[X,X+2T(X)]$: there exists a length-$L(X)$ test interval $J$ lying entirely to the left of $X$, so $J\cap V_X=\varnothing$, and the required positive lower bound is impossible. Consequently the collision-cylinder family cannot encode collisions with an endpoint in that strip.
+
+This is a strictly new obstruction beyond Round-2, and it rules out an entire class of boundary-buffer Moser--Tardos encodings that only record the \emph{current-scale} deletion bits.
+
+\section{ATTACK PLAN (ROUND-3)}
+
+Round-2 left the following possibility open:
+
+\begin{quote}
+Replace the invalid one-shot hitting-set step by a Moser--Tardos/LLL construction on local pattern events.
+\end{quote}
+
+The exact gap to check now is whether the bad-event family really covers \emph{all} logarithmic collisions with maximal element in $[X,2X)$.
+
+The plan is:
+
+\begin{enumerate}
+\item Prove an abstract boundary-strip emptiness lemma for current-scale-only admissible pattern sets.
+\item Apply it to the January 17, 2026 preprint's definitions of $\Sigma_u$ and $T_X$.
+\item Deduce that the collision-cylinder family misses an entire boundary strip of possible endpoints.
+\item Record the second, formal mismatch: the scale theorem quoted in the preprint states only an upper bound on $|B_X\cap I|$ for $I\subset[X,2X)$, whereas the coverage lemma assumes a two-sided capacity condition on $D_{<X}\cup B_X$ for all $I\subset[X/2,2X)$.
+\item Give the minimal corrected statement consistent with the Round-2 corrected dyadic implication theorem.
+\end{enumerate}
+
+This overcomes the previous obstacle in the sense that it identifies a \emph{concrete, local, rigorously provable failure mode} in the revised proof, rather than merely saying that the combinatorics is delicate.
+
+\section{WORK (ROUND-3)}
+
+\subsection{Abstract boundary-strip emptiness for current-scale pattern families}
+
+Fix positive integers $X,L,T$ with $T\ge 1$. Let
+\[
+V_X\subseteq [X,2X)
+\]
+be any set of ``current-scale eligible variables''. For $u\in[X,2X)$ suppose one defines a family $\Sigma_u$ of local patterns on a subset of the current-scale window near $u$, with the following property:
+
+\begin{quote}
+($*$) For every $\sigma\in\Sigma_u$ and every integer interval $J\subset [u-(L+2T),u)$ of length $L$, one has
+\[
+\sum_{n\in J\cap V_X}\sigma(n)\ge cT
+\]
+for some fixed constant $c>0$.
+\end{quote}
+
+Here the sum is taken only over the current-scale positions $J\cap V_X$.
+
+\textbf{Lemma 5.1 (boundary-strip emptiness).}
+Assume ($*$). Then for every
+\[
+u\in [X,X+2T]
+\]
+one has $\Sigma_u=\varnothing$.
+
+\textbf{Proof.}
+Fix $u\in[X,X+2T]$. Consider the interval
+\[
+J:=[X-L,X).
+\]
+It has length $L$. Also,
+\[
+u-(L+2T)\le X-L
+\]
+because $u\le X+2T$, and clearly $X\le u$. Hence
+\[
+J\subset [u-(L+2T),u).
+\]
+But by definition $V_X\subseteq [X,2X)$, so
+\[
+J\cap V_X=\varnothing.
+\]
+Therefore for every pattern $\sigma$ one has
+\[
+\sum_{n\in J\cap V_X}\sigma(n)=0.
+\]
+Since $T\ge1$ and $c>0$, this contradicts the lower bound $0\ge cT>0$ required by \((*)\). Hence no such $\sigma$ exists and $\Sigma_u=\varnothing$. \hfill$\square$
+
+\medskip
+
+The point is that the contradiction is \emph{structural}: it does not depend on number theory, on the geometry input, or on whether a collision actually exists. It follows solely from using a positive lower bound on \emph{current-scale} deletions inside a buffered window that reaches left of $X$.
+
+\subsection{Application to the January 17, 2026 preprint}
+
+In the January 17, 2026 preprint, the scale-$X$ Moser--Tardos module introduces
+\[
+V_X=[X,2X)\cap A_0,
+\]
+and for $u\in[X/2,2X)$ it defines admissible local patterns $\sigma_u\in\Sigma_u$ by the condition that for every integer interval
+\[
+J\subset [u-(L+2T),u)
+\qquad\text{with}\qquad |J|=L,
+\]
+one has
+\[
+\frac{T}{200}
+\le
+\sum_{n\in J\cap V_X}\sigma_u(n)
+\le
+\frac{T}{2}.
+\]
+The collision bad events $A_\tau$ are indexed by tuples
+\[
+\tau=(x,y,\ell,k,\sigma_x,\sigma_y)
+\]
+with $\sigma_x\in\Sigma_x$ and $\sigma_y\in\Sigma_y$.
+
+\textbf{Corollary 5.2 (preprint boundary emptiness).}
+For the preprint's pattern definition, one has
+\[
+\Sigma_u=\varnothing
+\qquad\text{for every }u\in[X,X+2T].
+\]
+
+\textbf{Proof.}
+Apply Lemma~5.1 with $c=1/200$. \hfill$\square$
+
+\textbf{Corollary 5.3 (the cylinder family misses a boundary strip).}
+In the preprint's collision index set $T_X$, no tuple $\tau=(x,y,\ell,k,\sigma_x,\sigma_y)$ can have
+\[
+x\in[X,X+2T]
+\qquad\text{or}\qquad
+y\in[X,X+2T].
+\]
+Hence the bad-event family $\{A_\tau:\tau\in T_X\}$ does not encode any putative logarithmic collision whose endpoint $x$ or $y$ lies in that boundary strip.
+
+\textbf{Proof.}
+If $x\in[X,X+2T]$, then Corollary~5.2 gives $\Sigma_x=\varnothing$, so no legal tuple $\tau\in T_X$ can involve that $x$. The same argument applies to $y$. \hfill$\square$
+
+\subsection{Consequence for the coverage lemma}
+
+The preprint's coverage lemma asserts:
+
+\begin{quote}
+If global capacity holds and there is a logarithmic collision in the final kept set with maximal element in $[X,2X)$, then there exists a tuple $\tau\in T_X$ such that the corresponding cylinder event $A_\tau$ occurs.
+\end{quote}
+
+The proof says: take the actual endpoint patterns $\sigma_x,\sigma_y$, define $\tau=(x,y,\ell,k,\sigma_x,\sigma_y)$, and conclude $\tau\in T_X$.
+
+\textbf{Proposition 5.4 (the coverage step is not justified as written).}
+The above proof step fails whenever $x\in[X,X+2T]$ or $y\in[X,X+2T]$.
+
+\textbf{Proof.}
+By Corollary~5.2, in that situation one has $\Sigma_x=\varnothing$ or $\Sigma_y=\varnothing$. Therefore the actual pattern pair cannot satisfy the legality requirement
+\[
+\sigma_x\in\Sigma_x,
+\qquad
+\sigma_y\in\Sigma_y
+\]
+needed to define a tuple in $T_X$. So the step ``define $\tau$ by these endpoints, lengths, and patterns'' is invalid in that boundary regime. \hfill$\square$
+
+\medskip
+
+This proposition does \emph{not} assert that a boundary-strip collision actually occurs in the final set. What it proves is the sharper statement needed for proof-checking: \emph{the current bad-event family does not cover that case}. Thus the revised Moser--Tardos argument is incomplete unless the boundary case is handled separately or the pattern encoding is changed.
+
+\subsection{A second formal mismatch: theorem statement vs. coverage hypothesis}
+
+The same preprint defines, for every length-$L$ interval $I\subset[X/2,2X)$, the two-sided capacity bad event
+\[
+B_I=B_I^+\cup B_I^-
+\]
+where
+\[
+B_I^+ := \{ |(D_{<X}\cup B_X)\cap I|>T\},
+\qquad
+B_I^- := \{ |(D_{<X}\cup B_X)\cap I|<T/100\}.
+\]
+The coverage lemma assumes
+\[
+\bigcap_I \neg B_I,
+\]
+that is, two-sided capacity for \emph{all} such intervals $I\subset[X/2,2X)$.
+
+However, the scale theorem is stated only as:
+\begin{quote}
+for every interval $I\subset[X,2X)$ of length $L$, one has $|B_X\cap I|\le T/2$.
+\end{quote}
+
+\textbf{Proposition 5.5 (statement-level implication failure).}
+The scale theorem's stated conclusion does \emph{not} imply the hypothesis of the coverage lemma.
+
+\textbf{Proof.}
+The coverage lemma requires two independent features:
+\begin{enumerate}
+\item an \emph{upper and lower} bound on $|(D_{<X}\cup B_X)\cap I|$;
+\item these bounds for \emph{all} length-$L$ intervals $I\subset[X/2,2X)$.
+\end{enumerate}
+The theorem statement supplies neither:
+\begin{enumerate}
+\item it gives only an upper bound, and only for $|B_X\cap I|$, not for $|(D_{<X}\cup B_X)\cap I|$;
+\item it restricts $I$ to lie inside $[X,2X)$, omitting intervals that meet the left buffer $[X/2,X)$.
+\end{enumerate}
+Therefore the stated conclusion does not logically imply the coverage hypothesis. \hfill$\square$
+
+This is weaker than Proposition~5.4: Proposition~5.5 is only a formal implication mismatch, while Proposition~5.4 gives a concrete structural reason the current event family cannot cover the boundary strip.
+
+\subsection{Minimal corrected statement}
+
+Round-2 already provided the right global target: a dyadic stage theorem must directly imply that \emph{after stage $X$}, no collision with maximal value in $[X,2X)$ remains.
+
+The minimal local correction consistent with the present Moser--Tardos strategy is:
+
+\begin{quote}
+At scale $X$, define local patterns on the \emph{full buffered window}
+\[
+\widetilde W_u:=[u-(L+2T),u)\cap [X/2,2X)\cap A_0,
+\]
+recording the \emph{total} deletion pattern of $D_{<X}\cup B_X$ on $\widetilde W_u$ (earlier-scale bits are fixed constants, current-scale bits are random variables). Define admissibility using the total deletion pattern on every length-$L$ interval in the window. Then prove:
+\begin{enumerate}
+\item a corrected coverage lemma for these full-window patterns;
+\item a two-sided capacity statement on all length-$L$ intervals in $[X/2,2X)$;
+\item $|B_X|=o(X)$.
+\end{enumerate}
+\end{quote}
+
+By the Round-2 corrected dyadic implication theorem, such a corrected scale theorem would be sufficient for the whole dyadic construction.
+
+I do \emph{not} prove that this correction works. The point of this round is narrower and rigorous: the current module does not yet provide it.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now try to break the new claims.
+
+\begin{enumerate}
+\item \textbf{Did Lemma~5.1 accidentally use information about $A_0$?} No. The proof uses only the set inclusion $V_X\subseteq [X,2X)$, so it is independent of any arithmetic property of $A_0$.
+
+\item \textbf{Is the interval $J=[X-L,X)$ always legal?} Yes. It has length $L$. The only inclusion needed is $J\subset [u-(L+2T),u)$, and this follows exactly from $u\in[X,X+2T]$.
+
+\item \textbf{Could the preprint avoid the problem because no collision endpoint can lie in $[X,X+2T]$?} No such restriction is stated anywhere in the scale theorem or coverage lemma. The theorem aims to remove all logarithmic collisions with maximal element in $[X,2X)$.
+
+\item \textbf{Is Proposition~5.5 merely cosmetic?} No. The proof of the coverage lemma explicitly assumes two-sided capacity on the larger buffered interval range $[X/2,2X)$, while the scale theorem as stated guarantees only an upper bound for $B_X$ on the smaller range $[X,2X)$. This is a genuine logical gap in the printed implication.
+
+\item \textbf{Does this round disprove the original Erd\H{o}s problem?} No. It disproves neither the problem nor the possibility that a corrected Moser--Tardos implementation could work. It proves only that the current revised proof is not yet complete.
+\end{enumerate}
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+This round makes a mathematically substantive advance beyond Round-2:
+
+\begin{enumerate}
+\item it proves a \emph{general boundary-strip emptiness theorem} for current-scale-only local pattern encodings with a positive lower deletion requirement;
+\item it applies that theorem to the January 17, 2026 Moser--Tardos preprint and deduces that the collision-cylinder family omits every endpoint in $[X,X+2T(X)]$;
+\item it pinpoints the exact failure in the coverage lemma: the actual endpoint patterns need not lie in the admissible sets $\Sigma_x,\Sigma_y$;
+\item it isolates a second, purely formal mismatch between the theorem statement and the hypothesis needed by the coverage lemma;
+\item it gives the minimal corrected local-pattern statement that would need to be proved to revive the dyadic Moser--Tardos strategy.
+\end{enumerate}
+
+So the investigation is still unresolved, but the current best publicly described proof route has now been narrowed to a sharper and more explicit obstruction than in Round-2.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 70\%}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#421}, problem page and discussion thread.
+\item P. Chojecki, \emph{A Density-One Sequence with Distinct Consecutive-Block Products}, January 17, 2026 preprint.
+\end{enumerate}

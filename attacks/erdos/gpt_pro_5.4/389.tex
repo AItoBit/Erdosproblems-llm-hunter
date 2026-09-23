@@ -1,0 +1,423 @@
+\section*{Problem 389. A divisibility problem for two consecutive blocks}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (A) was not realistic after Round~1, because no general existence theorem for all $n$ had been found.  The most promising Round-2 goal is therefore the fail-safe route: prove theorems that strictly advance beyond Round~1.
+
+I will do this in three ways.
+
+\begin{itemize}
+\item I derive an explicit digit-sum criterion from the Round-1 valuation reformulation.
+\item I give infinite families of solutions for $n=2$ and $n=3$ (and the trivial complete solution for $n=1$).
+\item I prove that for every fixed $n$, infinitely many $k$ fail.
+\end{itemize}
+
+So the global problem remains open, but the picture is now much sharper.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts.
+
+\begin{itemize}
+\item The problem asks whether for every $n\ge 1$ there exists $k\ge 1$ such that
+\[
+\prod_{i=0}^{k-1}(n+i)\mid \prod_{i=0}^{k-1}(n+k+i).
+\]
+
+\item Round-1 binomial reformulation:
+\[
+\prod_{i=0}^{k-1}(n+i)\mid \prod_{i=0}^{k-1}(n+k+i)
+\quad\Leftrightarrow\quad
+{n+k-1\choose k}\mid {n+2k-1\choose k}.
+\]
+
+\item Round-1 valuation reformulation:
+the divisibility is equivalent to
+\[
+v_p\!\left((n+2k-1)!\right)+v_p\!\left((n-1)!\right)\ge 2v_p\!\left((n+k-1)!\right)
+\]
+for every prime $p$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The key new tool is a \emph{digit-sum criterion} obtained from the Round-1 valuation identity via Legendre's formula.
+
+If $s_p(m)$ denotes the sum of the base-$p$ digits of $m$, then
+\[
+v_p(t!)=\frac{t-s_p(t)}{p-1}.
+\]
+Substituting this into the Round-1 valuation condition yields an exact criterion in terms of
+\[
+2s_p(n+k-1)-s_p(n+2k-1)-s_p(n-1).
+\]
+
+This criterion is strong enough to prove:
+\begin{itemize}
+\item every $k$ works for $n=1$;
+\item infinitely many $k$ work for $n=2$;
+\item infinitely many $k$ work for $n=3$;
+\item for each fixed $n$, infinitely many $k$ do \emph{not} work.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was the absence of any constructive mechanism producing or ruling out admissible $k$.
+
+To overcome that, I first derive the digit-sum test.  Then I use it in two opposite directions:
+
+\begin{enumerate}
+\item choose $k$ so that the relevant base-$p$ digit sums force divisibility (positive families);
+\item choose $k$ so that one particular prime gives a negative digit-sum expression (negative families).
+\end{enumerate}
+
+This supplies strict, rigorous progress on both the existence and nonexistence sides.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Define
+\[
+T_n:=\left\{k\ge 1:\ \prod_{i=0}^{k-1}(n+i)\mid \prod_{i=0}^{k-1}(n+k+i)\right\}.
+\]
+
+\medskip
+\noindent\textbf{Claim 1 (digit-sum criterion).}
+\emph{A positive integer $k$ belongs to $T_n$ if and only if for every prime $p$ dividing $\prod_{i=0}^{k-1}(n+i)$ one has}
+\[
+2s_p(n+k-1)-s_p(n+2k-1)-s_p(n-1)\ge 0.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+By Round-1, $k\in T_n$ if and only if
+\[
+v_p\!\left((n+2k-1)!\right)+v_p\!\left((n-1)!\right)-2v_p\!\left((n+k-1)!\right)\ge 0
+\]
+for every prime $p$.
+
+Now apply Legendre's formula
+\[
+v_p(t!)=\frac{t-s_p(t)}{p-1}.
+\]
+The left-hand side becomes
+\[
+\frac{(n+2k-1)-s_p(n+2k-1)+(n-1)-s_p(n-1)-2(n+k-1)+2s_p(n+k-1)}{p-1},
+\]
+which simplifies to
+\[
+\frac{2s_p(n+k-1)-s_p(n+2k-1)-s_p(n-1)}{p-1}.
+\]
+Therefore the valuation inequality is equivalent to
+\[
+2s_p(n+k-1)-s_p(n+2k-1)-s_p(n-1)\ge 0.
+\]
+
+It is enough to check primes dividing the left block $\prod_{i=0}^{k-1}(n+i)$, because if a prime $p$ does not divide that block, then its left-side valuation is $0$ and the divisibility condition at $p$ is automatic.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 2.}
+\emph{$T_1=\{1,2,3,\dots\}$.  In other words, every $k\ge 1$ works for $n=1$.}
+
+\medskip
+\noindent\textbf{Proof.}
+For $n=1$ the divisibility becomes
+\[
+1\cdot 2\cdots k \mid (k+1)(k+2)\cdots(2k).
+\]
+The left-hand side is $k!$, and the right-hand side is
+\[
+\frac{(2k)!}{k!}={2k\choose k}\,k!.
+\]
+Hence the right-hand side is an integer multiple of $k!$, so every $k$ works.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 3.}
+\emph{$T_2$ is infinite.  More precisely, if $p>5$ and $q$ are primes with}
+\[
+\frac{3p}{2}<q<2p,
+\]
+\emph{then}
+\[
+k=pq-1
+\]
+\emph{belongs to $T_2$.}
+
+\medskip
+\noindent\textbf{Proof.}
+For $n=2$, Round-1 gives
+\[
+k\in T_2
+\quad\Leftrightarrow\quad
+{k+1\choose k}=k+1\mid {2k+1\choose k}.
+\]
+So it suffices to show that $k+1=pq$ divides ${2k+1\choose k}$.
+
+Because $q<2p$, the prime factorization of $k+1$ is exactly $pq$ with two distinct primes $p$ and $q$.
+Hence it is enough to show that both $p$ and $q$ divide ${2k+1\choose k}$.
+
+By Claim~1 with $n=2$, it is enough to verify
+\[
+2s_r(k+1)-s_r(2k+1)-1\ge 0
+\]
+for $r=p$ and $r=q$.
+
+\smallskip
+\noindent\emph{Base $p$.}
+Since $k+1=pq$ and $q<2p$, we can write
+\[
+k+1=pq=p^2+(q-p)p.
+\]
+Therefore
+\[
+s_p(k+1)=1+(q-p).
+\]
+Also
+\[
+2k+1=2pq-1=3p^2+(2q-3p-1)p+(p-1).
+\]
+The coefficient $2q-3p-1$ is a valid base-$p$ digit because $q>3p/2$ implies $2q-3p\ge 1$, and $q<2p$ implies $2q-3p-1\le p-2$.
+Hence
+\[
+s_p(2k+1)=3+(2q-3p-1)+(p-1)=2q-2p+1.
+\]
+Thus
+\[
+2s_p(k+1)-s_p(2k+1)-1
+=2(q-p+1)-(2q-2p+1)-1=0.
+\]
+
+\smallskip
+\noindent\emph{Base $q$.}
+Now
+\[
+k+1=pq=p\cdot q+0,
+\]
+so
+\[
+s_q(k+1)=p.
+\]
+Also
+\[
+2k+1=2pq-1=q^2+(2p-q-1)q+(q-1).
+\]
+Again the coefficient $2p-q-1$ is a valid base-$q$ digit because $q<2p$ implies $2p-q-1\ge 0$, and $q>p$ implies $2p-q-1<q$.
+Therefore
+\[
+s_q(2k+1)=1+(2p-q-1)+(q-1)=2p-1,
+\]
+and hence
+\[
+2s_q(k+1)-s_q(2k+1)-1=2p-(2p-1)-1=0.
+\]
+
+So both primes $p$ and $q$ divide ${2k+1\choose k}$, hence $pq=k+1$ divides ${2k+1\choose k}$, and therefore $k\in T_2$.
+
+Finally, there are infinitely many such prime pairs $(p,q)$.  Indeed, Nagura's theorem gives a prime in $(x,6x/5)$ for every sufficiently large $x$; taking $x=3p/2$ yields a prime
+\[
+q\in\left(\frac{3p}{2},\frac{9p}{5}\right)\subset\left(\frac{3p}{2},2p\right)
+\]
+for every sufficiently large prime $p$.
+So $T_2$ is infinite.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 4.}
+\emph{$T_3$ is infinite.  More precisely, if $k\in T_2$, then $k-1\in T_3$.}
+
+\medskip
+\noindent\textbf{Proof.}
+Assume $k\in T_2$.
+Then by the $n=2$ binomial reformulation,
+\[
+k+1\mid {2k+1\choose k}.
+\]
+Use the standard identity
+\[
+{2k+1\choose k}=\frac{2k+1}{k+1}{2k\choose k}.
+\]
+Multiplying the divisibility $k+1\mid {2k+1\choose k}$ by $k$ gives
+\[
+k(k+1)\mid k{2k+1\choose k}=(2k+1){2k\choose k-1}.
+\]
+Now
+\[
+\gcd(2k+1,k)=1,\qquad \gcd(2k+1,k+1)=1,
+\]
+so
+\[
+\gcd(2k+1,k(k+1))=1.
+\]
+Therefore
+\[
+k(k+1)\mid {2k\choose k-1}.
+\]
+Since $k(k+1)$ is always even, this implies
+\[
+{k+1\choose 2}=\frac{k(k+1)}{2}\mid {2k\choose k-1}.
+\]
+Now apply the Round-1 binomial reformulation with $n=3$ and $K:=k-1$:
+\[
+K\in T_3
+\quad\Leftrightarrow\quad
+{K+2\choose K}={K+2\choose 2}\mid {2K+2\choose K}.
+\]
+Substituting $K=k-1$ gives exactly
+\[
+{k+1\choose 2}\mid {2k\choose k-1},
+\]
+which we have proved.  Hence $k-1\in T_3$.
+\hfill\textit{QED.}
+
+Combining Claims~3 and~4, the explicit family
+\[
+k=pq-2
+\]
+belongs to $T_3$ whenever $p>5$ and $q$ are primes with $3p/2<q<2p$.
+
+\medskip
+\noindent\textbf{Claim 5.}
+\emph{For every fixed $n\ge 2$, the complement of $T_n$ is infinite.  In fact, if $p>n-1$ is prime and $m\ge 2$, then}
+\[
+k=2p^m-n+1
+\]
+\emph{does not belong to $T_n$.}
+
+\medskip
+\noindent\textbf{Proof.}
+Fix $n\ge 2$, choose a prime $p>n-1$, choose $m\ge 2$, and define
+\[
+k=2p^m-n+1.
+\]
+Then
+\[
+n+k-1=2p^m,
+\]
+so $p$ divides the left block $\prod_{i=0}^{k-1}(n+i)$, and Claim~1 applies to this prime $p$.
+
+Because $p>n-1$, the base-$p$ expansion of $n-1$ is a single digit, so
+\[
+s_p(n-1)=n-1.
+\]
+Also
+\[
+n+k-1=2p^m,
+\]
+hence
+\[
+s_p(n+k-1)=2.
+\]
+
+Now
+\[
+n+2k-1=4p^m-n+1.
+\]
+Write this in base $p$ as
+\[
+4p^m-n+1
+=3p^m+(p-1)(p+p^2+\cdots+p^{m-1})+(p-n+1).
+\]
+This is valid because $p>n-1$, so $0\le p-n+1\le p-1$.
+Therefore
+\[
+s_p(n+2k-1)=3+(m-1)(p-1)+(p-n+1).
+\]
+
+Insert these values into Claim~1:
+\[
+2s_p(n+k-1)-s_p(n+2k-1)-s_p(n-1)
+\]
+\[
+=4-\bigl(3+(m-1)(p-1)+(p-n+1)\bigr)-(n-1)
+=1-p-(m-1)(p-1)<0.
+\]
+So the digit-sum criterion fails for the prime $p$, and therefore $k\notin T_n$.
+
+Since there are infinitely many choices of $p$ and $m$, the complement of $T_n$ is infinite.
+\hfill\textit{QED.}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I check the new arguments against the main possible flaws.
+
+\begin{itemize}
+\item \textbf{Index shift.}
+The literature on this problem often uses the parameter $n-1$ instead of $n$.
+To avoid any hidden mismatch, every statement above was re-derived in the present notation.
+
+\item \textbf{Claim 1 uses only primes dividing the left block.}
+That is correct: divisibility needs to be checked only at primes that occur on the left.  For primes not dividing the left block, the left valuation is $0$ and the divisibility condition is automatic.
+
+\item \textbf{Base-$p$ digit expansions in Claim~3.}
+The inequalities
+\[
+\frac{3p}{2}<q<2p
+\]
+were used exactly to ensure that the coefficients in the base-$p$ and base-$q$ expansions are valid digits.  I checked both bounds explicitly in the proof.
+
+\item \textbf{Infinitely many prime pairs $(p,q)$.}
+This does not follow from Bertrand alone, but it does follow from Nagura's theorem on primes in short intervals, which is why I used Nagura explicitly.
+
+\item \textbf{The reduction from $T_2$ to $T_3$.}
+The step
+\[
+k(k+1)\mid (2k+1){2k\choose k-1}
+\quad\Rightarrow\quad
+k(k+1)\mid {2k\choose k-1}
+\]
+uses $\gcd(2k+1,k(k+1))=1$, and this was checked directly.
+
+\item \textbf{Claim~5.}
+The chosen prime $p$ really does divide the left block because $n+k-1=2p^m$ is the last term of that block.  The base-$p$ expansion of $4p^m-n+1$ was checked by direct summation.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advances beyond Round~1 are the following.
+
+\begin{enumerate}
+\item There is an exact digit-sum criterion for membership in $T_n$.
+
+\item The problem is completely solved for $n=1$: every $k$ works, so in this case the complement of $T_1$ is empty.
+
+\item There are infinitely many solutions for $n=2$, for example
+\[
+k=pq-1
+\]
+with primes $p>5$ and $3p/2<q<2p$.
+
+\item There are infinitely many solutions for $n=3$, for example
+\[
+k=pq-2
+\]
+with the same prime-pair condition.
+
+\item For every fixed $n\ge 2$, there are infinitely many failures; indeed
+\[
+k=2p^m-n+1
+\]
+never works whenever $p>n-1$ is prime and $m\ge 2$.
+\end{enumerate}
+
+What remains open is the original global existence question:
+for each $n\ge 1$, must the set $T_n$ be nonempty?
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item M. Ulas, \emph{On the Erd\H{o}s--Straus and Erd\H{o}s--Graham problems}, especially the digit-sum criterion and the explicit families for the shifted indexing version of this problem.
+
+\item J. Nagura, \emph{On the interval containing at least one prime number}, for the prime-in-short-interval statement used to make the family in Claim~3 infinite.
+
+\item The Erd\H{o}s Problems site, Problem~389, and OEIS A375071 for computational background only.
+\end{enumerate}
+
+
+

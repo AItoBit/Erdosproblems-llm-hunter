@@ -19,6 +19,44 @@ ATTACKS_DIR = BASE_DIR / "attacks"
 LISTS_DIR = BASE_DIR / "lists"
 DATA_DIR = BASE_DIR / "docs" / "data"
 REVIEWS_DIR = BASE_DIR / "reviews"
+ERDOS_STATUS_PATH = LISTS_DIR / "erdos_status.json"
+# Tao's database includes independence results in its total solved count.
+RESOLVED_ERDOS_STATUSES = {'proved', 'disproved', 'solved', 'independent'}
+
+
+def load_erdos_status():
+    """Load the versioned upstream snapshot; ordinary builds work offline."""
+    with ERDOS_STATUS_PATH.open(encoding='utf-8') as f:
+        return json.load(f)
+
+
+def apply_erdos_status(problems, snapshot):
+    """Keep LLM claims separate from the current mathematical problem status."""
+    statuses = snapshot['problems']
+    missing = sorted(set(problems) - set(statuses), key=int)
+    if missing:
+        raise ValueError(
+            'Missing upstream status for Erdos problems: '
+            + ', '.join(missing)
+            + '. Run python scripts/sync_erdos_status.py before building.'
+        )
+
+    for number, problem in problems.items():
+        upstream = statuses[number]
+        problem['llm_status'] = problem['status'] if problem.get('attacks') else 'none'
+        problem['status'] = upstream['status']
+        problem['status_updated'] = upstream['status_updated']
+        problem['is_solved'] = upstream['informal_status'] in RESOLVED_ERDOS_STATUSES
+        problem['statement_formalization'] = upstream['statement_formalization']
+        problem['solution_formalization'] = upstream['solution_formalization']
+        problem['database_url'] = snapshot['database_url']
+        if isinstance(problem.get('completion'), (int, float)):
+            problem['llm_completion'] = problem['completion']
+            problem['completion_source'] = 'llm'
+        if problem['is_solved']:
+            problem['completion'] = 100
+            problem['completion_source'] = 'database'
+    return problems
 
 
 def read_tex_file(filepath):
@@ -47,6 +85,21 @@ def extract_completion(content):
         right = min(len(text), end + window)
         return confidence_re.search(text[left:right]) is not None
 
+    def is_rejected_value(text, start, end):
+        # Reviews may quote a completion claim only to reject it. Match the
+        # rejection next to that value, without discarding a corrected estimate.
+        formatting = r'\\[A-Za-z]+\*?|[{}\'"`“”‘’$]'
+        before = re.sub(formatting, '', text[:start])
+        after = re.sub(formatting, '', text[end:])
+        return (
+            re.search(r'\b(?:not|rather than)\s*$', before, re.IGNORECASE)
+            or re.match(
+                r'\s*(?:(?:is|was|would be)\s+)?'
+                r'(?:false|incorrect|invalid|wrong|rejected|unsupported|unjustified)\b',
+                after, re.IGNORECASE,
+            )
+        )
+
     for idx, line in enumerate(lines):
         if not re.search(r'COMPLETION\s*ESTIMATE', line, re.IGNORECASE):
             continue
@@ -59,6 +112,8 @@ def extract_completion(content):
         for match in re.finditer(r'(\d+(?:\.\d+)?)\s*\\?%', window_text):
             if is_confidence_context(window_text, match.start(), match.end()):
                 continue
+            if is_rejected_value(window_text, match.start(), match.end()):
+                continue
             try:
                 local_values.append(float(match.group(1)))
             except ValueError:
@@ -70,7 +125,11 @@ def extract_completion(content):
 
         # Fallback: decimal fraction (e.g., 0.10) -> convert to percent.
         for match in re.finditer(r'\b0?\.\d+\b', window_text):
+            if re.match(r'\s*\\?%', window_text[match.end():]):
+                continue
             if is_confidence_context(window_text, match.start(), match.end()):
+                continue
+            if is_rejected_value(window_text, match.start(), match.end()):
                 continue
             try:
                 decimal_value = float(match.group(0))
@@ -142,7 +201,9 @@ def parse_attack(content, model_name, date_posted=None):
         sections[current_section] = '\n'.join(current_content).strip()
 
     # Determine status from raw content.
-    status = 'unresolved' if re.search(r'unresolved', content, re.IGNORECASE) else 'solved'
+    status = 'unresolved' if re.search(
+        r'\bunresolved\b|\bremains\s+open\b', content, re.IGNORECASE
+    ) else 'solved'
 
     completion = extract_completion(content)
 
@@ -287,7 +348,7 @@ def build_erdos_data():
     # Aggregate status across all attacks for each problem
     problems = aggregate_problem_status(problems)
 
-    return problems
+    return apply_erdos_status(problems, load_erdos_status())
 
 
 def build_mo_data():
@@ -403,6 +464,8 @@ def generate_js_data(erdos_problems, mo_problems):
         # Sort by problem number
         sorted_problems = dict(sorted(erdos_problems.items(), key=lambda x: int(x[0]) if x[0].isdigit() else float('inf')))
         f.write(f"var erdosProblems = {json.dumps(sorted_problems, indent=2)};\n")
+        source = {key: value for key, value in load_erdos_status().items() if key != 'problems'}
+        f.write(f"var erdosStatusSync = {json.dumps(source, indent=2)};\n")
 
     # Generate mo_data.js
     with open(DATA_DIR / "mo_data.js", 'w', encoding='utf-8') as f:
@@ -415,7 +478,8 @@ def generate_js_data(erdos_problems, mo_problems):
         'erdos': {
             'total_problems': len(erdos_problems),
             'with_attacks': sum(1 for p in erdos_problems.values() if p.get('attacks')),
-            'models': list(set(
+            'solved_problems': sum(1 for p in erdos_problems.values() if p['is_solved']),
+            'models': sorted(set(
                 a['model']
                 for p in erdos_problems.values()
                 for a in p.get('attacks', [])
@@ -424,7 +488,7 @@ def generate_js_data(erdos_problems, mo_problems):
         'mo': {
             'total_problems': len(mo_problems),
             'with_attacks': sum(1 for p in mo_problems.values() if p.get('attacks')),
-            'models': list(set(
+            'models': sorted(set(
                 a['model']
                 for p in mo_problems.values()
                 for a in p.get('attacks', [])

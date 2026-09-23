@@ -1,0 +1,630 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}: isolate the \emph{next exact arithmetic obstruction} after the now-settled family \(\omega(n)\le 2\).
+
+Round-(round\_no-1) proved a uniform absolute bound for
+\[
+S_{\mathrm{all}}(n)=\sum_{1\le i<j\le t}\frac1{d_j-d_i}
+\]
+on the whole family of integers \(n\) with at most two distinct prime factors. The exact remaining gap was whether the first genuinely new family,
+\[
+n=p^a q^b r^c \qquad (p<q<r\text{ distinct primes}),
+\]
+could be reduced to one explicit Diophantine obstruction.
+
+The main new theorem of this round does exactly that.
+
+\medskip
+
+\noindent\textbf{Main new theorem.}
+For distinct primes \(p<q<r\), define
+\[
+L_{p,q,r}:=\sup_{a,b,c\ge 0} S_{\mathrm{all}}(p^a q^b r^c)
+\]
+and
+\[
+C(p,q,r):=\sum_{u,v,w\ge 1}
+\left(
+\frac{1}{|p^u-q^v r^w|}
++\frac{1}{|q^v-p^u r^w|}
++\frac{1}{|r^w-p^u q^v|}
+\right).
+\]
+Then
+\[
+C(p,q,r)\le L_{p,q,r}<527+4\,C(p,q,r).
+\]
+Consequently,
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\sup_{p<q<r} C(p,q,r)<\infty.
+\]
+
+Thus the entire \(\omega(n)\le 3\) problem is reduced to the single explicit mixed reciprocal power-difference series \(C(p,q,r)\).
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}.
+\]
+
+\item The fixed-smoothness theorem from Round-(round\_no-1): for every fixed finite set \(S\) of primes, both \(S_{\mathrm{all}}(n)\) and \(S_{\mathrm{gap}}(n)\) are uniformly bounded on the class of \(S\)-smooth integers.
+
+\item The Round-(round\_no-1) two-prime theorem: if \(p<q\) are distinct primes and
+\[
+B(p,q):=\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|},
+\]
+then
+\[
+B(p,q)\le \sup_{a,b\ge 0}S_{\mathrm{all}}(p^a q^b)\le 12+3B(p,q),
+\]
+and in particular
+\[
+B(p,q)<45
+\qquad\text{and}\qquad
+\sup_{a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<147.
+\]
+\end{enumerate}
+
+I do not re-prove these earlier results.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{primitive-pair formula} for the limiting all-pairs reciprocal sum on every fixed prime-support class.
+
+For a fixed finite prime set \(S\), every divisor pair \(x<y\) factors uniquely as
+\[
+x=gU,\qquad y=gV,
+\]
+where \(g\) is the common gcd of the pair and \(U,V\) are coprime \(S\)-smooth integers. Summing first over the gcd part \(g\) and then over the primitive coprime pair \((U,V)\) yields an exact representation of
+\[
+\sup_{\substack{n\text{ }S\text{-smooth}}} S_{\mathrm{all}}(n)
+\]
+as a geometric factor times a sum over primitive coprime \(S\)-smooth pairs.
+
+For \(S=\{p,q,r\}\), these primitive pairs split into exactly three support types:
+\begin{enumerate}
+\item \(U>1\), \(V=1\) (elementary same-sign part);
+\item \(U\) and \(V\) each supported on exactly one prime (the previously-settled two-prime part);
+\item one of \(U,V\) supported on one prime and the other on the remaining two primes (the genuinely new mixed part \(C(p,q,r)\)).
+\end{enumerate}
+
+This decomposition is the new insight of the round.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-(round\_no-1) was:
+
+\begin{quote}
+After proving the uniform \(\omega(n)\le 2\) bound, there was still no sharp internal reduction for the first new family \(\omega(n)=3\).
+\end{quote}
+
+I now prove the following claims.
+
+\begin{enumerate}
+\item A general primitive-pair formula for fixed prime support.
+\item An exact decomposition of \(L_{p,q,r}\) into:
+\[
+\text{elementary part}+\text{pairwise mixed part}+C(p,q,r).
+\]
+\item A uniform bound for the elementary part.
+\item Using the Round-(round\_no-1) bound \(B(p,q)<45\), a quantitative reduction
+\[
+C(p,q,r)\le L_{p,q,r}<527+4C(p,q,r).
+\]
+\item The equivalence
+\[
+\sup_{\omega(n)\le 3}S_{\mathrm{all}}(n)<\infty
+\iff
+\sup_{p<q<r}C(p,q,r)<\infty.
+\]
+\end{enumerate}
+
+This gives a single sharply formulated next obstruction for the \(\omega(n)\le 3\) problem.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. A primitive-pair formula for fixed prime support}
+
+Let \(S=\{p_1,\dots,p_k\}\) be a fixed finite set of distinct primes. For
+\[
+\mathbf a=(a_1,\dots,a_k)\in \mathbf Z_{\ge 0}^k,
+\qquad
+n(\mathbf a):=\prod_{m=1}^k p_m^{a_m},
+\]
+define
+\[
+L_S:=\sup_{\mathbf a\in \mathbf Z_{\ge 0}^k} S_{\mathrm{all}}(n(\mathbf a)).
+\]
+By the Round-(round\_no-1) fixed-smoothness theorem, \(L_S<\infty\).
+
+Also let \(\langle S\rangle\) denote the set of positive \(S\)-smooth integers.
+
+\paragraph{Proposition 1 (primitive-pair formula).}
+With notation as above,
+\[
+L_S=
+\frac{1}{\prod_{m=1}^k(1-p_m^{-1})}
+\sum_{\substack{U>V\ge 1\\ U,V\in \langle S\rangle\\ (U,V)=1}}
+\frac{1}{U-V}.
+\]
+
+\emph{Proof.}
+Fix \(\mathbf a\), and let \(x<y\) be divisors of \(n(\mathbf a)\). Write
+\[
+x=\prod_{m=1}^k p_m^{\alpha_m},
+\qquad
+y=\prod_{m=1}^k p_m^{\beta_m},
+\qquad
+0\le \alpha_m,\beta_m\le a_m.
+\]
+Set
+\[
+\gamma_m:=\min(\alpha_m,\beta_m),
+\qquad
+g:=\prod_{m=1}^k p_m^{\gamma_m}.
+\]
+Then
+\[
+x=gU,\qquad y=gV,
+\]
+where
+\[
+U:=\prod_{m=1}^k p_m^{\alpha_m-\gamma_m},
+\qquad
+V:=\prod_{m=1}^k p_m^{\beta_m-\gamma_m}.
+\]
+For each \(m\), at least one of the exponents \(\alpha_m-\gamma_m\), \(\beta_m-\gamma_m\) is \(0\). Hence \((U,V)=1\). Conversely, given coprime \(U,V\in\langle S\rangle\) and a common factor \(g\in\langle S\rangle\) with \(gU\mid n(\mathbf a)\) and \(gV\mid n(\mathbf a)\), the pair \((gU,gV)\) is a divisor pair of \(n(\mathbf a)\).
+
+Since
+\[
+\frac{1}{y-x}=\frac{1}{g(V-U)},
+\]
+we may group the sum \(S_{\mathrm{all}}(n(\mathbf a))\) by primitive coprime pairs \(U>V\). For fixed \(U,V\), let
+\[
+u_m:=v_{p_m}(U),\qquad v_m:=v_{p_m}(V).
+\]
+Because \((U,V)=1\), for each \(m\) at most one of \(u_m,v_m\) is positive. The admissible exponents of the common factor \(g\) are exactly
+\[
+0\le \delta_m\le a_m-u_m-v_m
+\qquad (m=1,\dots,k).
+\]
+Thus the contribution of all divisor pairs with primitive part \((U,V)\) equals
+\[
+\frac{1}{U-V}
+\prod_{m=1}^k
+\left(
+\sum_{\delta_m=0}^{a_m-u_m-v_m} p_m^{-\delta_m}
+\right),
+\]
+with the understanding that if \(a_m<u_m+v_m\), the inner sum is empty and hence contributes \(0\).
+
+Therefore
+\[
+S_{\mathrm{all}}(n(\mathbf a))
+=
+\sum_{\substack{U>V\ge 1\\ U,V\in \langle S\rangle\\ (U,V)=1}}
+\frac{1}{U-V}
+\prod_{m=1}^k
+\left(
+\sum_{\delta_m=0}^{a_m-u_m-v_m} p_m^{-\delta_m}
+\right).
+\tag{1.1}
+\]
+For each fixed primitive pair \((U,V)\), the factor in parentheses is nondecreasing in every \(a_m\), and as all \(a_m\to\infty\) coordinatewise it tends to
+\[
+\prod_{m=1}^k \frac{1}{1-p_m^{-1}}.
+\]
+Hence, by monotone convergence applied to the nonnegative series in \((1.1)\),
+\[
+\lim_{a_1,\dots,a_k\to\infty} S_{\mathrm{all}}(n(\mathbf a))
+=
+\frac{1}{\prod_{m=1}^k(1-p_m^{-1})}
+\sum_{\substack{U>V\ge 1\\ U,V\in \langle S\rangle\\ (U,V)=1}}
+\frac{1}{U-V}.
+\]
+Finally, \(S_{\mathrm{all}}(n(\mathbf a))\) is nondecreasing in each \(a_m\), so this coordinatewise limit equals \(L_S\). This proves the proposition.
+\hfill\(\Box\)
+
+\subsection*{2. Specialisation to three primes}
+
+From now on fix distinct primes
+\[
+p<q<r.
+\]
+Write
+\[
+L_{p,q,r}:=\sup_{a,b,c\ge 0}S_{\mathrm{all}}(p^a q^b r^c).
+\]
+Define
+\[
+A_3(p,q,r):=
+\sum_{\substack{u,v,w\ge 0\\(u,v,w)\neq (0,0,0)}}
+\frac{1}{p^u q^v r^w-1}
+\]
+and
+\[
+C(p,q,r):=
+\sum_{u,v,w\ge 1}
+\left(
+\frac{1}{|p^u-q^v r^w|}
++\frac{1}{|q^v-p^u r^w|}
++\frac{1}{|r^w-p^u q^v|}
+\right).
+\]
+
+\paragraph{Proposition 2 (exact decomposition for \(\omega\le 3\)).}
+For distinct primes \(p<q<r\),
+\[
+L_{p,q,r}
+=
+\frac{
+A_3(p,q,r)+B(p,q)+B(p,r)+B(q,r)+C(p,q,r)
+}{
+(1-p^{-1})(1-q^{-1})(1-r^{-1})
+}.
+\]
+
+\emph{Proof.}
+Apply Proposition 1 with \(S=\{p,q,r\}\). A primitive coprime pair \(U>V\) of \(\{p,q,r\}\)-smooth integers has disjoint prime supports. Since there are only three primes, exactly one of the following occurs.
+
+\medskip
+\noindent\textbf{Type I:} \(V=1\) and \(U>1\).  
+Then
+\[
+U=p^u q^v r^w
+\]
+with \(u,v,w\ge 0\), not all zero, and the total contribution is exactly \(A_3(p,q,r)\).
+
+\medskip
+\noindent\textbf{Type II:} both supports are nonempty and each has size \(1\).  
+Then, up to order, the pair is one of
+\[
+(p^u,q^v),\qquad (p^u,r^w),\qquad (q^v,r^w),
+\]
+with \(u,v,w\ge 1\). Their contributions are precisely
+\[
+B(p,q),\qquad B(p,r),\qquad B(q,r).
+\]
+
+\medskip
+\noindent\textbf{Type III:} one support has size \(1\) and the other has size \(2\).  
+Then, up to order, the pair is one of
+\[
+(p^u,q^v r^w),\qquad (q^v,p^u r^w),\qquad (r^w,p^u q^v),
+\]
+with \(u,v,w\ge 1\). Their total contribution is exactly \(C(p,q,r)\).
+
+\medskip
+These three types are exhaustive, because two disjoint nonempty subsets of \(\{p,q,r\}\) can only have cardinalities \((1,1)\) or \((1,2)\), and if one subset is empty then the other gives Type I.
+
+Substituting this partition into Proposition 1 gives the stated identity.
+\hfill\(\Box\)
+
+\subsection*{3. Uniform bound for the elementary part}
+
+\paragraph{Lemma 3.}
+For all distinct primes \(p<q<r\),
+\[
+A_3(p,q,r)\le \frac{11}{2}.
+\]
+
+\emph{Proof.}
+Split \(A_3\) according to the support of the monomial \(p^u q^v r^w\):
+\[
+A_3=S_p+S_q+S_r+S_{pq}+S_{pr}+S_{qr}+S_{pqr},
+\]
+where
+\[
+S_p:=\sum_{u\ge 1}\frac{1}{p^u-1},
+\quad
+S_q:=\sum_{v\ge 1}\frac{1}{q^v-1},
+\quad
+S_r:=\sum_{w\ge 1}\frac{1}{r^w-1},
+\]
+and similarly for the mixed-support terms.
+
+Since \(p\ge 2\),
+\[
+S_p
+\le
+1+\sum_{u\ge 2}\frac{1}{2^{u-1}}
+=2.
+\]
+Since \(q\ge 3\),
+\[
+q^v-1\ge 2\cdot 3^{v-1},
+\]
+so
+\[
+S_q\le \sum_{v\ge 1}\frac{1}{2\cdot 3^{v-1}}=1.
+\]
+Since \(r\ge 5\),
+\[
+r^w-1\ge 4\cdot 5^{w-1},
+\]
+so
+\[
+S_r\le \sum_{w\ge 1}\frac{1}{4\cdot 5^{w-1}}=\frac{5}{16}<\frac12.
+\]
+
+Next,
+\[
+p^u q^v\ge 2\cdot 3=6,
+\]
+so
+\[
+p^u q^v-1\ge \frac12 p^u q^v.
+\]
+Hence
+\[
+S_{pq}:=\sum_{u,v\ge 1}\frac{1}{p^u q^v-1}
+\le
+2\sum_{u,v\ge 1}\frac{1}{p^u q^v}
+\le
+2\left(\sum_{u\ge 1}2^{-u}\right)\left(\sum_{v\ge 1}3^{-v}\right)=1.
+\]
+Similarly,
+\[
+S_{pr}:=\sum_{u,w\ge 1}\frac{1}{p^u r^w-1}
+\le
+2\left(\sum_{u\ge 1}2^{-u}\right)\left(\sum_{w\ge 1}5^{-w}\right)=\frac12,
+\]
+and
+\[
+S_{qr}:=\sum_{v,w\ge 1}\frac{1}{q^v r^w-1}
+\le
+2\left(\sum_{v\ge 1}3^{-v}\right)\left(\sum_{w\ge 1}5^{-w}\right)=\frac14.
+\]
+Finally,
+\[
+S_{pqr}:=\sum_{u,v,w\ge 1}\frac{1}{p^u q^v r^w-1}
+\le
+2\left(\sum_{u\ge 1}2^{-u}\right)\left(\sum_{v\ge 1}3^{-v}\right)\left(\sum_{w\ge 1}5^{-w}\right)=\frac14.
+\]
+
+Adding these estimates gives
+\[
+A_3(p,q,r)
+\le
+2+1+\frac12+1+\frac12+\frac14+\frac14
+=
+\frac{11}{2}.
+\]
+This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{4. Quantitative reduction to the one-vs-two mixed series}
+
+\paragraph{Theorem 4.}
+For all distinct primes \(p<q<r\),
+\[
+C(p,q,r)\le L_{p,q,r}<527+4\,C(p,q,r).
+\]
+
+\emph{Proof.}
+By Proposition 2,
+\[
+L_{p,q,r}
+=
+\frac{
+A_3(p,q,r)+B(p,q)+B(p,r)+B(q,r)+C(p,q,r)
+}{
+(1-p^{-1})(1-q^{-1})(1-r^{-1})
+}.
+\tag{4.1}
+\]
+Since
+\[
+(1-p^{-1})(1-q^{-1})(1-r^{-1})<1,
+\]
+the formula immediately implies
+\[
+L_{p,q,r}\ge C(p,q,r).
+\]
+
+For the upper bound, Lemma 3 gives
+\[
+A_3(p,q,r)\le \frac{11}{2},
+\]
+and the Round-(round\_no-1) two-prime bound gives
+\[
+B(p,q)<45,\qquad B(p,r)<45,\qquad B(q,r)<45.
+\]
+Also, because \(p,q,r\) are distinct primes,
+\[
+p\ge 2,\qquad q\ge 3,\qquad r\ge 5,
+\]
+hence
+\[
+(1-p^{-1})(1-q^{-1})(1-r^{-1})
+\ge
+\left(1-\frac12\right)\left(1-\frac13\right)\left(1-\frac15\right)
+=
+\frac{4}{15}.
+\]
+Therefore \((4.1)\) yields
+\[
+L_{p,q,r}
+\le
+\frac{15}{4}\left(\frac{11}{2}+45+45+45+C(p,q,r)\right)
+=
+\frac{15}{4}\left(\frac{281}{2}+C(p,q,r)\right).
+\]
+Since
+\[
+\frac{15}{4}\cdot \frac{281}{2}
+=
+\frac{4215}{8}
+=
+526.875<527
+\]
+and
+\[
+\frac{15}{4}C(p,q,r)<4\,C(p,q,r),
+\]
+we conclude that
+\[
+L_{p,q,r}<527+4\,C(p,q,r).
+\]
+This proves the theorem.
+\hfill\(\Box\)
+
+\subsection*{5. Exact next obstruction for the \(\omega(n)\le 3\) problem}
+
+\paragraph{Corollary 5.}
+The following are equivalent:
+\begin{enumerate}
+\item
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty;
+\]
+\item
+\[
+\sup_{p<q<r} C(p,q,r)<\infty.
+\]
+\end{enumerate}
+
+\emph{Proof.}
+Assume first that
+\[
+\sup_{p<q<r} C(p,q,r)<\infty.
+\]
+Then Theorem 4 implies
+\[
+\sup_{p<q<r} L_{p,q,r}<\infty.
+\]
+Hence \(S_{\mathrm{all}}(n)\) is uniformly bounded on all integers with exactly three distinct prime factors. By the Round-(round\_no-1) theorem, it is also uniformly bounded on all integers with at most two distinct prime factors. Therefore
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty.
+\]
+
+Conversely, assume
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty.
+\]
+Then in particular
+\[
+L_{p,q,r}\le \sup_{\omega(n)\le 3}S_{\mathrm{all}}(n)
+\qquad\text{for every }p<q<r.
+\]
+By Theorem 4,
+\[
+C(p,q,r)\le L_{p,q,r},
+\]
+so
+\[
+\sup_{p<q<r} C(p,q,r)<\infty.
+\]
+This proves the equivalence.
+\hfill\(\Box\)
+
+\paragraph{Corollary 6.}
+Let \((n_m)\) be a sequence of positive integers such that
+\[
+\frac{S_{\mathrm{all}}(n_m)}{1+S_{\mathrm{gap}}(n_m)}\to\infty.
+\]
+Then one of the following must hold:
+\begin{enumerate}
+\item \(\omega(n_m)\ge 4\) for infinitely many \(m\);
+\item along infinitely many \(m\) with \(\omega(n_m)=3\), if
+\[
+\mathrm{rad}(n_m)=p_m q_m r_m
+\qquad (p_m<q_m<r_m),
+\]
+then
+\[
+C(p_m,q_m,r_m)\to\infty
+\]
+along a subsequence.
+\end{enumerate}
+
+\emph{Proof.}
+By the Round-(round\_no-1) theorem on \(\omega(n)\le 2\), the ratio is uniformly bounded on that family, so infinitely many terms of an unbounded-ratio sequence must satisfy \(\omega(n_m)\ge 3\).
+
+If infinitely many of those terms satisfy \(\omega(n_m)=3\) and the corresponding quantities \(C(p_m,q_m,r_m)\) remained bounded, then Theorem 4 would imply a uniform bound on \(S_{\mathrm{all}}(n_m)\) along that subsequence, hence on the ratio
+\[
+\frac{S_{\mathrm{all}}(n_m)}{1+S_{\mathrm{gap}}(n_m)},
+\]
+since \(1+S_{\mathrm{gap}}(n_m)\ge 1\). That contradicts unboundedness. Therefore either \(\omega(n_m)\ge 4\) infinitely often, or \(C(p_m,q_m,r_m)\to\infty\) along a subsequence with \(\omega(n_m)=3\).
+\hfill\(\Box\)
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Exhaustiveness of the primitive-pair classification.}
+In Proposition 1, the primitive factors \(U,V\) are coprime \(S\)-smooth integers. For \(S=\{p,q,r\}\), this means their prime supports are disjoint subsets of \(\{p,q,r\}\). There are only three possibilities:
+\begin{enumerate}
+\item one support empty;
+\item both nonempty of sizes \(1,1\);
+\item both nonempty of sizes \(1,2\).
+\end{enumerate}
+No other case is possible, because two disjoint nonempty subsets of a three-element set cannot both have size \(2\).
+
+\paragraph{2. Legitimacy of the limit in Proposition 1.}
+The coefficient of each fixed primitive pair \((U,V)\) is a finite product of truncated geometric series, increasing coordinatewise in the exponent box \(\mathbf a\). Since all terms are nonnegative, monotone convergence applies. Finiteness of the resulting limit is guaranteed by the Round-(round\_no-1) fixed-smoothness theorem.
+
+\paragraph{3. Correct use of previous-round results.}
+The bound \(B(p,q)<45\) is not re-proved here; it is used exactly as a vetted Round-(round\_no-1) input. The present round's new content is the primitive-pair formula and the reduction of the \(\omega(n)\le 3\) problem to \(C(p,q,r)\).
+
+\paragraph{4. What this round does \emph{not} claim.}
+Theorem 4 gives an equivalence for the stronger statement
+\[
+\sup_{\omega(n)\le 3}S_{\mathrm{all}}(n)<\infty.
+\]
+It does \emph{not} prove an equivalence for the original Erd\H{o}s ratio problem on \(\omega(n)\le 3\), because the denominator \(1+S_{\mathrm{gap}}(n)\) still appears there. I do not claim such an equivalence.
+
+\paragraph{5. Strict advance beyond the previous round.}
+The previous round fully settled \(\omega(n)\le 2\) but left \(\omega(n)=3\) as a diffuse difficulty. Theorem 4 and Corollary 5 replace that diffuse difficulty by a single explicit series \(C(p,q,r)\). This is a genuine sharpening.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a new exact reduction for the first new family beyond the already-settled case \(\omega(n)\le 2\):
+
+\begin{quote}
+For distinct primes \(p<q<r\),
+\[
+C(p,q,r)\le \sup_{a,b,c\ge 0}S_{\mathrm{all}}(p^a q^b r^c)<527+4\,C(p,q,r),
+\]
+where
+\[
+C(p,q,r)=\sum_{u,v,w\ge 1}
+\left(
+\frac{1}{|p^u-q^v r^w|}
++\frac{1}{|q^v-p^u r^w|}
++\frac{1}{|r^w-p^u q^v|}
+\right).
+\]
+Hence
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\sup_{p<q<r} C(p,q,r)<\infty.
+\]
+\end{quote}
+
+So the next unresolved barrier is now sharply formulated: to extend the uniform absolute bound from \(\omega(n)\le 2\) to \(\omega(n)\le 3\), it is necessary and sufficient to control the one-vs-two mixed reciprocal power-difference series \(C(p,q,r)\) uniformly in the prime triple.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 97\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item J.-H. Evertse, \emph{Diophantine Equations}, Chapter 5, especially Theorem 5.6 (Tijdeman's gap theorem for fixed smoothness classes).
+\item M. A. Bennett, \emph{Differences between Perfect Powers}, Canadian Mathematical Bulletin \textbf{51} (2008), no. 3, 337--347.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}.
+\end{enumerate}

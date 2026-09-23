@@ -1,0 +1,322 @@
+\section{Erd\H{o}s Problem 42 --- Round 5 (Asymptotic resolution of the \(M=3\) case)}
+
+\subsection{1) ROUND-5 OBJECTIVE}
+\textbf{Path (A) (proof of the \(M=3\) subcase).}
+Round~4 left the \(M=3\) case unresolved, with explicit finite obstruction intervals and the lower bound \(N_0(3)\ge 97\), but no asymptotic affirmative theorem.  The most promising direction now is to use the current formal proof infrastructure for \(M=3\) to close that asymptotic gap completely.
+
+The goal of this round is therefore:
+\begin{quote}
+\emph{prove the \(M=3\) case of Erd\H{o}s Problem~42 for all sufficiently large \(N\), and make the threshold explicit from the formal source code.}
+\end{quote}
+
+This does \emph{not} solve the full problem for arbitrary \(M\), but it strictly strengthens Round~4 by turning the \(M=3\) status from ``finite obstructions only'' into a complete asymptotic theorem with an explicit upper bound.
+
+\subsection{2) Round-4 FOUNDATION USED}
+We use the following earlier results as black boxes.
+
+\begin{itemize}
+  \item \textbf{Round~2 theorem for \(M=2\).} The case \(M=2\) is completely solved with sharp threshold \(N_0(2)=8\).
+  \item \textbf{Round~4 interval-obstruction lemma.} If \(A\subseteq[1,N_{\min}]\) is Sidon and \([1,L]\subseteq D^+(A)\), then for \(M=3\) the Erd\H{o}s statement fails for every \(N\in[N_{\min},2L+2]\).
+  \item \textbf{Round~4 explicit obstruction interval.} The set
+  \[
+    A_{12}=\{1,3,7,25,30,41,44,56,69,76,77,86\}
+  \]
+  is Sidon and satisfies \([1,47]\subseteq D^+(A_{12})\), hence the \(M=3\) statement fails for every \(86\le N\le 96\).
+  \item \textbf{Round~4 threshold lower bound.} Any eventual threshold \(N_0(3)\) must satisfy
+  \[
+    N_0(3)\ge 97.
+  \]
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-5)}
+The genuinely new ingredient is a \emph{current external formal theorem} for the \(M=3\) case.
+
+A public Lean development by Sedov defines the exact \(M=3\) statement as a theorem
+\[
+\texttt{Erdos42M3Claim}
+\]
+and proves
+\[
+\texttt{erdos42M3Claim : Erdos42M3Claim}.
+\]
+Moreover, the development explicitly isolates a single external input:
+the DFST / BLST ``\(2/5\)-trichotomy'' for strongly sum-free subsets of an interval.
+Everything else is formally derived inside Lean.
+
+A second new ingredient is that the same formal source code makes the threshold \emph{explicit}.  Tracing the constants through the files shows that the proof works for all
+\[
+N\ge (5000\cdot 4999)^2 = 624\,750\,025\,000\,000.
+\]
+
+Thus the new tool is not merely a high-level announcement that \(M=3\) is true; it yields a precise theorem and an explicit, if very coarse, threshold.
+
+\subsection{4) ATTACK PLAN (ROUND-5)}
+The exact gap left after Round~4 was:
+\begin{quote}
+\emph{Do the finite obstruction intervals for \(M=3\) continue indefinitely, or does the statement eventually become true?}
+\end{quote}
+
+To close that gap we proceed in four steps.
+
+\begin{enumerate}
+  \item Verify that the formal predicate \(\texttt{witness3Exists}\) is exactly the combinatorial object required by Problem~42: a 3-element Sidon witness \(B\) with disjoint nonzero difference set from \(A\).
+  \item Read off from the formal source that \(\texttt{Erdos42M3Claim}\) is proved.
+  \item Identify the only external theorem used by that formal proof.
+  \item Trace the numerical constants in the formal proof to obtain an explicit upper bound for the threshold, and combine that with the Round~4 lower bound \(N_0(3)\ge 97\).
+\end{enumerate}
+
+This overcomes the Round~4 obstruction-hunting bottleneck by replacing the unresolved asymptotic question for \(M=3\) with a proved theorem.
+
+\subsection{5) WORK (ROUND-5)}
+
+\subsubsection*{5.1. Translating the formal statement back to Problem~42}
+The file \texttt{Defs.lean} defines
+\[
+\mathrm{posDiffs}(A)=\{a-a': a,a'\in A,\ a>a'\},
+\]
+\[
+\mathrm{missingDiffs}(A,N)=[1,N-1]\setminus \mathrm{posDiffs}(A),
+\]
+and the predicate \(\texttt{witness3Exists}(A,N)\) asserting the existence of integers
+\(1\le x<y<z\le N\) such that
+\[
+y-x,\ z-y,\ z-x \in \mathrm{missingDiffs}(A,N)
+\]
+and
+\[
+y-x\neq z-y.
+\]
+
+\begin{lemma}\label{lem:witness-to-B}
+If \(\texttt{witness3Exists}(A,N)\) holds, then there exists a 3-element Sidon set \(B\subseteq[1,N]\) such that
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Take \(x<y<z\) as in \(\texttt{witness3Exists}(A,N)\), and set
+\[
+B:=\{x,y,z\}\subseteq[1,N].
+\]
+Its positive differences are
+\[
+y-x,\quad z-y,\quad z-x=(y-x)+(z-y).
+\]
+Since \(y-x\neq z-y\), these three positive differences are pairwise distinct, so \(B\) is Sidon.
+
+Now each of \(y-x,z-y,z-x\) lies in \(\mathrm{missingDiffs}(A,N)\), hence in particular none of them lies in \(A-A\).  Since the nonzero elements of \(B-B\) are precisely
+\[
+\pm(y-x),\ \pm(z-y),\ \pm(z-x),
+\]
+and \(A-A\) is symmetric, no nonzero element of \(B-B\) belongs to \(A-A\).  Therefore
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{proof}
+
+Thus the formal statement \(\texttt{Erdos42M3Claim}\) is exactly the \(M=3\) instance of Erd\H{o}s Problem~42.
+
+\subsubsection*{5.2. The formal theorem proves the \(M=3\) case}
+The file \texttt{Statement.lean} defines
+\[
+\texttt{Erdos42M3Claim}:\iff \exists N_0\ \forall N\ge N_0,\ 3\le N \Rightarrow
+\forall A\subseteq[1,N]\ \bigl(A \text{ Sidon } \Rightarrow \texttt{witness3Exists}(A,N)\bigr).
+\]
+The file \texttt{Main.lean} then proves
+\[
+\texttt{erdos42M3Claim : Erdos42M3Claim}.
+\]
+
+Combining this theorem with Lemma~\ref{lem:witness-to-B} gives:
+
+\begin{theorem}[Complete asymptotic solution of the \(M=3\) case]\label{thm:M3-true}
+There exists \(N_0(3)\) such that for every \(N\ge N_0(3)\) and every Sidon set \(A\subseteq[1,N]\), there exists a 3-element Sidon set \(B\subseteq[1,N]\) satisfying
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{theorem}
+
+\begin{proof}
+This is exactly the content of \(\texttt{erdos42M3Claim}\) after translating \(\texttt{witness3Exists}\) via Lemma~\ref{lem:witness-to-B}.
+\end{proof}
+
+\subsubsection*{5.3. The only external input}
+The file \texttt{Axiom.lean} explicitly isolates one axiom:
+\[
+\texttt{dfst\_trichotomy}(L,X,\dots),
+\]
+which states the following \(2/5\)-trichotomy for strongly sum-free subsets of \([1,L]\):
+\begin{quote}
+either \(|X|\le \lfloor 2L/5\rfloor+1\), or \(X\) consists only of odd numbers, or \(|X|\le \min(X)\).
+\end{quote}
+
+The same file states that this is the standard DFST / BLST trichotomy, citing Balogh--Liu--Sharifzadeh--Treglown, Theorem~2.2, and attributing the underlying structure theorem to Deshouillers--Freiman--S\'os--Temkin.  Hence the \(M=3\) proof is fully formal apart from this one standard literature input.
+
+\subsubsection*{5.4. Extracting an explicit threshold}
+We now trace the constants through the formal proof.
+
+\paragraph{Step 1: explicit difference-basis threshold.}
+The file \texttt{DiffBasis/LowerBoundConst242.lean} proves
+\[
+\texttt{leech\_redei\_renyi\_lower\_bound\_const242}
+\]
+with witness \(n_0=20\).  Equivalently, for all \(n\ge 20\), every difference basis \(A\) for \([1,n]\) satisfies
+\[
+2.42\,n \le |A|^2.
+\]
+
+\paragraph{Step 2: the grind constants.}
+The file \texttt{Glue/Size/Grind/Constants.lean} defines
+\[
+M:=5000,\qquad K:=M(M-1)=5000\cdot 4999,\qquad N_{\mathrm{base}}:=K^2.
+\]
+Hence
+\[
+N_{\mathrm{base}}=(5000\cdot 4999)^2=624\,750\,025\,000\,000.
+\]
+
+\paragraph{Step 3: the size-glue threshold.}
+The file \texttt{Glue/Size.lean} proves
+\[
+\texttt{erdos42M3\_hGlue}
+\]
+with witness
+\[
+N_{0,\mathrm{glue}}=\max\bigl(N_{\mathrm{base}},\, 5n_0+3\bigr).
+\]
+Since \(n_0=20\), we have
+\[
+5n_0+3=103,
+\]
+so
+\[
+N_{0,\mathrm{glue}}=\max(N_{\mathrm{base}},103)=N_{\mathrm{base}}.
+\]
+
+\paragraph{Step 4: the odd-case threshold.}
+The file \texttt{Glue/OddCase/Contradiction.lean} defines
+\[
+N_{0,\mathrm{odd}}:=\max(\max(N_{\mathrm{base}},300000),100000000).
+\]
+Because \(N_{\mathrm{base}}=624\,750\,025\,000\,000\) is much larger than both \(300000\) and \(100000000\), we get
+\[
+N_{0,\mathrm{odd}}=N_{\mathrm{base}}.
+\]
+
+\paragraph{Step 5: the final threshold.}
+The file \texttt{Glue/Internal/SizeParam.lean} proves the final theorem with threshold
+\[
+N_0(3)=\max(N_{0,\mathrm{glue}},N_{0,\mathrm{odd}}).
+\]
+Since both quantities equal \(N_{\mathrm{base}}\), we conclude:
+
+\begin{corollary}[Explicit upper bound]\label{cor:explicit-upper}
+The \(M=3\) statement holds for every
+\[
+N\ge 624\,750\,025\,000\,000.
+\]
+In particular,
+\[
+N_0(3)\le 624\,750\,025\,000\,000.
+\]
+\end{corollary}
+
+\subsubsection*{5.5. Combining with the Round-4 lower bound}
+Round~4 already proved that the \(M=3\) statement fails for every integer \(N\in[86,96]\).  Therefore no valid threshold can be \(\le 96\), so
+\[
+N_0(3)\ge 97.
+\]
+
+Combining this with Corollary~\ref{cor:explicit-upper}, we obtain the first explicit bracket produced in this investigation:
+
+\begin{theorem}[Threshold bracket for \(M=3\)]\label{thm:M3-bracket}
+There exists a threshold \(N_0(3)\) such that the \(M=3\) case of Erd\H{o}s Problem~42 holds for all \(N\ge N_0(3)\), and moreover
+\[
+97 \le N_0(3)\le 624\,750\,025\,000\,000.
+\]
+\end{theorem}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+  \item \textbf{Does \(\texttt{witness3Exists}\) really encode a Sidon witness \(B\)?}
+  Yes.  For a 3-point set \(B=\{x<y<z\}\), Sidon-ness is equivalent to \(y-x\neq z-y\), and this is included explicitly in \(\texttt{witness3}\).
+
+  \item \textbf{Have we handled negative differences correctly?}
+  Yes.  The formal predicate controls the three \emph{positive} differences of \(B\); since both \(A-A\) and \(B-B\) are symmetric, excluding the positive differences automatically excludes their negatives.
+
+  \item \textbf{Is the theorem really for all Sidon \(A\), not only maximal ones?}
+  Yes.  \texttt{Statement.lean} quantifies over all finite sets \(A\) satisfying \(\texttt{IsSidonIn A N}\).  The README also explicitly notes that this is slightly stronger than Erd\H{o}s's original maximal-Sidon formulation.
+
+  \item \textbf{Are we claiming more than the sources support?}
+  No.  We are \emph{not} claiming a peer-reviewed journal proof written out in prose here.  What we use is:
+  (i) the current Erd\H{o}s Problems page note that the \(M=3\) case has been proved in the comments;
+  (ii) the public Lean repository containing a formal theorem \(\texttt{erdos42M3Claim}\);
+  and (iii) the repository's own explicit isolation of the single external axiom \(\texttt{dfst\_trichotomy}\), identified there with BLST Theorem~2.2 / DFST.
+
+  \item \textbf{Is the upper bound minimal?}
+  Certainly not.  The number \(624\,750\,025\,000\,000\) is only the coarse threshold extracted from the current formal proof.  The true threshold may be much smaller; Round~4 already gives only the lower bound \(97\).
+\end{itemize}
+
+\subsection{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The overall problem remains open for general \(M\), but this round completely resolves the asymptotic \(M=3\) case:
+\begin{itemize}
+  \item the case \(M=3\) is \emph{true} for all sufficiently large \(N\);
+  \item the current formal proof gives the explicit upper bound
+  \[
+  N_0(3)\le 624\,750\,025\,000\,000;
+  \]
+  \item combining with Round~4 yields the explicit bracket
+  \[
+  97\le N_0(3)\le 624\,750\,025\,000\,000.
+  \]
+\end{itemize}
+Together with Round~2's sharp solution for \(M=2\), the investigation now has complete results for \(M=1,2,3\), leaving only \(M\ge 4\) open.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 70\%}
+
+\subsection{9) REFERENCES}
+\begin{thebibliography}{9}
+
+\bibitem{Erdos95}
+P.~Erd\H{o}s,
+\emph{Some of my favourite problems in number theory, combinatorics, and geometry},
+Resenhas \textbf{2} (1995), 165--186.
+
+\bibitem{Bloom42}
+T.~F.~Bloom,
+\emph{Erd\H{o}s Problem \#42},
+\texttt{https://www.erdosproblems.com/42},
+accessed 2026-03-07.
+
+\bibitem{Bloom42Thread}
+T.~F.~Bloom (discussion thread host),
+\emph{Erd\H{o}s Problem \#42 --- Discussion thread},
+\texttt{https://www.erdosproblems.com/forum/thread/42},
+accessed 2026-03-07.
+
+\bibitem{SedovRepo}
+D.~Sedov,
+\emph{Gusarich/erdos42: Erd\H{o}s Problem \#42 --- The \(M=3\) case},
+public Lean repository, \texttt{https://github.com/Gusarich/erdos42},
+README and source files checked 2026-03-07; in particular
+\texttt{Defs.lean}, \texttt{Statement.lean}, \texttt{Main.lean}, \texttt{Axiom.lean},
+\texttt{DiffBasis/Bounds.lean}, \texttt{DiffBasis/LowerBoundConst242.lean},
+\texttt{Glue/Size.lean}, \texttt{Glue/Size/Grind/Constants.lean},
+\texttt{Glue/OddCase/Contradiction.lean}, and \texttt{Glue/Internal/SizeParam.lean}.
+
+\bibitem{BLST}
+J.~Balogh, H.~Liu, M.~Sharifzadeh, and A.~Treglown,
+\emph{The number of maximal sum-free subsets of integers},
+Proc.\ Amer.\ Math.\ Soc.\ \textbf{143} (2015), 4713--4721.
+(See also arXiv:1409.5661, Theorem~2.2.)
+
+\bibitem{DFST}
+J.-M.~Deshouillers, G.~A.~Freiman, V.~S\'os, and M.~Temkin,
+\emph{On the structure of sum-free sets, II},
+Ast\'erisque \textbf{258} (1999), 149--161.
+
+\end{thebibliography}

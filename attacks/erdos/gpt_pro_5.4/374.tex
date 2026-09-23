@@ -1,0 +1,258 @@
+\section*{Problem 374. Growth of $D_k$ for products of factorials that are squares --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): obstruction/correction via a genuine strengthening of the Round-1 lower bounds.
+
+Round 1 already established
+\[
+D_3(X)\gg \sqrt{X},\qquad D_4(X)\gg X,\qquad D_5(X)\gg \frac{X}{\log X},\qquad D_6(X)\gg \frac{X}{\log X},
+\]
+but left the original question ``is $D_6(X)\gg X$?'' unresolved.
+In this round I will not restart from scratch.  Instead, I will use the Round-1 semiprime strategy and strengthen it in two ways:
+\begin{itemize}
+\item obtain an explicit leading constant for the $D_5(X)$ lower bound, and
+\item prove the genuinely stronger statement
+\[
+D_6(X)=\omega\!\left(\frac{X}{\log X}\right).
+\]
+\end{itemize}
+This does not settle the original linear-growth question for $D_6$, but it is a strict advance over Round 1.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+\begin{itemize}
+\item The factorial identities
+\[
+x!(x-1)!=\frac{(x!)^2}{x},
+\qquad
+x!(x-1)!y!(y-1)!=\frac{(x!y!)^2}{xy}.
+\]
+\item The Round-1 consequence that if $n=ab$ with $a,b>1$ and $a\neq b$, then $n\in F_6$.
+\item The Round-1 use of Erd\H{o}s--Graham's statements that:
+  \begin{itemize}
+  \item if a proper divisor of $n$ belongs to $\{2,3,5,7,11\}$, then $n\in F_5$;
+  \item for any fixed prime $q$, almost all numbers of the form $pq$ (with $p$ prime) do not belong to $F_4$.
+  \end{itemize}
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is that Erd\H{o}s--Graham's Theorem~3 is not really special to $13$:
+their proof is explicitly said to work for $13$ \emph{and all larger primes}.
+Therefore, for every fixed prime $q\ge 13$, almost all numbers of the form $pq$ fail to lie in $F_5$.
+
+Once this is combined with the Round-1 observation $pq\in F_6$, one can union over \emph{arbitrarily many} fixed primes $q\ge 13$.
+Because the reciprocal sum of the primes diverges, this forces
+\[
+D_6(X)=\omega\!\left(\frac{X}{\log X}\right).
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round 1 left two concrete gaps:
+\begin{itemize}
+\item the $D_5(X)\gg X/\log X$ lower bound used only one semiprime family;
+\item the $D_6(X)\gg X/\log X$ lower bound used only the family $13p$.
+\end{itemize}
+
+To improve these, I will:
+\begin{enumerate}
+\item union the five $D_5$-families $qp$ with $q\in\{2,3,5,7,11\}$ and show the overlaps are only $O(1)$;
+\item union \emph{any fixed finite collection} of $D_6$-families $qp$ with $q\ge 13$ prime, again with only $O(1)$ overlap;
+\item let the finite collection grow after $X\to\infty$ to force an arbitrarily large constant in front of $X/\log X$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\subsubsection*{Lemma 5.1 (semiprimes with a small fixed factor give many elements of $D_5$)}
+Let
+\[
+S_5:=\{2,3,5,7,11\}.
+\]
+Then
+\[
+D_5(X)\ge \left(\sum_{q\in S_5}\frac1q+o(1)\right)\frac{X}{\log X}.
+\]
+
+\paragraph{Proof.}
+Fix $q\in S_5$, and define
+\[
+A_q(X):=\{qp\le X:\ p \text{ prime},\ p\neq q,\ qp\notin F_4\}.
+\]
+Because $q$ is a proper divisor of $qp$ and $q\in\{2,3,5,7,11\}$, Erd\H{o}s--Graham's Fact~7 gives
+\[
+qp\in F_5.
+\]
+Since by definition $qp\notin F_4$, every element of $A_q(X)$ lies in
+\[
+F_5\setminus F_4=D_5.
+\]
+Hence
+\[
+A_q(X)\subseteq D_5.
+\]
+
+Now Erd\H{o}s--Graham also prove that for any fixed prime $q$, almost all numbers of the form $pq$ do not belong to $F_4$.
+Therefore
+\[
+|A_q(X)|=\pi(X/q)-o(\pi(X/q))
+      =\left(\frac1q+o(1)\right)\frac{X}{\log X}
+\]
+by the prime number theorem.
+
+Next, if $q_1\neq q_2$ belong to $S_5$ and
+\[
+q_1p_1=q_2p_2
+\]
+with $p_1,p_2$ prime, then primality forces
+\[
+p_1=q_2,\qquad p_2=q_1.
+\]
+So for each ordered pair $(q_1,q_2)$ there is at most one overlap, and therefore
+\[
+\sum_{\substack{q_1,q_2\in S_5\\ q_1\neq q_2}} |A_{q_1}(X)\cap A_{q_2}(X)| = O(1).
+\]
+Hence
+\[
+D_5(X)\ge \left|\bigcup_{q\in S_5} A_q(X)\right|
+       = \sum_{q\in S_5}|A_q(X)| - O(1)
+       = \left(\sum_{q\in S_5}\frac1q+o(1)\right)\frac{X}{\log X}.
+\]
+This proves the lemma. \hfill$\square$
+
+\subsubsection*{Lemma 5.2 (fixed semiprime families in $D_6$)}
+Let $q\ge 13$ be a fixed prime. Then, for almost all primes $p\neq q$,
+\[
+qp\in D_6.
+\]
+
+\paragraph{Proof.}
+Fix such a prime $q$.
+
+First, $qp\in F_6$ for every prime $p\neq q$.
+Indeed, taking the six-term set
+\[
+\{qp,\ qp-1,\ q,\ q-1,\ p,\ p-1\},
+\]
+we have
+\[
+(qp)!(qp-1)!q!(q-1)!p!(p-1)!
+=
+\frac{\big((qp)!q!p!\big)^2}{(qp)\,q\,p}
+=
+\frac{\big((qp)!q!p!\big)^2}{q^2p^2},
+\]
+which is a perfect square.
+Thus $qp\in F_6$.
+
+Second, Erd\H{o}s--Graham's Theorem~3 proves that for almost all primes $p$, one has $13p\notin F_5$;
+and immediately after the proof they explain that the same proof works for $13$ \emph{and all larger primes}.
+Therefore, for our fixed $q\ge 13$, almost all primes $p$ satisfy
+\[
+qp\notin F_5.
+\]
+
+Combining the two statements, for almost all primes $p\neq q$,
+\[
+qp\in F_6\setminus F_5=D_6.
+\]
+This proves the lemma. \hfill$\square$
+
+\subsubsection*{Lemma 5.3 (finite unions of $D_6$-families)}
+Let $S$ be any fixed finite set of primes, all at least $13$. Then
+\[
+D_6(X)\ge \left(\sum_{q\in S}\frac1q+o(1)\right)\frac{X}{\log X}.
+\]
+
+\paragraph{Proof.}
+For each $q\in S$, define
+\[
+B_q(X):=\{qp\le X:\ p \text{ prime},\ p\neq q,\ qp\notin F_5\}.
+\]
+By Lemma 5.2, for each fixed $q\in S$,
+\[
+|B_q(X)|=\pi(X/q)-o(\pi(X/q))
+       = \left(\frac1q+o(1)\right)\frac{X}{\log X},
+\]
+and every element of $B_q(X)$ belongs to $D_6$.
+
+As in Lemma 5.1, if $q_1\neq q_2$ and
+\[
+q_1p_1=q_2p_2
+\]
+with $p_1,p_2$ prime, then necessarily
+\[
+p_1=q_2,\qquad p_2=q_1.
+\]
+Hence the total overlap among the finitely many families $\{B_q(X)\}_{q\in S}$ is only $O_S(1)$.
+Therefore
+\[
+D_6(X)\ge \left|\bigcup_{q\in S} B_q(X)\right|
+        = \sum_{q\in S}|B_q(X)| - O_S(1)
+        = \left(\sum_{q\in S}\frac1q+o(1)\right)\frac{X}{\log X}.
+\]
+This proves the lemma. \hfill$\square$
+
+\subsubsection*{Corollary 5.4 (strict Round-2 advance)}
+One has
+\[
+D_6(X)=\omega\!\left(\frac{X}{\log X}\right).
+\]
+
+\paragraph{Proof.}
+Let $A>0$ be arbitrary.
+Because the reciprocal sum of the primes diverges, there exists a finite set $S$ of primes $q\ge 13$ such that
+\[
+\sum_{q\in S}\frac1q > 2A.
+\]
+Now $S$ is fixed, so Lemma 5.3 applies:
+\[
+D_6(X)\ge \left(\sum_{q\in S}\frac1q+o(1)\right)\frac{X}{\log X}.
+\]
+For all sufficiently large $X$ the parenthesis is at least $A$, and thus
+\[
+D_6(X)\ge A\frac{X}{\log X}.
+\]
+Since $A>0$ was arbitrary, this is exactly
+\[
+D_6(X)=\omega\!\left(\frac{X}{\log X}\right).
+\]
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Potential weak points and checks:
+\begin{itemize}
+\item \emph{Overlap problem.}  
+Two different semiprime families $q_1p$ and $q_2p'$ can coincide only in the trivial swapped-factor case; for a fixed finite set of $q$ this contributes only $O(1)$ points.  So no density is lost here.
+
+\item \emph{Uniformity in $q$.}  
+I never need an error term uniform in $q$ over all large primes.  In Lemma 5.3 the set $S$ is fixed \emph{before} letting $X\to\infty$, so the individual $o(1)$ terms may depend on $q$.
+
+\item \emph{Could some $qp$ lie in $F_5$ and still belong to $D_6$?}  
+Yes, and I do not use them.  The lower bound counts only the subfamily explicitly known to be outside $F_5$.
+
+\item \emph{Does this prove $D_6(X)\gg X$?}  
+No.  The argument only yields arbitrarily large multiples of $X/\log X$, not a positive proportion of all integers.  So the original question from Round 1 remains open.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Relative to Round 1, the new unconditional statements are:
+\[
+D_5(X)\ge \left(\frac12+\frac13+\frac15+\frac17+\frac1{11}+o(1)\right)\frac{X}{\log X},
+\]
+and
+\[
+D_6(X)=\omega\!\left(\frac{X}{\log X}\right).
+\]
+The original question ``is $D_6(X)\gg X$?'' remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 68\%
+
+\subsection*{9) REFERENCES}
+[EG76] P.~Erd\H{o}s and R.~L.~Graham, \emph{On products of factorials}, Bull. Inst. Math. Acad. Sinica \textbf{4} (1976), 337--355.
+
+[DNSS14] A.~Dujella, F.~Najman, N.~Saradha, and T.~N.~Shorey, \emph{Products of three factorials}, Publ. Math. Debrecen \textbf{85} (2014), 3--13.
+
+\bigskip
+

@@ -1,0 +1,231 @@
+\section{Erd\H{o}s Problem \#62 (Round 3): Common $4$-chromatic subgraphs of $\aleph_1$-chromatic graphs}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+\emph{Path (C): obstruction / prerequisite extraction.}
+
+Round~2 reduced Problem~\#62 to the intersection problem for the sets of finite $4$-vertex-critical subgraphs appearing in two $\aleph_1$-chromatic graphs, and ruled out all proof strategies based on a \emph{fixed} or \emph{finite} unavoidable $4$-chromatic template family. The most promising next step is therefore to convert the pairwise-common-subgraph question into a \emph{single-graph} necessary condition.
+
+The new goal of Round~3 is to prove that if the answer to Problem~\#62 were positive, then \emph{every} $\aleph_1$-chromatic graph would have to contain finite $4$-vertex-critical subgraphs with \emph{arbitrarily large odd girth} and also with \emph{arbitrarily large order}. This gives a concrete obstruction criterion for any future counterexample search.
+
+\subsection*{2) ROUND-2 FOUNDATION USED}
+I use the following specific Round~2 results without re-proving them.
+\begin{itemize}
+\item \textbf{Round~2 Corollary~4:} a common $4$-chromatic subgraph exists for $G_1,G_2$ if and only if there exists a common \emph{finite $4$-vertex-critical} subgraph.
+\item \textbf{Round~2 Lemma~5:} every fixed non-bipartite graph can be omitted by some $\aleph_1$-chromatic graph.
+\item \textbf{Round~2 Corollary~7:} every finite family of graphs of chromatic number at least $3$ can be simultaneously omitted by some $\aleph_1$-chromatic graph.
+\item \textbf{Round~2 Proposition~8:} a counterexample pair would follow from sufficiently flexible omission of prescribed families of finite $4$-vertex-critical graphs.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+The genuinely new ingredient is the following three-step strengthening.
+\begin{enumerate}
+\item Round~2 only formalized omission for fixed graphs and finite families. Round~3 proves an explicit \textbf{bounded-odd-girth family avoidance theorem}: any family of non-bipartite graphs whose odd girths are uniformly bounded can be simultaneously omitted by some $\aleph_1$-chromatic graph.
+\item Assuming a \emph{positive} answer to Problem~\#62, this immediately forces every $\aleph_1$-chromatic graph $G$ to have finite $4$-vertex-critical subgraphs of \textbf{unbounded odd girth}.
+\item Combining the positive answer with Round~2 Corollary~7 also forces every $\aleph_1$-chromatic graph $G$ to have finite $4$-vertex-critical subgraphs of \textbf{unbounded order}.
+\end{enumerate}
+In contrapositive form, a \emph{single} $\aleph_1$-chromatic graph with bounded $4$-critical odd-girth spectrum, or bounded $4$-critical order spectrum, would already disprove Problem~\#62.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+\textbf{Gap left after Round~2.}
+Round~2 showed that no fixed graph and no finite family of $4$-chromatic graphs can be unavoidable. But this still left open the possibility that every pair of $\aleph_1$-chromatic graphs might intersect in some \emph{infinite}, highly nonuniform family of finite $4$-critical graphs.
+
+\textbf{Precise Round~3 claims.}
+Let $\mathcal C_4$ be the set of isomorphism types of finite $4$-vertex-critical graphs, and let
+\[
+\mathcal C_4(G):=\{F\in \mathcal C_4 : F\text{ embeds into }G\}.
+\]
+I will prove:
+\begin{enumerate}
+\item if $S\subseteq \mathcal C_4$ has bounded odd girth, then some $\aleph_1$-chromatic graph omits every member of $S$;
+\item if Problem~\#62 has a positive answer, then for every $\aleph_1$-chromatic graph $G$, the odd girths of graphs in $\mathcal C_4(G)$ are unbounded;
+\item if Problem~\#62 has a positive answer, then for every $\aleph_1$-chromatic graph $G$, the orders of graphs in $\mathcal C_4(G)$ are unbounded.
+\end{enumerate}
+This plan overcomes the Round~2 obstacle by turning the unresolved pairwise-intersection problem into a concrete \emph{single-graph prerequisite}. Any future disproof need only construct one $\aleph_1$-chromatic graph violating either prerequisite.
+
+\subsection*{5) WORK (ROUND-3)}
+
+\subsubsection*{5.1. A family-version of Round~2 odd-girth avoidance}
+
+\paragraph{Proposition 9 (bounded-odd-girth family avoidance).}
+Let $\mathcal H$ be any family of non-bipartite graphs such that
+\[
+M:=\sup\{\mathrm{og}(H):H\in \mathcal H\}<\infty.
+\]
+Then for every infinite cardinal $\kappa$ there exists a graph $G$ with $|V(G)|=\kappa$ and $\chi(G)=\kappa$ such that no member of $\mathcal H$ embeds into $G$.
+
+\emph{Proof.}
+Choose an integer $s>M$. By the external input already used in Round~2 (recorded in Hajnal--Komj\'ath), there exists a graph $G$ of size and chromatic number $\kappa$ with odd girth $\mathrm{og}(G)>s$.
+Suppose, toward a contradiction, that some $H\in \mathcal H$ embeds into $G$.
+Because $H$ is non-bipartite, it contains an odd cycle of length $\mathrm{og}(H)\le M < s < \mathrm{og}(G)$.
+Its image in $G$ would be an odd cycle of the same length, contradicting the definition of odd girth.
+Hence no $H\in \mathcal H$ embeds into $G$.
+\hfill$\square$
+
+\paragraph{Corollary 10.}
+If $S\subseteq \mathcal C_4$ is any family of finite $4$-vertex-critical graphs with bounded odd girth, then there exists an $\aleph_1$-chromatic graph $G$ such that
+\[
+\mathcal C_4(G)\cap S=\varnothing.
+\]
+
+\emph{Proof.}
+Every member of $S$ is non-bipartite, so Proposition~9 applies with $\kappa=\aleph_1$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Round~3 gain over Round~2.}
+Round~2 only made this omission principle explicit for \emph{finite} families. Proposition~9 shows that the same mechanism works for \emph{arbitrary} families, provided their odd girths stay uniformly bounded.
+
+\subsubsection*{5.2. A positive answer would force unbounded odd girth in every $\mathcal C_4(G)$}
+
+\paragraph{Theorem 11 (necessary odd-girth richness under a positive answer).}
+Assume Problem~\#62 has a positive answer; that is, whenever $G_1,G_2$ have chromatic number $\aleph_1$, they have a common subgraph of chromatic number $4$.
+Then for every graph $G$ with $\chi(G)=\aleph_1$ and every integer $r\ge 3$, there exists a finite $4$-vertex-critical graph $F\in \mathcal C_4(G)$ with
+\[
+\mathrm{og}(F)>r.
+\]
+
+\emph{Proof.}
+Fix $G$ with $\chi(G)=\aleph_1$ and an integer $r\ge 3$.
+By the large-odd-girth existence theorem used in Round~2, there exists an $\aleph_1$-chromatic graph $H_r$ with
+\[
+\mathrm{og}(H_r)>r.
+\]
+By the assumed positive answer to Problem~\#62, the graphs $G$ and $H_r$ have a common subgraph of chromatic number $4$.
+Applying Round~2 Corollary~4, there is a \emph{finite} $4$-vertex-critical graph $F$ that is a subgraph of both $G$ and $H_r$.
+Because $F\subseteq H_r$, every odd cycle of $F$ is also an odd cycle of $H_r$.
+Therefore
+\[
+\mathrm{og}(F)\ge \mathrm{og}(H_r)>r.
+\]
+Thus $F\in \mathcal C_4(G)$ and $\mathrm{og}(F)>r$, as required.
+\hfill$\square$
+
+\paragraph{Corollary 12.}
+Under the positive answer to Problem~\#62, for every $\aleph_1$-chromatic graph $G$ the set
+\[
+\{\mathrm{og}(F):F\in \mathcal C_4(G)\}
+\]
+is unbounded in $\mathbb N$.
+
+\emph{Proof.}
+Immediate from Theorem~11.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Interpretation.}
+A positive solution to the pair problem would already imply a surprisingly strong \emph{single-graph} consequence: every $\aleph_1$-chromatic graph would contain finite $4$-vertex-critical subgraphs of arbitrarily large odd girth.
+This is much stronger than anything obtained in Round~2 and sharply narrows the obstruction.
+
+\subsubsection*{5.3. A positive answer would force unbounded order in every $\mathcal C_4(G)$}
+
+\paragraph{Theorem 13 (necessary size richness under a positive answer).}
+Assume Problem~\#62 has a positive answer.
+Then for every graph $G$ with $\chi(G)=\aleph_1$ and every integer $N\ge 1$, there exists a finite $4$-vertex-critical graph $F\in \mathcal C_4(G)$ with
+\[
+|V(F)|>N.
+\]
+
+\emph{Proof.}
+Fix $G$ with $\chi(G)=\aleph_1$ and $N\ge 1$.
+Let
+\[
+S_N:=\{F\in \mathcal C_4: |V(F)|\le N\}.
+\]
+This set is finite, because there are only finitely many isomorphism types of graphs on at most $N$ vertices.
+By Round~2 Corollary~7, there exists an $\aleph_1$-chromatic graph $H_N$ that contains none of the graphs in $S_N$.
+By the assumed positive answer to Problem~\#62, $G$ and $H_N$ have a common $4$-chromatic subgraph; by Round~2 Corollary~4, they therefore have a common finite $4$-vertex-critical subgraph $F$.
+Now $F\in \mathcal C_4(G)$ and $F\notin S_N$ because $H_N$ omits every member of $S_N$.
+Hence $|V(F)|>N$.
+\hfill$\square$
+
+\paragraph{Corollary 14.}
+Under the positive answer to Problem~\#62, for every $\aleph_1$-chromatic graph $G$ the set
+\[
+\{|V(F)|:F\in \mathcal C_4(G)\}
+\]
+is unbounded in $\mathbb N$.
+In particular, $\mathcal C_4(G)$ is infinite.
+
+\emph{Proof.}
+Unboundedness follows from Theorem~13. Infinitude is immediate.
+\hfill$\square$
+
+\subsubsection*{5.4. A one-graph obstruction criterion for disproving Problem~\#62}
+
+\paragraph{Corollary 15 (single-graph obstruction criterion).}
+Any one of the following statements would already imply a \emph{negative} answer to Problem~\#62.
+\begin{enumerate}
+\item There exists an $\aleph_1$-chromatic graph $G$ such that
+\[
+\sup\{\mathrm{og}(F):F\in \mathcal C_4(G)\}<\infty.
+\]
+\item There exists an $\aleph_1$-chromatic graph $G$ such that
+\[
+\sup\{|V(F)|:F\in \mathcal C_4(G)\}<\infty.
+\]
+\end{enumerate}
+
+\emph{Proof.}
+If (1) holds, let
+\[
+R:=\sup\{\mathrm{og}(F):F\in \mathcal C_4(G)\}.
+\]
+By Proposition~9, there exists an $\aleph_1$-chromatic graph $H$ with odd girth $>R$.
+Then no finite $4$-vertex-critical graph embedded in $G$ can embed in $H$.
+By Round~2 Corollary~4, $G$ and $H$ cannot have a common $4$-chromatic subgraph, so Problem~\#62 fails.
+
+If (2) holds, let
+\[
+N:=\sup\{|V(F)|:F\in \mathcal C_4(G)\}.
+\]
+By Round~2 Corollary~7, there exists an $\aleph_1$-chromatic graph $H$ omitting every finite $4$-vertex-critical graph on at most $N$ vertices.
+Again Round~2 Corollary~4 implies that $G$ and $H$ have no common $4$-chromatic subgraph, so Problem~\#62 fails.
+\hfill$\square$
+
+\paragraph{Remark 16.}
+Corollary~15 is the sharpest new reduction obtained in Round~3.
+It shows that the search for a counterexample pair can be replaced by a search for a \emph{single} $\aleph_1$-chromatic graph whose finite $4$-vertex-critical spectrum is bounded in some globally avoidable invariant.
+The most natural remaining candidate invariant is odd girth.
+Hence the new bottleneck is:
+\begin{quote}
+\emph{Does every $\aleph_1$-chromatic graph contain finite $4$-vertex-critical subgraphs of arbitrarily large odd girth?}
+\end{quote}
+A positive answer to Problem~\#62 would force this statement by Theorem~11.
+Conversely, a single counterexample to this one-graph statement would disprove Problem~\#62 by Corollary~15.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Does Proposition~9 really extend Round~2?} Yes. Round~2 handled fixed graphs and finite families; Proposition~9 handles \emph{arbitrary} families with uniformly bounded odd girth. No cardinality restriction on $\mathcal H$ is needed.
+
+\item \textbf{Does Theorem~11 improperly assume finiteness of the common subgraph?} No. The positive answer only yields a common $4$-chromatic subgraph a priori, but Round~2 Corollary~4 upgrades this to a common \emph{finite $4$-vertex-critical} subgraph, which is exactly what is used.
+
+\item \textbf{Is odd girth monotone in the right direction?} Yes. If $F\subseteq H_r$, then every odd cycle of $F$ is an odd cycle of $H_r$, so $\mathrm{og}(F)\ge \mathrm{og}(H_r)$.
+
+\item \textbf{Is $S_N$ finite in Theorem~13?} Yes. There are only finitely many graphs on at most $N$ labeled vertices, hence finitely many isomorphism types, and therefore finitely many finite $4$-vertex-critical graphs of order at most $N$.
+
+\item \textbf{Any hidden converse claim?} None is made. Unbounded odd girth or unbounded order in every $\mathcal C_4(G)$ is proved only as a \emph{necessary} condition for a positive answer, not as a sufficient one.
+
+\item \textbf{Compatibility with Round~2 Proposition~8.} There is no conflict. Proposition~8 gave a sufficient condition for a counterexample pair via arbitrary family omission. Round~3 instead gives a one-graph obstruction criterion via boundedness in odd girth or size.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~3 advances beyond Round~2 in a mathematically substantive way.
+\begin{itemize}
+\item It upgrades finite-family omission to \textbf{bounded-odd-girth family omission} (Proposition~9).
+\item It proves that any positive solution to Problem~\#62 would force \textbf{every} $\aleph_1$-chromatic graph to contain finite $4$-vertex-critical subgraphs of \textbf{arbitrarily large odd girth} (Theorem~11).
+\item It proves that any positive solution to Problem~\#62 would force \textbf{every} $\aleph_1$-chromatic graph to contain finite $4$-vertex-critical subgraphs of \textbf{arbitrarily large order} (Theorem~13).
+\item It reduces any future \textbf{disproof} to a \textbf{single-graph construction}: it would suffice to build one $\aleph_1$-chromatic graph whose finite $4$-vertex-critical spectrum is bounded in odd girth or in order (Corollary~15).
+\end{itemize}
+The main remaining gap is therefore sharply formulated: determine whether every $\aleph_1$-chromatic graph must already have $4$-critical finite subgraphs of unbounded odd girth.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 55\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#62}, problem page and LaTeX source, accessed 2026-03-07. (Used for the exact current problem statement, the note that Erd\H{o}s asked the finite-family variant, and the currently listed open status.)
+\item A. Hajnal, P. Komj\'ath, \emph{What must and what need not be contained in a graph of uncountable chromatic number?}, Combinatorica 4(1) (1984), 47--52. (Used for the large odd-girth existence input and obligatory-subgraph background.)
+\item P. Erd\H{o}s, A. Hajnal, S. Shelah, \emph{On some general properties of chromatic numbers}, Topics in topology (Proc. Colloq., Keszthely, 1972) (1974), 243--255. (Used for the common $3$-chromatic / odd-cycle background already invoked in earlier rounds.)
+\end{itemize}

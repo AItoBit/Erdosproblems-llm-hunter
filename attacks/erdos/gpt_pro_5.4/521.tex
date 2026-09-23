@@ -1,0 +1,543 @@
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C) obstruction/correction}. The Round-1 output already reduced the problem to a specific missing ingredient: a maximal inequality capable of upgrading subsequence convergence to full-sequence convergence for the \emph{outside} roots. I do not have a gap-free proof or counterexample for the original full-sequence statement. Instead, I will do two things that strictly advance the investigation.
+
+First, I isolate a precise obstruction: the currently available one-point concentration bound is \emph{not summable} along the full sequence, so Borel--Cantelli alone can never prove the desired almost sure full-sequence law. Second, I push the Borel--Cantelli method to its natural limit and prove a substantially stronger subsequence theorem than Round~1: the almost sure asymptotic law holds not only on lacunary subsequences, but on every deterministic subsequence $(n_k)$ satisfying
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty.
+\]
+This includes explicit \emph{non-lacunary} subsequences with
+\[
+\frac{n_{k+1}}{n_k}\to 1.
+\]
+Using this, together with Round-1 symmetry lemmas and Do's strong law on $[-1,1]$, I obtain exact almost sure asymptotics along such dense subsequences for the hard outside intervals $[1,\infty)$, $(-\infty,-1]$, and their union.
+
+\section{Round-1 FOUNDATION USED}
+
+I will use the following vetted Round-1 results without reproving them.
+
+\begin{itemize}
+\item \textbf{Round-1 multiple-root lemma.} If $D_n$ denotes the event that $f_n$ has a real multiple root, then
+\[
+\sum_{n=1}^\infty \mathbb P(D_n)<\infty.
+\]
+Hence, almost surely, all real roots of $f_n$ are simple for all sufficiently large $n$. In particular, for all large $n$, counting real roots with multiplicity agrees with counting distinct real roots on every real interval.
+
+\item \textbf{Round-1 endpoint formula.} For each $n\ge 0$,
+\[
+\mathbb P(f_n(1)=0)=\mathbb P(f_n(-1)=0)=
+\begin{cases}
+0,& n \text{ even},\\[3pt]
+2^{-(n+1)}\binom{n+1}{(n+1)/2},& n \text{ odd}.
+\end{cases}
+\]
+In particular,
+\[
+\mathbb P(f_n(\pm 1)=0)=O(n^{-1/2}).
+\]
+
+\item \textbf{Round-1 reciprocal expectation symmetry.} If $N_n(a,b)$ denotes the number of distinct real roots of $f_n$ in $(a,b)$, then
+\[
+\mathbb E N_n(0,1)=\mathbb E N_n(1,\infty),
+\qquad
+\mathbb E N_n(-1,0)=\mathbb E N_n(-\infty,-1).
+\]
+
+\item \textbf{Round-1 lacunary global law.} Along any lacunary subsequence $(n_k)$ with $n_{k+1}\ge q n_k$ for some fixed $q>1$,
+\[
+\frac{R_{n_k}}{\log n_k}\to \frac{2}{\pi}
+\qquad\text{almost surely.}
+\]
+The present round strengthens this substantially.
+\end{itemize}
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new input is the following observation.
+
+\medskip
+\noindent\textbf{Summability, not lacunarity, is the real issue.}
+For each fixed $\varepsilon>0$ and each interval
+\[
+I\in\{\mathbb R,[0,1],[1,\infty),[-1,0],(-\infty,-1]\},
+\]
+Can--Nguyen's concentration theorem (quoted explicitly in Do's paper) gives constants $c_{\varepsilon,I},C_{\varepsilon,I}>0$ such that
+\[
+\mathbb P\bigl(|N_n(I)-\mathbb E N_n(I)|\ge \varepsilon \log n\bigr)
+\le C_{\varepsilon,I} e^{-c_{\varepsilon,I}\sqrt{\log n}}
+\qquad(n\ge 2).
+\]
+Therefore, Borel--Cantelli works on \emph{every} deterministic subsequence $(n_k)$ for which these tails are summable. Lacunarity is only one sufficient condition, not the correct boundary.
+
+A convenient explicit sufficient condition is
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty.
+\]
+This still allows very dense subsequences, including ones with $n_{k+1}/n_k\to 1$.
+
+\medskip
+\noindent\textbf{Second new observation.}
+The same summable-tail argument applies not only to the total real-root count, but also to each of the four fundamental real intervals separately. After identifying their expectation constants using the Round-1 symmetry lemmas, one obtains almost sure asymptotics for the outside half-lines $[1,\infty)$ and $(-\infty,-1]$ along these dense subsequences.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was this: the Borel--Cantelli argument gives almost sure convergence along sparse subsequences, but cannot by itself fill the gaps between neighboring degrees. The missing ingredient is a maximal inequality controlling
+\[
+\max_{n\le m\le n(1+o(1))}|N_m-N_n|.
+\]
+Do proved such a maximal inequality for roots in $[0,1]$, which yields the full-sequence strong law there, but explicitly explained that his pairing argument does not extend to the reciprocal-polynomial process needed for the outside roots.
+
+I therefore proceed in two steps.
+
+\begin{enumerate}
+\item Prove a rigorous \emph{obstruction lemma}: the one-point tail bound $e^{-c\sqrt{\log n}}$ is not summable along the full sequence, so one-point concentration alone cannot prove the full-sequence strong law.
+
+\item Prove a \emph{dense-subsequence strong law}: along any deterministic subsequence with
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty,
+\]
+we have almost sure convergence of $N_{n_k}(I)/\log n_k$ to the expected constant for each interval
+\[
+I\in\{\mathbb R,[0,1],[-1,0],[1,\infty),(-\infty,-1]\}.
+\]
+This gives new a.s. laws for the outside roots and exhibits explicit non-lacunary subsequences with ratio $n_{k+1}/n_k\to1$ on which the conjectured constant is already forced.
+\end{enumerate}
+
+This strictly advances beyond Round~1 because it replaces the lacunary theorem by a much denser subsequence theorem and, for the first time in this investigation, yields an exact almost sure law for the outside half-lines along explicit non-lacunary subsequences.
+
+\section{WORK (ROUND-2)}
+
+Throughout this section, $N_n(I)$ denotes the number of \emph{distinct} real roots of $f_n$ in the interval $I$. By the Round-1 multiple-root lemma, for almost every outcome $\omega$, all real roots are simple for all sufficiently large $n$, so every asymptotic statement below remains valid if $N_n(I)$ is replaced by the multiplicity-counting quantity $R_n(I)$.
+
+\subsection*{5.1. Obstruction: one-point concentration is not enough for the full sequence}
+
+\medskip
+\noindent\textbf{Lemma 5.1.}
+Let $c>0$. Then
+\[
+\sum_{n=3}^\infty e^{-c\sqrt{\log n}}=\infty.
+\]
+Consequently, the presently available one-point concentration bound
+\[
+\mathbb P\bigl(|N_n(I)-\mathbb E N_n(I)|\ge \varepsilon\log n\bigr)
+\le C_\varepsilon e^{-c_\varepsilon\sqrt{\log n}}
+\]
+cannot by itself yield the full-sequence almost sure convergence via Borel--Cantelli.
+
+\medskip
+\noindent\emph{Proof.}
+Consider the integral
+\[
+\int_3^\infty e^{-c\sqrt{\log x}}\,dx.
+\]
+Make the substitution $u=\sqrt{\log x}$, so that $x=e^{u^2}$ and $dx=2u e^{u^2}\,du$. Then
+\[
+\int_3^\infty e^{-c\sqrt{\log x}}\,dx
+=\int_{\sqrt{\log 3}}^\infty 2u\,e^{u^2-cu}\,du.
+\]
+Since $u^2-cu\to\infty$ as $u\to\infty$, the integrand $2u e^{u^2-cu}$ tends to $\infty$ and in particular is eventually bounded below by $1$. Hence the integral diverges. By the integral test,
+\[
+\sum_{n=3}^\infty e^{-c\sqrt{\log n}}=\infty.
+\]
+The final claim is immediate: the first Borel--Cantelli lemma requires summability of the probabilities along the full sequence, and Lemma~5.1 shows that the current one-point upper bound does not provide this. Therefore any proof of the original full-sequence almost sure law must use more than one-point concentration; specifically, one needs some maximal inequality or other mechanism controlling correlations between nearby degrees.
+\hfill$\square$
+
+\subsection*{5.2. A generic summable-tail subsequence principle}
+
+The following lemma is the main new technical device of this round.
+
+\medskip
+\noindent\textbf{Lemma 5.2 (summable-tail subsequence principle).}
+Let $(X_n)_{n\ge2}$ be random variables and $(a_n)_{n\ge2}$ deterministic real numbers. Let $(b_n)_{n\ge2}$ be positive deterministic numbers with $b_n\to\infty$. Assume that for every integer $m\ge1$ there is a sequence $(p_{n,m})_{n\ge2}$ such that
+\[
+\mathbb P\bigl(|X_n-a_n|\ge m^{-1}b_n\bigr)\le p_{n,m}
+\qquad(n\ge2).
+\]
+Let $(n_k)_{k\ge1}$ be an increasing sequence of integers such that for every $m\ge1$,
+\[
+\sum_{k=1}^\infty p_{n_k,m}<\infty.
+\]
+Then
+\[
+\frac{X_{n_k}-a_{n_k}}{b_{n_k}}\to0
+\qquad\text{almost surely as }k\to\infty.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Fix $m\ge1$. Define
+\[
+E_{k,m}:=\bigl\{|X_{n_k}-a_{n_k}|\ge m^{-1}b_{n_k}\bigr\}.
+\]
+By hypothesis,
+\[
+\sum_{k=1}^\infty \mathbb P(E_{k,m})\le \sum_{k=1}^\infty p_{n_k,m}<\infty.
+\]
+The first Borel--Cantelli lemma implies
+\[
+\mathbb P(E_{k,m}\ \text{i.o.})=0.
+\]
+Therefore, for almost every outcome $\omega$, there exists $K_m(\omega)$ such that for all $k\ge K_m(\omega)$,
+\[
+|X_{n_k}(\omega)-a_{n_k}|<m^{-1}b_{n_k}.
+\]
+Now intersect over all $m\in\mathbb N$. Since this is a countable intersection of probability-one events, it still has probability one. On that event, for every $m\ge1$ the ratio $|X_{n_k}-a_{n_k}|/b_{n_k}$ is eventually at most $1/m$. Hence the ratio tends to $0$.
+\hfill$\square$
+
+\subsection*{5.3. The relevant concentration input}
+
+We now record the specific concentration estimate that will be plugged into Lemma~5.2.
+
+\medskip
+\noindent\textbf{Lemma 5.3.}
+For each fixed $\varepsilon>0$ and each interval
+\[
+I\in\{\mathbb R,[0,1],[1,\infty),[-1,0],(-\infty,-1]\},
+\]
+there exist constants $c_{\varepsilon,I},C_{\varepsilon,I}>0$ such that for all $n\ge2$,
+\[
+\mathbb P\bigl(|N_n(I)-\mathbb E N_n(I)|\ge \varepsilon\log n\bigr)
+\le C_{\varepsilon,I}e^{-c_{\varepsilon,I}\sqrt{\log n}}.
+\]
+
+\medskip
+\noindent\emph{Justification.}
+This is precisely the consequence of Can--Nguyen's Theorems~1.4 and~1.5 recorded by Do in the proof of his Lemma~2.3.
+\hfill$\square$
+
+\subsection*{5.4. Expectation constants for the four fundamental intervals}
+
+We next determine the asymptotic expectations on the intervals $[0,1]$, $[-1,0]$, $[1,\infty)$, and $(-\infty,-1]$.
+
+\medskip
+\noindent\textbf{Lemma 5.4.}
+As $n\to\infty$,
+\[
+\mathbb E N_n([0,1])
+=\mathbb E N_n([-1,0])
+=\mathbb E N_n([1,\infty))
+=\mathbb E N_n((-\infty,-1])
+=\frac{1}{2\pi}\log n+o(\log n).
+\]
+
+\medskip
+\noindent\emph{Proof.}
+We proceed in three steps.
+
+\smallskip
+\noindent\emph{Step 1: positive and negative roots inside $[-1,1]$ have the same expectation.}
+Consider the polynomial
+\[
+g_n(x):=f_n(-x)=\sum_{k=0}^n \epsilon_k(-1)^k x^k.
+\]
+The coefficient sequence $((-1)^k\epsilon_k)_{0\le k\le n}$ has the same joint distribution as $(\epsilon_k)_{0\le k\le n}$, because multiplying each coordinate by the deterministic sign $(-1)^k$ preserves the i.i.d. Rademacher law. Hence $g_n$ has the same distribution as $f_n$.
+
+A real number $x\in[0,1]$ is a root of $g_n$ if and only if $-x\in[-1,0]$ is a root of $f_n$, with the same multiplicity. Therefore the random variables $N_n([0,1])$ and $N_n([-1,0])$ have the same distribution, hence
+\[
+\mathbb E N_n([0,1])=\mathbb E N_n([-1,0]).
+\]
+
+\smallskip
+\noindent\emph{Step 2: inside and outside expectations agree on each sign side.}
+By the Round-1 reciprocal symmetry,
+\[
+\mathbb E N_n(0,1)=\mathbb E N_n(1,\infty).
+\]
+Adding the same endpoint contribution $\mathbb P(f_n(1)=0)$ to both sides gives
+\[
+\mathbb E N_n([0,1])=\mathbb E N_n([1,\infty)).
+\]
+Similarly,
+\[
+\mathbb E N_n([-1,0])=\mathbb E N_n((-\infty,-1]).
+\]
+
+\smallskip
+\noindent\emph{Step 3: evaluate the common asymptotic.}
+Do records the classical expectation asymptotic
+\[
+\mathbb E N_n([-1,1])=\frac{1}{\pi}\log n+o(\log n).
+\]
+Since $0$ is never a root of $f_n$ (because $f_n(0)=\epsilon_0\in\{\pm1\}$), the intervals $[-1,0]$ and $[0,1]$ split $[-1,1]$ without overlap on roots, and therefore
+\[
+\mathbb E N_n([-1,1])=\mathbb E N_n([-1,0])+\mathbb E N_n([0,1]).
+\]
+By Step~1 the two summands are equal, so each equals
+\[
+\frac12\,\mathbb E N_n([-1,1])
+=\frac{1}{2\pi}\log n+o(\log n).
+\]
+Then Step~2 transfers the same asymptotic to $[1,\infty)$ and $(-\infty,-1]$.
+\hfill$\square$
+
+\subsection*{5.5. Dense-subsequence strong laws}
+
+We can now combine Lemma~5.2 and Lemma~5.3 with the expectation asymptotics above.
+
+\medskip
+\noindent\textbf{Theorem 5.5 (dense-subsequence strong law on the four fundamental intervals and on $\mathbb R$).}
+Let $(n_k)_{k\ge1}$ be an increasing sequence of integers such that
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty.
+\]
+Then the following almost sure convergences hold:
+\[
+\frac{N_{n_k}(\mathbb R)}{\log n_k}\to\frac{2}{\pi},
+\]
+and for each interval
+\[
+I\in\{[0,1],[-1,0],[1,\infty),(-\infty,-1]\}
+\]
+one has
+\[
+\frac{N_{n_k}(I)}{\log n_k}\to\frac{1}{2\pi}
+\qquad\text{almost surely.}
+\]
+Consequently,
+\[
+\frac{N_{n_k}((-\infty,-1]\cup[1,\infty))}{\log n_k}\to\frac{1}{\pi}
+\qquad\text{almost surely.}
+\]
+
+\medskip
+\noindent\emph{Proof.}
+We first prove the statement for a fixed interval $I$ among
+\[
+\mathbb R,[0,1],[-1,0],[1,\infty),(-\infty,-1].
+\]
+For each integer $m\ge1$, apply Lemma~5.3 with $\varepsilon=1/m$. Then there exist constants $c_{m,I},C_{m,I}>0$ such that
+\[
+\mathbb P\Bigl(\bigl|N_n(I)-\mathbb E N_n(I)\bigr|\ge m^{-1}\log n\Bigr)
+\le C_{m,I}e^{-c_{m,I}\sqrt{\log n}}
+\qquad(n\ge2).
+\]
+Because
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty,
+\]
+for each fixed $m$ there exists $K_m$ such that for all $k\ge K_m$,
+\[
+c_{m,I}\sqrt{\log n_k}\ge 3\log k.
+\]
+Therefore, for all large $k$,
+\[
+C_{m,I}e^{-c_{m,I}\sqrt{\log n_k}}
+\le C_{m,I}k^{-3}.
+\]
+Hence
+\[
+\sum_{k=1}^\infty
+\mathbb P\Bigl(\bigl|N_{n_k}(I)-\mathbb E N_{n_k}(I)\bigr|\ge m^{-1}\log n_k\Bigr)<\infty.
+\]
+Lemma~5.2 now yields
+\[
+\frac{N_{n_k}(I)-\mathbb E N_{n_k}(I)}{\log n_k}\to0
+\qquad\text{almost surely.}
+\]
+
+It remains to identify the deterministic limit of $\mathbb E N_{n_k}(I)/\log n_k$.
+
+\begin{itemize}
+\item For $I=\mathbb R$, Round~1 already used the expectation asymptotic of Do--Nguyen--Vu:
+\[
+\mathbb E N_n(\mathbb R)=\frac{2}{\pi}\log n + C + o(1).
+\]
+Hence
+\[
+\frac{\mathbb E N_{n_k}(\mathbb R)}{\log n_k}\to \frac{2}{\pi}.
+\]
+Combining with the previous display gives
+\[
+\frac{N_{n_k}(\mathbb R)}{\log n_k}\to\frac{2}{\pi}
+\qquad\text{almost surely.}
+\]
+
+\item For $I\in\{[0,1],[-1,0],[1,\infty),(-\infty,-1]\}$, Lemma~5.4 gives
+\[
+\frac{\mathbb E N_{n_k}(I)}{\log n_k}\to \frac{1}{2\pi}.
+\]
+Therefore
+\[
+\frac{N_{n_k}(I)}{\log n_k}\to\frac{1}{2\pi}
+\qquad\text{almost surely.}
+\]
+\end{itemize}
+
+Finally, the intervals $[1,\infty)$ and $(-\infty,-1]$ are disjoint, so their counts add exactly. Hence
+\[
+N_{n_k}((-\infty,-1]\cup[1,\infty))
+= N_{n_k}((-\infty,-1]) + N_{n_k}([1,\infty)),
+\]
+and dividing by $\log n_k$ yields the outside-root limit $1/\pi$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.6 (explicit non-lacunary subsequence with ratio tending to $1$).}
+Define, for $k\ge3$,
+\[
+\nu_k:=\exp\bigl((\log k)^3\bigr)
+\qquad\text{and}\qquad
+n_k:=\lfloor \nu_k\rfloor.
+\]
+After discarding finitely many initial terms, $(n_k)$ is strictly increasing and satisfies
+\[
+\frac{n_{k+1}}{n_k}\to1.
+\]
+Hence Theorem~5.5 applies to this explicit non-lacunary subsequence. In particular,
+\[
+\frac{N_{n_k}(\mathbb R)}{\log n_k}\to\frac{2}{\pi}
+\qquad\text{and}\qquad
+\frac{N_{n_k}((-\infty,-1]\cup[1,\infty))}{\log n_k}\to\frac{1}{\pi}
+\]
+almost surely.
+
+\medskip
+\noindent\emph{Proof.}
+We first verify the growth condition in Theorem~5.5. Since
+\[
+\log n_k=(\log k)^3+o(1),
+\]
+we obtain
+\[
+\frac{\sqrt{\log n_k}}{\log k}
+\sim \frac{(\log k)^{3/2}}{\log k}
+=(\log k)^{1/2}\to\infty.
+\]
+So Theorem~5.5 applies once $(n_k)$ is strictly increasing.
+
+It remains to show $n_{k+1}/n_k\to1$. Because
+\[
+\log \nu_k=(\log k)^3,
+\]
+we have
+\[
+\log \frac{\nu_{k+1}}{\nu_k}
+=(\log(k+1))^3-(\log k)^3.
+\]
+By the mean value theorem applied to $\phi(x)=(\log x)^3$, there exists $\xi_k\in(k,k+1)$ such that
+\[
+(\log(k+1))^3-(\log k)^3
+=\phi'(\xi_k)
+=\frac{3(\log \xi_k)^2}{\xi_k}\to0.
+\]
+Hence $\nu_{k+1}/\nu_k\to 1$. Since $n_k/\nu_k\to1$, the same limit holds for $n_{k+1}/n_k$. Also,
+\[
+\nu_{k+1}-\nu_k\sim \nu_k\cdot \frac{3(\log k)^2}{k}\to\infty,
+\]
+so after removing finitely many initial indices the floors $n_k$ are strictly increasing.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.7 (full-sequence liminf/limsup constraints).}
+Almost surely,
+\[
+\liminf_{n\to\infty}\frac{R_n}{\log n}\ge \frac{1}{\pi}
+\qquad\text{and}\qquad
+\limsup_{n\to\infty}\frac{R_n}{\log n}\ge \frac{2}{\pi}.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Since $R_n\ge N_n([-1,1])$ for every $n$, Do's strong law on $[-1,1]$ gives
+\[
+\liminf_{n\to\infty}\frac{R_n}{\log n}
+\ge
+\lim_{n\to\infty}\frac{N_n([-1,1])}{\log n}
+=\frac{1}{\pi}
+\qquad\text{almost surely.}
+\]
+For the limsup, apply Theorem~5.5 to the explicit sequence from Corollary~5.6 (or alternatively use the Round-1 lacunary theorem): along that subsequence,
+\[
+\frac{R_{n_k}}{\log n_k}\to \frac{2}{\pi}
+\qquad\text{almost surely,}
+\]
+so the full-sequence limsup is at least $2/\pi$ almost surely.
+\hfill$\square$
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new arguments against the main failure modes.
+
+\begin{itemize}
+\item \textbf{Did I really go beyond Round~1?} Yes. Round~1 proved only a lacunary almost sure law on $\mathbb R$. Theorem~5.5 replaces this by a much denser subsequence theorem, valid whenever $\sqrt{\log n_k}/\log k\to\infty$, and gives exact outside-half-line laws that were absent in Round~1.
+
+\item \textbf{Was lacunarity accidentally used anywhere?} No. The proof of Theorem~5.5 uses only the summability of
+\[
+e^{-c_{m,I}\sqrt{\log n_k}},
+\]
+which follows from $\sqrt{\log n_k}/\log k\to\infty$. No ratio lower bound $n_{k+1}/n_k\ge q>1$ is used.
+
+\item \textbf{Is the condition $\sqrt{\log n_k}/\log k\to\infty$ strong enough for all rational error tolerances?} Yes. For each fixed $m$, the constant $c_{m,I}>0$ is fixed. Hence eventually
+\[
+c_{m,I}\sqrt{\log n_k}\ge 3\log k,
+\]
+which makes the $m$th error event summable in $k$. Countably many $m$ are handled by a countable intersection of probability-one events.
+
+\item \textbf{Did endpoint roots at $\pm1$ create double-counting issues?} They do not invalidate any asymptotic. In Lemma~5.4, the equality
+\[
+\mathbb E N_n([0,1])=\mathbb E N_n([1,\infty))
+\]
+is exact because both closed intervals differ from their open counterparts by the same endpoint event $\{f_n(1)=0\}$. Likewise on the negative side.
+
+\item \textbf{Did multiplicities matter?} The concentration theorems and expectation asymptotics are stated for distinct roots. By the Round-1 multiple-root lemma, real multiple roots occur only finitely often almost surely. Therefore every asymptotic statement in Theorem~5.5 and its corollaries remains valid for the original multiplicity-counting quantities $R_n(I)$.
+
+\item \textbf{Any hidden use of unproved expectation asymptotics on $[1,\infty)$ or $(-\infty,-1]$?} No. These were derived in Lemma~5.4 from (i) the classical expectation on $[-1,1]$, (ii) the sign symmetry $x\mapsto -x$, and (iii) the Round-1 reciprocal expectation symmetry.
+
+\item \textbf{Does Corollary~5.6 really give a non-lacunary sequence?} Yes. The ratio $n_{k+1}/n_k\to1$, so there is no fixed $q>1$ with $n_{k+1}\ge q n_k$ for all large $k$. Hence the sequence is genuinely non-lacunary.
+\end{itemize}
+
+No contradiction or gap was found in the new arguments.
+
+\section{FINAL}
+
+\noindent\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The original full-sequence statement remains unresolved. However, this round proves the following new theorems beyond Round~1.
+
+\begin{enumerate}
+\item \textbf{Rigorous obstruction.} The current one-point concentration estimate is non-summable along the full sequence, so Borel--Cantelli alone cannot prove the original almost sure law; a maximal inequality or other inter-degree control is genuinely necessary.
+
+\item \textbf{Dense-subsequence global law.} If $(n_k)$ is any deterministic increasing sequence with
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty,
+\]
+then
+\[
+\frac{R_{n_k}}{\log n_k}\to\frac{2}{\pi}
+\qquad\text{almost surely.}
+\]
+This is strictly stronger than the Round-1 lacunary theorem.
+
+\item \textbf{Dense-subsequence law on the outside half-lines.} Along the same class of subsequences,
+\[
+\frac{R_{n_k}([1,\infty))}{\log n_k}\to\frac{1}{2\pi},
+\qquad
+\frac{R_{n_k}((-\infty,-1])}{\log n_k}\to\frac{1}{2\pi},
+\]
+and therefore
+\[
+\frac{R_{n_k}((-\infty,-1]\cup[1,\infty))}{\log n_k}\to\frac{1}{\pi}
+\qquad\text{almost surely.}
+\]
+
+\item \textbf{Explicit non-lacunary subsequence.} The same conclusions hold along the explicit deterministic sequence
+\[
+ n_k=\Bigl\lfloor\exp\bigl((\log k)^3\bigr)\Bigr\rfloor
+\]
+(after removing finitely many initial terms), for which $n_{k+1}/n_k\to1$.
+\end{enumerate}
+
+Thus the remaining gap is now sharply localized: the unresolved issue is not one-point concentration, but the absence of a method that propagates these dense-subsequence laws across the residual windows between nearby degrees.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent\textbf{COMPLETION: 74\%}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item Y. Q. Do, \emph{A strong law of large numbers for real roots of random polynomials}, arXiv:2403.06353.
+\item V. H. Can and O. Nguyen, \emph{Concentration inequalities for the number of real zeros of Kac polynomials}, arXiv:2311.15446.
+\item Y. Q. Do, H. Nguyen, and V. Vu, \emph{Real roots of random polynomials: expectation and repulsion}, arXiv:1409.4128.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#521}, erdosproblems.com/521 (checked for current open status).
+\end{enumerate}

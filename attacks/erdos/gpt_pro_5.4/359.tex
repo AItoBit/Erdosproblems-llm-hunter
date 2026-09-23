@@ -1,0 +1,216 @@
+
+\section*{Round 2 continuation for Erd\H{o}s problems \#319, \#359, \#361}
+
+This file is written as a continuation of the Round-1 write-up.  I explicitly indicate below whenever I use a Round-1 result as a black box.
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Problem \#359}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}  The Round-1 write-up still had only the trivial lower bound $a_k\ge k$.  The most natural strict advance is therefore to prove a genuinely stronger lower bound on $a_k$, or equivalently an upper bound on the counting function
+\[
+A(x):=\#\{k:\ a_k\le x\}.
+\]
+I will prove the new unconditional estimate
+\[
+A(x)\le \frac{3x+3}{4},
+\qquad\text{hence}\qquad
+a_k\ge \frac{4k-3}{3}.
+\]
+This does not settle Erd\H{o}s' question $a_k/k\to\infty$, but it is a rigorous improvement over Round 1 and it rules out any positive upper density larger than $3/4$.
+
+\subsection*{2) ROUND-1 FOUNDATION USED}
+I use the following Round-1 points as fixed background.
+
+\begin{itemize}
+\item The original statement for general $n>1$ is internally inconsistent unless one inserts the monotonicity correction ``least integer $>a_i$''; Round 1 already made this minimal correction.
+\item For the main asymptotic question, the case of real interest is still $n=1$.
+\item Round 1 proved the unconditional upper bound
+\[
+a_{k+1}\le \binom{k+1}{2}+1.
+\]
+\end{itemize}
+
+In the present round I work only with the corrected $n=1$ sequence.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new observation is that \emph{adjacent two-term sums already force many permanent exclusions}.
+
+If
+\[
+a_1<a_2<\cdots<a_t\le x/2,
+\]
+then the numbers
+\[
+a_1+a_2,\ a_2+a_3,\ \dots,\ a_{t-1}+a_t
+\]
+are all distinct, all at most $x$, and none of them can ever appear later in the sequence, because each is already a sum of two consecutive earlier terms.
+
+This gives a clean counting obstruction on $[1,x]$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The precise gap after Round 1 was the absence of any nontrivial lower bound on $a_k$ beyond $a_k\ge k$.
+
+To improve that, I will prove:
+
+\begin{itemize}
+\item[(i)] for every $x\ge 1$,
+\[
+A(x)\le \frac{x+\lceil x/2\rceil+1}{2}\le \frac{3x+3}{4};
+\]
+\item[(ii)] equivalently,
+\[
+a_k\ge \left\lceil \frac{4k-3}{3}\right\rceil.
+\]
+\end{itemize}
+
+The mechanism is a direct ``included numbers versus permanently forbidden adjacent sums'' comparison inside the same interval $[1,x]$.
+
+\subsection*{5) WORK (ROUND-2)}
+
+For the rest of this section let
+\[
+A(x):=\#\{k:\ a_k\le x\}
+\]
+for the corrected $n=1$ MacMahon sequence.
+
+\paragraph{Lemma 359.1.}
+For every integer $x\ge 1$,
+\[
+A(x)\le \frac{x+\lceil x/2\rceil+1}{2}\le \frac{3x+3}{4}.
+\]
+
+\paragraph{Proof.}
+Let
+\[
+t:=A\!\left(\left\lfloor \frac{x}{2}\right\rfloor\right).
+\]
+Thus
+\[
+a_1<a_2<\cdots<a_t\le \left\lfloor \frac{x}{2}\right\rfloor.
+\]
+
+Consider the $t-1$ adjacent sums
+\[
+s_i:=a_i+a_{i+1}\qquad (1\le i\le t-1).
+\]
+Because the sequence is strictly increasing, these sums are strictly increasing:
+\[
+s_1<s_2<\cdots<s_{t-1}.
+\]
+Also
+\[
+s_i\le 2\left\lfloor \frac{x}{2}\right\rfloor\le x.
+\]
+Finally, each $s_i$ is \emph{not} a term of the sequence, because as soon as $a_{i+1}$ has appeared, the number $a_i+a_{i+1}$ is already representable as a sum of consecutive earlier terms, so it can never be chosen later by the defining greedy rule.
+
+Hence, among the integers in $[1,x]$, there are at least $t-1$ numbers which are definitely \emph{not} in the sequence.  Therefore
+\[
+A(x)\le x-(t-1)=x-t+1.
+\]
+On the other hand, from $\lfloor x/2\rfloor+1$ up to $x$ there are only
+\[
+x-\left\lfloor \frac{x}{2}\right\rfloor=\left\lceil \frac{x}{2}\right\rceil
+\]
+available integers, so
+\[
+A(x)-t\le \left\lceil \frac{x}{2}\right\rceil,
+\qquad\text{that is,}\qquad
+t\ge A(x)-\left\lceil \frac{x}{2}\right\rceil.
+\]
+Substituting this lower bound for $t$ into $A(x)\le x-t+1$ gives
+\[
+A(x)\le x-\left(A(x)-\left\lceil \frac{x}{2}\right\rceil\right)+1,
+\]
+hence
+\[
+2A(x)\le x+\left\lceil \frac{x}{2}\right\rceil+1.
+\]
+Therefore
+\[
+A(x)\le \frac{x+\lceil x/2\rceil+1}{2}\le \frac{3x+3}{4}.
+\]
+\hfill $\square$
+
+\paragraph{Corollary 359.2.}
+For every $k\ge 1$,
+\[
+a_k\ge \left\lceil \frac{4k-3}{3}\right\rceil.
+\]
+
+\paragraph{Proof.}
+Apply Lemma 359.1 with $x=a_k$.  Since $A(a_k)=k$, we obtain
+\[
+k\le \frac{3a_k+3}{4},
+\]
+so
+\[
+a_k\ge \frac{4k-3}{3}.
+\]
+As $a_k$ is an integer, this yields
+\[
+a_k\ge \left\lceil \frac{4k-3}{3}\right\rceil.
+\]
+\hfill $\square$
+
+\paragraph{Consequence.}
+The counting function of the sequence has upper density at most $3/4$:
+\[
+\limsup_{x\to\infty}\frac{A(x)}{x}\le \frac34.
+\]
+Equivalently,
+\[
+\liminf_{k\to\infty}\frac{a_k}{k}\ge \frac43.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the new proof against the main possible objections.
+
+\begin{itemize}
+\item \textbf{Could two adjacent sums coincide?}  
+No.  Since the sequence is strictly increasing,
+\[
+a_i+a_{i+1}<a_{i+1}+a_{i+2}
+\]
+for every valid $i$.
+
+\item \textbf{Could an adjacent sum later re-enter the sequence?}  
+No.  Once $a_i$ and $a_{i+1}$ have been chosen, the value $a_i+a_{i+1}$ is permanently representable as a sum of consecutive earlier terms, so the greedy rule can never choose it later.
+
+\item \textbf{Did the proof use anything false for small $x$?}  
+No.  If $t=0$ or $t=1$, the argument still gives a valid inequality because there are then $t-1\le 0$ adjacent sums, and the final bound remains true.  In particular, $A(1)=1$ and the estimate gives $1\le (3+1)/4$.
+
+\item \textbf{Is the result genuinely stronger than Round 1?}  
+Yes.  Round 1 had only $a_k\ge k$.  We now have the explicit improvement
+\[
+a_k\ge \frac43k+O(1).
+\]
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The open asymptotic questions from Erd\H{o}s remain open, but Round 2 adds a real theorem that was not present in Round 1:
+\[
+A(x)\le \frac{3x+3}{4}
+\qquad\text{and}\qquad
+a_k\ge \left\lceil \frac{4k-3}{3}\right\rceil.
+\]
+So the sequence is now known to have upper density at most $3/4$, which is a genuine structural obstruction beyond the trivial $a_k\ge k$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#359}, \texttt{erdosproblems.com/359} (checked in this round).
+\item \v{S}. Porubsk\'y, \emph{On MacMahon's segmented numbers and related sequences}, Nieuw Arch. Wisk. (3) 25 (1977), 403--408.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

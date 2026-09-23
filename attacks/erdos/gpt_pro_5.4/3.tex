@@ -1,0 +1,439 @@
+\section{Round 5: Quantitative finite-scale extremal theorem for Erd\H{o}s Problem \#3}
+
+\subsection{1) ROUND-5 OBJECTIVE}
+
+\textbf{Path (C): obstruction/correction.}
+Round~4 proved an exact \emph{qualitative} dyadic reformulation: for each fixed $k\ge 3$, the harmonic-sum form of Erd\H{o}s Problem~\#3 is equivalent to the convergence of
+\[
+\sum_{j\ge 0}\frac{r_k(2^j)}{2^j}.
+\]
+It also gave a weighted analogue, up to a constant-scale dilation of the weight.
+
+The exact gap left after Round~4 is that this was only a convergence/divergence criterion. It did \emph{not} quantify the largest possible weighted mass of a $k$-AP-free subset of $[1,N]$.
+
+The new goal is to prove a \emph{finite-scale quantitative theorem}: for every fixed $k$ and every regular weight $\varphi$, the maximal weighted mass of a $k$-AP-free subset of $[1,N]$ is comparable, up to absolute constants, to the partial dyadic sum
+\[
+\sum_{j\le \log_2 N}\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+This is strictly stronger than Round~4, and it sharpens the obstruction: within the dyadic-block framework, the extremal weighted mass is already determined up to constants by the dyadic profile of $r_k$.
+
+\subsection{2) Round-4 FOUNDATION USED}
+
+I use the following Round~4 results as black boxes.
+
+\begin{itemize}
+\item \textbf{Weighted dyadic upper bound.} If $\varphi:[2,\infty)\to(0,\infty)$ is nondecreasing and $B_j:=A\cap(2^j,2^{j+1}]$, then
+\[
+\sum_{n\in A\cap[2,\infty)}\frac{1}{n\varphi(n)}
+\le
+\sum_{j\ge 0}\frac{|B_j|}{2^j\varphi(2^j)}.
+\]
+\item \textbf{Sparse block-pasting lemma.} If $N_{m+1}>3N_m$ and each $E_m\subseteq (2N_m,3N_m]$ is $k$-AP-free, then $\bigcup_m E_m$ is $k$-AP-free.
+\end{itemize}
+
+I do \emph{not} reprove these; I only strengthen their consequences.
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-5)}
+
+The new ingredient is a \textbf{finite extremal function} together with a \textbf{subadditivity lemma} for $r_k$.
+
+For a nondecreasing weight $\varphi:[2,\infty)\to(0,\infty)$, define
+\[
+F_{k,\varphi}(N)
+:=
+\sup\left\{
+\sum_{n\in A\cap[3,N]}\frac{1}{n\varphi(n)}:
+A\subseteq\{1,\dots,N\},\ A\text{ is }k\text{-AP-free}
+\right\}.
+\]
+
+The new theorem shows that, for regular weights satisfying $\varphi(3x)\ll \varphi(x)$,
+\[
+F_{k,\varphi}(N)\asymp \sum_{j\le \log_2 N}\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+Thus the dyadic criterion from Round~4 is not merely sufficient for boundedness: it gives the \emph{correct order of growth} of the finite extremal problem.
+
+\subsection{4) ATTACK PLAN (ROUND-5)}
+
+The exact remaining gap after Round~4 is:
+\begin{quote}
+Round~4 characterizes \emph{whether} the total weighted mass can be finite or infinite, but not \emph{how large} the extremal weighted mass up to scale $N$ actually is.
+\end{quote}
+
+To close this gap, I prove four claims.
+
+\begin{enumerate}
+\item $r_k$ is subadditive: $r_k(m+n)\le r_k(m)+r_k(n)$. As a consequence, the dyadic densities $r_k(2^j)/2^j$ are nonincreasing.
+\item The Round~4 dyadic upper bound yields
+\[
+F_{k,\varphi}(N)\le \sum_{j\le \log_2 N}\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+\item The Round~4 sparse block-pasting lemma yields a matching lower bound (up to constants) by packing extremal blocks on one parity of dyadic scales.
+\item Combining these with the monotonicity from subadditivity upgrades the Round~4 convergence criterion to a quantitative equivalence.
+\end{enumerate}
+
+This overcomes the previous obstacle because it turns the qualitative dyadic reformulation into an explicit finite-$N$ growth theorem.
+
+\subsection{5) WORK (ROUND-5)}
+
+\subsubsection{5.1 A new structural lemma: subadditivity of $r_k$}
+
+\noindent\textbf{Lemma 5.1 (subadditivity of $r_k$).}
+Fix $k\ge 3$. For all integers $m,n\ge 1$,
+\[
+r_k(m+n)\le r_k(m)+r_k(n).
+\]
+Consequently,
+\[
+\frac{r_k(2^{j+1})}{2^{j+1}}\le \frac{r_k(2^j)}{2^j}
+\qquad\text{for all }j\ge 0.
+\]
+
+\noindent\emph{Proof.}
+Let $S\subseteq\{1,\dots,m+n\}$ be $k$-AP-free. Split $S$ into
+\[
+S_1:=S\cap\{1,\dots,m\},
+\qquad
+S_2:=\{x-m:x\in S\cap\{m+1,\dots,m+n\}\}\subseteq\{1,\dots,n\}.
+\]
+If $S_1$ contained a $k$-term arithmetic progression, then so would $S$; likewise for $S_2$ after translating back by $m$. Hence $|S_1|\le r_k(m)$ and $|S_2|\le r_k(n)$, so
+\[
+|S|=|S_1|+|S_2|\le r_k(m)+r_k(n).
+\]
+Taking the maximum over all $k$-AP-free $S\subseteq\{1,\dots,m+n\}$ yields
+\[
+r_k(m+n)\le r_k(m)+r_k(n).
+\]
+Applying this with $m=n=2^j$ gives
+\[
+r_k(2^{j+1})\le 2r_k(2^j),
+\]
+which is equivalent to the claimed monotonicity of $r_k(2^j)/2^j$.
+\hfill$\square$
+
+\medskip
+For the rest of the round, define
+\[
+u_j:=\frac{r_k(2^j)}{2^j\varphi(2^j)}\qquad (j\ge 1).
+\]
+If $\varphi$ is nondecreasing, then Lemma~5.1 implies that $(u_j)_{j\ge 1}$ is nonincreasing.
+
+\subsubsection{5.2 Finite upper bound from the Round~4 dyadic inequality}
+
+\noindent\textbf{Proposition 5.2 (finite upper bound).}
+Let $k\ge 3$, let $\varphi:[2,\infty)\to(0,\infty)$ be nondecreasing, and let $N\ge 3$. Set
+\[
+J:=\lfloor \log_2 N\rfloor.
+\]
+Then
+\[
+F_{k,\varphi}(N)
+\le
+\sum_{j=1}^{J} \frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+
+\noindent\emph{Proof.}
+Let $A\subseteq\{1,\dots,N\}$ be $k$-AP-free. For each $1\le j\le J$, define the truncated dyadic block
+\[
+B_j:=A\cap (2^j,\min\{2^{j+1},N\}].
+\]
+Then the $B_j$ partition $A\cap[3,N]$, and by the Round~4 weighted dyadic upper bound,
+\[
+\sum_{n\in A\cap[3,N]}\frac{1}{n\varphi(n)}
+\le
+\sum_{j=1}^{J}\frac{|B_j|}{2^j\varphi(2^j)}.
+\]
+Now each $B_j$ lies in an interval of length at most $2^j$. After translating this interval to an initial segment $\{1,\dots,\ell_j\}$ with $\ell_j\le 2^j$, the set $B_j$ remains $k$-AP-free; hence
+\[
+|B_j|\le r_k(\ell_j)\le r_k(2^j),
+\]
+using the monotonicity of $r_k$. Therefore
+\[
+\sum_{n\in A\cap[3,N]}\frac{1}{n\varphi(n)}
+\le
+\sum_{j=1}^{J}\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+Taking the supremum over all such $A$ proves the result.
+\hfill$\square$
+
+\subsubsection{5.3 Finite lower bound from sparse block-pasting}
+
+\noindent\textbf{Proposition 5.3 (finite lower bound).}
+Let $k\ge 3$, let $\varphi:[2,\infty)\to(0,\infty)$ be nondecreasing, and let $N\ge 3$. Set
+\[
+J_-(N):=\left\lfloor \log_2\left(\frac{N}{3}\right)\right\rfloor.
+\]
+(If $N<6$, interpret the sum below as the empty sum $0$.) Then
+\[
+F_{k,\varphi}(N)
+\ge
+\frac16\sum_{j=1}^{J_-(N)} \frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}.
+\]
+
+\noindent\emph{Proof.}
+Fix $J:=J_-(N)$. For each $1\le j\le J$, choose a $k$-AP-free set
+\[
+S_j\subseteq\{1,\dots,2^j\}
+\qquad\text{with}\qquad |S_j|=r_k(2^j).
+\]
+For each parity $p\in\{0,1\}$ define
+\[
+I_p:=\{j\in\{1,\dots,J\}: j\equiv p\pmod 2\},
+\]
+and set
+\[
+A^{(p)}:=\bigcup_{j\in I_p} (2^{j+1}+S_j).
+\]
+Each translated block $2^{j+1}+S_j$ is contained in
+\[
+(2^{j+1},3\cdot 2^j],
+\]
+and is $k$-AP-free. Consecutive dyadic scales of the same parity differ by a factor $4$, so if we write $N_m:=2^j$ for $j\in I_p$ in increasing order, then $N_{m+1}=4N_m>3N_m$. Therefore, by the Round~4 sparse block-pasting lemma, each $A^{(p)}$ is $k$-AP-free.
+
+Also, since $j\le J$, every element of $A^{(p)}$ is at most $3\cdot 2^J\le N$, so $A^{(p)}\subseteq\{1,\dots,N\}$. Hence $A^{(p)}$ is an admissible set in the definition of $F_{k,\varphi}(N)$.
+
+Now fix $j\in I_p$. Every $n\in 2^{j+1}+S_j$ satisfies $n\le 3\cdot 2^j$ and $\varphi(n)\le \varphi(3\cdot 2^j)$, so
+\[
+\frac{1}{n\varphi(n)}\ge \frac{1}{3\cdot 2^j\varphi(3\cdot 2^j)}.
+\]
+Summing over the block gives
+\[
+\sum_{n\in 2^{j+1}+S_j}\frac{1}{n\varphi(n)}
+\ge
+\frac{|S_j|}{3\cdot 2^j\varphi(3\cdot 2^j)}
+=
+\frac{1}{3}\cdot \frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}.
+\]
+Therefore
+\[
+\sum_{n\in A^{(p)}\cap[3,N]}\frac{1}{n\varphi(n)}
+\ge
+\frac13\sum_{j\in I_p}\frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}.
+\]
+Choose the better parity $p$, for which the right-hand side is at least half of the total sum over $1\le j\le J$. Then
+\[
+F_{k,\varphi}(N)
+\ge
+\frac13\cdot \frac12
+\sum_{j=1}^{J}\frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}
+=
+\frac16\sum_{j=1}^{J}\frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}.
+\]
+This proves the proposition.
+\hfill$\square$
+
+\subsubsection{5.4 Quantitative equivalence for regular weights}
+
+\noindent\textbf{Theorem 5.4 (finite-scale quantitative equivalence).}
+Let $k\ge 3$, and let $\varphi:[2,\infty)\to(0,\infty)$ be nondecreasing. Assume there exists a constant $C\ge 1$ such that
+\[
+\varphi(3x)\le C\varphi(x)\qquad\text{for all }x\ge 2.
+\]
+Then for every $N\ge 8$,
+\[
+\frac{1}{18C}
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}
+\le
+F_{k,\varphi}(N)
+\le
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+In particular,
+\[
+F_{k,\varphi}(N)
+\asymp
+\sum_{j\le \log_2 N}
+\frac{r_k(2^j)}{2^j\varphi(2^j)},
+\]
+with implicit constants depending only on $C$.
+
+\noindent\emph{Proof.}
+The upper bound is exactly Proposition~5.2.
+
+For the lower bound, let
+\[
+J:=\lfloor \log_2 N\rfloor,
+\qquad
+J_-:=\left\lfloor \log_2\left(\frac{N}{3}\right)\right\rfloor.
+\]
+Since $N\ge 8$, we have $J\ge 3$ and hence $J_-\ge J-2$.
+
+Apply Proposition~5.3:
+\[
+F_{k,\varphi}(N)
+\ge
+\frac16\sum_{j=1}^{J_-}\frac{r_k(2^j)}{2^j\varphi(3\cdot 2^j)}
+\ge
+\frac{1}{6C}\sum_{j=1}^{J_-}\frac{r_k(2^j)}{2^j\varphi(2^j)}
+=
+\frac{1}{6C}\sum_{j=1}^{J_-}u_j,
+\]
+where $u_j:=r_k(2^j)/(2^j\varphi(2^j))$.
+
+By Lemma~5.1 and the monotonicity of $\varphi$, the sequence $(u_j)_{j\ge 1}$ is nonincreasing. Therefore, since $J_-\ge J-2$,
+\[
+\sum_{j=1}^{J}u_j
+\le
+3\sum_{j=1}^{J_-}u_j.
+\]
+Indeed, the only nontrivial case is $J_-=J-2$, when
+\[
+\sum_{j=1}^{J}u_j
+=
+\sum_{j=1}^{J-2}u_j + u_{J-1}+u_J
+\le
+\sum_{j=1}^{J-2}u_j + 2u_{J-2}
+\le
+3\sum_{j=1}^{J-2}u_j.
+\]
+Hence
+\[
+\sum_{j=1}^{J_-}u_j\ge \frac13\sum_{j=1}^{J}u_j.
+\]
+Combining this with the previous lower bound yields
+\[
+F_{k,\varphi}(N)
+\ge
+\frac{1}{18C}\sum_{j=1}^{J}u_j
+=
+\frac{1}{18C}
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+This proves the theorem.
+\hfill$\square$
+
+\subsubsection{5.5 Global corollaries and exact extremal formulas}
+
+Define the global weighted extremal quantity
+\[
+M_{k,\varphi}:=\sup_{N\ge 3} F_{k,\varphi}(N).
+\]
+
+\noindent\textbf{Corollary 5.5 (global quantitative equivalence).}
+Under the hypotheses of Theorem~5.4,
+\[
+\frac{1}{18C}
+\sum_{j=1}^{\infty}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}
+\le
+M_{k,\varphi}
+\le
+\sum_{j=1}^{\infty}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}.
+\]
+In particular,
+\[
+M_{k,\varphi}<\infty
+\quad\Longleftrightarrow\quad
+\sum_{j=1}^{\infty}
+\frac{r_k(2^j)}{2^j\varphi(2^j)}<\infty.
+\]
+
+\noindent\emph{Proof.}
+Take the supremum of Theorem~5.4 over $N$, and use monotone convergence of the partial sums.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.6 (harmonic case).}
+For every fixed $k\ge 3$, define
+\[
+F_k(N):=\sup\left\{\sum_{n\in A\cap[3,N]}\frac1n:
+A\subseteq\{1,\dots,N\},\ A\text{ is }k\text{-AP-free}\right\}.
+\]
+Then for every $N\ge 8$,
+\[
+\frac1{18}
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}\frac{r_k(2^j)}{2^j}
+\le
+F_k(N)
+\le
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}\frac{r_k(2^j)}{2^j}.
+\]
+Consequently,
+\[
+\sup_{N\ge 3}F_k(N)<\infty
+\quad\Longleftrightarrow\quad
+\sum_{j=1}^{\infty}\frac{r_k(2^j)}{2^j}<\infty.
+\]
+Thus the fixed-$k$ form of Erd\H{o}s Problem~\#3 is equivalent to the uniform boundedness of the finite extremal harmonic function $F_k(N)$.
+
+\noindent\emph{Proof.}
+Apply Theorem~5.4 and Corollary~5.5 with $\varphi\equiv 1$, so $C=1$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.7 (log-weighted case).}
+For every fixed $k\ge 3$, define
+\[
+F_{k,\log}(N):=\sup\left\{\sum_{n\in A\cap[3,N]}\frac{1}{n\log n}:
+A\subseteq\{1,\dots,N\},\ A\text{ is }k\text{-AP-free}\right\}.
+\]
+Then
+\[
+F_{k,\log}(N)
+\asymp
+\sum_{j=1}^{\lfloor \log_2 N\rfloor}
+\frac{r_k(2^j)}{j\,2^j}
+\qquad (N\ge 8).
+\]
+Hence the Round~3 log-weighted theorem is not merely a boundedness statement: it gives the correct order of growth of the finite extremal function.
+
+\noindent\emph{Proof.}
+Apply Theorem~5.4 with $\varphi(x)=\log x$. Since $\log(3x)\le C\log x$ for all $x\ge 2$ (for example one may take $C=3$), the regularity hypothesis holds. Also $\log(2^j)=j\log 2$, so the dyadic series differs only by an absolute constant factor from $\sum_j r_k(2^j)/(j2^j)$.
+\hfill$\square$
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Did the new argument really use Round~4 rather than restarting?}
+Yes. Proposition~5.2 uses the Round~4 weighted dyadic upper bound, and Proposition~5.3 uses the Round~4 sparse block-pasting lemma. The only genuinely new ingredient is Lemma~5.1 (subadditivity of $r_k$), which is then used to turn the Round~4 qualitative criterion into a finite-scale quantitative theorem.
+
+\item \textbf{Is subadditivity valid despite cross-boundary progressions?}
+Yes. A cross-boundary progression in $S\subseteq [m+n]$ is irrelevant for proving $r_k(m+n)\le r_k(m)+r_k(n)$; one only needs that each piece $S_1$ and $S_2$ is individually $k$-AP-free, which is immediate because any progression inside a piece would also lie in $S$.
+
+\item \textbf{Does the lower-bound construction create new progressions between blocks?}
+No. This is exactly what the Round~4 sparse block-pasting lemma rules out. Using only one parity of dyadic scales ensures successive chosen scales differ by a factor $4>3$, so the lemma applies.
+
+\item \textbf{Why is the endpoint loss from $N$ to $N/3$ harmless?}
+The loss changes the dyadic cutoff by at most $2$ indices. Lemma~5.1 implies that the dyadic summands $u_j$ are nonincreasing, so dropping the last at most two terms changes the partial sum by at most a factor of $3$.
+
+\item \textbf{Could there be a problem at very small $N$?}
+For Proposition~5.3 the lower bound is stated with the convention that the sum is empty when $N<6$, so it remains true. The quantitative equivalence theorem is stated only for $N\ge 8$, precisely to avoid irrelevant small-$N$ edge cases.
+
+\item \textbf{Did we smuggle in any new deep external theorem?}
+No. Round~5 uses no new deep theorem at all. Every deep input (such as any upper bound on $r_k$ used in earlier rounds) is inherited from Round~3/4. The new work in this round is entirely elementary and structural.
+\end{itemize}
+
+\subsection{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s conjecture remains open. However, Round~5 makes a substantive new advance beyond Round~4:
+
+\begin{enumerate}
+\item it proves a \emph{quantitative finite-scale theorem} for the extremal weighted mass of $k$-AP-free subsets of $[1,N]$;
+\item it shows that, for every regular weight $\varphi$,
+\[
+F_{k,\varphi}(N)
+\asymp
+\sum_{j\le \log_2 N}\frac{r_k(2^j)}{2^j\varphi(2^j)};
+\]
+\item in particular, it upgrades the Round~4 convergence criterion into an exact order-of-growth statement for the finite extremal problem;
+\item it isolates the remaining obstruction even more sharply: within the dyadic-block approach, there is no hidden slack left---the extremal weighted mass is already captured up to constants by the dyadic profile of $r_k$.
+\end{enumerate}
+
+This rules out another broad class of proof strategies: any method that seeks substantially better control of the finite extremal harmonic or log-weighted mass without correspondingly stronger control on the dyadic quantities $r_k(2^j)$ cannot succeed, because the two are already equivalent up to constants.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 78\%}
+
+\subsection{9) REFERENCES}
+
+\begin{thebibliography}{9}
+\bibitem{BloomErdos3}
+T. F. Bloom, \emph{Erd\H{o}s Problem \#3}, \texttt{https://www.erdosproblems.com/3}, accessed 2026-03-07.
+\end{thebibliography}

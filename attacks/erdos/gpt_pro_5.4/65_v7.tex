@@ -1,0 +1,376 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 10}
+
+\subsection*{1) ROUND-10 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~9 reduced the unresolved part of the line
+\[
+|E(G)|=2|V(G)|-4
+\]
+for $43\le n\le 51$ to a single obstruction: any graph $G$ with
+\[
+|V(G)|=n,\qquad |E(G)|=2n-4,\qquad S(G)<\frac14
+\]
+must satisfy
+\[
+\mathcal C(G)=\{6,L\}
+\qquad\text{for some }L\ge 13.
+\]
+In this round I eliminate that obstruction by proving a general density bound for graphs whose cycle-length set is $\{6,L\}$. This completes the whole previously unresolved interval $43\le n\le 51$.
+
+\subsection*{2) Round-9 FOUNDATION USED}
+
+I use the following vetted Round~9 results as black boxes.
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^{a}\frac1{2j}=\frac12(H_a-1).
+\]
+In particular,
+\[
+S(K_{2,n-2})=\frac14.
+\]
+
+\item[(F2)] For every $7\le n\le 42$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+
+\item[(F3)] If $43\le n\le 51$, $|V(G)|=n$, $|E(G)|=2n-4$, and $S(G)<1/4$, then
+\[
+\mathcal C(G)=\{6,L\}
+\qquad\text{for some }L\ge 13.
+\]
+
+\item[(F4)] If $X$ is connected and every cycle of $X$ has length $6$ (or $X$ is acyclic), then
+\[
+|E(X)|\le \frac32\bigl(|V(X)|-1\bigr).
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-10)}
+
+The new ingredient is a cycle-started $H$-path growth bound for the two-length family $\{6,L\}$.
+If a $2$-connected graph $B$ has no cycle lengths outside $\{6,L\}$ and contains an $L$-cycle, then every $H$-path used to enlarge an $L$-cycle inside $B$ must have length at least $3$.
+Since an added path of length $s\ge 3$ contributes $s$ edges and only $s-1$ new vertices, each such step adds at most $3/2$ edges per new vertex. Starting from one $L$-cycle, this yields the block bound
+\[
+|E(B)|\le \frac32|V(B)|-\frac L2.
+\]
+Combined with the Round~9 estimate for the ``all cycles are $6$'' case, this rules out every graph with cycle-length set $\{6,L\}$ at density $2n-4$.
+
+\subsection*{4) ATTACK PLAN (ROUND-10)}
+
+The exact Round~9 gap was:
+\[
+43\le n\le 51,
+\qquad
+|V(G)|=n,
+\qquad
+|E(G)|=2n-4,
+\qquad
+\mathcal C(G)=\{6,L\}\text{ for some }L\ge 13.
+\]
+The plan is:
+\begin{enumerate}
+\item prove a self-contained density bound for every $2$-connected graph whose cycle lengths lie in $\{6,L\}$ and which contains an $L$-cycle;
+\item extend it to connected graphs by induction on the block tree, using Foundation~(F4) on the blocks with no $L$-cycle;
+\item extend it once more to disconnected graphs;
+\item apply the result to the Round~9 obstruction.
+\end{enumerate}
+This turns the last obstruction into an outright contradiction, and therefore finishes the whole range $43\le n\le 51$.
+
+\subsection*{5) WORK (ROUND-10)}
+
+As before,
+\[
+\mathcal C(G):=\{\ell\ge 3:\text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+\subsubsection*{5.1. Basic lemmas on $H$-paths}
+
+\textbf{Definition.}
+If $H\subseteq G$ is a subgraph, an \emph{$H$-path} in $G$ is a path whose endpoints lie in $H$ and whose internal vertices lie outside $H$. We allow an $H$-path to have length $1$.
+
+\medskip
+\textbf{Lemma 5.1.}
+Let $H$ be a proper $2$-connected subgraph of a $2$-connected graph $B$. Then $B$ contains an $H$-path.
+
+\medskip
+\textit{Proof.}
+If $V(H)=V(B)$ but $E(H)\neq E(B)$, any edge of $E(B)\setminus E(H)$ is an $H$-path of length $1$.
+So assume $V(H)\neq V(B)$ and let $K$ be a component of $B-V(H)$.
+Because $B$ is connected, $K$ has a neighbor in $H$.
+If it had only one such neighbor $x\in V(H)$, then deleting $x$ would separate $K$ from $H-x$, contradicting $2$-connectedness of $B$.
+Hence $K$ has at least two neighbors in $H$.
+A shortest path in $K$ between two vertices adjacent to $H$, together with its two incident edges into $H$, gives an $H$-path.
+\hfill$\square$
+
+\medskip
+\textbf{Lemma 5.2.}
+If $H$ is $2$-connected and $P$ is an $H$-path, then $H\cup P$ is $2$-connected.
+
+\medskip
+\textit{Proof.}
+Let the endpoints of $P$ be $u,v\in V(H)$.
+We show that deleting any vertex from $H\cup P$ leaves a connected graph.
+If the deleted vertex is not on $P$, then $H$ minus that vertex is connected and still contains $u,v$, so it also contains the remaining path $P$.
+If the deleted vertex is internal to $P$, then $P$ splits into two paths leading to $u$ and $v$, while $H$ minus that vertex is connected.
+If the deleted vertex is $u$ (the case $v$ is symmetric), then $H-u$ is connected and contains $v$, so every remaining vertex of $P$ still reaches $H-u$ through the $v$-end.
+Thus $(H\cup P)-z$ is connected for every vertex $z$, so $H\cup P$ is $2$-connected.
+\hfill$\square$
+
+\subsubsection*{5.2. One $2$-connected $\{6,L\}$-block}
+
+\textbf{Theorem 5.3.}
+Let $L\ge 13$, and let $B$ be a $2$-connected graph such that
+\[
+\mathcal C(B)\subseteq\{6,L\}
+\qquad\text{and}\qquad
+L\in\mathcal C(B).
+\]
+Then
+\[
+|E(B)|\le \frac32|V(B)|-\frac L2
+= \frac32\bigl(|V(B)|-1\bigr)-\frac{L-3}{2}.
+\]
+
+\medskip
+\textit{Proof.}
+Choose an $L$-cycle $C\subseteq B$.
+Let $H$ be a maximal $2$-connected subgraph of $B$ obtainable from $C$ by repeatedly adjoining $H$-paths.
+We claim that $H=B$.
+
+Assume for contradiction that $H\neq B$.
+By Lemma~5.1, there is an $H$-path $P$ in $B$.
+Let $s:=|E(P)|$ and let $u,v\in V(H)$ be its endpoints.
+Since $H$ is $2$-connected, there exist two internally disjoint $u$--$v$ paths in $H$; their union contains a cycle $D\subseteq H$ through $u$ and $v$.
+Let $m:=|D|\in\{6,L\}$, and let the two $u$--$v$ arcs of $D$ have lengths $d$ and $m-d$.
+Then $P$ together with each arc forms a cycle of $B$, so
+\[
+s+d\in\{6,L\},
+\qquad
+s+m-d\in\{6,L\}.
+\]
+We show that $s\ge 3$.
+
+If $m=6$ and $s\le 2$, then the two new cycle lengths have sum
+\[
+(s+d)+(s+6-d)=2s+6\in\{8,10\},
+\]
+whereas any sum of two numbers from $\{6,L\}$ is one of $12$, $L+6$, or $2L$, impossible for $L\ge 13$.
+
+If $m=L$ and $s\le 2$, then the two new cycle lengths have sum
+\[
+(s+d)+(s+L-d)=2s+L\in\{L+2,L+4\},
+\]
+whereas again any sum of two numbers from $\{6,L\}$ is one of $12$, $L+6$, or $2L$.
+So $s\ge 3$.
+
+By Lemma~5.2, adjoining $P$ to $H$ gives a larger $2$-connected subgraph still obtainable from $C$ by adjoining $H$-paths, contradicting maximality of $H$.
+Therefore $H=B$.
+
+So $B$ can be built from the initial $L$-cycle by adjoining paths $P_1,\dots,P_t$ of lengths $s_1,\dots,s_t$, all at least $3$.
+Each $P_i$ contributes $s_i$ new edges and $s_i-1$ new vertices, hence
+\[
+|E(B)|=L+\sum_{i=1}^t s_i,
+\qquad
+|V(B)|=L+\sum_{i=1}^t (s_i-1).
+\]
+Thus
+\[
+|E(B)|=|V(B)|+t.
+\]
+Also,
+\[
+|V(B)|-L=\sum_{i=1}^t (s_i-1)\ge 2t,
+\qquad\text{so}\qquad
+t\le \frac{|V(B)|-L}{2}.
+\]
+Substituting gives
+\[
+|E(B)|\le |V(B)|+\frac{|V(B)|-L}{2}=\frac32|V(B)|-\frac L2.
+\]
+\hfill$\square$
+
+\subsubsection*{5.3. Connected and disconnected $\{6,L\}$-graphs}
+
+\textbf{Proposition 5.4.}
+Let $L\ge 13$, and let $G$ be a connected graph such that
+\[
+\mathcal C(G)\subseteq\{6,L\}
+\qquad\text{and}\qquad
+L\in\mathcal C(G).
+\]
+Then
+\[
+|E(G)|\le \frac32\bigl(|V(G)|-1\bigr)-\frac{L-3}{2}.
+\]
+
+\medskip
+\textit{Proof.}
+We induct on the number of blocks of $G$.
+If $G$ has only one block, then because it contains an $L$-cycle it is not a bridge, hence it is $2$-connected, and the claim is exactly Theorem~5.3.
+
+Assume now that $G$ has at least two blocks.
+Choose a leaf block $B$ in the block tree of $G$, and let $H$ be the union of the other blocks.
+Then $H$ is connected and
+\[
+|V(G)|=|V(B)|+|V(H)|-1,
+\qquad
+|E(G)|=|E(B)|+|E(H)|.
+\]
+
+If $B$ contains an $L$-cycle, then Theorem~5.3 gives
+\[
+|E(B)|\le \frac32\bigl(|V(B)|-1\bigr)-\frac{L-3}{2}.
+\]
+For $H$ we have the weaker bound
+\[
+|E(H)|\le \frac32\bigl(|V(H)|-1\bigr),
+\]
+either by the inductive hypothesis (if $H$ also contains an $L$-cycle) or by Foundation~(F4) (if it does not).
+Summing gives the result.
+
+If $B$ contains no $L$-cycle, then every cycle of $B$ has length $6$, or else $B\cong K_2$.
+So Foundation~(F4) gives
+\[
+|E(B)|\le \frac32\bigl(|V(B)|-1\bigr).
+\]
+Since $G$ contains an $L$-cycle and $B$ does not, the remainder $H$ still contains an $L$-cycle, so the inductive hypothesis applies to $H$:
+\[
+|E(H)|\le \frac32\bigl(|V(H)|-1\bigr)-\frac{L-3}{2}.
+\]
+Again summing gives the result.
+\hfill$\square$
+
+\medskip
+\textbf{Corollary 5.5.}
+Let $L\ge 13$, and let $G$ be an arbitrary graph with
+\[
+\mathcal C(G)=\{6,L\}.
+\]
+If $c(G)$ denotes the number of connected components, then
+\[
+|E(G)|\le \frac32\bigl(|V(G)|-c(G)\bigr)-\frac{L-3}{2}.
+\]
+In particular,
+\[
+|E(G)|<2|V(G)|-4.
+\]
+
+\medskip
+\textit{Proof.}
+Choose one component $G_0$ containing an $L$-cycle.
+By Proposition~5.4,
+\[
+|E(G_0)|\le \frac32\bigl(|V(G_0)|-1\bigr)-\frac{L-3}{2}.
+\]
+Every other component $G_i$ satisfies the weaker estimate
+\[
+|E(G_i)|\le \frac32\bigl(|V(G_i)|-1\bigr),
+\]
+by Proposition~5.4 if it also contains an $L$-cycle, and by Foundation~(F4) otherwise.
+Summing over all components gives
+\[
+|E(G)|\le \frac32\sum_i\bigl(|V(G_i)|-1\bigr)-\frac{L-3}{2}
+= \frac32\bigl(|V(G)|-c(G)\bigr)-\frac{L-3}{2}.
+\]
+Since $c(G)\ge 1$,
+\[
+|E(G)|\le \frac32\bigl(|V(G)|-1\bigr)-\frac{L-3}{2}.
+\]
+Finally,
+\[
+2|V(G)|-4-\left(\frac32\bigl(|V(G)|-1\bigr)-\frac{L-3}{2}\right)
+=\frac{|V(G)|+L-8}{2}>0,
+\]
+so $|E(G)|<2|V(G)|-4$.
+\hfill$\square$
+
+\subsubsection*{5.4. Completion of the previously unresolved interval}
+
+\textbf{Theorem 5.6.}
+For every integer $43\le n\le 51$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14.
+\]
+The minimum is attained by the complete bipartite graph $K_{2,n-2}$.
+
+\medskip
+\textit{Proof.}
+By Foundation~(F1), $S(K_{2,n-2})=1/4$.
+So it remains to prove that every graph $G$ on $n$ vertices with $2n-4$ edges satisfies $S(G)\ge 1/4$.
+Assume for contradiction that $S(G)<1/4$.
+Then Foundation~(F3) gives
+\[
+\mathcal C(G)=\{6,L\}
+\qquad\text{for some }L\ge 13.
+\]
+But Corollary~5.5 then implies
+\[
+|E(G)|<2|V(G)|-4,
+\]
+contradicting $|E(G)|=2n-4$.
+Therefore $S(G)\ge 1/4$, and the example $K_{2,n-2}$ shows that the minimum is exactly $1/4$.
+\hfill$\square$
+
+\medskip
+\textbf{Corollary 5.7.}
+For every integer $7\le n\le 51$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+
+\medskip
+\textit{Proof.}
+For $7\le n\le 42$ this is Foundation~(F2). For $43\le n\le 51$ it is Theorem~5.6.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{$H$-path existence.} Lemma~5.1 explicitly handles both possibilities: either $H$ is proper because of missing vertices or because of missing edges.
+
+\item \textbf{Preservation of $2$-connectedness.} Lemma~5.2 is proved directly by checking connectivity after deleting an arbitrary vertex; no external ear-decomposition theorem is used.
+
+\item \textbf{The key inequality $|P|\ge 3$.} In Theorem~5.3 the contradiction for $|P|=1$ or $2$ depends only on the two arc lengths of one cycle through the endpoints and the fact that both resulting cycle lengths must lie in $\{6,L\}$. No stronger classification claim is required.
+
+\item \textbf{Block induction.} In Proposition~5.4 the identities
+\[
+|V(G)|=|V(B)|+|V(H)|-1,
+\qquad
+|E(G)|=|E(B)|+|E(H)|
+\]
+are valid because a leaf block meets the rest of the graph in exactly one cutvertex. The case split according to whether $B$ contains an $L$-cycle is exhaustive.
+
+\item \textbf{Interaction with Round~9.} Round~9 reduced any putative counterexample in $43\le n\le 51$ to the form $\mathcal C(G)=\{6,L\}$. Corollary~5.5 shows that no graph of that form can reach $2n-4$ edges, so the new argument genuinely closes the last Round~9 obstruction.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~10 completes the entire unresolved interval left after Round~9. It proves that for every $43\le n\le 51$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+with extremal graph $K_{2,n-2}$.
+Hence the complete-bipartite minimiser statement on the line $m=2n-4$ is now fully proved for
+\[
+7\le n\le 51.
+\]
+The global Erd\H{o}s--Hajnal minimiser question for arbitrary $(n,m)$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 99\%}
+
+\subsection*{9) REFERENCES}
+
+No new external references were used in the new proofs of this round. The only imported inputs are the vetted Round~9 results listed in \S2.

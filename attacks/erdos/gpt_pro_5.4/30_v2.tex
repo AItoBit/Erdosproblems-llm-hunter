@@ -1,0 +1,430 @@
+\section{Round 7 (Problem 30): a distinct-gap improvement of the Singer embedding}
+
+\subsection{1) Round-7 Objective}
+\textbf{Path (A): proof direction (strengthen the explicit lower-bound family).}
+Round~6 globalised the Round~5 Singer subsequence by combining it with primes in short intervals, but the actual \emph{subsequence construction} from Round~5 still used only the crude fact that a $(q+1)$-point subset of a cycle of length $q^2+q+1$ has a gap of size at least the average, namely $q+1$.
+
+The most promising direction is therefore to sharpen the \emph{cyclic geometry} of the Singer construction itself.
+In this round we do exactly that.
+
+The new theorem is:
+\[
+h\!\left(q^2-\left\lfloor \frac q2\right\rfloor+1\right)\ge q+1
+\qquad\text{for every prime power }q.
+\]
+This strictly improves the Round~5 family
+\[
+h(q^2+1)\ge q+1.
+\]
+As a consequence,
+\[
+\limsup_{N\to\infty}\bigl(h(N)-\sqrt N\bigr)\ge \frac54,
+\]
+improving the Round~5 bound $\ge 1$.
+
+The original Erd\H{o}s--Tur\'an problem remains open:
+is it true that for every $\varepsilon>0$,
+\[
+h(N)=\sqrt N+O_\varepsilon(N^\varepsilon)\,?
+\]
+
+\subsection{2) Round-6 / Earlier Foundation Used}
+We rely on the following previously vetted results.
+
+\begin{itemize}
+\item \textbf{(R5 Singer existence theorem)} For every prime power $q$ and
+\[
+v=q^2+q+1,
+\]
+there exists a perfect difference set
+\[
+D\subset \mathbb Z/v\mathbb Z
+\qquad\text{with}\qquad |D|=q+1.
+\]
+
+\item \textbf{(R5 injective modular-to-integer transfer)} If $B\subset \mathbb Z$ is finite, reduction modulo $v$ is injective on $B$, and the image of $B$ is Sidon in $\mathbb Z/v\mathbb Z$, then $B$ is Sidon in $\mathbb Z$.
+
+\item \textbf{(R5 cut-at-a-gap principle)} If a translate of $D\subset \mathbb Z/v\mathbb Z$ lies on an arc of length $L$, then choosing integer representatives on that arc and translating to start at $1$ gives an integer Sidon set inside $\{1,\dots,L+1\}$.
+
+\item \textbf{(R6 final status)} The main Erd\H{o}s--Tur\'an question remains open; Round~6 produced global lower bounds from the Round~5 family, but did not improve the Singer subsequence itself.
+\end{itemize}
+
+We will \emph{strengthen} the Round~5 gap argument by exploiting a new structural property of perfect difference sets.
+
+\subsection{3) New Insight / Tool (Round 7)}
+\textbf{The cyclic gaps in a perfect difference set are pairwise distinct.}
+
+Let
+\[
+0\le d_0<d_1<\cdots<d_q\le v-1
+\]
+be representatives of a perfect difference set $D\subset \mathbb Z/v\mathbb Z$, and define the cyclic gaps
+\[
+g_i:=d_{i+1}-d_i\quad(0\le i\le q-1),\qquad g_q:=d_0+v-d_q.
+\]
+Each $g_i$ is an ordered difference of two elements of $D$.
+Since perfect difference sets have all nonzero ordered differences distinct, the $g_i$ must be pairwise distinct.
+
+This single observation upgrades the Round~5 averaging bound:
+instead of merely knowing that the largest gap is at least the average $(q^2+q+1)/(q+1)$, we now know it is the largest among \emph{$q+1$ distinct positive integers summing to $q^2+q+1$}.
+That forces a much larger gap.
+
+\subsection{4) Attack Plan (Round 7)}
+The exact gap left after Round~6 is this:
+
+\begin{quote}
+Round~6 globalised the old Singer subsequence, but the intrinsic lower-bound subsequence itself still only came from the weak bound ``max gap $\ge$ average gap''.
+\end{quote}
+
+To improve it, we:
+\begin{enumerate}
+\item prove that the cyclic gaps in a perfect difference set are distinct;
+\item prove a sharp extremal lemma for the largest of $q+1$ distinct positive integers with fixed sum $q^2+q+1$;
+\item cut the Singer cycle at this improved gap;
+\item transfer back to the integer setting using the Round~5 injective transfer lemma.
+\end{enumerate}
+
+This yields a strictly shorter ambient interval than in Round~5, and therefore a larger lower bound for the second-order term.
+
+\subsection{5) Work (Round 7)}
+
+\subsubsection{5.1. Distinct cyclic gaps in a perfect difference set}
+\begin{lemma}[Distinct-gap lemma]\label{lem:distinct_gaps}
+Let $q$ be a prime power, let $v=q^2+q+1$, and let
+\[
+D\subset \mathbb Z/v\mathbb Z
+\]
+be a perfect difference set of size $q+1$.
+Choose representatives
+\[
+0\le d_0<d_1<\cdots<d_q\le v-1
+\]
+and define cyclic gaps
+\[
+g_i:=d_{i+1}-d_i\quad(0\le i\le q-1),\qquad g_q:=d_0+v-d_q.
+\]
+Then:
+\begin{enumerate}
+\item each $g_i$ is a positive integer;
+\item
+\[
+\sum_{i=0}^q g_i=v;
+\]
+\item the integers $g_0,\dots,g_q$ are pairwise distinct.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The first two assertions are immediate from the definition of the cyclic gaps.
+
+For distinctness, note that for $0\le i\le q-1$ the gap $g_i$ is exactly the ordered difference
+\[
+d_{i+1}-d_i \pmod v,
+\]
+and
+\[
+g_q\equiv d_0-d_q \pmod v.
+\]
+Thus every $g_i$ is a nonzero ordered difference between two elements of $D$.
+
+If $g_i=g_j$ for some $i\neq j$, then two distinct ordered pairs of elements of $D$ would yield the same nonzero ordered difference modulo $v$, contradicting the defining property of a perfect difference set.
+Therefore the $g_i$ are pairwise distinct.
+\end{proof}
+
+\subsubsection{5.2. Extremal bound for the largest distinct gap}
+\begin{lemma}[Largest distinct summand bound]\label{lem:max_distinct}
+Let $m\ge 1$, and let
+\[
+1\le x_1< x_2<\cdots< x_m
+\]
+be distinct positive integers with sum
+\[
+x_1+\cdots+x_m=S.
+\]
+Then
+\[
+x_m\ge \left\lceil \frac{S+\binom{m}{2}}{m}\right\rceil.
+\]
+\end{lemma}
+
+\begin{proof}
+Since the $x_i$ are distinct and all at most $x_m$, the largest possible value of their sum for a fixed $x_m$ is obtained by taking
+\[
+x_m,\ x_m-1,\ \dots,\ x_m-(m-1).
+\]
+Hence
+\[
+S\le x_m+(x_m-1)+\cdots+(x_m-(m-1))
+   =m x_m-\binom{m}{2}.
+\]
+Rearranging gives
+\[
+x_m\ge \frac{S+\binom{m}{2}}{m},
+\]
+and therefore
+\[
+x_m\ge \left\lceil \frac{S+\binom{m}{2}}{m}\right\rceil.
+\]
+\end{proof}
+
+\begin{corollary}[Improved gap lower bound for Singer parameters]\label{cor:gap_lb}
+With the notation of Lemma~\ref{lem:distinct_gaps}, let
+\[
+G:=\max_{0\le i\le q} g_i.
+\]
+Then
+\[
+G\ge \left\lfloor \frac{3q}{2}\right\rfloor+1.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:max_distinct} with
+\[
+m=q+1,\qquad S=v=q^2+q+1.
+\]
+Since the $g_i$ are distinct positive integers summing to $v$, we obtain
+\[
+G\ge \left\lceil \frac{q^2+q+1+\binom{q+1}{2}}{q+1}\right\rceil
+ = \left\lceil \frac{q^2+q+1+\frac{q(q+1)}2}{q+1}\right\rceil
+ = \left\lceil \frac{3q}{2}+\frac{1}{q+1}\right\rceil.
+\]
+Because $1/(q+1)>0$, this equals $\lfloor 3q/2\rfloor+1$.
+\end{proof}
+
+\subsubsection{5.3. Improved Singer embedding}
+\begin{theorem}[Improved Singer subsequence]\label{thm:improved_singer}
+For every prime power $q$, there exists an integer Sidon set
+\[
+S\subseteq \left\{1,2,\dots, q^2-\left\lfloor \frac q2\right\rfloor+1\right\}
+\]
+with
+\[
+|S|=q+1.
+\]
+Equivalently,
+\[
+h\!\left(q^2-\left\lfloor \frac q2\right\rfloor+1\right)\ge q+1.
+\]
+\end{theorem}
+
+\begin{proof}
+Let
+\[
+v:=q^2+q+1,
+\]
+and let
+\[
+D\subset \mathbb Z/v\mathbb Z
+\]
+be a perfect difference set of size $q+1$, guaranteed by the Round~5 Singer existence theorem.
+
+Choose representatives
+\[
+0\le d_0<d_1<\cdots<d_q\le v-1
+\]
+and define cyclic gaps $g_0,\dots,g_q$ as in Lemma~\ref{lem:distinct_gaps}.
+Let
+\[
+G:=\max_i g_i.
+\]
+By Corollary~\ref{cor:gap_lb},
+\[
+G\ge \left\lfloor \frac{3q}{2}\right\rfloor+1.
+\]
+
+Now cut the cycle at a gap of size $G$.
+That is, translate $D$ so that the point \emph{after} this largest gap becomes $0$, and then choose integer representatives on the complementary arc.
+By the Round~5 cut-at-a-gap principle, we obtain a set
+\[
+B\subset \mathbb Z
+\]
+whose reduction modulo $v$ is a translate of $D$, and whose diameter satisfies
+\[
+\operatorname{diam}(B)\le v-G.
+\]
+Using the bound on $G$ gives
+\[
+\operatorname{diam}(B)\le q^2+q+1-\left(\left\lfloor \frac{3q}{2}\right\rfloor+1\right)
+= q^2+q-\left\lfloor \frac{3q}{2}\right\rfloor.
+\]
+Since
+\[
+q^2+q-\left\lfloor \frac{3q}{2}\right\rfloor
+=
+q^2-\left\lfloor \frac q2\right\rfloor
+< v,
+\]
+reduction modulo $v$ is injective on $B$.
+Moreover the image of $B$ modulo $v$ is a translate of the perfect difference set $D$, hence is Sidon in $\mathbb Z/v\mathbb Z$.
+
+By the Round~5 injective modular-to-integer transfer lemma, $B$ is Sidon in $\mathbb Z$.
+Finally translate $B$ so that its minimum becomes $1$:
+\[
+S:=B-(\min B)+1.
+\]
+Then
+\[
+|S|=|B|=q+1
+\]
+and
+\[
+S\subseteq \{1,2,\dots,\operatorname{diam}(B)+1\}
+   \subseteq \left\{1,2,\dots, q^2-\left\lfloor \frac q2\right\rfloor+1\right\}.
+\]
+Thus $S$ is an integer Sidon set of the required size in the claimed interval.
+\end{proof}
+
+\subsubsection{5.4. Consequence for the second-order term}
+\begin{corollary}[Improved limsup]\label{cor:limsup_5_4}
+One has
+\[
+\limsup_{N\to\infty}\bigl(h(N)-\sqrt N\bigr)\ge \frac54.
+\]
+\end{corollary}
+
+\begin{proof}
+Set
+\[
+N_q:=q^2-\left\lfloor \frac q2\right\rfloor+1,
+\]
+where $q$ ranges over prime powers.
+By Theorem~\ref{thm:improved_singer},
+\[
+h(N_q)\ge q+1.
+\]
+Therefore
+\[
+h(N_q)-\sqrt{N_q}\ge q+1-\sqrt{N_q}.
+\]
+
+Now
+\[
+\left\lfloor \frac q2\right\rfloor\ge \frac q2-\frac12,
+\]
+so
+\[
+N_q\le q^2-\frac q2+\frac32.
+\]
+Hence
+\[
+q+1-\sqrt{N_q}\ge q+1-\sqrt{q^2-\frac q2+\frac32}.
+\]
+Let
+\[
+\alpha_q:=q-\frac14.
+\]
+Then
+\[
+\alpha_q^2=q^2-\frac q2+\frac1{16},
+\]
+so
+\[
+q^2-\frac q2+\frac32=\alpha_q^2+\frac{23}{16}.
+\]
+Therefore
+\[
+\sqrt{q^2-\frac q2+\frac32}
+=\alpha_q+\frac{\frac{23}{16}}{\alpha_q+\sqrt{q^2-\frac q2+\frac32}}.
+\]
+As $q\to\infty$, the correction term tends to $0$, so
+\[
+\sqrt{q^2-\frac q2+\frac32}=q-\frac14+o(1).
+\]
+Consequently
+\[
+q+1-\sqrt{q^2-\frac q2+\frac32}=\frac54+o(1),
+\]
+and thus
+\[
+h(N_q)-\sqrt{N_q}\ge \frac54+o(1).
+\]
+Taking the limsup over prime powers $q$ gives
+\[
+\limsup_{N\to\infty}\bigl(h(N)-\sqrt N\bigr)\ge \frac54.
+\]
+\end{proof}
+
+\subsection{6) Adversarial Verification}
+We check the new argument carefully.
+
+\begin{itemize}
+\item \textbf{Are the cyclic gaps really ordered differences in the modular sense?}
+Yes. For $0\le i\le q-1$, one has $g_i=d_{i+1}-d_i$ as an integer and hence modulo $v$.
+For the wrap-around gap, $g_q=d_0+v-d_q$, so modulo $v$ this is $d_0-d_q$.
+Thus every cyclic gap is indeed a nonzero ordered difference.
+
+\item \textbf{Could two equal cyclic gaps come from the same ordered pair?}
+No. The ordered pairs $(d_{i+1},d_i)$ are distinct as $i$ varies cyclically, so equality of two gaps would give two distinct ordered pairs with the same nonzero difference, contradicting perfectness.
+
+\item \textbf{Is the extremal bound in Lemma~\ref{lem:max_distinct} sharp enough?}
+Yes. It is the best possible bound obtainable from only ``distinct positive integers with fixed sum'', and it is exactly the information needed to improve the Round~5 average-gap argument.
+
+\item \textbf{Is the new ambient length formula correct?}
+From the cut-at-gap step, the final interval length is
+\[
+\operatorname{diam}(B)+1\le (v-G)+1.
+\]
+Since $G\ge \lfloor 3q/2\rfloor+1$ and $v=q^2+q+1$, this becomes
+\[
+v-G+1\le q^2+q+1-\left(\left\lfloor\frac{3q}{2}\right\rfloor+1\right)+1
+      =q^2-\left\lfloor\frac q2\right\rfloor+1.
+\]
+So there is no off-by-one error.
+
+\item \textbf{Does injectivity of reduction modulo $v$ hold?}
+Yes, because
+\[
+\operatorname{diam}(B)\le q^2-\left\lfloor \frac q2\right\rfloor < q^2+q+1=v.
+\]
+Therefore no two distinct elements of $B$ can be congruent modulo $v$.
+
+\item \textbf{Does the limsup computation really tend to $5/4$?}
+Yes. The parameter
+\[
+N_q=q^2-\left\lfloor \frac q2\right\rfloor+1
+\]
+satisfies
+\[
+N_q=q^2-\frac q2+O(1),
+\]
+so
+\[
+\sqrt{N_q}=q-\frac14+o(1),
+\]
+which yields
+\[
+q+1-\sqrt{N_q}=\frac54+o(1).
+\]
+\end{itemize}
+
+\subsection{7) Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~7 proves a genuinely stronger explicit lower-bound family than any previous round:
+\[
+h\!\left(q^2-\left\lfloor \frac q2\right\rfloor+1\right)\ge q+1
+\qquad(q\text{ a prime power}),
+\]
+which strictly improves the Round~5 family $h(q^2+1)\ge q+1$.
+
+As a consequence,
+\[
+\limsup_{N\to\infty}\bigl(h(N)-\sqrt N\bigr)\ge \frac54,
+\]
+improving the Round~5 lower bound $\ge 1$.
+
+The original Erd\H{o}s--Tur\'an problem --- whether for every $\varepsilon>0$,
+\[
+h(N)=\sqrt N+O_\varepsilon(N^\varepsilon)
+\]
+--- remains open.
+
+\subsection{8) Completion Estimate}
+\textbf{COMPLETION: 80\%}
+
+\subsection{9) References}
+\begin{itemize}
+\item T.\ F.\ Bloom (ed.), \emph{Erd\H{o}s Problem \#30}, \texttt{https://www.erdosproblems.com/30}, accessed 7 March 2026.
+\item J.\ Singer, \emph{A theorem in finite projective geometry and some applications to number theory}, Trans.\ Amer.\ Math.\ Soc.\ \textbf{43} (1938), 377--385.
+\end{itemize}

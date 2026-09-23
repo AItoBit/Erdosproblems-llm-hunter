@@ -1,0 +1,240 @@
+\section{Erd\H{o}s Problem \#203}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (C)-style obstruction sharpening / strict advance without a full resolution.}
+
+Round~1 proved a finite-box lemma: for any fixed finite set of exponent pairs $(k,\ell)$, one can choose $m$ so that all corresponding values $2^k3^\ell m+1$ are composite. The obvious gap was that this did not control \emph{infinitely many} exponent pairs.
+
+The most promising Round~2 move is therefore to prove a strictly stronger theorem that kills \emph{infinitely many exponent pairs at once} in a structured way, and then identify the precise remaining obstruction.
+
+The new goal in this round is to pass from ``finite boxes'' to ``finite collections of infinite rays'' in the exponent lattice.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 items.
+
+\begin{itemize}
+\item The formal restatement of the problem.
+\item The Round~1 finite-box lemma: any \emph{finite} set of exponent pairs $(k,\ell)$ can be forced composite simultaneously by a CRT construction.
+\item The Round~1 observation that for odd $m>1$, the value at $(k,\ell)=(0,0)$ is
+\[
+m+1,
+\]
+which is even and at least $4$, hence automatically composite.
+\end{itemize}
+
+I do not reprove the finite-box lemma. It is used only as the comparison point that Round~2 must beat.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a theorem of Filaseta on \emph{generalized Sierpi\'nski numbers}:
+
+\medskip
+
+\emph{For every fixed integer $A\ge 2$, there exists an arithmetic progression of odd positive integers $m$ such that}
+\[
+m a^n+1
+\]
+\emph{is composite for every integer $a$ with $2\le a\le A$ and every $n\ge 1$.}
+
+\medskip
+
+This is dramatically stronger than the Round~1 finite-box lemma. It controls infinitely many exponents $n$ simultaneously for \emph{every base} $a$ in a fixed finite interval.
+
+The exponent pairs $(k,\ell)$ for the original problem naturally decompose into rays:
+\[
+(k,\ell)=n(u,v),
+\]
+where $(u,v)$ is primitive, meaning $\gcd(u,v)=1$, and $n\ge 1$.
+
+Thus Filaseta's theorem lets us kill every pair on any fixed finite collection of primitive rays, because each ray corresponds to the fixed base
+\[
+a=2^u3^v.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round~1 gap was:
+\[
+\text{finite sets of exponent pairs are controllable, but infinite structured families were not.}
+\]
+
+To overcome this, I will prove:
+
+\begin{enumerate}
+\item a \emph{finite-ray annihilation theorem}: for any finite set of directions $(u,v)$, there exists an arithmetic progression of odd integers $m$ such that
+\[
+2^{nu}3^{nv}m+1
+\]
+is composite for all $n\ge 1$ and for every chosen direction $(u,v)$;
+
+\item an \emph{infinite-prime strengthening}: for any such finite ray set, there are infinitely many \emph{prime} choices of $m$ with the same property;
+
+\item a precise reformulation of the remaining obstruction: the original problem is equivalent to asking whether one can annihilate \emph{all primitive rays simultaneously}.
+\end{enumerate}
+
+This goes well beyond Round~1, which only handled finitely many isolated lattice points.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{External theorem used (Filaseta).}
+Fix an integer $A\ge 2$. Then there exists an arithmetic progression of odd positive integers $m$ such that
+\[
+m a^n+1
+\]
+is composite for every integer $a$ with $2\le a\le A$ and every integer $n\ge 1$.
+
+\paragraph{External corollary used (Filaseta + Maynard/Shiu).}
+For the same fixed $A$, let $K(A)$ denote the set of odd positive integers $m$ such that
+\[
+m a^n+1 \quad \text{and} \quad m+a^n
+\]
+are composite for all integers $a$ with $2\le a\le A$ and all $n\ge 1$. Then $K(A)$ contains infinitely many primes; in fact, Filaseta records arbitrarily long strings of consecutive primes in $K(A)$.
+
+\paragraph{Theorem 5.1 (finite-ray annihilation).}
+Let
+\[
+D\subset \{(u,v)\in \mathbf{Z}_{\ge 0}^2:(u,v)\neq (0,0)\}
+\]
+be finite. Then there exists an arithmetic progression of odd positive integers $m$ such that
+\[
+2^{nu}3^{nv}m+1
+\]
+is composite for every $(u,v)\in D$ and every integer $n\ge 1$.
+
+\paragraph{Proof.}
+Set
+\[
+A:=\max\{2^u3^v:(u,v)\in D\}.
+\]
+Since $D$ is finite, $A$ is a finite positive integer, and because $(u,v)\neq (0,0)$ for every $(u,v)\in D$, we have $2^u3^v\ge 2$, so $A\ge 2$.
+
+Apply Filaseta's theorem to this $A$. Then there exists an arithmetic progression of odd positive integers $m$ such that
+\[
+m a^n+1
+\]
+is composite for every integer $a$ with $2\le a\le A$ and every $n\ge 1$.
+
+Now fix $(u,v)\in D$. The number
+\[
+a:=2^u3^v
+\]
+satisfies $2\le a\le A$. Therefore, for every $n\ge 1$,
+\[
+m a^n+1 = m(2^u3^v)^n+1 = m\,2^{nu}3^{nv}+1
+\]
+is composite.
+
+Since this holds for every $(u,v)\in D$, the theorem follows.
+\hfill $\square$
+
+\paragraph{Corollary 5.2 (finite-ray annihilation by infinitely many primes).}
+With $D$ as above, there are infinitely many \emph{prime} numbers $m$ such that
+\[
+2^{nu}3^{nv}m+1
+\]
+is composite for every $(u,v)\in D$ and every $n\ge 1$.
+
+\paragraph{Proof.}
+Choose $A$ as in Theorem~5.1. By the cited corollary in Filaseta's paper, the set $K(A)$ contains infinitely many primes. Every $m\in K(A)$ satisfies
+\[
+m a^n+1 \text{ composite for all } 2\le a\le A,\ n\ge 1.
+\]
+In particular this holds for the finitely many bases $a=2^u3^v$ with $(u,v)\in D$. Hence every prime $m\in K(A)$ has the desired finite-ray annihilation property.
+\hfill $\square$
+
+\paragraph{Proposition 5.3 (primitive-ray decomposition).}
+Every exponent pair $(k,\ell)\in \mathbf{Z}_{\ge 0}^2\setminus \{(0,0)\}$ can be written uniquely in the form
+\[
+(k,\ell)=n(u,v),
+\]
+where $n\ge 1$ and $(u,v)\in \mathbf{Z}_{\ge 0}^2$ is primitive, i.e.
+\[
+\gcd(u,v)=1.
+\]
+
+\paragraph{Proof.}
+Let
+\[
+n:=\gcd(k,\ell),
+\]
+with the conventions $\gcd(k,0)=k$ and $\gcd(0,\ell)=\ell$. Since $(k,\ell)\neq (0,0)$, we have $n\ge 1$. Define
+\[
+u:=k/n,\qquad v:=\ell/n.
+\]
+Then $(u,v)\in \mathbf{Z}_{\ge 0}^2$, $(k,\ell)=n(u,v)$, and $\gcd(u,v)=1$ by construction.
+
+For uniqueness, suppose
+\[
+(k,\ell)=n(u,v)=n'(u',v')
+\]
+with both $(u,v)$ and $(u',v')$ primitive. Taking gcds of the coordinates on both sides gives $n=n'$, and then $(u,v)=(u',v')$ follows immediately.
+\hfill $\square$
+
+\paragraph{Sharp reformulation of the remaining obstruction.}
+By Proposition~5.3, the original problem asks whether there exists an odd $m>1$ such that every value
+\[
+2^k3^\ell m+1
+\]
+is composite, equivalently: whether one can choose a single $m$ that annihilates \emph{every primitive ray}
+\[
+\{n(u,v):n\ge 1\}, \qquad \gcd(u,v)=1.
+\]
+
+Theorem~5.1 and Corollary~5.2 show that \emph{every finite collection of primitive rays} can be annihilated simultaneously, even by infinitely many prime choices of $m$.
+
+So the unresolved step is now isolated sharply:
+
+\medskip
+
+\emph{Can one pass from finite primitive-ray annihilation to annihilation of the full infinite primitive-ray set?}
+
+\medskip
+
+This is strictly stronger than the Round~1 finite-box perspective, because each ray contains infinitely many exponent pairs.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I now check the places where the new argument could fail.
+
+\paragraph{(i) Does Theorem~5.1 accidentally miss the pair $(0,0)$?}
+Yes, it misses it intentionally, because the ray decomposition only applies to nonzero exponent pairs. But for odd $m>1$,
+\[
+2^0 3^0 m +1 = m+1
+\]
+is even and at least $4$, hence composite. So this is not a real gap.
+
+\paragraph{(ii) Are the axis directions included?}
+Yes. The primitive rays $(1,0)$ and $(0,1)$ are included in the framework and correspond to the bases $2$ and $3$.
+
+\paragraph{(iii) Is it legitimate to choose $A$ as the maximum of the bases $2^u3^v$?}
+Yes. Filaseta's theorem works for \emph{all} integers $a$ with $2\le a\le A$, so it certainly covers the special finitely many integers of the form $2^u3^v$ that I need.
+
+\paragraph{(iv) Does the prime strengthening really follow?}
+Yes. Filaseta's Corollary~4.4 gives infinitely many primes in $K(A)$, and every such prime belongs to the annihilating set from Theorem~5.1.
+
+\paragraph{(v) Have I solved the original problem?}
+No. The argument only proves finite-ray annihilation, not annihilation of the full infinite primitive-ray family. That remaining passage is exactly the unresolved step, and I have stated it explicitly.
+
+So the Round~2 work is rigorous and strictly stronger than Round~1, but it still falls short of a full resolution.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round~2 advance is the finite-ray annihilation theorem: any finite collection of primitive rays in the $(k,\ell)$-lattice can be annihilated simultaneously, even by infinitely many prime choices of $m$.
+
+This is substantially stronger than the Round~1 finite-box lemma and isolates the exact remaining obstruction: extending from finitely many primitive rays to all primitive rays.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 52\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item M. Filaseta, \emph{Generalized Sierpi\'nski Numbers}, arXiv:2305.09219, 2023.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#203}, \texttt{erdosproblems.com}, accessed 2026-03-07.
+\end{enumerate}
+

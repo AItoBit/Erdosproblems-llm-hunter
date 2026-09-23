@@ -1,0 +1,302 @@
+\section{Erd\H{o}s Problem \#252}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round~2 already extracted a correct conditional contradiction once two special prime-pattern families were available. The most promising continuation is therefore not to repeat that comparison, but to identify the exact \emph{structural consequence} of the Round~2 mechanism.
+
+The new goal is to prove a theorem strictly stronger than the Round~2 two-family criterion: for any fixed admissible congruence class, rationality of
+\[
+\alpha_k=\sum_{n\ge 1}\frac{\sigma_k(n)}{n!}
+\]
+forces the fractional parts of
+\[
+\frac{\sigma_k(q)}{q}=q^{k-1}\sigma_{-k}(q)
+\]
+to become rigid modulo $1$, with error $O_k(1/q)$, along \emph{every} admissible sequence $q$ in that class. The previous prime-versus-semiprime contradiction will then become a corollary.
+
+\subsection*{2) Round-2 FOUNDATION USED}
+I use the following Round~2 results without reproving them.
+\begin{itemize}
+\item \textbf{Tail-integrality lemma.} If $\alpha_k\in\mathbb{Q}$, then for every sufficiently large $n$,
+\[
+\sum_{\nu\ge n}\frac{\sigma_k(\nu)}{(\nu)_{\nu-n+1}}\in\mathbb{Z}.
+\]
+\item \textbf{Discarded-tail estimate.} For fixed $k\ge 2$, truncating the above sum after its first $k$ terms leaves an error $O_k(1/n)$.
+\item \textbf{Integer-polynomial approximation.} For each $1\le i\le k$ there exists $P_{k,i}\in\mathbb{Z}[x]$ such that
+\[
+\frac{(x+i-1)^k}{(x+i-1)_i}=P_{k,i}(x)+O_k\!\left(\frac1x\right),
+\]
+with $P_{k,1}(x)=x^{k-1}$.
+\item \textbf{Congruence-stability lemma.} If $D=(k!)^k$ and $q_1\equiv q_2\pmod D$, then for each $2\le i\le k$,
+\[
+\sigma_{-k}(i)\bigl(P_{k,i}(q_1)-P_{k,i}(q_2)\bigr)\in\mathbb{Z}.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+For fixed $k\ge 3$ set
+\[
+D:=(k!)^k.
+\]
+For a residue class $c\pmod D$, define the associated \emph{admissible class}
+\[
+\mathcal{A}_{k,c}:=\Bigl\{q\in\mathbb{N}: q\equiv c\pmod D,\ \forall\,2\le i\le k,\ q+i-1=i\,r_i(q)
+\text{ with }r_i(q)\text{ prime and }r_i(q)>k\Bigr\}.
+\]
+(The condition $r_i(q)>k$ ensures $\gcd(i,r_i(q))=1$.)
+
+The new theorem is a \emph{mod-$1$ rigidity statement}:
+
+\medskip
+\noindent
+\textbf{Rigidity theorem.} \emph{Assume $\alpha_k\in\mathbb{Q}$ and $\mathcal{A}_{k,c}$ is infinite. Then there exists a class $\theta_{k,c}\in\mathbb{R}/\mathbb{Z}$ and a constant $C_k>0$ such that for every sufficiently large $q\in\mathcal{A}_{k,c}$,}
+\[
+\left\|\frac{\sigma_k(q)}{q}-\theta_{k,c}\right\|\le \frac{C_k}{q}.
+\]
+Equivalently, the values $\sigma_k(q)/q\pmod 1$ on any admissible class must collapse to a single phase at rate $O_k(1/q)$.
+
+This is strictly stronger than the Round~2 two-family criterion: once the phase $\theta_{k,c}$ is known, any second subsequence with incompatible limiting fractional behaviour yields a contradiction automatically.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+The exact gap left after Round~2 is that the contradiction was still packaged as a direct comparison between two specially chosen families. That did not yet isolate the universal consequence of the factorial-tail method.
+
+The claims to prove now are:
+\begin{enumerate}
+\item For every admissible $q\in\mathcal{A}_{k,c}$, the Round~2 machinery yields a near-integer relation of the form
+\[
+\left\|\frac{\sigma_k(q)}{q}+E_k(q)\right\|\ll_k \frac1q,
+\]
+where $E_k(q)=\sum_{i=2}^k\sigma_{-k}(i)P_{k,i}(q)$.
+\item If $q,q'\in\mathcal{A}_{k,c}$, then $E_k(q)-E_k(q')\in\mathbb{Z}$; hence the normalized values $\sigma_k(q)/q$ satisfy a pairwise Cauchy estimate modulo $1$.
+\item From this pairwise estimate, deduce existence of a unique phase $\theta_{k,c}$ on the whole admissible class.
+\item Show that if an admissible class contains infinitely many primes and infinitely many numbers of the form $pr$ with fixed prime $p>k$ and $r$ prime, then the phase forced by the primes contradicts the phase forced by the semiprimes.
+\end{enumerate}
+This overcomes the earlier obstacle by separating the \emph{algebraic} part of the argument (which is now universal) from the \emph{prime-pattern existence} part (which is the only remaining external input).
+
+\subsection*{5) WORK (ROUND-3)}
+\subsubsection*{5.1 A universal near-integer relation on admissible classes}
+Fix $k\ge 3$ and assume, for contradiction, that $\alpha_k\in\mathbb{Q}$.
+For $n\ge 1$ write
+\[
+S_k(n):=\sum_{i=1}^{k}\frac{\sigma_k(n+i-1)}{(n+i-1)_i}.
+\]
+By the Round~2 tail-integrality lemma together with the Round~2 discarded-tail estimate, there exists a constant $B_k>0$ such that
+\begin{equation}\label{eq:Sk-near-int}
+\|S_k(n)\|\le \frac{B_k}{n}
+\end{equation}
+for every sufficiently large $n$.
+
+Now fix a residue class $c\pmod D$ and a sufficiently large $q\in\mathcal{A}_{k,c}$. For each $2\le i\le k$ we may write
+\[
+q+i-1=i\,r_i(q),
+\]
+where $r_i(q)$ is prime and $r_i(q)>k\ge i$, hence $\gcd(i,r_i(q))=1$. By multiplicativity of $\sigma_k$,
+\[
+\sigma_k(q+i-1)=\sigma_k(i)\sigma_k(r_i(q))=\sigma_k(i)\bigl(1+r_i(q)^k\bigr).
+\]
+Since $r_i(q)^k=(q+i-1)^k/i^k$ and $\sigma_{-k}(i)=\sigma_k(i)/i^k$, this becomes
+\[
+\sigma_k(q+i-1)=\sigma_{-k}(i)(q+i-1)^k+\sigma_k(i).
+\]
+Dividing by $(q+i-1)_i$ gives
+\[
+\frac{\sigma_k(q+i-1)}{(q+i-1)_i}
+=\sigma_{-k}(i)\frac{(q+i-1)^k}{(q+i-1)_i}+\frac{\sigma_k(i)}{(q+i-1)_i}.
+\]
+By the Round~2 polynomial-division lemma,
+\[
+\frac{(q+i-1)^k}{(q+i-1)_i}=P_{k,i}(q)+O_k\!\left(\frac1q\right),
+\]
+and because $i\ge 2$,
+\[
+\frac{\sigma_k(i)}{(q+i-1)_i}=O_k\!\left(\frac1{q^2}\right).
+\]
+Hence for each $2\le i\le k$,
+\[
+\frac{\sigma_k(q+i-1)}{(q+i-1)_i}=\sigma_{-k}(i)P_{k,i}(q)+O_k\!\left(\frac1q\right).
+\]
+Summing over $i=2,\dots,k$ yields
+\[
+S_k(q)=\frac{\sigma_k(q)}{q}+E_k(q)+O_k\!\left(\frac1q\right),
+\]
+where
+\[
+E_k(q):=\sum_{i=2}^{k}\sigma_{-k}(i)P_{k,i}(q).
+\]
+Combining this with \eqref{eq:Sk-near-int}, and enlarging the constant if necessary, we obtain:
+\begin{equation}\label{eq:master-near-int}
+\left\|\frac{\sigma_k(q)}{q}+E_k(q)\right\|\le \frac{C_k}{q}
+\end{equation}
+for every sufficiently large $q\in\mathcal{A}_{k,c}$, where $C_k>0$ depends only on $k$.
+
+\subsubsection*{5.2 Pairwise rigidity modulo $1$}
+\begin{lemma}[pairwise rigidity on one admissible class]\label{lem:pairwise-rigidity}
+Assume $\alpha_k\in\mathbb{Q}$. Fix $k\ge 3$, a residue class $c\pmod D$, and suppose $\mathcal{A}_{k,c}$ is infinite. Then for all sufficiently large $q,q'\in\mathcal{A}_{k,c}$,
+\[
+\left\|\frac{\sigma_k(q)}{q}-\frac{\sigma_k(q')}{q'}\right\|\le C_k\left(\frac1q+\frac1{q'}\right).
+\]
+\end{lemma}
+\begin{proof}
+Because $q\equiv q'\equiv c\pmod D$, the Round~2 congruence-stability lemma gives
+\[
+E_k(q)-E_k(q')\in\mathbb{Z}.
+\]
+Apply \eqref{eq:master-near-int} at $q$ and $q'$ and subtract the two relations modulo $\mathbb{Z}$. Using the triangle inequality for distance to the nearest integer, we get
+\begin{align*}
+\left\|\frac{\sigma_k(q)}{q}-\frac{\sigma_k(q')}{q'}\right\|
+&=\left\|\left(\frac{\sigma_k(q)}{q}+E_k(q)\right)-\left(\frac{\sigma_k(q')}{q'}+E_k(q')\right)\right\|\\
+&\le \left\|\frac{\sigma_k(q)}{q}+E_k(q)\right\|+\left\|\frac{\sigma_k(q')}{q'}+E_k(q')\right\|\\
+&\le C_k\left(\frac1q+\frac1{q'}\right),
+\end{align*}
+as required.
+\end{proof}
+
+\subsubsection*{5.3 Existence of a unique phase on each admissible class}
+\begin{proposition}[phase rigidity]\label{prop:phase-rigidity}
+Assume $\alpha_k\in\mathbb{Q}$ and $\mathcal{A}_{k,c}$ is infinite. Then there exists $\theta_{k,c}\in\mathbb{R}/\mathbb{Z}$ such that
+\[
+\left\|\frac{\sigma_k(q)}{q}-\theta_{k,c}\right\|\le \frac{C_k}{q}
+\]
+for every sufficiently large $q\in\mathcal{A}_{k,c}$.
+\end{proposition}
+\begin{proof}
+Choose an increasing sequence $q_1<q_2<\cdots$ in $\mathcal{A}_{k,c}$. The circle $\mathbb{R}/\mathbb{Z}$ is compact, so the sequence
+\[
+\frac{\sigma_k(q_j)}{q_j}\pmod 1
+\]
+has a convergent subsequence. Let its limit be $\theta_{k,c}\in\mathbb{R}/\mathbb{Z}$.
+
+Fix a sufficiently large $q\in\mathcal{A}_{k,c}$. Apply Lemma~\ref{lem:pairwise-rigidity} to $q$ and a subsequence term $q_{j_m}$ large enough that the lemma applies. Then
+\[
+\left\|\frac{\sigma_k(q)}{q}-\frac{\sigma_k(q_{j_m})}{q_{j_m}}\right\|\le C_k\left(\frac1q+\frac1{q_{j_m}}\right).
+\]
+Letting $m\to\infty$ and using $q_{j_m}\to\infty$ together with
+\[
+\frac{\sigma_k(q_{j_m})}{q_{j_m}}\pmod 1\to \theta_{k,c},
+\]
+we obtain
+\[
+\left\|\frac{\sigma_k(q)}{q}-\theta_{k,c}\right\|\le \frac{C_k}{q}.
+\]
+This proves the claim.
+\end{proof}
+
+\subsubsection*{5.4 A concrete contradiction from incompatible subsequences}
+\begin{corollary}[prime and fixed-semiprime subsequences cannot coexist]\label{cor:prime-semiprime}
+Fix $k\ge 3$ and a residue class $c\pmod D$. Assume $\alpha_k\in\mathbb{Q}$ and $\mathcal{A}_{k,c}$ is infinite. If $\mathcal{A}_{k,c}$ contains
+\begin{enumerate}
+\item infinitely many primes $q$, and
+\item infinitely many numbers $q=pr$ with a fixed prime $p>k$ and $r$ prime, $r\ne p$,
+\end{enumerate}
+then a contradiction results. Hence under these two conditions $\alpha_k$ is irrational.
+\end{corollary}
+\begin{proof}
+By Proposition~\ref{prop:phase-rigidity}, there exists $\theta_{k,c}\in\mathbb{R}/\mathbb{Z}$ such that
+\[
+\left\|\frac{\sigma_k(q)}{q}-\theta_{k,c}\right\|\le \frac{C_k}{q}
+\]
+for all sufficiently large $q\in\mathcal{A}_{k,c}$.
+
+Along the prime subsequence,
+\[
+\frac{\sigma_k(q)}{q}=\frac{1+q^k}{q}=q^{k-1}+\frac1q,
+\]
+so modulo $1$ we have
+\[
+\frac{\sigma_k(q)}{q}\equiv \frac1q \pmod 1.
+\]
+Letting $q\to\infty$ through primes in $\mathcal{A}_{k,c}$ gives $\theta_{k,c}=0$ in $\mathbb{R}/\mathbb{Z}$. Therefore
+\begin{equation}\label{eq:phase-zero}
+\left\|\frac{\sigma_k(q)}{q}\right\|\le \frac{C_k}{q}
+\end{equation}
+for every sufficiently large $q\in\mathcal{A}_{k,c}$.
+
+Now let $q=pr\in\mathcal{A}_{k,c}$ with $r$ prime and $r\ne p$. Since $p$ and $r$ are distinct primes,
+\[
+\sigma_k(q)=\sigma_k(p)\sigma_k(r)=(1+p^k)(1+r^k).
+\]
+Dividing by $q=pr$ yields
+\[
+\frac{\sigma_k(q)}{q}=p^{k-1}r^{k-1}+\frac{r^{k-1}}{p}+\frac{p^{k-1}}{r}+\frac{1}{pr}.
+\]
+Because $p^{k-1}r^{k-1}\in\mathbb{Z}$, \eqref{eq:phase-zero} implies
+\[
+\left\|\frac{r^{k-1}}{p}+\frac{p^{k-1}}{r}+\frac{1}{pr}\right\|\le \frac{C_k}{pr}.
+\]
+Hence
+\[
+\left\|\frac{r^{k-1}}{p}\right\|\le \frac{C_k}{pr}+\frac{p^{k-1}}{r}+\frac{1}{pr}
+=\frac{C_k+p^k+1}{pr}.
+\]
+But $p\nmid r$, so $r^{k-1}/p$ is a non-integer rational number with denominator exactly $p$; therefore
+\[
+\left\|\frac{r^{k-1}}{p}\right\|\ge \frac1p.
+\]
+For sufficiently large $r$ this contradicts the previous upper bound. Thus the two subsequences cannot coexist if $\alpha_k$ were rational.
+\end{proof}
+
+\subsubsection*{5.5 Recovery of the Round-2 two-family criterion}
+The previous round introduced, for each prime $p>k$,
+\[
+\mathcal{Q}_k^{(0)}:=\Bigl\{q\equiv1\pmod D: q\text{ prime and }(q+i-1)/i\text{ prime for }2\le i\le k\Bigr\},
+\]
+\[
+\mathcal{Q}_{k,p}^{(1)}:=\Bigl\{q\equiv1\pmod D: q=pr\text{ with }r\text{ prime},\ p^2\nmid q,
+\ (q+i-1)/i\text{ prime for }2\le i\le k\Bigr\}.
+\]
+Discarding finitely many small elements if necessary, both sets are contained in $\mathcal{A}_{k,1}$. Therefore Corollary~\ref{cor:prime-semiprime} immediately implies the Round~2 proposition:
+
+\medskip
+\noindent
+\emph{If, for some prime $p>k$, both $\mathcal{Q}_k^{(0)}$ and $\mathcal{Q}_{k,p}^{(1)}$ are infinite, then $\alpha_k$ is irrational.}
+
+\medskip
+\noindent
+The new point is that this is now seen as a corollary of the stronger phase-rigidity theorem, not as the fundamental statement.
+
+\subsubsection*{5.6 The sharpened obstruction}
+The exact obstruction isolated by this round is now the following.
+
+\medskip
+\noindent
+\textbf{Sharpened obstruction.} To prove irrationality of $\alpha_k$ by the Round~2/Round~3 method, it is enough to exhibit a residue class $c\pmod D$ and an infinite admissible set $\mathcal{A}_{k,c}$ for which the fractional parts of $\sigma_k(q)/q$ do \emph{not} approach a single phase at speed $O_k(1/q)$.
+
+\medskip
+\noindent
+Equivalently: the entire remaining difficulty is no longer the factorial-tail analysis, but the production of admissible sequences whose normalized divisor sums have two incompatible mod-$1$ behaviours.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Use of Round~2 only where allowed.} I did not reprove the Round~2 tail-integrality, tail-discard, polynomial-division, or congruence-stability lemmas; I used them explicitly as black boxes.
+\item \textbf{Admissible-class definition.} The added hypothesis $r_i(q)>k$ is deliberate: it guarantees $\gcd(i,r_i(q))=1$, which is exactly what multiplicativity of $\sigma_k$ needs. Discarding finitely many small $q$ does not affect infinitude arguments.
+\item \textbf{Pairwise rigidity step.} The only place where congruence information enters is the integrality of $E_k(q)-E_k(q')$, which follows directly from the Round~2 congruence-stability lemma because $q\equiv q'\pmod D$.
+\item \textbf{Compactness argument.} Proposition~\ref{prop:phase-rigidity} uses only compactness of $\mathbb{R}/\mathbb{Z}$ and Lemma~\ref{lem:pairwise-rigidity}. No hidden uniform distribution input is used.
+\item \textbf{Prime subsequence forces phase $0$.} Along primes in an admissible class, $\sigma_k(q)/q\equiv1/q\pmod 1$, so the limiting phase is indeed $0$.
+\item \textbf{Semiprime lower bound.} For $q=pr$ with $r\ne p$, the number $r^{k-1}/p$ has exact denominator $p$ because $p$ is prime and $p\nmid r$. Hence its distance to the nearest integer is at least $1/p$.
+\item \textbf{Interaction with Round~2.} The new rigidity theorem strictly strengthens the previous round: it implies the Round~2 two-family proposition as a corollary and isolates the remaining obstruction more sharply.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original problem remains unresolved in general, but this round proves a theorem strictly stronger than the previous round's criterion:
+
+\medskip
+\noindent
+\emph{If $\alpha_k$ were rational, then on every infinite admissible congruence class $\mathcal{A}_{k,c}$ the normalized values $\sigma_k(q)/q$ would be rigid modulo $1$, converging to a single phase at rate $O_k(1/q)$.}
+
+\medskip
+\noindent
+This turns the earlier prime-versus-semiprime contradiction into a corollary and isolates a single sharp obstruction: one now only needs an admissible class with two incompatible mod-$1$ behaviours of $\sigma_k(q)/q$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 78\%
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{9}
+\bibitem{ScPu06}
+J.-C. Schlage-Puchta,
+\emph{The irrationality of a number theoretical series},
+Ramanujan Journal \textbf{12} (2006), no.~3, 455--460.
+\end{thebibliography}

@@ -1,0 +1,222 @@
+\section*{Erd\H{o}s Problem \#213 (Round 2)}
+
+Question recalled. For each $n\geq 4$, do there exist $n$ points in $\mathbb{R}^2$, no three on a line and no four on a circle, such that all pairwise distances are integers?
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+Path C: obstruction/structure plus exact verification. Round 1 already had an explicit $4$-point example and had recorded a $7$-point configuration from Kreisel--Kurz, but the $7$-point example was not fully verified and no common structure theorem had been proved. The most promising strict advance is therefore to do two things: prove the standard quadratic-field/characteristic theorem for planar integral point sets, and then turn the recorded $7$-point coordinates into a complete exact proof. This immediately upgrades existence from one hand-checked example at $n=4$ to a rigorously verified existence theorem for every $n\leq 7$.
+
+\subsection*{2. Round-1 FOUNDATION USED}
+I use the following Round-1 material.
+\begin{enumerate}
+\item Proposition 4.1: an explicit $4$-point general-position integral set.
+\item Proposition 4.2: the coordinates of a $7$-point integral set from Kreisel--Kurz were already recorded.
+\item The Round-1 gap statement: there was no proof that the $7$-point coordinates really satisfy all $21$ integrality conditions and all general-position checks.
+\end{enumerate}
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 2)}
+There are two new pieces of mathematics in this round.
+\begin{enumerate}
+\item A \emph{common characteristic theorem}: every non-collinear planar integral point set lies, after normalization, in one quadratic field $\mathbb{Q}(\sqrt{k})$, and all its nondegenerate triangles have the same characteristic.
+\item A \emph{full exact certificate} for the Kreisel--Kurz heptagon: all $21$ pairwise distances are listed explicitly, and the no-three-collinear / no-four-concyclic conditions are checked by exact determinant tests in $\mathbb{Q}(\sqrt{2002})$.
+\end{enumerate}
+
+\subsection*{4. ATTACK PLAN (ROUND 2)}
+Round 1 left two exact gaps.
+\begin{enumerate}
+\item It had no structural theorem explaining why the $7$-point coordinates live in $\mathbb{Q}(\sqrt{2002})$.
+\item It had no rigorous verification of the full $7$-point example.
+\end{enumerate}
+So I first prove the characteristic theorem, which sharpens the search space for any future $8$-point construction. I then use exact symbolic computation in the field $\mathbb{Q}(\sqrt{2002})$ to certify all pairwise distances and all general-position conditions for the recorded heptagon.
+
+\subsection*{5. WORK (ROUND 2)}
+
+\medskip
+\noindent\textbf{Definition 5.1 (characteristic of an integral triangle).}
+Let $\triangle XYZ$ be a nondegenerate triangle with integer side lengths. By Heron's formula, its area can be written uniquely in the form
+\[
+\operatorname{Area}(\triangle XYZ)=q\sqrt{k},
+\]
+where $q\in \mathbb{Q}_{>0}$ and $k$ is a squarefree positive integer. The integer $k$ is called the \emph{characteristic} of the triangle.
+
+\medskip
+\noindent\textbf{Theorem 5.2 (common characteristic theorem).}
+Let $S$ be a non-collinear integral point set in the plane. Then there exists a squarefree integer $k>0$ and a Euclidean motion of the plane such that every point of $S$ has coordinates
+\[
+(r_1,r_2\sqrt{k}) \qquad (r_1,r_2\in \mathbb{Q}).
+\]
+In particular, every nondegenerate triangle determined by $S$ has characteristic $k$.
+
+\smallskip
+\noindent\emph{Proof.}
+Choose a non-collinear triple $A,B,C\in S$. After translation and rotation we may assume
+\[
+A=(0,0), \qquad B=(d,0),
+\]
+where $d=|AB|\in \mathbb{Z}_{>0}$.
+
+Let $P=(x,y)\in S$. Since the distances $|PA|$ and $|PB|$ are integers, say
+\[
+|PA|=a,\qquad |PB|=b,
+\]
+we have
+\[
+x^2+y^2=a^2,\qquad (x-d)^2+y^2=b^2.
+\]
+Subtracting gives
+\[
+x=\frac{a^2-b^2+d^2}{2d}\in \mathbb{Q},
+\]
+and hence
+\[
+y^2=a^2-x^2\in \mathbb{Q}.
+\]
+
+Now write
+\[
+C=(u,v),\qquad v\neq 0.
+\]
+As above, $u\in \mathbb{Q}$ and $v^2\in \mathbb{Q}_{>0}$, so
+\[
+v=r\sqrt{k}
+\]
+for some $r\in \mathbb{Q}_{\neq 0}$ and some squarefree integer $k>0$.
+
+Take any point $P=(x,y)\in S$. Since $|PC|$ is an integer,
+\[
+|PC|^2=(x-u)^2+(y-v)^2
+\]
+is rational. Expanding,
+\[
+(x-u)^2+y^2+v^2-2yv\in \mathbb{Q}.
+\]
+The first three terms are rational, so $2yv\in \mathbb{Q}$. Because $v=r\sqrt{k}$ with $r\neq 0$ rational, it follows that
+\[
+y\in \mathbb{Q}\sqrt{k}.
+\]
+Thus every point of $S$ has coordinates in $\mathbb{Q}\times \mathbb{Q}\sqrt{k}$.
+
+Finally, the area of any nondegenerate triangle with vertices in $S$ is
+\[
+\frac12\left| \det\begin{pmatrix}x_1&y_1&1\\x_2&y_2&1\\x_3&y_3&1\end{pmatrix}\right|,
+\]
+hence a rational multiple of $\sqrt{k}$. Therefore every nondegenerate triangle in $S$ has characteristic $k$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Proposition 5.3 (exact verification of the Kreisel--Kurz heptagon).}
+Let $\omega=\sqrt{2002}$ and define
+\[
+\begin{array}{rcl}
+P_1&=&(0,0),\\[2mm]
+P_2&=&(22270,0),\\[2mm]
+P_3&=&\left(\dfrac{26127018}{2227}, \dfrac{932064}{2227}\,\omega\right),\\[3mm]
+P_4&=&\left(\dfrac{245363}{17}, \dfrac{3144}{17}\,\omega\right),\\[3mm]
+P_5&=&\left(\dfrac{17615968}{2227}, \dfrac{238464}{2227}\,\omega\right),\\[3mm]
+P_6&=&\left(\dfrac{56068}{17}, \dfrac{3144}{17}\,\omega\right),\\[3mm]
+P_7&=&\left(\dfrac{19079044}{2227}, -\dfrac{54168}{2227}\,\omega\right).
+\end{array}
+\]
+Then:
+\begin{enumerate}
+\item all $21$ pairwise distances are integers;
+\item no three of the points are collinear;
+\item no four of the points are concyclic.
+\end{enumerate}
+
+\smallskip
+\noindent\emph{Proof.}
+All calculations are exact in the quadratic field $K=\mathbb{Q}(\omega)$.
+
+\smallskip
+\noindent\underline{Step 1: all pairwise distances are integers.}
+A direct exact simplification of the $21$ squared distances gives the following distance table:
+\[
+\begin{array}{c|cccccc}
+ & P_2 & P_3 & P_4 & P_5 & P_6 & P_7\\
+\hline
+P_1 & 22270 & 22098 & 16637 & 9248 & 8908 & 8636\\
+P_2 &       & 21488 & 11397 & 15138 & 20698 & 13746\\
+P_3 &       &       & 10795 & 14450 & 13430 & 20066\\
+P_4 &       &       &       & 7395  & 11135 & 11049\\
+P_5 &       &       &       &       & 5780  & 5916\\
+P_6 &       &       &       &       &       & 10744
+\end{array}
+\]
+Hence every pairwise distance is an integer.
+
+\smallskip
+\noindent\underline{Step 2: no three points are collinear.}
+For distinct $i,j,k$, three points are collinear if and only if
+\[
+\Delta_{ijk}:=\det\begin{pmatrix}
+x_i & y_i & 1\\
+x_j & y_j & 1\\
+x_k & y_k & 1
+\end{pmatrix}=0.
+\]
+Each $\Delta_{ijk}$ lies in $K=\mathbb{Q}(\omega)$. Expanding every determinant in the basis $\{1,\omega\}$, an exact check shows that for all
+\[
+1\leq i<j<k\leq 7
+\]
+the pair of coefficients is not $(0,0)$. Therefore all $35$ determinants $\Delta_{ijk}$ are nonzero, so no three points are collinear.
+
+\smallskip
+\noindent\underline{Step 3: no four points are concyclic.}
+Four points are concyclic if and only if the determinant
+\[
+\Gamma_{ijkl}:=\det\begin{pmatrix}
+x_i & y_i & x_i^2+y_i^2 & 1\\
+x_j & y_j & x_j^2+y_j^2 & 1\\
+x_k & y_k & x_k^2+y_k^2 & 1\\
+x_l & y_l & x_l^2+y_l^2 & 1
+\end{pmatrix}
+\]
+vanishes. Again every $\Gamma_{ijkl}$ lies in $K$, and an exact expansion in the basis $\{1,\omega\}$ shows that all
+\[
+\binom{7}{4}=35
+\]
+such determinants are nonzero. Hence no four points are concyclic.
+
+This proves the proposition.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.4.}
+For every integer $n$ with $4\leq n\leq 7$, there exists a set of $n$ points in $\mathbb{R}^2$, no three on a line and no four on a circle, such that all pairwise distances are integers.
+
+\smallskip
+\noindent\emph{Proof.}
+For $n=4$, use the Round-1 construction. For $5\leq n\leq 7$, take any $n$-point subset of the heptagon in Proposition 5.3. Pairwise integrality and the two general-position conditions are hereditary under taking subsets.
+\hfill$\square$
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+The new work was checked against the main possible defects.
+\begin{enumerate}
+\item \emph{Common characteristic theorem.} The proof really uses non-collinearity only once, namely to guarantee a point with nonzero $y$-coordinate after normalization. This is valid because the problem concerns general-position sets.
+\item \emph{Exactness versus numerics.} All computations for Proposition 5.3 were exact, not floating-point. Equality in $K=\mathbb{Q}(\omega)$ was tested by comparing the coefficients of $1$ and $\omega$.
+\item \emph{Subset argument.} Distances remain integers on subsets, and any collinear triple or concyclic quadruple in a subset would already violate general position in the full $7$-point set.
+\item \emph{Interpretation of the field $\mathbb{Q}(\sqrt{2002})$.} Theorem 5.2 explains why the coordinates of a planar integral point set naturally live in a common quadratic field, so the appearance of $\sqrt{2002}$ is structural rather than accidental.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The Round-2 gains over Round 1 are:
+\begin{enumerate}
+\item A full proof of the common characteristic theorem for planar integral point sets.
+\item A complete exact verification of the recorded $7$-point Kreisel--Kurz construction.
+\item Consequently, a rigorous existence theorem for every $n\leq 7$.
+\end{enumerate}
+
+The first unresolved case remains $n=8$.
+
+\subsection*{8. COMPLETION ESTIMATE}
+COMPLETION: 55\%
+
+\subsection*{9. REFERENCES}
+\begin{enumerate}
+\item T. Kreisel and S. Kurz, \emph{There are integral heptagons, no three points on a line, no four on a circle}, Discrete Comput. Geom. 39 (2008), 786--790.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#213}, problem page accessed 2026-03-07.
+\end{enumerate}
+
+

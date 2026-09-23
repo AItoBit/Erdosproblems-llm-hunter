@@ -1,0 +1,267 @@
+
+\section*{Round 2 continuation for Erd\H{o}s problems \#319, \#359, \#361}
+
+This file is written as a continuation of the Round-1 write-up.  I explicitly indicate below whenever I use a Round-1 result as a black box.
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Problem \#319}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}  Round 1 gave the lower bound
+\[
+F(N)\ge \left(1-\frac1e+o(1)\right)N
+\]
+by using a \emph{singleton-sign} construction
+\[
+A=\{1\}\cup B,\qquad \sum_{b\in B}\frac1b=1.
+\]
+The most promising Round-2 step is therefore to determine whether this entire strategy can ever do better.  I will prove that it cannot: within the class of solutions in which one sign class has size $1$, the constant $1-\frac1e$ is asymptotically \emph{best possible}.  Hence any future improvement for the full problem must use genuinely two-sided cancellation with at least two positive and two negative terms.
+
+\subsection*{2) ROUND-1 FOUNDATION USED}
+I use the following Round-1 fact without re-proving it.
+
+\begin{itemize}
+\item Round 1 showed, using Croot's short-interval Egyptian-fraction theorem, that there exists
+\[
+B\subseteq \left[\left(\frac1e-o(1)\right)N,N\right]
+\]
+with $\sum_{b\in B}1/b=1$, and hence
+\[
+F(N)\ge \left(1-\frac1e+o(1)\right)N
+\]
+via the admissible set $A=\{1\}\cup B$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is a sharp extremal principle for reciprocal sums:
+
+\medskip
+\noindent
+\textbf{Maximal-cardinality reciprocal-sum principle.}
+For fixed $r>0$, among all $m$-element subsets of $\{1,\dots,N\}$, the reciprocal sum
+\[
+\sum_{n\in B}\frac1n
+\]
+is minimized by the terminal interval
+\[
+\{N-m+1,\dots,N\}.
+\]
+
+This immediately turns the problem of maximizing $|B|$ subject to $\sum_{b\in B}1/b=r$ into a harmonic-tail calculation, and it gives a matching upper bound to the Round-1 lower-bound strategy.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap left by Round 1 was this: the construction
+\[
+A=\{1\}\cup B,\qquad \sum_{b\in B}\frac1b=1
+\]
+gave a lower bound, but there was no proof that this \emph{particular type of construction} was already optimal.
+
+So I will now prove two precise claims.
+
+\begin{itemize}
+\item[(i)] For every fixed rational $r>0$, if
+\[
+M_r(N):=\max\left\{|B|:\ B\subseteq \{1,\dots,N\},\ \sum_{b\in B}\frac1b=r\right\},
+\]
+then
+\[
+M_r(N)=\left(1-e^{-r}+o(1)\right)N.
+\]
+\item[(ii)] Consequently, if an admissible solution to Problem \#319 has one sign class of size $1$, then its total size is at most
+\[
+\left(1-\frac1e+o(1)\right)N.
+\]
+\end{itemize}
+
+This closes the entire Round-1 ``singleton-sign'' avenue.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Proposition 319.1.}
+Fix a rational number $r>0$.  Let
+\[
+M_r(N):=\max\left\{|B|:\ B\subseteq \{1,\dots,N\},\ \sum_{b\in B}\frac1b=r\right\}.
+\]
+Then
+\[
+M_r(N)=\left(1-e^{-r}+o(1)\right)N
+\qquad (N\to\infty).
+\]
+
+\paragraph{Proof.}
+I first prove the upper bound.
+
+Suppose $B\subseteq \{1,\dots,N\}$ has cardinality $m$ and
+\[
+\sum_{b\in B}\frac1b=r.
+\]
+Since the function $n\mapsto 1/n$ is strictly decreasing, the reciprocal sum of an $m$-element subset is minimized by choosing the $m$ largest available integers.  Therefore
+\[
+r=\sum_{b\in B}\frac1b \ge \sum_{n=N-m+1}^{N}\frac1n = H_N-H_{N-m},
+\]
+where $H_t$ denotes the $t$th harmonic number.
+
+Using $H_t=\log t+\gamma+o(1)$ uniformly for $t\to\infty$, we get
+\[
+r\ge \log\!\left(\frac{N}{N-m}\right)+o(1).
+\]
+Exponentiating,
+\[
+\frac{N}{N-m}\le e^{\,r+o(1)},
+\]
+so
+\[
+1-\frac{m}{N}\ge e^{-r+o(1)}=e^{-r}+o(1).
+\]
+Hence
+\[
+m\le \left(1-e^{-r}+o(1)\right)N.
+\]
+This proves
+\[
+M_r(N)\le \left(1-e^{-r}+o(1)\right)N.
+\]
+
+For the lower bound I use Croot's theorem, exactly as in Round 1 but with $1$ replaced by $r$.  Croot proved that for every fixed rational $r>0$ there are, for all sufficiently large $X$, distinct integers
+\[
+X<n_1<\cdots<n_k<(e^r+o_r(1))X
+\]
+such that
+\[
+\sum_{i=1}^k \frac1{n_i}=r.
+\]
+Choose $X=X(N)$ so that
+\[
+(e^r+o_r(1))X\le N.
+\]
+Then there is a set
+\[
+B\subseteq \left[(e^{-r}-o(1))N,\ N\right]
+\]
+with
+\[
+\sum_{b\in B}\frac1b=r.
+\]
+
+Let
+\[
+I_N:=\left\{\left\lceil (e^{-r}-o(1))N\right\rceil,\dots,N\right\}.
+\]
+The reciprocal sum of the full interval is
+\[
+\sum_{n\in I_N}\frac1n = \log(e^r)+o(1)=r+o(1).
+\]
+Since $B\subseteq I_N$ and $\sum_{b\in B}1/b=r$, it follows that
+\[
+\sum_{n\in I_N\setminus B}\frac1n=o(1).
+\]
+Every omitted element of $I_N$ is at most $N$, so each contributes at least $1/N$.  Hence
+\[
+\frac{|I_N\setminus B|}{N}\le \sum_{n\in I_N\setminus B}\frac1n=o(1),
+\]
+that is,
+\[
+|I_N\setminus B|=o(N).
+\]
+Therefore
+\[
+|B|=|I_N|-o(N)=\left(1-e^{-r}+o(1)\right)N.
+\]
+So
+\[
+M_r(N)\ge \left(1-e^{-r}+o(1)\right)N.
+\]
+Together with the upper bound, this proves the proposition.
+\hfill $\square$
+
+\paragraph{Corollary 319.2 (singleton-sign solutions are completely understood).}
+Let $A\subseteq \{1,\dots,N\}$ be admissible for Problem \#319, and write
+\[
+A=P\sqcup Q,\qquad \sum_{p\in P}\frac1p=\sum_{q\in Q}\frac1q.
+\]
+If $\min\{|P|,|Q|\}=1$, then
+\[
+|A|\le \left(1-\frac1e+o(1)\right)N.
+\]
+
+\paragraph{Proof.}
+By symmetry it suffices to consider the case $P=\{p\}$ for some $p\in\{1,\dots,N\}$.  Then
+\[
+\sum_{q\in Q}\frac1q=\frac1p.
+\]
+Applying Proposition 319.1 with $r=1/p$ gives
+\[
+|Q|\le \left(1-e^{-1/p}+o(1)\right)N.
+\]
+Since the function $p\mapsto 1-e^{-1/p}$ is decreasing for $p\ge 1$, its maximum occurs at $p=1$, giving
+\[
+|Q|\le \left(1-\frac1e+o(1)\right)N.
+\]
+Hence
+\[
+|A|=|Q|+1\le \left(1-\frac1e+o(1)\right)N.
+\]
+\hfill $\square$
+
+\paragraph{Corollary 319.3 (exact asymptotic for the Round-1 class).}
+Let $F_{\mathrm{sing}}(N)$ be the maximum size of an admissible set in Problem \#319 for which one sign class has size $1$.  Then
+\[
+F_{\mathrm{sing}}(N)=\left(1-\frac1e+o(1)\right)N.
+\]
+
+\paragraph{Proof.}
+The upper bound is Corollary 319.2.  The matching lower bound is exactly the Round-1 construction $A=\{1\}\cup B$ with $\sum_{b\in B}1/b=1$ and
+\[
+|B|=\left(1-\frac1e+o(1)\right)N.
+\]
+\hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the new argument against the obvious failure modes.
+
+\begin{itemize}
+\item \textbf{Did I accidentally use minimality where only equality was needed?}  
+No.  Proposition 319.1 is purely about subsets $B$ with a fixed reciprocal sum, and Corollary 319.2 uses only the equality
+\[
+\sum_{p\in P}\frac1p=\sum_{q\in Q}\frac1q.
+\]
+So the upper bound for singleton-sign solutions is valid a fortiori.
+
+\item \textbf{Could a non-terminal set of the same size have smaller reciprocal sum than the terminal interval?}  
+No.  Replacing any denominator by a larger one strictly decreases its reciprocal.  Repeating this replacement process pushes every $m$-element set to the terminal interval and can only decrease the reciprocal sum.
+
+\item \textbf{Does the lower bound really give almost all elements of the interval?}  
+Yes.  The missing reciprocal mass is $o(1)$, and every omitted denominator contributes at least $1/N$, so the number of omitted denominators is $o(N)$.
+
+\item \textbf{Does the corollary really rule out every singleton-sign strategy, not just $P=\{1\}$?}  
+Yes.  The proof treats an arbitrary singleton $\{p\}$ and shows that the constant is maximized at $p=1$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 proves a genuine obstruction that was absent in Round 1:
+
+\begin{itemize}
+\item the entire singleton-sign class is now solved asymptotically, and
+\item the Round-1 constant $1-\frac1e$ is \emph{exactly} the best possible constant obtainable from any construction with one positive term or, more generally, with one sign class of size $1$.
+\end{itemize}
+
+So any future improvement for the full problem must use at least two positive and two negative denominators.  In other words, the Round-1 mechanism has now been exhausted, not merely exhibited.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 60\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item E. S. Croot III, \emph{On unit fractions with denominators in short intervals}, Acta Arithmetica 99 (2001), 99--114.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#319}, \texttt{erdosproblems.com/319} (checked in this round).
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

@@ -1,0 +1,216 @@
+\section{Erd\H{o}s Problem \#254}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): isolate a single sharp obstruction whose resolution would settle the problem.
+
+Round-1 extracted only very basic consequences from the hypotheses. The best Round-2 move is to prove a dyadic bootstrap theorem showing that, once one finite initial segment of $A$ creates a long enough interval of subset sums, the hypothesis
+\[
+|A\cap[1,2x]|-|A\cap[1,x]|\to\infty
+\]
+by itself propagates that interval forever. This would identify the exact missing bridge from the hypotheses to completeness.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use only the following Round-1 facts.
+
+\begin{itemize}
+\item Writing
+\[
+B_j:=A\cap(2^j,2^{j+1}],
+\qquad
+m_j:=|B_j|,
+\]
+Round-1 showed that $m_j\to\infty$.
+\item Round-1 also showed that the second hypothesis implies $\gcd(A)=1$, but the new theorem below does not actually need that fact.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is an \emph{interval absorption lemma} for subset sums.
+
+It shows that the only thing still missing is a ``starter interval'' of subset sums inside one sufficiently large dyadic initial segment.
+
+More precisely, I prove:
+
+\begin{quote}
+If for some large $J$ the finite set $A\cap[1,2^J]$ already has a subset-sum interval of length at least $2^{J+1}$, then the dyadic growth condition $m_j\to\infty$ forces $A$ to be complete.
+\end{quote}
+
+So the second hypothesis involving
+\[
+\sum_{n\in A}\{\theta n\}=\infty
+\]
+must, in any successful proof, be used only to manufacture such a starter interval.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the absence of any mechanism turning the two qualitative hypotheses into actual intervals inside the subset-sum set
+\[
+\Sigma(A):=\left\{\sum_{a\in F}a:\ F\subseteq A\text{ finite}\right\}.
+\]
+
+The new plan is:
+
+\begin{itemize}
+\item prove a general interval-absorption lemma for subset sums;
+\item apply it block-by-block to the dyadic decomposition $A=\bigsqcup_j B_j$;
+\item conclude that once one interval has length at least the next dyadic scale, all later dyadic blocks can be absorbed greedily.
+\end{itemize}
+
+This produces a single sharply formulated obstruction to completeness.
+
+\subsection*{5) WORK (ROUND-2)}
+For a finite set $F\subseteq \mathbf{N}$, write
+\[
+\Sigma(F):=\left\{\sum_{a\in E} a:\ E\subseteq F\right\}.
+\]
+
+\paragraph{Lemma 1 (interval absorption by one new element).}
+Let $F\subseteq \mathbf{N}$ be finite, and suppose there is an interval
+\[
+[L,U]\subseteq \Sigma(F).
+\]
+Let $c\in \mathbf{N}$ with
+\[
+c\le U-L+1.
+\]
+Then
+\[
+[L,U+c]\subseteq \Sigma(F\cup\{c\}).
+\]
+
+\paragraph{Proof.}
+The sums not using $c$ give the interval $[L,U]$, and the sums using $c$ give the translated interval
+\[
+[L+c,U+c].
+\]
+The assumption $c\le U-L+1$ is equivalent to
+\[
+L+c\le U+1,
+\]
+so these two intervals overlap or are adjacent. Hence their union is the full interval
+\[
+[L,U+c].
+\]
+Every sum in this union uses distinct elements because $c$ is a new element not in $F$.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Theorem 2 (dyadic bootstrap from one starter interval).}
+Assume $m_j\to\infty$. Suppose there exists an integer $J$ such that:
+
+\begin{itemize}
+\item $m_j\ge 2$ for every $j\ge J+1$;
+\item the finite set $A\cap[1,2^J]$ has a subset-sum interval
+\[
+[L_J,U_J]\subseteq \Sigma\bigl(A\cap[1,2^J]\bigr)
+\]
+of length
+\[
+W_J:=U_J-L_J+1\ge 2^{J+1}.
+\]
+\end{itemize}
+
+Then every sufficiently large integer belongs to $\Sigma(A)$.
+
+\paragraph{Proof.}
+We induct on $j\ge J$.
+
+Induction hypothesis: there exists an interval
+\[
+[L_J,U_j]\subseteq \Sigma\bigl(A\cap[1,2^j]\bigr)
+\]
+of length
+\[
+W_j:=U_j-L_J+1\ge 2^{j+1}.
+\]
+This is true for $j=J$ by assumption.
+
+Now fix $j\ge J$ and write the next dyadic block as
+\[
+B_{j+1}=\{b_1<b_2<\cdots<b_t\},
+\qquad t=m_{j+1}.
+\]
+Every element of $B_{j+1}$ satisfies
+\[
+2^j < b_i \le 2^{j+1} \le W_j.
+\]
+Therefore Lemma 1 applies to $b_1$, giving an interval of length $W_j+b_1$. Since $b_2\le 2^{j+1}\le W_j < W_j+b_1$, Lemma 1 applies again to $b_2$. Continuing in this way, we can absorb the entire block $B_{j+1}$ one element at a time, obtaining an interval
+\[
+[L_J,U_{j+1}]\subseteq \Sigma\bigl(A\cap[1,2^{j+1}]\bigr)
+\]
+of length
+\[
+W_{j+1}=W_j+\sum_{i=1}^{t} b_i.
+\]
+Because $t\ge 2$ and each $b_i>2^j$,
+\[
+\sum_{i=1}^{t} b_i > 2\cdot 2^j = 2^{j+1}.
+\]
+Hence
+\[
+W_{j+1}>W_j+2^{j+1}\ge 2^{j+1}+2^{j+1}=2^{j+2}.
+\]
+So the induction closes.
+
+Thus for every $j\ge J$, the finite set $A\cap[1,2^j]$ has an interval of subset sums with the same left endpoint $L_J$ and with length at least $2^{j+1}$. As $j\to\infty$, these lengths tend to infinity, so
+\[
+[L_J,\infty)\subseteq \Sigma(A).
+\]
+Therefore every sufficiently large integer is a sum of distinct elements of $A$.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Corollary 3 (sharp obstruction to a counterexample).}
+Assume the hypotheses of Problem \#254 and suppose $A$ is \emph{not} complete. Then for every sufficiently large $J$ the finite subset-sum set
+\[
+\Sigma\bigl(A\cap[1,2^J]\bigr)
+\]
+contains no interval of length $2^{J+1}$.
+
+\paragraph{Proof.}
+Round-1 gives $m_j\to\infty$, so there exists $J_0$ such that $m_j\ge 2$ for all $j\ge J_0$. If for some $J\ge J_0$ the set $\Sigma(A\cap[1,2^J])$ contained an interval of length $2^{J+1}$, then Theorem 2 would imply that $A$ is complete, contradiction.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Interpretation.}
+The unresolved part of Problem \#254 is now concentrated in one sharply formulated finite statement:
+
+\begin{quote}
+Produce, from the two original hypotheses, one initial dyadic scale $2^J$ for which the finite set $A\cap[1,2^J]$ already has a subset-sum interval of length at least $2^{J+1}$.
+\end{quote}
+
+Once such a scale exists, the dyadic growth hypothesis alone finishes the proof.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item The absorption lemma depends on interval \emph{length}, not on the right endpoint alone. This was checked carefully: the overlap condition is exactly $c\le U-L+1$.
+\item Distinctness of summands is preserved, because each absorbed element is added only once and is not already present in the finite set used at that step.
+\item The theorem needs $m_j\ge 2$ eventually, not merely $m_j\ge 1$. This is why the hypothesis $m_j\to\infty$ is used at precisely that point.
+\item The second hypothesis involving $\sum_{n\in A}\{\theta n\}$ plays no role in the bootstrap theorem itself; this is intentional, and it cleanly isolates where any future proof must use that hypothesis.
+\end{itemize}
+
+So the new theorem is internally consistent and pinpoints a single missing bridge rather than leaving the obstruction diffuse.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is a dyadic bootstrap theorem:
+
+\begin{quote}
+If one can obtain just one subset-sum interval of length at least the next dyadic scale inside some finite initial segment $A\cap[1,2^J]$, then the dyadic growth condition propagates this interval forever and forces completeness.
+\end{quote}
+
+Equivalently, any genuine counterexample would have to avoid such starter intervals at every sufficiently large dyadic scale. That is a much sharper obstruction than in Round-1.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+Only references actually used or checked.
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#254}, \texttt{https://www.erdosproblems.com/254}, accessed 2026-03-07.
+\item J. W. S. Cassels, \emph{On the representation of integers as the sums of distinct summands taken from a fixed set}, Acta Sci. Math. (Szeged) 21 (1960), 111--124.
+\end{itemize}

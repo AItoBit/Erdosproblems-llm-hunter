@@ -1,0 +1,278 @@
+\section{Erd\H{o}s Problem 625 --- ROUND-2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (C) obstruction / correction-by-reduction.}
+
+Round-1 recorded the classical asymptotics and the 2024 progress of Heckel and Steiner,
+but it still left a qualitative gap:
+why do anti-concentration statements about $\chi(G(n,1/2))$ control the random variable
+$\chi(G)-\zeta(G)$, and what exact obstruction remains to a full solution for \emph{all} $n$?
+
+In this round I prove a precise quantitative transfer lemma:
+small gap $\chi-\zeta$ forces near-concentration of $\chi$ in a short interval.
+This isolates the remaining obstruction sharply.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts as fixed background:
+
+\begin{itemize}
+\item the definitions of $\chi(G)$ and $\zeta(G)$;
+\item the classical bounds
+\[
+\frac{n}{2\log_2 n}\le \zeta(G)\le \chi(G)\le (1+o(1))\frac{n}{2\log_2 n}
+\]
+for $G\sim G(n,1/2)$;
+\item the Round-1 summary of recent progress by Steiner and Heckel showing that
+$\chi(G)-\zeta(G)$ is not bounded with high probability and that Heckel proves a positive answer
+for roughly $95\%$ of all $n$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{quantitative concentration transfer lemma}.
+
+For fixed $m\ge 0$, define
+\[
+q_{n,m}:=\Pr\bigl(\chi(G)-\zeta(G)>m\bigr),
+\qquad G\sim G(n,1/2).
+\]
+I prove:
+
+\begin{enumerate}
+\item for every integer $a$,
+\[
+q_{n,m}\ge \Pr(\chi(G)\le a)\Pr(\chi(G)\ge a+m+1);
+\]
+\item consequently, there exists an interval of width $m$ that contains
+$\chi(G)$ with probability at least $1-2\sqrt{q_{n,m}}$.
+\end{enumerate}
+
+So if $\chi(G)-\zeta(G)\le m$ with high probability, then $\chi(G)$ must be concentrated,
+with high probability, in an interval of width $m$.
+This is the exact obstruction that remains.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The Round-1 obstacle was qualitative:
+recent work implies large gaps for infinitely many $n$ and for about $95\%$ of all $n$,
+but not for \emph{every} $n$.
+
+To sharpen this, I prove a deterministic-probabilistic lemma reducing the open problem to one precise
+question about fixed-width concentration of $\chi(G(n,1/2))$.
+The proof uses only three facts:
+
+\begin{enumerate}
+\item $\zeta(G)\le \chi(\overline G)$;
+\item $\overline G$ has the same distribution as $G$ when $G\sim G(n,1/2)$;
+\item Harris--FKG for increasing events in the edge-exposure product space.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let $G\sim G(n,1/2)$ and let $\overline G$ denote its complement.
+
+\paragraph{Lemma 1 (deterministic comparison).}
+For every graph $G$,
+\[
+\zeta(G)\le \chi(\overline G).
+\]
+
+\paragraph{Proof.}
+A proper colouring of $\overline G$ partitions $V(G)$ into independent sets of $\overline G$,
+equivalently into cliques of $G$.
+Such a partition is a valid cocolouring of $G$.
+Hence the minimum number of colours in a cocolouring is at most $\chi(\overline G)$. \hfill $\square$
+
+\paragraph{Lemma 2 (quantitative transfer).}
+Fix an integer $m\ge 0$ and put
+\[
+q_{n,m}:=\Pr\bigl(\chi(G)-\zeta(G)>m\bigr).
+\]
+Then for every integer $a$,
+\[
+q_{n,m}\ge \Pr(\chi(G)\le a)\Pr(\chi(G)\ge a+m+1).
+\tag{1}
+\]
+
+\paragraph{Proof.}
+Consider the events
+\[
+A_a:=\{\chi(G)\ge a+m+1\},
+\qquad
+B_a:=\{\chi(\overline G)\le a\}.
+\]
+The event $A_a$ is increasing in the edge set of $G$:
+adding edges cannot decrease $\chi(G)$.
+
+The event $B_a$ is also increasing in the edge set of $G$:
+adding an edge to $G$ removes an edge from $\overline G$,
+and removing edges cannot increase $\chi(\overline G)$.
+Therefore $A_a$ and $B_a$ are both increasing events in the product probability space
+of edge indicators of $G$.
+By Harris--FKG,
+\[
+\Pr(A_a\cap B_a)\ge \Pr(A_a)\Pr(B_a).
+\tag{2}
+\]
+Because $\overline G$ has the same distribution as $G(n,1/2)$,
+\[
+\Pr(B_a)=\Pr(\chi(G)\le a).
+\tag{3}
+\]
+On the event $A_a\cap B_a$, Lemma 1 gives
+\[
+\zeta(G)\le \chi(\overline G)\le a,
+\]
+while also $\chi(G)\ge a+m+1$.
+Hence
+\[
+\chi(G)-\zeta(G)\ge m+1,
+\]
+so $A_a\cap B_a\subseteq \{\chi(G)-\zeta(G)>m\}$.
+Thus, using (2) and (3),
+\[
+q_{n,m}\ge \Pr(A_a\cap B_a)\ge \Pr(\chi(G)\ge a+m+1)\Pr(\chi(G)\le a),
+\]
+which is exactly (1). \hfill $\square$
+
+\paragraph{Lemma 3 (concentration consequence).}
+For every $n$ and every integer $m\ge 0$, there exists an integer $a_n$ such that
+\[
+\Pr\bigl(a_n\le \chi(G)\le a_n+m\bigr)\ge 1-2\sqrt{q_{n,m}}.
+\tag{4}
+\]
+
+\paragraph{Proof.}
+Let
+\[
+F(t):=\Pr(\chi(G)\le t).
+\]
+If $q_{n,m}=0$, choose $a_n$ minimal such that $F(a_n)>0$.
+Then $F(a_n-1)=0$, and applying Lemma 2 with $a=a_n$ gives
+$F(a_n)\bigl(1-F(a_n+m)\bigr)=0$.
+Since $F(a_n)>0$, we get $F(a_n+m)=1$, so
+\[
+\Pr\bigl(a_n\le \chi(G)\le a_n+m\bigr)=1,
+\]
+which is exactly (4). Thus it remains only to treat the case $q_{n,m}>0$.
+
+Choose $a_n$ minimal such that
+\[
+F(a_n)\ge \sqrt{q_{n,m}}.
+\]
+Then by minimality,
+\[
+F(a_n-1)<\sqrt{q_{n,m}}.
+\tag{5}
+\]
+Apply Lemma 2 with $a=a_n$:
+\[
+q_{n,m}\ge F(a_n)\bigl(1-F(a_n+m)\bigr).
+\]
+Since $F(a_n)\ge \sqrt{q_{n,m}}$, it follows that
+\[
+1-F(a_n+m)\le \sqrt{q_{n,m}}.
+\tag{6}
+\]
+Now
+\[
+\Pr\bigl(a_n\le \chi(G)\le a_n+m\bigr)
+=
+F(a_n+m)-F(a_n-1).
+\]
+Using (5) and (6),
+\[
+F(a_n+m)-F(a_n-1)\ge 1-\sqrt{q_{n,m}}-\sqrt{q_{n,m}}
+=1-2\sqrt{q_{n,m}}.
+\]
+This proves (4). \hfill $\square$
+
+\paragraph{Corollary 4.}
+If for some fixed $m$ one has
+\[
+\Pr\bigl(\chi(G)-\zeta(G)\le m\bigr)\to 1,
+\]
+then there exists a sequence of intervals $I_n$ of width $m$ such that
+\[
+\Pr\bigl(\chi(G)\in I_n\bigr)\to 1.
+\]
+
+\paragraph{Proof.}
+This is immediate from Lemma 3, since in that case $q_{n,m}\to 0$. \hfill $\square$
+
+\paragraph{Corollary 5.}
+If for some fixed $m$ and some $\delta>0$ every interval $I$ of width $m$ satisfies
+\[
+\Pr(\chi(G)\in I)\le 1-\delta,
+\]
+then
+\[
+\Pr\bigl(\chi(G)-\zeta(G)>m\bigr)\ge \delta^2/4.
+\]
+
+\paragraph{Proof.}
+If $q_{n,m}<\delta^2/4$, then Lemma 3 would produce an interval of width $m$
+containing $\chi(G)$ with probability $>1-\delta$, contradiction. \hfill $\square$
+
+\paragraph{Interpretation.}
+The full Erd\H{o}s--Gimbel problem is therefore reduced to the following sharply formulated obstruction:
+
+\begin{quote}
+\emph{For each fixed $m$, can $\chi(G(n,1/2))$ concentrate with probability $1-o(1)$
+inside some interval of width $m$?}
+\end{quote}
+
+If the answer is \emph{no} for every fixed $m$, then $\chi(G)-\zeta(G)\to\infty$ with high probability.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Monotonicity of $B_a=\{\chi(\overline G)\le a\}$.}
+This is easy to get wrong because the event is phrased in terms of $\overline G$.
+But as edges are added to $G$, edges are removed from $\overline G$, and removing edges cannot increase
+chromatic number. So $B_a$ is indeed increasing in the coordinates of $G$.
+
+\item \emph{Use of complement symmetry.}
+For $G\sim G(n,1/2)$, the complement $\overline G$ has the same distribution as $G$.
+This is essential in passing from $\Pr(B_a)$ to $\Pr(\chi(G)\le a)$.
+
+\item \emph{Endpoint conventions.}
+I formulated the gap event as $\chi(G)-\zeta(G)>m$ and the interval as $[a_n,a_n+m]$.
+This matches the discrete inequality in Lemma 2:
+the upper tail is $\Pr(\chi\ge a+m+1)$.
+
+\item \emph{What the lemma does \emph{not} prove.}
+Lemma 3 does not itself show that $\chi(G)-\zeta(G)\to\infty$ with high probability.
+It shows instead that any failure of the conjecture must be accompanied by near-total concentration
+of $\chi(G)$ in a bounded-width interval.
+Thus it identifies the exact remaining obstruction.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round-1 is a quantitative theorem:
+\emph{small cochromatic gap forces short-interval concentration of the chromatic number.}
+This turns the open problem into a sharp fixed-width concentration problem for $\chi(G(n,1/2))$.
+That is a precise obstruction, rather than the looser heuristic connection recorded in Round-1.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 55\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#625}, \texttt{erdosproblems.com/625}, accessed 2026-03-07.
+\item R. Steiner, \emph{On the difference between the chromatic and cochromatic number}, arXiv:2408.02400v2.
+\item A. Heckel, \emph{On a question of Erd\H{o}s and Gimbel on the cochromatic number}, Electron. J. Combin. \textbf{31} (2024), P4.72.
+\item A. Heckel, \emph{The difference between the chromatic and the cochromatic number of a random graph}, arXiv:2409.17614v2.
+\item N. Alon and J. H. Spencer, \emph{The Probabilistic Method}, for the Harris--FKG inequality.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This section is written in drop-in \LaTeX\ form and starts directly from \verb|\section{}|, with no preamble.

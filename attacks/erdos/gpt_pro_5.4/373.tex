@@ -1,0 +1,171 @@
+\section{Erd\H{o}s Problem 373}
+
+\paragraph{Problem statement.}
+Show that the equation
+\[
+n! = a_{1}!a_{2}!\cdots a_{k}!,
+\qquad
+n-1>a_{1}\geq a_{2}\geq \cdots \geq a_{k}\geq 2,
+\]
+has only finitely many solutions.
+
+\paragraph{Tools in this round.}
+Web browsing: YES. Computation: YES.
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am not pursuing path (A), because the full finiteness statement is still open. The Round-2 objective is strict advancement beyond Round 1 by turning the qualitative prime-gap obstruction into a quantitative theorem.
+
+Round 1 only proved $a_{1}>n/2$. In this round I will prove the substantially sharper statement
+\[
+a_{1}>n\Bigl(1-\frac{\eta}{(\log n)^{2}}\Bigr)
+\]
+for every fixed $\eta>1/25$ and all sufficiently large solutions. Equivalently,
+\[
+n-a_{1}=O\!\left(\frac{n}{(\log n)^{2}}\right).
+\]
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I rely on the main structural lemma proved in Round 1.
+
+If
+\[
+n! = a_{1}!a_{2}!\cdots a_{k}!,
+\qquad
+n-1>a_{1}\geq a_{2}\geq \cdots \geq a_{k}\geq 2,
+\]
+then the interval $(a_{1},n]$ contains no prime numbers. Equivalently, every prime $p\leq n$ satisfies $p\leq a_{1}$.
+
+Round 1 also extracted the easy corollary $a_{1}>n/2$ from Bertrand's postulate. I will now replace that by a much sharper asymptotic bound.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is Dusart's explicit short-interval prime theorem:
+
+for every $x>396738$, there exists a prime $p$ with
+\[
+x<p\leq x\left(1+\frac{1}{25(\log x)^{2}}\right).
+\]
+
+Combining this with the Round-1 prime-free interval lemma shows that $(a_{1},n]$ cannot be much longer than a Dusart interval ending at $n$. This converts the qualitative prime-gap obstruction into a quantitative restriction on $a_{1}$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 was clear: knowing merely that $(a_{1},n]$ is prime-free does not rule out infinitely many solutions, because large prime gaps do occur.
+
+To advance beyond that, I will:
+\begin{enumerate}
+\item choose a point $x$ just below $n$;
+\item prove that Dusart's interval starting from $x$ still ends below $n$;
+\item conclude that there must be a prime in $(x,n]$;
+\item invoke the Round-1 prime-free interval lemma to force $a_{1}>x$.
+\end{enumerate}
+This yields the new theorem $a_{1}>n(1-\eta/(\log n)^{2})$.
+
+\subsection*{5) WORK (ROUND-2)}
+Fix a real number $\eta>1/25$. I will prove that every sufficiently large solution satisfies
+\[
+a_{1}>n\Bigl(1-\frac{\eta}{(\log n)^{2}}\Bigr).
+\]
+
+Let
+\[
+L=\log n,
+\qquad
+x=n\left(1-\frac{\eta}{L^{2}}\right).
+\]
+For all sufficiently large $n$ we have $x>396738$, so Dusart's theorem applies.
+
+It remains to check that the corresponding Dusart interval stays below $n$.
+
+Since $\eta/L^{2}\to 0$, the Taylor expansion $\log(1-z)=-z+O(z^{2})$ gives
+\[
+\log x
+=\log n+\log\left(1-\frac{\eta}{L^{2}}\right)
+=L-\frac{\eta}{L^{2}}+O\!\left(\frac{1}{L^{4}}\right).
+\]
+Hence
+\[
+\frac{1}{(\log x)^{2}}
+=\frac{1}{L^{2}}+O\!\left(\frac{1}{L^{5}}\right),
+\]
+because replacing $L$ by $L+O(L^{-2})$ changes its reciprocal square by $O(L^{-5})$.
+
+Therefore
+\[
+x\left(1+\frac{1}{25(\log x)^{2}}\right)
+=n\left(1-\frac{\eta}{L^{2}}\right)
+\left(1+\frac{1}{25L^{2}}+O\!\left(\frac{1}{L^{5}}\right)\right).
+\]
+Multiplying out,
+\[
+x\left(1+\frac{1}{25(\log x)^{2}}\right)
+=n\left(1-\frac{\eta-1/25}{L^{2}}+O\!\left(\frac{1}{L^{4}}\right)\right).
+\]
+Since $\eta>1/25$, the coefficient of $1/L^{2}$ is negative. Thus for all sufficiently large $n$,
+\[
+x\left(1+\frac{1}{25(\log x)^{2}}\right)<n.
+\]
+
+Now apply Dusart. There exists a prime $p$ such that
+\[
+x<p\leq x\left(1+\frac{1}{25(\log x)^{2}}\right)<n.
+\]
+So in fact
+\[
+p\in (x,n].
+\]
+
+Suppose for contradiction that $a_{1}\leq x$. Then $p>x\geq a_{1}$, hence
+\[
+p\in (a_{1},n],
+\]
+which contradicts the Round-1 lemma that $(a_{1},n]$ contains no prime.
+
+Therefore $a_{1}>x$, i.e.
+\[
+a_{1}>n\left(1-\frac{\eta}{(\log n)^{2}}\right)
+\]
+for all sufficiently large solutions.
+
+This proves the claimed theorem.
+
+\paragraph{Corollary.}
+Choosing, for example, $\eta=1/5$, one obtains the concrete bound
+\[
+n-a_{1}<\frac{n}{5(\log n)^{2}}
+\]
+for every sufficiently large solution.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The delicate points are as follows.
+\begin{itemize}
+\item \emph{Validity of the Taylor expansions.} Here $z=\eta/L^{2}\to 0$, so both $\log(1-z)=-z+O(z^{2})$ and the reciprocal-square expansion are legitimate.
+\item \emph{Was the Dusart interval really forced below $n$?} Yes. The main term is $1-(\eta-1/25)/L^{2}$, and because $\eta>1/25$ this is strictly less than $1$ for large $n$; the $O(L^{-4})$ term cannot overturn that sign eventually.
+\item \emph{Did I use the Round-1 lemma correctly?} Yes. If $a_{1}\leq x$ then the prime $p$ found above satisfies $p>x\geq a_{1}$ and also $p\leq n$, so $p\in (a_{1},n]$, impossible.
+\item \emph{Does this solve finiteness?} No. The new theorem only shows that $a_{1}$ is very close to $n$ on the scale $n/(\log n)^{2}$. That is much stronger than Round 1, but it still does not rule out infinitely many solutions.
+\end{itemize}
+No hidden conflict with the Round-1 results appears; the new theorem is a direct strengthening of the previous prime-gap argument.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The strict new advance is the theorem
+\[
+\forall \eta>1/25,\qquad
+ a_{1}>n\Bigl(1-\frac{\eta}{(\log n)^{2}}\Bigr)
+\]
+for every sufficiently large solution. In particular,
+\[
+n-a_{1}=O\!\left(\frac{n}{(\log n)^{2}}\right).
+\]
+This is substantially stronger than the Round-1 bound $a_{1}>n/2$, and it cleanly identifies the remaining weakness of the prime-gap approach: even such a strong closeness estimate does not by itself force finiteness.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 58\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item P. Dusart, \emph{Estimates of some functions over primes without R.H.}, arXiv:1002.0442, especially Proposition 6.8.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#373}, accessed 2026-03-07.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+Erd\H{o}s problem number: $x=373$. This section is written as a drop-in \LaTeX{} fragment and is included in the combined file \texttt{369\_371\_373\_round2\_solutions.tex}.

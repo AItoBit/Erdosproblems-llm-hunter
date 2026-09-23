@@ -1,0 +1,207 @@
+\section{Erd\H{o}s Problem \#307 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path C (structural obstruction / correction of the search space).}
+
+Round 1 reduced the problem to finding a nontrivial squarefree $2$-cycle of
+\[
+g(n):=\sum_{p\mid n}\frac{n}{p}.
+\]
+That reformulation is correct but still very broad. The most promising Round-2 direction is therefore to prove \emph{local congruence constraints} that any solution must satisfy, thereby ruling out whole classes of constructions and making any future search much more rigid.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+
+\begin{itemize}
+\item If
+\[
+1=\left(\sum_{p\in P}\frac1p\right)\left(\sum_{q\in Q}\frac1q\right),
+\]
+then $P\cap Q=\emptyset$.
+\item Writing
+\[
+D:=\prod_{p\in P}p,\qquad E:=\prod_{q\in Q}q,
+\]
+one has the exact identities
+\[
+E=\sum_{p\in P}\frac{D}{p}=g(D),\qquad D=\sum_{q\in Q}\frac{E}{q}=g(E).
+\]
+In particular $D,E$ are squarefree and coprime.
+\item The simple reciprocal-sum argument gives the necessary bound
+\[
+|P\cup Q|\ge 59.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The genuinely new ingredient is a \emph{cross-congruence lemma}:
+for every $q\in Q$,
+\[
+\sum_{p\in P} p^{-1}\equiv 0 \pmod q,
+\]
+and symmetrically for every $p\in P$,
+\[
+\sum_{q\in Q} q^{-1}\equiv 0 \pmod p,
+\]
+where inverses are taken in the relevant finite field.
+
+This turns the problem into a family of simultaneous local zero-sum conditions. It immediately yields parity and residue-class balance laws, and rules out any construction in which one side lies entirely in one nonzero residue class modulo a prime from the other side unless the cardinality is a multiple of that prime.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The main Round-1 gap was that the $2$-cycle reformulation did not explain \emph{why} such cycles should be rare. The plan is:
+
+\begin{enumerate}
+\item derive exact local congruence conditions from $E=g(D)$ and $D=g(E)$;
+\item extract concrete consequences for the primes $2$ and $3$;
+\item rule out an entire class of ``residue-homogeneous'' search strategies.
+\end{enumerate}
+
+This does not solve the problem, but it cuts the candidate space much more sharply than the Round-1 product reformulation alone.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+A:=\sum_{p\in P}\frac1p=\frac{E}{D},\qquad B:=\sum_{q\in Q}\frac1q=\frac{D}{E}.
+\]
+
+\textbf{Lemma 5.1.} No finite nonempty set of distinct primes has reciprocal sum equal to an integer.
+
+\emph{Proof.}
+For a nonempty prime set $R$, let
+\[
+M_R:=\prod_{r\in R} r,
+\qquad
+N_R:=\sum_{r\in R}\frac{M_R}{r}.
+\]
+By the Round-1 denominator lemma, $\gcd(N_R,M_R)=1$, so the fraction
+\[
+\sum_{r\in R}\frac1r=\frac{N_R}{M_R}
+\]
+is already in lowest terms with denominator $M_R>1$. Hence it cannot be an integer. \hfill $\square$
+
+\medskip
+\textbf{Corollary 5.2.} In any solution of Problem \#307 one has $D\neq E$. Equivalently, neither of the two factors can equal $1$.
+
+\emph{Proof.}
+If $D=E$, then $A=E/D=1$ and $B=D/E=1$, contradicting Lemma 5.1 on either side. \hfill $\square$
+
+\medskip
+Thus one factor is strictly larger than $1$ and the other strictly smaller than $1$.
+
+\medskip
+\textbf{Lemma 5.3 (cross-congruence).} For every $q\in Q$,
+\[
+\sum_{p\in P} p^{-1}\equiv 0 \pmod q,
+\]
+and for every $p\in P$,
+\[
+\sum_{q\in Q} q^{-1}\equiv 0 \pmod p.
+\]
+
+\emph{Proof.}
+Fix $q\in Q$. Since $q\mid E=g(D)$ and $q\notin P$, we have $q\nmid D$, so $D$ is invertible modulo $q$. Reducing
+\[
+E=\sum_{p\in P}\frac{D}{p}
+\]
+modulo $q$ and multiplying by $D^{-1}$ gives
+\[
+0\equiv \sum_{p\in P} p^{-1}\pmod q.
+\]
+The second statement is the same argument with the roles of $P$ and $Q$ swapped. \hfill $\square$
+
+\medskip
+\textbf{Corollary 5.4 (parity law).}
+
+\begin{itemize}
+\item If $2\in Q$, then $|P|$ is even.
+\item If $2\in P$, then $|Q|$ is even.
+\item If $2\notin P\cup Q$, then both $|P|$ and $|Q|$ are odd.
+\end{itemize}
+
+\emph{Proof.}
+Modulo $2$, every nonzero residue is $1$, so Lemma 5.3 gives
+\[
+\sum_{p\in P} p^{-1}\equiv |P|\equiv 0\pmod 2
+\]
+whenever $2\in Q$. This proves the first claim; the second is symmetric. If $2\notin P\cup Q$, then $D$ and $E$ are odd, so from the Round-1 identities
+\[
+E=\sum_{p\in P}\frac{D}{p},\qquad D=\sum_{q\in Q}\frac{E}{q}
+\]
+each side is a sum of odd integers; hence $E\equiv |P|\pmod 2$ and $D\equiv |Q|\pmod 2$. Since $D,E$ are odd, both $|P|$ and $|Q|$ are odd. \hfill $\square$
+
+\medskip
+\textbf{Corollary 5.5 (the $3$-balance law).}
+If $3\in Q$, then
+\[
+\#\{p\in P: p\equiv 1\pmod 3\}
+\equiv
+\#\{p\in P: p\equiv 2\pmod 3\}
+\pmod 3.
+\]
+The analogous statement with $P,Q$ swapped also holds.
+
+\emph{Proof.}
+If $3\in Q$, then $3\notin P$ because $P\cap Q=\emptyset$. Hence every $p\in P$ is congruent to $1$ or $2$ mod $3$, and in $\mathbf F_3$ one has $1^{-1}=1$ and $2^{-1}=2\equiv -1$. Lemma 5.3 therefore gives
+\[
+0\equiv \sum_{p\in P} p^{-1}
+\equiv
+\#\{p\equiv 1\pmod 3\}-\#\{p\equiv 2\pmod 3\}
+\pmod 3,
+\]
+which is exactly the claim. \hfill $\square$
+
+\medskip
+\textbf{Corollary 5.6 (residue-homogeneous constructions are heavily restricted).}
+Suppose $q\in Q$, and all primes in $P$ lie in one fixed nonzero residue class $a\pmod q$. Then
+\[
+q\mid |P|.
+\]
+Symmetrically, if $p\in P$ and all primes in $Q$ lie in one fixed nonzero residue class $b\pmod p$, then
+\[
+p\mid |Q|.
+\]
+In particular, if $q\in Q$ and $q>|P|$, then $P$ cannot be contained in a single nonzero residue class modulo $q$.
+
+\emph{Proof.}
+If every $p\in P$ satisfies $p\equiv a\pmod q$, then every inverse satisfies $p^{-1}\equiv a^{-1}\pmod q$. Lemma 5.3 gives
+\[
+0\equiv \sum_{p\in P} p^{-1}\equiv |P|\,a^{-1}\pmod q.
+\]
+Since $a\not\equiv 0\pmod q$, also $a^{-1}\not\equiv 0\pmod q$, and therefore $q\mid |P|$. The second claim is identical with the roles reversed. \hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item The cross-congruence lemma uses the invertibility of $D$ modulo $q$ (or $E$ modulo $p$). This is valid because Round 1 already proved $P\cap Q=\emptyset$.
+\item Lemma 5.1 is only a corollary of the Round-1 reduced-denominator fact; no hidden cancellation is possible.
+\item Corollary 5.4 splits into two cases. The first two bullets come from Lemma 5.3 modulo $2$; the third bullet uses the explicit oddness of the summands when neither side contains $2$.
+\item These new local conditions do \emph{not} yet improve the Round-1 lower bound $|P\cup Q|\ge 59$, and I am not claiming a proof of the stronger bound ``$\ge 60$'' appearing on the current webpage discussion.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round 1 is the local zero-sum structure of Lemma 5.3 and its consequences:
+
+\begin{itemize}
+\item neither factor can equal $1$;
+\item every prime on one side imposes a modular vanishing condition on the other side;
+\item parity and mod-$3$ balance laws follow immediately;
+\item residue-homogeneous search patterns are ruled out unless the opposite-side cardinality is divisible by the controlling prime.
+\end{itemize}
+
+This does not settle Problem \#307, but it sharply narrows the allowed architecture of any future solution.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 47\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item P. Erd\H{o}s and R. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, problem source for \#307.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#307}, Erd\H{o}s Problems website, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#307 -- Discussion thread}, Erd\H{o}s Problems website, accessed 2026-03-07.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This file is already in drop-in LaTeX format with no preamble.
+
+

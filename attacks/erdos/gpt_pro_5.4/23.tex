@@ -1,0 +1,116 @@
+\section{Round 2 Progress on Erd\H{o}s Problem 23}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (A): proof track via sharper universal bounds and counterexample localization.}
+We build on Round~1's elementary bounds to (i) obtain a strictly smaller unconditional
+constant than $25/8$, and (ii) constrain the edge-density regime in which a counterexample
+to $\tau_B(G)\le n^2$ could possibly occur.
+
+\subsection*{2) ROUND-1 FOUNDATION USED}
+We use the following Round~1 results as established inputs.
+\begin{itemize}
+\item \textbf{(R1--MaxCut)} For any graph with $m$ edges, $\tau_B(G)\le m/2$.
+\item \textbf{(R1--Mantel)} If $G$ is triangle-free on $N$ vertices then $m\le N^2/4$.
+\item \textbf{(R1--Sharpness)} The balanced blow-up of $C_5$ on $5n$ vertices satisfies
+      $\tau_B(G)=n^2$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+\paragraph{Norin--Sun inequality.}
+For every graph $G$ on $N$ vertices,
+\[
+\alpha_1(G)+\tau_B(G)\le \frac{N^2}{4},
+\]
+where $\alpha_1(G)$ is the maximum size of a triangle-independent edge set.
+If $G$ is triangle-free then $\alpha_1(G)=|E(G)|=m$, hence
+\[
+\tau_B(G)\le \frac{N^2}{4}-m.
+\]
+
+\paragraph{Balogh--Clemen--Lidick\'y (2021).}
+For all sufficiently large $N$, every triangle-free graph on $N$ vertices satisfies
+\[
+\tau_B(G)\le \frac{N^2}{23.5},
+\]
+and Erd\H{o}s' conjectured bound $\tau_B(G)\le N^2/25$ holds outside a narrow intermediate
+edge-density window.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round~1 gave $\tau_B(G)\le m/2$ and $m\le N^2/4$, hence $\tau_B(G)\le N^2/8$.
+Round~2 adds the complementary bound $\tau_B(G)\le N^2/4-m$ (triangle-free case),
+so that taking the minimum improves the worst-case constant and forces any potential
+counterexample to lie in a mid-density regime.
+
+\subsection*{5) WORK (ROUND-2)}
+Let $G$ be triangle-free with $|V(G)|=N$ and $|E(G)|=m$.
+
+\begin{theorem}[Round-2 universal improvement]
+\label{thm:round2N12}
+For triangle-free $G$ on $N$ vertices with $m$ edges,
+\[
+\tau_B(G)\le \min\!\left(\frac{m}{2},\,\frac{N^2}{4}-m\right)\le \frac{N^2}{12}.
+\]
+In particular, for $N=5n$,
+\[
+\tau_B(G)\le \frac{25}{12}n^2.
+\]
+\end{theorem}
+
+\begin{proof}
+The inequality $\tau_B(G)\le m/2$ is (R1--MaxCut).
+The inequality $\tau_B(G)\le N^2/4-m$ follows from Norin--Sun and triangle-freeness.
+Thus $\tau_B(G)\le \min(m/2,\,N^2/4-m)$.
+The two expressions intersect at $m/2=N^2/4-m$, i.e.\ $m=N^2/6$, where the common
+value equals $N^2/12$.
+Therefore $\min(m/2,\,N^2/4-m)\le N^2/12$ for all $m$, proving the claim.
+Substituting $N=5n$ gives $\tau_B(G)\le 25n^2/12$.
+\end{proof}
+
+\begin{corollary}[Round-2 localization of potential counterexamples]
+\label{cor:round2density}
+Let $G$ be triangle-free on $5n$ vertices with $m$ edges.
+If $\tau_B(G)>n^2$, then
+\[
+2n^2<m<\frac{21}{4}n^2.
+\]
+\end{corollary}
+
+\begin{proof}
+If $\tau_B(G)>n^2$, then Theorem~\ref{thm:round2N12} implies both
+$m/2>n^2$ and $25n^2/4-m>n^2$, i.e.\ $m>2n^2$ and $m<21n^2/4$.
+\end{proof}
+
+\paragraph{Best known asymptotic constant on $5n$ vertices.}
+Balogh--Clemen--Lidick\'y prove that for all sufficiently large $N$,
+$\tau_B(G)\le N^2/23.5$ for every triangle-free $G$ on $N$ vertices.
+For $N=5n$ this becomes
+\[
+\tau_B(G)\le \frac{(5n)^2}{23.5}=\frac{50}{47}n^2\approx 1.064\,n^2
+\qquad (n\ \text{sufficiently large}).
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION (ROUND-2)}
+\begin{itemize}
+\item The optimization in Theorem~\ref{thm:round2N12} is exact: solving
+      $m/2=N^2/4-m$ gives $m=N^2/6$ and bound $N^2/12$.
+\item Corollary~\ref{cor:round2density} correctly substitutes $N=5n$ into $N^2/4$.
+\item All bounds are consistent with the balanced $C_5$ blow-up, which has
+      $m=5n^2$ and $\tau_B(G)=n^2$.
+\end{itemize}
+
+\subsection*{7) FINAL (ROUND-2)}
+\textbf{UNRESOLVED (but strictly advanced).}
+Round~2 proves the improved unconditional bound $\tau_B(G)\le 25n^2/12$
+for all triangle-free $G$ on $5n$ vertices, and localizes any hypothetical
+counterexample to the intermediate edge-count regime $2n^2<m<21n^2/4$.
+
+\subsection*{8) COMPLETION ESTIMATE (ROUND-2)}
+\[
+\textbf{COMPLETION: }65\%.
+\]
+
+\subsection*{9) REFERENCES (ROUND-2)}
+S. Norin, Y. R. Sun, \emph{Triangle-independent sets vs.\ cuts}, arXiv:1602.04370.\\
+J. Balogh, F. C. Clemen, B. Lidick\'y, \emph{Max Cuts in Triangle-free Graphs}, arXiv:2103.14179.
+
+

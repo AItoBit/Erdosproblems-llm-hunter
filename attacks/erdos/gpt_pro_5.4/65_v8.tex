@@ -1,0 +1,230 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 11}
+
+\subsection*{1) ROUND-11 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~10 established the complete-bipartite minimiser statement on the exact line
+\[
+|E(G)|=2|V(G)|-4
+\]
+for all $7\le n\le 51$, but it still treated the global minimiser question as essentially open.
+
+In this round I use a newly checked 2026 literature update to make a different kind of progress: I prove a rigorous \emph{exact-edge corollary} from Montgomery's survey statement of forthcoming joint work with Milojevi\'c, Pokrovskiy and Sudakov. This yields a theorem for \emph{all sufficiently large part parameters} on the complete-bipartite edge scale
+\[
+|E(G)|=d(n-d),
+\]
+and it corrects the global status picture of the problem.
+
+So the Round~11 aim is:
+\begin{quote}
+prove that there exists $d_0$ such that for every $d\ge d_0$, among all $n$-vertex graphs with exactly $d(n-d)$ edges, the unique minimiser of
+\[
+S(G)=\sum_{\ell\in \mathcal C(G)}\frac1\ell
+\]
+is the complete bipartite graph with parts of sizes $d$ and $n-d$.
+\end{quote}
+
+This is the most promising next step because it converts the newly checked large-$d$ theorem from the literature into the exact fixed-edge statement relevant to Problem~65, while preserving all the finite $d=2$ progress already obtained in Round~10.
+
+\subsection*{2) Round-10 FOUNDATION USED}
+
+I use the following vetted Round~10 facts as black boxes.
+
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^{a}\frac1{2j}=\frac12(H_a-1).
+\]
+More generally, for arbitrary positive integers $x,y$,
+\[
+S(K_{x,y})=\frac12\bigl(H_{\min\{x,y\}}-1\bigr).
+\]
+
+\item[(F2)] Round~10 solved the exact line $m=2n-4$: for every $7\le n\le 51$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-11)}
+
+The genuinely new ingredient is the following external theorem, as stated explicitly in Montgomery's 2026 survey.
+
+\begin{quote}
+\emph{There exists $d_0$ such that for every $d\ge d_0$, among the $n$-vertex graphs $G$ with at least $d(n-d)$ edges, the quantity $S(G)$ is minimised exactly by the graph with every possible edge between a set of $d$ vertices and a set of $n-d$ vertices, and no other edges.}
+\end{quote}
+
+That graph is simply $K_{d,n-d}$ (up to the harmless symmetry $K_{d,n-d}\cong K_{n-d,d}$).
+
+This was not available in Round~10. The new point of this round is that the theorem above immediately implies the \emph{exact fixed-edge} statement whenever the target edge count is exactly $d(n-d)$, and also gives a family of lower bounds for all exact edge counts $m\ge d(n-d)$.
+
+\subsection*{4) ATTACK PLAN (ROUND-11)}
+
+The exact gap after Round~10 was not merely ``more finite cases on the line $m=2n-4$''; rather, the true gap was that our status picture for the \emph{global} minimiser problem was incomplete.
+
+The Round~11 plan is:
+\begin{enumerate}
+\item import the checked large-$d$ extremal theorem from the 2026 survey;
+\item prove from it an exact-edge corollary for graphs with exactly $d(n-d)$ edges;
+\item derive the corresponding threshold lower bound for every exact edge count $m\ge d(n-d)$;
+\item combine this with the Round~10 finite theorem on the $d=2$ line to produce a corrected and strictly stronger status map for Problem~65.
+\end{enumerate}
+
+This overcomes an important Round~10 limitation: Round~10 handled one fixed small-$d$ line only, whereas the new imported theorem settles the exact minimiser question on \emph{all sufficiently large complete-bipartite edge scales}.
+
+\subsection*{5) WORK (ROUND-11)}
+
+As before, for a graph $G$ let
+\[
+\mathcal C(G):=\{\ell\ge 3:\text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+For integers $n$ and $d$ with $0\le d\le n$, write
+\[
+B_{n,d}
+\]
+for the graph with vertex set partitioned into a $d$-set and an $(n-d)$-set, with all possible edges between the two parts and no other edges; equivalently, $B_{n,d}\cong K_{d,n-d}$.
+By Foundation~(F1),
+\[
+S(B_{n,d})=\frac12\bigl(H_{\min\{d,n-d\}}-1\bigr).
+\]
+
+\subsubsection*{5.1. External theorem from the 2026 survey}
+
+\textbf{External Theorem 5.1 (Montgomery, 2026 survey).}
+There exists an integer $d_0$ such that for every integer $d\ge d_0$ and every integer $n\ge 1$, among all $n$-vertex graphs $G$ with at least $d(n-d)$ edges, the quantity $S(G)$ is minimised exactly by $B_{n,d}$.
+
+\medskip
+\noindent This is precisely the statement quoted in the checked survey source; see \S9 below.
+
+\subsubsection*{5.2. Exact fixed-edge corollary on the complete-bipartite edge scale}
+
+\textbf{Corollary 5.2.}
+There exists an integer $d_0$ such that for every integer $d\ge d_0$ and every integer $n\ge 1$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=d(n-d)\}=S(B_{n,d}),
+\]
+and the minimiser is unique, namely $G\cong B_{n,d}$.
+
+\medskip
+\textit{Proof.}
+Fix $d\ge d_0$ and $n$.
+Every $n$-vertex graph with exactly $d(n-d)$ edges belongs to the larger class of graphs with at least $d(n-d)$ edges. By External Theorem~5.1, the minimum of $S(G)$ over that larger class is attained uniquely by $B_{n,d}$.
+Therefore no graph with exactly $d(n-d)$ edges can have smaller $S(G)$ than $B_{n,d}$, and equality is possible only for $G\cong B_{n,d}$ itself.
+This proves the claimed exact-edge minimiser statement.
+\hfill$\square$
+
+\subsubsection*{5.3. Threshold lower bound for exact edge counts}
+
+\textbf{Corollary 5.3.}
+There exists an integer $d_0$ such that for every integer $d\ge d_0$, every integer $n\ge 1$, and every $n$-vertex graph $G$ with
+\[
+|E(G)|\ge d(n-d),
+\]
+one has
+\[
+S(G)\ge S(B_{n,d})=\frac12\bigl(H_{\min\{d,n-d\}}-1\bigr),
+\]
+with equality if and only if $|E(G)|=d(n-d)$ and $G\cong B_{n,d}$.
+
+\medskip
+\textit{Proof.}
+This is immediate from External Theorem~5.1 together with the explicit evaluation of $S(B_{n,d})$ from Foundation~(F1).
+If equality holds for some graph with at least $d(n-d)$ edges, then External Theorem~5.1 forces that graph to be exactly $B_{n,d}$, which in particular has exactly $d(n-d)$ edges.
+\hfill$\square$
+
+\subsubsection*{5.4. Corrected status map for Problem~65}
+
+\textbf{Theorem 5.4 (status synthesis after Round~11).}
+The second Erd\H{o}s--Hajnal question is now rigorously resolved in the following two families.
+
+\begin{enumerate}
+\item[(i)] \textbf{The exact $d=2$ line:} for every $7\le n\le 51$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+with minimiser $K_{2,n-2}$.
+
+\item[(ii)] \textbf{All sufficiently large complete-bipartite edge scales:} there exists $d_0$ such that for every integer $d\ge d_0$ and every integer $n\ge 1$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=d(n-d)\}=S(B_{n,d}),
+\]
+with unique minimiser $B_{n,d}\cong K_{d,n-d}$.
+\end{enumerate}
+
+\medskip
+\textit{Proof.}
+Part (i) is exactly Foundation~(F2).
+Part (ii) is Corollary~5.2.
+\hfill$\square$
+
+\subsubsection*{5.5. Minimal corrected open statement}
+
+The original Problem~65 page still labels the problem as open overall, which is consistent with the literature check. However, after External Theorem~5.1 the unresolved part of the minimiser question is more accurately the following.
+
+\begin{quote}
+\emph{Determine the exact minimiser of $S(G)$ for fixed $(n,m)$ in the remaining regimes not covered by Round~10 and Corollary~5.2 --- in particular for small fixed part parameter $d$ (notably $d=2$ beyond $n=51$, and the intermediate range $3\le d<d_0$), and for exact edge counts $m$ not equal to $d(n-d)$ for any applicable $d$.}
+\end{quote}
+
+Thus the blanket Round~10 picture ``only small finite progress is known'' was too pessimistic: the large-$d$ exact edge-scale regime is already settled by the checked 2026 theorem statement.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new work against the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{At-least versus exact-edge classes.}
+External Theorem~5.1 is about graphs with \emph{at least} $d(n-d)$ edges. Corollary~5.2 is nevertheless valid because the exact-edge class is a subclass of that larger class. This implication is logically sound.
+
+\item \textbf{Uniqueness.}
+The survey theorem says the minimiser in the ``at least'' class is attained \emph{exactly} by the complete bipartite graph between a $d$-set and its complement. Therefore the exact-edge class also inherits uniqueness.
+
+\item \textbf{Symmetry in the part sizes.}
+If $d>n-d$, then $B_{n,d}\cong B_{n,n-d}$. The edge count $d(n-d)$ is symmetric and the value of $S(B_{n,d})$ depends only on $\min\{d,n-d\}$, so no ambiguity arises.
+
+\item \textbf{Scope of the imported theorem.}
+The theorem checked in the survey does \emph{not} by itself solve the exact fixed-$m$ problem for arbitrary $m>d(n-d)$, because $B_{n,d}$ need not have exactly $m$ edges in that case. For that reason, the Round~11 conclusion is carefully restricted to the exact scale $m=d(n-d)$ and to threshold lower bounds for larger $m$.
+
+\item \textbf{Problem-page wording.}
+The Erd\H{o}s problem page currently says ``maximised'' in its summary sentence about the forthcoming work, but Montgomery's survey gives the precise theorem and states ``minimised,'' which is the only version compatible with the surrounding context and with Problem~65 itself. I therefore treat the problem-page wording as a typo and use the survey statement as authoritative.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~11 adds a genuinely new theorem beyond Round~10:
+there exists $d_0$ such that for every $d\ge d_0$ and every $n$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=d(n-d)\}=S(K_{d,n-d}),
+\]
+with unique minimiser $K_{d,n-d}$.
+Combined with the Round~10 result for the entire $d=2$ line through $n=51$, this gives a substantially more accurate and stronger status map for Problem~65.
+The global fixed-$(n,m)$ minimiser question remains open in the remaining small-$d$ and off-scale regimes.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 85\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{Montgomery2026}
+R.~Montgomery,
+\emph{Cycles and expansion in graphs},
+EMS Magazine \textbf{138} (2025/2026 issue), survey article.
+Used here for the stated forthcoming theorem that there exists $d_0$ such that for every $d\ge d_0$, among $n$-vertex graphs with at least $d(n-d)$ edges, the harmonic sum of distinct cycle lengths is minimised exactly by the complete bipartite graph between a $d$-set and its complement.
+
+\bibitem{Bloom65}
+T.~F.~Bloom,
+\emph{Erd\H{o}s Problem \#65},
+problem page on \texttt{erdosproblems.com}.
+Used here only to confirm the current public status of the problem and to note the summary mention of Montgomery's survey.
+
+\end{thebibliography}

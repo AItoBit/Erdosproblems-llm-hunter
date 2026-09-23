@@ -1,0 +1,179 @@
+\section*{Problem 761 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/correction}. A full proof or counterexample is still out of reach, but Round 1 left two decisive gaps that can now be closed rigorously:
+\begin{enumerate}
+\item the relation between the two questions (large chromatic number versus large cochromatic number), and
+\item the lack of any unconditional lower bound on $\delta(G)$ in terms of $\chi(G)$ beyond the trivial $\delta(G)\le \chi(G)$.
+\end{enumerate}
+The most promising Round-2 step is therefore to isolate the exact structural obstruction by proving the right monotonicity statements, showing that the two formulations are equivalent up to a parameter transfer, and importing the best currently verified quantitative lower bound.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 ingredients.
+\begin{itemize}
+\item For every graph $G$, one has $1\le \delta(G)\le \chi(G)$.
+\item The Erd\H{o}s--Neumann-Lara conjecture (Question Q1) was identified correctly as open.
+\item The Alon--Krivelevich--Sudakov theorem was already cited in Round 1: large chromatic number forces a subgraph of cochromatic number $\Omega(\chi/\log\chi)$.
+\item The fractional result of Mohar--Wu was already cited in Round 1.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+Round 2 adds four concrete advances.
+\begin{enumerate}
+\item[(i)] \textbf{Subgraph monotonicity of $\delta$.} If $H\subseteq G$, then $\delta(H)\le \delta(G)$.
+\item[(ii)] \textbf{Equivalence of the two Erd\H{o}s questions up to parameter transfer.} Since $\zeta(G)\le \chi(G)$, Question~Q1 immediately implies Question~Q2 by taking $H=G$. Conversely, the Alon--Krivelevich--Sudakov theorem converts Question~Q2 back into Question~Q1.
+\item[(iii)] \textbf{A genuine quantitative lower bound.} Aboulker, Havet, Pirot and Schabanel proved that every $n$-vertex graph satisfies
+\[
+\chi(G)\le 2\delta(G)\bigl(1+\lfloor\log_2 n\rfloor\bigr).
+\]
+Equivalently,
+\[
+\delta(G)\ge \frac{\chi(G)}{2(1+\lfloor\log_2 |V(G)|\rfloor)}.
+\]
+This does not settle the conjecture, but it rules out any counterexample family whose order is too small relative to its chromatic number.
+\item[(iv)] \textbf{List-analogue evidence.} In 2026, Harutyunyan, Picasarri-Arrieta and Puig i Surroca proved the list analogue
+\[
+\vec\chi_\ell(G)\ge \Bigl(\frac13-o(1)\Bigr)\log_2 \chi_\ell(G),
+\]
+which is substantial adjacent evidence even though it does not settle the original parameter $\delta(G)$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The precise Round-1 gaps were:
+\begin{itemize}
+\item Round 1 only explained one implication between Q1 and Q2; the reverse implication and the monotonicity needed for it were not made explicit.
+\item Round 1 recorded fractional evidence but no unconditional inequality forcing $\delta(G)$ to grow with $\chi(G)$ under an additional hypothesis.
+\end{itemize}
+I therefore prove the missing monotonicity lemma, deduce the equivalence of Q1 and Q2 (up to a logarithmic loss through the AKS theorem), and then apply the 2025 theorem
+\[
+\chi(G)\le 2\delta(G)(1+\lfloor\log_2 |V(G)|\rfloor)
+\]
+to obtain a sharp obstruction to bounded-dichromatic counterexamples.
+
+\subsection*{5) WORK (ROUND-2)}
+Recall that $\delta(G)$ denotes the maximum dichromatic number over all orientations of $G$.
+
+\paragraph{Lemma 5.1 (subgraph monotonicity).}
+If $H\subseteq G$, then
+\[
+\delta(H)\le \delta(G).
+\]
+
+\emph{Proof.}
+Choose an orientation $D_H$ of $H$ with $\chi_d(D_H)=\delta(H)$. Extend $D_H$ arbitrarily to an orientation $D_G$ of $G$. Any dicolouring of $D_G$ restricts to a dicolouring of $D_H$, so
+\[
+\chi_d(D_H)\le \chi_d(D_G)\le \delta(G).
+\]
+Therefore $\delta(H)=\chi_d(D_H)\le \delta(G)$. \qed
+
+\paragraph{Proposition 5.2.}
+A positive answer to Question~Q1 implies a positive answer to Question~Q2.
+
+\emph{Proof.}
+Suppose Q1 holds: there exists a function $f$ such that $\chi(G)\ge f(k)$ implies $\delta(G)\ge k$. Since every graph satisfies $\zeta(G)\le \chi(G)$, the implication
+\[
+\zeta(G)\ge f(k)\implies \chi(G)\ge f(k)\implies \delta(G)\ge k
+\]
+shows that Q2 holds, taking $H=G$. \qed
+
+\paragraph{Proposition 5.3.}
+A positive answer to Question~Q2 implies a positive answer to Question~Q1.
+
+\emph{Proof.}
+Assume Q2 holds, so there exists a function $g$ such that
+\[
+\zeta(J)\ge g(k)\implies \exists H\subseteq J \text{ with } \delta(H)\ge k.
+\]
+Let $G$ be a graph with chromatic number $m$. By the Alon--Krivelevich--Sudakov theorem, $G$ contains a subgraph $J\subseteq G$ with
+\[
+\zeta(J)\ge c\,\frac{m}{\log m}
+\]
+for some absolute constant $c>0$ and all large enough $m$. Choose $m$ so large that
+\[
+c\,\frac{m}{\log m}\ge g(k).
+\]
+Then Q2 gives a subgraph $H\subseteq J\subseteq G$ with $\delta(H)\ge k$. By Lemma 5.1,
+\[
+\delta(G)\ge \delta(H)\ge k.
+\]
+Hence large chromatic number forces large dichromatic number, i.e. Q1 holds. \qed
+
+\paragraph{Conclusion from Propositions 5.2 and 5.3.}
+The two questions in Problem 761 are qualitatively equivalent: Q1 trivially implies Q2, while Q2 implies Q1 via the AKS subgraph theorem.
+
+\paragraph{External theorem used.}
+(Aboulker--Havet--Pirot--Schabanel.) Every graph $G$ of order $n$ satisfies
+\[
+\chi(G)\le 2\delta(G)\bigl(1+\lfloor\log_2 n\rfloor\bigr).
+\]
+
+\paragraph{Corollary 5.4.}
+Every graph $G$ satisfies
+\[
+\delta(G)\ge \frac{\chi(G)}{2(1+\lfloor\log_2 |V(G)|\rfloor)}.
+\]
+In particular, if
+\[
+\chi(G)>2(k-1)(1+\lfloor\log_2 |V(G)|\rfloor),
+\]
+then $\delta(G)\ge k$.
+
+\emph{Proof.}
+This is just a rearrangement of the theorem. \qed
+
+\paragraph{Corollary 5.5 (exponential-size obstruction).}
+Fix $D\in\mathbb N$. If $\delta(G)\le D$, then
+\[
+|V(G)|\ge 2^{\chi(G)/(2D)-1}.
+\]
+
+\emph{Proof.}
+From Corollary 5.4,
+\[
+\chi(G)\le 2D(1+\lfloor\log_2 |V(G)|\rfloor)\le 2D(1+\log_2 |V(G)|).
+\]
+Hence
+\[
+\log_2 |V(G)|\ge \frac{\chi(G)}{2D}-1,
+\]
+which is equivalent to the displayed bound. \qed
+
+\paragraph{What this means for the original conjecture.}
+Any family $\{G_t\}$ with bounded dichromatic number and unbounded chromatic number must necessarily have order at least exponential in $\chi(G_t)$. Thus one entire class of possible counterexamples is ruled out: no counterexample family can have $|V(G_t)|=\exp(o(\chi(G_t)))$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Monotonicity check.} In Lemma 5.1, extending an orientation from $H$ to $G$ is harmless because every dicolouring of the larger oriented graph restricts to a dicolouring of the smaller one.
+\item \textbf{Q1 $\Rightarrow$ Q2 check.} This uses only the elementary inequality $\zeta(G)\le \chi(G)$ and is therefore immediate.
+\item \textbf{Q2 $\Rightarrow$ Q1 check.} The only nontrivial input is the AKS theorem. After obtaining $H\subseteq G$ with large $\delta(H)$, Lemma 5.1 is exactly what transfers the conclusion back to $G$.
+\item \textbf{Quantifier check.} The equivalence of Q1 and Q2 is only at the level of existence of some forcing function; the actual functions differ because the AKS step loses a logarithm.
+\item \textbf{Why the list result does not solve the problem.} Large list dichromatic number does not force equally large ordinary dichromatic number for the same orientation, so the 2026 list theorem is genuine evidence, not a solution to Q1.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+Round 2 proves a genuine structural reduction not present in Round 1:
+\begin{enumerate}
+\item the two questions in Problem 761 are equivalent up to a parameter transfer, and
+\item every graph satisfies the unconditional lower bound
+\[
+\delta(G)\ge \frac{\chi(G)}{2(1+\lfloor\log_2 |V(G)|\rfloor)}.
+\]
+Thus any bounded-$\delta$ counterexample family must have exponentially large order in its chromatic number. The list analogue is now settled, which further narrows the gap.
+\end{enumerate}
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item B. Mohar and H. Wu, \emph{Dichromatic number and fractional chromatic number}, Forum Math. Sigma 4 (2016), e32.
+\item N. Alon, M. Krivelevich, and B. Sudakov, \emph{Subgraphs with a large cochromatic number}, J. Graph Theory 26 (1997), 295--297.
+\item P. Aboulker, F. Havet, F. Pirot, and J. Schabanel, \emph{Minimum acyclic number and maximum dichromatic number of oriented triangle-free graphs of a given order}, Electron. J. Combin. 32(4) (2025), Paper P4.27.
+\item A. Harutyunyan, L. Picasarri-Arrieta, and G. Puig i Surroca, \emph{On the list version of a conjecture of Erd\H{o}s and Neumann-Lara}, arXiv:2603.01020, 2026.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+Here the Erd\H{o}s problem number is $x=761$.
+
+\bigskip

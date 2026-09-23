@@ -1,0 +1,307 @@
+\section{Round 5 Progress on Erd\H{o}s Problem 23}
+
+\subsection*{1) ROUND-5 OBJECTIVE}
+\textbf{Path (A): proof track via a local structural condition forcing the conjectured bound.}
+Round~4 ruled out all graphs admitting a homomorphism to an odd cycle, but only after the
+homomorphism was already given.  The exact remaining gap is to find \emph{intrinsic} conditions on a
+triangle-free graph that force such a homomorphism.
+In this round we prove a new exact theorem for a broad structural class:
+if a triangle-free graph has sufficiently large \emph{minimum common degree}, then it is forced to be
+$C_5$-colorable, and hence satisfies the conjectured deletion bound exactly.
+This strictly advances beyond Round~4 by replacing an \emph{assumed} $C_5$-homomorphism with a
+verifiable internal condition.
+
+\subsection*{2) ROUND-4 FOUNDATION USED}
+We use the following established results from previous rounds.
+\begin{itemize}
+\item \textbf{(R3--Sharp $C_5$ subclass)} Theorem~\ref{thm:C5colorable}: if $G$ is $C_5$-colorable and
+      $|V(G)|=5n$, then $\tau_B(G)\le n^2$, with equality forcing the balanced complete blow-up of $C_5$.
+\item \textbf{(R4--Odd-cycle homomorphism obstruction)} Round~4 proved that, more generally, graphs
+      homomorphic to odd cycles satisfy the conjectured edge-deletion bound on the corresponding scale.
+\item \textbf{(R1--Sharpness example)} The balanced blow-up of $C_5$ on $5n$ vertices satisfies
+      $\tau_B(G)=n^2$.
+\end{itemize}
+We will strengthen the Round~3 $C_5$-colorable theorem by removing the divisibility restriction,
+and then combine it with an external structural theorem on minimum common degree.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-5)}
+\paragraph{Strengthening of the Round~3 $C_5$-colorable theorem.}
+Round~3 handled $C_5$-colorable graphs only when the number of vertices is exactly $5n$.
+The same argument in fact yields, for \emph{arbitrary} $N$,
+\[
+\tau_B(G)\le \frac{N^2}{25}
+\qquad\text{for every $C_5$-colorable graph on $N$ vertices,}
+\]
+with equality iff $5\mid N$ and $G$ is the balanced complete blow-up of $C_5$.
+
+\paragraph{Minimum common degree forces $C_5$-colorability.}
+Write
+\[
+\delta_2(G):=\min\{|N(x)\cap N(y)|:xy\notin E(G)\}
+\]
+for the minimum common degree of $G$.
+A theorem of Wang--Yang--Zhao (2024) states that if $G$ is triangle-free on $N\ge 8$ vertices and
+\[
+\delta_2(G)>\Bigl\lfloor\frac{N}{8}\Bigr\rfloor,
+\]
+then $G$ is homomorphic to $C_5$.
+Combining this with the strengthened $C_5$-colorable theorem gives the exact Erd\H{o}s bound on this
+entire class.
+
+\subsection*{4) ATTACK PLAN (ROUND-5)}
+The exact gap after Round~4 is that we only know how to conclude $\tau_B(G)\le n^2$ after being
+handed a homomorphism to $C_5$ (or to some odd cycle).  We now proceed in two steps.
+\begin{enumerate}
+\item Strengthen the Round~3 theorem to all $C_5$-colorable graphs on $N$ vertices:
+\[
+\tau_B(G)\le \frac{N^2}{25}.
+\]
+\item Import the Wang--Yang--Zhao theorem $\delta_2(G)>\lfloor N/8\rfloor\Rightarrow G\to C_5$ and
+      combine it with Step~1.
+\end{enumerate}
+This overcomes the Round~4 obstacle by turning an \emph{external homomorphism assumption} into a
+\emph{local certificate} involving only common neighborhoods.
+
+\subsection*{5) WORK (ROUND-5)}
+
+\subsubsection*{5.1 A strengthened five-part product lemma}
+\begin{lemma}\label{lem:adjprod_general5}
+Let $a_1,\dots,a_5\ge 0$ be real numbers with
+\[
+a_1+a_2+a_3+a_4+a_5=N.
+\]
+Then
+\[
+\min_{i\in\mathbb Z/5\mathbb Z} a_i a_{i+1}\le \frac{N^2}{25}.
+\]
+Moreover, equality holds if and only if
+\[
+a_1=a_2=a_3=a_4=a_5=\frac{N}{5}.
+\]
+\end{lemma}
+
+\begin{proof}
+If some $a_i=0$, then the minimum adjacent product is $0\le N^2/25$, so assume all $a_i>0$.
+Suppose for contradiction that
+\[
+a_i a_{i+1}>\frac{N^2}{25}
+\qquad\text{for every }i\in\mathbb Z/5\mathbb Z.
+\]
+Multiplying these five inequalities gives
+\[
+\prod_{i=1}^5 (a_i a_{i+1})>\left(\frac{N^2}{25}\right)^5.
+\]
+Since each $a_i$ appears exactly twice in the product on the left,
+\[
+\prod_{i=1}^5 (a_i a_{i+1})=(a_1a_2a_3a_4a_5)^2.
+\]
+Hence
+\[
+a_1a_2a_3a_4a_5>\left(\frac{N}{5}\right)^5.
+\]
+But by AM--GM,
+\[
+a_1a_2a_3a_4a_5\le \left(\frac{a_1+a_2+a_3+a_4+a_5}{5}\right)^5=\left(\frac{N}{5}\right)^5,
+\]
+a contradiction.  Therefore
+\[
+\min_i a_i a_{i+1}\le \frac{N^2}{25}.
+\]
+
+For the equality statement, assume
+\[
+\min_i a_i a_{i+1}=\frac{N^2}{25}.
+\]
+Then each adjacent product is at least $N^2/25$, so multiplying yields
+\[
+(a_1a_2a_3a_4a_5)^2=\prod_{i=1}^5 (a_i a_{i+1})\ge \left(\frac{N^2}{25}\right)^5,
+\]
+hence
+\[
+a_1a_2a_3a_4a_5\ge \left(\frac{N}{5}\right)^5.
+\]
+AM--GM gives the reverse inequality, so equality holds in AM--GM.
+Therefore $a_1=\cdots=a_5=N/5$.
+The converse is immediate.
+\end{proof}
+
+\subsubsection*{5.2 Exact bound for $C_5$-colorable graphs on arbitrary $N$}
+\begin{theorem}\label{thm:C5colorable_generalN}
+Let $G$ be $C_5$-colorable on $N$ vertices. Then
+\[
+\tau_B(G)\le \frac{N^2}{25}.
+\]
+Moreover, equality holds if and only if $5\mid N$ and $G$ is the balanced complete blow-up of $C_5$.
+\end{theorem}
+
+\begin{proof}
+Fix a homomorphism $\varphi:V(G)\to V(C_5)=\{1,2,3,4,5\}$ and write
+\[
+V_i:=\varphi^{-1}(i),\qquad a_i:=|V_i| \quad (1\le i\le 5).
+\]
+Then
+\[
+a_1+a_2+a_3+a_4+a_5=N,
+\]
+and every edge of $G$ lies between $V_i$ and $V_{i\pm 1}$.
+
+Exactly as in Round~3, for each $i\in\mathbb Z/5\mathbb Z$ there exists a bipartition of $V(G)$
+obtained by pulling back a $2$-coloring of $C_5$ in which the only monochromatic cycle-edge is
+$i(i+1)$.  Under this bipartition, every edge of $G$ except those between $V_i$ and $V_{i+1}$
+crosses the cut.  Therefore
+\[
+\tau_B(G)\le e(V_i,V_{i+1}) \qquad\text{for each }i,
+\]
+so
+\[
+\tau_B(G)\le \min_i e(V_i,V_{i+1})\le \min_i |V_i||V_{i+1}|=\min_i a_i a_{i+1}.
+\]
+By Lemma~\ref{lem:adjprod_general5},
+\[
+\min_i a_i a_{i+1}\le \frac{N^2}{25},
+\]
+whence
+\[
+\tau_B(G)\le \frac{N^2}{25}.
+\]
+
+Assume now that equality holds:
+\[
+\tau_B(G)=\frac{N^2}{25}.
+\]
+Then all inequalities in
+\[
+\frac{N^2}{25}=\tau_B(G)\le \min_i e(V_i,V_{i+1})\le \min_i a_i a_{i+1}\le \frac{N^2}{25}
+\]
+are equalities.  In particular,
+\[
+\min_i a_i a_{i+1}=\frac{N^2}{25}.
+\]
+By Lemma~\ref{lem:adjprod_general5}, this forces
+\[
+a_1=a_2=a_3=a_4=a_5=\frac{N}{5}.
+\]
+Since the $a_i$ are integers, we obtain $5\mid N$.
+Moreover, for every $i$,
+\[
+e(V_i,V_{i+1})\le |V_i||V_{i+1}|=\frac{N^2}{25},
+\]
+while also
+\[
+\min_i e(V_i,V_{i+1})=\frac{N^2}{25}.
+\]
+Hence
+\[
+e(V_i,V_{i+1})=\frac{N^2}{25}
+\qquad\text{for all }i,
+\]
+so each consecutive pair induces a complete bipartite graph.  Therefore $G$ is exactly the balanced
+complete blow-up of $C_5$.
+\end{proof}
+
+\subsubsection*{5.3 Minimum common degree implies the exact Erd\H{o}s bound}
+We now use the following external theorem.
+
+\begin{theorem}[Wang--Yang--Zhao, 2024]\label{thm:WYZ_delta2_to_C5}
+Let $G$ be a triangle-free graph on $N\ge 8$ vertices.  If
+\[
+\delta_2(G)>\Bigl\lfloor\frac{N}{8}\Bigr\rfloor,
+\]
+then $G$ is homomorphic to $C_5$.
+\end{theorem}
+
+Combining this with Theorem~\ref{thm:C5colorable_generalN} gives the following exact result.
+
+\begin{theorem}\label{thm:delta2_implies_bound}
+Let $G$ be a triangle-free graph on $N\ge 8$ vertices.  If
+\[
+\delta_2(G)>\Bigl\lfloor\frac{N}{8}\Bigr\rfloor,
+\]
+then
+\[
+\tau_B(G)\le \frac{N^2}{25}.
+\]
+Moreover, equality holds if and only if $5\mid N$ and $G$ is the balanced complete blow-up of $C_5$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:WYZ_delta2_to_C5}, $G$ is homomorphic to $C_5$.
+Therefore Theorem~\ref{thm:C5colorable_generalN} applies and yields
+\[
+\tau_B(G)\le \frac{N^2}{25}.
+\]
+If equality holds, Theorem~\ref{thm:C5colorable_generalN} also yields the rigidity statement.
+Conversely, the balanced complete blow-up of $C_5$ on $N=5m$ vertices satisfies
+\[
+\tau_B(G)=m^2=\frac{N^2}{25},
+\]
+so the characterization is exact.
+\end{proof}
+
+\subsubsection*{5.4 Consequence for the original Erd\H{o}s problem}
+\begin{corollary}\label{cor:original_delta2}
+Let $G$ be a triangle-free graph on $5n$ vertices.
+If $n\ge 2$ and
+\[
+\delta_2(G)>\Bigl\lfloor\frac{5n}{8}\Bigr\rfloor,
+\]
+then
+\[
+\tau_B(G)\le n^2.
+\]
+Consequently, any counterexample to Erd\H{o}s Problem~23 must satisfy
+\[
+\delta_2(G)\le \Bigl\lfloor\frac{5n}{8}\Bigr\rfloor.
+\]
+\end{corollary}
+
+\begin{proof}
+For $n\ge 2$, we have $N=5n\ge 10$, so Theorem~\ref{thm:delta2_implies_bound} applies and gives
+\[
+\tau_B(G)\le \frac{(5n)^2}{25}=n^2.
+\]
+The final statement is the contrapositive.
+\end{proof}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Strengthening vs. repetition.}  Lemma~\ref{lem:adjprod_general5} and
+      Theorem~\ref{thm:C5colorable_generalN} are genuine strengthenings of Round~3: the previous
+      statements required $N=5n$, while the new statements hold for arbitrary $N$.
+\item \textbf{Small-$N$ issue in Theorem~\ref{thm:WYZ_delta2_to_C5}.}  The external theorem requires
+      $N\ge 8$.  This is harmless for the original problem except when $N=5$ (i.e. $n=1$), which was
+      already checked in Round~1.
+\item \textbf{Equality case.}  If $5\nmid N$, then $N^2/25$ need not be an integer.  Theorem~\ref{thm:C5colorable_generalN}
+      correctly shows equality is impossible in this case, because equality forces all five fiber sizes to be
+      exactly $N/5$.
+\item \textbf{No hidden use of completeness.}  The proof of Theorem~\ref{thm:C5colorable_generalN}
+      only uses the existence of a homomorphism to $C_5$ and the bound
+      $e(V_i,V_{i+1})\le |V_i||V_{i+1}|$; completeness is deduced only in the equality case.
+\item \textbf{Interaction with earlier rounds.}  Round~2 gave only a universal constant $25/12$,
+      Round~3 gave the exact constant $1$ for $C_5$-colorable graphs on $5n$ vertices, and Round~4
+      ruled out all odd-cycle-colorable constructions.  Round~5 adds a new intrinsic obstruction:
+      any counterexample must have a non-edge with at most $\lfloor 5n/8\rfloor$ common neighbors.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+We proved a new exact theorem strictly stronger than any prior round result in the original
+$5n$-vertex setting:
+if a triangle-free graph on $5n$ vertices has minimum common degree exceeding $\lfloor 5n/8\rfloor$,
+then it satisfies Erd\H{o}s' conjectured bound $\tau_B(G)\le n^2$.
+Equivalently, any counterexample must satisfy
+\[
+\delta_2(G)\le \Bigl\lfloor\frac{5n}{8}\Bigr\rfloor.
+\]
+This is a new, sharply formulated local obstruction that any full proof or counterexample must confront.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\[
+\textbf{COMPLETION: }84\%.
+\]
+
+\subsection*{9) REFERENCES}
+S. Norin, Y. R. Sun, \emph{Triangle-independent sets vs.\ cuts}, arXiv:1602.04370.\\
+J. Balogh, F. C. Clemen, B. Lidick\'y, \emph{Max Cuts in Triangle-free Graphs}, arXiv:2103.14179.\\
+J. Wang, W. Yang, F. Zhao, \emph{Triangle-free Graphs with Large Minimum Common Degree}, arXiv:2408.05547.
+

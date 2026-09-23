@@ -1,0 +1,208 @@
+\section*{Problem 757 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/correction}. The Round-1 writeup isolated the right local obstruction --- repeated distances collapse to $3$-term arithmetic progressions --- but it did not exploit the full hypergraph structure now available in the literature. The most promising Round-2 step is therefore to \emph{replace the Round-1 qualitative picture by a sharp quantitative framework}: the A.P.-hypergraph reformulation, the best presently verified lower bound $c_*\ge 9/17$, and the explicit upper bound $c_*\le 4/7$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+\begin{itemize}
+\item \textbf{Lemma 4.1 (Round 1).} In a $(4,5)$-set, two disjoint pairs cannot determine the same distance.
+\item \textbf{Corollary 4.2 (Round 1).} For $S\subseteq A$, the subset $S$ is Sidon if and only if $S$ contains no nontrivial $3$-term arithmetic progression.
+\end{itemize}
+These are exactly the ingredients needed to pass from additive combinatorics to a $3$-uniform hypergraph independence problem.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is the \emph{A.P.-hypergraph} of a $(4,5)$-set. For a finite $A\subset\mathbb R$, define $H(A)$ to be the $3$-uniform hypergraph with vertex set $A$ and edge set
+\[
+E(H(A)):=\bigl\{\{x-d,x,x+d\}\subseteq A: d\neq 0\bigr\}.
+\]
+By Round-1 Corollary 4.2, the size of the largest Sidon subset of $A$ is precisely the independence number of $H(A)$.
+
+Round 2 adds three structural facts.
+\begin{enumerate}
+\item[(i)] $H(A)$ is \emph{linear}: distinct edges intersect in at most one vertex.
+\item[(ii)] Distinct edges of $H(A)$ have distinct midpoints; consequently $|E(H(A))|\le |A|-2$.
+\item[(iii)] (Gy\'arf\'as--Lehel) If $A$ is a $(4,5)$-set, then $H(A)$ is $F_7$-free, where $F_7$ is the $7$-vertex $3$-uniform hypergraph with edges
+\[
+\{0,1,2\},\ \{0,3,4\},\ \{0,5,6\},\ \{1,3,5\},\ \{2,4,6\}.
+\]
+Then the Henning--Yeo transversal theorem for $3$-uniform linear $F_7$-free hypergraphs gives the improved lower bound $c_*\ge 9/17$.
+\end{enumerate}
+A second new ingredient is an explicit $14$-point $(4,5)$-set with largest Sidon subset of size $8$, which gives the improved upper bound $c_*\le 4/7$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 was quantitative:
+\begin{itemize}
+\item Round 1 reduced the problem to finding a large $3$-term-A.P.-free subset.
+\item What remained was a \emph{numerical} lower bound on the largest independent set in the associated hypergraph, and a better construction for the upper bound.
+\end{itemize}
+I therefore prove the hypergraph translation cleanly, verify the linearity and midpoint-counting properties directly from the Round-1 lemmas, and then import the two external facts that Round 1 did not use:
+\begin{enumerate}
+\item the Gy\'arf\'as--Lehel $F_7$-freeness theorem, and
+\item the Henning--Yeo bound $17\tau(H)\le 5|V(H)|+3|E(H)|$ for $3$-uniform linear $F_7$-free hypergraphs.
+\end{enumerate}
+This closes the main Round-1 quantitative gap.
+
+\subsection*{5) WORK (ROUND-2)}
+For a $(4,5)$-set $A$, let $h(A)$ denote the maximum size of a Sidon subset of $A$. For each $n\ge 1$, let
+\[
+\sigma(n):=\min\{h(A): A\subset\mathbb R,\ |A|=n,\ A\text{ is a }(4,5)\text{-set}\},
+\]
+and let
+\[
+c_*:=\inf_{n\ge 1}\frac{\sigma(n)}{n}.
+\]
+
+\paragraph{Proposition 5.1.}
+For every $(4,5)$-set $A\subset\mathbb R$,
+\[
+h(A)=\alpha(H(A)),
+\]
+where $\alpha$ denotes the independence number.
+
+\emph{Proof.}
+By Round-1 Corollary 4.2, a subset $S\subseteq A$ is Sidon if and only if it contains no nontrivial $3$-term arithmetic progression. But the edges of $H(A)$ are exactly the nontrivial $3$-term arithmetic progressions contained in $A$. Hence $S$ is Sidon if and only if $S$ is an independent set of $H(A)$. Taking the maximum over all $S\subseteq A$ yields $h(A)=\alpha(H(A))$. \qed
+
+\paragraph{Proposition 5.2.}
+If $A$ is a $(4,5)$-set, then $H(A)$ is linear.
+
+\emph{Proof.}
+Suppose two distinct edges of $H(A)$ intersect in at least two vertices. Since every edge has size $3$, the two edges then share exactly two vertices. Let the shared vertices be $x<y$, and put $d:=y-x>0$.
+
+Any nontrivial $3$-term arithmetic progression containing both $x$ and $y$ has third point equal to one of
+\[
+x-d,\qquad \frac{x+y}{2},\qquad y+d.
+\]
+Since the two edges are distinct, their union is obtained by choosing two distinct points from this three-element set. After translating by $-x$ and scaling by $d$, the resulting four-point set is one of
+\[
+\{-1,0,1,2\},\qquad \{-1,0,\tfrac12,1\},\qquad \{0,\tfrac12,1,2\}.
+\]
+In the first case the positive distances are $\{1,2,3\}$, and in each of the other two cases the positive distances are $\{\tfrac12,1,\tfrac32,2\}$. Thus in every case the $4$-point union has at most four distinct positive distances, so its difference set has size at most
+\[
+1+2\cdot 4=9,
+\]
+contradicting the $(4,5)$-condition $|B-B|\ge 11$ for every $4$-subset $B\subseteq A$.
+
+Therefore two distinct edges cannot intersect in two vertices, so $H(A)$ is linear. \qed
+
+\paragraph{Proposition 5.3.}
+If $A$ is a $(4,5)$-set and $|A|\ge 2$, then distinct edges of $H(A)$ have distinct midpoints. Consequently,
+\[
+|E(H(A))|\le |A|-2.
+\]
+
+\emph{Proof.}
+Suppose two distinct edges have the same midpoint $u\in A$. Then for some distinct positive $d,e$,
+\[
+\{u-d,u,u+d\},\ \{u-e,u,u+e\}\in E(H(A)).
+\]
+Without loss of generality $0<d<e$. Consider the $4$-set
+\[
+B=\{u-e,u-d,u+d,u+e\}.
+\]
+Its six pairwise distances are
+\[
+e-d,\ e+d,\ 2e,\ 2d,\ e+d,\ e-d.
+\]
+Thus among the positive distances there are at most four distinct values, namely
+\[
+e-d,\ 2d,\ e+d,\ 2e.
+\]
+Hence
+\[
+|B-B|\le 1+2\cdot 4=9,
+\]
+contradicting the $(4,5)$-condition $|B-B|\ge 11$. Therefore distinct edges have distinct midpoints.
+
+Now the midpoint of any nontrivial $3$-term progression lies strictly between its two endpoints, so it cannot be the minimum or maximum element of $A$. Thus the midpoint map $E(H(A))\to A$ is injective and lands in $A\setminus\{\min A,\max A\}$. Therefore
+\[
+|E(H(A))|\le |A|-2.
+\]
+\qed
+
+\paragraph{External theorem used.}
+Gy\'arf\'as and Lehel proved that if $A$ is a $(4,5)$-set, then $H(A)$ contains no copy of $F_7$.
+
+\paragraph{External theorem used.}
+(Henning--Yeo.) If $H$ is a $3$-uniform linear hypergraph with no subhypergraph isomorphic to $F_7$, then
+\[
+17\tau(H)\le 5|V(H)|+3|E(H)|,
+\]
+where $\tau(H)$ is the transversal number.
+
+\paragraph{Theorem 5.4.}
+For every $(4,5)$-set $A$ of size $n$,
+\[
+h(A)\ge \frac{9}{17}n.
+\]
+Consequently,
+\[
+c_*\ge \frac{9}{17}.
+\]
+
+\emph{Proof.}
+If $n=1$, then $h(A)=1\ge 9/17$, so there is nothing to prove. Assume $n\ge 2$, and let $H:=H(A)$. By Proposition 5.1, $h(A)=\alpha(H)$. By Proposition 5.2, $H$ is linear; by the Gy\'arf\'as--Lehel theorem, $H$ is $F_7$-free; and by Proposition 5.3,
+\[
+|E(H)|\le |V(H)|-2=n-2.
+\]
+Applying the Henning--Yeo theorem gives
+\[
+17\tau(H)\le 5n+3(n-2)=8n-6<8n.
+\]
+Hence $\tau(H)\le 8n/17$. Since $\alpha(H)+\tau(H)=|V(H)|=n$ for every hypergraph,
+\[
+h(A)=\alpha(H)\ge n-\frac{8n}{17}=\frac{9n}{17}.
+\]
+Taking the minimum over all $(4,5)$-sets $A$ of size $n$ yields $\sigma(n)\ge 9n/17$ for every $n$, and hence $c_*\ge 9/17$. \qed
+
+\paragraph{Theorem 5.5.}
+There exists a $(4,5)$-set
+\[
+A_{\mathrm{base}}=\{0,136,200,243,246,249,272,286,298,323,400,528,596,1056\}
+\]
+of size $14$ such that $h(A_{\mathrm{base}})=8$. Consequently,
+\[
+c_*\le \frac{8}{14}=\frac47.
+\]
+
+\emph{Proof.}
+The assertions that $A_{\mathrm{base}}$ is a $(4,5)$-set and that its largest Sidon subset has size $8$ were verified by exhaustive exact computation in Ma--Tang. Therefore $\sigma(14)\le 8$, and by the definition of $c_*$ as an infimum of the ratios $\sigma(n)/n$, we obtain $c_*\le 8/14=4/7$. \qed
+
+\paragraph{Round-2 conclusion for Problem 757.}
+Combining Theorems 5.4 and 5.5 gives the strongest explicit interval reached in this round:
+\[
+\frac{9}{17}\le c_*\le \frac47.
+\]
+This is a strict improvement over the Round-1 state $\tfrac12<c_*<\tfrac35$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Does Proposition 5.1 use anything stronger than Round 1?} No. It is exactly Round-1 Corollary 4.2 rewritten hypergraphically.
+\item \textbf{Could Proposition 5.2 fail when two $3$-term progressions share two vertices?} No. The proof reduces the union to one of three affine normal forms, and each normal form has at most four distinct positive distances on its four vertices.
+\item \textbf{Is the midpoint-counting argument valid for all edges?} Yes. The midpoint of a nontrivial progression is never an extreme point of $A$, so the midpoint map lands in $A\setminus\{\min A,\max A\}$.
+\item \textbf{Does the upper bound really follow from one finite example?} Yes. Since $c_*=\inf_n \sigma(n)/n$, one example with $\sigma(14)\le 8$ immediately implies $c_*\le 8/14$.
+\item \textbf{Is anything claimed beyond the cited external theorems?} No. The only imported ingredients are the $F_7$-freeness theorem of Gy\'arf\'as--Lehel, the Henning--Yeo transversal bound, and the explicit $14$-point construction of Ma--Tang.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+Round 2 upgrades the Round-1 qualitative reduction to the presently strongest quantitative statement I could verify:
+\[
+\frac{9}{17}\le c_*\le \frac47.
+\]
+The lower bound is now derived by a clean hypergraph argument using Round-1's ``Sidon $\Leftrightarrow$ $3$AP-free'' reformulation, while the upper bound comes from an explicit $14$-point example.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 55\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item J. Ma and Q. Tang, \emph{Largest Sidon subsets in weak Sidon sets}, arXiv:2602.23282, 2026.
+\item A. Gy\'arf\'as and J. Lehel, \emph{Linear sets with five distinct differences among any four elements}, J. Combin. Theory Ser. B 64 (1995), 108--118.
+\item M. A. Henning and A. Yeo, \emph{Affine Planes and Transversals in 3-Uniform Linear Hypergraphs}, Graphs Combin. 37 (2021), 867--890.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+Here the Erd\H{o}s problem number is $x=757$.
+
+\bigskip

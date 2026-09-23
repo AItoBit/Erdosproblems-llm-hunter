@@ -1,0 +1,202 @@
+\section{Erd\H{o}s problems \#655, \#738, \#740 --- Round 2 continuation}
+
+\subsection*{Problem \#740}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+Path (C): sharpen Round 1 into an exact reduction for the countable case, make the $r=3$ countable case unconditional, and isolate the uncountable obstruction precisely.
+
+This is the most promising direction because Round 1 already had a conditional countable theorem and a partial consistency remark; the natural next step is to remove the conditionality, prove the exact finite/infinite equivalence, and show how the known forcing obstruction destroys the full universal statement.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use the following vetted Round-1 facts.
+
+\begin{itemize}
+\item If $\chi(G)=\aleph_0$, removing finitely many vertices leaves chromatic number $\aleph_0$.
+\item Hence one can build pairwise vertex-disjoint finite induced subgraphs of arbitrarily large finite chromatic number inside any graph of chromatic number $\aleph_0$.
+\item Round 1 also gave the disjoint-union construction that converts a suitable finite theorem into the countable infinitary conclusion.
+\end{itemize}
+
+I strengthen those observations here rather than re-proving them in the same form.
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+For each fixed odd-cycle threshold $r$, the countable infinitary statement is \emph{equivalent} to a finite forcing statement. This was not established in Round 1.
+
+For $r=3$, Rödl's theorem supplies the finite statement, so the countable case becomes unconditional. On the other hand, Komj\'{a}th and Shelah's forcing result produces a model with an $\omega_1$-chromatic graph all of whose triangle-free subgraphs are only countably chromatic; this yields a relative obstruction to any ZFC proof of the full universal statement for all infinite cardinals.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gaps after Round 1 were:
+
+\begin{enumerate}
+\item the countable case was only derived \emph{assuming} a finite theorem;
+\item there was no exact converse reduction back to the finite problem;
+\item the consistency obstruction for uncountable chromatic number was not pushed to the actual odd-cycle threshold in the problem.
+\end{enumerate}
+
+I will now:
+
+\begin{enumerate}
+\item prove an exact equivalence between the countable infinitary statement and the corresponding finite odd-cycle-cleaning statement;
+\item cite Rödl to settle the case $(\aleph_0,3)$ unconditionally;
+\item show that, assuming $\operatorname{Con}(\mathrm{ZFC})$, the full statement ``for every infinite cardinal $\mathfrak m$ and every $r$'' is not provable in ZFC, because it fails in a forcing extension already for $\mathfrak m=\omega_1$ and every $r\ge 3$.
+\end{enumerate}
+
+\subsubsection*{5) WORK (ROUND-2)}
+For a graph $H$ and integer $r\ge 1$, write
+\[
+\mathcal O_r(H)
+\]
+for the property that $H$ has no odd cycle of length at most $r$.
+
+Only odd lengths matter, so for even $r$ the property $\mathcal O_r$ is the same as $\mathcal O_{r-1}$.
+
+\paragraph{Boundary cases $r=1,2$.}
+If $r=1$ or $2$, then $\mathcal O_r$ is vacuous, since the shortest odd cycle has length $3$. Hence the original statement is trivial in these two cases: one may simply take $H=G$.
+From now on the interesting range is $r\ge 3$.
+
+\paragraph{Finite statement $A_r$.}
+For every integer $k\ge 1$ there exists an integer $N_r(k)$ such that every finite graph $F$ with $\chi(F)\ge N_r(k)$ contains a subgraph $J\subseteq F$ with
+\[
+\chi(J)\ge k \qquad \text{and} \qquad \mathcal O_r(J).
+\]
+
+\paragraph{Countable infinitary statement $B_r$.}
+Every graph $G$ with $\chi(G)=\aleph_0$ contains a subgraph $H\subseteq G$ with
+\[
+\chi(H)=\aleph_0 \qquad \text{and} \qquad \mathcal O_r(H).
+\]
+
+\paragraph{Proposition 1.} For every fixed $r\ge 1$, the statements $A_r$ and $B_r$ are equivalent.
+
+\paragraph{Proof.}
+We prove both directions.
+
+\smallskip
+\noindent\emph{$A_r\Rightarrow B_r$.}
+Let $G$ be a graph with $\chi(G)=\aleph_0$. Using the Round-1 foundation, choose pairwise disjoint finite vertex sets $S_1,S_2,\dots$ such that
+\[
+\chi(G[S_k])\ge N_r(k) \qquad \text{for every } k\ge 1.
+\]
+Apply $A_r$ to each finite graph $G[S_k]$. We obtain a subgraph $H_k\subseteq G[S_k]$ such that
+\[
+\chi(H_k)\ge k \qquad \text{and} \qquad \mathcal O_r(H_k).
+\]
+Now let $H$ be the disjoint union of the graphs $H_k$, viewed as a subgraph of $G$ (that is, we delete every edge of $G$ joining distinct blocks). Then $\mathcal O_r(H)$ holds, because every odd cycle of $H$ would have to lie inside one block $H_k$. Also
+\[
+\chi(H)\ge \chi(H_k)\ge k \qquad \text{for every } k,
+\]
+so $\chi(H)=\aleph_0$. Thus $B_r$ holds.
+
+\smallskip
+\noindent\emph{$B_r\Rightarrow A_r$.}
+Assume $A_r$ fails. Then there exists some fixed integer $k_0\ge 1$ such that for every integer $N$ there is a finite graph $F_N$ with
+\[
+\chi(F_N)\ge N,
+\]
+but every subgraph $J\subseteq F_N$ satisfying $\mathcal O_r(J)$ has
+\[
+\chi(J)<k_0.
+\]
+Form the disjoint union
+\[
+G:=\bigsqcup_{N\ge 1} F_N.
+\]
+Then $\chi(G)=\aleph_0$, because the chromatic numbers of the components are unbounded.
+
+Now let $H\subseteq G$ satisfy $\mathcal O_r(H)$. Since $G$ is a disjoint union of the $F_N$, the graph $H$ is a disjoint union of subgraphs $H_N\subseteq F_N$. The property $\mathcal O_r$ is inherited by subgraphs, so each $H_N$ satisfies $\mathcal O_r$, and therefore
+\[
+\chi(H_N)<k_0 \qquad \text{for every } N.
+\]
+The chromatic number of a disjoint union is the supremum of the chromatic numbers of its components, hence
+\[
+\chi(H)=\sup_N \chi(H_N) < k_0.
+\]
+So $H$ cannot have chromatic number $\aleph_0$, contradicting $B_r$. Therefore $A_r$ must hold.
+
+This proves $A_r\Longleftrightarrow B_r$. \hfill $\square$
+
+\paragraph{Corollary 2.} The case $(\mathfrak m,r)=(\aleph_0,3)$ is true unconditionally.
+
+\paragraph{Proof.}
+For $r=3$, the condition $\mathcal O_3(J)$ is exactly ``$J$ is triangle-free.'' Rödl proved that for every $k$ there exists $N(k)$ such that every finite graph of chromatic number at least $N(k)$ contains a triangle-free subgraph of chromatic number at least $k$ \cite{Rodl77}. This is precisely $A_3$, and so Proposition 1 yields $B_3$. \hfill $\square$
+
+\paragraph{Proposition 3.} Assume $\operatorname{Con}(\mathrm{ZFC})$. Then the full universal statement of Problem \#740 is not provable in ZFC.
+
+\paragraph{Proof.}
+Komj\'{a}th and Shelah constructed a forcing extension in which there exists a graph $X$ with
+\[
+\chi(X)=\omega_1
+\]
+such that every triangle-free subgraph of $X$ is only countably chromatic \cite{KomjathShelah88}.
+Now fix any $r\ge 3$. If $H\subseteq X$ satisfies $\mathcal O_r(H)$, then in particular $H$ has no triangle, so $H$ is triangle-free. Therefore every such $H$ is countably chromatic, and in particular
+\[
+\chi(H)\neq \omega_1.
+\]
+So in that model, $X$ is a counterexample to the universal statement for the pair $(\mathfrak m,r)=(\omega_1,r)$, for every $r\ge 3$.
+Hence, assuming ZFC is consistent, the full statement of Problem \#740 cannot be a theorem of ZFC.
+\hfill $\square$
+
+\paragraph{Corrected formulation extracted from Proposition 1.}
+If one wants a ZFC theorem after Round 2, the sharp countable reformulation is not the original universal statement over all infinite cardinals. The exact countable version is the family of equivalences
+\[
+B_r \Longleftrightarrow A_r \qquad (r\ge 1),
+\]
+and the case $r=3$ is settled positively by Rödl.
+
+Thus the genuine unresolved part now splits into two separate questions:
+\begin{enumerate}
+\item for each fixed $r\ge 5$, does $A_r$ hold (equivalently, does $B_r$ hold)?
+\item what, if anything, remains true for uncountable chromatic number in ZFC?
+\end{enumerate}
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Property inherited by subgraphs.} If a graph has no odd cycle of length at most $r$, then every subgraph also has no such odd cycle. This is essential in the proof of $B_r\Rightarrow A_r$.
+\item \textbf{Disjoint-union chromatic number.} The chromatic number of a disjoint union is the supremum of the chromatic numbers of its components. This justifies both directions of Proposition 1.
+\item \textbf{Fixed $k_0$ in the negation of $A_r$.} The negation of $A_r$ does indeed yield one fixed integer $k_0$ for which no threshold works; otherwise $A_r$ would hold by definition.
+\item \textbf{Odd-cycle threshold versus triangle-free.} For $r\ge 3$, the property $\mathcal O_r$ implies triangle-free. Hence the Komj\'{a}th--Shelah model for triangle-free subgraphs automatically obstructs all larger odd-cycle thresholds as well.
+\item \textbf{Boundary cases.} The negative forcing obstruction starts only at $r\ge 3$; for $r=1,2$ the property is vacuous and the statement is trivial.
+\item \textbf{What has and has not been proved.} Proposition 3 is a relative non-provability statement (assuming $\operatorname{Con}(\mathrm{ZFC})$), not a ZFC disproof of the underlying combinatorial assertion.
+\end{itemize}
+
+\subsubsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round 2 makes three strict advances beyond Round 1:
+
+\begin{enumerate}
+\item it proves the exact equivalence $A_r\Longleftrightarrow B_r$ for every fixed $r$;
+\item it upgrades the case $(\aleph_0,3)$ from conditional to unconditional using Rödl's theorem;
+\item it shows that, assuming $\operatorname{Con}(\mathrm{ZFC})$, the full universal statement over all infinite cardinals is not provable in ZFC, because it fails in a forcing extension already for $(\omega_1,r)$ for every $r\ge 3$.
+\end{enumerate}
+
+So the remaining unresolved core is now sharply isolated: the countable cases $r\ge 5$, and the genuinely uncountable ZFC problem. The overall problem remains open as a combinatorial statement \cite{Bloom740}.
+
+\subsubsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 72\%
+
+\subsubsection*{9) REFERENCES}
+References used in Round 2 are listed in the global bibliography below.
+
+
+\section{References}
+\begin{thebibliography}{99}
+
+\bibitem{Bloom738}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#738}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Bloom740}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#740}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Scott97}
+A. D. Scott, \emph{Induced trees in graphs of large chromatic number}, Journal of Graph Theory \textbf{24} (1997), 297--311.
+
+\bibitem{NguyenScottSeymour24}
+T. Nguyen, A. Scott, and P. Seymour, \emph{A note on the Gy\'{a}rf\'{a}s--Sumner conjecture}, Graphs and Combinatorics \textbf{40} (2024), Article 33.
+
+\bibitem{Rodl77}
+V. R\"{o}dl, \emph{On the chromatic number of subgraphs of a given graph}, Proceedings of the American Mathematical Society \textbf{64} (1977), 370--371.
+
+\bibitem{KomjathShelah88}
+P. Komj\'{a}th and S. Shelah, \emph{Forcing constructions for uncountably chromatic graphs}, Journal of Symbolic Logic \textbf{53} (1988), 696--707.
+
+\end{thebibliography}

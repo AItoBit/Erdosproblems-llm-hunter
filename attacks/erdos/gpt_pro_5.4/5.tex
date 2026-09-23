@@ -1,0 +1,435 @@
+\section{ROUND-6 OBJECTIVE}
+
+\textbf{Path chosen: (C) obstruction / correction via a new structural reformulation and a stronger strategy-elimination theorem.}
+
+Round--5 already showed that one-hole model sets can satisfy all currently known coarse structural properties of the normalized-prime-gap limit-point set $S$ while still failing to be dense. The remaining loophole is that perhaps density might still follow once one excludes \emph{single-hole} pathologies and insists on a more complicated complement --- for instance infinitely many holes, infinite complement measure, or more realistic global geometry.
+
+The aim of Round--6 is to close that loophole rigorously. We do this in two steps.
+
+\begin{enumerate}
+\item We prove a new \emph{complement-side reformulation} of the $k$-point difference property $(P_k)$. For $k=4$, this says that $A\subseteq[0,\infty)$ has $(P_4)$ if and only if its complement contains no six-term additive configuration
+\[
+ x,\ y,\ z,\ x+y,\ y+z,\ x+y+z.
+\]
+\item Using that reformulation, we construct \emph{lacunary multi-hole countermodels}: closed, non-dense sets with \emph{infinitely many} disjoint holes, \emph{asymptotic density $1$}, \emph{arbitrarily small exact syndetic constant}, and \emph{arbitrarily long initial segment containment}, while still satisfying $(P_4)$.
+\end{enumerate}
+
+This strictly advances beyond Round--5: the obstruction is no longer confined to one-gap or finite-measure-complement models.
+
+
+\section{ROUND-5 FOUNDATION USED}
+
+We use the following vetted Round--5 (and earlier) results.
+
+\begin{itemize}
+\item \textbf{(Round--1)} The actual prime-gap limit-point set $S$ is closed.
+\item \textbf{(Round--2)} The limit-point set for $(p_{n+1}-p_n)/\log n$ equals the classical one for $(p_{n+1}-p_n)/\log p_n$, so results of Banks--Freiberg--Maynard, Pintz, and Merikoski apply directly to the present problem.
+\item \textbf{(Round--3)} Relative-gap lemma: if a set $A\subset[0,\infty)$ has $(P_k)$ and $(a,b)\cap A=\emptyset$ with $a>0$, then $b\le (k-1)a$.
+\item \textbf{(Round--5)} Exact one-gap characterization: for
+\[
+A_{a,b}=[0,a]\cup[b,\infty),
+\]
+property $(P_k)$ is equivalent to $b\le (k-1)a$, and for $k=4$ this is equivalent to the sharp initial-interval measure bound
+\[
+\mu(A_{a,b}\cap[0,T])\ge T/3\qquad (T>0).
+\]
+\item \textbf{(Imported earlier for the genuine set $S$)} Merikoski proves $(P_4)$, the lower bound $\mu(S\cap[0,T])\ge T/3$ for all $T\ge 0$, and bounded gaps; Pintz gives $[0,c]\subseteq S$ for some ineffective $c>0$.
+\end{itemize}
+
+
+\section{NEW INSIGHT / TOOL (ROUND-6)}
+
+The genuinely new ingredient is a \emph{complement reformulation} of $(P_k)$.
+Let $A\subseteq[0,\infty)$ and let
+\[
+B:=[0,\infty)\setminus A.
+\]
+Then $A$ has $(P_k)$ if and only if there do \emph{not} exist nonnegative reals
+\[
+ x_1,\dots,x_{k-1}
+\]
+such that every contiguous sum
+\[
+ x_i+x_{i+1}+\cdots+x_j\qquad (1\le i\le j\le k-1)
+\]
+lies in $B$.
+
+For $k=4$, this becomes the explicit additive-pattern exclusion:
+\[
+A\text{ has }(P_4)
+\iff
+\text{there do not exist }x,y,z\ge 0\text{ with }x,y,z,x+y,y+z,x+y+z\in B.
+\]
+
+This makes it possible to construct complements $B$ with infinitely many short holes placed so far apart that the total sum of any three hole-points necessarily lands \emph{between} two holes, and hence outside $B$. That yields a new infinite-hole family of countermodels.
+
+
+\section{ATTACK PLAN (ROUND-6)}
+
+After Round--5, the exact unresolved logical gap was this:
+
+\emph{Could density perhaps still be forced from the known coarse properties if one rules out the one-hole geometry used in earlier countermodels?}
+
+Round--6 addresses this by proving:
+
+\begin{enumerate}
+\item a structural lemma translating $(P_k)$ into a forbidden additive pattern in the complement;
+\item a general lacunary-hole construction with infinitely many gaps satisfying $(P_k)$;
+\item a specialization to $k=4$ showing that even closedness, $(P_4)$, arbitrarily long initial segment containment, arbitrarily small exact syndetic constant, asymptotic density $1$, \emph{and infinitely many complementary components} still do not imply density.
+\end{enumerate}
+
+Thus any proof of Erd\H{o}s' conjecture must use arithmetic structure beyond these coarse invariants.
+
+
+\section{WORK (ROUND-6)}
+
+\subsection*{Definition}
+For an integer $k\ge 2$, a set $A\subseteq[0,\infty)$ has property $(P_k)$ if for every real numbers
+\[
+\beta_1\le \beta_2\le \cdots\le \beta_k
+\]
+we have
+\[
+A\cap\{\beta_j-\beta_i:1\le i<j\le k\}\neq\emptyset.
+\]
+
+\subsection*{Lemma 1 (complement reformulation of $(P_k)$)}
+Let $A\subseteq[0,\infty)$ and let $B=[0,\infty)\setminus A$. Then $A$ has $(P_k)$ if and only if there do not exist nonnegative reals $x_1,\dots,x_{k-1}$ such that
+\[
+\sum_{t=i}^{j}x_t\in B
+\qquad\text{for every }1\le i\le j\le k-1.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Suppose first that $A$ fails $(P_k)$. Then there exist reals
+\[
+\beta_1\le \beta_2\le \cdots\le \beta_k
+\]
+for which every pairwise difference $\beta_j-\beta_i$ belongs to $B$.
+Set
+\[
+ x_r:=\beta_{r+1}-\beta_r\ge 0\qquad (1\le r\le k-1).
+\]
+Then for every $1\le i\le j\le k-1$ we have
+\[
+\sum_{t=i}^{j}x_t
+= (\beta_{i+1}-\beta_i)+(\beta_{i+2}-\beta_{i+1})+\cdots+(\beta_{j+1}-\beta_j)
+=\beta_{j+1}-\beta_i\in B.
+\]
+Thus all contiguous sums lie in $B$.
+
+Conversely, suppose there exist nonnegative reals $x_1,\dots,x_{k-1}$ such that every contiguous sum lies in $B$.
+Define
+\[
+\beta_1:=0,
+\qquad
+\beta_m:=x_1+x_2+\cdots+x_{m-1}
+\quad (2\le m\le k).
+\]
+Then $\beta_1\le\beta_2\le\cdots\le\beta_k$, and for $1\le i<j\le k$ we have
+\[
+\beta_j-\beta_i=x_i+x_{i+1}+\cdots+x_{j-1}\in B.
+\]
+Hence all pairwise differences lie in $B$, so $A$ fails $(P_k)$.
+This proves the equivalence.
+\hfill$\square$
+
+\subsection*{Corollary 2 (the $k=4$ forbidden pattern)}
+A set $A\subseteq[0,\infty)$ has $(P_4)$ if and only if its complement
+\[
+B=[0,\infty)\setminus A
+\]
+contains no triple $x,y,z\ge 0$ such that
+\[
+ x,\ y,\ z,\ x+y,\ y+z,\ x+y+z\in B.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Apply Lemma~1 with $k=4$ and write
+\[
+ x_1=x,\quad x_2=y,\quad x_3=z.
+\]
+The contiguous sums are then exactly
+\[
+ x,\ y,\ z,\ x+y,\ y+z,\ x+y+z.
+\]
+\hfill$\square$
+
+\subsection*{Theorem 3 (lacunary multi-hole models with $(P_k)$)}
+Fix an integer $k\ge 3$, a real $L>0$, a hole length $\varepsilon>0$, and a ratio $R>k-1$.
+Choose a base point $M>0$ such that
+\[
+M>\max\left\{L,\frac{\varepsilon}{k-2},\frac{(k-1)\varepsilon}{R-(k-1)}\right\}.
+\]
+Define
+\[
+ a_n:=MR^{n-1}\qquad (n\ge 1),
+\]
+and let
+\[
+ B:=\bigcup_{n\ge 1}(a_n,a_n+\varepsilon),
+ \qquad
+ A:=[0,\infty)\setminus B.
+\]
+Then the following hold:
+
+\begin{enumerate}
+\item $A$ is closed and not dense in $[0,\infty)$.
+\item $A$ contains $[0,L]$.
+\item $A$ has infinitely many pairwise disjoint complementary intervals.
+\item $A$ has property $(P_k)$.
+\item The exact closed-interval syndetic constant of $A$ is $\varepsilon$: every closed interval of length $\varepsilon$ meets $A$, and for every $c<\varepsilon$ some closed interval of length $c$ misses $A$.
+\item The complement has logarithmic counting growth:
+\[
+\mu(B\cap[0,T])\le \varepsilon\left(1+\frac{\log(T/M)}{\log R}\right)
+\qquad (T\ge M).
+\]
+In particular,
+\[
+\lim_{T\to\infty}\frac{\mu(A\cap[0,T])}{T}=1.
+\]
+\item The complement $B$ has infinite total measure:
+\[
+\mu(B)=\infty.
+\]
+\end{enumerate}
+
+\medskip
+\noindent\emph{Proof.}
+
+\underline{(1)}
+Each interval $(a_n,a_n+\varepsilon)$ is open, so $B$ is open and therefore $A$ is closed.
+Since every $(a_n,a_n+\varepsilon)$ is a nonempty open interval disjoint from $A$, the set $A$ is not dense.
+
+\smallskip
+\underline{(2)}
+Because $a_1=M>L$, the first hole begins to the right of $L$. Hence
+\[
+[0,L]\subseteq [0,M]\subseteq A.
+\]
+
+\smallskip
+\underline{(3)}
+The intervals $(a_n,a_n+\varepsilon)$ are pairwise disjoint because $a_{n+1}=Ra_n>a_n+\varepsilon$.
+Thus $B$ has infinitely many connected components.
+
+\smallskip
+\underline{(4)}
+We use Lemma~1.
+Assume for contradiction that $A$ fails $(P_k)$. Then there exist nonnegative reals
+\[
+ x_1,\dots,x_{k-1}
+\]
+all of whose contiguous sums lie in $B$.
+In particular, each singleton sum $x_i$ lies in $B$, so for each $i$ there exists an index $n_i$ with
+\[
+ a_{n_i}<x_i<a_{n_i}+\varepsilon.
+\]
+Let
+\[
+ n:=\max\{n_1,\dots,n_{k-1}\}.
+\]
+Then at least one of the $x_i$ is $>a_n$, while every $x_i$ is $<a_n+\varepsilon$.
+Therefore the total sum
+\[
+ S:=x_1+x_2+\cdots+x_{k-1}
+\]
+satisfies
+\[
+S>a_n+(k-2)M>a_n+\varepsilon
+\]
+by the choice $M>\varepsilon/(k-2)$, and also
+\[
+S<(k-1)(a_n+\varepsilon)<Ra_n=a_{n+1}
+\]
+by the choice $M>\frac{(k-1)\varepsilon}{R-(k-1)}$ (since $a_n\ge M$).
+Hence
+\[
+ a_n+\varepsilon < S < a_{n+1}.
+\]
+But the set $B$ has no points in the interval $(a_n+\varepsilon,a_{n+1})$, because its components are exactly the holes $(a_m,a_m+\varepsilon)$.
+Thus $S\notin B$, contradicting the assumption that all contiguous sums lie in $B$.
+Therefore $A$ has $(P_k)$.
+
+\smallskip
+\underline{(5)}
+First we show that every closed interval of length $\varepsilon$ meets $A$.
+Suppose not. Then some closed interval $I=[u,u+\varepsilon]$ is contained in $B$.
+Since $I$ is connected and the connected components of $B$ are exactly the disjoint open intervals $(a_n,a_n+\varepsilon)$, the interval $I$ must be contained in one component, say $(a_n,a_n+\varepsilon)$.
+But a closed interval of length $\varepsilon$ cannot be contained in an open interval of the same length. Contradiction.
+So every closed interval of length $\varepsilon$ meets $A$.
+
+Now let $0<c<\varepsilon$.
+Then the closed interval
+\[
+\left[a_1+\frac{\varepsilon-c}{2},\ a_1+\frac{\varepsilon+c}{2}\right]
+\]
+has length $c$ and lies entirely inside the hole $(a_1,a_1+\varepsilon)$, so it is disjoint from $A$.
+Hence no smaller positive constant works.
+Therefore the exact closed-interval syndetic constant is $\varepsilon$.
+
+\smallskip
+\underline{(6)}
+For $T\ge M$, let $N(T)$ denote the number of holes whose left endpoint is $<T$.
+Since $a_n=MR^{n-1}$, the inequality $a_n<T$ implies
+\[
+ n-1<\frac{\log(T/M)}{\log R}.
+\]
+Therefore
+\[
+ N(T)\le 1+\frac{\log(T/M)}{\log R}.
+\]
+Each hole contributes at most $\varepsilon$ of measure to $B\cap[0,T]$, so
+\[
+\mu(B\cap[0,T])\le \varepsilon N(T)
+\le \varepsilon\left(1+\frac{\log(T/M)}{\log R}\right).
+\]
+Hence
+\[
+\mu(A\cap[0,T])=T-\mu(B\cap[0,T])=T-O(\log T),
+\]
+which implies
+\[
+\frac{\mu(A\cap[0,T])}{T}\to 1.
+\]
+
+\smallskip
+\underline{(7)}
+The holes are pairwise disjoint and each has measure $\varepsilon$, so
+\[
+\mu(B)=\sum_{n\ge 1}\mu((a_n,a_n+\varepsilon))
+=\sum_{n\ge 1}\varepsilon
+=\infty.
+\]
+This completes the proof.
+\hfill$\square$
+
+\subsection*{Corollary 4 (the case relevant to the prime-gap problem)}
+For every $L>0$ and every $\varepsilon>0$, there exists a closed non-dense set $A\subseteq[0,\infty)$ such that:
+
+\begin{enumerate}
+\item $[0,L]\subseteq A$;
+\item $A$ has property $(P_4)$;
+\item the exact closed-interval syndetic constant of $A$ is $\varepsilon$;
+\item $A$ has infinitely many complementary intervals;
+\item $\mu([0,\infty)\setminus A)=\infty$;
+\item \(\displaystyle \lim_{T\to\infty}\frac{\mu(A\cap[0,T])}{T}=1\).
+\end{enumerate}
+
+\medskip
+\noindent\emph{Proof.}
+Apply Theorem~3 with $k=4$ and, for instance, $R=4$.
+Then it is enough to choose
+\[
+M>\max\{L,\varepsilon/2,3\varepsilon\}=\max\{L,3\varepsilon\}.
+\]
+All the claimed properties follow immediately.
+\hfill$\square$
+
+\subsection*{Corollary 5 (a stronger no-go theorem)}
+There do not exist constants $L_0>0$ and $\varepsilon_0>0$ with the following property:
+
+\emph{every closed set $A\subseteq[0,\infty)$ satisfying}
+\begin{itemize}
+\item $[0,L_0]\subseteq A$,
+\item $A$ has $(P_4)$,
+\item the exact closed-interval syndetic constant of $A$ is at most $\varepsilon_0$,
+\item $[0,\infty)\setminus A$ has infinitely many connected components,
+\item \(\displaystyle \lim_{T\to\infty}\frac{\mu(A\cap[0,T])}{T}=1\),
+\end{itemize}
+\emph{must be dense in $[0,\infty)$.}
+
+\medskip
+\noindent\emph{Proof.}
+Fix arbitrary $L_0,\varepsilon_0>0$.
+Apply Corollary~4 with $L=L_0$ and $\varepsilon=\varepsilon_0/2$.
+The resulting set $A$ is closed, not dense, contains $[0,L_0]$, has $(P_4)$, has exact closed-interval syndetic constant $\varepsilon_0/2<\varepsilon_0$, has infinitely many complementary intervals, and has asymptotic density $1$.
+So it satisfies all the displayed hypotheses but is not dense, contradiction.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Interpretation.}
+Round--5 had already shown that one-hole countermodels destroy any proof strategy based only on closedness, $(P_4)$, syndeticity, and large measure. Round--6 strengthens this decisively:
+\emph{even infinitely many holes, infinite complement measure, and asymptotic density $1$ do not force density.}
+Thus any proof of Erd\H{o}s' conjecture for the genuine prime-gap limit-point set must exploit arithmetic information that is invisible to these coarse geometric and additive-combinatorial invariants.
+
+
+\section{ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Boundary case in Lemma~1.}
+The proof allows $x_i=0$, which is necessary because equal consecutive $\beta$'s are permitted in the definition of $(P_k)$. No positivity assumption was smuggled in.
+
+\item \textbf{Are the components of $B$ really the single holes $(a_n,a_n+\varepsilon)$?}
+Yes. The intervals are pairwise disjoint because $a_{n+1}=Ra_n>a_n+\varepsilon$ by construction. Hence connected components of $B$ are exactly those open intervals.
+
+\item \textbf{Upper-bound check in Theorem~3(4).}
+The key estimate is
+\[
+S<(k-1)(a_n+\varepsilon)<Ra_n=a_{n+1}.
+\]
+This follows from
+\[
+(k-1)\varepsilon < (R-(k-1))a_n,
+\]
+which holds because $a_n\ge M$ and
+\[
+M>\frac{(k-1)\varepsilon}{R-(k-1)}.
+\]
+No hidden dependence on $n$ remains.
+
+\item \textbf{Lower-bound check in Theorem~3(4).}
+We used
+\[
+S>a_n+(k-2)M>a_n+\varepsilon.
+\]
+This is valid because one summand exceeds $a_n$ and the other $k-2$ summands each exceed $M$, since every singleton sum $x_i$ lies in some hole and therefore is $>a_1=M$.
+
+\item \textbf{Exact syndetic constant.}
+The proof is with \emph{closed} intervals, matching the convention used in earlier rounds. For open-interval syndeticity one would take any constant $>\varepsilon$ instead. This does not affect the obstruction statements.
+
+\item \textbf{Interaction with Round--5.}
+Round--5 handled one-gap models; Round--6 does not reprove that result but extends the obstruction to infinitely many holes. The two are consistent: the new family simply shows that even finite-component assumptions are unnecessary for countermodels.
+
+\item \textbf{Relevance to the actual set $S$.}
+The constructed sets are \emph{model sets}, not claims about prime gaps. Their purpose is logical: to show that currently known coarse properties of $S$ are insufficient to imply density.
+\end{itemize}
+
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round--6 makes two substantive advances beyond Round--5.
+
+\begin{enumerate}
+\item It proves a new complement-side structural characterization of $(P_k)$.
+For $k=4$, this becomes the exact forbidden additive pattern
+\[
+ x,\ y,\ z,\ x+y,\ y+z,\ x+y+z.
+\]
+This is a genuinely new tool for constructing and analyzing model sets.
+
+\item It constructs \emph{infinitely many-hole} countermodels with the same coarse properties one might hope to use in proving density: closedness, $(P_4)$, arbitrarily long initial segment containment, arbitrarily small exact syndetic constant, and asymptotic density $1$.
+In fact these countermodels may also have infinite complement measure and infinitely many complementary components.
+\end{enumerate}
+
+So the gap isolated after Round--5 is now closed: density cannot be deduced even after excluding one-hole or finite-measure-complement pathologies.
+A successful proof of Erd\H{o}s' conjecture must therefore use arithmetic structure beyond all presently known coarse invariants treated in Rounds 3--6.
+
+
+\section{COMPLETION ESTIMATE}
+
+COMPLETION: 74\%
+
+
+\section{REFERENCES}
+
+\begin{itemize}
+\item T.\,F. Bloom, \emph{Erd\H{o}s Problem \#5}, \texttt{erdosproblems.com/5}.
+\item W.\,D. Banks, T. Freiberg, J. Maynard, \emph{On limit points of the sequence of normalized prime gaps}, arXiv:1404.5094v2.
+\item J. Merikoski, \emph{Limit points of normalized prime gaps}, arXiv:1811.03008v3.
+\item J. Pintz, \emph{On the distribution of gaps between consecutive primes}, arXiv:1407.2213.
+\end{itemize}

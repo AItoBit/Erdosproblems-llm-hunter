@@ -1,0 +1,266 @@
+\section{Erd\H{o}s Problem 17: Cluster Primes --- Round 3 Continuation}
+
+We continue strictly from the Round-2 state of the investigation. The original question remains:
+\[
+\text{Are there infinitely many cluster primes?}
+\]
+Here a prime $p$ is \emph{cluster} if every even integer $n$ with $2\le n\le p-3$ can be written as
+\[
+n=q_1-q_2
+\]
+with primes $q_1,q_2\le p$.
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+
+\textbf{Path (C): obstruction / structural correction.}
+
+Round-2 proved a single-offset obstruction theorem: for every fixed odd composite $m\ge 9$, there are infinitely many primes $p$ for which the even number $n=p-m$ fails the cluster condition. The natural next gap is whether these obstructions can be \emph{synchronized}. That is the direction pursued here.
+
+The new Round-3 goal is to prove a genuinely stronger statement:
+\begin{quote}
+for \emph{any finite set} of odd composite offsets $m$, there are infinitely many primes $p$ for which \emph{all} corresponding even numbers $p-m$ fail simultaneously.
+\end{quote}
+This yields, in particular, infinitely many primes with arbitrarily many distinct failing even gaps, and it gives a clean classification of fixed odd offsets: prime offsets are always trivially covered, whereas odd composite offsets fail infinitely often.
+
+\subsection*{2) Round-2 FOUNDATION USED}
+
+We use the following previously established results.
+
+\begin{enumerate}
+\item \textbf{Round-1 Lemma 17.1 (prime-pair formulation).} A prime $p$ is cluster if and only if for every even $n$ with $2\le n\le p-3$ there exists a prime $q\le p-n$ such that both $q$ and $q+n$ are prime.
+
+\item \textbf{Round-2 Lemma 17.3 (finite reduction for $n=p-m$).} If $p$ is an odd prime, $3\le m\le p-2$, and $n:=p-m$, then any representation $n=q_1-q_2$ with primes $q_1,q_2\le p$ forces $q_2\le m$. Consequently,
+\[
+n=p-m
+\]
+fails at $p$ if and only if
+\[
+\forall\ \text{primes }q\le m,\qquad p-(m-q)\ \text{is not prime}.
+\]
+
+\item \textbf{Round-2 Lemma 17.4 (CRT--Dirichlet forcing).} Given finitely many positive integers $d_1,\dots,d_k$, and pairwise distinct primes $r_i$ such that $r_i\nmid d_i$, one can choose a residue class $a\pmod{R}$, where $R=\prod_i r_i$, such that infinitely many primes $p\equiv a\pmod R$ satisfy that every $p-d_i$ is composite.
+
+\item \textbf{Round-2 Theorem 17.5 (single-offset obstruction).} For every fixed odd composite $m\ge 9$, there are infinitely many primes $p$ such that $p-m$ fails the cluster condition at $p$.
+\end{enumerate}
+
+No Round-2 proofs are repeated here; they are only invoked and extended.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+
+\textbf{New insight: simultaneous obstruction forcing.}
+
+Round-2 killed one prescribed near-$p$ gap at a time. The new idea is that the CRT--Dirichlet construction can be run \emph{simultaneously} for every pair $(m,q)$ with $m$ in a fixed finite set of odd composite offsets and $q\le m$ prime. Thus finitely many candidate witness systems can all be destroyed at once.
+
+This has two concrete consequences.
+
+\begin{enumerate}
+\item The obstructions $p-m$ for different odd composite $m$ are \emph{not mutually incompatible}; any finite family of them can occur simultaneously for infinitely many primes $p$.
+\item The single-offset theorem of Round-2 upgrades to an \emph{arbitrarily-many-offset} theorem, showing that non-cluster behavior can be forced in a highly structured way.
+\end{enumerate}
+
+A second new consequence is a \emph{complete classification of fixed odd offsets}: if $m$ is a fixed odd prime, then $p-m$ is always trivially representable for every prime $p>m$; if $m$ is a fixed odd composite, then $p-m$ fails for infinitely many primes $p$.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+
+The exact gap left after Round-2 was this:
+\begin{quote}
+Round-2 produced infinitely many primes with one prescribed failing gap $p-m$, but did not address whether several such prescribed failures can be forced \emph{simultaneously}, nor whether fixed odd offsets can be classified completely.
+\end{quote}
+
+The plan is therefore:
+\begin{enumerate}
+\item Extend the Round-2 CRT--Dirichlet argument from one offset $m$ to a finite family $M$ of odd composite offsets.
+\item Deduce that for every $K\ge 1$ there are infinitely many primes with at least $K$ distinct failing even integers.
+\item Combine the new theorem with the trivial representation $p-m=p-m$ when $m$ is prime to classify fixed odd offsets.
+\item Extract a concrete local corollary for cluster primes, namely that every cluster prime $p>7$ must be preceded by a prime gap at most $6$.
+\end{enumerate}
+
+This overcomes the previous obstacle because it shows that a whole finite obstruction pattern can be enforced with one global arithmetic progression.
+
+\subsection*{5) WORK (ROUND-3)}
+
+\subsubsection*{5.1 Simultaneous finite-pattern obstruction theorem}
+
+\textbf{Theorem 17.7.}
+Let $M$ be a finite nonempty set of odd composite integers, each at least $9$. Then there exist infinitely many primes $p$ such that for \emph{every} $m\in M$, the even integer
+\[
+n_m:=p-m
+\]
+fails the cluster condition at $p$. In particular, for such primes $p$, the prime $p$ is non-cluster and has at least $|M|$ distinct failing even integers.
+
+\emph{Proof.}
+Let
+\[
+B:=\max M.
+\]
+For each pair $(m,q)$ with $m\in M$ and $q\le m$ prime, define
+\[
+d_{m,q}:=m-q.
+\]
+Because every $m\in M$ is composite, we never have $q=m$, so each $d_{m,q}$ is a positive integer.
+
+Choose pairwise distinct primes
+\[
+r_{m,q}>B
+\]
+for all such pairs $(m,q)$. Since $0<d_{m,q}<m\le B<r_{m,q}$, we have
+\[
+r_{m,q}\nmid d_{m,q}
+\]
+for every pair.
+
+Now apply the Round-2 CRT--Dirichlet lemma simultaneously to the full finite family of integers $d_{m,q}$. We obtain a modulus
+\[
+R:=\prod_{m\in M}\ \prod_{\substack{q\le m \\ q\ \mathrm{prime}}} r_{m,q}
+\]
+and a residue class $a\pmod R$ with $\gcd(a,R)=1$ such that there are infinitely many primes
+\[
+p\equiv a\pmod R
+\]
+and, for every sufficiently large such prime $p$,
+\[
+p-d_{m,q}=p-(m-q)
+\]
+is composite for every pair $(m,q)$.
+
+Fix such a prime $p$, large enough that $p\ge B+3$. Then for each $m\in M$, the integer
+\[
+n_m=p-m
+\]
+is even because both $p$ and $m$ are odd, and it lies in the cluster range since
+\[
+2\le p-m\le p-3.
+\]
+Moreover, for every prime $q\le m$, the number
+\[
+p-(m-q)
+\]
+is composite. By Round-2 Lemma 17.3, this means exactly that $n_m=p-m$ fails the cluster condition at $p$.
+
+Since this holds for every $m\in M$, all these failures occur simultaneously. The numbers $p-m$ are distinct because the elements of $M$ are distinct, so $p$ has at least $|M|$ distinct failing even integers. In particular, $p$ is non-cluster. Since infinitely many such primes $p$ exist, the theorem follows. \hfill$\square$
+
+\subsubsection*{5.2 Corollary: arbitrarily many prescribed failures}
+
+\textbf{Corollary 17.8.}
+For every integer $K\ge 1$, there exist infinitely many primes $p$ for which at least $K$ distinct even integers $n$ with $2\le n\le p-3$ fail the cluster condition.
+
+\emph{Proof.}
+Choose any set $M$ consisting of $K$ distinct odd composite integers at least $9$; for example, the first $K$ odd composite integers at least $9$. Apply Theorem 17.7. Then for infinitely many primes $p$, every number $p-m$ with $m\in M$ fails, giving at least $K$ distinct failures. \hfill$\square$
+
+This strictly strengthens Round-2, where only one prescribed failure gap was forced at a time.
+
+\subsubsection*{5.3 Corollary: classification of fixed odd offsets}
+
+\textbf{Corollary 17.9.}
+Let $m\ge 3$ be a fixed odd integer.
+\begin{enumerate}
+\item If $m$ is prime, then for every prime $p>m$ the even integer $p-m$ is represented as a difference of two primes $\le p$, namely
+\[
+p-m=p-m,
+\]
+with $q_1=p$ and $q_2=m$. Thus the fixed offset $m$ never causes failure.
+
+\item If $m$ is composite, then $m\ge 9$, and there exist infinitely many primes $p$ such that $p-m$ fails the cluster condition at $p$.
+\end{enumerate}
+
+Thus, among fixed odd offsets, the prime offsets are always trivially covered, while every odd composite offset fails for infinitely many primes.
+
+\emph{Proof.}
+Part (1) is immediate from the representation $p-m=q_1-q_2$ with $q_1=p$ and $q_2=m$.
+
+For part (2), every odd composite integer at least $3$ is at least $9$, so the conclusion follows from the Round-2 single-offset obstruction theorem (equivalently from Theorem 17.7 with $M=\{m\}$). \hfill$\square$
+
+\subsubsection*{5.4 Corollary: a necessary local condition for cluster primes}
+
+\textbf{Corollary 17.10.}
+If $p>7$ is a cluster prime, then the preceding prime gap is at most $6$; equivalently, at least one of
+\[
+p-2,\qquad p-4,\qquad p-6
+\]
+is prime.
+
+\emph{Proof.}
+If $p=11$, the preceding prime is $7$, so the gap is $4\le 6$. It therefore remains to treat the case $p>11$.
+
+Because $9$ is an odd composite, the even number $p-9$ lies in the cluster range for every prime $p>11$. If $p$ is cluster, then $p-9$ must be representable.
+
+Apply Round-2 Lemma 17.3 with $m=9$. The possible upper primes are
+\[
+p-(9-q),\qquad q\in\{2,3,5,7\},
+\]
+namely
+\[
+p-7,\qquad p-6,\qquad p-4,\qquad p-2.
+\]
+Now $p-7$ is even and greater than $2$ for $p>9$, hence composite. Therefore at least one of
+\[
+p-6,\quad p-4,\quad p-2
+\]
+must be prime. This means there is a prime in the interval $(p-8,p)$, so the preceding prime gap is at most $6$. \hfill$\square$
+
+This recovers a sharp and very concrete necessary condition on any cluster prime.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+We now test the Round-3 argument for hidden flaws.
+
+\begin{enumerate}
+\item \textbf{Do simultaneous congruences conflict across different offsets $m$?}  
+No. Each pair $(m,q)$ is assigned its own distinct modulus prime $r_{m,q}$. CRT handles all congruences simultaneously because the moduli are pairwise coprime.
+
+\item \textbf{Could some $d_{m,q}$ equal $0$?}  
+No. Since every $m\in M$ is composite and $q$ is prime, $q=m$ cannot happen. Hence $d_{m,q}=m-q\ge 1$.
+
+\item \textbf{Could the forced divisor $r_{m,q}$ equal the number $p-(m-q)$, making it prime rather than composite?}  
+This can happen for at most one value of $p$ per pair $(m,q)$. Excluding finitely many such exceptional primes still leaves infinitely many primes in the arithmetic progression.
+
+\item \textbf{Are the claimed failing numbers distinct?}  
+Yes. If $m_1\neq m_2$, then $p-m_1\neq p-m_2$. Thus Theorem 17.7 really gives at least $|M|$ distinct failures.
+
+\item \textbf{Does every $p-m$ lie in the required cluster range?}  
+Yes. Once $p\ge \max(M)+3$, we have $2\le p-m\le p-3$ for every $m\in M$.
+
+\item \textbf{Does Corollary 17.9 miss any odd offsets?}  
+The only odd integer below $3$ is $1$, but then $p-1>p-3$ and it lies outside the cluster range. So the classification of fixed odd offsets naturally begins at $m=3$.
+\end{enumerate}
+
+No contradiction with earlier rounds arises: Theorem 17.7 genuinely strengthens the Round-2 one-offset theorem, and Corollaries 17.8--17.10 are proper new consequences.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The original question --- whether there are infinitely many cluster primes --- remains open.
+
+However, Round-3 proves a theorem strictly stronger than the Round-2 result:
+\begin{quote}
+For any finite set $M$ of odd composite integers at least $9$, there are infinitely many primes $p$ such that every prescribed near-$p$ gap $p-m$ with $m\in M$ fails simultaneously.
+\end{quote}
+
+This yields the following new unconditional advances.
+
+\begin{enumerate}
+\item For every $K\ge 1$, there are infinitely many primes with at least $K$ distinct failing even integers.
+\item Fixed odd offsets are completely classified: prime offsets are always trivially represented, while odd composite offsets fail infinitely often.
+\item Any attempted proof strategy based on the idea that different near-$p$ obstructions are mutually incompatible is ruled out: finitely many such obstructions can coexist on an infinite set of primes.
+\item Every cluster prime $p>7$ must be preceded by a prime gap at most $6$.
+\end{enumerate}
+
+These results do not settle infinitude of cluster primes, but they sharpen the obstruction side substantially and isolate a stronger structural barrier than in Round-2.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 49\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item R. Blecksmith, P. Erd\H{o}s, and J. L. Selfridge, \emph{Cluster Primes}, American Mathematical Monthly \textbf{106} (1999), 43--48.
+\item C. Elsholtz, \emph{On cluster primes}, Acta Arithmetica \textbf{109} (2003), 281--284.
+\item Chinese Remainder Theorem (standard elementary number theory).
+\item Dirichlet's theorem on primes in arithmetic progressions (standard analytic number theory).
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This is a drop-in \LaTeX{} fragment with no preamble and no \verb|\begin{document}|, as requested.

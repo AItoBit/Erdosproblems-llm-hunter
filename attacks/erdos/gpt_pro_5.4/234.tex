@@ -1,0 +1,260 @@
+\section*{Erd\H{o}s Problem \#234 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: obstruction/gap-closure. Round 1 left two distinct gaps: existence of the densities
+\[
+F_N(c):=\frac{1}{N}\#\Bigl\{2\le n\le N:\ \frac{p_{n+1}-p_n}{\log n}<c\Bigr\}
+\]
+for fixed $c$, and continuity of the limiting function if the limit exists. The most promising strict advance is to remove \emph{one} of those obstacles unconditionally: I will prove a quantitative upper bound
+\[
+F_N(c)\ll c
+\]
+for fixed $c>0$. This shows that any putative limiting distribution is automatically continuous at $0$, so the only genuinely open part that remains is existence of the densities and continuity away from the origin.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without re-proving them.
+
+\begin{itemize}
+\item Round-1 Lemma 234.1: the normalized gaps
+\[
+a_n:=\frac{p_{n+1}-p_n}{\log n}
+\]
+have mean value $1+o(1)$, i.e.
+\[
+\frac{1}{N}\sum_{n=2}^{N} a_n \to 1.
+\]
+\item Round-1 Corollary 234.2: for every fixed $c>0$,
+\[
+\limsup_{N\to\infty}\frac{1}{N}\#\{2\le n\le N: a_n\ge c\}\le \frac{1}{c},
+\]
+so any limiting law would be tight on the right.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{pair-counting upper bound averaged over short gap lengths}. The key quantitative input is a standard Selberg-sieve prime-pair estimate together with the elementary average-order identity
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}\ll H.
+\]
+This converts upper bounds for prime pairs into an upper bound for the frequency of \emph{small consecutive} prime gaps.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+After Round 1, the exact unresolved issue was: even if one believes the densities should exist, no rigorous argument had been given for continuity of the limiting function. I now target the specific sub-gap at $c=0$.
+
+The precise claim to prove is:
+
+\medskip
+\noindent
+\textbf{Claim 234-R2.} There exists an absolute constant $C>0$ such that for every fixed $c>0$ and all sufficiently large $N$,
+\[
+F_N(c)\le Cc+O\!\left(\frac{1}{N}\right).
+\]
+In particular,
+\[
+\limsup_{N\to\infty}F_N(c)\le Cc.
+\]
+\medskip
+
+This overcomes one concrete obstacle from Round 1: continuity at the origin is no longer part of the open problem.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let
+\[
+d_n:=p_{n+1}-p_n
+\qquad (n\ge 1).
+\]
+
+I will use the following standard external theorem.
+
+\medskip
+\noindent
+\textbf{Prime-pair upper bound (Selberg sieve).}
+There exists an absolute constant $A>0$ such that for all integers $h\ge 2$ and all $X\ge h+2$,
+\[
+\Pi(X;h):=\#\{p\le X:\ p\text{ and }p+h\text{ are both prime}\}
+\le
+A\,\frac{h}{\phi(h)}\,\frac{X}{(\log X)^2}.
+\]
+For odd $h>1$, the left-hand side is actually $0$.
+\medskip
+
+The only other ingredient needed is the following elementary mean-value lemma.
+
+\medskip
+\noindent
+\textbf{Lemma 234.2.1.}
+For all $H\ge 1$,
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}\ll H.
+\]
+
+\emph{Proof.}
+Use the divisor identity
+\[
+\frac{n}{\phi(n)}=\sum_{d\mid n}\frac{\mu^2(d)}{\phi(d)}.
+\]
+Indeed, both sides are multiplicative, and on prime powers $p^k$ they equal
+\[
+\frac{p}{p-1}=1+\frac{1}{p-1}.
+\]
+Therefore
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}
+=
+\sum_{h\le H}\sum_{d\mid h}\frac{\mu^2(d)}{\phi(d)}
+=
+\sum_{d\le H}\frac{\mu^2(d)}{\phi(d)}\Bigl\lfloor\frac{H}{d}\Bigr\rfloor.
+\]
+Hence
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}
+\le
+H\sum_{d=1}^{\infty}\frac{\mu^2(d)}{d\phi(d)}.
+\]
+The Euler product for the last series is
+\[
+\prod_{p}\left(1+\frac{1}{p(p-1)}\right),
+\]
+which converges absolutely. So the whole sum is $O(H)$.
+\hfill$\square$
+\medskip
+
+Now prove the announced bound on small normalized gaps.
+
+\medskip
+\noindent
+\textbf{Theorem 234.2.2.}
+There exists an absolute constant $C>0$ such that for every fixed $c>0$ and all sufficiently large $N$,
+\[
+F_N(c)\le Cc+O\!\left(\frac{1}{N}\right).
+\]
+Consequently,
+\[
+\limsup_{N\to\infty}F_N(c)\le Cc.
+\]
+
+\emph{Proof.}
+Set
+\[
+X:=p_{N+1}.
+\]
+If $2\le n\le N$ and $d_n/\log n<c$, then certainly $d_n<c\log N$ because $\log n\le \log N$.
+Therefore
+\[
+N F_N(c)
+\le
+\#\{2\le n\le N:\ d_n<c\log N\}.
+\]
+Now all prime gaps are even except the unique gap $p_2-p_1=1$. Hence
+\[
+\#\{2\le n\le N:\ d_n<c\log N\}
+\le
+1+\sum_{2\le h<c\log N}\#\{2\le n\le N:\ d_n=h\}.
+\]
+If $d_n=h$, then $(p_n,p_n+h)$ is a prime pair with $p_n\le p_N<X$. Discarding the consecutiveness condition can only enlarge the count, so
+\[
+\#\{2\le n\le N:\ d_n=h\}\le \Pi(X;h).
+\]
+Hence
+\[
+N F_N(c)
+\le
+1+\sum_{2\le h<c\log N}\Pi(X;h)
+\le
+1+A\frac{X}{(\log X)^2}\sum_{2\le h<c\log N}\frac{h}{\phi(h)}.
+\]
+By Lemma 234.2.1 with $H=\lfloor c\log N\rfloor$,
+\[
+\sum_{2\le h<c\log N}\frac{h}{\phi(h)}\ll c\log N+1.
+\]
+Also, by the prime number theorem,
+\[
+X=p_{N+1}\asymp N\log N,
+\qquad
+\log X\asymp \log N.
+\]
+Therefore
+\[
+N F_N(c)
+\ll
+1+\frac{N\log N}{(\log N)^2}(c\log N+1)
+\ll
+1+cN.
+\]
+Dividing by $N$ yields
+\[
+F_N(c)\le Cc+O\!\left(\frac{1}{N}\right)
+\]
+for some absolute $C$.
+\hfill$\square$
+\medskip
+
+\noindent
+\textbf{Corollary 234.2.3.}
+If the densities
+\[
+f(c)=\lim_{N\to\infty}F_N(c)
+\]
+exist for all $c\ge 0$, then automatically
+\[
+f(c)\ll c \qquad (c\downarrow 0),
+\]
+so $f$ is continuous at $0$.
+
+\emph{Proof.}
+Since $f(0)=0$ and Theorem 234.2.2 gives $f(c)\le Cc$ for every fixed $c>0$, one has $f(c)\to 0$ as $c\downarrow 0$.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Did I silently use consecutiveness where only prime pairs were counted?} No. I only used the inequality
+\[
+\#\{n:d_n=h\}\le \Pi(X;h),
+\]
+which is valid because every consecutive prime pair is a prime pair, but not conversely.
+
+\item \emph{What about odd gaps?} For $n\ge 2$, prime gaps are even. The exceptional gap $1$ between $2$ and $3$ contributes the harmless additive term $1$.
+
+\item \emph{Are the sieve hypotheses satisfied?} Yes. Here $h<c\log N$ and $X=p_{N+1}\asymp N\log N$, so $h\le X$ for all large $N$.
+
+\item \emph{Could the bound depend on $c$ in a hidden way?} The theorem is uniform in fixed $c$ because the only $c$-dependence enters through the upper limit $H\asymp c\log N$ in Lemma 234.2.1.
+
+\item \emph{Did this prove too much?} No. The argument only bounds the \emph{upper density} of small gaps. It does not control oscillation of $F_N(c)$ in $N$, so it does not prove the existence of the density.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The new rigorous advance over Round 1 is:
+\begin{itemize}
+\item the continuity issue at $c=0$ is now settled conditionally on existence of the densities, because any putative limit must satisfy $f(c)\ll c$ as $c\downarrow 0$;
+\item equivalently, the only genuinely open part remaining is existence of the densities and continuity for positive $c$.
+\end{itemize}
+
+The exact unresolved gap is still the same hard one identified in Round 1: proving that $F_N(c)$ has a limit for each fixed $c$, or producing a value of $c$ for which the densities fail to exist.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 45\%
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{References}
+
+Only references actually used or checked in this round are listed.
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#234}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#236}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#238}, erdosproblems.com, accessed 2026-03-07.
+\item H. Halberstam and H.-E. Richert, \emph{Sieve Methods}, Academic Press, 1974.
+\item H. L. Montgomery and R. C. Vaughan, \emph{Multiplicative Number Theory I: Classical Theory}, Cambridge University Press, 2007.
+\end{enumerate}

@@ -1,0 +1,102 @@
+\section{Erd\H{o}s Problem \#318}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path pursued: \textbf{(A) full proof}.  Round~1 already settled the arithmetic-progression case and the positive-density counterexample case, leaving only the squares case open.  In this round I close that exact gap by applying a new external theorem of Daniel Larsen whose statement matches the missing squares case precisely.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 conclusions without re-proving them.
+\begin{enumerate}
+\item For an infinite arithmetic progression $A$ and a non-constant function $f:A\to\{-1,1\}$, there does exist a finite nonempty $S\subset A$ with
+\[
+\sum_{n\in S} \frac{f(n)}{n}=0.
+\]
+\item For arbitrary positive-density sets, the statement is false; Round~1 gave an explicit counterexample of parity type.
+\item The only unresolved part after Round~1 was the case where $A$ is the set of perfect squares greater than $1$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the following theorem from Daniel Larsen's 2026 note \emph{Sufficiently abundant numbers are pseudoperfect}.
+
+\paragraph{Larsen's theorem on partitions of the squares.}
+Let $X$ and $Y$ be any partition of the set of perfect squares greater than $1$ into two nonempty parts.  Then there exist nonempty finite subsets $X'\subset X$ and $Y'\subset Y$ such that
+\[
+\sum_{x\in X'} \frac1x = \sum_{y\in Y'} \frac1y.
+\]
+This theorem was not available in Round~1; it closes the only missing case.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The gap left after Round~1 is sharply formulated: given a non-constant sign function on the squares greater than $1$, prove the existence of a finite zero-sum.  Larsen's theorem is tailor-made for this.  The plan is simply to translate the sign function into a two-colouring of the squares and then apply Larsen's theorem.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+A=\{4,9,16,25,\dots\}
+\]
+be the set of perfect squares greater than $1$, and let
+\[
+f:A\to\{-1,1\}
+\]
+be non-constant.
+Define
+\[
+X:=\{n\in A: f(n)=1\},
+\qquad
+Y:=\{n\in A: f(n)=-1\}.
+\]
+Because $f$ is non-constant and takes values only in $\{-1,1\}$, both $X$ and $Y$ are nonempty, and they form a partition of $A$.
+
+Apply Larsen's theorem to this partition.  We obtain nonempty finite sets
+\[
+X'\subset X,
+\qquad
+Y'\subset Y
+\]
+such that
+\[
+\sum_{x\in X'} \frac1x = \sum_{y\in Y'} \frac1y.
+\]
+Set
+\[
+S:=X'\cup Y'.
+\]
+Then $S$ is a finite nonempty subset of $A$, and
+\[
+\sum_{n\in S} \frac{f(n)}{n}
+=
+\sum_{x\in X'} \frac{1}{x}
+-
+\sum_{y\in Y'} \frac{1}{y}
+=0.
+\]
+So the squares case has an affirmative answer.
+
+Combining this with the Round~1 foundation, the complete resolution of Problem~\#318 is now:
+\begin{enumerate}
+\item for infinite arithmetic progressions: \textbf{yes};
+\item for arbitrary positive-density sets: \textbf{no};
+\item for the set of perfect squares greater than $1$: \textbf{yes}.
+\end{enumerate}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I checked the new deduction against the likely failure modes.
+\begin{enumerate}
+\item \emph{Does non-constant imply both colour classes are nonempty?}  Yes, because the codomain is exactly $\{-1,1\}$.
+\item \emph{Does Larsen's theorem apply to exactly this domain?}  Yes.  Its statement is about partitions of the set of perfect squares greater than $1$, which is exactly the set $A$.
+\item \emph{Are the subsets produced nonempty and finite?}  Yes; that is part of Larsen's theorem.
+\item \emph{Is there any overlap issue in $S=X'\cup Y'$?}  No, because $X$ and $Y$ are disjoint parts of a partition.
+\item \emph{Am I re-proving Larsen's theorem?}  No.  The Round~2 advance here is a gap-free application of an external theorem whose hypotheses match the remaining open case exactly.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{FULL SOLUTION -- FULL PROOF.}
+
+Using Larsen's theorem on partitions of the perfect squares greater than $1$, the squares case is affirmative.  Together with the Round~1 results for arithmetic progressions and for positive-density sets, this completely resolves Erd\H{o}s Problem~\#318.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 100\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#318}, problem page, accessed 2026-03-07.
+\item D. Larsen, \emph{Sufficiently abundant numbers are pseudoperfect}, 2026 note; theorem on partitions of the perfect squares greater than $1$ checked from the publicly posted source file.
+\end{enumerate}

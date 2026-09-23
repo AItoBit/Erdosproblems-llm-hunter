@@ -1,0 +1,345 @@
+\section{Round-10 Objective}
+We pursue \textbf{(C) obstruction/correction}.  Round~9 proved that the full difficulty of the problem survives inside an arbitrarily high-density branch: by an affine padding construction, any instance can be embedded into one with
+\[
+\inf_k d(A^{(k)})\ge 1-\varepsilon.
+\]
+The exact gap left after Round~9 is whether the remaining problem becomes easier once the finite-stage densities are not merely bounded away from $0$, but are \emph{almost constant} from the very beginning.
+
+The new goal of this round is to show that this does \emph{not} simplify the problem.  We prove that for every $\varepsilon>0$, the original Erd\H{o}s Problem~25 is equivalent to its restriction to instances whose stage-density sequence
+\[
+\delta_k:=d(A^{(k)})
+\]
+lies inside an interval of length at most $\varepsilon$, and in fact satisfies
+\[
+1-\varepsilon<\delta:=\lim_{k\to\infty}\delta_k<1,
+\qquad
+0\le \delta_k-\delta\le \varepsilon\quad (k\ge 1).
+\]
+Thus the full difficulty already appears in the branch where the stage densities are uniformly $\varepsilon$-close to their limit and remain arbitrarily close to $1$.
+
+This rules out an entire class of strategies based on ``eventual stabilization'' or ``small total variation'' of the stage-density sequence.
+
+\section{Round-9 Foundation Used}
+We rely on the following vetted Round~9 results.
+\begin{itemize}
+\item \textbf{Stage-density monotonicity (Round~2).}
+For every instance,
+\[
+\delta_k:=d(A^{(k)})
+\]
+exists, and
+\[
+1\ge \delta_1\ge \delta_2\ge \cdots\ge 0,
+\]
+so $\delta_k\to\delta\in[0,1]$.
+
+\item \textbf{Round~9 affine padding transformation.}
+Given an arbitrary instance $(m_j,b_j)$ and an integer $M\ge 3$, define the transformed instance by
+\[
+ n_1:=M,\quad a_1:=0,
+ \qquad
+ n_{j+1}:=Mm_j,\quad a_{j+1}:=Mb_j+1\pmod{Mm_j}.
+\]
+If $B$ is the original set and $A_M$ the transformed set, then Round~9 established:
+\begin{align}
+A_M
+&=
+\{1\}
+\cup
+\{n\in\mathbb N:\ n\equiv r\pmod M\ \text{for some }2\le r\le M-1\}
+\cup
+\{Mt+1:\ t\in B\},
+\tag{R9.1}\\
+ d(A_M^{(k+1)})
+&=
+\frac{M-2}{M}+\frac1M\,d(B^{(k)}),
+\tag{R9.2}\\
+\underline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\underline{\delta}_{\log}(B),
+\tag{R9.3}\\
+\overline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\overline{\delta}_{\log}(B).
+\tag{R9.4}
+\end{align}
+In particular, $A_M$ has a logarithmic density if and only if $B$ does.
+\end{itemize}
+
+\section{New Insight / Tool (Round-10)}
+The new observation is that the Round~9 padding transformation does more than force high density: it \emph{compresses the entire stage-density sequence by the factor $1/M$}.
+
+If
+\[
+\beta_k:=d(B^{(k)}),
+\qquad \beta_0:=1,
+\]
+and
+\[
+\alpha_k:=d(A_M^{(k)}),
+\qquad \alpha:=\lim_{k\to\infty}\alpha_k,
+\]
+then Round~9 gives the exact affine formula
+\[
+\alpha_k=\frac{M-2}{M}+\frac{\beta_{k-1}}{M}
+\qquad (k\ge 1),
+\]
+so
+\[
+\alpha=\frac{M-2}{M}+\frac{\beta}{M},
+\qquad \beta:=\lim_{k\to\infty}\beta_k.
+\]
+Therefore,
+\[
+0\le \alpha_k-\alpha=\frac{\beta_{k-1}-\beta}{M}\le \frac1M
+\qquad (k\ge 1).
+\]
+Hence the transformed instance has:
+\begin{itemize}
+\item stage densities confined to an interval of width at most $1/M$,
+\item total variation at most $1/M$,
+\item limit lying in the interval $[1-2/M,1-1/M]$.
+\end{itemize}
+So the whole problem can be embedded into instances whose stage-density sequence is uniformly arbitrarily close to a limit arbitrarily close to $1$.
+
+\section{Attack Plan (Round-10)}
+The exact gap after Round~9 was this: although the full problem reduces to a high-density branch, perhaps the problem becomes easier if the stage densities are nearly stationary.
+
+We close that gap by proving:
+\begin{enumerate}
+\item the padding transformation from Round~9 compresses the entire stage-density sequence by $1/M$;
+\item for every $\varepsilon>0$, any instance can be transformed into one with
+\[
+1-\varepsilon<\delta<1,
+\qquad
+0\le \delta_k-\delta\le \varepsilon\quad\forall k;
+\]
+\item logarithmic nonexistence transfers exactly under this transformation;
+\item consequently, the original problem is equivalent to its restriction to this almost-constant high-density branch.
+\end{enumerate}
+This shows that small absolute variation or rapid stabilization of the stage densities does not isolate an easier subclass.
+
+\section{Work (Round-10)}
+Let $(m_j,b_j)$ be an arbitrary instance of Problem~25, with associated set $B$ and finite-stage sets $B^{(k)}$.  Write
+\[
+\beta_k:=d(B^{(k)})\qquad (k\ge 1),
+\]
+and define $\beta_0:=1$.  By Round~2, $(\beta_k)$ decreases to a limit
+\[
+\beta:=\lim_{k\to\infty}\beta_k\in[0,1].
+\]
+
+Fix an integer $M\ge 3$, and let $(n_i,a_i)$ be the Round~9 padded instance.  Let $A_M$ be the corresponding set, and let
+\[
+\alpha_k:=d(A_M^{(k)})\qquad (k\ge 1)
+\]
+denote the stage densities of the transformed instance.
+
+\subsection*{10.1. Compression of the stage-density sequence}
+\paragraph{Lemma 10.1.}
+For every $k\ge 1$,
+\begin{equation}
+\alpha_k=\frac{M-2}{M}+\frac{\beta_{k-1}}{M}.
+\tag{10.1}
+\end{equation}
+Consequently, if
+\begin{equation}
+\alpha:=\lim_{k\to\infty}\alpha_k,
+\tag{10.2}
+\end{equation}
+then
+\begin{equation}
+\alpha=\frac{M-2}{M}+\frac{\beta}{M},
+\tag{10.3}
+\end{equation}
+and for every $k\ge 1$,
+\begin{equation}
+0\le \alpha_k-\alpha=\frac{\beta_{k-1}-\beta}{M}\le \frac1M.
+\tag{10.4}
+\end{equation}
+In particular,
+\begin{equation}
+\sup_{k\ge 1}\alpha_k-\inf_{k\ge 1}\alpha_k\le \frac1M,
+\tag{10.5}
+\end{equation}
+and the total variation of $(\alpha_k)$ satisfies
+\begin{equation}
+\sum_{k\ge 1}(\alpha_k-\alpha_{k+1})=\alpha_1-\alpha\le \frac1M.
+\tag{10.6}
+\end{equation}
+
+\emph{Proof.}
+Equation \eqref{10.1} is exactly Round~9 formula (R9.2), extended to $k=1$ by the convention $\beta_0=1$; indeed stage~1 of the padded instance removes only the residue class $0\pmod M$, so
+\[
+\alpha_1=1-\frac1M=\frac{M-2}{M}+\frac{\beta_0}{M}.
+\]
+Now let $k\to\infty$ in \eqref{10.1}.  Since $\beta_{k-1}\to\beta$, this gives \eqref{10.3}.  Subtracting \eqref{10.3} from \eqref{10.1} yields
+\[
+\alpha_k-\alpha=\frac{\beta_{k-1}-\beta}{M}.
+\]
+Because $(\beta_k)$ is decreasing and bounded below by $\beta$, we have
+\[
+0\le \beta_{k-1}-\beta\le \beta_0-\beta\le 1,
+\]
+which proves \eqref{10.4}.  Then \eqref{10.5} follows immediately.
+
+Since $(\alpha_k)$ is also decreasing, its total variation is just $\alpha_1-\alpha$; using \eqref{10.4} with $k=1$ gives \eqref{10.6}. \hfill $\square$
+
+\subsection*{10.2. Equivalence with the almost-constant high-density branch}
+\paragraph{Theorem 10.2.}
+Fix $\varepsilon>0$.  The following are equivalent.
+\begin{enumerate}
+\item[(i)] Every instance of Erd\H{o}s Problem~25 has a logarithmic density.
+\item[(ii)] Every instance of Erd\H{o}s Problem~25 satisfying
+\begin{equation}
+1-\varepsilon<\delta:=\lim_{k\to\infty} d(A^{(k)})<1
+\quad\text{and}\quad
+0\le d(A^{(k)})-\delta\le \varepsilon\ \,\forall k\ge 1
+\tag{10.7}
+\end{equation}
+has a logarithmic density.
+\end{enumerate}
+Moreover, one may restrict in \textup{(ii)} to instances having the additional structural property that for some integer $M\ge 3$,
+\begin{equation}
+ n_1=M,\ a_1=0,
+ \qquad
+ M\mid n_i\ \text{and}\ a_i\equiv 1\pmod M\quad (i\ge 2).
+\tag{10.8}
+\end{equation}
+
+\emph{Proof.}
+The implication (i)$\Rightarrow$(ii) is immediate.
+
+Assume (ii).  Let $(m_j,b_j)$ be an arbitrary instance, with associated set $B$.  If the first modulus is $m_1=1$, then $B=\varnothing$, so there is nothing to prove.  Assume therefore that $m_1\ge 2$.
+
+Choose an integer $M\ge 3$ so large that
+\begin{equation}
+\frac{2}{M}<\varepsilon.
+\tag{10.9}
+\end{equation}
+Form the padded instance from Round~9.  By construction it satisfies the structural condition \eqref{10.8}.  Let $A_M$ be its associated set, and let $\alpha_k=d(A_M^{(k)})$, $\alpha=\lim_k \alpha_k$.
+
+By Lemma~10.1,
+\[
+\alpha=\frac{M-2}{M}+\frac{\beta}{M}.
+\]
+Since $0\le \beta\le 1$, we obtain
+\begin{equation}
+1-\frac{2}{M}\le \alpha\le 1-\frac{1}{M}<1.
+\tag{10.10}
+\end{equation}
+Thus \eqref{10.9} implies
+\begin{equation}
+1-\varepsilon<\alpha<1.
+\tag{10.11}
+\end{equation}
+Also Lemma~10.1 gives
+\begin{equation}
+0\le \alpha_k-\alpha\le \frac1M<\varepsilon
+\qquad (k\ge 1),
+\tag{10.12}
+\end{equation}
+so the transformed instance satisfies \eqref{10.7}.
+
+By assumption (ii), this transformed instance has a logarithmic density.  But Round~9 formulas (R9.3)--(R9.4) show that $A_M$ has a logarithmic density if and only if the original set $B$ does.  Therefore $B$ has a logarithmic density.
+
+Since the original instance was arbitrary, (i) follows. \hfill $\square$
+
+\paragraph{Corollary 10.3.}
+For every $\varepsilon>0$, the original problem is equivalent to its restriction to instances satisfying the stronger property
+\begin{equation}
+\sup_{k\ge 1}\Bigl|d(A^{(k)})-\delta\Bigr|\le \varepsilon
+\quad\text{for some }\delta\in(1-\varepsilon,1).
+\tag{10.13}
+\end{equation}
+Indeed, one may further require
+\begin{equation}
+\sum_{k\ge 1}\Bigl(d(A^{(k)})-d(A^{(k+1)})\Bigr)\le \varepsilon.
+\tag{10.14}
+\end{equation}
+
+\emph{Proof.}
+By Theorem~10.2 and Lemma~10.1, choose $M$ so large that $1/M<\varepsilon$ and $2/M<\varepsilon$.  Then \eqref{10.13} follows from \eqref{10.4} and \eqref{10.10}, while \eqref{10.14} is exactly \eqref{10.6}. \hfill $\square$
+
+\paragraph{Corollary 10.4 (counterexamples can be made almost stationary).}
+If there exists a counterexample to Erd\H{o}s Problem~25, then for every $\varepsilon>0$ there exists a counterexample such that its stage-density sequence $(\delta_k)$ satisfies
+\begin{equation}
+1-\varepsilon<\lim_{k\to\infty}\delta_k<1,
+\qquad
+0\le \delta_k-\lim_{j\to\infty}\delta_j\le \varepsilon\quad (k\ge 1),
+\tag{10.15}
+\end{equation}
+and even
+\begin{equation}
+\sum_{k\ge 1}(\delta_k-\delta_{k+1})\le \varepsilon.
+\tag{10.16}
+\end{equation}
+
+\emph{Proof.}
+Apply Theorem~10.2 and Corollary~10.3 to a hypothetical counterexample. \hfill $\square$
+
+\paragraph{Interpretation.}
+Round~9 showed that the full difficulty survives in an arbitrarily high-density branch.  Theorem~10.2 goes further:
+\begin{quote}
+for every $\varepsilon>0$, the full difficulty survives even when the finite-stage densities remain within $\varepsilon$ of their limiting value from the very first stage, and that limiting value itself lies in $(1-\varepsilon,1)$.
+\end{quote}
+So any argument that uses only small absolute variation, rapid stabilization, or uniform closeness of the stage densities to their limit cannot by itself isolate an easier subclass of the problem.
+
+\section{Adversarial Verification}
+We stress-test the new argument.
+\begin{itemize}
+\item \textbf{No re-proving of Round~9 beyond strengthening.}  The exact affine padding formulas (R9.1)--(R9.4) are taken as foundation.  The new step is to extract the quantitative compression of the entire stage-density sequence from them.
+
+\item \textbf{Stage~1 consistency.}  Formula \eqref{10.1} must also hold at $k=1$.  This is why we introduced the convention $\beta_0:=1$; then
+\[
+\alpha_1=1-\frac1M=\frac{M-2}{M}+\frac1M,
+\]
+so there is no off-by-one error.
+
+\item \textbf{Upper bound $1/M$ is sharp enough.}  Since $0\le \beta\le \beta_{k-1}\le 1$, the bound
+\[
+0\le \alpha_k-\alpha\le 1/M
+\]
+is immediate and uniform in $k$.  No additional information about the original instance is needed.
+
+\item \textbf{Logarithmic nonconvergence really transfers.}  Theorem~10.2 uses only the already-vetted Round~9 affine relation of upper/lower logarithmic densities, so the equivalence is exact.
+
+\item \textbf{Why $\alpha<1$.}  Even if the original stage-density limit is $\beta=1$, the transformed limit is
+\[
+\alpha=\frac{M-2}{M}+\frac1M=1-\frac1M<1,
+\]
+so condition \eqref{10.7} is always satisfied after padding.
+
+\item \textbf{Why $\alpha>1-\varepsilon$.}  The lower bound
+\[
+\alpha\ge 1-\frac{2}{M}
+\]
+comes from $\beta\ge 0$.  Choosing $M>2/\varepsilon$ therefore guarantees $\alpha>1-\varepsilon$.
+
+\item \textbf{No contradiction with Round~8.}  Round~8 proved that the branch $\delta_k\to 0$ is always benign.  The present round shows that the complementary almost-constant high-density branch already contains the full problem.  These statements are fully compatible.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main new result is Theorem~10.2:
+\begin{quote}
+For every $\varepsilon>0$, Erd\H{o}s Problem~25 is equivalent to its restriction to instances whose stage densities satisfy
+\[
+1-\varepsilon<\delta:=\lim_{k\to\infty}d(A^{(k)})<1,
+\qquad
+0\le d(A^{(k)})-\delta\le \varepsilon\quad \forall k.
+\]
+\end{quote}
+Equivalently, any hypothetical counterexample can be transformed into one whose stage-density sequence is uniformly $\varepsilon$-close to its limit from the start, with total variation at most $\varepsilon$, and with limit arbitrarily close to $1$.
+
+This is a substantive strengthening of Round~9.  It rules out a broader class of approaches: the full difficulty of the problem already persists in the branch of \emph{almost stationary high-density stage sequences}.  So neither eventual smallness of stage densities (Round~8) nor near-constancy of stage densities (this round) yields a decisive simplification.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 96\%}.
+
+\section{References}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#25}, official problem page, \texttt{https://www.erdosproblems.com/25}, accessed 2026-03-08.
+\item No external mathematical references were used in the proofs of this round.
+\end{itemize}

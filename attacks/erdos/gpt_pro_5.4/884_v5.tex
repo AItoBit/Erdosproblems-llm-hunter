@@ -1,0 +1,418 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)} in the following precise sense: I prove a \emph{fatal obstruction} to any counterexample sequence that stays inside a fixed finite smoothness class, and I give the corresponding corrected positive statement.
+
+The exact gap left after Round-(round\_no-1) was that all unconditional positive results still allowed the set of prime divisors of \(n\) to vary with \(n\). A natural way a disproof might try to proceed is to keep the prime set fixed and let only the exponents grow. I will show that this entire class is harmless.
+
+\medskip
+
+\noindent\textbf{New corrected statement proved in this round.}
+\emph{Let \(S\) be a fixed finite set of primes. Then there exists a constant \(C_S>0\), depending only on \(S\), such that for every positive integer \(n\) all of whose prime factors lie in \(S\), if}
+\[
+1=d_1<d_2<\cdots<d_t=n
+\]
+\emph{are the positive divisors of \(n\), then}
+\[
+\sum_{1\le i<j\le t}\frac{1}{d_j-d_i}\le C_S
+\qquad\text{and}\qquad
+\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}\le C_S.
+\]
+\emph{In particular,}
+\[
+\sum_{1\le i<j\le t}\frac{1}{d_j-d_i}\le C_S\left(1+\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}\right).
+\]
+
+This strictly advances the previous rounds: it gives an unconditional theorem for \emph{all} \(S\)-smooth integers for each fixed finite \(S\), with no restriction on exponents or on \(\tau(n)\).
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) items as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}.
+\]
+\item The previously checked contextual status that Erd\H{o}s Problem \#884 remains open unconditionally, while Tao's 2025 note gives only a conditional disproof under a prime-tuples hypothesis.
+\item The previous-round positive theorems for special divisor families, which motivate the search for a fixed-prime-set theorem.
+\end{enumerate}
+
+I do not re-prove any of those facts here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a theorem of Tijdeman on \emph{gaps between consecutive \(S\)-smooth numbers}.
+
+Let \(S=\{p_1,\dots,p_h\}\) be a finite set of primes, and let
+\[
+1=a_0<a_1<a_2<\cdots
+\]
+be the increasing sequence of positive integers whose prime factors all lie in \(S\). Tijdeman proved that there exist effectively computable constants \(c_1,c_2>0\), depending only on \(S\), such that
+\[
+a_n-a_{n-1}>\frac{a_n}{c_1(\log a_n)^{c_2}}
+\qquad (n\ge 1).
+\]
+This lower bound is polynomially strong enough to make the weighted reciprocal series
+\[
+\sum_{m\in \mathcal U_S}\frac{(1+\log m)^A}{m}
+\]
+converge for every fixed \(A>0\), where \(\mathcal U_S\) denotes the set of \(S\)-smooth numbers. That is exactly what is needed to control both \(S_{\mathrm{gap}}(n)\) and \(S_{\mathrm{all}}(n)\) uniformly over all \(S\)-smooth \(n\).
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The precise gap after Round-(round\_no-1) was:
+
+\begin{quote}
+Can a counterexample sequence be built while keeping the set of allowed prime factors fixed?
+\end{quote}
+
+I prove the answer is \emph{no}. More precisely:
+
+\begin{enumerate}
+\item enumerate all \(S\)-smooth numbers \(a_0<a_1<a_2<\cdots\);
+\item use Tijdeman's lower bound for \(a_n-a_{n-1}\);
+\item show that every divisor gap \(d_j-d_{j-1}\) inside an \(S\)-smooth integer \(n\) is at least the ambient \(S\)-smooth gap immediately before \(d_j\);
+\item sum the resulting reciprocal bounds, using the convergence of
+\[
+\sum_{m\in \mathcal U_S}\frac{(1+\log m)^A}{m}.
+\]
+\end{enumerate}
+
+This yields boundedness of both \(S_{\mathrm{gap}}(n)\) and \(S_{\mathrm{all}}(n)\) on every fixed \(S\)-smooth class, thereby ruling out an entire family of possible counterexample constructions.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. Setup and external input}
+
+Fix a finite set of primes
+\[
+S=\{p_1,\dots,p_h\}.
+\]
+Let
+\[
+\mathcal U_S:=\left\{p_1^{e_1}\cdots p_h^{e_h}: e_1,\dots,e_h\in \mathbb Z_{\ge 0}\right\}
+\]
+be the multiplicative semigroup of \(S\)-smooth positive integers, written in increasing order as
+\[
+1=a_0<a_1<a_2<\cdots.
+\]
+
+We use the following theorem.
+
+\paragraph{Theorem T (Tijdeman).}
+\emph{There exist constants \(c_1,c_2>0\), depending only on \(S\), such that}
+\[
+a_n-a_{n-1}>\frac{a_n}{c_1(\log a_n)^{c_2}}
+\qquad (n\ge 1).
+\]
+
+\subsection*{2. An auxiliary convergence lemma}
+
+\paragraph{Lemma 1.}
+Let \(A>0\). Then
+\[
+\sum_{m\in \mathcal U_S}\frac{(1+\log m)^A}{m}<\infty.
+\]
+
+\emph{Proof.}
+Write
+\[
+m=p_1^{e_1}\cdots p_h^{e_h}
+\qquad (e_1,\dots,e_h\in \mathbb Z_{\ge 0}).
+\]
+Let
+\[
+L:=\max_{1\le r\le h}\log p_r.
+\]
+Then
+\[
+\log m = e_1\log p_1+\cdots+e_h\log p_h\le L(e_1+\cdots+e_h).
+\]
+Hence
+\[
+1+\log m\le 1+L(e_1+\cdots+e_h)\le (1+L)(1+e_1+\cdots+e_h).
+\]
+Also,
+\[
+1+e_1+\cdots+e_h \le (1+e_1)\cdots(1+e_h).
+\]
+Therefore
+\[
+(1+\log m)^A \le (1+L)^A \prod_{r=1}^h (1+e_r)^A.
+\]
+Dividing by \(m=\prod_{r=1}^h p_r^{e_r}\) and summing over all exponent tuples gives
+\[
+\sum_{m\in \mathcal U_S}\frac{(1+\log m)^A}{m}
+\le
+(1+L)^A
+\prod_{r=1}^h \left(\sum_{e=0}^{\infty}\frac{(1+e)^A}{p_r^e}\right).
+\]
+For each fixed \(r\), the one-variable series
+\[
+\sum_{e=0}^{\infty}\frac{(1+e)^A}{p_r^e}
+\]
+converges because \(p_r\ge 2\) and an exponentially decaying sequence dominates any fixed power of \(e\). Hence the finite product converges, proving the lemma.
+\hfill\(\Box\)
+
+\subsection*{3. Bounding the consecutive-gap sum on every fixed \(S\)-smooth class}
+
+\paragraph{Theorem 2.}
+There exists a constant \(C_{S,\mathrm{gap}}>0\), depending only on \(S\), such that for every \(S\)-smooth integer \(n\),
+\[
+S_{\mathrm{gap}}(n)\le C_{S,\mathrm{gap}}.
+\]
+
+\emph{Proof.}
+Let
+\[
+1=d_1<d_2<\cdots<d_t=n
+\]
+be the positive divisors of \(n\), in increasing order. Since every divisor of an \(S\)-smooth integer is again \(S\)-smooth, each \(d_j\) is some \(a_{\nu_j}\) with
+\[
+0=\nu_1<\nu_2<\cdots<\nu_t.
+\]
+Fix \(j\in\{2,\dots,t\}\). Since \(d_{j-1}=a_{\nu_{j-1}}<a_{\nu_j}=d_j\), we have
+\[
+d_j-d_{j-1}\ge a_{\nu_j}-a_{\nu_j-1}.
+\]
+Applying Theorem T with \(n=\nu_j\) yields
+\[
+d_j-d_{j-1}\ge a_{\nu_j}-a_{\nu_j-1}
+> \frac{a_{\nu_j}}{c_1(\log a_{\nu_j})^{c_2}}
+= \frac{d_j}{c_1(\log d_j)^{c_2}}.
+\]
+Hence
+\[
+\frac{1}{d_j-d_{j-1}} < c_1\,\frac{(\log d_j)^{c_2}}{d_j}
+\le c_1\,\frac{(1+\log d_j)^{c_2}}{d_j}.
+\]
+Summing over \(j=2,\dots,t\), we obtain
+\[
+S_{\mathrm{gap}}(n)
+\le c_1\sum_{j=2}^{t}\frac{(1+\log d_j)^{c_2}}{d_j}
+\le c_1\sum_{m\in \mathcal U_S}\frac{(1+\log m)^{c_2}}{m}.
+\]
+The final series converges by Lemma 1 with \(A=c_2\). Therefore
+\[
+C_{S,\mathrm{gap}}
+:=
+c_1\sum_{m\in \mathcal U_S}\frac{(1+\log m)^{c_2}}{m}
+\]
+is finite and depends only on \(S\), and \(S_{\mathrm{gap}}(n)\le C_{S,\mathrm{gap}}\) for all \(S\)-smooth \(n\).
+\hfill\(\Box\)
+
+\subsection*{4. Counting \(S\)-smooth numbers up to \(x\)}
+
+\paragraph{Lemma 3.}
+There exists a constant \(K_S>0\), depending only on \(S\), such that
+\[
+\#\bigl(\mathcal U_S\cap [1,x]\bigr)\le K_S(1+\log x)^h
+\qquad (x\ge 1).
+\]
+
+\emph{Proof.}
+If
+\[
+m=p_1^{e_1}\cdots p_h^{e_h}\le x,
+\]
+then for each \(r\),
+\[
+0\le e_r\le \frac{\log x}{\log p_r}.
+\]
+Hence the number of possible exponent tuples is at most
+\[
+\prod_{r=1}^h\left(1+\frac{\log x}{\log p_r}\right).
+\]
+For each \(r\),
+\[
+1+\frac{\log x}{\log p_r}\le (1+\log x)\max\left(1,\frac{1}{\log p_r}\right).
+\]
+Thus
+\[
+\#\bigl(\mathcal U_S\cap [1,x]\bigr)
+\le
+\left(\prod_{r=1}^h \max\left(1,\frac{1}{\log p_r}\right)\right)(1+\log x)^h.
+\]
+So we may take
+\[
+K_S:=\prod_{r=1}^h \max\left(1,\frac{1}{\log p_r}\right).
+\]
+This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{5. Bounding the all-pairs reciprocal sum}
+
+\paragraph{Theorem 4.}
+There exists a constant \(C_{S,\mathrm{all}}>0\), depending only on \(S\), such that for every \(S\)-smooth integer \(n\),
+\[
+S_{\mathrm{all}}(n)\le C_{S,\mathrm{all}}.
+\]
+
+\emph{Proof.}
+Let
+\[
+1=d_1<d_2<\cdots<d_t=n
+\]
+be the positive divisors of \(n\). Then
+\[
+S_{\mathrm{all}}(n)=\sum_{j=2}^{t}\sum_{i=1}^{j-1}\frac{1}{d_j-d_i}.
+\]
+For fixed \(j\), since \(d_i\le d_{j-1}\) for all \(i<j\),
+\[
+d_j-d_i\ge d_j-d_{j-1}.
+\]
+Therefore
+\[
+\sum_{i=1}^{j-1}\frac{1}{d_j-d_i}\le \frac{j-1}{d_j-d_{j-1}}.
+\]
+As in the proof of Theorem 2,
+\[
+\frac{1}{d_j-d_{j-1}} \le c_1\,\frac{(1+\log d_j)^{c_2}}{d_j}.
+\]
+Also, since \(d_1,\dots,d_{j-1}\) are distinct \(S\)-smooth numbers less than \(d_j\),
+\[
+j-1\le \#\bigl(\mathcal U_S\cap [1,d_j)\bigr)\le K_S(1+\log d_j)^h
+\]
+by Lemma 3. Hence
+\[
+\sum_{i=1}^{j-1}\frac{1}{d_j-d_i}
+\le c_1K_S\,\frac{(1+\log d_j)^{h+c_2}}{d_j}.
+\]
+Summing over \(j=2,\dots,t\), we get
+\[
+S_{\mathrm{all}}(n)
+\le
+c_1K_S\sum_{j=2}^{t}\frac{(1+\log d_j)^{h+c_2}}{d_j}
+\le
+c_1K_S\sum_{m\in \mathcal U_S}\frac{(1+\log m)^{h+c_2}}{m}.
+\]
+The final series converges by Lemma 1 with \(A=h+c_2\). Therefore
+\[
+C_{S,\mathrm{all}}
+:=
+c_1K_S\sum_{m\in \mathcal U_S}\frac{(1+\log m)^{h+c_2}}{m}
+\]
+is finite and depends only on \(S\), and \(S_{\mathrm{all}}(n)\le C_{S,\mathrm{all}}\) for all \(S\)-smooth \(n\).
+\hfill\(\Box\)
+
+\subsection*{6. Main consequence}
+
+\paragraph{Corollary 5.}
+Let \(S\) be a fixed finite set of primes. Then there exists a constant \(C_S>0\), depending only on \(S\), such that for every \(S\)-smooth integer \(n\),
+\[
+S_{\mathrm{all}}(n)\le C_S
+\qquad\text{and}\qquad
+S_{\mathrm{gap}}(n)\le C_S.
+\]
+In particular,
+\[
+S_{\mathrm{all}}(n)\le C_S\bigl(1+S_{\mathrm{gap}}(n)\bigr).
+\]
+
+\emph{Proof.}
+Take
+\[
+C_S:=\max\{C_{S,\mathrm{all}},\,C_{S,\mathrm{gap}}\}.
+\]
+Then Theorems 2 and 4 give the first two inequalities, and the last one follows immediately from \(1+S_{\mathrm{gap}}(n)\ge 1\).
+\hfill\(\Box\)
+
+\subsection*{7. Structural consequence for any hypothetical counterexample sequence}
+
+\paragraph{Corollary 6.}
+Suppose \((n_\ell)\) is a sequence of positive integers such that
+\[
+\frac{S_{\mathrm{all}}(n_\ell)}{1+S_{\mathrm{gap}}(n_\ell)}\to \infty.
+\]
+Then for every finite set \(S\) of primes, only finitely many \(n_\ell\) are \(S\)-smooth. Equivalently, along such a sequence the largest prime factor \(P^+(n_\ell)\) must tend to infinity.
+
+\emph{Proof.}
+If infinitely many \(n_\ell\) were \(S\)-smooth for some fixed finite \(S\), then Corollary 5 would give
+\[
+\frac{S_{\mathrm{all}}(n_\ell)}{1+S_{\mathrm{gap}}(n_\ell)}\le C_S
+\]
+along that infinite subsequence, contradicting divergence to \(+\infty\). Thus no such fixed finite \(S\) exists.
+
+Now fix \(B\ge 2\). The set of primes \(\le B\) is finite; call it \(S_B\). If infinitely many \(n_\ell\) satisfied \(P^+(n_\ell)\le B\), then they would all be \(S_B\)-smooth, again impossible. Hence for each \(B\) only finitely many \(\ell\) satisfy \(P^+(n_\ell)\le B\), which means \(P^+(n_\ell)\to\infty\).
+\hfill\(\Box\)
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now try to break the new work.
+
+\paragraph{1. Did I use a theorem stronger than what was cited?}
+No. The only external input is Theorem T, namely Tijdeman's lower bound for consecutive gaps in the full sequence of \(S\)-smooth numbers. Everything else is elementary.
+
+\paragraph{2. Is the comparison}
+\[
+d_j-d_{j-1}\ge a_{\nu_j}-a_{\nu_j-1}
+\]
+\emph{always valid?}
+Yes. Since \(d_j=a_{\nu_j}\) and \(d_{j-1}=a_{\nu_{j-1}}\) with \(\nu_{j-1}<\nu_j\), one has
+\[
+d_{j-1}\le a_{\nu_j-1},
+\]
+hence
+\[
+d_j-d_{j-1}\ge a_{\nu_j}-a_{\nu_j-1}.
+\]
+
+\paragraph{3. Could the series in Lemma 1 diverge for non-integer \(A>0\)?}
+No. The proof factors the sum into finitely many one-dimensional series of the form
+\[
+\sum_{e\ge 0}\frac{(1+e)^A}{p^e},
+\]
+which converge for every real \(A>0\) by comparison with a geometric series.
+
+\paragraph{4. Is Lemma 3 too crude near \(x=1\)?}
+No. The bound is only used as an upper bound, and \(1+\log x\ge 1\) for \(x\ge 1\). Any coarse polynomial bound in \(\log x\) suffices.
+
+\paragraph{5. Does Corollary 6 prove more than justified?}
+No. It proves only that an unbounded-ratio sequence cannot stay inside any \emph{fixed} finite prime set. It does \emph{not} prove that \(\omega(n)\to\infty\), and I do not claim that.
+
+\paragraph{6. Is this genuinely stronger than the previous rounds?}
+Yes. Previous unconditional positive results required structural restrictions such as bounded \(\tau(m)\) in decompositions \(n=r^a m\), or special low-dimensional exponent geometry. The present theorem covers \emph{all} \(S\)-smooth integers for every fixed finite prime set \(S\), with no restriction on exponents and no restriction on \(\tau(n)\).
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains open unconditionally. However, this round proves a new theorem that strictly enlarges the unconditional positive regime:
+
+\begin{quote}
+For every fixed finite set \(S\) of primes, both
+\[
+S_{\mathrm{all}}(n)
+\qquad\text{and}\qquad
+S_{\mathrm{gap}}(n)
+\]
+are uniformly bounded on the class of \(S\)-smooth integers \(n\). In particular, Erd\H{o}s' inequality holds on every fixed \(S\)-smooth class with a constant depending only on \(S\).
+\end{quote}
+
+This also isolates a sharp obstruction for any future counterexample construction:
+
+\begin{quote}
+Any sequence \(n_\ell\) for which
+\[
+\frac{S_{\mathrm{all}}(n_\ell)}{1+S_{\mathrm{gap}}(n_\ell)}\to\infty
+\]
+must use primes escaping every fixed finite set; equivalently, its largest prime factor must tend to infinity.
+\end{quote}
+
+So while the global absolute-constant problem is still unresolved, one entire class of potential counterexample/proof scenarios has now been ruled out rigorously.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 94\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item J.-H. Evertse, \emph{Diophantine Equations}, Chapter 5, in particular Theorem 5.6 (Tijdeman's gap theorem for \(S\)-smooth numbers) and the surrounding discussion of Baker's lower bounds for linear forms in logarithms.
+\item T. Tao, \emph{On the sum of reciprocals of gaps between divisors}, September 2025.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}.
+\end{enumerate}

@@ -1,0 +1,238 @@
+\section*{Erd\H{o}s Problem \#238 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: obstruction/correction. Round 1 already proved a weak Erd\H{o}s-type theorem: for each fixed $c_2>0$, one can force a block of more than $c_1^*(c_2)\log x$ consecutive primes whose internal gaps all exceed $c_2$. The exact gap was quantitative: no explicit dependence on $c_2$ was obtained, and there was no explanation of why the simple counting strategy stops short of the full conjecture.
+
+In this round I will do two things.
+\begin{itemize}
+\item First, sharpen the partial theorem to an explicit bound
+\[
+L_{c_2}(x)\gg \frac{\log x}{1+\lfloor c_2\rfloor},
+\]
+where $L_{c_2}(x)$ is the maximal length of such a block.
+\item Second, prove that the Round-1 pigeonhole strategy is \emph{combinatorially sharp}: global control of the number of small gaps cannot by itself yield anything stronger than a constant multiple of $\log x/c_2$.
+\end{itemize}
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 ingredients.
+
+\begin{itemize}
+\item Round-1 Theorem 238.2: for each fixed $c_2>0$ there exists some $c_1^*(c_2)>0$ such that $L_{c_2}(x)>c_1^*(c_2)\log x$ for all large $x$.
+\item The block-decomposition inequality from Round 1: if $m=\pi(x)$ and $B(x)$ is the number of indices $i<m$ with $p_{i+1}-p_i\le c_2$, then
+\[
+L_{c_2}(x)\ge \frac{m}{B(x)+1}.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is the same divisor-sum averaging device from Problem \#234:
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}\ll H.
+\]
+When combined with the Selberg-sieve prime-pair upper bound, this yields an explicit estimate
+\[
+B(x)\ll H\,\frac{x}{(\log x)^2},
+\qquad H:=\lfloor c_2\rfloor.
+\]
+The second new ingredient is a purely combinatorial sharpness lemma showing that the bound $L\ge m/(B+1)$ cannot be improved using only the single scalar datum ``there are at most $B$ bad gaps''.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact unresolved issue after Round 1 was: why does the elementary sieve-plus-pigeonhole method only give some unspecified $c_1^*(c_2)$, and how close is that method to optimal? I now prove two precise claims.
+
+\medskip
+\noindent
+\textbf{Claim 238-R2(a).}
+For every fixed $c_2>0$,
+\[
+L_{c_2}(x)\gg \frac{\log x}{1+\lfloor c_2\rfloor}
+\qquad (x\to\infty).
+\]
+
+\noindent
+\textbf{Claim 238-R2(b).}
+Any method using only the numerical inequality $B(x)\le B$ and the path decomposition into good blocks is combinatorially sharp up to constants; in particular, such a method can never force a block much longer than $m/(B+1)$ without extra information on how the bad gaps are distributed.
+\medskip
+
+This isolates the real missing ingredient for the full conjecture: one needs nontrivial information about the \emph{spacing pattern} of the small gaps, not merely their total number.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let $p_1<p_2<\cdots<p_{\pi(x)}\le x$ be the primes up to $x$, and let
+\[
+L_{c_2}(x):=\max\Bigl\{\ell:\ \text{there exists a block of }\ell\text{ consecutive primes }\le x\text{ with all pairwise differences }>c_2\Bigr\}.
+\]
+Because adjacent gaps are positive integers, the condition ``all pairwise differences exceed $c_2$'' is equivalent to saying that every adjacent gap inside the block is at least $H+1$, where
+\[
+H:=\lfloor c_2\rfloor.
+\]
+If $H=0$, then every gap between odd primes already exceeds $c_2$, so apart from the initial pair $(2,3)$ one may take essentially all primes up to $x$. Thus the interesting case is $H\ge 1$.
+
+As before, call a gap \emph{bad} if
+\[
+p_{i+1}-p_i\le H.
+\]
+Let $B_H(x)$ be the number of bad indices $i<\pi(x)$. Removing bad edges partitions the path of primes into blocks, each of which has all adjacent gaps $>c_2$. Therefore
+\[
+L_{c_2}(x)\ge \frac{\pi(x)}{B_H(x)+1}.
+\]
+So it remains to bound $B_H(x)$.
+
+\medskip
+\noindent
+\textbf{Theorem 238.2.1 (explicit quantitative partial theorem).}
+For every fixed $c_2>0$,
+\[
+L_{c_2}(x)\gg \frac{\log x}{1+\lfloor c_2\rfloor}
+\qquad (x\to\infty).
+\]
+
+\emph{Proof.}
+If $H=0$, then as noted above the conclusion is trivial, so assume $H\ge 1$.
+
+Every bad gap of size $h\ge 2$ produces a prime pair $(p,p+h)$ with both entries prime. The gap $1$ occurs only once, namely between $2$ and $3$. Hence
+\[
+B_H(x)
+\le
+1+\sum_{2\le h\le H}\Pi(x;h),
+\]
+where $\Pi(x;h)$ counts prime pairs $p,p+h\le x$.
+
+By the prime-pair Selberg-sieve estimate,
+\[
+\Pi(x;h)\ll \frac{h}{\phi(h)}\frac{x}{(\log x)^2}.
+\]
+Therefore
+\[
+B_H(x)
+\ll
+1+\frac{x}{(\log x)^2}\sum_{2\le h\le H}\frac{h}{\phi(h)}.
+\]
+By the divisor-sum lemma proved in Problem \#234,
+\[
+\sum_{h\le H}\frac{h}{\phi(h)}\ll H.
+\]
+Thus
+\[
+B_H(x)\ll 1+H\frac{x}{(\log x)^2}.
+\]
+On the other hand, the prime number theorem gives
+\[
+\pi(x)\asymp \frac{x}{\log x}.
+\]
+Substituting into the block inequality yields
+\[
+L_{c_2}(x)
+\ge
+\frac{\pi(x)}{B_H(x)+1}
+\gg
+\frac{x/\log x}{H x/(\log x)^2+1}
+\gg
+\frac{\log x}{H+1}
+\]
+for all sufficiently large $x$. Since $H=\lfloor c_2\rfloor$, this is exactly
+\[
+L_{c_2}(x)\gg \frac{\log x}{1+\lfloor c_2\rfloor}.
+\]
+\hfill$\square$
+\medskip
+
+This sharpens Round 1 by making the $c_2$-dependence explicit.
+
+Now comes the obstruction statement.
+
+\medskip
+\noindent
+\textbf{Lemma 238.2.2 (sharpness of the block-counting step).}
+Let $m\ge 1$ and $B\ge 0$ be integers. There exists a path on $m$ vertices with exactly $B$ marked edges such that the largest connected component after deleting the marked edges has size at most
+\[
+\left\lceil \frac{m}{B+1}\right\rceil.
+\]
+Equivalently: from the single datum ``at most $B$ bad gaps among $m-1$ total gaps'', the inequality
+\[
+L\ge \frac{m}{B+1}
+\]
+is best possible up to rounding.
+
+\emph{Proof.}
+Write
+\[
+m=q(B+1)+r
+\qquad (0\le r\le B).
+\]
+Construct $B+1$ blocks of vertices, with $r$ blocks of size $q+1$ and $B+1-r$ blocks of size $q$. Separate consecutive blocks by one marked edge. Then the total number of vertices is exactly
+\[
+r(q+1)+(B+1-r)q = q(B+1)+r = m,
+\]
+and the number of marked edges is exactly $B$. The largest block has size $q+1=\lceil m/(B+1)\rceil$.
+\hfill$\square$
+\medskip
+
+\noindent
+\textbf{Corollary 238.2.3 (method barrier).}
+Suppose one only knows a bound of the form
+\[
+B_H(x)\ll H\frac{x}{(\log x)^2}
+\]
+and then argues solely by partitioning the prime path into blocks. Then, even in the abstract combinatorial model, one can force at most
+\[
+L_{c_2}(x)\gg \frac{\log x}{H}
+\asymp \frac{\log x}{c_2}.
+\]
+Thus the full conjecture for \emph{arbitrary} $c_1$ cannot follow from global counting of small gaps alone; one needs additional information on their distribution.
+
+\emph{Proof.}
+Take $m\asymp x/\log x$ and $B\asymp Hx/(\log x)^2$. By Lemma 238.2.2 there are abstract configurations with longest good block of order exactly $m/(B+1)\asymp \log x/H$. So no argument using only the scalar bound on $B$ can prove a larger lower bound in general.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{What about the case $0<c_2<1$?} I handled it separately. Then every prime gap except possibly the initial gap $1$ already exceeds $c_2$, so the theorem is stronger than stated.
+
+\item \emph{Did I use pairwise differences or only adjacent gaps?} For consecutive primes these are equivalent: if every adjacent gap in the block exceeds $c_2$, then any non-adjacent difference is a sum of such gaps and is therefore even larger.
+
+\item \emph{Could the prime-pair count overcount bad gaps?} Yes, deliberately so. Every bad gap gives a prime pair, and overcounting is harmless for an upper bound on $B_H(x)$.
+
+\item \emph{Is the barrier lemma really relevant to the prime problem?} It is relevant to the \emph{method}. It shows that the precise Round-1/2 strategy based only on counting bad gaps is saturated; to improve the theorem one must bring in extra arithmetic information.
+
+\item \emph{Did the new theorem solve the original conjecture?} No. It still gives only a fixed multiple of $\log x$; the original conjecture asks for more than $c_1\log x$ for every prescribed $c_1>0$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict new advances beyond Round 1 are:
+\begin{itemize}
+\item an explicit quantitative bound
+\[
+L_{c_2}(x)\gg \frac{\log x}{1+\lfloor c_2\rfloor};
+\]
+\item a proof that the underlying sieve-plus-pigeonhole method is already combinatorially sharp up to constants, so any further progress toward the full conjecture must use information beyond the total number of small gaps.
+\end{itemize}
+
+This identifies the real obstruction left by Round 1: not the quantity of small gaps, but their spacing pattern.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 68\%
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{References}
+
+Only references actually used or checked in this round are listed.
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#234}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#236}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#238}, erdosproblems.com, accessed 2026-03-07.
+\item H. Halberstam and H.-E. Richert, \emph{Sieve Methods}, Academic Press, 1974.
+\item H. L. Montgomery and R. C. Vaughan, \emph{Multiplicative Number Theory I: Classical Theory}, Cambridge University Press, 2007.
+\end{enumerate}

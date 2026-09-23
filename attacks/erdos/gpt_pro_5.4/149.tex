@@ -1,0 +1,204 @@
+
+\section{Erd\H{o}s Problem \#149 (Round 2): corrected formulation and a broad solved class}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Here I pursue path (C): the literal Round-1 formulation
+\[
+\chi'_s(G)\le \frac54\,\Delta^2
+\]
+is not the standard exact Erd\H{o}s--Ne\v{s}et\v{r}il conjecture when $\Delta$ is odd. The minimal corrected target is
+\[
+\chi'_s(G)\le \frac54\,\Delta^2 \qquad \mbox{if $\Delta$ is even},
+\]
+and
+\[
+\chi'_s(G)\le \frac{5\Delta^2-2\Delta+1}{4} \qquad \mbox{if $\Delta$ is odd}.
+\]
+My Round-2 goal is then to prove this corrected statement for a nontrivial infinite class of graphs, thereby excluding that entire class from any potential counterexample.
+
+The class I will handle is: \emph{all $2$-degenerate graphs.}
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 points.
+
+\begin{enumerate}
+\item The line-graph reformulation
+\[
+\chi'_s(G)=\chi(L(G)^2).
+\]
+\item The Round-1 greedy upper bound
+\[
+\chi'_s(G)\le 2\Delta^2-2\Delta+1.
+\]
+\item The Round-1 $C_5$-blow-up example showing that the conjectured constant is tight in the even-$\Delta$ regime.
+\item The Round-1 ambiguity note that the odd-$\Delta$ case requires a piecewise correction.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new ingredient is to combine two known theorems that were \emph{not} used in Round~1.
+
+\begin{enumerate}
+\item \textbf{Andersen's theorem.} Every graph with maximum degree at most $3$ has strong chromatic index at most $10$.
+\item \textbf{Yu's theorem for $k$-degenerate graphs.} Every $k$-degenerate graph of maximum degree $\Delta$ satisfies
+\[
+\chi'_s(G)\le (4k-2)\Delta-k(2k-1)+1.
+\]
+For $k=2$, this becomes
+\[
+\chi'_s(G)\le 6\Delta-5.
+\]
+\end{enumerate}
+
+These two statements together imply that the corrected Erd\H{o}s--Ne\v{s}et\v{r}il bound holds for every $2$-degenerate graph.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+Round~1 left a huge gap between the general greedy bound and the conjectured piecewise bound. I will not close that general gap, but I will prove a broad solved class.
+
+The exact claims to prove are:
+
+\begin{enumerate}
+\item If $G$ is $2$-degenerate and $\Delta\ge 4$, then Yu's theorem gives a linear bound $6\Delta-5$, and this linear bound is already at most the corrected Erd\H{o}s--Ne\v{s}et\v{r}il target.
+\item If $G$ is $2$-degenerate and $\Delta\le 3$, then the corrected target also holds: for $\Delta\le 2$ this follows from the Round-1 greedy bound, and for $\Delta=3$ it follows from Andersen's theorem.
+\end{enumerate}
+
+This will prove the conjectured bound for all $2$-degenerate graphs and hence show that any counterexample must have degeneracy at least $3$ (and in particular maximum degree at least $4$).
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{External theorem 1 (Andersen).}
+If $G$ is a graph with maximum degree at most $3$, then
+\[
+\chi'_s(G)\le 10.
+\]
+
+\paragraph{External theorem 2 (Yu).}
+If $G$ is a $k$-degenerate graph with maximum degree $\Delta$, then
+\[
+\chi'_s(G)\le (4k-2)\Delta-k(2k-1)+1.
+\]
+In particular, if $G$ is $2$-degenerate, then
+\[
+\chi'_s(G)\le 6\Delta-5.
+\]
+
+\paragraph{Claim.}
+Every $2$-degenerate graph satisfies the corrected Erd\H{o}s--Ne\v{s}et\v{r}il bound
+\[
+\chi'_s(G)\le \frac54\,\Delta^2 \qquad \mbox{if $\Delta$ is even},
+\]
+and
+\[
+\chi'_s(G)\le \frac{5\Delta^2-2\Delta+1}{4} \qquad \mbox{if $\Delta$ is odd}.
+\]
+
+\paragraph{Proof.}
+Let $G$ be $2$-degenerate, and let $\Delta=\Delta(G)$.
+
+\smallskip
+\noindent\emph{Case 1: $\Delta\le 2$.}
+By the Round-1 greedy bound,
+\[
+\chi'_s(G)\le 2\Delta^2-2\Delta+1.
+\]
+For $\Delta=1$, this is $1$, which equals the corrected target.
+For $\Delta=2$, this is $5$, which again equals the corrected target
+\[
+\frac54\cdot 2^2=5.
+\]
+
+\smallskip
+\noindent\emph{Case 2: $\Delta=3$.}
+By Andersen's theorem,
+\[
+\chi'_s(G)\le 10.
+\]
+The corrected odd-$\Delta$ target equals
+\[
+\frac{5\Delta^2-2\Delta+1}{4}
+=
+\frac{45-6+1}{4}
+=10.
+\]
+So the target holds exactly.
+
+\smallskip
+\noindent\emph{Case 3: $\Delta\ge 4$ and even.}
+By Yu's theorem,
+\[
+\chi'_s(G)\le 6\Delta-5.
+\]
+So it is enough to check
+\[
+6\Delta-5\le \frac54\,\Delta^2.
+\]
+This is equivalent to
+\[
+5\Delta^2-24\Delta+20\ge 0.
+\]
+The quadratic function on the left has derivative $10\Delta-24>0$ for every $\Delta\ge 3$, so it is increasing on $[4,\infty)$. At $\Delta=4$ it equals
+\[
+5\cdot 16-24\cdot 4+20=4>0.
+\]
+Hence it is positive for every even $\Delta\ge 4$, proving the desired inequality.
+
+\smallskip
+\noindent\emph{Case 4: $\Delta\ge 5$ and odd.}
+Again Yu gives
+\[
+\chi'_s(G)\le 6\Delta-5.
+\]
+Now it is enough to check
+\[
+6\Delta-5\le \frac{5\Delta^2-2\Delta+1}{4}.
+\]
+This is equivalent to
+\[
+5\Delta^2-26\Delta+21\ge 0.
+\]
+Its derivative is $10\Delta-26>0$ for every $\Delta\ge 3$, so it is increasing on $[5,\infty)$. At $\Delta=5$ it equals
+\[
+5\cdot 25-26\cdot 5+21=16>0.
+\]
+Hence it is positive for every odd $\Delta\ge 5$.
+
+All cases are proved.
+
+
+\paragraph{Corollary.}
+Any counterexample to the corrected Erd\H{o}s--Ne\v{s}et\v{r}il conjecture must have degeneracy at least $3$ and maximum degree at least $4$.
+
+\paragraph{Proof.}
+If the graph had degeneracy at most $2$, the claim above would dispose of it. If it had maximum degree at most $3$, Cases 1 and 2 would dispose of it. Therefore every counterexample lies outside both ranges.
+
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the delicate points.
+
+\begin{enumerate}
+\item \textbf{Odd-$\Delta$ correction.} The corrected target is the standard piecewise Erd\H{o}s--Ne\v{s}et\v{r}il form, not simply $\lceil 5\Delta^2/4\rceil$. This matters already at $\Delta=3$, where the exact target is $10$.
+\item \textbf{Small degrees.} Yu's linear estimate is \emph{not} enough for $\Delta=3$, since it gives $13$. That is why Andersen's theorem is required in Case 2.
+\item \textbf{Use of Round-1 results.} The Round-1 greedy bound is only used for $\Delta\le 2$, where it is exact enough. There is no hidden dependence on unproved new claims.
+\item \textbf{Hypotheses of external theorems.} Yu requires only $k$-degeneracy and maximum degree; Andersen requires only $\Delta\le 3$. These hypotheses are exactly what is used here.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 does not solve the corrected Erd\H{o}s--Ne\v{s}et\v{r}il conjecture in full, but it gives a real structural advance over Round~1:
+
+\begin{enumerate}
+\item it replaces the vague odd-$\Delta$ formulation by the standard exact piecewise conjecture;
+\item it proves that the corrected conjecture holds for \emph{every $2$-degenerate graph};
+\item consequently, it rules out all $2$-degenerate graphs from the search for a counterexample.
+\end{enumerate}
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 50\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item Erd\H{o}s Problems, Problem \#149, checked on 7 March 2026.
+\item Lars D{\o}vling Andersen, \emph{The strong chromatic index of a cubic graph is at most 10}, Discrete Mathematics 108 (1992), 231--252.
+\item Gexin Yu, \emph{Strong edge-colorings for $k$-degenerate graphs}, Graphs and Combinatorics 31 (2015), 1815--1818; see also arXiv:1212.6093.
+\end{enumerate}
+

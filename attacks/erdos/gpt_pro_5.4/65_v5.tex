@@ -1,0 +1,289 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 8}
+
+\subsection*{1) ROUND-8 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~7 proved that on the line
+\[
+|E(G)|=2|V(G)|-4
+\]
+one has
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14
+\qquad\text{for all }7\le n\le 42,
+\]
+with minimiser $K_{2,n-2}$.
+
+In this round I do not claim a full extension of that theorem, but I do prove a new general result beyond Round~7:
+\begin{quote}
+for every $43\le n\le 51$, any $n$-vertex graph with $2n-4$ edges and \emph{no $6$-cycle} already satisfies $S(G)\ge 1/4$.
+\end{quote}
+Consequently, any graph in this range with $S(G)<1/4$ must belong to a sharply constrained obstruction class.
+
+This is the most promising direction because Round~7 left the first unresolved full case at $n=43$, and the exact small-cycle extremal tables allow us to eliminate \emph{all} potential counterexamples except those containing a $6$-cycle and no other cycle length up to $12$.
+
+\subsection*{2) Round-7 FOUNDATION USED}
+
+I use the following vetted Round~7 results as black boxes.
+
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^{a}\frac1{2j}=\frac12(H_a-1).
+\]
+In particular,
+\[
+S(K_{2,n-2})=\frac14.
+\]
+
+\item[(F2)] Round~7 theorem: for every $7\le n\le 42$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-8)}
+
+The new ingredient is a \emph{three-table forcing principle} for the range $43\le n\le 51$.
+Define
+\[
+A_n:=\operatorname{ex}(n;\{C_3,C_4,C_5,C_6,C_7\}),
+\qquad
+B_n:=\operatorname{ex}(n;\{C_4,C_6,C_8\}),
+\]
+and, in the bipartite class,
+\[
+C_n:=\operatorname{ex}_{\rm bip}(n;\{C_{\mathrm{odd}},C_4,C_6\}).
+\]
+For $43\le n\le 51$ the exact tables give
+\[
+\begin{array}{c|ccccccccc}
+ n & 43&44&45&46&47&48&49&50&51\\\hline
+ A_n & 68&70&72&75&77&80&81&83&85\\
+ B_n & 74&76&78&81&83&85&87&90&92\\
+ C_n & 68&70&72&75&77&80&81&83&85\\
+ 2n-4 & 82&84&86&88&90&92&94&96&98
+\end{array}
+\]
+so throughout this range one has
+\[
+2n-4>A_n,\qquad 2n-4>B_n,\qquad 2n-4>C_n.
+\]
+
+The point is that these three strict inequalities eliminate three large competitor classes at once:
+\begin{enumerate}
+\item bipartite graphs with no $4$- or $6$-cycle;
+\item general graphs with no cycle lengths $3,4,5,6,7$;
+\item general graphs with no cycle lengths $4,6,8$.
+\end{enumerate}
+Combining them yields a new theorem for all $C_6$-free graphs in the target density range.
+
+\subsection*{4) ATTACK PLAN (ROUND-8)}
+
+The exact gap left by Round~7 was the unresolved tail of the line $m=2n-4$ beyond $n=42$.
+
+The plan here is:
+\begin{enumerate}
+\item reduce to the range $43\le n\le 51$;
+\item prove that every graph in this range with $2n-4$ edges and no $C_6$ already has $S(G)\ge 1/4$;
+\item deduce that any graph with $S(G)<1/4$ must necessarily contain a $6$-cycle;
+\item use the reciprocal-sum condition itself to sharpen this into a precise obstruction: such a graph cannot contain any other cycle length up to $12$.
+\end{enumerate}
+
+This does not complete the full theorem, but it rules out an entire class of proof obstacles and isolates exactly what remains to be treated.
+
+\subsection*{5) WORK (ROUND-8)}
+
+As before, for a graph $G$ let
+\[
+\mathcal C(G):=\{\ell\ge 3 : \text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+\begin{theorem}[No $C_6$-free counterexamples for $43\le n\le 51$]\label{thm:noC6}
+Let $43\le n\le 51$, and let $G$ be a graph with $|V(G)|=n$ and $|E(G)|=2n-4$.
+If $G$ contains no $6$-cycle, then
+\[
+S(G)\ge \frac14.
+\]
+In particular, no graph in this range with $2n-4$ edges and $S(G)<1/4$ can be $C_6$-free.
+\end{theorem}
+
+\begin{proof}
+Let $G$ be such a graph.
+
+If $G$ contains a triangle $C_3$, then
+\[
+S(G)\ge \frac13>\frac14.
+\]
+If $G$ contains a $4$-cycle $C_4$, then
+\[
+S(G)\ge \frac14.
+\]
+So the only remaining case is that $G$ contains no $C_3$ and no $C_4$.
+We also assume throughout that $G$ contains no $C_6$.
+
+We split according to whether $G$ is bipartite.
+
+\medskip
+\noindent\textbf{Case 1: $G$ is bipartite.}
+Then $G$ has no odd cycle, no $4$-cycle and no $6$-cycle.
+Hence
+\[
+|E(G)|\le C_n=\operatorname{ex}_{\rm bip}(n;\{C_{\mathrm{odd}},C_4,C_6\}),
+\]
+contrary to $|E(G)|=2n-4>C_n$.
+So this case is impossible.
+
+\medskip
+\noindent\textbf{Case 2: $G$ is non-bipartite.}
+Then $G$ contains an odd cycle.
+Since $G$ contains no $C_3$, if it contained neither a $5$-cycle nor a $7$-cycle, then together with the standing assumptions ``no $C_3$, no $C_4$, no $C_6$'' the graph would contain no cycle of length $3,4,5,6,7$.
+Therefore
+\[
+|E(G)|\le A_n=\operatorname{ex}(n;\{C_3,C_4,C_5,C_6,C_7\}),
+\]
+contrary to $|E(G)|=2n-4>A_n$.
+Thus $G$ contains a $5$-cycle or a $7$-cycle.
+
+Next, if $G$ contained no $8$-cycle either, then together with ``no $C_4$, no $C_6$'' we would have
+\[
+|E(G)|\le B_n=\operatorname{ex}(n;\{C_4,C_6,C_8\}),
+\]
+contrary to $|E(G)|=2n-4>B_n$.
+So $G$ must contain an $8$-cycle.
+
+We conclude that either $\{5,8\}\subseteq\mathcal C(G)$ or $\{7,8\}\subseteq\mathcal C(G)$.
+In the first case,
+\[
+S(G)\ge \frac15+\frac18=\frac{13}{40}>\frac14,
+\]
+and in the second case,
+\[
+S(G)\ge \frac17+\frac18=\frac{15}{56}>\frac14.
+\]
+This finishes the proof.
+\end{proof}
+
+\begin{corollary}[Sharp obstruction class for $43\le n\le 51$]\label{cor:sharp-obstruction}
+Let $43\le n\le 51$, and let $G$ be a graph with $|V(G)|=n$ and $|E(G)|=2n-4$.
+If
+\[
+S(G)<\frac14,
+\]
+then the following all hold:
+\begin{enumerate}
+\item $G$ is non-bipartite;
+\item $6\in\mathcal C(G)$;
+\item $\mathcal C(G)\cap\{3,4,5,7,8,9,10,11,12\}=\varnothing$.
+\end{enumerate}
+Equivalently,
+\[
+6\in\mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}.
+\]
+In particular, any such graph has odd girth at least $13$.
+\end{corollary}
+
+\begin{proof}
+If $G$ were bipartite, then all cycles would be even; Round~7 already proved that every bipartite graph with $2n-4$ edges satisfies $S(G)\ge 1/4$ for all $n\le 55$.
+Hence $G$ is non-bipartite.
+
+Theorem~\ref{thm:noC6} shows that $G$ cannot be $C_6$-free, so $6\in\mathcal C(G)$.
+Also, since $S(G)<1/4$, the graph cannot contain a $3$-cycle or $4$-cycle.
+
+Now let $\ell\in\mathcal C(G)$ be any cycle length different from $6$.
+If $3\le \ell\le 12$, then
+\[
+\frac16+\frac1\ell\ge \frac16+\frac1{12}=\frac14,
+\]
+with strict inequality for every $\ell<12$.
+Thus the presence of such an $\ell$ would force $S(G)\ge 1/4$, contradicting the assumption.
+Therefore no cycle length from $\{3,4,5,7,8,9,10,11,12\}$ can occur.
+
+This proves the displayed containment.  Since $G$ is non-bipartite, it has some odd cycle, and that odd cycle must then have length at least $13$.
+\end{proof}
+
+\begin{remark}[What remains to settle the full line through $n=51$]
+To extend the full minimiser theorem from Round~7 beyond $n=42$ using the present approach, it now suffices to rule out graphs with
+\[
+|V(G)|=n,\qquad |E(G)|=2n-4,\qquad 43\le n\le 51,
+\]
+and
+\[
+6\in\mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}.
+\]
+Thus the remaining obstruction is sharply localised: only non-bipartite graphs with a $6$-cycle, odd girth at least $13$, and no other cycle length below $13$ can possibly beat the complete bipartite benchmark $1/4$.
+\end{remark}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new work against the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{Round dependence.}
+I used Round~7 only as a black box for the already solved all-graphs range $7\le n\le 42$ and the already solved bipartite lower bound up to $n\le 55$.
+No Round~7 proof is reproved.
+
+\item \textbf{Exact use of the external tables.}
+The proof of Theorem~\ref{thm:noC6} uses only exact table entries: every edge number $A_n,B_n,C_n$ used above is exact in the sense explained on the ANU page.
+No lower-bound-only entry appears in the proof.
+
+\item \textbf{Case 1 in Theorem~\ref{thm:noC6}.}
+The contradiction is legitimate: a bipartite graph with no $C_4$ and no $C_6$ lies exactly in the forbidden family defining $C_n$.
+
+\item \textbf{Case 2 in Theorem~\ref{thm:noC6}.}
+Under the standing assumptions, the contradiction with $A_n$ is correct because ``no $C_5$ and no $C_7$'' would leave no cycle lengths $3,4,5,6,7$ at all.
+Similarly, the contradiction with $B_n$ is correct because ``no $C_8$'' together with ``no $C_4$, no $C_6$'' is precisely the family defining $B_n$.
+
+\item \textbf{Corollary~\ref{cor:sharp-obstruction}.}
+The reciprocal estimate
+\[
+\frac16+\frac1\ell\ge \frac16+\frac1{12}=\frac14
+\]
+is the only numerical input needed to eliminate every additional cycle length $\ell\le 12$ once a $6$-cycle is known.
+For $\ell<12$ the inequality is strict, and for $\ell=12$ it is equality, so either way $S(G)<1/4$ is impossible.
+\end{itemize}
+
+No contradiction with any Round~7 result was found.
+The new theorem strictly advances beyond Round~7 by ruling out all $C_6$-free competitors on the full line $m=2n-4$ for $43\le n\le 51$, and by isolating a single sharply formulated obstruction class.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~8 proves a new theorem beyond Round~7:
+for every $43\le n\le 51$, any $n$-vertex graph with $2n-4$ edges and no $6$-cycle already satisfies
+\[
+S(G)\ge \frac14.
+\]
+Therefore any graph in this range with $S(G)<1/4$ must be non-bipartite and satisfy
+\[
+6\in\mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}.
+\]
+This rules out an entire class of potential counterexamples and isolates the remaining obstruction with much greater precision than in Round~7.
+The general Erd\H{o}s--Hajnal minimiser question for arbitrary $(n,m)$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 97\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{AfzalyMcKayData}
+N.~Afzaly and B.~D.~McKay,
+\emph{Extremal Graphs and Turan numbers},
+Australian National University combinatorial data page.
+Used here for the exact tables for
+$\operatorname{ex}(n;\{C_3,C_4,C_5,C_6,C_7\})$,
+$\operatorname{ex}(n;\{C_4,C_6,C_8\})$,
+and
+$\operatorname{ex}_{\rm bip}(n;\{C_{\mathrm{odd}},C_4,C_6\})$,
+as well as for the exactness convention of the tabulated data.
+
+\end{thebibliography}

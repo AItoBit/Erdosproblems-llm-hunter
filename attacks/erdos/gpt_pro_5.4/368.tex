@@ -1,0 +1,98 @@
+\section*{Erd\H{o}s Problem \#368 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round-1 tried to prove the baseline statement $F(n)\to\infty$ by a self-contained Pell/St\o rmer argument, and it also overclaimed a full resolution of the original problem. The original problem, however, asks for \emph{quantitative size} of $F(n)$ and remains open. Moreover, the round-1 self-contained proof has a real gap in the $p\ge 5$ part of its uniqueness lemma. So round-2 will replace that flawed subproof by a clean theorem-level citation and correct the overall status.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I retain from round-1 only the valid reduction:
+\begin{itemize}
+\item If $F(n)\le B$ and $S$ is the set of primes at most $B$, then both $n$ and $n+1$ are $S$-smooth.
+\end{itemize}
+I do \emph{not} reuse the round-1 proof of the key Pell uniqueness lemma, because that is exactly where the gap occurs.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a precise external theorem of St\o rmer, in the form quoted by Klazar:
+
+\medskip
+\noindent
+\textbf{St\o rmer's theorem.} If $S$ is a finite set of primes, then the equation
+\[
+x-y=1
+\]
+has only finitely many solutions in positive $S$-numbers; in fact at most $3^{|S|}$ such solutions.
+\medskip
+
+This theorem exactly matches the round-1 reduction and removes the need for the flawed self-contained lemma.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The gap left after round-1 is now very precise:
+\begin{itemize}
+\item round-1 reduced $F(n)\to\infty$ to finiteness of consecutive $S$-smooth pairs;
+\item round-1 then attempted a self-contained proof of that finiteness, but the contradiction in the $p\ge 5$ case was not valid.
+\end{itemize}
+So I will keep the reduction and swap in St\o rmer's theorem as a black box with verified hypotheses.
+
+Then I will explain why even the repaired statement $F(n)\to\infty$ is still much weaker than the original quantitative problem.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+F(n):=\max\{p : p\mbox{ prime and } p\mid n(n+1)\}.
+\]
+Fix a positive integer $B$, and let $S$ be the finite set of all primes $\le B$.
+Suppose that
+\[
+F(n)\le B.
+\]
+Then every prime dividing $n(n+1)$ lies in $S$. Since any prime divisor of $n$ or $n+1$ also divides $n(n+1)$, it follows that both $n$ and $n+1$ are $S$-smooth.
+
+Now apply St\o rmer's theorem: for a fixed finite set $S$, there are only finitely many pairs of consecutive positive $S$-smooth integers. Therefore, for this fixed $B$, there are only finitely many $n$ such that $F(n)\le B$.
+
+Because $B$ was arbitrary, we conclude:
+for every $B$ there exists $N(B)$ such that
+\[
+n\ge N(B)\quad\Longrightarrow\quad F(n)>B.
+\]
+This is exactly the definition of
+\[
+F(n)\to\infty\qquad (n\to\infty).
+\]
+So the baseline statement is proved.
+
+\medskip
+\textbf{Why this does not solve the original Erd\H{o}s problem.}
+The original question is not merely whether $F(n)$ is unbounded, but how large it must be quantitatively. The current problem page records much stronger partial results, for example
+\[
+F(n)\gg \frac{(\log\log n)^2}{\log\log\log n},
+\]
+and also records the conjectural scale
+\[
+F(n)\gg (\log n)^2.
+\]
+Round-2 proves none of these stronger quantitative statements. It only repairs the weakest baseline fact $F(n)\to\infty$.
+
+Hence the correct global status is still unresolved.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Hypothesis check for St\o rmer:} the set $S=\{p\le B\}$ is finite, so the theorem applies.
+\item \emph{Quantifier check:} for each fixed $B$ there are only finitely many $n$ with $F(n)\le B$; this is exactly the statement $F(n)\to\infty$.
+\item \emph{Gap check:} the flawed round-1 Pell uniqueness lemma is no longer used anywhere.
+\item \emph{Scope check:} proving $F(n)\to\infty$ does not answer ``how large is $F(n)$?'' in the quantitative sense intended by the open problem.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round-2 repairs the proof of the baseline statement $F(n)\to\infty$ and corrects the round-1 overclaim. But the original quantitative Erd\H{o}s problem remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 40\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item[Bloom368] T. F. Bloom, \emph{Erd\H{o}s Problem \#368}, \texttt{https://www.erdosproblems.com/368}, accessed 2026-03-07.
+\item[Klazar] M. Klazar, \emph{St\o rmer's solution of the unit equation $x-y=1$}, 2010, \texttt{https://kam.mff.cuni.cz/~klazar/stormer.pdf}.
+\end{itemize}

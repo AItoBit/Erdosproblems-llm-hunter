@@ -1,0 +1,172 @@
+\section*{Problem 766 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/correction}. The exact function $f(n;k,l)$ is still open, but Round 1 left its most important heuristic unproved: that the minimiser should be bipartite. The best Round-2 step is therefore to turn this heuristic into a theorem, thereby reducing the problem asymptotically to a finite family of bipartite graphs and solving the endpoint case $l=\lfloor k^2/4\rfloor$ exactly for large $n$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts.
+\begin{itemize}
+\item For $a:=\min\{t: l\le t(k-t)\}$ one has
+\[
+f(n;k,l)\le \mathrm{ex}(n;K_{a,k-a})=O\bigl(n^{2-1/a}\bigr).
+\]
+\item Since $l\le \lfloor k^2/4\rfloor$, there exists at least one bipartite graph on $k$ vertices and $l$ edges.
+\end{itemize}
+Round 1 stated that one \emph{expects} the minimiser to be bipartite; Round 2 proves that this is correct for all sufficiently large $n$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the Erd\H{o}s--Stone--Simonovits theorem. It implies that every fixed non-bipartite graph $H$ has
+\[
+\mathrm{ex}(n;H)=\Theta(n^2).
+\]
+But Round 1 already supplied a bipartite $k$-vertex $l$-edge graph $B$ with
+\[
+\mathrm{ex}(n;B)=O\bigl(n^{2-1/a}\bigr)=o(n^2).
+\]
+Therefore, for fixed $(k,l)$ in the range $k<l\le \lfloor k^2/4\rfloor$, every asymptotic minimiser for $f(n;k,l)$ must be bipartite.
+
+This immediately yields an exact endpoint identification when $l=\lfloor k^2/4\rfloor$: among bipartite graphs on $k$ vertices, the only graph with that many edges is the balanced complete bipartite graph $K_{\lfloor k/2\rfloor,\lceil k/2\rceil}$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was:
+\begin{quote}
+``The minimiser should be bipartite'' was only heuristic.
+\end{quote}
+I close that gap in three steps.
+\begin{enumerate}
+\item Use Erd\H{o}s--Stone--Simonovits to show every non-bipartite candidate has quadratic extremal number.
+\item Use the Round-1 K\H{o}v\'ari--S\'os--Tur\'an upper bound to produce one bipartite candidate with subquadratic extremal number.
+\item Because there are only finitely many $k$-vertex $l$-edge graphs, conclude that for sufficiently large $n$ the minimum is attained inside the bipartite subfamily.
+\end{enumerate}
+Then I treat the endpoint $l=\lfloor k^2/4\rfloor$ by a direct uniqueness argument.
+
+\subsection*{5) WORK (ROUND-2)}
+For fixed integers $k,l$ with $k<l\le \lfloor k^2/4\rfloor$, let
+\[
+\mathcal G_{k,l}:=\{G: |V(G)|=k,\ |E(G)|=l\}
+\]
+and let $\mathcal B_{k,l}\subseteq \mathcal G_{k,l}$ be the bipartite members.
+
+\paragraph{Lemma 5.1.}
+For every fixed non-bipartite graph $H$,
+\[
+\mathrm{ex}(n;H)=\Bigl(1-\frac{1}{\chi(H)-1}+o(1)\Bigr)\frac{n^2}{2}.
+\]
+In particular, if $\chi(H)\ge 3$, then
+\[
+\mathrm{ex}(n;H)=\Theta(n^2).
+\]
+
+\emph{Justification.}
+This is the Erd\H{o}s--Stone--Simonovits theorem.
+
+\paragraph{Lemma 5.2.}
+There exists $B\in \mathcal B_{k,l}$ such that
+\[
+\mathrm{ex}(n;B)=o(n^2).
+\]
+
+\emph{Proof.}
+By the assumption $l\le \lfloor k^2/4\rfloor$, there exists a bipartite graph on $k$ vertices with $l$ edges. More concretely, by the Round-1 construction there is some $a\in\{1,\dots,\lfloor k/2\rfloor\}$ with $l\le a(k-a)$ and a graph $B\subseteq K_{a,k-a}$ having $k$ vertices and $l$ edges. Then
+\[
+\mathrm{ex}(n;B)\le \mathrm{ex}(n;K_{a,k-a})=O\bigl(n^{2-1/a}\bigr)=o(n^2)
+\]
+by the K\H{o}v\'ari--S\'os--Tur\'an theorem. \qed
+
+\paragraph{Theorem 5.3 (asymptotic bipartite reduction).}
+For every fixed $k,l$ with $k<l\le \lfloor k^2/4\rfloor$, there exists $N=N(k,l)$ such that for all $n\ge N$,
+\[
+f(n;k,l)=\min\{\mathrm{ex}(n;B): B\in \mathcal B_{k,l}\}.
+\]
+In words: for sufficiently large $n$, the minimisation defining $f(n;k,l)$ may be restricted to bipartite graphs.
+
+\emph{Proof.}
+By definition,
+\[
+f(n;k,l)=\min\{\mathrm{ex}(n;G): G\in \mathcal G_{k,l}\}.
+\]
+Let
+\[
+M_B(n):=\min\{\mathrm{ex}(n;B): B\in \mathcal B_{k,l}\}.
+\]
+Clearly $f(n;k,l)\le M_B(n)$.
+
+Now fix any non-bipartite graph $H\in \mathcal G_{k,l}\setminus \mathcal B_{k,l}$. By Lemma 5.1,
+\[
+\mathrm{ex}(n;H)=\Theta(n^2).
+\]
+By Lemma 5.2, there exists some bipartite $B\in \mathcal B_{k,l}$ with
+\[
+\mathrm{ex}(n;B)=o(n^2).
+\]
+Hence for each fixed non-bipartite $H$ there exists $N_H$ such that
+\[
+\mathrm{ex}(n;B)<\mathrm{ex}(n;H)\qquad\text{for all }n\ge N_H.
+\]
+Since $\mathcal G_{k,l}\setminus \mathcal B_{k,l}$ is finite, taking
+\[
+N:=\max_H N_H
+\]
+over all non-bipartite $H\in \mathcal G_{k,l}\setminus \mathcal B_{k,l}$ shows that for every $n\ge N$, every non-bipartite candidate has larger extremal number than some bipartite candidate. Therefore the minimum is attained within $\mathcal B_{k,l}$, i.e.
+\[
+f(n;k,l)=M_B(n)=\min\{\mathrm{ex}(n;B): B\in \mathcal B_{k,l}\}.
+\]
+\qed
+
+\paragraph{Corollary 5.4.}
+For fixed $k,l$ in the stated range,
+\[
+f(n;k,l)=o(n^2).
+\]
+
+\emph{Proof.}
+Immediate from Theorem 5.3 and Lemma 5.2. \qed
+
+\paragraph{Theorem 5.5 (endpoint $l=\lfloor k^2/4\rfloor$).}
+For fixed $k$ and sufficiently large $n$,
+\[
+f\bigl(n;k,\lfloor k^2/4\rfloor\bigr)=\mathrm{ex}\bigl(n;K_{\lfloor k/2\rfloor,\lceil k/2\rceil}\bigr).
+\]
+
+\emph{Proof.}
+By Theorem 5.3, for sufficiently large $n$ the minimum may be taken over bipartite graphs with $k$ vertices and $\lfloor k^2/4\rfloor$ edges. But by Mantel's theorem, a bipartite graph on $k$ vertices has at most $\lfloor k^2/4\rfloor$ edges, with equality only for the balanced complete bipartite graph
+\[
+K_{\lfloor k/2\rfloor,\lceil k/2\rceil}.
+\]
+Therefore the bipartite family $\mathcal B_{k,\lfloor k^2/4\rfloor}$ consists of this single graph, and the displayed identity follows. \qed
+
+\paragraph{What remains open after Round 2.}
+The strict monotonicity question is now sharply reduced: for fixed $k$ and large $n$, it is entirely a question about comparing extremal numbers of finitely many \emph{bipartite} graphs on $k$ vertices. In particular, no non-bipartite graph can be asymptotically extremal in the minimisation problem.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Does Theorem 5.3 hold for all $n$?} No. The argument is asymptotic, since it compares $\Theta(n^2)$ with $o(n^2)$. So the conclusion is correctly stated only for sufficiently large $n$.
+\item \textbf{Could a non-bipartite graph have smaller extremal number than a bipartite one for small $n$?} Yes, in principle. That is why the theorem includes the threshold $N(k,l)$.
+\item \textbf{Why is finiteness important?} Because the set of $k$-vertex $l$-edge graphs is finite, one can take the maximum of the finitely many thresholds $N_H$.
+\item \textbf{Is the endpoint uniqueness claim correct?} Yes. Among all bipartite graphs on $k$ vertices, the maximum possible number of edges is $\lfloor k^2/4\rfloor$, attained uniquely by the balanced complete bipartite graph.
+\item \textbf{Did Round 2 solve monotonicity?} No. It only localises the monotonicity problem to the finite bipartite family, which is a strict structural advance but not a full solution.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+Round 2 proves the key structural correction that Round 1 only conjectured:
+for every fixed $k,l$ with $k<l\le \lfloor k^2/4\rfloor$, the minimiser in the definition of $f(n;k,l)$ is asymptotically bipartite. Moreover,
+\[
+f\bigl(n;k,\lfloor k^2/4\rfloor\bigr)=\mathrm{ex}\bigl(n;K_{\lfloor k/2\rfloor,\lceil k/2\rceil}\bigr)
+\]
+for all sufficiently large $n$.
+This reduces the remaining difficulty to a finite comparison problem inside the bipartite regime.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 35\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item Erd\H{o}s Problem \#766, statement and historical note (official problem page).
+\item Erd\H{o}s--Stone--Simonovits theorem.
+\item K\H{o}v\'ari--S\'os--Tur\'an theorem.
+\item Mantel's theorem.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+Here the Erd\H{o}s problem number is $x=766$.

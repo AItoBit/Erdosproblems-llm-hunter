@@ -1,0 +1,214 @@
+\section*{Round-2 continuation for Erd\H{o}s Problems 741, 749, 750}
+
+\noindent
+This is a genuine continuation of the previous round. I only use Round-1 material when explicitly indicated below, and I only re-prove statements when they are strengthened.
+
+\medskip
+\noindent
+Conventions for this continuation: $\overline d(\cdot)$ and $\underline d(\cdot)$ denote upper and lower asymptotic density in $\mathbb N$, and when discussing Problem 750 it is enough to work with induced subgraphs, since deleting edges can only increase the independence number.
+
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Problem 749}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: prove a \emph{rigorous asymptotic obstruction} that is substantially sharper than the Round-1 bound $A(x)\ll \sqrt{x}$.
+
+The goal of this round is to show that any hypothetical solution must in fact be \emph{quadratically parameterized}:
+if $A=\{a_1<a_2<\cdots\}$, then necessarily
+\[
+a_n=\Theta(n^2),
+\]
+with explicit constants depending only on $\epsilon$ and the representation bound.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use exactly two Round-1 facts.
+
+\begin{itemize}
+\item Round-1 proved the coarse necessary bound $A(x)\ll \sqrt{x}$ from bounded representation.
+\item Round-1 observed that the real obstacle is compatibility across scales, not finite-model feasibility.
+\end{itemize}
+
+In this round I sharpen the first point from a coarse counting estimate in $x$ to a precise estimate in terms of the ordered sequence $a_n$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The key observation is to evaluate the density condition at the \emph{special cutoff}
+\[
+N=a_{n+1}-1.
+\]
+Since every sum $\le N$ uses only the first $n$ elements of $A$, one gets a direct upper bound on $a_{n+1}$ from the maximum possible number of distinct sums of an $n$-element set. Combined with the bounded-representation lower bound, this traps $a_n$ between two quadratic curves.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left by Round-1 was:
+\begin{quote}
+Can we say anything more precise than $A(x)\asymp \sqrt{x}$ about the shape of a candidate set?
+\end{quote}
+
+I will prove two complementary bounds.
+
+\medskip
+\noindent
+\textbf{Theorem 749.1.}
+Let $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$.
+
+\begin{enumerate}
+\item If $\underline d(A+A)\ge 1-\epsilon$, then for every $\eta>0$ there exists $n_0(\eta)$ such that
+\[
+a_{n+1}\le \frac{n(n+1)}{2(1-\epsilon-\eta)}+1
+\qquad (n\ge n_0(\eta)).
+\]
+In particular,
+\[
+\limsup_{n\to\infty}\frac{2a_n}{n^2}\le \frac{1}{1-\epsilon}.
+\]
+
+\item If moreover $(\mathbf 1_A\ast \mathbf 1_A)(m)\le g$ for all $m$, then for every $n$,
+\[
+a_n\ge \frac{n^2}{2g}.
+\]
+In particular,
+\[
+\liminf_{n\to\infty}\frac{2a_n}{n^2}\ge \frac1g.
+\]
+\end{enumerate}
+
+Hence any candidate for Problem 749 must satisfy
+\[
+\frac1g\le \liminf_{n\to\infty}\frac{2a_n}{n^2}
+\le
+\limsup_{n\to\infty}\frac{2a_n}{n^2}
+\le
+\frac1{1-\epsilon},
+\]
+and therefore
+\[
+a_n=\Theta(n^2),
+\]
+while the counting function
+\[
+A(x):=|A\cap[1,x]|
+\]
+satisfies
+\[
+A(x)=\Theta(\sqrt x).
+\]
+
+\subsection*{5) WORK (ROUND-2)}
+
+\noindent
+\textbf{Proof of Theorem 749.1(1).}
+Fix $\eta>0$.
+Since $\underline d(A+A)\ge 1-\epsilon$, there exists $N_0(\eta)$ such that for all $N\ge N_0(\eta)$,
+\[
+|(A+A)\cap[1,N]|\ge (1-\epsilon-\eta)N.
+\]
+Now take $N=a_{n+1}-1$.
+Any representation
+\[
+m=a_i+a_j\le a_{n+1}-1
+\]
+must use only indices $i,j\le n$, because $a_{n+1}+a_1>a_{n+1}-1$.
+Therefore
+\[
+(A+A)\cap[1,a_{n+1}-1]
+\subseteq
+\{a_i+a_j:1\le i\le j\le n\}.
+\]
+The set on the right has cardinality at most the number of unordered pairs from an $n$-element set, namely $n(n+1)/2$.
+Hence, for all sufficiently large $n$,
+\[
+(1-\epsilon-\eta)(a_{n+1}-1)
+\le
+\bigl|(A+A)\cap[1,a_{n+1}-1]\bigr|
+\le
+\frac{n(n+1)}{2}.
+\]
+So
+\[
+a_{n+1}\le \frac{n(n+1)}{2(1-\epsilon-\eta)}+1.
+\]
+Dividing by $n^2/2$ and letting $n\to\infty$ yields
+\[
+\limsup_{n\to\infty}\frac{2a_n}{n^2}\le \frac{1}{1-\epsilon-\eta}.
+\]
+Since $\eta>0$ is arbitrary,
+\[
+\limsup_{n\to\infty}\frac{2a_n}{n^2}\le \frac{1}{1-\epsilon}.
+\]
+This proves (1). \hfill $\square$
+
+\medskip
+\noindent
+\textbf{Proof of Theorem 749.1(2).}
+Assume
+\[
+(\mathbf 1_A\ast \mathbf 1_A)(m)\le g
+\qquad\text{for all }m.
+\]
+Consider the $n^2$ ordered pairs $(a_i,a_j)$ with $1\le i,j\le n$.
+Each such pair produces a sum in $[2,2a_n]$.
+Since each integer is assumed to have at most $g$ ordered representations, the number of distinct sums produced by these $n^2$ pairs is at least $n^2/g$.
+But there are at most $2a_n-1$ positive integers in $[2,2a_n]$, so certainly
+\[
+2a_n\ge \frac{n^2}{g}.
+\]
+Equivalently,
+\[
+a_n\ge \frac{n^2}{2g}.
+\]
+Dividing by $n^2/2$ gives
+\[
+\frac{2a_n}{n^2}\ge \frac1g
+\]
+for every $n$, hence
+\[
+\liminf_{n\to\infty}\frac{2a_n}{n^2}\ge \frac1g.
+\]
+This proves (2). \hfill $\square$
+
+\medskip
+Combining (1) and (2) gives the stated quadratic window.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Why $N=a_{n+1}-1$?} This is essential. At that cutoff, no sum involving $a_{n+1}$ can appear, so only the first $n$ elements matter.
+\item \textbf{Ordered vs.\ unordered representations.} The upper bound in part (1) counts \emph{distinct sums}, so unordered pairs are correct. The lower bound in part (2) uses the hypothesis on $(\mathbf 1_A\ast \mathbf 1_A)(m)$, which counts \emph{ordered} representations, so $n^2$ ordered pairs are correct there.
+\item \textbf{Lower density.} Part (1) uses only the definition of $\underline d(A+A)$ with an arbitrary $\eta>0$; no unjustified subsequence argument appears.
+\item \textbf{No hidden assumption on $A(0)$.} The argument uses only positivity of the elements and monotonicity of the sequence $(a_n)$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\noindent
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves a sharp structural obstruction:
+\begin{quote}
+Any solution of Problem 749 must come from a sequence $A=\{a_n\}$ with genuinely quadratic growth $a_n=\Theta(n^2)$, and the quadratic constant is trapped between $1/(2g)$ and $1/(2(1-\epsilon))$.
+\end{quote}
+So the open problem is not merely about finding a sparse set of size $\asymp \sqrt{x}$; it is about building an \emph{almost extremal quadratic} generalized Sidon-type sequence whose initial segments remain globally compatible.
+
+This rules out an entire family of overly separated recursive strategies from Round-1.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#749}, \texttt{erdosproblems.com}.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

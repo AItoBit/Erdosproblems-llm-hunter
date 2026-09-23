@@ -1,0 +1,280 @@
+\section{Erd\H{o}s Problem 269 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: the finite-set problem remains open, so the most promising strict advance is to isolate the multiplicity obstruction identified in Round~1, turn it into a precise irrationality criterion, and then prove a rigorous irrationality theorem for a broad infinite-prime-set regime. In addition, I explicitly re-check the unverified forum proof strategy and repair only the part that survives adversarial scrutiny.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 items without re-proving them.
+
+\begin{itemize}
+\item The sequence of distinct denominators can be studied by grouping equal values of
+\[
+L_n=[a_1,\dots,a_n].
+\]
+Round~1 already identified the main obstruction: the original series is a weighted version
+\[
+\sum_i \frac{c_i}{d_i}
+\]
+with multiplicities $c_i$, and these multiplicities are what prevent the simple Cantor-series tail argument from resolving the finite case.
+\item Round~1 also proved convergence of the series, so all rearrangements into grouped denominator levels are legitimate.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a prime-power frontier decomposition.
+
+Let $P$ be any set of primes, and let
+\[
+1<q_1<q_2<\cdots
+\]
+be the increasing sequence of all prime powers $p^r$ with $p\in P$ and $r\ge 1$. Define
+\[
+q_0:=1,
+\qquad
+x_i:=\mathrm{lcm}(q_1,\dots,q_i)\quad (i\ge 1),
+\qquad x_0:=1.
+\]
+For each $i\ge 0$, let $m_i$ be the number of $P$-smooth integers in the half-open interval $[q_i,q_{i+1})$.
+
+Then the original series becomes
+\[
+\sum_{n\ge 1}\frac1{L_n}
+=
+\sum_{i\ge 0}\frac{m_i}{x_i}.
+\]
+The key Round-2 criterion is:
+
+\medskip
+\noindent
+\textbf{Criterion.}
+If $P$ is infinite and
+\[
+\frac{m_i}{q_i}\to 0,
+\]
+then the grouped series $\sum_{i\ge 0} m_i/x_i$ is irrational.
+\medskip
+
+This is strictly stronger than anything obtained in Round~1, and it pinpoints a single sharp obstruction: one only needs sufficiently small multiplicity relative to the prime-power frontier.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact remaining gap after Round~1 was: repeated denominators can be too numerous for the simple tail $<1/d_i$ argument.
+
+The new plan is:
+
+\begin{itemize}
+\item encode denominator changes by the ordered prime powers $q_i$;
+\item show that the tail after a \emph{new prime} enters the denominator is an integer multiple of $1/x_N$ under a rationality assumption;
+\item show that this integer tends to $0$ whenever $m_i=o(q_i)$;
+\item deduce irrationality in every situation where one can actually prove $m_i=o(q_i)$.
+\end{itemize}
+
+This directly overcomes the Round~1 obstacle in all regimes where the multiplicities are genuinely sparse relative to the frontier.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Lemma 5.1.}
+If $q_{i+1}=p^r$, then
+\[
+x_{i+1}=p\,x_i.
+\]
+Equivalently, if $\alpha(q_{i+1})$ denotes the prime base of $q_{i+1}$, then
+\[
+x_{i+1}=\alpha(q_{i+1})x_i.
+\]
+
+\emph{Proof.}
+Since the $q_j$ are the distinct prime powers coming from $P$, if $q_{i+1}=p^r$ then $p^{r-1}$ already occurred earlier but $p^r$ did not. Thus the $p$-adic valuation of the lcm increases by exactly $1$, while all other prime-adic valuations stay unchanged. Hence $x_{i+1}=p x_i$. 
+
+\paragraph{Lemma 5.2.}
+For every $i\ge 0$,
+\[
+\sum_{n\ge 1}\frac1{L_n}=\sum_{i\ge 0}\frac{m_i}{x_i}.
+\]
+
+\emph{Proof.}
+Fix $i\ge 0$. For every $P$-smooth integer $u$ with $q_i\le u<q_{i+1}$, all prime powers from $P$ not exceeding $u$ are precisely $q_1,\dots,q_i$, so
+\[
+\mathrm{lcm}\{v\in\mathbf Z_{>0}: v\le u,\ v\text{ is }P\text{-smooth}\}=x_i.
+\]
+Exactly $m_i$ values of $u$ lie in $[q_i,q_{i+1})$, so grouping equal denominators gives the formula. 
+
+\paragraph{Lemma 5.3.}
+Let $p_1$ be the smallest prime in $P$. Then for every $i\ge 0$,
+\[
+q_{i+1}\le p_1 q_i.
+\]
+Consequently,
+\[
+q_i\le p_1^{\,i-N-1}q_{N+1}\qquad (i\ge N+1).
+\]
+
+\emph{Proof.}
+Given $q_i$, choose the unique integer $s$ with
+\[
+p_1^{s-1}\le q_i < p_1^s.
+\]
+Then $p_1^s$ is a prime power from $P$, it is $>q_i$, and $p_1^s\le p_1 q_i$. Since $q_{i+1}$ is the next prime power after $q_i$, we get $q_{i+1}\le p_1 q_i$. Iterating gives the second claim. 
+
+\paragraph{Proposition 5.4 (irrationality criterion from sparse multiplicities).}
+Assume that $P$ is infinite and that
+\[
+\frac{m_i}{q_i}\to 0.
+\]
+Then
+\[
+\sum_{n\ge 1}\frac1{L_n}
+\]
+is irrational.
+
+\emph{Proof.}
+Write
+\[
+S:=\sum_{n\ge 1}\frac1{L_n}=\sum_{i\ge 0}\frac{m_i}{x_i}.
+\]
+Assume for contradiction that $S=a/b\in\mathbf Q$ in lowest terms.
+
+Because $P$ is infinite, infinitely many of the $q_j$ are actual primes. Choose $N$ so that $q_{N+1}$ is a prime. Define the tail
+\[
+T_N:=\sum_{i\ge N+1}\frac{m_i}{x_i}.
+\]
+Since $x_i\mid x_N$ for $i\le N$, we have
+\[
+I_N:=b x_N T_N
+=
+ax_N-bx_N\sum_{i=0}^{N}\frac{m_i}{x_i}
+\in \mathbf Z_{>0}.
+\]
+So $I_N$ is a positive integer.
+
+Now let
+\[
+M_N:=\sup_{i\ge N+1}\frac{m_i}{q_i}.
+\]
+Since $m_i/q_i\to 0$, we have $M_N\to 0$ as $N\to\infty$.
+
+Using Lemma~5.1,
+\[
+\frac{x_N}{x_i}
+=
+\frac1{\alpha(q_{N+1})\alpha(q_{N+2})\cdots \alpha(q_i)}.
+\]
+Hence
+\[
+I_N
+=
+ b\sum_{i\ge N+1}
+ \frac{m_i}{\alpha(q_{N+1})\alpha(q_{N+2})\cdots \alpha(q_i)}
+\le
+ b M_N
+ \sum_{i\ge N+1}
+ \frac{q_i}{\alpha(q_{N+1})\alpha(q_{N+2})\cdots \alpha(q_i)}.
+\]
+Because $q_{N+1}$ is a prime, $\alpha(q_{N+1})=q_{N+1}$. By Lemma~5.3,
+\[
+\frac{q_i}{\alpha(q_{N+1})\cdots \alpha(q_i)}
+\le
+\frac{p_1^{\,i-N-1}}{\alpha(q_{N+2})\cdots \alpha(q_i)}.
+\]
+Let $p_2$ be the second-smallest prime in $P$, and let
+\[
+n_i:=\#\{j\in\{N+2,\dots,i\}: \alpha(q_j)>p_1\}.
+\]
+Since each factor $\alpha(q_j)$ is either $p_1$ or at least $p_2$,
+\[
+\alpha(q_{N+2})\cdots \alpha(q_i)
+\ge
+p_1^{\,i-N-1-n_i}p_2^{n_i},
+\]
+so
+\[
+\frac{q_i}{\alpha(q_{N+1})\cdots \alpha(q_i)}
+\le
+\left(\frac{p_1}{p_2}\right)^{n_i}.
+\]
+Therefore
+\[
+I_N\le b M_N \sum_{i\ge N+1}\left(\frac{p_1}{p_2}\right)^{n_i}.
+\]
+It remains to bound the last series uniformly in $N$.
+
+Set
+\[
+\ell:=\left\lceil \frac{\log p_2}{\log p_1}\right\rceil.
+\]
+For every $x>0$, the next power of $p_2$ after $x$ is at most $p_2 x\le p_1^{\ell}x$. Thus every interval $(x,p_1^{\ell}x]$ contains a power of $p_2$. In particular, it is impossible to have $\ell+1$ consecutive terms of the prime-power sequence $(q_i)$ all with base prime $p_1$: the first and last of those terms would differ by a factor at most $p_1^{\ell}$, but there would have to be a power of $p_2$ strictly between them. Hence $n_i$ can stay constant for at most $\ell+1$ consecutive indices. Therefore, for each $k\ge 0$,
+\[
+\#\{i\ge N+1: n_i=k\}\le \ell+1.
+\]
+So
+\[
+\sum_{i\ge N+1}\left(\frac{p_1}{p_2}\right)^{n_i}
+\le
+(\ell+1)\sum_{k\ge 0}\left(\frac{p_1}{p_2}\right)^k
+=:C(P)<\infty,
+\]
+with $C(P)$ independent of $N$.
+
+Hence
+\[
+0<I_N\le b C(P) M_N\to 0.
+\]
+But $I_N$ is a positive integer, contradiction. Therefore $S$ is irrational. 
+
+\paragraph{Corollary 5.5.}
+Assume $P$ is infinite and one of the following holds.
+
+\begin{itemize}
+\item[(i)] $q_{i+1}-q_i=o(q_i)$ for the ordered prime-power frontier;
+\item[(ii)] $\sum_{p\notin P}1/p=\infty$.
+\end{itemize}
+Then
+\[
+\sum_{n\ge 1}\frac1{L_n}
+\]
+is irrational.
+
+\emph{Proof.}
+In case (i),
+\[
+m_i\le q_{i+1}-q_i=o(q_i),
+\]
+so Proposition~5.4 applies.
+
+In case (ii), let $h_i:=q_{i+1}-q_i$. Every integer counted by $m_i$ lies in an interval of length $h_i$ and has no prime factor outside $P$. Brun's upper-bound sieve gives
+\[
+m_i\ll h_i\prod_{\substack{p\le h_i\\ p\notin P}}\left(1-\frac1p\right).
+\]
+If $h_i=o(q_i)$ then we are done. Otherwise there is some $\varepsilon>0$ along an infinite subsequence with $h_i\ge \varepsilon q_i$, so $h_i\to\infty$ there; because $\sum_{p\notin P}1/p=\infty$, the Euler product above tends to $0$, and thus along that subsequence
+\[
+m_i=o(h_i)=o(q_i).
+\]
+Therefore $m_i=o(q_i)$ in all cases, and Proposition~5.4 applies. 
+
+\paragraph{Round-2 consequence.}
+The proposition and corollary give a complete irrationality proof for a broad infinite-$P$ regime, including for example the case where $P$ is the set of all primes.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+There is one important correction to make relative to the unverified forum proof sketch.
+
+\begin{itemize}
+\item The step ``$\sum_{p\notin P}1/p<\infty$ implies every interval $(x,(1+\varepsilon)x]$ eventually contains a prime of $P$'' is not justified by the argument sketched on the forum page. Convergence of the complementary reciprocal sum alone does not obviously force this multiplicative-syndetic property.
+\item The proof written above therefore \emph{does not} claim irrationality for every infinite $P$. What it proves is the precise conditional theorem in Proposition~5.4, together with the rigorous Corollary~5.5 covering two broad classes of infinite sets.
+\item Every use of positivity and integrality in Proposition~5.4 has been checked: $I_N>0$ because the tail is positive, and $I_N\in\mathbf Z$ because $x_i\mid x_N$ for all $i\le N$.
+\item The boundedness of the auxiliary series was also checked carefully: the only input is that powers of $p_2$ occur regularly on the multiplicative scale, and Lemma~5.3 converts this into a uniform bound on the number of indices with a fixed value of $n_i$.
+\end{itemize}
+
+So the new argument is rigorous as stated, but it still leaves open the genuinely difficult remaining infinite-$P$ cases, and of course the original finite-$P$ problem.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+I proved a new irrationality criterion for the grouped series and obtained a rigorous irrationality theorem for all infinite prime sets $P$ satisfying $m_i=o(q_i)$, in particular for every infinite $P$ with either $q_{i+1}-q_i=o(q_i)$ or $\sum_{p\notin P}1/p=\infty$. I also identified a concrete gap in the previously cited unverified ``all infinite $P$'' argument. The original finite-$P$ problem remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#269}, checked 2026-03-07.
+\item T. F. Bloom, \emph{Discussion thread for Erd\H{o}s Problem \#269}; in particular the comment of Steve Fan (11 Oct 2025), checked 2026-03-07. Used as a heuristic starting point only; the Round-2 proof above is the corrected version actually verified here.
+\end{itemize}
+

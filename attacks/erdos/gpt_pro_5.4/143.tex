@@ -1,0 +1,453 @@
+% File: 143_145_146_solutions.tex
+% Drop-in LaTeX: no preamble, no custom theorem environments.
+
+\section*{Erd\H{o}s Problem \#143}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path C (obstruction / correction).} Round-1 already settled the weaker harmonic-sum statement
+\[
+\sum_{\substack{x\in \mathcal A\\ x\le X}}\frac1x=o(\log X)
+\]
+under the integer-dilation separation hypothesis, using the 2025 theorem of
+Koukoulopoulos--Lamzouri--Lichtman. The unresolved part is the stronger convergence claim
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+In this round I isolate the exact remaining obstruction by converting the open statement into an
+Abel-summation criterion and an equivalent exponential-block criterion, prove a broad strategy-barrier
+showing that the Round-1 information alone can never force the stronger convergence, and prove the
+stronger convergence for a genuine new subclass (rational sets with only finitely many reduced denominators).
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts as black boxes.
+
+\begin{enumerate}
+\item If $\mathcal A\subset (1,\infty)$ satisfies
+\[
+|kx-y|\ge 1 \qquad (x\neq y\in\mathcal A,\ k\in\mathbb Z_{\ge 1}),
+\]
+then
+\[
+H_{\mathcal A}(X):=\sum_{\substack{x\in\mathcal A\\ x\le X}}\frac1x=o(\log X).
+\]
+\item The same hypothesis implies $1$-separation (take $k=1$), hence at most one element of
+$\mathcal A$ lies in each interval $[m,m+1)$.
+\end{enumerate}
+
+I do \emph{not} re-prove these facts here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are four genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item An \textbf{exact Abel-summation criterion} showing that, once Round-1 gives
+$H_{\mathcal A}(X)=o(\log X)$, the open convergence question is \emph{equivalent} to the integral test
+\[
+\int_2^\infty \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt<\infty.
+\]
+\item An \textbf{equivalent exponential-block formulation}: if
+\[
+a_m:=\bigl|\mathcal A\cap [e^m,e^{m+1})\bigr|,\qquad b_m:=e^{-m}a_m,
+\]
+then
+\[
+H_{\mathcal A}(e^N)\asymp \sum_{m\le N} b_m,
+\qquad
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty
+\iff
+\sum_{m\ge 1}\frac{b_m}{m}<\infty.
+\]
+So the remaining gap after Round-1 is exactly a logarithmic weighted summability problem for
+exponential-block masses.
+\item An \textbf{explicit barrier family}: for any nondecreasing $\omega(m)\to\infty$ with
+$\sum_{m\ge 2}\frac{1}{m\omega(m)}=\infty$, there exists a $1$-separated set
+$B\subset (1,\infty)$ such that
+\[
+\sum_{\substack{b\in B\\ b\le e^N}}\frac1b=o(N)
+\qquad\text{but}\qquad
+\sum_{b\in B}\frac{1}{b\log b}=\infty.
+\]
+This rules out any proof strategy that uses only the Round-1 harmonic estimate and $1$-separation.
+\item A \textbf{new positive class}: if $\mathcal A\subset \mathbb Q_{>1}$ satisfies the
+integer-dilation separation condition and only finitely many reduced denominators occur, then
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap is the step
+\[
+H_{\mathcal A}(X)=o(\log X)\quad \Longrightarrow\quad
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty,
+\]
+which is not logically valid in general. So the plan is:
+
+\begin{enumerate}
+\item Convert the open series into an integral involving the already-known function $H_{\mathcal A}(X)$.
+\item Discretise that integral on exponential blocks, so the open question becomes a completely explicit
+summability problem for the block masses $b_m$.
+\item Prove an explicit counterexample family at the level of $1$-separated sets, showing that no argument
+depending only on Round-1 data can finish the problem.
+\item Salvage a genuinely new positive result by exploiting arithmetic structure in one clean rational subclass.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+For convenience write
+\[
+P_{\mathcal A}(X):=\sum_{\substack{x\in\mathcal A\\ 2<x\le X}}\frac{1}{x\log x}.
+\]
+
+\paragraph{\textbf{Lemma 143.1 (Abel criterion).}}
+For every countable $\mathcal A\subset (1,\infty)$ and every $X\ge 3$,
+\[
+P_{\mathcal A}(X)
+=
+\frac{H_{\mathcal A}(X)}{\log X}
++
+\int_2^X \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt
++
+O_{\mathcal A}(1).
+\]
+Consequently, under the Round-1 conclusion $H_{\mathcal A}(X)=o(\log X)$,
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty
+\iff
+\int_2^\infty \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt<\infty.
+\]
+
+\paragraph{\textit{Proof.}}
+Ignore finitely many elements of $\mathcal A$ in $(1,2]$, since they contribute only $O_{\mathcal A}(1)$.
+Let
+\[
+U(t):=\sum_{\substack{x\in\mathcal A\\ 2<x\le t}}\frac1x.
+\]
+Take $f(t):=1/\log t$ on $[2,\infty)$, so
+\[
+f'(t)=-\frac{1}{t(\log t)^2}.
+\]
+Abel summation gives
+\[
+\sum_{\substack{x\in\mathcal A\\ 2<x\le X}}\frac1x\,f(x)
+=
+U(X)f(X)-\int_2^X U(t)f'(t)\,dt.
+\]
+Since $U(t)=H_{\mathcal A}(t)+O_{\mathcal A}(1)$ for $t\ge 2$, this becomes
+\[
+P_{\mathcal A}(X)
+=
+\frac{H_{\mathcal A}(X)}{\log X}
++
+\int_2^X \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt
++
+O_{\mathcal A}(1),
+\]
+as claimed.
+
+If $H_{\mathcal A}(X)=o(\log X)$, then $H_{\mathcal A}(X)/\log X\to 0$, so the convergence of
+$P_{\mathcal A}(X)$ is equivalent to the convergence of the integral. \hfill $\square$
+
+\medskip
+
+This immediately yields a quantitative sufficient condition.
+
+\paragraph{\textbf{Corollary 143.2 (integrable saving suffices).}}
+Assume the Round-1 hypothesis and suppose there is a positive function $L(X)$ such that
+\[
+H_{\mathcal A}(X)\ll \frac{\log X}{L(X)}
+\qquad (X\ge X_0),
+\]
+and
+\[
+\int_{X_0}^\infty \frac{dt}{t\log t\,L(t)}<\infty.
+\]
+Then
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+In particular, it would be enough to prove any bound of the form
+\[
+H_{\mathcal A}(X)\ll \frac{\log X}{(\log\log X)^{1+\delta}}
+\qquad (\delta>0).
+\]
+
+\paragraph{\textit{Proof.}}
+Insert the assumed upper bound into Lemma 143.1:
+\[
+\int_2^\infty \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt
+\ll
+\int_{X_0}^\infty \frac{dt}{t\log t\,L(t)}<\infty.
+\]
+Now apply Lemma 143.1 again. \hfill $\square$
+
+\paragraph{\textbf{Lemma 143.3 (exponential-block reformulation).}}
+For $m\ge 1$, let
+\[
+I_m:=[e^m,e^{m+1}),\qquad
+a_m:=|\mathcal A\cap I_m|,\qquad
+b_m:=e^{-m}a_m.
+\]
+Then for every $N\ge 1$,
+\[
+e^{-1}\sum_{m\le N} b_m
+\le
+H_{\mathcal A}(e^{N+1})-H_{\mathcal A}(e)
+\le
+\sum_{m\le N} b_m,
+\]
+and
+\[
+e^{-1}\sum_{m\le N}\frac{b_m}{m+1}
+\le
+P_{\mathcal A}(e^{N+1})
+\le
+\sum_{m\le N}\frac{b_m}{m}.
+\]
+Hence
+\[
+H_{\mathcal A}(e^N)\asymp \sum_{m\le N} b_m,
+\]
+and
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty
+\iff
+\sum_{m\ge 1}\frac{b_m}{m}<\infty.
+\]
+
+\paragraph{\textit{Proof.}}
+If $x\in I_m$, then
+\[
+e^{-m-1}\le \frac1x \le e^{-m}
+\]
+and, for $m\ge 1$,
+\[
+\frac{e^{-m-1}}{m+1}\le \frac{1}{x\log x}\le \frac{e^{-m}}{m}.
+\]
+Summing over $x\in \mathcal A\cap I_m$ gives the blockwise bounds
+\[
+e^{-1}b_m \le \sum_{x\in \mathcal A\cap I_m}\frac1x \le b_m,
+\qquad
+\frac{e^{-1}}{m+1}b_m \le \sum_{x\in \mathcal A\cap I_m}\frac{1}{x\log x}\le \frac1m b_m.
+\]
+Summing over $m\le N$ proves the displayed inequalities and the equivalence. \hfill $\square$
+
+\medskip
+
+By Round-1, $H_{\mathcal A}(e^N)=o(N)$, so Lemma 143.3 implies
+\[
+\sum_{m\le N} b_m=o(N).
+\]
+Thus the entire unresolved part of the problem is now compressed into the single question
+\[
+\sum_{m\le N}b_m=o(N)
+\quad\stackrel{?}{\Longrightarrow}\quad
+\sum_{m\ge 1}\frac{b_m}{m}<\infty
+\]
+for the special block masses coming from integer-dilation-separated sets.
+
+\paragraph{\textbf{Theorem 143.4 (explicit barrier family).}}
+Let $\omega:\mathbb N\to [1,\infty)$ be nondecreasing, with $\omega(m)\to\infty$, and assume
+\[
+\sum_{m\ge 2}\frac{1}{m\omega(m)}=\infty.
+\]
+Then there exists a $1$-separated set $B\subset (1,\infty)$ such that
+\[
+\sum_{\substack{b\in B\\ b\le e^N}}\frac1b
+\ll
+\sum_{m\le N}\frac{1}{\omega(m)}
+=
+o(N),
+\]
+but
+\[
+\sum_{b\in B}\frac{1}{b\log b}=\infty.
+\]
+
+\paragraph{\textit{Proof.}}
+For large $m$, let
+\[
+L_m:=\left\lfloor \frac{e^m}{\omega(m)}\right\rfloor,
+\qquad
+n_m:=\lceil e^m\rceil,
+\qquad
+B_m:=\{n_m,n_m+1,\dots,n_m+L_m-1\}.
+\]
+Because $L_m<e^m$ and
+\[
+n_{m+1}-n_m \sim (e-1)e^m,
+\]
+the sets $B_m$ are pairwise disjoint for all large $m$. Let
+\[
+B:=\bigcup_{m\ge m_0} B_m
+\]
+for $m_0$ large enough that the disjointness already holds. Since $B$ is a union of disjoint intervals of integers, it is $1$-separated.
+
+For $b\in B_m$ we have $e^m\le b\le 2e^m$ for large $m$, hence
+\[
+\frac{1}{2e^m}\le \frac1b\le \frac{1}{e^m},
+\qquad
+\frac{1}{2e^m(m+\log 2)}\le \frac{1}{b\log b}\le \frac{1}{e^m m}.
+\]
+Therefore the contribution of the $m$th block satisfies
+\[
+\sum_{b\in B_m}\frac1b \asymp \frac{L_m}{e^m}\asymp \frac{1}{\omega(m)},
+\]
+and
+\[
+\sum_{b\in B_m}\frac{1}{b\log b}\asymp \frac{L_m}{e^m m}\asymp \frac{1}{m\omega(m)}.
+\]
+Summing over $m\le N$ gives
+\[
+\sum_{\substack{b\in B\\ b\le e^N}}\frac1b
+\ll
+\sum_{m\le N}\frac{1}{\omega(m)}.
+\]
+Since $1/\omega(m)\to 0$, Ces\`aro's theorem gives
+\[
+\sum_{m\le N}\frac{1}{\omega(m)}=o(N).
+\]
+On the other hand,
+\[
+\sum_{b\in B}\frac{1}{b\log b}
+\asymp
+\sum_{m\ge m_0}\frac{1}{m\omega(m)}
+=
+\infty.
+\]
+This proves the theorem. \hfill $\square$
+
+\medskip
+
+Taking $\omega(m)=\log(m+2)$ gives an explicit $1$-separated set with
+\[
+\sum_{b\le e^N,\ b\in B}\frac1b \asymp \frac{N}{\log N}=o(N)
+\]
+but
+\[
+\sum_{b\in B}\frac{1}{b\log b}=\infty.
+\]
+So the Round-1 estimate $H_{\mathcal A}(X)=o(\log X)$, even together with $1$-separation, is
+\emph{far} from enough to imply the desired convergence.
+
+\paragraph{\textbf{Theorem 143.5 (bounded reduced denominators).}}
+Assume $\mathcal A\subset \mathbb Q_{>1}$ satisfies the integer-dilation separation condition, and
+assume only finitely many reduced denominators occur among the elements of $\mathcal A$.
+Then
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+
+\paragraph{\textit{Proof.}}
+Let $D$ be the finite set of reduced denominators occurring in $\mathcal A$.
+For each $q\in D$, define
+\[
+B_q:=\{a\in\mathbb N:\ \gcd(a,q)=1,\ a/q\in \mathcal A\}.
+\]
+Fix $q\in D$. I claim that $B_q$ is a primitive set of integers.
+
+Indeed, if $a,b\in B_q$ are distinct and $b=ka$ for some integer $k\ge 2$, then
+\[
+\frac{b}{q}=k\frac{a}{q},
+\]
+so taking $x=a/q$ and $y=b/q$ violates the defining condition $|kx-y|\ge 1$ (the left-hand side
+would be $0$). Thus no element of $B_q$ divides another, so $B_q$ is primitive.
+
+By Erd\H{o}s's classical theorem on primitive sets,
+\[
+\sum_{a\in B_q}\frac{1}{a\log a}<\infty.
+\]
+Split the sum over $a/q\in\mathcal A$ into the finitely many terms with $a<2q$ and the rest.
+For $a\ge 2q$ we have $\log(a/q)\ge \frac12\log a$, hence
+\[
+\frac{1}{(a/q)\log(a/q)}
+=
+\frac{q}{a\log(a/q)}
+\le
+\frac{2q}{a\log a}.
+\]
+Therefore
+\[
+\sum_{\substack{a/q\in\mathcal A\\ a\ge 2q}}
+\frac{1}{(a/q)\log(a/q)}
+\le
+2q\sum_{a\in B_q}\frac{1}{a\log a}
+<
+\infty.
+\]
+Since there are only finitely many $a<2q$, the whole $q$-slice converges. Summing over the
+finite denominator set $D$ gives
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+\hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Potential issue: the Abel formula near $x=1$.}
+I explicitly removed the finitely many elements in $(1,2]$ and absorbed them into $O_{\mathcal A}(1)$,
+so the logarithmic singularity at $1$ causes no problem.
+\item \textbf{Potential issue: The barrier set does not satisfy the original integer-dilation condition.}
+Correct, and this is intentional. The theorem is not offered as a counterexample to the problem.
+Its role is to \emph{rule out an entire proof strategy}: any argument that only sees
+$1$-separation plus the Round-1 harmonic estimate cannot possibly finish the problem.
+\item \textbf{Potential issue: could the bounded-denominator proof miss cross-denominator interactions?}
+No. The series splits over denominator classes, and positivity means each class can be handled separately.
+Cross-denominator interactions are irrelevant for convergence once each slice converges.
+\item \textbf{Potential issue: primitive-set input for $B_q$.}
+The only property needed is that no element of $B_q$ divides another; this was checked directly.
+\item \textbf{Potential issue: block criterion uses natural logarithms.}
+Yes, deliberately. The blocks $[e^m,e^{m+1})$ are exactly the right ones for the weight $1/\log x$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 does not prove or disprove the full real-variable convergence statement
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty.
+\]
+However, it makes three substantive advances beyond Round-1:
+
+\begin{enumerate}
+\item It isolates the \emph{exact} remaining obstruction:
+\[
+\sum_{x\in\mathcal A}\frac{1}{x\log x}<\infty
+\iff
+\int_2^\infty \frac{H_{\mathcal A}(t)}{t(\log t)^2}\,dt<\infty,
+\]
+and equivalently
+\[
+\sum_{m\ge 1}\frac{b_m}{m}<\infty
+\quad\text{for}\quad
+b_m=e^{-m}\bigl|\mathcal A\cap[e^m,e^{m+1})\bigr|.
+\]
+\item It proves a broad \emph{strategy barrier}: the Round-1 information
+$H_{\mathcal A}(X)=o(\log X)$ and $1$-separation is insufficient on its own, even in very strong
+quantitative forms.
+\item It proves the full desired convergence for a new class: rational sets with finitely many reduced
+denominators.
+\end{enumerate}
+
+So the open core of Problem \#143 is now sharply localised: one must exploit genuinely arithmetic
+features of the integer-dilation condition that are invisible to purely block-counting arguments.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 68\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item D. Koukoulopoulos, Y. Lamzouri, J. D. Lichtman, \emph{Erd\H{o}s's integer dilation approximation problem and GCD graphs}, arXiv:2502.09539, 2025.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#143}, \texttt{erdosproblems.com/143}, accessed 2026-03-07.
+\item J. D. Lichtman, \emph{A proof of the Erd\H{o}s primitive set conjecture}, arXiv:2202.02384, especially the historical introduction recalling Erd\H{o}s's 1935 primitive-set theorem.
+\end{enumerate}
+
+\newpage

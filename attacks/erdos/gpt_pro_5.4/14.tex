@@ -1,0 +1,391 @@
+\section{Problem 14 --- Round 3}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+I continue on path \textbf{(A)}: proof track. A full resolution of Q1/Q2 still appears out of reach, so the Round-3 goal is to obtain a \emph{strictly stronger obstruction} than the Round-2 near-Sidon bound. The specific target is to rule out an entire class of potential counterexamples: those for which the counting function
+\[
+A(x):=|A\cap\{1,\dots,x\}|
+\]
+stays below a constant multiple of $\sqrt{x}$ with constant strictly smaller than a critical threshold. This is the most promising direction because Round~2 already ruled out sets that are too \emph{dense}; the missing complementary step is to rule out sets that are too \emph{sparse}.
+
+\subsection*{2) Round-2 FOUNDATION USED}
+I use the following Round-2 results explicitly.
+\begin{enumerate}
+\item Round-2 Theorem 14.5 and Corollary 14.6: if
+\[
+K(N):=|\{1,\dots,N\}\setminus B|,
+\]
+then
+\[
+A(x)\le 2\sqrt{x}+K(2x).
+\]
+In particular, any hypothetical set with $K(N)=o(N^{1/2})$ satisfies
+\[
+A(x)\le (2+o(1))\sqrt{x}.
+\]
+\item Round-2 Corollary 14.8: if $A(x)\ge (2+\delta)\sqrt{x}$ on some scale, then $K(2x)\gg_\delta \sqrt{x}$. This ruled out the high-density side.
+\end{enumerate}
+Round~3 builds on this by proving the complementary low-density obstruction.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+The new ingredient is a different counting functional:
+\[
+P_A(N):=\bigl|\{\{a,b\}:a,b\in A,\ a\le b,\ a+b\le N\}\bigr|,
+\]
+the number of unordered pairs from $A$ with sum at most $N$.
+
+Every integer $n\in B\cap[1,N]$ contributes one distinct pair to $P_A(N)$, so small $K(N)$ forces $P_A(N)$ to be close to $N$. The Round-3 innovation is to prove a sharp upper bound for $P_A(N)$ under a global envelope
+\[
+A(x)\le C\sqrt{x}+D.
+\]
+The main term turns out to be
+\[
+P_A(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+This yields a new critical constant
+\[
+\sqrt{\frac{8}{\pi}}\approx 1.59577,
+\]
+strictly stronger than the Round-1 lower-density threshold $\sqrt2\approx 1.41421$ coming from the crude total-pair bound.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+After Round~2, the exact remaining gap was the near-extremal regime in which
+\[
+A(x)=O(\sqrt{x})
+\quad\mbox{and}\quad
+K(N)=o(\sqrt N).
+\]
+Round~2 ruled out densities above $2\sqrt{x}+o(\sqrt{x})$, but did not exclude sparser quadratic-growth models.
+
+The Round-3 plan is:
+\begin{enumerate}
+\item express $P_A(N)$ exactly in terms of the increasing sequence of elements of $A$;
+\item prove that the envelope $A(x)\le C\sqrt{x}+D$ forces
+\[
+P_A(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N);
+\]
+\item combine this with the trivial lower bound
+\[
+N-K(N)=|B\cap[1,N]|\le P_A(N)
+\]
+to show that if $C<\sqrt{8/\pi}$, then necessarily $K(N)$ is \emph{linear} in $N$;
+\item combine that new sparse-side obstruction with the Round-2 dense-side obstruction to isolate a narrower asymptotic density window for any hypothetical counterexample to Q2.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-3)}
+Retain the notation
+\[
+K(N):=|\{1,\dots,N\}\setminus B|,
+\qquad
+A(x):=|A\cap\{1,\dots,x\}|.
+\]
+Define the low-sum pair count
+\[
+P_A(N):=\bigl|\{\{a,b\}:a,b\in A,\ a\le b,\ a+b\le N\}\bigr|.
+\]
+Then every $n\in B\cap[1,N]$ determines a unique pair $\{a,b\}$ with $a+b=n$, and different integers $n$ give different pairs because their sums differ. Therefore
+\[
+N-K(N)=|B\cap[1,N]|\le P_A(N).
+\]
+
+\medskip
+
+\noindent\textbf{Lemma 14.9 (exact decomposition of $P_A(N)$).}
+Write
+\[
+A=\{a_1<a_2<a_3<\cdots\}.
+\]
+Let $m:=A(N/2)$. Then
+\[
+P_A(N)=\sum_{i=1}^{m}\bigl(A(N-a_i)-i+1\bigr).
+\]
+
+\noindent\textit{Proof.}
+Every pair counted by $P_A(N)$ has a unique smaller element $a_i\le N/2$. Fix such an index $i\le m$. The larger element $b$ must satisfy
+\[
+b\in A,
+\qquad
+b\ge a_i,
+\qquad
+b\le N-a_i.
+\]
+The number of admissible $b$ is therefore
+\[
+A(N-a_i)-A(a_i-1).
+\]
+Since $a_i$ is the $i$-th element of $A$, we have $A(a_i-1)=i-1$. Hence the number of pairs with smaller element $a_i$ is exactly $A(N-a_i)-i+1$. Summing over $i=1,\dots,m$ proves the formula. \qed
+
+\medskip
+
+\noindent\textbf{Theorem 14.10 (sparse-envelope bound for low-sum pairs).}
+Assume that for some fixed constants $C>0$ and $D\ge 0$ one has
+\[
+A(x)\le C\sqrt{x}+D
+\qquad (x\ge 1).
+\]
+Then
+\[
+P_A(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+Consequently,
+\[
+N-K(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+
+\noindent\textit{Proof.}
+Let $d:=\lceil D\rceil$ and write $m:=A(N/2)$. If $m\le d$, then trivially
+\[
+P_A(N)\le \binom{m+1}{2}=O_{C,D}(1),
+\]
+so the stated estimate is immediate. Thus assume $m>d$.
+
+By Lemma~14.9,
+\[
+P_A(N)=\sum_{i=1}^{m}\bigl(A(N-a_i)-i+1\bigr).
+\]
+Split this at $d$:
+\[
+P_A(N)=\sum_{i=1}^{d}\bigl(A(N-a_i)-i+1\bigr)
++\sum_{i=d+1}^{m}\bigl(A(N-a_i)-i+1\bigr).
+\]
+The first sum has only $d=O_D(1)$ terms, and each term is at most $A(N)\le C\sqrt N+D$, so it contributes
+\[
+O_{C,D}(\sqrt N).
+\]
+
+Now fix $i>d$ and set $j:=i-d\ge 1$. Since $i=A(a_i)\le C\sqrt{a_i}+D\le C\sqrt{a_i}+d$, we get
+\[
+j=i-d\le C\sqrt{a_i},
+\qquad\mbox{hence}\qquad
+a_i\ge \frac{j^2}{C^2}.
+\]
+Also $i\le m=A(N/2)$ implies $a_i\le N/2$, so $j\le C\sqrt{N/2}$. Therefore
+\[
+A(N-a_i)-i+1
+\le C\sqrt{N-a_i}+D-i+1
+\le C\sqrt{N-j^2/C^2}-j+1,
+\]
+because $D-d\le 0$.
+
+Thus
+\[
+P_A(N)
+\le O_{C,D}(\sqrt N)
++\sum_{j=1}^{\lfloor C\sqrt{N/2}\rfloor}
+\Bigl(C\sqrt{N-j^2/C^2}-j+1\Bigr).
+\]
+Set
+\[
+f_N(x):=C\sqrt{N-x^2/C^2}-x+1
+\qquad\mbox{for }0\le x\le C\sqrt{N/2}.
+\]
+A direct differentiation gives
+\[
+f_N'(x)=-\frac{x/C}{\sqrt{N-x^2/C^2}}-1<0,
+\]
+so $f_N$ is decreasing on its domain. Hence
+\[
+\sum_{j=1}^{\lfloor C\sqrt{N/2}\rfloor} f_N(j)
+\le f_N(0)+\int_0^{C\sqrt{N/2}} f_N(x)\,dx.
+\]
+Now $f_N(0)=C\sqrt N+1=O_C(\sqrt N)$, while
+\[
+\int_0^{C\sqrt{N/2}} f_N(x)\,dx
+=
+\int_0^{C\sqrt{N/2}}\Bigl(C\sqrt{N-x^2/C^2}-x\Bigr)dx
++O_C(\sqrt N).
+\]
+Substitute $x=C\sqrt N\,t$. Then
+\[
+\int_0^{C\sqrt{N/2}}\Bigl(C\sqrt{N-x^2/C^2}-x\Bigr)dx
+=
+C^2N\int_0^{1/\sqrt2}(\sqrt{1-t^2}-t)\,dt.
+\]
+Finally,
+\[
+\int_0^{1/\sqrt2}(\sqrt{1-t^2}-t)\,dt
+=
+\left(\frac{\pi}{8}+\frac14\right)-\frac14
+=\frac{\pi}{8}.
+\]
+Therefore
+\[
+P_A(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+Combining with the basic inequality $N-K(N)\le P_A(N)$ gives
+\[
+N-K(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+This proves the theorem. \qed
+
+\medskip
+
+\noindent\textbf{Corollary 14.11 (low-density envelopes force a linear bad set).}
+Suppose there exist constants $C<\sqrt{8/\pi}$ and $D\ge 0$ such that
+\[
+A(x)\le C\sqrt{x}+D
+\qquad (x\ge 1).
+\]
+Then
+\[
+K(N)\ge \left(1-\frac{\pi}{8}C^2\right)N-O_{C,D}(\sqrt N).
+\]
+In particular,
+\[
+K(N)\gg_{C,D} N.
+\]
+
+\noindent\textit{Proof.}
+By Theorem~14.10 and the basic inequality $N-K(N)\le P_A(N)$,
+\[
+N-K(N)\le \frac{\pi}{8}C^2N+O_{C,D}(\sqrt N).
+\]
+Rearranging gives the stated inequality. Since $C<\sqrt{8/\pi}$, the coefficient $1-\pi C^2/8$ is positive. \qed
+
+\medskip
+
+\noindent\textbf{Corollary 14.12 (new asymptotic obstruction for Q2).}
+If
+\[
+K(N)=o(\sqrt N),
+\]
+then necessarily
+\[
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}
+\ge
+\sqrt{\frac{8}{\pi}}.
+\]
+Equivalently, for every $\delta>0$ there exist arbitrarily large $x$ such that
+\[
+A(x)\ge \left(\sqrt{\frac{8}{\pi}}-\delta\right)\sqrt x.
+\]
+
+\noindent\textit{Proof.}
+Assume for contradiction that
+\[
+L:=\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}<\sqrt{\frac{8}{\pi}}.
+\]
+Choose $C$ with
+\[
+L<C<\sqrt{\frac{8}{\pi}}.
+\]
+Then there exists $X_0$ such that $A(x)\le C\sqrt x$ for all $x\ge X_0$. Define
+\[
+D:=\max_{1\le x<X_0}\bigl(A(x)-C\sqrt x\bigr).
+\]
+This is finite, and now
+\[
+A(x)\le C\sqrt x + D
+\qquad (x\ge 1).
+\]
+Hence Corollary~14.11 applies and yields
+\[
+K(N)\gg N,
+\]
+contradicting the assumption $K(N)=o(\sqrt N)$. Therefore
+\[
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}\ge \sqrt{\frac{8}{\pi}}.
+\]
+The equivalent formulation is immediate. \qed
+
+\medskip
+
+\noindent\textbf{Corollary 14.13 (Round-2 $+$ Round-3 density window for any putative counterexample).}
+If
+\[
+K(N)=o(\sqrt N),
+\]
+then
+\[
+\sqrt{\frac{8}{\pi}}
+\le
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}
+\le 2.
+\]
+
+\noindent\textit{Proof.}
+The lower bound is Corollary~14.12. For the upper bound, apply Round-2 Corollary~14.6:
+\[
+A(x)\le 2\sqrt{x}+K(2x)=(2+o(1))\sqrt x,
+\]
+so the limsup is at most $2$. \qed
+
+\medskip
+
+\noindent\textbf{Interpretation.}
+Round~2 ruled out sets that are too dense; Round~3 rules out sets that are too sparse. Thus any genuine counterexample to Q2 must live in the narrower asymptotic window
+\[
+1.59577\ldots=\sqrt{\frac{8}{\pi}}
+\le
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}
+\le 2.
+\]
+This is a strict strengthening over the pre-Round-3 lower threshold $\sqrt2\approx1.41421$.
+
+Equivalently, Round~3 rules out the entire class of constructions satisfying a global envelope
+\[
+A(x)\le c\sqrt x+O(1)
+\qquad\mbox{with}\qquad
+c<\sqrt{\frac{8}{\pi}}.
+\]
+Any eventual counterexample to Q2 would therefore have to be both
+\begin{enumerate}
+\item dense enough to beat the new $\sqrt{8/\pi}$ threshold infinitely often, and
+\item sparse enough to stay below the Round-2 ceiling $2\sqrt x+o(\sqrt x)$.
+\end{enumerate}
+This sharply narrows the surviving regime.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Distinct-sum issue.} The inequality $N-K(N)\le P_A(N)$ uses only that different integers $n$ correspond to different pair-sums. There is no hidden injectivity assumption beyond equality of sums.
+\item \textbf{Diagonal pairs.} Lemma~14.9 counts $a_i=a_i$ correctly because $a_i\le N/2$ implies $a_i\le N-a_i$, so the diagonal is included exactly once when admissible.
+\item \textbf{Envelope inversion.} From $i=A(a_i)\le C\sqrt{a_i}+D\le C\sqrt{a_i}+d$ we indeed obtain $a_i\ge ((i-d)/C)^2$ for $i>d$. No monotonicity gap is hidden here.
+\item \textbf{Range of the new index $j=i-d$.} Since $i\le A(N/2)$ implies $a_i\le N/2$, the bound $j\le C\sqrt{a_i}\le C\sqrt{N/2}$ is valid. This prevents the function $f_N(j)$ from entering the region where the square root would be undefined or where the bound would become vacuous.
+\item \textbf{Monotone sum-to-integral step.} The derivative
+\[
+f_N'(x)=-\frac{x/C}{\sqrt{N-x^2/C^2}}-1<0
+\]
+shows $f_N$ is decreasing on $[0,C\sqrt{N/2}]$, so the upper Riemann-sum estimate used in Theorem~14.10 is legitimate.
+\item \textbf{Finite initial segment correction.} The constant $D$ absorbs all irregularities coming from finitely many small values of $x$. Since $D$ is fixed in Theorem~14.10 and Corollary~14.11, the resulting error term remains $O_{C,D}(\sqrt N)$ and does not affect the main linear coefficient.
+\item \textbf{Compatibility with Round~2.} There is no conflict with Round-2 Corollary~14.6. In fact, the two rounds are complementary: Round~2 gives the upper-density ceiling $2$, and Round~3 gives the new lower-density floor $\sqrt{8/\pi}$.
+\item \textbf{What remains unproved.} The new argument still does not decide whether the surviving density window
+\[
+\sqrt{\frac{8}{\pi}}\le \limsup A(x)/\sqrt x\le 2
+\]
+actually contains an admissible infinite construction with $K(N)=o(\sqrt N)$, nor does it prove the conjectural lower bound $K(N)\gg_\varepsilon N^{1/2-\varepsilon}$. The near-extremal regime remains open.
+\end{enumerate}
+No internal contradiction was found in the new work.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The strict Round-3 advance is the new sparse-side obstruction:
+\[
+A(x)\le C\sqrt x+O(1)
+\quad\mbox{with}\quad
+C<\sqrt{\frac{8}{\pi}}
+\Longrightarrow
+K(N)\gg N.
+\]
+Hence any putative counterexample to Q2 must satisfy
+\[
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}
+\ge
+\sqrt{\frac{8}{\pi}}.
+\]
+Combining this with the Round-2 dense-side obstruction yields the narrowed density window
+\[
+\sqrt{\frac{8}{\pi}}
+\le
+\limsup_{x\to\infty}\frac{A(x)}{\sqrt x}
+\le 2.
+\]
+
+So Round~3 rules out an entire class of counterexample strategies---all globally subcritical $c\sqrt x$ envelopes with $c<\sqrt{8/\pi}$---and isolates the remaining difficulty more sharply than Round~2 did.
+
+The unresolved core is now even more specific: one must analyze the narrow quadratic-growth regime corresponding roughly to densities between $1.59577\sqrt x$ and $2\sqrt x$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 58\%}
+
+\subsection*{9) REFERENCES}
+No external references were used in the new argument. The proof is self-contained and uses only the Round-2 results supplied in the prompt.

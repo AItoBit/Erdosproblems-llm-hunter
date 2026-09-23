@@ -1,0 +1,198 @@
+\section{Erd\H{o}s Problem \#98}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path (A): continue the proof attempt by determining the next exact small case after Round-1. Round-1 established $h(3)=1$ and $h(4)=2$, but did not determine $h(5)$. The Round-2 target is to prove the exact value of $h(5)$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without re-proving them.
+
+\begin{itemize}
+\item The exact values $h(3)=1$ and $h(4)=2$.
+\item The problem remains globally unresolved: Round-1 only gave the general bounds
+\[
+c\,\frac{n}{\log n}\le h(n)\le n\exp(c\sqrt{\log n}).
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a two-sided exact argument for $n=5$.
+
+\begin{itemize}
+\item The lower bound $h(5)\ge 3$ comes from a classification theorem: a $5$-point planar set with only two distances must be a regular pentagon, which is excluded by the ``no four concyclic'' hypothesis.
+\item The upper bound $h(5)\le 3$ comes from an explicit $5$-point configuration in general position that determines exactly three distances.
+\end{itemize}
+
+Together these give the exact value $h(5)=3$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The gap left by Round-1 was the complete lack of exact information beyond $n=4$.
+
+To close the next case, I need two claims:
+
+\begin{itemize}
+\item \textbf{Lower bound:} a $5$-point set in general position cannot determine only $2$ distances.
+\item \textbf{Upper bound:} there exists a $5$-point set in general position determining exactly $3$ distances.
+\end{itemize}
+
+The first claim uses a precise external classification theorem; the second is fully explicit and verified by direct computation.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem.}
+\[
+h(5)=3.
+\]
+
+\paragraph{Proof of the lower bound $h(5)\ge 3$.}
+I use the following theorem.
+
+\medskip
+
+\textbf{External theorem used.}
+Among planar $5$-point sets that determine exactly two distances, the regular pentagon is the unique possibility up to similarity.
+
+\medskip
+
+Assume for contradiction that $h(5)=2$.
+Then there exists a $5$-point set $P\subset \mathbf{R}^2$ in general position such that $|\Delta(P)|=2$.
+By the external theorem, $P$ must be similar to a regular pentagon.
+But all five vertices of a regular pentagon are concyclic, so $P$ violates the condition ``no four points are concyclic''.
+This contradiction proves
+\[
+h(5)\ge 3.
+\]
+
+\paragraph{Proof of the upper bound $h(5)\le 3$.}
+Consider the five points
+\[
+A=(0,0),\qquad
+B=(1,0),\qquad
+C=\left(\frac{\sqrt3}{2},\frac12\right),\qquad
+D=\left(\frac12,1-\frac{\sqrt3}{2}\right),\qquad
+E=(0,1).
+\]
+Let
+\[
+P:=\{A,B,C,D,E\}.
+\]
+
+I first compute all squared pairwise distances.
+A direct calculation gives
+\[
+AB^2=AC^2=AE^2=CE^2=DE^2=1,
+\]
+\[
+AD^2=BC^2=BD^2=CD^2=2-\sqrt3,
+\]
+and
+\[
+BE^2=2.
+\]
+These are all ten unordered pairs, so
+\[
+\Delta(P)=\left\{1,\sqrt{2-\sqrt3},\sqrt2\right\},
+\]
+hence
+\[
+|\Delta(P)|=3.
+\]
+
+It remains to check that $P$ is in general position.
+
+\paragraph{No three points are collinear.}
+For three points $X,Y,Z$, let $\Delta(X,Y,Z)$ denote twice the signed area of triangle $XYZ$.
+A direct calculation yields
+\[
+\begin{array}{lll}
+\Delta(A,B,C)=\frac12, &
+\Delta(A,B,D)=1-\frac{\sqrt3}{2}, &
+\Delta(A,B,E)=1, \\[6pt]
+\Delta(A,C,D)=-1+\frac{\sqrt3}{2}, &
+\Delta(A,C,E)=\frac{\sqrt3}{2}, &
+\Delta(A,D,E)=\frac12, \\[6pt]
+\Delta(B,C,D)=-\frac32+\sqrt3, &
+\Delta(B,C,E)=-\frac12+\frac{\sqrt3}{2}, &
+\Delta(B,D,E)=\frac12-\frac{\sqrt3}{2}, \\[6pt]
+\Delta(C,D,E)=-\frac12.
+\end{array}
+\]
+All ten values are nonzero because $\sqrt3\neq 1$ and $\sqrt3\neq 2$.
+Therefore no three points of $P$ are collinear.
+
+\paragraph{No four points are concyclic.}
+For four points $X_1,\dots,X_4$ with coordinates $(x_i,y_i)$, define
+\[
+\Gamma(X_1,X_2,X_3,X_4):=
+\det\!\begin{pmatrix}
+x_1^2+y_1^2 & x_1 & y_1 & 1\\
+x_2^2+y_2^2 & x_2 & y_2 & 1\\
+x_3^2+y_3^2 & x_3 & y_3 & 1\\
+x_4^2+y_4^2 & x_4 & y_4 & 1
+\end{pmatrix}.
+\]
+The four points are concyclic if and only if $\Gamma=0$.
+For the five $4$-subsets of $P$, direct computation gives
+\[
+\begin{array}{ll}
+\Gamma(A,B,C,D)=\dfrac{2-\sqrt3}{2}, &
+\Gamma(A,B,C,E)=\dfrac{1-\sqrt3}{2}, \\[10pt]
+\Gamma(A,B,D,E)=\dfrac{1-\sqrt3}{2}, &
+\Gamma(A,C,D,E)=\dfrac{\sqrt3-2}{2}, \\[10pt]
+\Gamma(B,C,D,E)=\sqrt3-2.
+\end{array}
+\]
+Again every value is nonzero.
+So no four points of $P$ are concyclic.
+
+Thus $P$ is in general position and determines exactly $3$ distances, which proves
+\[
+h(5)\le 3.
+\]
+
+Combining the lower and upper bounds, we conclude
+\[
+h(5)=3.\qquad \square
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Lower bound dependence on literature.} The only external input is the precise classification of planar $5$-point $2$-distance sets. Its hypothesis matches exactly the hypothetical case $h(5)=2$.
+\item \textbf{Have all ten distances been checked?} Yes. The partition
+\[
+5+4+1=10
+\]
+of the unordered pairs matches the three displayed distance classes.
+\item \textbf{Have all collinearity obstructions been checked?} Yes. There are exactly $\binom53=10$ triples, and all ten signed areas were written down explicitly.
+\item \textbf{Have all cocircularity obstructions been checked?} Yes. There are exactly $\binom54=5$ four-point subsets, and all five determinants were computed explicitly.
+\item \textbf{Interaction with Round-1.} This strictly extends the exact information from $h(4)=2$ to $h(5)=3$.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves the exact value
+\[
+h(5)=3.
+\]
+This is a genuine new theorem beyond Round-1, though the original asymptotic question $h(n)/n\to\infty$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 40\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item Z. Kov\'acs, G. G\'evay, and B. Kov\'acs, \emph{A note on Erd\H{o}s's mysterious remark}, arXiv:2412.05190, 2024. (Used for the uniqueness of the $5$-point planar $2$-distance configuration.)
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+

@@ -1,0 +1,214 @@
+\section*{Problem \#304}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path C (obstruction/correction).}
+Round~1 did not produce a rigorous theorem beyond the classical literature bounds.
+The most promising round-2 target is therefore a sharp subproblem.
+I will do two things:
+\begin{enumerate}
+\item prove a complete theorem for the prime-denominator boundary case \((p-1)/p\), namely that no three-term Egyptian decomposition exists for any prime \(p\ge 11\);
+\item prove that a natural reduction suggested by the Round~1 data --- namely ``the worst case should always be \((b-1)/b\)'' --- is already false at \(b=79\).
+\end{enumerate}
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 material.
+\begin{enumerate}
+\item Every rational \(0<a/b<1\) has some Egyptian-fraction decomposition with distinct denominators.
+\item The exact-search framework from Round~1 computes \(N(a,b)\) by iterative deepening with safe pruning.
+\item Round~1 already established the exact value \(N(79)=6\) with witness \(a=77\).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the exact two-term criterion
+\[
+  \frac{u}{v}=\frac1x+\frac1y
+  \quad\Longleftrightarrow\quad
+  (ux-v)(uy-v)=v^2
+\]
+for \((u,v)=1\).
+Applied to the remainder after peeling off \(1/2\), this turns the ``three terms?'' question for \((p-1)/p\) into a finite divisor congruence problem over divisors of \(4p^2\).
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The precise gap after Round~1 was the lack of a rigorous lower bound even for special infinite families of denominators.
+To close that gap I will:
+\begin{enumerate}
+\item prove the two-term criterion carefully;
+\item show that any hypothetical three-term decomposition of \((p-1)/p\) with \(p\ge 11\) must start with \(1/2\);
+\item reduce the remainder to the two-term criterion and rule it out by congruence;
+\item then use the exact-search machinery from Round~1 for one new check, namely \(N(78,79)=5\), in order to disprove the tempting simplification ``study only \((b-1)/b\)''.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+\textbf{Lemma (two-term criterion).}
+Let \(0<u<v\) with \((u,v)=1\).
+Then
+\[
+  \frac{u}{v}=\frac1x+\frac1y
+\]
+for some integers \(1<x<y\) if and only if there exists a divisor \(d\mid v^2\) such that
+\[
+  u\mid (v+d).
+\]
+In that case one may take
+\[
+  x=\frac{v+d}{u},
+  \qquad
+  y=\frac{v+v^2/d}{u}.
+\]
+
+\medskip
+\textit{Proof.}
+Starting from
+\[
+  \frac{u}{v}=\frac1x+\frac1y,
+\]
+clear denominators to get
+\[
+  uxy=v(x+y).
+\]
+Rearranging gives
+\[
+  (ux-v)(uy-v)=v^2.
+\]
+So if a two-term decomposition exists, then \(d:=ux-v\) is a divisor of \(v^2\), and clearly \(u\mid (v+d)\).
+Conversely, assume \(d\mid v^2\) and \(u\mid (v+d)\), and set \(e:=v^2/d\).
+Because \((u,v)=1\) and \(d\mid v^2\), we also have \((u,d)=1\).
+From \(d\equiv -v\pmod u\) and \(de=v^2\) it follows that
+\[
+  e\equiv v^2 d^{-1}\equiv -v\pmod u.
+\]
+Hence both \((v+d)/u\) and \((v+e)/u\) are integers, and substituting them into
+\[
+  (ux-v)(uy-v)=v^2
+\]
+shows that they indeed give a two-term Egyptian decomposition.
+\hfill \(\square\)
+
+\medskip
+\textbf{Theorem.}
+Let \(p\ge 11\) be prime.
+Then \((p-1)/p\) has no three-term Egyptian-fraction decomposition.
+Equivalently,
+\[
+  N(p-1,p)\ge 4
+  \qquad (p\ge 11\text{ prime}).
+\]
+Therefore the only primes with \(N(p-1,p)\le 3\) are
+\[
+  p=2,3,5,7.
+\]
+
+\medskip
+\textit{Proof.}
+Suppose for contradiction that
+\[
+  \frac{p-1}{p}=\frac1x+\frac1y+\frac1z
+\]
+with integers \(1<x<y<z\).
+If \(x\ge 3\), then
+\[
+  \frac1x+\frac1y+\frac1z\le \frac13+\frac14+\frac15=\frac{47}{60},
+\]
+whereas for \(p\ge 11\),
+\[
+  \frac{p-1}{p}\ge \frac{10}{11}>\frac{47}{60}.
+\]
+So necessarily \(x=2\).
+Subtracting \(1/2\) gives
+\[
+  \frac{p-2}{2p}=\frac1y+\frac1z.
+\]
+Now \(p\) is odd, so
+\[
+  (p-2,2p)=1.
+\]
+Apply the lemma with
+\[
+  u=p-2,
+  \qquad
+  v=2p.
+\]
+Then there must exist a divisor \(d\mid 4p^2\) such that
+\[
+  p-2\mid 2p+d.
+\]
+Every divisor of \(4p^2\) is of the form \(2^i p^j\) with \(0\le i,j\le 2\).
+Modulo \(p-2\) we have \(p\equiv 2\), hence
+\[
+  d\equiv 2^{i+j}\pmod{p-2}.
+\]
+Therefore the divisibility condition implies
+\[
+  p-2\mid 4+2^{i+j}.
+\]
+But \(i+j\in\{0,1,2,3,4\}\), so the right-hand side can only be one of
+\[
+  5,\ 6,\ 8,\ 12,\ 20.
+\]
+Since \(p\ge 11\) is odd prime, \(p-2\) is an odd integer at least \(9\), and no such integer divides any of \(5,6,8,12,20\).
+Contradiction.
+Hence no three-term decomposition exists.
+
+For the small prime exceptions we have explicit decompositions
+\[
+  \frac12=\frac12,
+  \qquad
+  \frac23=\frac12+\frac16,
+\]
+\[
+  \frac45=\frac12+\frac14+\frac1{20},
+  \qquad
+  \frac67=\frac12+\frac13+\frac1{42}.
+\]
+Thus the only primes with \(N(p-1,p)\le 3\) are \(2,3,5,7\).
+\hfill \(\square\)
+
+\medskip
+\textbf{A concrete obstruction to the ``just study \((b-1)/b\)'' strategy.}
+Using the exact iterative-deepening search from Round~1, I checked that
+\[
+  N(78,79)=5,
+\]
+for example via
+\[
+  \frac{78}{79}=\frac12+\frac13+\frac17+\frac1{90}+\frac1{24885},
+\]
+and the same exact search shows that no four-term decomposition exists.
+Round~1 already established
+\[
+  N(77,79)=6.
+\]
+Therefore, even at the same denominator \(b=79\), the extremal numerator is \emph{not} \(a=b-1\).
+So one cannot reduce Problem~\#304 to the single subfamily \(N(b-1,b)\) without losing information.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Did the proof really force \(x=2\)?}
+Yes. The bound \(1/3+1/4+1/5=47/60\) is the maximum possible three-term sum with \(x\ge 3\), and \((p-1)/p\ge 10/11\) for every prime \(p\ge 11\).
+\item \textbf{Was the two-term criterion applied in reduced form?}
+Yes. For odd prime \(p\), \((p-2,2p)=1\), so the lemma applies exactly as stated.
+\item \textbf{Were all divisors of \(4p^2\) considered?}
+Yes. Every divisor is \(2^i p^j\) with \(0\le i,j\le 2\), so \(i+j\in\{0,1,2,3,4\}\).
+\item \textbf{Could the computational side remark hide a gap?}
+The remark about \(N(78,79)=5\) is finite and exact: the Round~1 algorithm is an exhaustive iterative-deepening search with a safe pruning rule. It found the displayed five-term representation and found no four-term representation.
+\item \textbf{Does the theorem solve the original asymptotic problem?}
+No. It solves only a prime-denominator boundary subproblem, but it is a genuine new theorem on an infinite family.
+\end{enumerate}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+Round~2 proves the new theorem that for every prime \(p\ge 11\), the fraction \((p-1)/p\) needs at least four unit fractions.
+Equivalently, among primes the relation \(N(p-1,p)\le 3\) occurs exactly for \(p=2,3,5,7\).
+In addition, Round~2 proves a concrete obstruction to the simplifying strategy of studying only \((b-1)/b\): already at \(b=79\), the true worst numerator is \(77\), not \(78\).
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 27\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item Round~1 output in this conversation (used as fixed foundation, including the exact value \(N(79)=6\)).
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#304}.
+\item W. van Doorn and Q. Tang, \emph{The smallest denominator not contained in a unit fraction decomposition of \(1\) with fixed length}, arXiv:2512.22083.
+\end{itemize}
+
+

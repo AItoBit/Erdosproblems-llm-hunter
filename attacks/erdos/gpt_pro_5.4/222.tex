@@ -1,0 +1,127 @@
+\section*{Problem 222 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C): obstruction/correction}.  The original prompt ``explore the behaviour'' is too broad to finish in one round.  The sharpest Round~1 gap was the very weak pointwise upper bound $\Delta_k\le 2\sqrt{n_k}+1$.  In this round I correct that to the classical Bambah--Chowla scale and give a complete proof:
+\[
+\Delta_k \le 2\sqrt{2}\,(n_k+1)^{1/4}+2.
+\]
+This is a major quantitative improvement from exponent $1/2$ down to exponent $1/4$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the Round~1 notation
+\[
+\mathcal S=\{n\ge 0:n=a^2+b^2\mbox{ for some integers }a,b\},
+\qquad
+0\le n_1<n_2<\cdots,
+\qquad
+\Delta_k=n_{k+1}-n_k.
+\]
+I also retain the Round~1 theorem that the gaps are unbounded (via the CRT construction), though that theorem is not reproved here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the arithmetic form of the Bambah--Chowla argument: for a given real $x\ge 1$, choose
+\[
+u:=\lfloor \sqrt{x}\rfloor,
+\qquad
+v:=\left\lceil \sqrt{x-u^2}\right\rceil.
+\]
+Then $u^2+v^2$ is a sum of two squares lying very close above $x$, and a direct estimate shows the error is $O(x^{1/4})$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The missing claim after Round~1 was a strong universal upper bound for the next representable number.  So the precise target is:
+
+\medskip
+\noindent\textbf{Claim.} For every real $x\ge 1$ there exists $m\in\mathcal S$ with
+\[
+x\le m < x+2\sqrt{2}\,x^{1/4}+1.
+\]
+
+Once this is proved, applying it with $x=n_k+1$ gives a pointwise bound for the consecutive gap $\Delta_k$.
+
+\subsection*{5) WORK (ROUND-2)}
+Let $x\ge 1$ be real, and define
+\[
+u:=\lfloor\sqrt{x}\rfloor,
+\qquad
+v:=\left\lceil\sqrt{x-u^2}\right\rceil.
+\]
+Then $u,v$ are nonnegative integers, $u^2\le x$, and therefore $x-u^2\ge 0$.
+By the defining property of the ceiling function,
+\[
+\sqrt{x-u^2}\le v < \sqrt{x-u^2}+1.
+\]
+Squaring gives
+\[
+x-u^2\le v^2 < x-u^2 + 2\sqrt{x-u^2}+1.
+\]
+After adding $u^2$ to all three terms we obtain
+\[
+x\le u^2+v^2 < x + 2\sqrt{x-u^2}+1.
+\]
+So it remains to estimate $x-u^2$.
+Since $u=\lfloor\sqrt{x}\rfloor$, we have $u\ge \sqrt{x}-1$, hence
+\[
+u^2 \ge (\sqrt{x}-1)^2 = x-2\sqrt{x}+1.
+\]
+Therefore
+\[
+x-u^2 \le 2\sqrt{x}-1.
+\]
+Substituting this into the previous inequality yields
+\[
+u^2+v^2 < x+2\sqrt{2\sqrt{x}-1}+1 < x+2\sqrt{2}\,x^{1/4}+1.
+\]
+Because $u^2+v^2\in\mathcal S$, this proves the claim.
+
+Now take $x=n_k+1$.  Then there exists $m\in\mathcal S$ with
+\[
+n_k+1\le m < n_k+1+2\sqrt{2}\,(n_k+1)^{1/4}+1.
+\]
+Since $n_{k+1}$ is the least element of $\mathcal S$ strictly larger than $n_k$, we have $n_{k+1}\le m$.  Hence
+\[
+\Delta_k=n_{k+1}-n_k\le 2\sqrt{2}\,(n_k+1)^{1/4}+2.
+\]
+Thus Round~2 proves the following corrected theorem.
+
+\medskip
+\noindent\textbf{Corrected theorem proved in Round~2.}
+For every $k\ge 1$,
+\[
+\Delta_k \le 2\sqrt{2}\,(n_k+1)^{1/4}+2.
+\]
+Equivalently, the maximal gap function among sums of two squares satisfies
+\[
+g(X):=\max\{n_{j+1}-n_j:n_j\le X\}\ll X^{1/4}.
+\]
+Together with the Round~1 CRT construction, this gives the rigorous window
+\[
+g(X)\to\infty
+\qquad\mbox{and}\qquad
+g(X)\ll X^{1/4}.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Is $x-u^2$ always nonnegative?} Yes, because $u=\lfloor\sqrt{x}\rfloor$ implies $u^2\le x$.
+\item \emph{Could the constructed sum of two squares equal $n_k$ when deriving the gap bound?} That is why the theorem is applied to $x=n_k+1$, not to $x=n_k$.
+\item \emph{Any issue at small $x$?} No.  For example $x=1$ gives $u=1$, $v=0$, and the inequality is immediate.
+\item \emph{Did the exponent really drop from $1/2$ to $1/4$?} Yes: the only nontrivial estimate is $x-u^2\le 2\sqrt{x}-1$, and taking one more square root produces the exponent $1/4$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}  The overall behaviour of gaps between sums of two squares is still not fully understood, but Round~2 proves a sharp classical pointwise upper bound absent from Round~1:
+\[
+\Delta_k \le 2\sqrt{2}\,(n_k+1)^{1/4}+2.
+\]
+This closes the main quantitative gap in the Round~1 work.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 65\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item R. P. Bambah and S. Chowla, \emph{On numbers which can be expressed as a sum of two squares}, Proc. Nat. Inst. Sci. India \textbf{13} (1947), 101--103.
+\item P. Shiu, \emph{On a result of Bambah and Chowla}, Integers \textbf{19} (2019), A48.
+\end{itemize}
+
+

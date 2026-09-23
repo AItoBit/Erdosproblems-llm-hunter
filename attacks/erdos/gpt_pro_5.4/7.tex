@@ -1,0 +1,256 @@
+\section{ROUND-4 OBJECTIVE}
+
+I continue along path \textbf{(C)}: strengthen the Round-3 obstruction for the minimally corrected statement.
+
+Round 2 already identified the fatal ambiguity in the naive formulation: without distinctness of the moduli, the question is trivial, since
+\[
+\{x \equiv 0 \pmod 3,\ x \equiv 1 \pmod 3,\ x \equiv 2 \pmod 3\}
+\]
+is an odd covering system. Thus the genuine problem remains the standard one:
+\begin{quote}
+Does there exist a \emph{distinct} covering system all of whose moduli are odd integers greater than \(1\)?
+\end{quote}
+
+Round 3 proved that any such system must contain a modulus at least \(127\). In this round I strengthen that finite obstruction substantially:
+
+\begin{quote}
+\textbf{Main new theorem.} Any distinct odd covering system must contain a modulus at least \(1001\).
+\end{quote}
+
+This is still far from a full solution, but it is a genuine theorem strictly stronger than the Round-3 lower bound.
+
+\section{Round-3 FOUNDATION USED}
+
+I use the following Round-3 results as fixed input.
+
+\begin{enumerate}
+\item \textbf{Corrected formulation.} The nontrivial problem is the \emph{distinct} odd-modulus problem; without distinctness the answer is trivially ``yes.'' 
+\item \textbf{Round-3 prime-power assignment obstruction (Lemma 3.1).} If a finite set \(M\) of odd moduli is assigned to prime divisors \(\pi(m)\mid m\) in such a way that, for every prime \(p\),
+\[
+\lambda_p:=\sum_{\pi(m)=p} p^{-v_p(m)} < 1,
+\]
+then for \emph{every} choice of residue classes \(x\equiv a_m \pmod m\) with \(m\in M\), there exists an integer \(x\) avoiding all of them. In particular, the chosen congruences do not cover \(\mathbb Z\).
+\item \textbf{Round-3 lower bound.} Any distinct odd covering system must contain a modulus at least \(127\).
+\end{enumerate}
+
+I do not re-prove these items here. The new work below uses item 2 and strictly strengthens item 3.
+
+\section{NEW INSIGHT / TOOL (ROUND-4)}
+
+The new idea is that the Round-3 prime-assignment lemma can be pushed much further by using the following assignment rule.
+
+\begin{itemize}
+\item Default rule: assign each odd modulus \(m\le 999\) to its \emph{largest prime divisor}.
+\item Then make only \(23\) explicit exceptions, all involving moduli whose prime divisors are at most \(19\).
+\end{itemize}
+
+This assignment was \emph{found} by an exact mixed-integer feasibility search, but the proof below does not depend on the search. Once the assignment is written down, the verification is completely explicit: one checks that every local load \(\lambda_p\) is strictly less than \(1\), and then Round-3 Lemma 3.1 applies.
+
+So the genuinely new content of this round is an explicit certificate showing that the Round-3 obstruction already rules out \emph{all} odd moduli up to \(999\).
+
+\section{ATTACK PLAN (ROUND-4)}
+
+After Round 3, the exact remaining gap was the following: the best unconditional finite obstruction only showed that a hypothetical distinct odd covering system must contain some modulus at least \(127\).
+
+To improve this, I will:
+
+\begin{enumerate}
+\item use Round-3 Lemma 3.1 as the main engine;
+\item define a prime-divisor assignment \(\pi(m)\) for every odd \(m\) with \(3\le m\le 999\);
+\item verify that every local load \(\lambda_p\) is \(<1\);
+\item conclude that no cover can use only odd moduli at most \(999\), hence any distinct odd covering system must contain a modulus at least \(1001\).
+\end{enumerate}
+
+This overcomes the Round-3 limitation because the new assignment is much more efficient than the previous explicit partitions: almost every modulus is handled by its largest prime divisor, and only a small exceptional family has to be rerouted.
+
+\section{WORK (ROUND-4)}
+
+\subsection*{Theorem 4.1}
+Let
+\[
+M_{999}:=\{m\in \mathbb N : 3\le m\le 999,\ m\ \text{odd}\}.
+\]
+Then for \emph{every} choice of residue classes \(a_m \pmod m\) with \(m\in M_{999}\), there exists an integer \(x\) such that
+\[
+x \not\equiv a_m \pmod m \qquad (m\in M_{999}).
+\]
+Consequently, no distinct odd covering system can have all of its moduli at most \(999\). In particular, any distinct odd covering system, if one exists, must contain a modulus at least \(1001\).
+
+\medskip
+\noindent\emph{Proof.}
+By Round-3 Lemma 3.1, it is enough to define a map
+\[
+\pi:M_{999}\to \{\text{odd primes}\}
+\]
+such that \(\pi(m)\mid m\) for every \(m\in M_{999}\) and
+\[
+\lambda_p:=\sum_{\pi(m)=p} p^{-v_p(m)} < 1
+\qquad\text{for every odd prime }p.
+\]
+
+For an odd integer \(m\), let \(P(m)\) denote its largest prime divisor. Define \(\pi(m)\) by the default rule
+\[
+\pi(m)=P(m),
+\]
+except for the following \(23\) moduli:
+\[
+\begin{aligned}
+&45,63,135,189,297,351,405,567,675,891,945 \mapsto 3,\\
+&165,175,275,325,525,825,875,975 \mapsto 5,\\
+&539,637,833 \mapsto 7,\\
+&429 \mapsto 11.
+\end{aligned}
+\]
+Each displayed reassignment is to a genuine prime divisor of the modulus, so \(\pi(m)\mid m\) always holds.
+
+We now verify that every local load is \(<1\).
+
+\subsubsection*{Large primes \(p\ge 23\)}
+If \(p\ge 23\), then no exception is assigned to \(p\), so \(\pi(m)=p\) means exactly that \(p=P(m)\), i.e. \(m\) is an odd multiple of \(p\) whose prime factors are all at most \(p\). In particular, every such \(m\) is an odd multiple of \(p\) not exceeding \(999\).
+
+The odd multiples of \(p\) up to \(999\) are
+\[
+p,\, 3p,\, 5p,\, \dots,\, (2k-1)p
+\]
+with \((2k-1)p\le 999\). Since \(p\ge 23\),
+\[
+2k-1 \le \frac{999}{p} \le \frac{999}{23} < 44,
+\]
+hence \(k\le 22\). Therefore there are at most \(22\) odd multiples of \(p\) in \(M_{999}\).
+
+Every modulus assigned to \(p\) contributes \(p^{-v_p(m)}\le 1/p\). Hence
+\[
+\lambda_p \le \frac{22}{p} < 1
+\qquad (p\ge 23).
+\]
+
+\subsubsection*{Small primes \(p\in\{3,5,7,11,13,17,19\}\)}
+Under the above assignment rule, the corresponding fibers \(S_p:=\pi^{-1}(p)\) are:
+
+\[
+\begin{aligned}
+S_3&=\{3,9,27,45,63,81,135,189,243,297,351,405,567,675,729,891,945\},\\
+S_5&=\{5,15,25,75,125,165,175,225,275,325,375,525,625,825,875,975\},\\
+S_7&=\{7,21,35,49,105,147,245,315,343,441,539,637,735,833\},\\
+S_{11}&=\{11,33,55,77,99,121,231,363,385,429,495,605,693,847\},\\
+S_{13}&=\{13,39,65,91,117,143,169,195,273,455,507,585,715,819,845\},\\
+S_{17}&=\{17,51,85,119,153,187,221,255,289,357,425,459,561,595,663,765,867,935\},\\
+S_{19}&=\{19,57,95,133,171,209,247,285,323,361,399,475,513,627,665,741,855,931,969\}.
+\end{aligned}
+\]
+
+From these explicit sets we read off the \(p\)-adic exponent counts and hence the local loads:
+
+\[
+\lambda_3
+= \frac{1}{3}+\frac{3}{3^2}+\frac{7}{3^3}+\frac{4}{3^4}+\frac{1}{3^5}+\frac{1}{3^6}
+= \frac{715}{729}<1,
+\]
+\[
+\lambda_5
+= \frac{3}{5}+\frac{9}{5^2}+\frac{3}{5^3}+\frac{1}{5^4}
+= \frac{616}{625}<1,
+\]
+\[
+\lambda_7
+= \frac{5}{7}+\frac{8}{7^2}+\frac{1}{7^3}
+= \frac{302}{343}<1,
+\]
+\[
+\lambda_{11}
+= \frac{10}{11}+\frac{4}{11^2}
+= \frac{114}{121}<1,
+\]
+\[
+\lambda_{13}
+= \frac{12}{13}+\frac{3}{13^2}
+= \frac{159}{169}<1,
+\]
+\[
+\lambda_{17}
+= \frac{16}{17}+\frac{2}{17^2}
+= \frac{274}{289}<1,
+\]
+\[
+\lambda_{19}
+= \frac{18}{19}+\frac{1}{19^2}
+= \frac{343}{361}<1.
+\]
+
+Thus \(\lambda_p<1\) for every odd prime \(p\).
+
+Round-3 Lemma 3.1 now applies, so for every choice of congruences
+\[
+x\equiv a_m \pmod m \qquad (m\in M_{999}),
+\]
+there is an integer \(x\) avoiding all of them. Therefore the full family \(M_{999}\) cannot support a cover.
+
+Finally, if some distinct odd covering system had all of its moduli at most \(999\), then its moduli would form a subset \(M\subseteq M_{999}\). Restricting \(\pi\) from \(M_{999}\) to \(M\) only decreases each local load \(\lambda_p\), so the same argument shows that \(M\) also cannot support a cover. This contradiction proves that no distinct odd covering system can have all moduli at most \(999\). Hence any such system must contain a modulus at least \(1001\). \hfill\(\square\)
+
+\medskip
+\noindent\textbf{Remark.}
+This strictly strengthens the Round-3 bound
+\[
+\max m_i \ge 127
+\]
+to the new unconditional bound
+\[
+\max m_i \ge 1001.
+\]
+
+\section{ADVERSARIAL VERIFICATION}
+
+I check the new argument against the main failure modes.
+
+\begin{enumerate}
+\item \textbf{Use of Round-3 results.} The only imported result is Round-3 Lemma 3.1, used exactly as intended: once a prime-divisor assignment with all local loads \(<1\) is produced, noncoverage follows.
+
+\item \textbf{Assignment validity.} Every exceptional reassignment is to an actual prime divisor:
+\[
+\begin{aligned}
+&45,135,405,675,975 \text{ are divisible by }5\text{ and }3;\\
+&63,189,567,945 \text{ are divisible by }7\text{ and }3;\\
+&297,891 \text{ are divisible by }11\text{ and }3;\\
+&351 \text{ is divisible by }13\text{ and }3;\\
+&165,825 \text{ are divisible by }11\text{ and }5;\\
+&175,525,875 \text{ are divisible by }7\text{ and }5;\\
+&275 \text{ is divisible by }11\text{ and }5;\\
+&325,975 \text{ are divisible by }13\text{ and }5;\\
+&539,637,833 \text{ are divisible by }7;\\
+&429 \text{ is divisible by }11.
+\end{aligned}
+\]
+
+\item \textbf{Large-prime estimate.} For \(p\ge 23\), the proof uses only the crude bound ``at most \(22\) odd multiples of \(p\) up to \(999\)'', together with the trivial inequality \(p^{-v_p(m)}\le 1/p\). This is independent of any hidden structure and gives a strict inequality \(\lambda_p<1\).
+
+\item \textbf{Small-prime loads.} The sets \(S_3,S_5,S_7,S_{11},S_{13},S_{17},S_{19}\) are explicit; the exponent counts used in the displayed formulas are read directly from those lists. Every resulting rational number is strictly below \(1\).
+
+\item \textbf{Subset monotonicity.} The conclusion for arbitrary distinct odd modulus sets with \(\max m_i\le 999\) is legitimate, because restricting the assignment \(\pi\) from \(M_{999}\) to a smaller set can only decrease the local loads. So if the full family cannot cover, then no subfamily can cover either.
+
+\item \textbf{Interaction with Round 3.} There is no conflict: Round 3 gave the weaker lower bound \(127\le \max m_i\), and Theorem 4.1 sharpens it to \(1001\le \max m_i\).
+\end{enumerate}
+
+No gap remains in the proof of Theorem 4.1.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The corrected odd-covering problem remains open, but this round proves a substantially stronger finite obstruction than Round 3:
+
+\begin{quote}
+If a distinct odd covering system exists, then it must contain a modulus at least \(1001\).
+\end{quote}
+
+The new ingredient is an explicit prime-divisor assignment certificate on all odd moduli \(3\le m\le 999\), verified using the Round-3 prime-power obstruction lemma.
+
+\section{COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 58\%}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#7}, \texttt{https://www.erdosproblems.com/7}, accessed 2026-03-07.
+\item C. Bispels, M. Cohen, J. Harrington, J. Lowrance, K. Pontes, L. Schaumann, and T. W. H. Wong, \emph{A further investigation on covering systems with odd moduli}, \emph{Discrete Mathematics} \textbf{349} (2026), no.~7, 115013.
+\end{enumerate}

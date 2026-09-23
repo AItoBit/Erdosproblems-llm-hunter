@@ -1,0 +1,217 @@
+\section{Problem 788}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(A)}: prove a new unconditional upper bound. This is the most promising direction because Round 1 already reduced the problem to an independence-number problem in a graph, and there is now a strong external theorem on random Cayley sum graphs that can be transferred into this setting.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results as fixed:
+\begin{enumerate}
+\item the graph reformulation
+\[
+ f(n)=\min_{B \subset (2n,4n)} \bigl(|B|+\alpha(G_B)\bigr),
+\]
+where $G_B$ has vertex set $I_n:=\{n+1,\dots,2n-1\}$ and an edge $xy$ whenever $x\neq y$ and $x+y \in B$;
+\item the lower bound
+\[
+ f(n) \ge 2\sqrt{n-1}-1;
+\]
+\item the small exact computations for tiny $n$, used only as a check.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a transference principle from random Cayley sum graphs to Problem 788.
+
+The external input is Alon--Pham (2025): for an abelian group $G$ of size $N$ and edge-density parameter $p \le 1/2$, the random Cayley sum graph on $G$ has independence number
+\[
+ \widetilde O(p^{-3/2})
+\]
+with high probability.
+
+I will prove a general reduction showing that any bound of the form $\widetilde O(p^{-c})$ for random Cayley sum graphs implies
+\[
+ f(n) \le n^{c/(c+1)+o(1)}.
+\]
+Substituting $c=3/2$ yields the new exponent $3/5$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was on the upper-bound side: we had only the older $2/3$ exponent. The plan is:
+\begin{enumerate}
+\item embed the interval graph $G_B$ into a Cayley sum graph on a cyclic group of prime order $q>4n$ so that there is no modular wrap-around;
+\item choose the Cayley generating set randomly with density $p$;
+\item use Alon--Pham to make the independence number small and Chernoff to keep the generating set sparse;
+\item optimize $pn + p^{-c}$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+Recall from Round 1 that $f(n)=\min_B (|B|+\alpha(G_B))$.
+
+\paragraph{Lemma 788.1 (general transfer principle).}
+Assume the following external hypothesis for some fixed $c>0$:
+
+\medskip
+\noindent
+for every finite abelian group $G$ of order $N$ and every $p \le 1/2$, the random Cayley sum graph on $G$ has independence number at most
+\[
+ \widetilde O(p^{-c})
+\]
+with high probability.
+\medskip
+
+Then
+\[
+ f(n) \le n^{c/(c+1)+o(1)}.
+\]
+
+\paragraph{Proof.}
+Fix $n$ large. By Bertrand's postulate there is a prime $q$ with
+\[
+ 4n < q < 8n.
+\]
+Work in the cyclic group $G = \mathbf Z / q\mathbf Z$.
+
+Choose a random subset $S \subseteq G$ by including each element independently with probability $p$, where $p \le 1/2$ will be chosen later. Let $\Gamma_S^+$ be the associated random Cayley sum graph on $G$.
+
+By the external hypothesis, with high probability,
+\[
+ \alpha(\Gamma_S^+) \le K p^{-c} (\log q)^K
+\]
+for some absolute constant $K$.
+Also, by a standard Chernoff bound, with high probability,
+\[
+ |S| \le 2pq.
+\]
+Hence for large $q$ there exists at least one realisation of $S$ for which both estimates hold simultaneously.
+
+Fix such an $S$, and define
+\[
+ B := S \cap \{2n+1,2n+2,\dots,4n-1\}.
+\]
+Then $B \subset (2n,4n)$, as required by the problem.
+
+Now consider the interval of vertices
+\[
+ I_n = \{n+1,n+2,\dots,2n-1\} \subset G.
+\]
+If $x,y \in I_n$ are distinct, then
+\[
+ 2n+3 \le x+y \le 4n-3 < q,
+\]
+so the sum $x+y$ in $G$ is the same as the ordinary integer sum. Therefore, for distinct $x,y \in I_n$,
+\[
+ x+y \in S \iff x+y \in B.
+\]
+This means exactly that the graph $G_B$ from Problem 788 is the induced subgraph of $\Gamma_S^+$ on the vertex set $I_n$.
+
+Every independent set in $G_B$ is therefore an independent set in $\Gamma_S^+$, and hence
+\[
+ \alpha(G_B) \le \alpha(\Gamma_S^+) \le K p^{-c} (\log q)^K.
+\]
+Also,
+\[
+ |B| \le |S| \le 2pq.
+\]
+Consequently,
+\[
+ f(n) \le |B| + \alpha(G_B)
+ \le 2pq + K p^{-c} (\log q)^K.
+\]
+Since $q \asymp n$, this is
+\[
+ f(n) \le \widetilde O(pn + p^{-c}).
+\]
+Choose
+\[
+ p = n^{-1/(c+1)}.
+\]
+Then
+\[
+ pn = n^{c/(c+1)}
+\qquad\text{and}\qquad
+p^{-c} = n^{c/(c+1)}.
+\]
+Thus
+\[
+ f(n) \le \widetilde O\!\left(n^{c/(c+1)}\right)
+ = n^{c/(c+1)+o(1)}.
+\]
+This proves the lemma.
+\hfill$\square$
+
+\paragraph{External theorem (Alon--Pham, 2025, Theorem 4).}
+For an abelian group of size $N$ and $p \le 1/2$, the random Cayley sum graph has independence number at most
+\[
+ \widetilde O(p^{-3/2})
+\]
+with high probability.
+
+\paragraph{Corollary 788.2.}
+One has
+\[
+ f(n) \le n^{3/5+o(1)}.
+\]
+
+\paragraph{Proof.}
+Apply Lemma 788.1 with $c=3/2$. Then
+\[
+ \frac{c}{c+1} = \frac{3/2}{5/2} = \frac35.
+\]
+So
+\[
+ f(n) \le n^{3/5+o(1)}.
+\]
+\hfill$\square$
+
+\paragraph{Summary.}
+Combining Corollary 788.2 with the Round-1 lower bound gives
+\[
+ n^{1/2} \ll f(n) \le n^{3/5+o(1)}.
+\]
+This improves the previously quoted upper exponent $2/3$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item The no-wrap condition is the key technical point, and it is valid because $q>4n$ while all relevant sums of distinct elements of $I_n$ lie in $[2n+3,4n-3]$.
+\item I used only distinct pairs in the interval graph $G_B$, exactly as in the original problem. Under the standard simple-graph convention for Cayley sum graphs, the induced-subgraph identification is exact on distinct vertices.
+\item The probabilistic argument is converted to a deterministic existence statement by intersecting two high-probability events: one for $\alpha(\Gamma_S^+)$ and one for $|S|$.
+\item The optimisation is correct:
+\[
+ pn + p^{-c}
+\]
+is balanced by $p=n^{-1/(c+1)}$, giving exponent $c/(c+1)$.
+\item Since $p=n^{-1/(c+1)} \to 0$, the assumption $p \le 1/2$ holds for all sufficiently large $n$; the finitely many small $n$ are absorbed into the implied constants.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance is a rigorous new upper bound:
+\[
+ f(n) \le n^{3/5+o(1)}.
+\]
+This improves the older $2/3$ exponent and comes from a general transfer lemma from random Cayley sum graph independence bounds to Problem 788.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{99}
+\bibitem{Choi788}
+S. L. G. Choi,
+\emph{On a combinatorial problem in number theory},
+Proc. London Math. Soc. (3) 23 (1971), 629--642.
+
+\bibitem{BSS788}
+A. Baltz, T. Schoen, and A. Srivastav,
+\emph{Probabilistic construction of small strongly sum-free sets via large Sidon sets},
+Colloq. Math. 86 (2000), 171--176.
+
+\bibitem{AlonPham788}
+N. Alon and H. T. Pham,
+\emph{Random Cayley graphs and random sumsets},
+arXiv:2509.02561 (2025).
+
+\bibitem{Bloom788}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#788}, updated January 2026,
+\texttt{https://www.erdosproblems.com/788}.
+\end{thebibliography}

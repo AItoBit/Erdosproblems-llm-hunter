@@ -1,0 +1,185 @@
+\section*{Round 2 continuation for Erd\H{o}s Problems \#282, \#283, \#287}
+
+\subsection*{Erd\H{o}s Problem \#287}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/correction}: isolate a structural condition that every counterexample must satisfy. Round 1 showed only the weaker no-consecutive-denominators result and an exhaustive search for $n_k\le 47$. The exact Round-1 gap was that the $2$-adic uniqueness argument breaks once isolated holes are allowed. The new Round-2 aim is to replace that fragile argument by a \emph{general prime-power uniqueness lemma} that applies to arbitrary Egyptian partitions.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 items.
+\begin{enumerate}
+\item The lcm/parity proof that a full interval of consecutive denominators cannot sum to $1$.
+\item The interpretation of the conjecture in terms of sets with all successive gaps at most $2$.
+\item The exhaustive Round-1 computation showing no counterexample with $n_k\le 47$.
+\end{enumerate}
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a general valuation obstruction.
+
+If
+\[
+1=\frac1{n_1}+\cdots+\frac1{n_k}
+\]
+and for some prime $p$ the maximum value of $v_p(n_i)$ is attained by exactly one denominator, then the identity is impossible. This immediately implies a strong span-divisibility theorem: if
+\[
+W:=n_k-n_1,
+\]
+then every denominator $n_i$ must divide
+\[
+L_W:=\mathrm{lcm}(1,2,\dots,W).
+\]
+So a hypothetical counterexample of span $W$ is forced into a very rigid set of allowed integers.
+
+A second new tool is a clean harmonic localisation bound:
+\[
+ n_1\le \frac{W+e}{e-1},
+ \qquad
+ n_k\le \frac{e(W+1)}{e-1}.
+\]
+Thus a counterexample of span $W$ must lie in a short initial interval of length about $1.582W$, and all of its denominators must be divisors of $L_W$.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+I prove three precise claims.
+\begin{enumerate}
+\item A general prime-adic uniqueness lemma for arbitrary Egyptian fraction decompositions of $1$.
+\item A corollary excluding every prime power divisor $p^e>W$ from every denominator, hence forcing $n_i\mid L_W$.
+\item A harmonic upper bound localising the first and last denominator in terms of the span $W$.
+\end{enumerate}
+This overcomes the exact Round-1 obstacle: the new argument no longer depends on the denominators being consecutive.
+
+\subsubsection*{5) WORK (ROUND-2)}
+
+\paragraph{5.1. A general prime-adic uniqueness lemma.}
+Suppose
+\[
+1=\frac1{n_1}+\cdots+\frac1{n_k}
+\]
+with distinct positive integers $n_1,\dots,n_k$. Fix a prime $p$, and let
+\[
+ t:=\max_{1\le i\le k} v_p(n_i).
+\]
+I claim that if $t\ge 1$, then this maximum cannot be attained by exactly one denominator.
+
+Indeed, let
+\[
+L:=\mathrm{lcm}(n_1,\dots,n_k).
+\]
+Multiplying the Egyptian fraction identity by $L$ gives
+\[
+L=\sum_{i=1}^k \frac{L}{n_i}.
+\]
+Assume for contradiction that $v_p(n_j)=t$ for exactly one index $j$. Then $v_p(L)=t$, so $L/n_j$ is not divisible by $p$, whereas for every $i\ne j$ we have $v_p(n_i)\le t-1$, hence $L/n_i$ \emph{is} divisible by $p$. Therefore the right-hand side is congruent to $L/n_j\not\equiv 0\pmod p$, while the left-hand side $L$ is divisible by $p$. This is impossible.
+
+So for each prime $p$, either no denominator is divisible by $p$, or the maximal $p$-adic valuation occurring among the denominators is attained at least twice.
+
+\paragraph{5.2. Span-divisibility theorem.}
+Now assume additionally that the denominators satisfy
+\[
+2\le n_1<\cdots<n_k,
+\qquad
+W:=n_k-n_1.
+\]
+I claim that every denominator $n_i$ divides $L_W:=\mathrm{lcm}(1,2,\dots,W)$.
+
+Fix $i$ and a prime $p$. Write $e:=v_p(n_i)$. If $p^e>W$, then two distinct multiples of $p^e$ differ by at least $p^e>W$, so the interval $[n_1,n_k]$ contains \emph{at most one} multiple of $p^e$. Hence among $n_1,\dots,n_k$, at most one denominator has $p$-adic valuation at least $e$. In particular the maximal $p$-adic valuation occurring in the set is attained uniquely, contradicting the lemma from 5.1.
+
+Therefore for every $i$ and every prime $p$,
+\[
+ p^{v_p(n_i)}\le W.
+\]
+Equivalently,
+\[
+ v_p(n_i)\le \max\{r\ge 0: p^r\le W\}=v_p(L_W).
+\]
+Since this holds for every prime $p$, one gets
+\[
+ n_i\mid L_W
+\qquad (1\le i\le k).
+\]
+This proves the theorem.
+
+\paragraph{5.3. Immediate corollaries of the span-divisibility theorem.}
+\begin{enumerate}
+\item No denominator can contain a prime factor $>W$.
+\item More strongly, no denominator can be a prime power $>W$.
+\item Hence every denominator $>W$ is necessarily composite and has at least two distinct prime factors.
+\end{enumerate}
+These are all exact consequences of $n_i\mid L_W$.
+
+\paragraph{5.4. Harmonic localisation.}
+Let $a:=n_1$ and $b:=n_k=a+W$. Since the denominator set is contained in the interval $[a,b]$,
+\[
+1=\sum_{i=1}^k \frac1{n_i}\le \sum_{n=a}^{b}\frac1n.
+\]
+Using the standard integral bound for a decreasing function,
+\[
+\sum_{n=a}^{b}\frac1n\le \int_{a-1}^{b}\frac{dx}{x}=\log\frac{b}{a-1}.
+\]
+Hence
+\[
+1\le \log\frac{b}{a-1},
+\qquad\text{so}\qquad
+ e\le \frac{b}{a-1}=\frac{a+W}{a-1}.
+\]
+Rearranging gives
+\[
+ (e-1)a\le W+e,
+ \qquad\text{i.e.}\qquad
+ a\le \frac{W+e}{e-1}.
+\]
+Substituting $b=a+W$ then yields
+\[
+ b\le W+\frac{W+e}{e-1}=\frac{e(W+1)}{e-1}.
+\]
+So every counterexample of span $W$ must lie inside the interval
+\[
+\left[2,\ \frac{e(W+1)}{e-1}\right]
+\]
+with first term at most $(W+e)/(e-1)$.
+
+\paragraph{5.5. Synthesis.}
+Any counterexample to Problem \#287 must therefore have the following rigid form. There exists an integer $W\ge 2$ and an interval $[a,a+W]$ such that
+\begin{enumerate}
+\item $a\le (W+e)/(e-1)$,
+\item every chosen denominator lies in $[a,a+W]\cap \mathrm{Div}(L_W)$,
+\item the chosen denominators have successive gaps at most $2$,
+\item their reciprocals sum to $1$.
+\end{enumerate}
+This is a substantial sharpening of the raw statement of the conjecture: the search for a counterexample is reduced to a divisor-theoretic problem tied to $L_W$.
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Does the prime-adic lemma require consecutive denominators?} No. The proof uses only the lcm identity and works for an arbitrary finite set of denominators.
+\item \textbf{Could there be two denominators with different large powers of the same prime, so that the maximal valuation is not unique?} If one denominator contains $p^e>W$, then there is at most one multiple of $p^e$ in the whole interval of length $W$, so there is at most one denominator with $p$-adic valuation at least $e$. Hence the maximal valuation is indeed unique.
+\item \textbf{Is the conclusion $n_i\mid L_W$ too strong?} No. It is exactly equivalent to the prime-by-prime inequalities $p^{v_p(n_i)}\le W$ proved above.
+\item \textbf{Could the harmonic bound be off by one?} The bound used is
+\[
+\sum_{n=a}^{b}\frac1n\le \int_{a-1}^{b}\frac{dx}{x},
+\]
+which is standard for decreasing $1/x$. The resulting inequalities are therefore valid exactly as written.
+\item \textbf{How does this interact with Round 1?} The Round-1 no-consecutive theorem becomes a special case of the new philosophy: in a full interval one can force a unique maximal $2$-adic valuation. Round 2 generalises the uniqueness obstruction to arbitrary prime powers and arbitrary sets.
+\end{enumerate}
+
+\subsubsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main conjecture remains open, but Round 2 proves a theorem that is strictly stronger than any Round-1 result: if a counterexample has span
+\[
+W=n_k-n_1,
+\]
+then \emph{every} denominator must divide $\mathrm{lcm}(1,2,\dots,W)$, and the whole counterexample must lie in a short initial interval with
+\[
+ n_1\le \frac{W+e}{e-1},
+ \qquad
+ n_k\le \frac{e(W+1)}{e-1}.
+\]
+So a hypothetical counterexample must be an unusually dense cluster of divisors of $L_W$ with no two consecutive omissions and reciprocal sum exactly $1$. This is a genuine structural reduction of the original problem.
+
+\subsubsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 55\%}
+
+\subsubsection*{9) REFERENCES}
+Checked or used in this round:
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#287}, webpage accessed 2026-03-07.
+\end{enumerate}

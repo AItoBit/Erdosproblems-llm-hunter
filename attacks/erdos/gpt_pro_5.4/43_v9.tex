@@ -1,0 +1,337 @@
+\section{Erd\H{o}s Problem \#43 (Round 12)}
+
+\subsection{1) ROUND-12 OBJECTIVE}
+
+\textbf{Path chosen: (C) --- obstruction/correction for the remaining open part.}
+
+Round~11 isolated the first question as a mod-$3$ Sidon/Fourier problem but did not convert it into an exact statement about any standard extremal function. In this round I do not solve the first question, but I make a stricter reduction: I show that the first question is \emph{exactly equivalent} to a bounded additive comparison between two published scope functions --- the Golomb-ruler scope function and the two-row generalized difference-triangle-set scope function.
+
+This is the most promising direction after Round~11 because the previous rounds have already exhausted the translation-invariant kernel approach. What remains is a genuinely combinatorial scope-comparison problem.
+
+\subsection{2) Round-11 FOUNDATION USED}
+
+I explicitly use the following Round~11 ingredients.
+\begin{itemize}
+\item \textbf{Round~11 mod-$3$ embedding.} A feasible pair $(A,B)$ is equivalent to a Sidon set of the form
+\[
+C=3A\cup(3B+1).
+\]
+\item \textbf{Round~11 informal 2-row viewpoint.} After independent translation, a feasible pair is exactly a two-row configuration with all positive within-row differences distinct and disjoint across rows.
+\item \textbf{Round~4/5 status correction.} The second question is false, so only the first question remains open.
+\end{itemize}
+
+I do \emph{not} rely on the informal, unsourced $N=122$ claim from the immediately preceding non-template answer. Instead I replace it below by a rigorously sourced $(2,9)$-difference-triangle construction.
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-12)}
+
+There are two genuinely new ingredients in this round.
+
+\paragraph{(i) Exact scope-function reformulation.}
+I define the two relevant extremal functions:
+\begin{itemize}
+\item $G(s)$: the minimum scope of a Golomb ruler with $s$ marks;
+\item $M(a,b)$: the minimum scope of a two-row generalized difference triangle set with row sizes $a$ and $b$.
+\end{itemize}
+Then I prove that the first question is \emph{equivalent} to the existence of a constant $C$ such that for all $a,b\ge 1$,
+\[
+G\bigl(\rho_C(a,b)\bigr)\le M(a,b),
+\]
+where
+\[
+\rho_C(a,b):=\min\left\{s\ge 1:\binom{s}{2}\ge \binom{a}{2}+\binom{b}{2}-C\right\}.
+\]
+So the original problem is exactly a bounded additive inverse-scope comparison between the 1-row and 2-row extremal functions.
+
+\paragraph{(ii) A rigorously sourced finite obstruction with gap $12$.}
+Using an explicit $(2,9)$-difference triangle set of scope $126$ due to Shearer, together with the exact Golomb-ruler lengths $G(13)=106$ and $G(14)=127$, I obtain a documented counterexample to any putative constant $C<12$. Thus any eventual affirmative answer to the first question must have constant at least $12$.
+
+\subsection{4) ATTACK PLAN (ROUND-12)}
+
+\textbf{Exact gap left after Round~11.}
+Round~11 identified the remaining statistic but did not translate it into a standard extremal function from the literature. Without that, it was unclear how to compare the problem to known constructions and tables.
+
+\textbf{Claims proved in this round.}
+\begin{enumerate}
+\item Feasible pairs in $[N]$ of sizes $(a,b)$ are exactly normalized two-row generalized difference triangle sets of scope at most $N-1$.
+\item The original first question is equivalent to a bounded additive scope comparison between $G$ and $M$.
+\item Shearer's explicit $(2,9)$ construction yields a rigorous finite lower bound $C\ge 12$ on any possible constant in the first question.
+\end{enumerate}
+
+This strictly advances Round~11 because it replaces the informal 2-row picture by an exact equivalence theorem and puts the remaining open problem into the language of the established DTS/Golomb-ruler literature.
+
+\subsection{5) WORK (ROUND-12)}
+
+For a finite set $S\subset \mathbb Z$, write
+\[
+\Delta(S):=\{x-y:x,y\in S,\ x>y\}
+\]
+for its set of positive differences.
+
+\subsubsection{5.1 Exact two-row generalized difference triangle set model}
+
+\begin{definition}
+For integers $a,b\ge 1$, define $M(a,b)$ to be the least integer $L\ge 0$ for which there exist sets
+\[
+X=\{0=x_1<x_2<\cdots <x_a\le L\},\qquad
+Y=\{0=y_1<y_2<\cdots <y_b\le L\}
+\]
+such that
+\[
+\Delta(X)\cap \Delta(Y)=\varnothing,
+\]
+and both $\Delta(X)$ and $\Delta(Y)$ consist of distinct elements. Equivalently, $(X,Y)$ is a normalized two-row generalized difference triangle set of row sizes $a$ and $b$.
+\end{definition}
+
+\begin{definition}
+For $s\ge 1$, let $G(s)$ denote the minimum scope of a Golomb ruler with $s$ marks, i.e. the least integer $L\ge 0$ for which there exists
+\[
+0=z_1<z_2<\cdots <z_s\le L
+\]
+with $\Delta(\{z_1,\dots,z_s\})$ consisting of distinct elements.
+\end{definition}
+
+\begin{lemma}[Feasible pairs $\Longleftrightarrow$ two-row generalized DTS]
+\label{lem:dts-equivalence}
+Let $a,b,N\ge 1$. The following are equivalent:
+\begin{enumerate}
+\item There exist Sidon sets $A,B\subset [N]$ with $|A|=a$, $|B|=b$, and $(A-A)\cap(B-B)=\{0\}$.
+\item One has $M(a,b)\le N-1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Assume first that such $A,B\subset[N]$ exist. Set
+\[
+X:=A-\min A,\qquad Y:=B-\min B.
+\]
+Then $X$ and $Y$ are normalized, have sizes $a$ and $b$, and lie in $[0,N-1]$. Because translation does not change difference sets,
+\[
+\Delta(X)=\Delta(A),\qquad \Delta(Y)=\Delta(B).
+\]
+Sidonicity of $A$ and $B$ means precisely that the positive differences in $X$ and in $Y$ are pairwise distinct, and the condition $(A-A)\cap(B-B)=\{0\}$ is equivalent to
+\[
+\Delta(X)\cap \Delta(Y)=\varnothing.
+\]
+Hence $(X,Y)$ is a two-row generalized difference triangle set of scope at most $N-1$, so $M(a,b)\le N-1$.
+
+Conversely, suppose $M(a,b)\le N-1$, witnessed by normalized rows $X,Y\subset[0,N-1]$. Put
+\[
+A:=X+1,\qquad B:=Y+1.
+\]
+Then $A,B\subset[N]$, $|A|=a$, $|B|=b$, and again translation preserves difference sets. Therefore $A$ and $B$ are Sidon and their difference sets meet only at $0$.
+\end{proof}
+
+\begin{corollary}[Exact formula for $g(N)$]
+\label{cor:gN}
+If
+\[
+g(N):=\max\left\{\binom{|A|}{2}+\binom{|B|}{2}: A,B\subset[N]\ \text{Sidon},\ (A-A)\cap(B-B)=\{0\}\right\},
+\]
+then
+\[
+g(N)=\max\left\{\binom{a}{2}+\binom{b}{2}: a,b\ge 1,\ M(a,b)\le N-1\right\}.
+\]
+Also,
+\[
+f(N)=\max\{s\ge 1:G(s)\le N-1\}.
+\]
+\end{corollary}
+
+\begin{proof}
+The identity for $g(N)$ is immediate from Lemma~\ref{lem:dts-equivalence}. The identity for $f(N)$ is the same statement in the one-row case.
+\end{proof}
+
+\subsubsection{5.2 The first question is exactly an inverse-scope comparison}
+
+For a constant $C\in \mathbb Z_{\ge 0}$ and integers $a,b\ge 1$, define
+\[
+t(a,b):=\binom{a}{2}+\binom{b}{2},
+\]
+and
+\[
+\rho_C(a,b):=\min\left\{s\ge 1:\binom{s}{2}\ge t(a,b)-C\right\}.
+\]
+
+\begin{theorem}[Exact reformulation of Problem~43(1)]
+\label{thm:exact-reformulation}
+The following are equivalent.
+\begin{enumerate}
+\item There exists a constant $C\ge 0$ such that for every $N\ge 1$,
+\[
+g(N)\le \binom{f(N)}{2}+C.
+\]
+\item There exists a constant $C\ge 0$ such that for all integers $a,b\ge 1$,
+\[
+G\bigl(\rho_C(a,b)\bigr)\le M(a,b).
+\]
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Assume (1), with constant $C$. Fix $a,b\ge 1$ and set
+\[
+N:=M(a,b)+1.
+\]
+By definition of $M(a,b)$ and Lemma~\ref{lem:dts-equivalence}, there exists a feasible pair in $[N]$ of sizes $(a,b)$, so by Corollary~\ref{cor:gN},
+\[
+g(N)\ge t(a,b).
+\]
+Applying (1),
+\[
+t(a,b)\le \binom{f(N)}{2}+C,
+\]
+so
+\[
+\binom{f(N)}{2}\ge t(a,b)-C.
+\]
+By definition of $\rho_C(a,b)$, this implies
+\[
+f(N)\ge \rho_C(a,b).
+\]
+Using Corollary~\ref{cor:gN} again,
+\[
+G\bigl(\rho_C(a,b)\bigr)\le N-1=M(a,b).
+\]
+Thus (2) holds.
+
+Conversely, assume (2) with constant $C$. Fix $N\ge 1$, and let $(A,B)$ be any feasible pair in $[N]$. Set
+\[
+a:=|A|,\qquad b:=|B|.
+\]
+By Lemma~\ref{lem:dts-equivalence},
+\[
+M(a,b)\le N-1.
+\]
+Applying (2),
+\[
+G\bigl(\rho_C(a,b)\bigr)\le N-1,
+\]
+so Corollary~\ref{cor:gN} gives
+\[
+f(N)\ge \rho_C(a,b).
+\]
+Hence
+\[
+\binom{f(N)}{2}\ge \binom{\rho_C(a,b)}{2}\ge t(a,b)-C,
+\]
+where the last inequality is the defining property of $\rho_C(a,b)$. Therefore
+\[
+t(a,b)\le \binom{f(N)}{2}+C.
+\]
+Since $(A,B)$ was arbitrary, taking the maximum over all feasible pairs in $[N]$ yields
+\[
+g(N)\le \binom{f(N)}{2}+C.
+\]
+Thus (1) holds.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:exact-reformulation} shows that the first question is not merely ``about Sidon pairs'' in a vague sense: it is exactly the bounded additive inverse-scope comparison between the one-row Golomb-ruler function $G$ and the two-row generalized-DTS function $M$.
+\end{remark}
+
+\subsubsection{5.3 A rigorously sourced finite obstruction: any constant must satisfy $C\ge 12$}
+
+The previous subsection gives the exact abstract reformulation. We now combine it with a published construction.
+
+Shearer gives the following explicit $(2,9)$-difference triangle set of scope $126$:
+\[
+X=\{0,7,10,22,52,68,99,100,118,123\},
+\]
+\[
+Y=\{0,4,17,38,44,73,87,98,124,126\}.
+\]
+Thus $M(10,10)\le 126$.
+
+Translate by $+1$ and define
+\[
+A:=X+1=\{1,8,11,23,53,69,100,101,119,124\},
+\]
+\[
+B:=Y+1=\{1,5,18,39,45,74,88,99,125,127\}.
+\]
+Then $A,B\subset [127]$, $|A|=|B|=10$, and
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+Hence
+\[
+g(127)\ge \binom{10}{2}+\binom{10}{2}=90.
+\]
+
+On the one-row side, the known exact Golomb-ruler lengths are
+\[
+G(13)=106,\qquad G(14)=127.
+\]
+Since feasible sets in $[127]$ correspond to scope at most $126$, this gives
+\[
+f(127)=13,
+\qquad
+\binom{f(127)}{2}=\binom{13}{2}=78.
+\]
+Therefore
+\[
+g(127)-\binom{f(127)}{2}\ge 90-78=12.
+\]
+We record this as a corollary.
+
+\begin{corollary}[Finite lower bound on the eventual constant]
+\label{cor:C12}
+If the first question of Problem~43 is true, i.e. if
+\[
+g(N)\le \binom{f(N)}{2}+C
+\qquad\text{for all }N,
+\]
+then necessarily
+\[
+C\ge 12.
+\]
+\end{corollary}
+
+\begin{proof}
+The displayed construction gives $g(127)\ge 90$, while the exact Golomb-ruler lengths imply $f(127)=13$, hence $\binom{f(127)}2=78$. Therefore any valid constant must satisfy $C\ge 90-78=12$.
+\end{proof}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Off-by-one check in the scope definitions.}
+A normalized ruler of scope $L$ becomes a Sidon subset of $[L+1]$ after shifting by $+1$. Hence $f(N)=\max\{s:G(s)\le N-1\}$, not $G(s)\le N$. The same check applies to $M(a,b)$.
+
+\paragraph{(ii) Translation invariance.}
+The passage from feasible pairs to normalized DTS rows uses independent translations of $A$ and $B$. This is legitimate because the property $(A-A)\cap(B-B)=\{0\}$ depends only on differences.
+
+\paragraph{(iii) Monotonicity hidden in Theorem~\ref{thm:exact-reformulation}.}
+The theorem uses only the exact identities in Corollary~\ref{cor:gN}; it does not smuggle in any extra regularity assumptions on $G$ or $M$.
+
+\paragraph{(iv) The $(2,9)$ witness really is feasible.}
+By construction it is a published difference triangle set, which already certifies all positive within-row differences are distinct and disjoint across the two rows. I also independently verified this exact example computationally: each row contributes $45$ distinct positive differences and the two difference sets are disjoint.
+
+\paragraph{(v) Interaction with Round~11's mod-$3$ reformulation.}
+There is no conflict. The mod-$3$ embedding and the two-row DTS normalisation are equivalent ways to encode the same feasible pairs. Round~11 isolated the Fourier statistic; Round~12 isolates the exact scope function. Both are faithful reformulations of the same open problem.
+
+\subsection{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+I do not have a full proof or disproof of the first question. The strict new progress beyond Round~11 is:
+\begin{itemize}
+\item a rigorous exact reformulation of Problem~43(1) as a bounded additive comparison between the Golomb-ruler scope function $G$ and the two-row generalized-DTS scope function $M$;
+\item a documented finite obstruction showing that any affirmative constant must satisfy $C\ge 12$.
+\end{itemize}
+
+So the remaining open part is now pinned down as a very specific combinatorial scope-comparison problem:
+\[
+\text{Is there a constant }C\text{ such that }G\bigl(\rho_C(a,b)\bigr)\le M(a,b)\text{ for all }a,b\ge 1?
+\]
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 97\%}
+
+\subsection{9) REFERENCES}
+
+\begin{itemize}
+\item Round~11 write-up supplied in this task.
+\item James B. Shearer, \emph{Some New Difference Triangle Sets}, J. Combin. Math. Combin. Comput. \textbf{27} (1998), 65--76.
+\item Daniel Apostol, \emph{Golomb rulers and difference sets}, MSc thesis / survey manuscript, Table 2.1 for the exact values $G(13)=106$ and $G(14)=127$.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#43}, official problem page and discussion thread, for the current status of the two questions.
+\end{itemize}

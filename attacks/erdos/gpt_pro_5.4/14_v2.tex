@@ -1,0 +1,296 @@
+\section{Round-5 Objective}
+\label{sec:round5-objective}
+\textbf{Path pursued: (C) obstruction/correction, by settling the upper-construction side rigorously.}
+
+Round~4 isolated the main unresolved issue as the behaviour near the exponent $1/2$: it produced structural obstructions on any putative counterexample to the lower-bound direction, but it did not rigorously prove the matching upper construction $|[1,N]\setminus B|\ll_\varepsilon N^{1/2+\varepsilon}$.
+
+In this round I prove exactly that upper-construction statement. Thus the remaining open part of Erd\H{o}s Problem~\#14 is not the existence of near-optimal constructions from above, but whether one can beat the square-root threshold from below, i.e. whether $o(N^{1/2})$ is possible or whether a lower bound $\gg_\varepsilon N^{1/2-\varepsilon}$ always holds.
+
+\section{Round-4 Foundation Used}
+\label{sec:round4-foundation-used}
+I use the following Round~4 conclusions.
+\begin{itemize}
+\item The Round~4 global density obstruction showed that if $E_N:=|[1,N]\setminus B|$ were as small as $o(N^{1/2})$, then the counting function of $A$ would have to lie in a narrow window, roughly between $N^{1/2}$ and $N^{3/4}$.
+\item More importantly for the present round, Round~4 left open the exact construction side: produce a single infinite set $A\subseteq \mathbb N$ with
+\[
+E_N\ll_\varepsilon N^{1/2+\varepsilon}.
+\]
+\end{itemize}
+No Round~4 lemma is needed inside the new proof; Round~4 is used to identify the exact remaining gap and to interpret the significance of the new theorem.
+
+\section{New Insight / Tool}
+\label{sec:round5-new-tool}
+The new tool is a \emph{balanced digit-splitting construction in base $s^2$}.
+
+For an integer $s\ge 2$, let
+\[
+q:=s^2.
+\]
+I construct two sets $F_s,G_s\subseteq \mathbb N_0$ such that:
+\begin{enumerate}
+\item every nonnegative integer has a \emph{unique} representation as $f+g$ with $f\in F_s$ and $g\in G_s$;
+\item the self-sum sets $F_s+F_s$ and $G_s+G_s$ have counting function
+\[
+\ll_s N^{\beta_s},\qquad \beta_s:=\frac{\log(2s-1)}{\log(s^2)}=\frac{\log(2s-1)}{2\log s};
+\]
+\item since $\beta_s\downarrow 1/2$ as $s\to\infty$, this yields, for every $\varepsilon>0$, an infinite set $A\subseteq\mathbb N$ with
+\[
+|[1,N]\setminus B|\ll_\varepsilon N^{1/2+\varepsilon}.
+\]
+\end{enumerate}
+The case $s=2$ recovers the classical exponent $\log 3/\log 4$; the new point is that allowing arbitrary $s$ pushes the exponent down to $1/2+\varepsilon$.
+
+\section{Attack Plan}
+\label{sec:round5-attack-plan}
+The exact Round~4 gap is the absence of a rigorous infinite construction matching the heuristic square-root upper scale.
+
+The plan is:
+\begin{enumerate}
+\item define $F_s$ and $G_s$ by digit restrictions in base $q=s^2$;
+\item prove that every $m\in\mathbb N_0$ has a unique decomposition $m=f+g$ with $f\in F_s$, $g\in G_s$;
+\item prove that $F_s+F_s$ and $G_s+G_s$ are sparse, with exponent $\beta_s$;
+\item define
+\[
+A_s:=(F_s+1)\cup(G_s+1)\subseteq\mathbb N
+\]
+and show that every $n\ge 2$ has one canonical representation coming from $F_s+G_s$, while every failure of uniqueness is forced into the sparse exceptional sets $(F_s+F_s)+2$ or $(G_s+G_s)+2$.
+\end{enumerate}
+This gives a full, gap-free proof of the upper-construction statement.
+
+\section{Work}
+\label{sec:round5-work}
+For a set $X\subseteq\mathbb N_0$ and $N\ge 0$, write
+\[
+X(N):=|X\cap [0,N]|.
+\]
+For $A\subseteq\mathbb N$, as before,
+\[
+r_A(n):=|\{\{a,b\}:a,b\in A,\ a\le b,\ a+b=n\}|,
+\qquad
+B(A):=\{n\in\mathbb N:r_A(n)=1\}.
+\]
+
+\subsection*{Lemma 5.1 (digit splitting)}
+Fix an integer $s\ge 2$ and put $q=s^2$.
+Define
+\[
+F_s:=\left\{\sum_{j\ge 0} u_j q^j:
+0\le u_j\le s-1\ \text{for all $j$, and $u_j=0$ for all but finitely many $j$}\right\},
+\]
+and
+\[
+G_s:=sF_s=\left\{\sum_{j\ge 0} sv_j q^j:
+0\le v_j\le s-1\ \text{for all $j$, and $v_j=0$ for all but finitely many $j$}\right\}.
+\]
+Then every integer $m\ge 0$ has a unique representation
+\[
+m=f+g,\qquad f\in F_s,\ g\in G_s.
+\]
+Moreover,
+\[
+F_s\cap G_s=\{0\}.
+\]
+
+\paragraph{Proof.}
+Write the base-$q$ expansion of $m$ as
+\[
+m=\sum_{j\ge 0} d_j q^j,\qquad 0\le d_j\le q-1=s^2-1.
+\]
+For each $j$, divide $d_j$ by $s$:
+\[
+d_j=u_j+sv_j,\qquad 0\le u_j\le s-1,\quad 0\le v_j\le s-1.
+\]
+This choice is unique. Therefore
+\[
+f:=\sum_{j\ge 0} u_j q^j\in F_s,
+\qquad
+g:=\sum_{j\ge 0} sv_j q^j\in G_s,
+\]
+and $m=f+g$.
+
+Uniqueness is digitwise: if $m=f+g=f'+g'$ with $f,f'\in F_s$ and $g,g'\in G_s$, then comparing base-$q$ digits yields the same quotient-and-remainder decomposition $d_j=u_j+sv_j$, so $f=f'$ and $g=g'$.
+
+Finally, if $n\in F_s\cap G_s$, then each base-$q$ digit of $n$ lies both in $\{0,1,\dots,s-1\}$ and in $\{0,s,2s,\dots,(s-1)s\}$. Their intersection is $\{0\}$, so every digit is $0$ and hence $n=0$.
+\hfill$\square$
+
+\subsection*{Lemma 5.2 (sparse self-sums)}
+With $F_s,G_s$ as above, define
+\[
+\beta_s:=\frac{\log(2s-1)}{\log(s^2)}=\frac{\log(2s-1)}{2\log s}.
+\]
+Then
+\[
+(F_s+F_s)(N)\ll_s N^{\beta_s}
+\qquad\text{and}\qquad
+(G_s+G_s)(N)\ll_s N^{\beta_s}.
+\]
+
+\paragraph{Proof.}
+Take $f,f'\in F_s$, say
+\[
+f=\sum_{j\ge 0} u_j q^j,
+\qquad
+f'=\sum_{j\ge 0} u'_j q^j,
+\qquad 0\le u_j,u'_j\le s-1.
+\]
+Then
+\[
+f+f'=\sum_{j\ge 0}(u_j+u'_j)q^j,
+\qquad 0\le u_j+u'_j\le 2s-2<q.
+\]
+So there are \emph{no carries}. Hence $F_s+F_s$ consists exactly of those integers whose base-$q$ digits all lie in $\{0,1,\dots,2s-2\}$.
+
+If $q^m\le N<q^{m+1}$, then every element of $(F_s+F_s)\cap[0,N]$ is determined by at most $m+1$ base-$q$ digits, each having $2s-1$ possibilities. Therefore
+\[
+(F_s+F_s)(N)\le (2s-1)^{m+1}
+\ll_s N^{\log_q(2s-1)}
+= N^{\beta_s}.
+\]
+
+Since $G_s=sF_s$, we have
+\[
+G_s+G_s=s(F_s+F_s),
+\]
+so
+\[
+(G_s+G_s)(N)\le (F_s+F_s)(N/s)\ll_s N^{\beta_s}.
+\]
+This proves the lemma.
+\hfill$\square$
+
+\subsection*{Proposition 5.3 (explicit infinite construction)}
+For each integer $s\ge 2$, set
+\[
+A_s:=(F_s+1)\cup(G_s+1)\subseteq\mathbb N.
+\]
+Then $A_s$ is infinite and
+\begin{equation}
+\label{eq:As-upper-bound}
+|[1,N]\setminus B(A_s)|\ll_s N^{\beta_s},
+\qquad \beta_s=\frac{\log(2s-1)}{2\log s}.
+\end{equation}
+
+\paragraph{Proof.}
+First, $A_s$ is infinite because $F_s$ is infinite.
+
+Let $n\ge 2$. By Lemma~5.1, $n-2$ has a unique representation
+\[
+n-2=f+g,\qquad f\in F_s,\ g\in G_s.
+\]
+Therefore
+\[
+n=(f+1)+(g+1),
+\]
+so every $n\ge 2$ is represented as a sum of two elements of $A_s$.
+
+Now suppose that $n\notin B(A_s)$. Then either $n=1$, or $n\ge 2$ and there is some representation
+\[
+n=(x+1)+(y+1),\qquad x,y\in F_s\cup G_s,
+\]
+which is different from the canonical unordered pair $\{f+1,g+1\}$ coming from $n-2=f+g$.
+
+If one of $x,y$ lies in $F_s$ and the other lies in $G_s$, then $x+y=n-2$ is a mixed decomposition of $n-2$. By the uniqueness in Lemma~5.1, this forces
+\[
+\{x,y\}=\{f,g\},
+\]
+so it gives the same unordered representation of $n$ and does \emph{not} create a second one.
+
+Hence any genuine failure of uniqueness must come from a same-type representation: either
+\[
+x,y\in F_s
+\qquad\text{or}\qquad
+x,y\in G_s.
+\]
+Consequently,
+\[
+[1,N]\setminus B(A_s)
+\subseteq
+\{1\}\cup \bigl((F_s+F_s)+2\bigr)\cup\bigl((G_s+G_s)+2\bigr).
+\]
+Therefore, by Lemma~5.2,
+\[
+|[1,N]\setminus B(A_s)|
+\le 1+(F_s+F_s)(N-2)+(G_s+G_s)(N-2)
+\ll_s N^{\beta_s}.
+\]
+This proves \eqref{eq:As-upper-bound}.
+\hfill$\square$
+
+\subsection*{Corollary 5.4 (the $N^{1/2+\varepsilon}$ construction)}
+For every $\varepsilon>0$ there exists an infinite set $A\subseteq\mathbb N$ such that
+\[
+|[1,N]\setminus B(A)|\ll_{\varepsilon} N^{1/2+\varepsilon}.
+\]
+
+\paragraph{Proof.}
+For $s\ge 2$,
+\[
+\beta_s
+=\frac{\log(2s-1)}{2\log s}
+=\frac12+\frac{\log(2-1/s)}{2\log s}
+<\frac12+\frac{\log 2}{2\log s}.
+\]
+Choose $s$ so large that $\beta_s<\tfrac12+\varepsilon$; for instance any
+\[
+s>2^{1/(2\varepsilon)}
+\]
+suffices. Then Proposition~5.3 gives an infinite set $A_s\subseteq\mathbb N$ with
+\[
+|[1,N]\setminus B(A_s)|\ll_s N^{\beta_s}\ll_{\varepsilon} N^{1/2+\varepsilon}.
+\]
+\hfill$\square$
+
+\subsection*{Consequence for the original problem}
+This round proves the full upper-construction side that had remained missing in the previous rounds:
+\[
+\forall\varepsilon>0\ \exists\, A\subseteq\mathbb N\ \text{infinite such that}\ |[1,N]\setminus B(A)|\ll_{\varepsilon}N^{1/2+\varepsilon}.
+\]
+Therefore the unresolved part of Erd\H{o}s Problem~\#14 is now concentrated entirely on the \emph{lower} side: whether every infinite $A\subseteq\mathbb N$ must satisfy
+\[
+|[1,N]\setminus B(A)|\gg_{\varepsilon}N^{1/2-\varepsilon}
+\]
+for all large $N$, or whether one can in fact achieve $o(N^{1/2})$.
+
+\section{Adversarial Verification}
+\label{sec:round5-adversarial}
+I check the new construction against the main possible failure modes.
+\begin{itemize}
+\item \textbf{Carry issue in the self-sums.} For $F_s+F_s$, the largest digit sum is $2s-2$, and since $2s-2<s^2=q$, there are no carries. This is the key point making the exponent $\beta_s$ exact. For $G_s+G_s$, I avoid a separate carry analysis by using the identity $G_s=sF_s$.
+
+\item \textbf{Overlap of the two parts.} We proved $F_s\cap G_s=\{0\}$. After shifting by $1$, the two parts intersect only at $1$. This does not create extra unordered representations: if a mixed representation of $n-2$ exists, Lemma~5.1 makes it unique, so it contributes exactly one unordered pair.
+
+\item \textbf{Possibility of missing sums.} There are no missing sums for $n\ge 2$, because every $n-2\in\mathbb N_0$ has a mixed representation $f+g$. The integer $1$ is the only inevitable missing sum in the shifted positive setting.
+
+\item \textbf{Boundary case $n=2$.} Here $n-2=0=0+0$, so the canonical representation is $2=1+1$. This is still exactly one unordered representation.
+
+\item \textbf{Dependence on $s$.} All constants in Proposition~5.3 depend only on the fixed parameter $s$. After choosing $s=s(\varepsilon)$, this becomes the claimed $\ll_\varepsilon$ bound.
+\end{itemize}
+No hidden assumption beyond the adopted unordered-representation convention is used.
+
+\section{Final}
+\label{sec:round5-final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round completely settles the \emph{upper-construction side} left open in the previous rounds:
+\[
+\forall\varepsilon>0\ \exists\, A\subseteq\mathbb N\ \text{infinite such that}\ |[1,N]\setminus B(A)|\ll_{\varepsilon}N^{1/2+\varepsilon}.
+\]
+The proof is explicit and gap-free.
+
+So the surviving open core of Erd\H{o}s Problem~\#14 is now precisely this:
+\begin{quote}
+Can one prove a matching lower bound of order $N^{1/2-o(1)}$ for every infinite $A$, or can one construct a single infinite $A$ with $|[1,N]\setminus B(A)|=o(N^{1/2})$?
+\end{quote}
+In other words, the exponent $1/2$ is now rigorously established as the correct \emph{upper} threshold, and only the lower-threshold question remains open.
+
+\section{Completion Estimate}
+\label{sec:round5-completion}
+\textbf{COMPLETION: 84\%}
+
+\section{References}
+\label{sec:round5-references}
+\begin{itemize}
+\item Internal previous-round files: \texttt{14\_v2.tex}, \texttt{14\_v2\_solutions.tex}, \texttt{14\_solutions.tex}.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#14}, \texttt{erdosproblems.com/14}, accessed 2026-03-07.
+\item A. S\'ark\"ozy and V. T. S\H{o}s, \emph{On Additive Representation Functions}, in \emph{The Mathematics of Paul Erd\H{o}s I}, Springer, 1997.
+\end{itemize}

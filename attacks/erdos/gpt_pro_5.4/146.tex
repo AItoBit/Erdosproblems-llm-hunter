@@ -1,0 +1,252 @@
+% File: 143_145_146_solutions.tex
+% Drop-in LaTeX: no preamble, no custom theorem environments.
+
+\section*{Erd\H{o}s Problem \#146}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path A (positive theorem on a new solved subclass).} Round-1 already handled the base case
+$r=1$ (forests). The best route in this continuation round is not to re-run dependent random choice
+from scratch, but to prove a new structural reduction showing that pendant trees can always be
+peeled off at a linear cost in the extremal number. This yields a broad new class of connected
+$bipartite$ graphs for which the conjectured exponent follows from a solved core, including all
+connected unicyclic bipartite graphs and, more generally, every connected graph whose $2$-core
+already lies in any solved family.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts.
+
+\begin{enumerate}
+\item If $H$ is a forest ($r=1$), then $\mathrm{ex}(n,H)=O_H(n)$.
+\item The full conjecture is still open in general, and remains open even for $r=2$.
+\item If $F$ is bipartite and one side of some bipartition has maximum degree at most $r$, then
+\[
+\mathrm{ex}(n,F)=O_F(n^{2-1/r}).
+\]
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a simple but very effective \textbf{tree-attachment reduction}.
+
+If a connected graph $H$ is obtained from a graph $F$ by attaching trees to vertices of $F$, then
+\[
+\mathrm{ex}(n,H)\le \mathrm{ex}(n,F)+(|V(H)|-2)n.
+\]
+So any extremal upper bound for the core $F$ automatically propagates to the graph $H$ obtained by
+adding arbitrary pendant trees.
+
+As a consequence, for connected graphs one may reduce Problem \#146 to the case where the graph
+is equal to its own $2$-core (equivalently, has no leaves after iterative leaf stripping).
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap is that the first nontrivial case $r=2$ was still almost untouched except for
+special named families. The plan is:
+
+\begin{enumerate}
+\item Prove the tree-attachment reduction.
+\item Apply it to the $2$-core of a connected graph.
+\item Deduce new solved families immediately from existing core theorems.
+\item In particular, settle every connected unicyclic bipartite graph (whose $2$-core is an even cycle).
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{\textbf{Theorem 146.1 (tree-attachment reduction).}}
+Let $F$ be a fixed graph, and let $H$ be a connected graph obtained from $F$ by attaching finitely
+many trees to vertices of $F$. Write $h:=|V(H)|$. Then for all $n$,
+\[
+\mathrm{ex}(n,H)\le \mathrm{ex}(n,F)+(h-2)n.
+\]
+
+\paragraph{\textit{Proof.}}
+Let $G$ be an $n$-vertex graph with
+\[
+e(G)>\mathrm{ex}(n,F)+(h-2)n.
+\]
+I claim that $G$ contains $H$.
+
+Iteratively delete vertices of degree at most $h-2$ until no such vertex remains. Each deletion
+removes at most $h-2$ edges, so if all vertices were deleted then the total number of removed edges
+would be at most $(h-2)n$, contradicting
+\[
+e(G)>\mathrm{ex}(n,F)+(h-2)n\ge (h-2)n.
+\]
+Hence a nonempty subgraph $G'\subseteq G$ survives with
+\[
+\delta(G')\ge h-1.
+\]
+Moreover the total number of deleted edges is at most $(h-2)n$, so
+\[
+e(G')> \mathrm{ex}(n,F).
+\]
+Since $|V(G')|\le n$ and $\mathrm{ex}(m,F)\le \mathrm{ex}(n,F)$ for $m\le n$, it follows that
+\[
+e(G')>\mathrm{ex}(|V(G')|,F),
+\]
+so $G'$ contains a copy of $F$.
+
+Fix such a copy of $F$ in $G'$. It remains to embed the trees attached to $F$.
+Root each attached tree at its attachment vertex in $F$, and order all vertices of $H\setminus V(F)$
+so that each vertex appears after its parent.
+
+Now embed the vertices of $H\setminus V(F)$ greedily in this order.
+Suppose at some stage we have already embedded $s<h$ vertices of $H$, and we want to embed a new
+vertex whose parent is already embedded at some vertex $u\in V(G')$.
+Since $\delta(G')\ge h-1$, vertex $u$ has at least $h-1$ neighbors in $G'$.
+At most $s-1\le h-2$ of these neighbors are already used (all embedded vertices other than $u$).
+Therefore $u$ has at least
+\[
+(h-1)-(s-1)=h-s\ge 1
+\]
+unused neighbors. Map the new vertex to one of them.
+
+Proceeding inductively embeds all of $H$ into $G'$, hence into $G$.
+Therefore every $H$-free $n$-vertex graph has at most $\mathrm{ex}(n,F)+(h-2)n$ edges. \hfill $\square$
+
+\paragraph{\textbf{Corollary 146.2 ($2$-core reduction).}}
+Let $H$ be a connected graph, and let $F$ be its $2$-core. Then
+\[
+\mathrm{ex}(n,H)\le \mathrm{ex}(n,F)+(|V(H)|-2)n.
+\]
+In particular, if
+\[
+\mathrm{ex}(n,F)=O(n^\gamma)
+\qquad\text{for some }\gamma\ge 1,
+\]
+then
+\[
+\mathrm{ex}(n,H)=O(n^\gamma).
+\]
+
+\paragraph{\textit{Proof.}}
+A standard leaf-stripping decomposition of a connected graph says that $H$ is obtained from its
+$2$-core $F$ by attaching trees to vertices of $F$. Apply Theorem 146.1. \hfill $\square$
+
+\medskip
+
+This is the main new structural advance: for connected graphs, all pendant trees are now completely
+eliminated from Problem \#146.
+
+\paragraph{\textbf{Corollary 146.3 (new family from a solved core).}}
+Let $H$ be a connected bipartite graph, and let $F$ be its $2$-core. If one side of some bipartition
+of $F$ has maximum degree at most $r$, then
+\[
+\mathrm{ex}(n,H)=O_H(n^{2-1/r}).
+\]
+
+\paragraph{\textit{Proof.}}
+By the Alon--Krivelevich--Sudakov / F\"uredi theorem,
+\[
+\mathrm{ex}(n,F)=O_F(n^{2-1/r}).
+\]
+Now apply Corollary 146.2. Since $2-1/r\ge 1$ for all $r\ge 1$, the extra linear term is negligible.
+\hfill $\square$
+
+\medskip
+
+This strictly enlarges the standard ``one side bounded-degree'' class: attached trees may create
+arbitrarily large degrees away from the $2$-core, yet the optimal exponent still survives.
+
+\paragraph{\textbf{Corollary 146.4 (connected unicyclic bipartite graphs).}}
+Let $H$ be a connected unicyclic bipartite graph, and let its unique cycle have length $2\ell$.
+Then
+\[
+\mathrm{ex}(n,H)=O_H(n^{1+1/\ell}).
+\]
+In particular,
+\[
+\mathrm{ex}(n,H)=O_H(n^{3/2}),
+\]
+which matches the Erd\H{o}s--Simonovits conjectured exponent for $r=2$.
+
+\paragraph{\textit{Proof.}}
+The $2$-core of a connected unicyclic bipartite graph is exactly its unique even cycle $C_{2\ell}$.
+By Bondy--Simonovits,
+\[
+\mathrm{ex}(n,C_{2\ell})=O_\ell(n^{1+1/\ell}).
+\]
+Now apply Corollary 146.2. Since $1+1/\ell\ge 1$, the extra linear term does not change the exponent.
+For $\ell\ge 2$ we have $1+1/\ell\le 3/2$, yielding the final bound. \hfill $\square$
+
+\medskip
+
+So Round-2 settles an entire infinite family that was not treated in Round-1, and in fact gives the
+stronger exponent $1+1/\ell$ for each fixed cycle length $2\ell$.
+
+\paragraph{\textbf{Sharp obstruction isolated in this round.}}
+If there exists any connected counterexample to Problem \#146, then there also exists one whose
+$2$-core is a connected counterexample. Indeed, Corollary 146.2 shows that if the $2$-core $F$ of a
+connected graph $H$ satisfied the conjectured bound, then $H$ would satisfy it too.
+
+Therefore the search for connected counterexamples may be reduced to graphs satisfying all of the
+following:
+
+\begin{enumerate}
+\item the graph is equal to its own $2$-core (equivalently, no leaf survives iterative stripping);
+\item it is not covered by the one-side bounded-degree-on-the-core theorem;
+\item it is not obtained from any currently solved core family merely by attaching trees.
+\end{enumerate}
+
+Thus, for connected graphs, the genuinely open content lies entirely in \emph{core graphs of minimum
+degree at least $2$}.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Potential issue: counting removed edges in the pruning step.}
+Each edge is removed exactly once, namely when its first endpoint is deleted. So the total number
+of removed edges is at most the sum of the deletion-time degrees, which is at most $(h-2)n$.
+\item \textbf{Potential issue: monotonicity of $\mathrm{ex}(n,F)$.}
+If $m\le n$, every $m$-vertex $F$-free graph can be viewed as an $n$-vertex $F$-free graph by
+adding isolated vertices. Hence $\mathrm{ex}(m,F)\le \mathrm{ex}(n,F)$.
+\item \textbf{Potential issue: the greedy embedding might get stuck near the end.}
+At the moment of embedding a new vertex, fewer than $h$ vertices are already used. Since the parent
+has at least $h-1$ neighbors and at most $h-2$ other used vertices exist, there is always an unused
+neighbor available.
+\item \textbf{Potential issue: disconnected graphs.}
+The reduction theorem is stated only for connected graphs, and I have not silently extended it beyond
+that range. The unicyclic corollary is therefore completely safe, since unicyclic graphs are connected.
+\item \textbf{Potential issue: identifying the $2$-core of a unicyclic graph.}
+For a connected unicyclic graph, iterative leaf stripping removes all trees attached to the unique cycle
+and leaves exactly that cycle. Since the graph is bipartite, the cycle length is even.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves a new general reduction and a new infinite solved family:
+
+\begin{enumerate}
+\item If a connected graph $H$ is obtained from a graph $F$ by attaching trees, then
+\[
+\mathrm{ex}(n,H)\le \mathrm{ex}(n,F)+(|V(H)|-2)n.
+\]
+\item Therefore, for connected graphs, Problem \#146 reduces to the case of graphs equal to their own
+$2$-core.
+\item As a concrete consequence, every connected unicyclic bipartite graph $H$ with cycle length $2\ell$
+satisfies
+\[
+\mathrm{ex}(n,H)=O_H(n^{1+1/\ell})\le O_H(n^{3/2}).
+\]
+\item More generally, any connected bipartite graph whose $2$-core lies in a presently solved class
+inherits the same conjectured exponent.
+\end{enumerate}
+
+So the remaining open part of Problem \#146 has now been narrowed to connected $r$-degenerate
+bipartite core graphs (minimum degree at least $2$) not accessible through solved core families.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 74\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#146}, \texttt{erdosproblems.com/146}, accessed 2026-03-07.
+\item N. Alon, M. Krivelevich, and B. Sudakov, \emph{Tur\'an numbers of bipartite graphs and related Ramsey-type questions}, Combinatorics, Probability and Computing 12 (2003), 477--494.
+\item J. A. Bondy and M. Simonovits, \emph{Cycles of even length in graphs}, Journal of Combinatorial Theory, Series B 16 (1974), 97--105.
+\end{enumerate}

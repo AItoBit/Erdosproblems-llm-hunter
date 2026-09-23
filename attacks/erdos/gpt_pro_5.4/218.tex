@@ -1,0 +1,113 @@
+\section*{Problem 218 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C): obstruction/correction}.  Round~1 isolated only elementary identities and the equivalence with consecutive primes in arithmetic progression, but did not produce any rigorous oscillation theorem for consecutive prime gaps.  In this round I replace the still-open density-$1/2$ target by a theorem that \emph{is} provable with current machinery: the strict comparison sets
+\[
+A_{>} := \{n\ge 1 : d_{n+1}>d_n\}, \qquad A_{<} := \{n\ge 1 : d_{n+1}<d_n\}
+\]
+are both infinite, and in fact the ratio $d_{n+1}/d_n$ is unbounded above and has $0$ as a limit inferior.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the Round~1 notation $d_n=p_{n+1}-p_n$ and the Round~1 density identity
+\[
+\delta(\{d_{n+1}\ge d_n\})+\delta(\{d_{n+1}\le d_n\})=1+\delta(\{d_{n+1}=d_n\})
+\]
+whenever the densities exist.  I do \emph{not} reprove that identity here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is Pintz's 2014 theorem on ratios of consecutive prime gaps.  Specializing his Theorem~1 and Theorem~1$'$ to $k=1$ gives a quantitative form of oscillation:
+there is a constant $c>0$ such that for every sufficiently large $N$ there exists $n\in[N,2N]$ with
+\[
+\frac{d_{n+1}}{d_n} > c\,\frac{\log N\,\log_2 N\,\log_4 N}{(\log_3 N)^2},
+\]
+and also there exists $m\in[N,2N]$ with
+\[
+\frac{d_{m-1}}{d_m} > c\,\frac{\log N\,\log_2 N\,\log_4 N}{(\log_3 N)^2}.
+\]
+Since the factor on the right tends to $\infty$, this is much stronger than merely saying that the sign of $d_{n+1}-d_n$ changes infinitely often.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round~1 gap was: there was no theorem showing that either strict inequality occurs infinitely often.  To close that gap, it is enough to prove
+\[
+\limsup_{n\to\infty}\frac{d_{n+1}}{d_n}=\infty,
+\qquad
+\liminf_{n\to\infty}\frac{d_{n+1}}{d_n}=0.
+\]
+These immediately imply $A_{>}$ and $A_{<}$ are both infinite.  Pintz's theorem supplies exactly the needed dyadic-interval witnesses.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+L(N):=\frac{\log N\,\log_2 N\,\log_4 N}{(\log_3 N)^2}.
+\]
+By Pintz's Theorem~1 with $k=1$, there are constants $c>0$ and $N_0$ such that for every $N\ge N_0$ there exists $n\in[N,2N]$ with
+\[
+\frac{d_{n+1}}{d_n}>cL(N).
+\]
+Now choose $N=2^j$ for $j$ sufficiently large.  Then for each such $j$ there exists $n_j\in[2^j,2^{j+1}]$ with
+\[
+\frac{d_{n_j+1}}{d_{n_j}}>cL(2^j).
+\]
+Because $L(2^j)\to\infty$, we obtain
+\[
+\limsup_{n\to\infty}\frac{d_{n+1}}{d_n}=\infty.
+\]
+In particular $d_{n_j+1}>d_{n_j}$ for all large $j$, so $A_{>}$ is infinite.
+
+Next apply Pintz's Theorem~1$'$ with $k=1$.  There are (after possibly decreasing $c$ and enlarging $N_0$) indices $m_j\in[2^j,2^{j+1}]$ such that
+\[
+\frac{d_{m_j-1}}{d_{m_j}}>cL(2^j).
+\]
+Set $r_j:=m_j-1$.  Then $r_j\to\infty$ and
+\[
+\frac{d_{r_j+1}}{d_{r_j}}<\frac{1}{cL(2^j)}\longrightarrow 0.
+\]
+Hence
+\[
+\liminf_{n\to\infty}\frac{d_{n+1}}{d_n}=0.
+\]
+In particular $d_{r_j+1}<d_{r_j}$ for all large $j$, so $A_{<}$ is infinite.
+
+Therefore we have proved the following corrected theorem.
+
+\medskip
+\noindent\textbf{Corrected theorem proved in Round~2.}
+There exist infinitely many $n$ with $d_{n+1}>d_n$ and infinitely many $n$ with $d_{n+1}<d_n$; in fact,
+\[
+\limsup_{n\to\infty}\frac{d_{n+1}}{d_n}=\infty,
+\qquad
+\liminf_{n\to\infty}\frac{d_{n+1}}{d_n}=0.
+\]
+
+Combining this with the Round~1 density identity shows exactly where the original Erd\H{o}s problem remains deeper: oscillation is known, but nothing here yields asymptotic frequencies, and in particular nothing here decides whether
+\[
+\delta(\{d_{n+1}\ge d_n\})=\delta(\{d_{n+1}\le d_n\})=1/2.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Is $k=1$ allowed in Pintz's theorems?} Yes: the statement is for an arbitrary fixed natural number $k$, so $k=1$ is admissible.
+\item \emph{Any index problem with $m_j-1$?} No: for large $j$, $m_j\ge 2^j\ge 2$, so $r_j=m_j-1\ge 1$.
+\item \emph{Do we really get infinitely many distinct indices?} Yes: choosing dyadic intervals $[2^j,2^{j+1}]$ forces $n_j$ and $m_j$ to escape to infinity.
+\item \emph{Could equality $d_{n+1}=d_n$ still occur infinitely often?} Yes; the present argument says nothing about the set $E=\{n:d_{n+1}=d_n\}$.  This is exactly one of the unresolved parts of the original problem.
+\item \emph{Does this imply any density statement?} No.  Sparse oscillation is much weaker than density-$1/2$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}  The original density problem is still open, but Round~2 proves a genuine theorem absent from Round~1:
+\[
+\liminf_{n\to\infty}\frac{d_{n+1}}{d_n}=0,
+\qquad
+\limsup_{n\to\infty}\frac{d_{n+1}}{d_n}=\infty,
+\]
+so both strict inequalities $d_{n+1}>d_n$ and $d_{n+1}<d_n$ occur infinitely often.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item J. Pintz, \emph{On the ratio of consecutive gaps between primes}, arXiv:1406.2658.
+\end{itemize}
+
+

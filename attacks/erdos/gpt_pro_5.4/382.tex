@@ -1,0 +1,184 @@
+
+\section{Problem \#382 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path C (obstruction / structural reduction). The Round-1 route gave only the conditional-style philosophy ``short prime gaps force short bad intervals'' and an unconditional bound of order $v^{0.525}$. The new goal is to remove that dependence entirely and force a square-divisibility anchor inside every bad interval, obtaining a sharper unconditional upper bound and a cleaner description of the intervals themselves.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts.
+
+\begin{enumerate}
+\item Every bad interval contains no primes.
+\item Therefore every bad interval satisfies $v<2u$.
+\item Round 1 recorded explicit examples with $v-u=3,4,5$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is the anchor-smooth reduction from Problem \#380. Applied here, it says:
+
+\begin{enumerate}
+\item if $[u,v]$ is bad and $L=v-u$, then $Q:=P\!\left(\prod_{m=u}^{v}m\right)$ satisfies $Q>L$;
+\item the interval contains a unique multiple of $Q$, and that multiple is divisible by $Q^2$;
+\item every term in the interval is $Q$-smooth.
+\end{enumerate}
+
+This immediately turns a bad interval into a short run of consecutive $Q$-smooth numbers with a built-in square anchor.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was that the $v^{0.525}$ bound still came from general theorems on primes in short intervals. The new plan is:
+
+\begin{enumerate}
+\item use the Round-2 structure theorem instead of prime-gap technology;
+\item deduce a direct unconditional inequality of square-root type;
+\item verify a much longer explicit example than the Round-1 examples.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem 1 (square-root bound).}
+Let $[u,v]$ be bad and put
+\[
+L=v-u,\qquad Q=P\!\left(\prod_{m=u}^{v}m\right).
+\]
+Then
+\[
+L<Q\le \sqrt{v}.
+\]
+In particular,
+\[
+v-u<\sqrt{v}.
+\]
+
+\paragraph{Proof.}
+By the anchor-smooth reduction from Problem \#380, we already know that $Q>L$ and that there is a unique $t\in [u,v]$ with $Q\mid t$, necessarily satisfying $Q^2\mid t$. Since $t\le v$, we get
+\[
+Q^2\le t\le v,
+\]
+hence $Q\le \sqrt{v}$. Combining this with $L<Q$ gives
+\[
+v-u=L<\sqrt{v}.
+\]
+This proves the theorem.
+
+\paragraph{Remark (optional deeper strengthening).}
+A survey of Shorey and Tijdeman records that if $n,n+1,\dots,n+k-1$ are all composite and $n>100$, then the greatest prime factor of their product exceeds $4.42k$. Since every bad interval is prime-free, this gives for all sufficiently large bad intervals
+\[
+Q>4.42(L+1).
+\]
+Together with $Q^2\mid t\le v$, one gets
+\[
+L<\frac{\sqrt{v}}{4.42}.
+\]
+I do \emph{not} need this stronger constant below; the elementary square-root bound already strictly improves Round 1.
+
+\paragraph{Structural reformulation.}
+Every bad interval is now seen to be a block of consecutive $Q$-smooth integers of length $L+1<Q+1$ containing a $Q^2$-divisible term. Therefore the second question in Problem \#382 can be rephrased as follows:
+
+\medskip
+
+\noindent\emph{Can one find arbitrarily long runs of consecutive $Q$-smooth integers, of length still $<Q$, containing a term divisible by $Q^2$, with $Q$ prime?}
+
+\medskip
+
+This is more precise than the Round-1 heuristic description.
+
+\paragraph{A verified example with $v-u=13$.}
+The Round-1 notes mentioned an informal forum claim of a length-$13$ example. I verified it exactly.
+
+Let
+\[
+q=4237033,\qquad q^2=17952448643089.
+\]
+Consider the interval
+\[
+[q^2-11,\ q^2+2]
+=
+[17952448643078,\ 17952448643091].
+\]
+Direct exact factorisation gives:
+
+\begin{enumerate}
+\item $q^2-11=2\cdot 89\cdot 30253\cdot 3333767$;
+\item $q^2-10=3\cdot 43\cdot 153719\cdot 905329$;
+\item $q^2-9=2^3\cdot 5\cdot 7^2\cdot 8647\cdot 1059259$;
+\item $q^2-8=31\cdot 193\cdot 239\cdot 2129\cdot 5897$;
+\item $q^2-7=2\cdot 3^2\cdot 47\cdot 103\cdot 109\cdot 1890121$;
+\item $q^2-6=19\cdot 431\cdot 18287\cdot 119881$;
+\item $q^2-5=2^2\cdot 331\cdot 80209\cdot 169049$;
+\item $q^2-4=3\cdot 5\cdot 11\cdot 25679\cdot 4237031$;
+\item $q^2-3=2\cdot 37\cdot 877\cdot 2063\cdot 134089$;
+\item $q^2-2=7\cdot 937\cdot 5711\cdot 479263$;
+\item $q^2-1=2^4\cdot 3\cdot 53\cdot 3331\cdot 2118517$;
+\item $q^2=q^2$;
+\item $q^2+1=2\cdot 5\cdot 13\cdot 17\cdot 29\cdot 113\cdot 2478877$;
+\item $q^2+2=3^2\cdot 41\cdot 67\cdot 739\cdot 982603$.
+\end{enumerate}
+
+Every prime shown above is at most $q$, and the middle term contributes $q^2$. Hence the largest prime factor of
+\[
+\prod_{m=q^2-11}^{q^2+2} m
+\]
+is $q$, with exponent at least $2$. Therefore
+\[
+[17952448643078,\ 17952448643091]
+\]
+is a bad interval, and
+\[
+v-u=13.
+\]
+
+\paragraph{By-product from Problem \#383.}
+The new explicit primes found in the Round-2 work for Problem \#383 give the following additional bad intervals:
+\[
+[510569^2,\ 510569^2+7],\qquad
+[2869123^2,\ 2869123^2+8],\qquad
+[3092701^2,\ 3092701^2+9].
+\]
+So there are rigorously verified bad intervals of lengths $7,8,9$, in addition to the verified length-$13$ example above.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the following possible issues.
+
+\begin{enumerate}
+\item \emph{Does $Q>L$ really follow for every non-singleton bad interval?} Yes: this is exactly the new Sylvester--Schur step from Problem \#380.
+\item \emph{Could the $Q$-multiple occur twice anyway?} No, because two distinct multiples of $Q$ differ by at least $Q>L$.
+\item \emph{Did I overstate the structure by saying the interval contains $Q^2$ itself?} No; the theorem only guarantees a $Q^2$-divisible term. The verified length-$13$ example happens to be centred at $q^2$, but this need not happen in general.
+\item \emph{Is the length-$13$ example merely borrowed from the forum?} No. The forum comment suggested it; the displayed exact factorisations above verify it independently.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The new Round-2 gains are:
+
+\begin{enumerate}
+\item a direct unconditional bound
+\[
+v-u<\sqrt{v},
+\]
+which is sharper than the Round-1 $v^{0.525}$ route;
+\item a rigorous reformulation of every bad interval as a short run of consecutive $Q$-smooth integers with a $Q^2$-divisible anchor;
+\item a fully verified explicit example with $v-u=13$;
+\item further verified examples of lengths $7,8,9$ coming from the new Problem \#383 computations.
+\end{enumerate}
+
+The two original questions in Problem \#382 remain open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 60\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#382}, accessed 2026-03-08, \texttt{https://www.erdosproblems.com/382}.
+\item T. F. Bloom, forum thread for Problem \#382, accessed 2026-03-08, \texttt{https://www.erdosproblems.com/forum/thread/382}. The length-$13$ interval was mentioned there and independently verified above.
+\item T. N. Shorey and R. Tijdeman, \emph{Arithmetic properties of blocks of consecutive integers}, especially Section 3.1 for the Sylvester theorem discussion and the quoted Nair--Shorey bound for composite blocks.
+\end{enumerate}
+

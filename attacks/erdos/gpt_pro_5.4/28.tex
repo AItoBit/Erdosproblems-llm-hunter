@@ -1,0 +1,477 @@
+\section{Round 4: Exact exceptional-set exponent for the Chen basis}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.} Round~3 proved that the explicit basis
+\[
+A=E\cup O,\qquad
+E:=\left\{\sum_{i\ge 0}\varepsilon_i4^i:\ \varepsilon_i\in\{0,1\}\right\},\qquad
+O:=2E,
+\]
+satisfies \(r_A(n)=2\) for density-one many \(n\), while still having unbounded spikes. The remaining conceptual gap was quantitative: how sparse can the exceptional set
+\[
+\mathcal X:=\{n\ge 1:r_A(n)\ne 2\}
+\]
+actually be for this construction?
+
+In this round I sharpen the Round~3 obstruction from a qualitative density-one statement to an \emph{exact polynomial-order count}. In particular, I prove that for this same explicit basis the exceptional set has exact exponent
+\[
+\gamma=\log_4 3,
+\]
+and along powers of \(4\) one has a closed formula
+\[
+\#(\mathcal X\cap[1,4^m))=5\cdot 3^{m-1}-F_{2m+1}-2.
+\]
+This is strict progress: it rules out a much larger class of frequency-based proof strategies than Round~3 did.
+
+\subsection*{2) Round-3 FOUNDATION USED}
+I use the following Round~3 results without reproving them.
+\begin{enumerate}
+\item The explicit basis \(A=E\cup O\) above, with \(E\cap O=\{0\}\).
+\item Every \(n\ge 0\) has a unique decomposition
+\[
+n=e(n)+o(n),\qquad e(n)\in E,\ o(n)\in O,
+\]
+obtained by separating the binary digits of \(n\) into even and odd positions.
+\item Consequently, for every \(n\ge 1\), the ordered pairs
+\[
+(e(n),o(n))\quad\text{and}\quad(o(n),e(n))
+\]
+are always representations of \(n\), so \(r_A(n)\ge 2\).
+\item Round~3 proved the qualitative obstruction \(r_A(n)=2\) for all but \(O(N^\theta)\) integers \(n\le N\), where \(\theta=\log 7/(3\log 2)\). The present round strengthens this to the exact exponent \(\log_4 3\) and, along powers of \(4\), an exact counting formula.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new tool is an \emph{exact base-\(4\) representation count} for the same-parity pieces \(E+E\) and \(O+O\).
+
+For \(n\ge 0\), let \(d_0(n),d_1(n),\dots\in\{0,1,2,3\}\) be the base-\(4\) digits of \(n\), and define
+\[
+\omega(n):=\#\{i:\ d_i(n)=1\}.
+\]
+Define also
+\[
+\rho(n):=
+\begin{cases}
+2^{\omega(n)},&\text{if every base-4 digit of }n\text{ lies in }\{0,1,2\},\\
+0,&\text{otherwise.}
+\end{cases}
+\]
+Then:
+\begin{enumerate}
+\item the number of ordered representations of \(n\) as \(e_1+e_2\) with \(e_1,e_2\in E\) is exactly \(\rho(n)\);
+\item the number of ordered representations of \(n\) as \(o_1+o_2\) with \(o_1,o_2\in O\) is exactly
+\[
+\mathbf 1_{2\mid n}\,\rho(n/2).
+\]
+\end{enumerate}
+
+From this I obtain:
+\begin{enumerate}
+\item an exact characterization
+\[
+\mathcal X=((E+E)\cup(O+O))\setminus\{1\};
+\]
+\item exact counts
+\[
+|(E+E)\cap[0,4^m)|=3^m,\qquad |(O+O)\cap[0,4^m)|=2\cdot 3^{m-1};
+\]
+\item the exact intersection formula
+\[
+|(E+E)\cap(O+O)\cap[0,4^m)|=F_{2m+1},
+\]
+where \(F_0=0,F_1=1\) are the Fibonacci numbers.
+\end{enumerate}
+
+Combining these gives the exact growth law for the exceptional set.
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+The precise gap left after Round~3 was this:
+
+\medskip
+\noindent
+\emph{Round~3 showed only that the exceptional set has density \(0\). It did not determine its true scale.}
+
+\medskip
+The claims to prove in this round are:
+\begin{enumerate}
+\item compute the exact same-parity representation counts \(r_{E,E}(n)\) and \(r_{O,O}(n)\);
+\item deduce an exact characterization of the exceptional set \(\mathcal X\);
+\item count \((E+E)\), \((O+O)\), and their intersection below \(4^m\);
+\item infer an exact formula for \(\#(\mathcal X\cap[1,4^m))\);
+\item deduce the sharp obstruction exponent \(\gamma=\log_4 3\), improving the Round~3 exponent \(\theta=\log 7/(3\log 2)\).
+\end{enumerate}
+
+This overcomes the earlier obstacle because it replaces the qualitative binary-block argument from Round~3 by an exact base-\(4\) digit analysis.
+
+\subsection*{5) WORK (ROUND-4)}
+
+\subsubsection*{5.1 Exact same-parity representation counts}
+For \(n\ge 0\), let
+\[
+r_{E,E}(n):=\#\{(e_1,e_2)\in E^2:\ e_1+e_2=n\},
+\qquad
+r_{O,O}(n):=\#\{(o_1,o_2)\in O^2:\ o_1+o_2=n\}.
+\]
+
+\medskip
+\noindent
+\textbf{Lemma 5.1.}
+For every \(n\ge 0\),
+\[
+r_{E,E}(n)=\rho(n).
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+Write \(n=\sum_{i\ge 0} d_i4^i\) in base \(4\).
+Every element of \(E\) has base-\(4\) digits in \(\{0,1\}\). Hence a representation
+\[
+n=e_1+e_2,\qquad e_1,e_2\in E,
+\]
+is obtained by adding, independently at each base-\(4\) position, two digits from \(\{0,1\}\). Since \(1+1=2<4\), there are no carries at all. Therefore:
+\begin{itemize}
+\item if some base-\(4\) digit \(d_i\) equals \(3\), then no such representation exists;
+\item if \(d_i=0\), the split is uniquely \(0+0\);
+\item if \(d_i=1\), the split can be either \(0+1\) or \(1+0\), giving exactly \(2\) choices;
+\item if \(d_i=2\), the split is uniquely \(1+1\).
+\end{itemize}
+Thus the total number of ordered representations is exactly \(2^{\omega(n)}\) when all digits lie in \(\{0,1,2\}\), and \(0\) otherwise. This is precisely \(\rho(n)\). \hfill\(\square\)
+
+\medskip
+\noindent
+\textbf{Lemma 5.2.}
+For every \(n\ge 0\),
+\[
+r_{O,O}(n)=\mathbf 1_{2\mid n}\,\rho(n/2).
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+Since \(O=2E\), a representation \(n=o_1+o_2\) with \(o_1,o_2\in O\) is equivalent to
+\[
+n=2e_1+2e_2=2(e_1+e_2),\qquad e_1,e_2\in E.
+\]
+Hence \(r_{O,O}(n)=0\) when \(n\) is odd, and for even \(n\),
+\[
+r_{O,O}(n)=r_{E,E}(n/2)=\rho(n/2)
+\]
+by Lemma~5.1. \hfill\(\square\)
+
+\subsubsection*{5.2 Exact representation formula for \(r_A\)}
+Let
+\[
+P_{EO}(n):=\{(e,o)\in E\times O:\ e+o=n\},
+\qquad
+P_{OE}(n):=\{(o,e)\in O\times E:\ o+e=n\}.
+\]
+By the Round~3 unique mixed decomposition, for every \(n\ge 1\),
+\[
+|P_{EO}(n)|=|P_{OE}(n)|=1.
+\]
+Moreover, for \(n\ge 1\), these two sets are disjoint because \(E\cap O=\{0\}\) and the two summands cannot both be \(0\).
+
+The actual ordered representations counted by \(r_A(n)\) are the union of the four sets
+\[
+P_{EO}(n),\ P_{OE}(n),\ P_{EE}(n),\ P_{OO}(n),
+\]
+where \(P_{EE}(n)\) and \(P_{OO}(n)\) are the sets counted by \(r_{E,E}(n)\) and \(r_{O,O}(n)\).
+
+The only overlaps are:
+\begin{itemize}
+\item \(P_{EE}(n)\cap P_{EO}(n)\) and \(P_{EE}(n)\cap P_{OE}(n)\), each of size \(1\), exactly when \(n\in E\) (equivalently, \(o(n)=0\));
+\item \(P_{OO}(n)\cap P_{EO}(n)\) and \(P_{OO}(n)\cap P_{OE}(n)\), each of size \(1\), exactly when \(n\in O\) (equivalently, \(e(n)=0\)).
+\end{itemize}
+There is no overlap between \(P_{EE}(n)\) and \(P_{OO}(n)\) for \(n\ge 1\), since \(E\cap O=\{0\}\).
+
+Therefore, for every \(n\ge 1\),
+\begin{equation}\label{eq:exact-rA}
+r_A(n)=2+r_{E,E}(n)+r_{O,O}(n)-2\mathbf 1_{E}(n)-2\mathbf 1_{O}(n).
+\end{equation}
+Combining \eqref{eq:exact-rA} with Lemmas~5.1 and 5.2 gives the exact formula
+\begin{equation}\label{eq:exact-rA-rho}
+r_A(n)=2+\rho(n)+\mathbf 1_{2\mid n}\,\rho(n/2)-2\mathbf 1_E(n)-2\mathbf 1_O(n)
+\qquad(n\ge 1).
+\end{equation}
+
+\subsubsection*{5.3 Exact characterization of the exceptional set}
+Let
+\[
+\mathcal X:=\{n\ge 1:\ r_A(n)\ne 2\}.
+\]
+Since \(r_A(n)\ge 2\) for all \(n\ge 1\), this is the same as
+\[
+\mathcal X=\{n\ge 1:\ r_A(n)>2\}.
+\]
+
+\medskip
+\noindent
+\textbf{Proposition 5.3.}
+One has
+\[
+\mathcal X=((E+E)\cup(O+O))\setminus\{1\}.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+First suppose \(n\ge 1\) does not lie in \((E+E)\cup(O+O)\). Then \(r_{E,E}(n)=r_{O,O}(n)=0\), so \eqref{eq:exact-rA} gives \(r_A(n)=2\). Hence \(n\notin\mathcal X\).
+
+Conversely, suppose \(n\in O+O\), \(n\ge 1\). If \(n\notin O\), then the \(O+O\) representation(s) are distinct from the two mixed representations, so \(r_A(n)>2\). If \(n\in O\), write \(n=2e\) with \(e\in E\). Then
+\[
+n=e+e
+\]
+is an \(E+E\) representation distinct from the two mixed representations \((n,0)\) and \((0,n)\). So again \(r_A(n)>2\).
+
+Now suppose \(n\in E+E\), \(n\ge 1\), and \(n\neq 1\). If \(n\notin E\), then any \(E+E\) representation is distinct from the two mixed representations, so \(r_A(n)>2\). If \(n\in E\), write \(n\) in base \(4\). Since \(n\neq 1\), there are two possibilities:
+\begin{enumerate}
+\item \(n\) has at least two base-\(4\) digits equal to \(1\). Then Lemma~5.1 gives \(r_{E,E}(n)=2^{\omega(n)}\ge 4\), so \(r_A(n)>2\).
+\item \(n\) has exactly one base-\(4\) digit equal to \(1\), so \(n=4^j\) for some \(j\ge 1\). Then
+\[
+4^j=2\cdot(2\cdot 4^{j-1}),
+\]
+and \(2\cdot 4^{j-1}\in E+E\) because
+\[
+2\cdot 4^{j-1}=4^{j-1}+4^{j-1}.
+\]
+Hence \(4^j\in O+O\), and the previous paragraph shows \(r_A(4^j)>2\).
+\end{enumerate}
+Therefore every \(n\in((E+E)\cup(O+O))\setminus\{1\}\) belongs to \(\mathcal X\).
+
+Combining both directions yields
+\[
+\mathcal X=((E+E)\cup(O+O))\setminus\{1\}.
+\]
+\hfill\(\square\)
+
+\subsubsection*{5.4 Counting \(E+E\), \(O+O\), and their intersection below \(4^m\)}
+Fix \(m\ge 1\), and define
+\[
+B_m:=(E+E)\cap[0,4^m),\qquad
+C_m:=(O+O)\cap[0,4^m).
+\]
+
+\medskip
+\noindent
+\textbf{Lemma 5.4.}
+\[
+|B_m|=3^m.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+By Lemma~5.1, \(n\in E+E\) if and only if every base-\(4\) digit of \(n\) lies in \(\{0,1,2\}\). Below \(4^m\), there are exactly \(m\) base-\(4\) positions, and each position has \(3\) choices. Hence \(|B_m|=3^m\). \hfill\(\square\)
+
+\medskip
+\noindent
+\textbf{Lemma 5.5.}
+\[
+|C_m|=2\cdot 3^{m-1}.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+Since \(O+O=2(E+E)\), an integer \(n\in[0,4^m)\) lies in \(O+O\) if and only if \(n=2t\) for some \(t\in E+E\) with
+\[
+t<2\cdot 4^{m-1}.
+\]
+Now \(t\in E+E\) means that the base-\(4\) digits of \(t\) all lie in \(\{0,1,2\}\). The additional bound \(t<2\cdot 4^{m-1}\) says that the leading base-\(4\) digit has only \(2\) possibilities, namely \(0\) or \(1\), while each of the remaining \(m-1\) digits has \(3\) possibilities. Therefore
+\[
+|C_m|=2\cdot 3^{m-1}.
+\]
+\hfill\(\square\)
+
+\medskip
+\noindent
+\textbf{Lemma 5.6.}
+Let \(I_m:=|B_m\cap C_m|\). Then
+\[
+I_m=F_{2m+1},
+\]
+where \(F_0=0,\ F_1=1,\ F_{k+1}=F_k+F_{k-1}\).
+
+\medskip
+\noindent
+\emph{Proof.}
+An element of \(B_m\cap C_m\) is an integer
+\[
+n=2t<4^m
+\]
+such that both \(t\) and \(n\) have all base-\(4\) digits in \(\{0,1,2\}\).
+
+Write
+\[
+t=\sum_{i=0}^{m-1} x_i4^i,\qquad x_i\in\{0,1,2\}.
+\]
+We double \(t\) in base \(4\), processing digits from \(i=0\) upward. Let \(c_i\in\{0,1\}\) be the carry entering position \(i\). The transition rules are:
+\[
+\begin{array}{c|c}
+\text{incoming carry }0 & x_i=0,1 \text{ keep carry }0;\ x_i=2 \text{ creates carry }1,\\
+\hline
+\text{incoming carry }1 & x_i=0 \text{ gives carry }0;\ x_i=2 \text{ keeps carry }1;\ x_i=1 \text{ is forbidden}
+\end{array}
+\]
+because \(2\cdot 1+1=3\), which would create a forbidden base-\(4\) digit \(3\).
+
+Let \(u_m\) be the number of admissible strings \((x_0,\dots,x_{m-1})\) that finish with carry \(0\), and let \(v_m\) be the number that finish with carry \(1\). We start with no incoming carry, so
+\[
+u_0=1,\qquad v_0=0.
+\]
+The transition rules give
+\[
+\binom{u_{m+1}}{v_{m+1}}
+=
+\begin{pmatrix}
+2 & 1\\
+1 & 1
+\end{pmatrix}
+\binom{u_m}{v_m}.
+\]
+Now
+\[
+\begin{pmatrix}
+2 & 1\\
+1 & 1
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 1\\
+1 & 0
+\end{pmatrix}^{\!2},
+\]
+so by induction
+\[
+\binom{u_m}{v_m}
+=
+\begin{pmatrix}
+1 & 1\\
+1 & 0
+\end{pmatrix}^{\!2m}
+\binom{1}{0}
+=
+\binom{F_{2m+1}}{F_{2m}}.
+\]
+Finally, the condition \(n<4^m\) is exactly the requirement that the final carry be \(0\). Hence
+\[
+I_m=u_m=F_{2m+1}.
+\]
+\hfill\(\square\)
+
+\subsubsection*{5.5 Exact exceptional-set count and sharp exponent}
+Define
+\[
+X(N):=\#\{1\le n\le N:\ r_A(n)\ne 2\}.
+\]
+
+\medskip
+\noindent
+\textbf{Theorem 5.7.}
+For every \(m\ge 1\),
+\begin{equation}\label{eq:exact-exceptional}
+X(4^m-1)=5\cdot 3^{m-1}-F_{2m+1}-2.
+\end{equation}
+Consequently, with
+\[
+\gamma:=\log_4 3,
+\]
+one has
+\[
+X(4^m-1)=\Theta(4^{m\gamma})=\Theta((4^m)^\gamma),
+\]
+and for all \(N\ge 2\),
+\[
+X(N)\ll N^\gamma.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+By Proposition~5.3,
+\[
+\mathcal X\cap[1,4^m)=\bigl((B_m\cup C_m)\cap[1,4^m)\bigr)\setminus\{1\}.
+\]
+Since \(0\in B_m\cap C_m\) and \(1\in B_m\setminus C_m\), this gives
+\[
+X(4^m-1)=|B_m\cup C_m|-2.
+\]
+By inclusion--exclusion and Lemmas~5.4--5.6,
+\[
+|B_m\cup C_m|
+=
+|B_m|+|C_m|-|B_m\cap C_m|
+=
+3^m+2\cdot 3^{m-1}-F_{2m+1}
+=
+5\cdot 3^{m-1}-F_{2m+1}.
+\]
+Therefore
+\[
+X(4^m-1)=5\cdot 3^{m-1}-F_{2m+1}-2,
+\]
+proving \eqref{eq:exact-exceptional}.
+
+Since \(F_{2m+1}=O(\varphi^{2m})\), where \(\varphi=(1+\sqrt5)/2\), and \(\varphi^2<3\), the main term is \(5\cdot 3^{m-1}\). Thus
+\[
+X(4^m-1)=\Theta(3^m)=\Theta(4^{m\log_4 3}).
+\]
+This proves the sharp exponent along powers of \(4\).
+
+For general \(N\), choose \(m\) with \(4^{m-1}\le N<4^m\). By monotonicity,
+\[
+X(N)\le X(4^m-1)\ll 3^m\ll N^{\log_4 3}.
+\]
+\hfill\(\square\)
+
+\subsubsection*{5.6 Consequence: a sharper obstruction than in Round~3}
+Round~3 showed that the set \(\{n:r_A(n)=2\}\) has density \(1\). The present round proves the stronger quantitative statement
+\[
+\#\{1\le n\le N:\ r_A(n)\ne 2\}=O(N^{\log_4 3}),
+\]
+and along infinitely many \(N\) (namely \(N=4^m-1\)) this bound is best possible up to constant factors.
+
+Equivalently: for this explicit basis, all deviations from the baseline value \(2\) live on a set of precise polynomial order \(N^{\log_4 3}\), where
+\[
+\log_4 3\approx 0.79248.
+\]
+Thus any strengthening of Erd\H{o}s--Tur\'an that attempts to force \emph{more} than \(N^{\log_4 3+o(1)}\) nontrivial spikes for every basis is false.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Overlap issue in \eqref{eq:exact-rA}.} The only possible overlaps between the mixed representations and same-parity representations occur when one summand is \(0\), i.e. precisely for \(n\in E\) or \(n\in O\). There is no \(P_{EE}\)--\(P_{OO}\) overlap for \(n\ge 1\) because \(E\cap O=\{0\}\).
+\item \textbf{Are all numbers in \(O+O\) really exceptional?} Yes. If \(n\notin O\), any \(O+O\) representation is extra beyond the two mixed ones. If \(n\in O\), writing \(n=2e\) with \(e\in E\) produces the extra representation \(n=e+e\).
+\item \textbf{Are all numbers in \(E+E\setminus\{1\}\) really exceptional?} Yes. If \(n\notin E\), any \(E+E\) representation is extra. If \(n\in E\) and has at least two base-\(4\) digits equal to \(1\), then \(r_{E,E}(n)\ge 4\). If \(n=4^j\) with \(j\ge 1\), then \(n\in O+O\), already handled. The only positive element of \(E+E\) not covered is \(n=1\), and indeed \(r_A(1)=2\).
+\item \textbf{Carry automaton for the intersection.} The forbidden case \(2\cdot 1+1=3\) is exactly the only way a base-\(4\) digit \(3\) can arise when doubling a digit string over \(\{0,1,2\}\). Final carry \(0\) is equivalent to the condition \(2t<4^m\), so the automaton count matches \(|B_m\cap C_m|\) exactly.
+\item \textbf{Consistency with earlier rounds.} Round~3 gave the upper bound \(O(N^\theta)\) with \(\theta=\log 7/(3\log 2)\approx 0.936\). The present round improves this to the exact exponent \(\log_4 3\approx 0.792\) and an exact formula on powers of \(4\), so this is strict progress.
+\end{enumerate}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~4 strengthens the Round~3 obstruction substantially. For the explicit Chen basis \(A=E\cup O\), the exceptional set is now understood sharply:
+\[
+\{n\ge 1:\ r_A(n)\ne 2\}=((E+E)\cup(O+O))\setminus\{1\},
+\]
+and
+\[
+\#\{1\le n<4^m:\ r_A(n)\ne 2\}=5\cdot 3^{m-1}-F_{2m+1}-2.
+\]
+Hence the true exceptional-set exponent for this construction is exactly
+\[
+\gamma=\log_4 3.
+\]
+
+This rules out an entire class of proof strategies more strongly than Round~3 did: any universal strengthening of Erd\H{o}s--Tur\'an that would force ``many'' spikes---for example more than \(N^{\log_4 3+o(1)}\) deviations from the baseline value \(2\)---is false.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 63\%}
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item P. Erd\H{o}s and P. Tur\'an, \emph{On a problem of Sidon in additive number theory, and on some related problems}, J. London Math. Soc. \textbf{16} (1941), 212--215.
+\item Y.-G. Chen, \emph{On the Erd\H{o}s--Tur\'an conjecture}, C. R. Acad. Sci. Paris, Ser. I \textbf{350} (2012), 933--935.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This file is the requested drop-in \LaTeX{} continuation, with no preamble and no \verb|\begin{document}|.

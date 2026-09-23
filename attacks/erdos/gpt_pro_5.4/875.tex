@@ -1,0 +1,264 @@
+\begin{quote}
+\textbf{Archive note.} This extract contains the work on Problem \#875 from a joint report on Problems \#789, \#873, and \#875. The shared introduction, verification, conclusions, and references are retained. The source's 68\% completion estimate applies to the joint report.
+\end{quote}
+
+\section{Round 2 continuation for Erd\H{o}s problems \#789, \#873, \#875}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Because Round~1 bundled three Erd\H{o}s problems into a single file, this continuation also treats the three problems together. I am pursuing path \textbf{(C)}: I identify and correct a concrete Round~1 error for Problem~\#875 (a missed theorem from the literature), then propagate the corrected consequences. In the same pass I also strengthen the Round~1 upper bound for Problem~\#789 and prove a new fixed-\(k\) obstruction for Problem~\#873. None of the three problems is fully solved, so the global status remains unresolved.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 facts without reproving them.
+
+\begin{enumerate}
+\item For Problem~\#789, Round~1 already corrected the statement to the standard \emph{distinct-summand} notion of admissibility, and proved the lower bound \(h(n) \gg n^{1/3}\).
+\item For Problem~\#873, Round~1 proved the monotonicity of \(F(A,X,k)\) in \(k\), namely that \(F(A,X,k') \le F(A,X,k)\) whenever \(k'\ge k\).
+\item For Problem~\#875, Round~1 observed that every finite initial segment \(A\cap [1,N]\) of an infinite admissible set is itself admissible, so any sharp finite bound inside \([1,N]\) immediately yields a universal density bound for infinite admissible sets.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are three genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item \textbf{Problem \#789.} I import the sharp Deshouillers--Freiman theorem for finite admissible subsets of \([1,N]\), which upgrades the Round~1 upper bound from \(\sqrt{7n}\) to \(2\sqrt{n}+O(1)\).
+\item \textbf{Problem \#873.} I introduce a new \emph{divisor-block construction}: concatenate scaled divisor sets of primorials. This produces, for every fixed \(k\), an infinite set \(A\) for which \(F(A,X,k)\) is larger than every power of \(\log X\) infinitely often. This does not disprove the Erd\H{o}s--Szemer\'edi conjecture, but it shows that any proof must use the freedom to let \(k\) depend on \(A\) and \(\varepsilon\).
+\item \textbf{Problem \#875.} Round~1 missed Erd\H{o}s--Nicolas--S\'ark\H{o}zy's 1991 theorem constructing an infinite admissible set with polynomial density \(A(x)\gg x^{5-2\sqrt6}\). After correcting this, I derive new consequences: existence of polynomial-growth admissible sets, existence of an admissible set with \(\liminf a_{n+1}/a_n = 1\), a sharpened universal lower bound \(a_n\ge n(n+2)/4\) for all large \(n\), and a sharpened gap obstruction \(\limsup (a_{n+1}-a_n)/n\ge 1/2\).
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+After Round~1, the exact remaining gaps were as follows.
+
+\begin{enumerate}
+\item For Problem~\#789, the upper bound was only \(O(\sqrt n)\) with a weak constant. The natural gap was to import the sharp finite-interval extremal theorem and transfer it immediately to \(h(n)\) by taking the special set \([1,n]\).
+\item For Problem~\#873, Round~1 had no construction showing how badly a fixed value of \(k\) can fail. The precise target now is to prove that for every fixed \(k\), there is an infinite \(A\) for which \(F(A,X,k)\) is still very large infinitely often.
+\item For Problem~\#875, the most serious issue is factual: Round~1 treated polynomial growth as if it might still be unknown. I first repair that mistake using the 1991 theorem, and then extract the strongest easy corollaries for growth and gap questions.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\subsubsection*{Problem \#875: correcting Round~1 and pushing the consequences}
+
+Round~1 stated, in effect, that polynomial growth and even \(\liminf a_{n+1}/a_n=1\) might still be open for infinite admissible sets. This is incorrect.
+
+\medskip
+\noindent\textbf{Correction 875.0.} Erd\H{o}s--Nicolas--S\'ark\H{o}zy proved in 1991 that there exists an infinite admissible set \(A\subset \mathbf{N}\) such that
+\[
+  A(x) := \#\{a\in A : a\le x\} \gg x^{5-2\sqrt6}.
+\]
+Thus polynomial-density admissible sets are already known.
+
+\medskip
+\noindent\textbf{Claim 875.1.} There exists an infinite admissible sequence \(A=\{a_n\}_{n\ge 1}\) such that
+\[
+  a_n \ll n^{5+2\sqrt6}.
+\]
+Consequently,
+\[
+  \liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Let \(\alpha:=5-2\sqrt6\). By Correction~875.0 there is an admissible infinite set with
+\[
+  A(x) \ge c x^{\alpha}
+\]
+for all large \(x\), with some constant \(c>0\). Evaluating at \(x=a_n\) gives
+\[
+  n = A(a_n) \ge c a_n^{\alpha}
+\]
+for all large \(n\), hence
+\[
+  a_n \le C n^{1/\alpha}
+\]
+for some \(C>0\). Since
+\[
+  \frac{1}{5-2\sqrt6}=5+2\sqrt6,
+\]
+this becomes
+\[
+  a_n \ll n^{5+2\sqrt6}.
+\]
+
+Now suppose, for contradiction, that
+\[
+  \liminf_{n\to\infty}\frac{a_{n+1}}{a_n} > 1.
+\]
+Then there exist \(\eta>0\) and \(n_0\) such that
+\[
+  a_{n+1} \ge (1+\eta)a_n
+\]
+for all \(n\ge n_0\). Iterating,
+\[
+  a_n \ge a_{n_0}(1+\eta)^{n-n_0},
+\]
+so \(a_n\) grows exponentially. This contradicts the polynomial upper bound \(a_n\ll n^{5+2\sqrt6}\). Therefore
+\[
+  \liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.2.} Every infinite admissible sequence \(A=\{a_n\}\) satisfies
+\[
+  A(x) \le 2\sqrt x + O(1),
+  \qquad
+  a_n \ge \frac{n^2}{4} + O(n).
+\]
+More precisely, for all sufficiently large integers \(N\),
+\[
+  A(N) \le 2\sqrt{N+\tfrac14}-1,
+\]
+and hence for all sufficiently large \(n\),
+\[
+  a_n \ge \frac{n(n+2)}{4}.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Let \(A\) be any infinite admissible set. For every sufficiently large integer \(N\), the finite set
+\[
+  A\cap [1,N]
+\]
+is an admissible subset of \([1,N]\). By the Deshouillers--Freiman theorem,
+\[
+  |A\cap [1,N]| \le 2\sqrt{N+\tfrac14}-1.
+\]
+This is the asserted bound for \(A(N)\). Replacing \(N\) by \(\lfloor x\rfloor\) gives
+\[
+  A(x) \le 2\sqrt x + O(1).
+\]
+Now take \(x=a_n\). Then for all large \(n\),
+\[
+  n = A(a_n) \le 2\sqrt{a_n+\tfrac14}-1.
+\]
+Hence
+\[
+  n+1 \le 2\sqrt{a_n+\tfrac14},
+\]
+so after squaring,
+\[
+  a_n \ge \frac{(n+1)^2-1}{4} = \frac{n(n+2)}{4}.
+\]
+This implies \(a_n\ge n^2/4 + O(n)\).
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.3.} If an infinite admissible sequence satisfies
+\[
+  a_{n+1}-a_n \le c n
+\]
+for all sufficiently large \(n\), then necessarily
+\[
+  c\ge \frac12.
+\]
+Equivalently,
+\[
+  \limsup_{n\to\infty}\frac{a_{n+1}-a_n}{n} \ge \frac12.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Assume to the contrary that there exists \(\varepsilon>0\) and \(n_0\) such that
+\[
+  a_{n+1}-a_n \le \left(\frac12-\varepsilon\right)n
+\]
+for every \(n\ge n_0\). Summing from \(n_0\) to \(n-1\) gives
+\[
+  a_n \le a_{n_0} + \left(\frac12-\varepsilon\right)\sum_{j=n_0}^{n-1} j
+  = \left(\frac14-\frac{\varepsilon}{2}\right)n^2 + O(n).
+\]
+But Claim~875.2 shows that every admissible sequence satisfies
+\[
+  a_n \ge \frac{n(n+2)}{4} = \frac14 n^2 + \frac12 n
+\]
+for all sufficiently large \(n\). These two estimates are incompatible for large \(n\). Hence the assumed eventual bound is impossible, and the stated conclusions follow.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.4.} For every real \(c>5+2\sqrt6\), there exists an infinite admissible sequence with
+\[
+  a_{n+1}-a_n \le n^c
+\]
+for all sufficiently large \(n\).
+
+\medskip
+\noindent\emph{Proof.}
+Take the sequence from Claim~875.1. Then there is a constant \(C>0\) such that
+\[
+  a_n \le C n^{5+2\sqrt6}
+\]
+for all sufficiently large \(n\). Therefore
+\[
+  a_{n+1}-a_n \le a_{n+1} \le C(n+1)^{5+2\sqrt6}.
+\]
+If \(c>5+2\sqrt6\), then \(C(n+1)^{5+2\sqrt6} \le n^c\) for all sufficiently large \(n\), and the claim follows.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Updated state of Problem \#875.}
+Round~1's final discussion must therefore be replaced by the following corrected bracket.
+
+\begin{itemize}
+\item There \emph{do} exist infinite admissible sets of polynomial growth: in fact \(A(x)\gg x^{5-2\sqrt6}\), so \(a_n\ll n^{5+2\sqrt6}\).
+\item Consequently, there exists an admissible set with \(\liminf a_{n+1}/a_n = 1\).
+\item Every admissible set satisfies \(A(x)\le 2\sqrt x + O(1)\), hence \(a_n\ge n^2/4 + O(n)\).
+\item For the gap exponent question, it is now rigorously known that
+\[
+  c<\frac12 \quad \text{is impossible},
+  \qquad
+  c>5+2\sqrt6 \quad \text{is possible}.
+\]
+\end{itemize}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{Problem \#789.}
+The only nontrivial hypothesis in Claim~789.1 is the Deshouillers--Freiman theorem, whose hypotheses are exactly satisfied by admissible subsets of \([1,n]\). The transfer from the interval problem to \(h(n)\) is logically sound because \(h(n)\) is a \emph{universal} guarantee over all \(n\)-element sets, so one counterexample family of size \(n\) immediately gives an upper bound.
+
+\paragraph{Problem \#873.}
+The divisor-block construction must satisfy three separate requirements: blocks must be ordered, the lcm inside each block must stay below the chosen threshold, and the quantitative lower bound must really exceed every power of \(\log X\). The recursive condition \(y_t>q_{t-1}P_{t-1}\) guarantees block ordering. The coprimality \(\gcd(q_t,P_t)=1\) makes the lcm computation exact. Finally, the prime number theorem turns the divisor count \(2^{\pi(y_t)}\) into the stated lower bound. No cross-block interaction is needed, because I only need a lower bound on \(F(A,X_t,k)\).
+
+\paragraph{Problem \#875.}
+The main issue was factual: Round~1 overlooked a published theorem. After correcting that, all subsequent deductions are elementary. Claim~875.1 uses only the inversion of the counting-function lower bound and a standard exponential-growth contradiction. Claim~875.2 applies the finite Deshouillers--Freiman theorem to the initial segment \(A\cap[1,N]\). Claim~875.3 sums an eventual linear gap bound and compares the quadratic leading coefficient against Claim~875.2; the contradiction is at the coefficient level \((1/4-\varepsilon/2)\) versus \(1/4\), so there is no hidden constant issue. Claim~875.4 only claims existence for \(c>5+2\sqrt6\), which is exactly the exponent one gets for free from the polynomial upper bound on \(a_n\).
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advances over Round~1 are these.
+
+\begin{enumerate}
+\item Problem~\#789: the upper bound is sharpened from \(\sqrt{7n}\) to \(2\sqrt n+O(1)\).
+\item Problem~\#873: a new fixed-\(k\) obstruction is proved. For every fixed \(k\), some infinite \(A\) has \(F(A,X,k)\) larger than every power of \(\log X\) infinitely often.
+\item Problem~\#875: a concrete Round~1 error is corrected. Polynomial-growth admissible sets already exist. As a result, the old final status for \#875 must be replaced by the sharper quantitative bracket
+\[
+  c<\frac12 \text{ impossible},
+  \qquad
+  c>5+2\sqrt6 \text{ possible}.
+\]
+Moreover there exists an admissible set with \(\liminf a_{n+1}/a_n=1\).
+\end{enumerate}
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 68\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#789}, problem page and discussion thread.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#873}, problem page and discussion thread.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#875}, problem page and discussion thread.
+\item J.-M. Deshouillers and G. A. Freiman, \emph{On an additive problem of Erd\H{o}s and Straus, 2}, in \emph{Structure theory of set addition}, Ast\'erisque 258 (1999), 141--148.
+\item P. Erd\H{o}s, J.-L. Nicolas, and A. S\'ark\H{o}zy, \emph{Sommes de sous-ensembles}, S\'eminaire de th\'eorie des nombres de Bordeaux 3 (1991), 55--72.
+\item Prime Number Theorem and the asymptotic \(\vartheta(x)\sim x\) for the Chebyshev function (used only in the quantitative corollary of Claim~873.1).
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT NOTE}
+
+This file intentionally starts at \verb|\section| and contains no preamble and no \verb|\begin{document}|, so it can be pasted directly into an existing LaTeX document.

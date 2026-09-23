@@ -1,0 +1,415 @@
+\section{Problem 626 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path C: isolate the exact inverse-threshold obstruction left after Round 1.
+
+Round 1 already reduced the problem to the inverse thresholds
+\[
+N_k(M):=\min\{n:\exists\,G,\ |V(G)|=n,\ \chi(G)=k,\ \operatorname{girth}(G)>M\}
+\]
+and
+\[
+N^{(m)}(t):=\min\{n:\exists\,G,\ |V(G)|=n,\ \operatorname{girth}(G)>m,\ \chi(G)\ge t\},
+\]
+but only in the one-way form ``if the inverse limit exists, then the original limit exists''.
+The natural gap is therefore to prove the exact converse, and more precisely to identify the
+\emph{limsup/liminf} of the original quantities in terms of the inverse thresholds.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts without reproving them.
+
+\begin{itemize}
+\item The monotonicity of \(g_k(n)\) and \(h^{(m)}(n)\) in \(n\).
+\item The inverse identities
+\[
+g_k(n)=\max\{M:N_k(M)\le n\},\qquad
+h^{(m)}(n)=\max\{t:N^{(m)}(t)\le n\}.
+\]
+\item The Round-1 one-way transfer statements:
+if \(\lim \log N_k(M)/M\) exists then \(\lim g_k(n)/\log n\) exists, and similarly for \(h^{(m)}\).
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+
+The new tool is an exact generalized-inverse theorem at the two scales relevant here:
+
+\begin{enumerate}
+\item exponential scale: \(N(M)\approx e^{\lambda M}\) versus \(g(n)\approx (\log n)/\lambda\);
+\item power scale: \(N(t)\approx t^{\alpha}\) versus \(h(n)\approx n^{1/\alpha}\).
+\end{enumerate}
+
+This upgrades the Round-1 one-way implication to an exact two-sided equivalence, and pins down
+the limsup/liminf constants as reciprocal liminf/limsup growth rates of the inverse thresholds.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+
+The exact gaps after Round 1 are:
+
+\begin{itemize}
+\item for fixed \(k\ge 4\), Round 1 did not prove that
+\[
+\lim_{n\to\infty}\frac{g_k(n)}{\log n}
+\]
+exists if and only if
+\[
+\lim_{M\to\infty}\frac{\log N_k(M)}{M}
+\]
+exists;
+\item for fixed \(m\ge 3\), Round 1 did not prove the analogous equivalence for
+\[
+\frac{\log h^{(m)}(n)}{\log n}
+\quad\text{and}\quad
+\frac{\log N^{(m)}(t)}{\log t}.
+\]
+\end{itemize}
+
+I close exactly these two gaps by proving reciprocal limsup/liminf formulae.
+This overcomes the main obstacle identified in Round 1: we no longer need any extra
+regularity assumption beyond monotonicity.
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{Claim 626.1 (generalized inverse on the exponential scale).}
+Let \(N:\mathbb{N}\to\mathbb{N}\) be nondecreasing and satisfy \(N(M)\to\infty\).
+Define
+\[
+g(n):=\max\{M\in\mathbb{N}:N(M)\le n\}.
+\]
+Put
+\[
+\lambda_-:=\liminf_{M\to\infty}\frac{\log N(M)}{M},
+\qquad
+\lambda_+:=\limsup_{M\to\infty}\frac{\log N(M)}{M}.
+\]
+Assume \(0<\lambda_-\le \lambda_+<\infty\).
+Then
+\[
+\limsup_{n\to\infty}\frac{g(n)}{\log n}=\frac{1}{\lambda_-},
+\qquad
+\liminf_{n\to\infty}\frac{g(n)}{\log n}=\frac{1}{\lambda_+}.
+\]
+
+\emph{Proof.}
+Fix \(n\), and let \(M:=g(n)\). By definition of the maximum,
+\[
+N(M)\le n < N(M+1).
+\]
+For the \(\limsup\), let \(\varepsilon>0\). By the definition of \(\lambda_-\), for all large \(M\),
+\[
+\log N(M)\ge (\lambda_--\varepsilon)M.
+\]
+Therefore, for all large \(n\),
+\[
+\log n\ge \log N(M)\ge (\lambda_--\varepsilon)M,
+\]
+so
+\[
+\frac{g(n)}{\log n}=\frac{M}{\log n}\le \frac{1}{\lambda_--\varepsilon}.
+\]
+Hence
+\[
+\limsup_{n\to\infty}\frac{g(n)}{\log n}\le \frac{1}{\lambda_-}.
+\]
+
+For the reverse inequality, choose a sequence \(M_j\to\infty\) such that
+\[
+\frac{\log N(M_j)}{M_j}\to \lambda_-.
+\]
+Set \(n_j:=N(M_j)\). Then \(g(n_j)\ge M_j\), so
+\[
+\frac{g(n_j)}{\log n_j}\ge \frac{M_j}{\log N(M_j)}\to \frac{1}{\lambda_-}.
+\]
+Thus
+\[
+\limsup_{n\to\infty}\frac{g(n)}{\log n}\ge \frac{1}{\lambda_-}.
+\]
+This proves the first identity.
+
+Now turn to the \(\liminf\). Let \(\varepsilon>0\). By the definition of \(\lambda_+\), for all large \(M\),
+\[
+\log N(M)\le (\lambda_++\varepsilon)M.
+\]
+Using \(n<N(M+1)\), we get
+\[
+\log n<\log N(M+1)\le (\lambda_++\varepsilon)(M+1).
+\]
+Hence
+\[
+\frac{g(n)}{\log n}=\frac{M}{\log n}
+>
+\frac{M}{(\lambda_++\varepsilon)(M+1)}.
+\]
+Since \(M=g(n)\to\infty\) as \(n\to\infty\), it follows that
+\[
+\liminf_{n\to\infty}\frac{g(n)}{\log n}\ge \frac{1}{\lambda_++\varepsilon}.
+\]
+Letting \(\varepsilon\downarrow 0\) gives
+\[
+\liminf_{n\to\infty}\frac{g(n)}{\log n}\ge \frac{1}{\lambda_+}.
+\]
+
+For the reverse inequality, choose \(M_j\to\infty\) with
+\[
+\frac{\log N(M_j)}{M_j}\to \lambda_+.
+\]
+Set \(n_j:=N(M_j)-1\). Since \(N(M_j)\to\infty\), we have \(n_j\to\infty\), and because
+\(n_j<N(M_j)\), we get \(g(n_j)\le M_j-1\). Therefore
+\[
+\frac{g(n_j)}{\log n_j}\le
+\frac{M_j-1}{\log(N(M_j)-1)}.
+\]
+Now \(\log(N(M_j)-1)\sim \log N(M_j)\), so
+\[
+\frac{M_j-1}{\log(N(M_j)-1)}\to \frac{1}{\lambda_+}.
+\]
+Hence
+\[
+\liminf_{n\to\infty}\frac{g(n)}{\log n}\le \frac{1}{\lambda_+}.
+\]
+This proves the second identity. \(\square\)
+
+\paragraph{Claim 626.2 (application to \(g_k(n)\)).}
+For fixed \(k\ge 4\), define
+\[
+\lambda_k^-:=\liminf_{M\to\infty}\frac{\log N_k(M)}{M},
+\qquad
+\lambda_k^+:=\limsup_{M\to\infty}\frac{\log N_k(M)}{M}.
+\]
+Then
+\[
+\limsup_{n\to\infty}\frac{g_k(n)}{\log n}=\frac{1}{\lambda_k^-},
+\qquad
+\liminf_{n\to\infty}\frac{g_k(n)}{\log n}=\frac{1}{\lambda_k^+}.
+\]
+
+\emph{Proof.}
+Round 1 already established the inverse identity
+\[
+g_k(n)=\max\{M:N_k(M)\le n\}.
+\]
+Also \(N_k(M)\to\infty\): indeed, any graph of girth \(>M\) containing a cycle must have at least \(M+1\) vertices, and \(\chi(G)=k\ge 4\) certainly forces \(G\) to contain a cycle.
+Thus Claim 626.1 applies directly. \(\square\)
+
+\paragraph{Corollary 626.3 (exact equivalence for the first limit).}
+For fixed \(k\ge 4\),
+\[
+\lim_{n\to\infty}\frac{g_k(n)}{\log n}
+\quad\text{exists}
+\quad\Longleftrightarrow\quad
+\lim_{M\to\infty}\frac{\log N_k(M)}{M}
+\quad\text{exists},
+\]
+and in that case the two limits are reciprocal.
+
+\emph{Proof.}
+The forward and backward implications follow immediately from Claim 626.2, because a real sequence has a limit if and only if its limsup and liminf are equal. \(\square\)
+
+\paragraph{Claim 626.4 (generalized inverse on the power scale).}
+Let \(N:\mathbb{N}\to\mathbb{N}\) be nondecreasing and \(N(t)\to\infty\).
+Define
+\[
+h(n):=\max\{t\in\mathbb{N}:N(t)\le n\}.
+\]
+Put
+\[
+\alpha_-:=\liminf_{t\to\infty}\frac{\log N(t)}{\log t},
+\qquad
+\alpha_+:=\limsup_{t\to\infty}\frac{\log N(t)}{\log t}.
+\]
+Assume \(0<\alpha_-\le \alpha_+<\infty\).
+Then
+\[
+\limsup_{n\to\infty}\frac{\log h(n)}{\log n}=\frac{1}{\alpha_-},
+\qquad
+\liminf_{n\to\infty}\frac{\log h(n)}{\log n}=\frac{1}{\alpha_+}.
+\]
+
+\emph{Proof.}
+Fix \(n\), and let \(t:=h(n)\). By definition,
+\[
+N(t)\le n < N(t+1).
+\]
+For the \(\limsup\), let \(\varepsilon>0\). By the definition of \(\alpha_-\), for all large \(t\),
+\[
+\log N(t)\ge (\alpha_--\varepsilon)\log t.
+\]
+Since \(n\ge N(t)\), we get
+\[
+\log n\ge \log N(t)\ge (\alpha_--\varepsilon)\log t,
+\]
+so
+\[
+\frac{\log h(n)}{\log n}=\frac{\log t}{\log n}\le \frac{1}{\alpha_--\varepsilon}.
+\]
+Thus
+\[
+\limsup_{n\to\infty}\frac{\log h(n)}{\log n}\le \frac{1}{\alpha_-}.
+\]
+
+For the reverse inequality, choose \(t_j\to\infty\) such that
+\[
+\frac{\log N(t_j)}{\log t_j}\to \alpha_-.
+\]
+Set \(n_j:=N(t_j)\). Then \(h(n_j)\ge t_j\), hence
+\[
+\frac{\log h(n_j)}{\log n_j}\ge \frac{\log t_j}{\log N(t_j)}\to \frac{1}{\alpha_-}.
+\]
+Therefore
+\[
+\limsup_{n\to\infty}\frac{\log h(n)}{\log n}\ge \frac{1}{\alpha_-}.
+\]
+This proves the first identity.
+
+Now let \(\varepsilon>0\). By the definition of \(\alpha_+\), for all large \(t\),
+\[
+\log N(t)\le (\alpha_++\varepsilon)\log t.
+\]
+Using \(n<N(t+1)\), we obtain
+\[
+\log n<\log N(t+1)\le (\alpha_++\varepsilon)\log(t+1),
+\]
+so
+\[
+\frac{\log h(n)}{\log n}=\frac{\log t}{\log n}>
+\frac{\log t}{(\alpha_++\varepsilon)\log(t+1)}.
+\]
+As \(t=h(n)\to\infty\), the right-hand side tends to \(1/(\alpha_++\varepsilon)\). Hence
+\[
+\liminf_{n\to\infty}\frac{\log h(n)}{\log n}\ge \frac{1}{\alpha_++\varepsilon}.
+\]
+Letting \(\varepsilon\downarrow 0\) yields
+\[
+\liminf_{n\to\infty}\frac{\log h(n)}{\log n}\ge \frac{1}{\alpha_+}.
+\]
+
+For the reverse inequality, choose \(t_j\to\infty\) with
+\[
+\frac{\log N(t_j)}{\log t_j}\to \alpha_+,
+\]
+and set \(n_j:=N(t_j)-1\). Then \(h(n_j)\le t_j-1\), so
+\[
+\frac{\log h(n_j)}{\log n_j}
+\le
+\frac{\log(t_j-1)}{\log(N(t_j)-1)}.
+\]
+Since \(\log(t_j-1)\sim \log t_j\) and \(\log(N(t_j)-1)\sim \log N(t_j)\), the right-hand side tends to \(1/\alpha_+\). Therefore
+\[
+\liminf_{n\to\infty}\frac{\log h(n)}{\log n}\le \frac{1}{\alpha_+}.
+\]
+This proves the second identity. \(\square\)
+
+\paragraph{Claim 626.5 (application to \(h^{(m)}(n)\)).}
+For fixed \(m\ge 3\), define
+\[
+\alpha_m^-:=\liminf_{t\to\infty}\frac{\log N^{(m)}(t)}{\log t},
+\qquad
+\alpha_m^+:=\limsup_{t\to\infty}\frac{\log N^{(m)}(t)}{\log t}.
+\]
+Then
+\[
+\limsup_{n\to\infty}\frac{\log h^{(m)}(n)}{\log n}=\frac{1}{\alpha_m^-},
+\qquad
+\liminf_{n\to\infty}\frac{\log h^{(m)}(n)}{\log n}=\frac{1}{\alpha_m^+}.
+\]
+
+\emph{Proof.}
+Round 1 already established
+\[
+h^{(m)}(n)=\max\{t:N^{(m)}(t)\le n\}.
+\]
+Also \(N^{(m)}(t)\to\infty\), since any graph with chromatic number at least \(t\) has at least \(t\) vertices. So Claim 626.4 applies directly. \(\square\)
+
+\paragraph{Corollary 626.6 (exact equivalence for the second limit).}
+For fixed \(m\ge 3\),
+\[
+\lim_{n\to\infty}\frac{\log h^{(m)}(n)}{\log n}
+\quad\text{exists}
+\quad\Longleftrightarrow\quad
+\lim_{t\to\infty}\frac{\log N^{(m)}(t)}{\log t}
+\quad\text{exists},
+\]
+and in that case the two limits are reciprocal.
+
+\emph{Proof.}
+Again this is immediate from Claim 626.5. \(\square\)
+
+\paragraph{Corollary 626.7 (translation of the currently listed bounds to the inverse scale).}
+Using the current bounds recorded on the problem page,
+\[
+\frac{1}{4\log k}\log n\le g_k(n)\le \frac{2}{\log(k-2)}\log n+1,
+\]
+one gets
+\[
+\frac{\log(k-2)}{2}
+\le
+\liminf_{M\to\infty}\frac{\log N_k(M)}{M}
+\le
+\limsup_{M\to\infty}\frac{\log N_k(M)}{M}
+\le
+4\log k.
+\]
+
+\emph{Proof.}
+Let \(a:=1/(4\log k)\) and \(b:=2/\log(k-2)\).
+
+From \(g_k(n)\ge a\log n\), choose \(n=\lceil e^{M/a}\rceil\). Then \(g_k(n)\ge M\), hence
+\(N_k(M)\le n\), so
+\[
+\limsup_{M\to\infty}\frac{\log N_k(M)}{M}\le \frac{1}{a}=4\log k.
+\]
+
+From \(g_k(n)\le b\log n+1\), if \(n<e^{(M-1)/b}\) then \(g_k(n)<M\), so
+\(N_k(M)\ge e^{(M-1)/b}\). Therefore
+\[
+\liminf_{M\to\infty}\frac{\log N_k(M)}{M}\ge \frac{1}{b}=\frac{\log(k-2)}{2}.
+\]
+This proves the claim. \(\square\)
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+The new work was checked against the following possible failure modes.
+
+\begin{itemize}
+\item \emph{Non-strict growth of \(N_k(M)\) and \(N^{(m)}(t)\).}  
+The proofs only use monotonicity, not strict monotonicity. The identities
+\[
+N(g(n))\le n < N(g(n)+1)
+\]
+and
+\[
+N(h(n))\le n < N(h(n)+1)
+\]
+remain valid for generalized inverses.
+
+\item \emph{Use of \(N(M)-1\).}  
+This requires \(N(M)\ge 2\), which holds for all sufficiently large \(M\) because \(N(M)\to\infty\).
+
+\item \emph{Could \(g_k(n)\) or \(h^{(m)}(n)\) stay bounded?}  
+No. If \(g_k(n)\) were bounded along an unbounded sequence of \(n\), then \(N_k(M)\) would be bounded for some arbitrarily large \(M\), impossible. The same argument works for \(h^{(m)}\).
+
+\item \emph{Reciprocal-limsup/lower-limsup interchange.}  
+Each direction was proved separately; no hidden continuity assumption was used.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round 1 is the exact reciprocal limsup/liminf theory:
+the two Erd\H{o}s limits in Problem 626 exist \emph{if and only if} the corresponding inverse-threshold
+limits exist, and the limsup/liminf constants are exactly reciprocals of the inverse liminf/limsup.
+Thus the problem is now reduced with no gap to determining the asymptotic growth of
+\(N_k(M)\) and \(N^{(m)}(t)\).
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 40\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item[\textbf{[Bloom626]}] T. F. Bloom, \emph{Erd\H{o}s Problem \#626}, accessed 2026-03-08.
+\end{itemize}
+

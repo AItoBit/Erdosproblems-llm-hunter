@@ -1,0 +1,258 @@
+\section*{Round-2 continuation for Erd\H{o}s Problems 741, 749, 750}
+
+\noindent
+This is a genuine continuation of the previous round. I only use Round-1 material when explicitly indicated below, and I only re-prove statements when they are strengthened.
+
+\medskip
+\noindent
+Conventions for this continuation: $\overline d(\cdot)$ and $\underline d(\cdot)$ denote upper and lower asymptotic density in $\mathbb N$, and when discussing Problem 750 it is enough to work with induced subgraphs, since deleting edges can only increase the independence number.
+
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Problem 741}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: isolate a \emph{sharp structural obstruction} and convert the Round-1 heuristic into a rigorous theorem.
+
+More precisely, Round-1 identified the following missing input: a positive-density family of sums with many disjoint representations would force a good 2-colouring of $A$. In this round I prove that this mechanism is rigorous, and that in fact the ``disjointness'' requirement from Round-1 is automatic once one counts distinct unordered representations. This gives a genuine conditional theorem and shows what any counterexample must look like.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use exactly the following Round-1 points.
+
+\begin{itemize}
+\item Round-1 already handled the easy dense case $\underline d(A)>0$.
+\item Round-1 isolated the key missing lemma: if a positive-density set of sums has many pairwise disjoint representations, then a random 2-colouring should leave positive density in both monochromatic sumsets.
+\end{itemize}
+
+I do \emph{not} re-prove those Round-1 facts here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+For a fixed integer $n$, \emph{distinct unordered representations of $n$ are automatically disjoint}.
+
+Indeed, if
+\[
+a+b=n,\qquad c+d=n,\qquad a\le b,\ c\le d,
+\]
+and $\{a,b\}\cap\{c,d\}\neq\varnothing$, then necessarily $\{a,b\}=\{c,d\}$.
+So the only real input needed is not ``many disjoint representations'', but simply ``many distinct unordered representations''.
+
+That converts the Round-1 heuristic into a clean quantitative theorem.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The gap left by Round-1 was:
+\begin{quote}
+Can one rigorously deduce a good partition from a positive-density set of sums with many representations?
+\end{quote}
+
+I will prove the following.
+
+\medskip
+\noindent
+\textbf{Theorem 741.1.}
+Let
+\[
+S_R:=\{n\in\mathbb N : r_A^{\ast}(n)\ge R\},
+\]
+where $r_A^{\ast}(n)$ denotes the number of distinct unordered representations
+\[
+n=a+b,\qquad a,b\in A,\qquad a\le b.
+\]
+If $\overline d(S_R)=\delta>0$ for some integer $R\ge 3$, then there exists a partition
+\[
+A=A_1\sqcup A_2
+\]
+such that
+\[
+\overline d(A_1+A_1)\ge \bigl(1-2(3/4)^R\bigr)\delta>0,
+\qquad
+\overline d(A_2+A_2)\ge \bigl(1-2(3/4)^R\bigr)\delta>0.
+\]
+
+This overcomes the precise obstacle named in Round-1, and it yields the structural corollary that any counterexample to Problem 741 must have
+\[
+\overline d\bigl(\{n:r_A^{\ast}(n)\ge 3\}\bigr)=0.
+\]
+
+\subsection*{5) WORK (ROUND-2)}
+
+For $n\in\mathbb N$, define
+\[
+r_A^{\ast}(n):=\bigl|\{(a,b)\in A^2:a\le b,\ a+b=n\}\bigr|.
+\]
+
+\medskip
+\noindent
+\textbf{Lemma 741.2.}
+If $(a,b)$ and $(c,d)$ are two distinct unordered representations of the same integer $n$, then
+\[
+\{a,b\}\cap\{c,d\}=\varnothing.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+Suppose $a+b=c+d=n$ and $(a,b)\neq(c,d)$ with $a\le b$ and $c\le d$.
+If $a=c$, then $b=d$, contradiction.
+If $a=d$, then $b=c$, and since $a\le b$ and $c\le d$, this again forces $(a,b)=(c,d)$.
+The other possibilities are symmetric.
+Hence distinct unordered representations are disjoint. \hfill $\square$
+
+\medskip
+Now colour each element of $A$ independently red or blue with probability $1/2$ each.
+Let $A_1$ be the red elements and $A_2$ the blue elements.
+
+Fix $n\in S_R$. By definition $n$ has at least $R$ distinct unordered representations
+\[
+n=a_1+b_1=\cdots=a_R+b_R,
+\]
+and by Lemma 741.2 the pairs $\{a_i,b_i\}$ are pairwise disjoint.
+For each $i$, let $E_i^{(1)}$ be the event that the $i$-th representation is monochromatic red, and let $E_i^{(2)}$ be the event that it is monochromatic blue.
+
+If $a_i\neq b_i$, then
+\[
+\mathbb P(E_i^{(1)})=\mathbb P(E_i^{(2)})=\frac14.
+\]
+If $a_i=b_i$, then the probability is $1/2$ for each colour, which is only better for us.
+Therefore, in every case,
+\[
+\mathbb P\bigl(n\notin A_1+A_1\bigr)\le \left(\frac34\right)^R,
+\qquad
+\mathbb P\bigl(n\notin A_2+A_2\bigr)\le \left(\frac34\right)^R.
+\]
+Hence, for
+\[
+p_R:=1-\left(\frac34\right)^R,
+\]
+we have
+\[
+\mathbb P\bigl(n\in A_1+A_1\bigr)\ge p_R,
+\qquad
+\mathbb P\bigl(n\in A_2+A_2\bigr)\ge p_R.
+\]
+
+For $N\ge 1$, define
+\[
+X_N:=\frac1N\sum_{\substack{n\le N\\ n\in S_R}}
+\Bigl(1_{n\in A_1+A_1}+1_{n\in A_2+A_2}\Bigr).
+\]
+Taking expectations and using the bound above,
+\[
+\mathbb E[X_N]\ge \frac{2p_R}{N}|S_R\cap[1,N]|.
+\]
+
+Choose a sequence $N_j\to\infty$ such that
+\[
+\frac{|S_R\cap[1,N_j]|}{N_j}\to \delta=\overline d(S_R).
+\]
+Then
+\[
+\limsup_{j\to\infty}\mathbb E[X_{N_j}]\ge 2p_R\delta.
+\]
+Because $0\le X_{N_j}\le 2$, reverse Fatou gives
+\[
+\mathbb E\!\left[\limsup_{j\to\infty}X_{N_j}\right]
+\ge
+\limsup_{j\to\infty}\mathbb E[X_{N_j}]
+\ge 2p_R\delta.
+\]
+Therefore there exists at least one colouring for which
+\[
+\limsup_{j\to\infty}X_{N_j}\ge 2p_R\delta.
+\]
+
+Fix such a colouring. Set
+\[
+R_j:=\frac1{N_j}\bigl|S_R\cap(A_1+A_1)\cap[1,N_j]\bigr|,
+\qquad
+B_j:=\frac1{N_j}\bigl|S_R\cap(A_2+A_2)\cap[1,N_j]\bigr|.
+\]
+Then $X_{N_j}=R_j+B_j$, so
+\[
+\limsup_{j\to\infty}(R_j+B_j)\ge 2p_R\delta.
+\]
+Let
+\[
+r:=\limsup_{j\to\infty}R_j,\qquad b:=\limsup_{j\to\infty}B_j.
+\]
+Since $\limsup(x_j+y_j)\le \limsup x_j+\limsup y_j$, we get
+\[
+r+b\ge 2p_R\delta.
+\]
+Also $r\le \delta$ and $b\le \delta$, because $R_j,B_j\le |S_R\cap[1,N_j]|/N_j$.
+If, say, $r<(2p_R-1)\delta$, then
+\[
+b>2p_R\delta-r>\delta,
+\]
+contradiction. Hence
+\[
+r\ge (2p_R-1)\delta,\qquad b\ge (2p_R-1)\delta.
+\]
+Since $2p_R-1=1-2(3/4)^R$, we conclude
+\[
+r\ge \bigl(1-2(3/4)^R\bigr)\delta,
+\qquad
+b\ge \bigl(1-2(3/4)^R\bigr)\delta.
+\]
+Finally,
+\[
+\overline d(A_1+A_1)\ge r,\qquad \overline d(A_2+A_2)\ge b,
+\]
+because $S_R\cap(A_i+A_i)\subseteq A_i+A_i$.
+This proves Theorem 741.1. \hfill $\square$
+
+\medskip
+\noindent
+\textbf{Corollary 741.3.}
+If Problem 741(Q1) had a counterexample, then
+\[
+\overline d\bigl(\{n:r_A^{\ast}(n)\ge 3\}\bigr)=0.
+\]
+
+\medskip
+\noindent
+\emph{Proof.}
+Apply Theorem 741.1 with $R=3$. \hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Diagonal representations.} If $n=2a$ has the representation $(a,a)$, then the monochromatic probability is $1/2$, not $1/4$. I used only the weaker upper bound $3/4$ for the failure probability, so this causes no problem.
+\item \textbf{Independence.} The only independence used is across the $R$ chosen representations of a \emph{fixed} $n$. Lemma 741.2 guarantees disjointness, so the colour events are independent.
+\item \textbf{A single colouring for infinitely many $N_j$.} I did \emph{not} optimize separately for each $N_j$; the reverse-Fatou argument produces one colouring whose limsup is large.
+\item \textbf{Upper density rather than lower density.} The argument only uses a subsequence $N_j$ witnessing $\overline d(S_R)$, so upper density is the correct notion here.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\noindent
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves a genuine new theorem:
+\begin{quote}
+If a positive-density set of sums has at least $3$ distinct unordered representations each, then Problem 741(Q1) has a positive answer.
+\end{quote}
+Equivalently, any counterexample must be \emph{essentially near-Sidon on a positive-density set of represented integers}: the set of $n$ with at least $3$ unordered representations must have upper density $0$.
+
+This is a substantive obstruction that was absent in Round-1.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#741}, \texttt{erdosproblems.com}.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

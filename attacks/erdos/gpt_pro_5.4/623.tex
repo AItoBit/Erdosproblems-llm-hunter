@@ -1,0 +1,176 @@
+\section{Erd\H{o}s Problem 623 --- ROUND-2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (C) obstruction / gap-isolation.}
+
+Round-1 identified the main obstacle in the naive recursion: when a new point $y_n$ is chosen, the values
+$f(B\cup\{y_n\})$ create uncontrolled future constraints. In this round I isolate the exact scope of that
+obstruction. I will prove that \emph{every} such set-mapping on $\aleph_\omega$ has independent sets of
+every finite size. Hence any negative answer to Problem 623 must be a genuinely infinitary failure of
+compactness, not a finite obstruction.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results as fixed background:
+
+\begin{itemize}
+\item the formal restatement of the problem;
+\item the Round-1 observation that a direct stage-by-stage recursion toward an infinite independent set
+fails because values of the form $f(B\cup\{y_n\})$ are not locally controllable;
+\item the Round-1 reduction from strong closure-free principles to a positive answer, only as contextual
+background (not in the proof below).
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+For a fixed finite target size $m$, I encode \emph{all} values of $f$ on subsets of an $m$-set into a
+single finite-valued set-mapping
+\[
+\Phi_m:[X]^m \to [X]^{<\omega},\qquad
+\Phi_m(A)=\{f(B):B\subseteq A\}.
+\]
+Kuratowski's free set theorem can then be applied to $\Phi_m$.
+This collapses all lower arities simultaneously and yields an $(m+1)$-element set $Z$ with the property
+that every proper subset of $Z$ already maps outside $Z$. Any $m$-subset of $Z$ is therefore independent
+for the original map $f$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-1 was this: we had no proof that finite independent sets exist at all sizes,
+so it was unclear whether the obstruction was already visible in finite combinatorics, or only at the
+infinite level.
+
+The precise claim to prove now is:
+\[
+\forall m\ge 1\ \exists Y\in [X]^m\ \forall B\subseteq Y,\qquad f(B)\notin Y.
+\]
+
+If this succeeds, then the only remaining gap is the passage from ``independent sets of every finite
+size'' to ``one infinite independent set,'' i.e. a pure compactness problem.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem.}
+Let $X$ be a set of cardinality $\aleph_\omega$, and let
+$f:[X]^{<\omega}\to X$ satisfy $f(A)\notin A$ for every finite $A\subseteq X$.
+Then for every positive integer $m$ there exists an independent set $Y\subseteq X$ of size $m$.
+
+\paragraph{Proof.}
+Fix $m\ge 1$.
+Define
+\[
+\Phi_m:[X]^m\to [X]^{<\omega},\qquad
+\Phi_m(A):=\{f(B):B\subseteq A\}.
+\]
+Since $A$ is finite, $\Phi_m(A)$ is finite.
+
+Now apply Kuratowski's free set theorem with $n=m$ and $\lambda=\aleph_0$:
+because $|X|=\aleph_\omega\ge \aleph_m$, every map from $[X]^m$ to finite subsets of $X$
+has a free set of size $m+1$.
+Hence there exists $Z\in [X]^{m+1}$ such that
+\[
+\forall A\in [Z]^m\qquad \Phi_m(A)\cap Z\subseteq A.
+\tag{$*$}
+\]
+
+I claim that every proper subset $C\subsetneq Z$ satisfies
+\[
+f(C)\notin Z.
+\tag{$**$}
+\]
+
+Indeed, there are two cases.
+
+\smallskip
+
+\emph{Case 1: $|C|=m$.}
+Then $C\in [Z]^m$, so by $(*)$ we have $\Phi_m(C)\cap Z\subseteq C$.
+Since $f(C)\in \Phi_m(C)$, this implies:
+if $f(C)\in Z$, then $f(C)\in C$.
+But the standing hypothesis on $f$ gives $f(C)\notin C$.
+Therefore $f(C)\notin Z$.
+
+\smallskip
+
+\emph{Case 2: $|C|<m$.}
+Take any $z\in Z\setminus C$.
+Then $A_z:=Z\setminus\{z\}\in [Z]^m$ and $C\subseteq A_z$, hence
+$f(C)\in \Phi_m(A_z)$ by definition of $\Phi_m$.
+Applying $(*)$ to $A_z$, we get
+\[
+\Phi_m(A_z)\cap Z\subseteq A_z=Z\setminus\{z\},
+\]
+so $z\notin \Phi_m(A_z)$.
+Since $f(C)\in \Phi_m(A_z)$, it follows that $f(C)\neq z$.
+
+Because $z\in Z\setminus C$ was arbitrary, we conclude that
+$f(C)\notin Z\setminus C$.
+Again, the hypothesis $f(C)\notin C$ shows $f(C)\notin Z$.
+
+\smallskip
+
+Thus $(**)$ holds for every proper subset $C\subsetneq Z$.
+
+Now choose any $Y\in [Z]^m$.
+Let $B\subseteq Y$ be arbitrary.
+Because $|Z|=m+1$ and $|Y|=m$, every subset $B\subseteq Y$ is a proper subset of $Z$.
+Hence by $(**)$,
+\[
+f(B)\notin Z,
+\]
+and therefore in particular $f(B)\notin Y$.
+So $Y$ is independent.
+
+This proves the theorem. \hfill $\square$
+
+\paragraph{Corollary.}
+If Problem 623 has a negative answer, then the obstruction is purely infinitary:
+for every $m<\omega$ there are independent sets of size $m$, but there is no infinite independent set.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Potential issue: does the proof handle the case $B=Y$?}
+Yes. Since $Y$ has size $m$ and $Z$ has size $m+1$, the set $Y$ is a proper subset of $Z$,
+so $(**)$ applies directly and gives $f(Y)\notin Z$, hence $f(Y)\notin Y$.
+
+\item \emph{Potential issue: did Kuratowski's theorem apply to the correct arity?}
+Yes. The map $\Phi_m$ is defined on $m$-element subsets, and the theorem gives a free set of
+size $m+1$ because $|X|=\aleph_\omega\ge \aleph_m$.
+
+\item \emph{Potential issue: could $\Phi_m(A)$ fail to be finite?}
+No. Each $A$ has exactly $2^m$ subsets, so $\Phi_m(A)$ has size at most $2^m$.
+
+\item \emph{Interaction with Round-1.}
+Round-1 isolated a recursion gap for building an \emph{infinite} independent set.
+The theorem above shows that this gap cannot be repaired merely by improving finite-stage bookkeeping:
+all finite target sizes are always attainable. The unresolved difficulty is exactly the infinite compactness step.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round-1 is the unconditional theorem that
+\emph{independent sets of every finite size always exist}.
+So any counterexample to Problem 623 must have arbitrarily large finite independent sets and yet no infinite one.
+That sharply localizes the remaining obstruction to a genuinely infinitary compactness phenomenon.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 40\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#623}, \texttt{erdosproblems.com/623}, accessed 2026-03-07.
+\item K. Kuratowski, \emph{Sur une caract\'erisation des alephs}, Fund. Math. \textbf{38} (1951), 14--17.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This section is written in drop-in \LaTeX\ form and starts directly from \verb|\section{}|, with no preamble.
+
+\bigskip
+

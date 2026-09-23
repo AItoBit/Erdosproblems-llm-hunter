@@ -1,0 +1,263 @@
+\section{Erd\H{o}s Problem \#1 --- Round 3: Reduction to Hypercube Bandwidth}
+
+\subsection{1) ROUND-3 OBJECTIVE}
+
+We interpret the placeholder prompt as requesting \textbf{Round 3}, continuing from the completed Round-2 output.
+
+\textbf{Path (A): proof attempt via a stronger universal lower bound.}
+The most promising direction after Round 2 is to exploit the \emph{full ordering} of the $2^n$ subset sums, rather than a single threshold family. Round 2 already converted the problem into a labeling problem on the hypercube $Q_n$; the new idea is to replace the actual subset-sum values by their \emph{ranks}. This leads directly to the \emph{bandwidth} of $Q_n$, and yields a lower bound strictly stronger than the Round-2 bound
+\[
+N\ge \binom{n}{\lfloor n/2\rfloor}.
+\]
+
+\subsection{2) Round-2 FOUNDATION USED}
+
+We use the following Round-2 ingredients.
+\begin{enumerate}
+\item The hypercube model: identify each subset $S\subseteq [n]$ with a vertex of $Q_n$, and define the subset-sum map
+\[
+f(S)=\sum_{i\in S} a_i.
+\]
+This map is injective because all subset sums are distinct.
+\item For adjacent vertices $S,T$ of $Q_n$ (that is, $T=S\triangle\{i\}$ for some $i$), one has
+\[
+|f(T)-f(S)|=a_i\le N.
+\]
+\item The Round-2 lower bound
+\[
+N\ge \binom{n}{\lfloor n/2\rfloor}.
+\]
+\item The Round-1 exact computations for small $n$:
+\[
+1,2,4,7,13,24
+\]
+for the minimal feasible values of $N$ when $n=1,2,3,4,5,6$.
+\end{enumerate}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-3)}
+
+\textbf{New insight: rank-compress the subset-sum labeling and compare with the bandwidth of $Q_n$.}
+
+Let $r(S)$ denote the rank of $f(S)$ among the $2^n$ distinct subset sums. Since passing from actual values to ranks can only \emph{decrease} differences, every edge of $Q_n$ has rank gap at most its actual subset-sum gap, hence at most $N$. Therefore $r$ is a numbering of $Q_n$ with bandwidth at most $N$. This gives
+\[
+N\ge \operatorname{bw}(Q_n).
+\]
+Using the classical exact formula for the hypercube bandwidth,
+\[
+\operatorname{bw}(Q_n)=\sum_{j=0}^{n-1}\binom{j}{\lfloor j/2\rfloor},
+\]
+we obtain a strictly stronger general lower bound than in Round 2.
+
+\subsection{4) ATTACK PLAN (ROUND-3)}
+
+The exact gap after Round 2 is that the argument only used a \emph{single threshold family}
+\[
+F_t=\{S: f(S)\le t\},
+\]
+and therefore only extracted one boundary estimate. To go beyond that, we now use the entire total order of the subset sums.
+
+The precise claims to prove are:
+\begin{enumerate}
+\item The rank map $r$ is a bijection from $V(Q_n)$ to $\{1,\dots,2^n\}$.
+\item For every edge $ST$ of $Q_n$,
+\[
+|r(S)-r(T)|\le |f(S)-f(T)|\le N.
+\]
+\item Hence $N\ge \operatorname{bw}(Q_n)$.
+\item Invoking the exact bandwidth formula for $Q_n$ yields
+\[
+N\ge \sum_{j=0}^{n-1}\binom{j}{\lfloor j/2\rfloor}.
+\]
+\end{enumerate}
+
+This overcomes the Round-2 obstacle because it uses \emph{all thresholds simultaneously}, encoded by the rank order.
+
+\subsection{5) WORK (ROUND-3)}
+
+Let
+\[
+A=\{a_1,\dots,a_n\}\subseteq \{1,\dots,N\}
+\]
+with all subset sums distinct. As in Round 2, identify each subset $S\subseteq [n]$ with a vertex of $Q_n$, and define
+\[
+f(S):=\sum_{i\in S} a_i.
+\]
+By hypothesis, $f$ is injective.
+
+\subsubsection*{Lemma 5.1 (rank labeling)}
+Define
+\[
+r(S):=1+\#\{T\subseteq [n]: f(T)<f(S)\}.
+\]
+Then $r$ is a bijection from $\mathcal P([n])$ onto $\{1,2,\dots,2^n\}$.
+
+\emph{Proof.}
+Because $f$ is injective, the $2^n$ values $f(S)$ are distinct integers and can therefore be totally ordered. The formula above assigns to each subset the position of its subset sum in that strict increasing order. Hence the values of $r$ are exactly $1,2,\dots,2^n$, each occurring once. \hfill$\square$
+
+\subsubsection*{Lemma 5.2 (rank gap is bounded by value gap)}
+If $S,T\subseteq [n]$ satisfy $f(S)<f(T)$, then
+\[
+r(T)-r(S)\le f(T)-f(S).
+\]
+
+\emph{Proof.}
+Between the two integers $f(S)$ and $f(T)$ there are exactly
+\[
+f(T)-f(S)-1
+\]
+integers. On the other hand, since $r(S)$ and $r(T)$ are the ranks of $f(S)$ and $f(T)$ in the ordered list of all subset sums, there are exactly
+\[
+r(T)-r(S)-1
+\]
+subset sums strictly between them. These are distinct integers lying strictly between $f(S)$ and $f(T)$, so
+\[
+r(T)-r(S)-1\le f(T)-f(S)-1.
+\]
+Therefore
+\[
+r(T)-r(S)\le f(T)-f(S),
+\]
+as claimed. \hfill$\square$
+
+\subsubsection*{Corollary 5.3 (edge rank gaps are at most $N$)}
+If $S$ and $T$ are adjacent vertices of $Q_n$, then
+\[
+|r(T)-r(S)|\le N.
+\]
+
+\emph{Proof.}
+Adjacency in $Q_n$ means that $T=S\triangle\{i\}$ for some $i\in[n]$. Therefore
+\[
+|f(T)-f(S)|=a_i\le N.
+\]
+Applying Lemma 5.2 to the smaller and larger of $f(S),f(T)$ gives
+\[
+|r(T)-r(S)|\le |f(T)-f(S)|=a_i\le N.
+\]
+\hfill$\square$
+
+\subsubsection*{Theorem 5.4 (bandwidth lower bound)}
+For every sum-distinct set $A\subseteq \{1,\dots,N\}$ of size $n$,
+\[
+N\ge \operatorname{bw}(Q_n).
+\]
+
+\emph{Proof.}
+By Lemma 5.1, $r$ is a numbering of the vertices of $Q_n$ by $1,2,\dots,2^n$. By Corollary 5.3, every edge of $Q_n$ has rank gap at most $N$ under this numbering. By the definition of graph bandwidth,
+\[
+\operatorname{bw}(Q_n):=\min_{\eta:V(Q_n)\overset{\sim}{\to}\{1,\dots,2^n\}}\ \max_{uv\in E(Q_n)} |\eta(u)-\eta(v)|,
+\]
+we conclude that
+\[
+\operatorname{bw}(Q_n)\le N.
+\]
+Equivalently,
+\[
+N\ge \operatorname{bw}(Q_n).
+\]
+\hfill$\square$
+
+\subsubsection*{Theorem 5.5 (explicit strengthened bound)}
+For every sum-distinct set $A\subseteq \{1,\dots,N\}$ of size $n$,
+\[
+N\ge \sum_{j=0}^{n-1}\binom{j}{\lfloor j/2\rfloor}.
+\]
+
+\emph{Proof.}
+By Theorem 5.4 it suffices to invoke the classical exact formula for the bandwidth of the hypercube:
+\[
+\operatorname{bw}(Q_n)=\sum_{j=0}^{n-1}\binom{j}{\lfloor j/2\rfloor}.
+\]
+Substituting into Theorem 5.4 yields the claim. \hfill$\square$
+
+\medskip
+
+Thus the new lower bound sequence begins
+\[
+1,2,4,7,13,23,43,78,148,\dots
+\]
+for $n=1,2,3,4,5,6,7,8,9,\dots$.
+
+Compared with the Round-2 bound
+\[
+\binom{n}{\lfloor n/2\rfloor}=1,2,3,6,10,20,35,70,126,\dots,
+\]
+this is already a strict improvement for the displayed values $n=3,4,5,6,7,8,9$.
+
+Combined with the Round-1 exact computations for the minimal feasible $N$ at $n\le 6$, we obtain the comparison
+\[
+\begin{array}{c|cccccc}
+ n & 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+ \text{Round-3 lower bound} & 1 & 2 & 4 & 7 & 13 & 23\\
+ \text{actual minimum from Round 1} & 1 & 2 & 4 & 7 & 13 & 24
+\end{array}
+\]
+so the new theorem is exact for $n\le 5$ and misses the $n=6$ optimum by only $1$.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+We now stress-test the new argument.
+
+\begin{enumerate}
+\item \textbf{Does the rank map really give a numbering?} Yes. Injectivity of the subset-sum map implies a strict total order on the $2^n$ subset sums, so the ranks are exactly $1,\dots,2^n$.
+
+\item \textbf{Could rank differences ever exceed value differences?} No. The proof of Lemma 5.2 uses only the fact that the subset sums are \emph{distinct integers}. This integrality is essential and is satisfied here.
+
+\item \textbf{Are edge differences really one of the $a_i$?} Yes. Adjacent vertices of $Q_n$ differ by toggling exactly one coordinate $i$, so their subset sums differ by exactly $a_i$ in absolute value.
+
+\item \textbf{Is positivity used?} Yes, but only indirectly: the original problem has $a_i\in\{1,\dots,N\}$, so each $a_i$ is a positive integer and in particular at most $N$.
+
+\item \textbf{Does the bandwidth theorem apply to the correct graph?} Yes. The graph whose vertices are subsets of $[n]$ and whose edges correspond to toggling one element is exactly the $n$-dimensional hypercube $Q_n$.
+
+\item \textbf{Interaction with Round 2.} There is no conflict. Round 2 produced the weaker bound $N\ge \binom{n}{\lfloor n/2\rfloor}$ via one threshold and vertex isoperimetry. Round 3 sharpens this by compressing the \emph{entire} labeling into ranks and invoking bandwidth.
+\end{enumerate}
+
+No hidden assumption was found that invalidates the proof.
+
+\subsection{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round 3 proves the stronger universal lower bound
+\[
+N\ge \operatorname{bw}(Q_n)=\sum_{j=0}^{n-1}\binom{j}{\lfloor j/2\rfloor}.
+\]
+This strictly strengthens the Round-2 bound
+\[
+N\ge \binom{n}{\lfloor n/2\rfloor}.
+\]
+It does \emph{not} settle the conjecture $N\gg 2^n$; it supplies a stronger explicit lower bound, but still not one of the form $c\,2^n$ with an absolute constant $c>0$.
+
+A useful reformulation emerging from this round is the following: the original problem asks for a very special kind of integer labeling of the hypercube---a \emph{separable} labeling of the form $f(S)=\sum_{i\in S} a_i$---and Round 3 shows that every such labeling must have maximum edge difference at least the ordinary bandwidth of $Q_n$.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 78\%}
+
+\subsection{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{Bloom1}
+T.~F.~Bloom,
+\emph{Erd\H{o}s Problem \#1}, online problem page.
+
+\bibitem{Harper}
+L.~H.~Harper,
+\emph{Optimal numberings and isoperimetric problems on graphs},
+Journal of Combinatorial Theory \textbf{1} (1966), 385--393.
+
+\bibitem{WWD}
+X.~Wang, X.~Wu, and S.~Dumitrescu,
+\emph{On explicit formulas for bandwidth and antibandwidth of hypercubes},
+Discrete Applied Mathematics \textbf{157} (2009), 1947--1952.
+
+\bibitem{OEISA036256}
+OEIS A036256,
+\emph{Partial sums of central binomial coefficients}; equivalently, shifted by one index, the bandwidth sequence of the hypercube graph.
+
+\end{thebibliography}
+
+\subsection{10) OUTPUT FORMAT}
+
+The Erd\H{o}s problem number here is $x=1$, so this continuation has been exported as \texttt{1\_solutions.tex}.

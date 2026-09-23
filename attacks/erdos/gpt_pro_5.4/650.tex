@@ -1,0 +1,405 @@
+\section{Problem 650 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(A)}: give a full proof of the target statement, and in fact of the stronger theorem
+\[
+ f(st)\le s+t
+\qquad (s,t\ge 1).
+\]
+This implies the desired bound
+\[
+ f(m)\le 2\lceil \sqrt m\rceil,
+\]
+so the original square-root upper-bound question is answered affirmatively.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use only one Round-1 item: the equivalent bipartite-matching reformulation.  Namely, for a set $A\subseteq \{1,\dots,N\}$ and an interval $I$ of length $2N$, one considers the bipartite graph with left side $A$, right side $I\cap\mathbb Z$, and edges $(a,b)$ whenever $a\mid b$.  Bounding the maximum matching is equivalent to bounding $f(m)$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is an explicit Chinese-remainder construction which forces all integers in the interval divisible by members of $A$ to lie in only $s+t$ prescribed locations.  This is much stronger than the original target $f(m)\ll \sqrt m$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+To prove $f(st)\le s+t$, it suffices to construct, for each $s,t\ge 1$,
+
+\begin{itemize}
+\item an integer $N$,
+\item a set $A\subseteq \{1,\dots,N\}$ with $|A|=st$,
+\item an interval $I$ of length $2N$,
+\end{itemize}
+
+such that at most $s+t$ integers of $I$ are divisible by at least one element of $A$.
+Then any matching in the bipartite divisibility graph has size at most $s+t$.
+
+The key steps are:
+\begin{enumerate}
+\item construct numbers $a_{i,j}$ whose pairwise gcd's are carefully controlled;
+\item solve a compatible simultaneous congruence system so that each $a_{i,j}$ divides a prescribed integer $x_0+i$;
+\item place the interval so that each $a_{i,j}$ has exactly two multiples inside it, and all such multiples lie in a fixed set of size $s+t$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+\paragraph{Theorem 650.1.}
+For all integers $s,t\ge 1$,
+\[
+ f(st)\le s+t.
+\]
+Consequently, for every $m\ge 1$,
+\[
+ f(m)\le 2\lceil\sqrt m\rceil.
+\]
+
+\paragraph{Proof.}
+We first prove the stronger statement $f(st)\le s+t$.
+If $s=1$ or $t=1$, then any matching has size at most $|A|=st\le s+t$, so there is nothing to prove.
+Hence assume from now on that
+\[
+ s,t\ge 2.
+\]
+
+Define
+\[
+ E:=\prod_{p\le st} p^{1+\lfloor \log_p(s-1)\rfloor},
+ \qquad
+ D:=E\cdot \mathrm{lcm}(1,2,\dots,st).
+\]
+Then for every prime $p\le st$ and every integer $\delta$ with
+\[
+1\le |\delta|\le s-1,
+\]
+one has
+\[
+ v_p(D)>v_p(\delta).
+\]
+Indeed, $v_p(\delta)\le \lfloor \log_p(s-1)\rfloor$, while the exponent of $p$ in $E$ is exactly $1+\lfloor \log_p(s-1)\rfloor$.
+
+Now let
+\[
+\mathcal P:=\Bigl\{p>st:\ p\text{ prime and } p\mid (qD+\delta)
+\text{ for some }1\le q\le t-1,
+1\le |\delta|\le s-1\Bigr\}.
+\]
+This is a finite set of primes.
+For each $p\in\mathcal P$, consider the residue classes
+\[
+ i-jD \pmod p
+ \qquad (1\le i\le s,\ 0\le j\le t-1).
+\]
+There are at most $st$ such classes, and $p>st$, so they do not exhaust all residue classes modulo $p$.
+Hence we may choose a residue class $r_p\pmod p$ such that
+\[
+ r_p\not\equiv i-jD \pmod p
+ \qquad (1\le i\le s,\ 0\le j\le t-1).
+\]
+By the Chinese remainder theorem, there exists an integer $a$ such that
+\[
+ a\equiv r_p \pmod p
+ \qquad (\forall p\in\mathcal P),
+\]
+and also
+\[
+ a>2(t-1)D+4s.
+\]
+
+For $1\le i\le s$ and $0\le j\le t-1$, define
+\[
+ a_{i,j}:=a+jD-i.
+\]
+These integers are pairwise distinct.  Indeed, if
+\[
+ a+jD-i=a+\ell D-k,
+\]
+then
+\[
+ (j-\ell)D=i-k.
+\]
+Since
+\[
+ |i-k|<s\le st\le D,
+\]
+we must have $j=\ell$, and then $i=k$.
+
+Set
+\[
+ A:=\{a_{i,j}:1\le i\le s,\ 0\le j\le t-1\},
+ \qquad
+ N:=a+(t-1)D-1.
+\]
+Then $|A|=st$, and every element of $A$ lies in $\{1,\dots,N\}$ because
+\[
+ 1\le a-s\le a_{i,j}\le a+(t-1)D-1=N.
+\]
+
+\paragraph{Claim 650.2.}
+For any two pairs $(i,j)$ and $(k,\ell)$,
+\[
+ \gcd(a_{i,j},a_{k,\ell})\mid (k-i).
+\]
+
+\paragraph{Proof.}
+Let
+\[
+ d:=\gcd(a_{i,j},a_{k,\ell}).
+\]
+Since
+\[
+ a_{i,j}-a_{k,\ell}=(j-\ell)D+(k-i),
+\]
+we have
+\[
+ d\mid (j-\ell)D+(k-i).
+\]
+There are three cases.
+
+If $i=k$, then trivially $d\mid 0=(k-i)$.
+If $i\ne k$ and $j=\ell$, then immediately $d\mid (k-i)$.
+So only the case
+\[
+ i\ne k,
+ \qquad
+ j\ne \ell
+\]
+remains.
+Let
+\[
+ q:=|j-\ell|\in\{1,\dots,t-1\}.
+\]
+Choose
+\[
+ \delta=
+ \begin{cases}
+ k-i,& j>\ell,\\
+ i-k,& j<\ell.
+ \end{cases}
+\]
+Then
+\[
+ 1\le |\delta|=|k-i|\le s-1,
+\]
+and from the divisibility above we obtain
+\[
+ d\mid qD+\delta.
+\]
+We first show that every prime divisor of $d$ is at most $st$.
+Suppose, for contradiction, that some prime $p>st$ divides $d$.
+Because $p\mid qD+\delta$ with $1\le q\le t-1$ and $1\le |\delta|\le s-1$, the prime $p$ lies in $\mathcal P$ by definition.
+On the other hand, $p\mid d\mid a_{i,j}=a+jD-i$, so
+\[
+ a\equiv i-jD \pmod p,
+\]
+contradicting the choice of $a\equiv r_p\pmod p$ with $r_p$ avoiding all residues $i-jD$.
+Thus every prime divisor of $d$ is at most $st$.
+
+Now let $p\le st$ be any prime divisor of $d$.
+Since $d\mid qD+\delta$, we have $p\mid qD+\delta$.
+Also,
+\[
+ v_p(qD)\ge v_p(D)>v_p(\delta).
+\]
+Therefore
+\[
+ v_p(qD+\delta)=v_p(\delta)=v_p(k-i).
+\]
+Since $d\mid qD+\delta$, it follows that
+\[
+ v_p(d)\le v_p(k-i).
+\]
+This holds for every prime divisor $p$ of $d$, hence indeed
+\[
+ d\mid (k-i).
+\]
+
+\hfill$\square$
+
+By Claim 650.2, the congruence system
+\[
+ x\equiv -i \pmod{a_{i,j}}
+ \qquad (1\le i\le s,\ 0\le j\le t-1)
+\]
+is pairwise compatible, because the difference between the residues $-i$ and $-k$ is $k-i$, and Claim 650.2 says that this is divisible by $\gcd(a_{i,j},a_{k,\ell})$.
+By the generalized Chinese remainder theorem, there exists a solution $x_0$.
+Replacing $x_0$ by a sufficiently large positive integer in the same residue class if necessary, we may assume that the interval introduced below lies inside $[1,\infty)$.
+
+Choose an integer $T$ such that
+\[
+ 2\bigl((t-1)D+s-1\bigr)<T\le a-2s.
+\]
+Such a choice is possible because
+\[
+ a>2(t-1)D+4s.
+\]
+Now define the interval
+\[
+ I:=(x_0-T,\ x_0-T+2N].
+\]
+It has length exactly $2N$.
+
+Fix $(i,j)$ with $1\le i\le s$ and $0\le j\le t-1$.
+From
+\[
+ x_0\equiv -i \pmod{a_{i,j}}
+\]
+we get
+\[
+ a_{i,j}\mid (x_0+i).
+\]
+Also, because $a_{i,j}=a+jD-i$,
+\[
+ x_0+a+jD=(x_0+i)+a_{i,j},
+\]
+so $x_0+a+jD$ is another multiple of $a_{i,j}$.
+We claim that these are the \emph{only} two multiples of $a_{i,j}$ in $I$.
+
+First, both lie in $I$.
+The offset of $x_0+i$ from the left endpoint $x_0-T$ is $T+i$, which is positive and satisfies
+\[
+ T+i\le T+s\le a-s<2N.
+\]
+Hence $x_0+i\in I$.
+Likewise, the offset of $x_0+a+jD$ from the left endpoint is $T+a+jD$, and
+\[
+ T+a+jD
+ \le T+a+(t-1)D
+ \le (a-2s)+a+(t-1)D
+ <2N,
+\]
+because
+\[
+ 2N=2a+2(t-1)D-2
+\]
+and
+\[
+ 2N-\bigl((a-2s)+a+(t-1)D\bigr)=(t-1)D+2s-2>0.
+\]
+So $x_0+a+jD\in I$.
+
+Next, the preceding multiple of $a_{i,j}$ is
+\[
+ (x_0+i)-a_{i,j}.
+\]
+Its offset from the left endpoint is
+\[
+ T+i-a_{i,j}.
+\]
+But
+\[
+ a_{i,j}=a+jD-i\ge a-s,
+\]
+while
+\[
+ T+i\le T+s\le a-s.
+\]
+Hence
+\[
+ T+i-a_{i,j}\le 0,
+\]
+so this preceding multiple is not in $I$.
+
+Finally, the next multiple after $x_0+a+jD$ is
+\[
+ (x_0+i)+2a_{i,j}.
+\]
+Its offset from the left endpoint is
+\[
+ T+i+2a_{i,j}
+ \ge T+1+2(a-s).
+\]
+Using
+\[
+ T>2\bigl((t-1)D+s-1\bigr)=2(t-1)D+2s-2,
+\]
+we obtain
+\[
+ T+i+2a_{i,j}
+ >2(t-1)D+2s-2+1+2a-2s
+ =2a+2(t-1)D-1
+ >2N,
+\]
+since $2N=2a+2(t-1)D-2$.
+Thus this next multiple also lies outside $I$.
+Therefore $a_{i,j}$ has exactly two multiples in $I$, namely
+\[
+ x_0+i
+ \qquad\text{and}\qquad
+ x_0+a+jD.
+\]
+
+It follows that every integer in $I$ divisible by some element of $A$ lies in the set
+\[
+ B:=\{x_0+i:1\le i\le s\}\cup\{x_0+a+jD:0\le j\le t-1\}.
+\]
+The two parts of this union are disjoint, because an equality
+\[
+ x_0+i=x_0+a+jD
+\]
+would imply $i=a+jD$, impossible since $1\le i\le s<a\le a+jD$.
+Hence
+\[
+ |B|=s+t.
+\]
+So the interval $I$ contains at most $s+t$ integers divisible by members of $A$.
+Consequently the maximum matching size in the bipartite divisibility graph is at most $s+t$.
+Therefore
+\[
+ f(st)\le s+t.
+\]
+This proves the stronger theorem.
+
+To deduce the original one-parameter bound, let
+\[
+ n:=\lceil\sqrt m\rceil.
+\]
+Then $m\le n^2$.
+Apply the stronger theorem with $s=t=n$ to obtain a set $A\subseteq\{1,\dots,N\}$ of size $n^2$ and an interval of length $2N$ for which at most $2n$ integers in the interval are divisible by elements of $A$.
+Choose any subset $A'\subseteq A$ of size exactly $m$.
+The same interval still contains at most $2n$ integers divisible by elements of $A'$, because $A'\subseteq A$.
+Hence
+\[
+ f(m)\le 2n=2\lceil\sqrt m\rceil.
+\]
+This completes the proof.
+
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I checked the following potential failure points.
+
+\begin{itemize}
+\item \textbf{Pairwise distinctness of the moduli $a_{i,j}$.}  This is guaranteed by the inequality $|i-k|<D$.
+\item \textbf{Existence of $a$.}  The exceptional-prime set $\mathcal P$ is finite, so CRT applies; adding a common multiple of all primes in $\mathcal P$ makes $a$ arbitrarily large.
+\item \textbf{Existence of $T$.}  The interval
+\[
+\bigl(2((t-1)D+s-1),\ a-2s\bigr]
+\]
+is nonempty because $a>2(t-1)D+4s$.
+\item \textbf{Generalized CRT step.}  Claim 650.2 gives exactly the compatibility condition required for a simultaneous solution of congruences with non-coprime moduli.
+\item \textbf{Exactly two multiples in $I$.}  Both the previous multiple and the next multiple were checked explicitly by offsets from the left endpoint; the half-open interval notation avoids endpoint ambiguity.
+\item \textbf{Passage from $n^2$ to $m$.}  Taking an $m$-element subset cannot create new divisible integers, so the one-parameter bound follows immediately.
+\end{itemize}
+
+No gap remains.
+
+\subsection*{7) FINAL}
+\textbf{FULL SOLUTION --- FULL PROOF.}
+
+The original question is answered affirmatively.  In fact the stronger theorem
+\[
+ f(st)\le s+t
+\qquad (s,t\ge 1)
+\]
+holds, and therefore
+\[
+ f(m)\le 2\lceil\sqrt m\rceil
+\qquad (m\ge 1).
+\]
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 100\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#650 and discussion thread}, accessed 2026-03-07.
+\item Q. Tang, \emph{ep-650.tex} (GitHub proof source linked from the discussion thread), accessed 2026-03-07.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This section is part of the combined drop-in file \texttt{643\_644\_650\_solutions.tex}; no preamble is used.

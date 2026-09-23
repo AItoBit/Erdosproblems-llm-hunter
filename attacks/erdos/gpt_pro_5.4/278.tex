@@ -1,0 +1,186 @@
+
+\section*{Round 2 continuation for Erd\H{o}s Problems \#278, \#279, \#281}
+
+We write $d(S)$ for natural density when it exists, $\overline d(S)$ for upper density, and $\underline d(S)$ for lower density.
+
+\section*{Problem 278}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+We pursue \textbf{(C) obstruction/correction}. Round 1 already settled the minimum-density part via Simpson's extremal theorem, but left the maximum-density question open in general. The most promising way to make strict progress is therefore to isolate a nontrivial family of moduli for which the maximum can be computed \emph{exactly}, and to show that this family already contains a genuine partition/knapsack-type optimization.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+We use the following Round-1 facts without re-proving them.
+
+\begin{enumerate}
+\item The density problem reduces to a finite optimization problem modulo $N=\mathrm{lcm}(n_1,\dots,n_r)$.
+\item If the moduli are pairwise coprime, the covered density is independent of the chosen residues.
+\item Simpson's theorem settles the minimum-density question: the minimum is attained when all residues are aligned.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is an \emph{exact structured-family formula}. For moduli of the form
+\[
+A=\{q,qb_1,\dots,qb_m\},
+\]
+with $q\ge 2$, with $b_1,\dots,b_m$ pairwise coprime, and with $(q,b_i)=1$ for every $i$, the maximum covered density can be written exactly as a labelled partition problem on the indices $1,\dots,m$.
+
+For $q=3$ this becomes a two-way balancing problem, i.e. a precise number-partitioning obstruction inside Erd\H{o}s Problem \#278.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The gap after Round 1 was: ``the maximum-density question is open in general, but can we say something mathematically sharper than that?''
+
+We now prove two precise claims.
+
+\begin{enumerate}
+\item An exact maximum-density formula for the family $\{q,qb_1,\dots,qb_m\}$.
+\item A corollary for $q=3$ showing that the optimization is equivalent to balancing the weights
+\[
+w_i=-\log\!\left(1-\frac{1}{b_i}\right).
+\]
+\end{enumerate}
+
+This overcomes the Round-1 obstacle by replacing a vague ``no closed form is known'' statement with a rigorous family-level theorem and an explicit optimization obstruction.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem.}
+Let $q\ge 2$, and let $b_1,\dots,b_m$ be pairwise coprime positive integers, each coprime to $q$. Consider the moduli
+\[
+A=\{q,qb_1,\dots,qb_m\}.
+\]
+Then the maximum density of integers covered by a suitable choice of congruences modulo these moduli is
+\[
+1-\frac{1}{q}\min_{I_1\sqcup\cdots\sqcup I_{q-1}=[m]}
+\sum_{j=1}^{q-1}\ \prod_{i\in I_j}\left(1-\frac{1}{b_i}\right),
+\]
+where the minimum runs over all labelled partitions of $[m]=\{1,\dots,m\}$ into $q-1$ (possibly empty) parts, and empty products are interpreted as $1$.
+
+\paragraph{Proof.}
+Let the chosen congruence modulo $q$ be $a_0 \pmod q$. Translating all congruences by the same integer does not change the density of the union, so we may assume
+\[
+a_0\equiv 0 \pmod q.
+\]
+
+Now consider a chosen congruence $a_i \pmod{qb_i}$. If $a_i\equiv 0\pmod q$, then
+\[
+a_i(qb_i)\subseteq 0(q),
+\]
+so that congruence contributes nothing outside the already-covered class $0\pmod q$. Hence in any optimal configuration we may assume
+\[
+a_i\not\equiv 0\pmod q \qquad (1\le i\le m).
+\]
+
+For each residue class $j\in\{1,\dots,q-1\}$ modulo $q$, define
+\[
+I_j:=\{\,i\in[m]: a_i\equiv j\pmod q\,\}.
+\]
+These sets form a labelled partition of $[m]$.
+
+Fix $j\in\{1,\dots,q-1\}$. Every integer $x\equiv j\pmod q$ can be written uniquely as
+\[
+x=j+qt.
+\]
+For $i\in I_j$, because $a_i\equiv j\pmod q$ and $(q,b_i)=1$, the condition
+\[
+x\equiv a_i\pmod{qb_i}
+\]
+is equivalent to a single congruence
+\[
+t\equiv c_i \pmod{b_i}
+\]
+for a uniquely determined residue class $c_i \pmod{b_i}$.
+
+Thus, within the residue class $x\equiv j\pmod q$, the congruences coming from the indices $i\in I_j$ forbid exactly one residue class modulo each $b_i$. Since the $b_i$ are pairwise coprime, the Chinese remainder theorem shows that the density of $t$ avoiding all these forbidden classes is
+\[
+\prod_{i\in I_j}\left(1-\frac{1}{b_i}\right).
+\]
+Therefore the density of \emph{uncovered} integers inside the class $j\pmod q$ is exactly that product, and since each class modulo $q$ has density $1/q$, the total uncovered density is
+\[
+\frac{1}{q}\sum_{j=1}^{q-1}\prod_{i\in I_j}\left(1-\frac{1}{b_i}\right).
+\]
+
+This quantity depends only on the partition $(I_1,\dots,I_{q-1})$, not on the finer residues modulo the $b_i$.
+
+Conversely, every labelled partition $(I_1,\dots,I_{q-1})$ can be realised: for each $i\in I_j$, choose any residue $a_i\pmod{qb_i}$ satisfying $a_i\equiv j\pmod q$ (for instance, by fixing any residue modulo $b_i$ and using the Chinese remainder theorem). Hence the possible uncovered densities are exactly the quantities above. Minimising uncovered density is equivalent to maximising covered density, which proves the formula.
+\hfill $\square$
+
+\paragraph{Corollary ($q=3$).}
+For moduli
+\[
+A=\{3,3b_1,\dots,3b_m\},
+\]
+with the $b_i$ pairwise coprime and each coprime to $3$, the maximum covered density is
+\[
+1-\frac{1}{3}\min_{S\subseteq[m]}
+\left(
+\prod_{i\in S}\left(1-\frac{1}{b_i}\right)
++
+\prod_{i\notin S}\left(1-\frac{1}{b_i}\right)
+\right).
+\]
+
+If we write
+\[
+\alpha_i:=1-\frac{1}{b_i}
+\qquad\text{and}\qquad
+w_i:=-\log \alpha_i,
+\]
+then the product of the two displayed terms is the fixed constant $\prod_{i=1}^m \alpha_i$. Hence minimising their sum is equivalent to making them as equal as possible, i.e. equivalent to minimising
+\[
+\left|
+\sum_{i\in S} w_i-\sum_{i\notin S} w_i
+\right|.
+\]
+So this family of moduli already contains a genuine balanced-partition optimization.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Why may we assume $a_0=0$?} Because simultaneous translation of all residue classes simply translates the covered set, and density is translation-invariant.
+
+\item \textbf{Why may we discard the case $a_i\equiv 0\pmod q$?} Because such a congruence is contained in the already-covered class $0\pmod q$, so it never increases the union.
+
+\item \textbf{Are empty parts allowed?} Yes. If $I_j=\emptyset$, the uncovered density in the class $j\pmod q$ is $1$, which is exactly the empty-product value.
+
+\item \textbf{Is pairwise coprimality of the $b_i$ really needed?} Yes. The proof uses the Chinese remainder theorem inside each residue class modulo $q$. If the $b_i$ are not pairwise coprime, the factorisation of the avoidance density can fail.
+
+\item \textbf{Spot check.} For $A=\{3,6,15\}$ the theorem gives
+\[
+1-\frac13\min\!\left\{\frac12+\frac45,\ 1+\frac25\right\}
+=
+1-\frac{13}{30}
+=
+\frac{17}{30}.
+\]
+A direct brute-force check over all $3\cdot 6\cdot 15=270$ residue choices agrees with $\frac{17}{30}$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 does \emph{not} solve the general maximum-density question, but it gives a rigorous obstruction/correction:
+
+\begin{enumerate}
+\item the family $\{q,qb_1,\dots,qb_m\}$ admits an exact partition formula for the maximum density;
+\item in the special case $q=3$, the optimization is exactly a balanced-partition problem in the weights $-\log(1-1/b_i)$.
+\end{enumerate}
+
+So the correct sharpened statement is that Erd\H{o}s Problem \#278 already contains a nontrivial partition optimization even on a very structured subfamily.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 60\%.
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item P. Erd\H{o}s and R. L. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique 28, Geneva, 1980.
+\item R. J. Simpson, \emph{Exact coverings of the integers by arithmetic progressions}, Discrete Mathematics 59 (1986), 181--190.
+\item Stijn Cambie, \emph{Proving it is impossible; on Erd\H{o}s problem \#278}, arXiv:2508.18270, 2025.
+\end{enumerate}
+

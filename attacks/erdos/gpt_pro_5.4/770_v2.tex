@@ -1,0 +1,340 @@
+
+\section*{Problem 770 (Round 2)}
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: repair the only real Round-1 gap, and then push the structure of $h(n)$ substantially further.
+
+Round 1 already established the useful characterization
+\[
+h(n)=n+1 \iff n+1 \text{ is prime},
+\]
+but the Round-1 proof that $h(n)$ is unbounded on odd $n$ had a gap: it intersected two prime conditions without proving that the intersection is infinite.
+The most promising Round-2 strategy is therefore:
+
+\begin{enumerate}
+\item first, repair that gap cleanly with one Chebotarev argument;
+\item second, look for a new structural theorem about the values of $h(n)$ themselves.
+\end{enumerate}
+
+That second step succeeds: \emph{$h(n)$ is always prime}.
+
+\subsection*{2. Round-1 FOUNDATION USED}
+
+I use the following Round-1 results.
+
+\begin{enumerate}
+\item The definition
+\[
+h(n)=\min\Bigl\{m\ge 2:\ \gcd(2^n-1,3^n-1,\dots,m^n-1)=1\Bigr\}.
+\]
+\item The Round-1 theorem
+\[
+h(n)=n+1 \iff n+1 \text{ is prime}.
+\]
+\end{enumerate}
+
+I also explicitly identify a flaw in the Round-1 proof of odd unboundedness and replace it by a correct proof.
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 2)}
+
+There are two new ideas.
+
+\begin{enumerate}
+\item \textbf{Subgroup closure forces primality of $h(n)$.}  
+If $m=h(n)$ and a prime $p$ divides the gcd up to $m-1$, then the residues
+\[
+1,2,\dots,m-1
+\]
+all lie in the subgroup of $n$th roots of unity modulo $p$.
+If $m$ were composite, then $m=ab$ with $2\le a,b\le m-1$, so subgroup closure would force $m$ itself to be an $n$th root, contradicting the minimality of $m$.
+Thus $h(n)$ is always prime.
+
+\item \textbf{The odd-$n$ argument should live in a single Galois extension.}  
+To force simultaneously
+\[
+q\equiv 3\pmod 4
+\qquad\text{and}\qquad
+2,3,\dots,M \text{ all quadratic residues mod } q,
+\]
+one should work in the compositum
+\[
+L_M=\mathbb Q(\sqrt 2,\sqrt 3,\dots,\sqrt M,i)
+\]
+and choose a Frobenius element that is trivial on the totally real part and nontrivial on $i$.
+Chebotarev then gives infinitely many such primes, indeed with positive density.
+\end{enumerate}
+
+\subsection*{4. ATTACK PLAN (ROUND 2)}
+
+The exact Round-1 gaps were:
+
+\begin{enumerate}
+\item no structural theorem about the \emph{values} of $h(n)$;
+\item one missing justification in the odd-unboundedness proof.
+\end{enumerate}
+
+I now prove three new statements.
+
+\begin{enumerate}
+\item For every $n\ge 1$, the integer $h(n)$ is prime.
+\item For every $n\ge 1$, one has $h(n)\le n+1$.
+\item For every fixed $M\ge 2$, the number of odd integers $n\le x$ with $h(n)>M$ is
+\[
+\gg_M \frac{x}{\log x}.
+\]
+In particular, $h(n)$ is unbounded on odd $n$.
+\end{enumerate}
+
+Statement (3) repairs and strengthens the Round-1 odd-unboundedness claim.
+
+\subsection*{5. WORK (ROUND 2)}
+
+For convenience write
+\[
+g_m(n):=\gcd(2^n-1,3^n-1,\dots,m^n-1).
+\]
+
+\paragraph{Theorem 1.}
+For every integer $n\ge 1$, the value $h(n)$ is prime.
+
+\paragraph{Proof.}
+Set
+\[
+m:=h(n).
+\]
+Then
+\[
+g_{m-1}(n)>1
+\qquad\text{and}\qquad
+g_m(n)=1.
+\]
+Choose a prime
+\[
+p\mid g_{m-1}(n).
+\]
+Then
+\[
+p\mid a^n-1
+\qquad\text{for every } a=2,3,\dots,m-1.
+\]
+I claim that
+\[
+p>m-1.
+\]
+Indeed, if $p\le m-1$, then taking $a=p$ gives
+\[
+p^n-1\equiv -1\pmod p,
+\]
+contradicting $p\mid p^n-1$.
+
+Now suppose, for contradiction, that $m$ is composite.
+Then we can write
+\[
+m=ab
+\]
+with
+\[
+2\le a,b\le m-1.
+\]
+Since $p>m-1$, we actually have $p>m$ (because $p$ is prime while $m$ is composite), so the congruence class of $m$ modulo $p$ is represented by the ordinary integer $m$.
+
+Let
+\[
+H:=\{x\in \mathbb F_p^\times : x^n=1\}.
+\]
+This is a multiplicative subgroup of $\mathbb F_p^\times$.
+By choice of $p$, the residues of
+\[
+1,2,\dots,m-1
+\]
+all belong to $H$.
+In particular, $a,b\in H$.
+Since $H$ is closed under multiplication,
+\[
+m=ab\in H.
+\]
+Therefore
+\[
+m^n\equiv 1\pmod p,
+\]
+so
+\[
+p\mid m^n-1.
+\]
+But $p$ already divides $g_{m-1}(n)$, hence it divides $g_m(n)$, contradicting $g_m(n)=1$.
+
+Therefore $m$ cannot be composite.
+So $h(n)=m$ is prime.
+\hfill$\square$
+
+\paragraph{Corollary 2.}
+For every $n\ge 1$,
+\[
+h(n)\le n+1.
+\]
+
+\paragraph{Proof.}
+If $g_n(n)=1$, then by definition $h(n)\le n$.
+So suppose $g_n(n)>1$, and choose a prime $p\mid g_n(n)$.
+Exactly as above, $p>n$.
+Hence the residues
+\[
+1,2,\dots,n
+\]
+are $n$ distinct roots of the polynomial $X^n-1$ in $\mathbb F_p$.
+A degree-$n$ polynomial has at most $n$ roots in a field, so these are all its roots.
+Since $n+1$ is a distinct residue modulo $p$, it is \emph{not} a root.
+Thus
+\[
+p\nmid (n+1)^n-1.
+\]
+This holds for every prime divisor $p$ of $g_n(n)$, so
+\[
+\gcd\bigl(g_n(n),(n+1)^n-1\bigr)=1.
+\]
+Therefore
+\[
+g_{n+1}(n)=1,
+\]
+and hence $h(n)\le n+1$.
+\hfill$\square$
+
+\paragraph{Corollary 3.}
+The Round-1 characterization
+\[
+h(n)=n+1 \iff n+1 \text{ is prime}
+\]
+can now be read very quickly as follows.
+
+\begin{enumerate}
+\item If $h(n)=n+1$, then Theorem 1 shows that $n+1$ is prime.
+\item Conversely, if $n+1$ is prime, the Round-1 divisibility argument gives $h(n)=n+1$.
+\end{enumerate}
+
+So Theorem 1 strictly strengthens one direction of the Round-1 result.
+
+\paragraph{Theorem 4.}
+Fix $M\ge 2$.
+Then the number of odd integers $n\le x$ with $h(n)>M$ is
+\[
+\gg_M \frac{x}{\log x}.
+\]
+In particular, $h(n)$ is unbounded on odd $n$.
+
+\paragraph{Proof.}
+Let
+\[
+K_M=\mathbb Q(\sqrt 2,\sqrt 3,\dots,\sqrt M),
+\qquad
+L_M=K_M(i).
+\]
+The field $K_M$ is totally real, so complex conjugation acts trivially on $K_M$ and nontrivially on $i$.
+Hence there is an automorphism
+\[
+\sigma\in \mathrm{Gal}(L_M/\mathbb Q)
+\]
+that fixes $K_M$ pointwise and sends $i\mapsto -i$.
+
+By the Chebotarev density theorem, the set of rational primes $q$ with Frobenius element equal to $\sigma$ has positive density in the set of all primes.
+In particular, the number of such primes $q\le 2x+1$ is
+\[
+\gg_M \frac{x}{\log x}.
+\]
+
+Fix such a prime $q$.
+Because the Frobenius at $q$ is trivial on $K_M$, the prime $q$ splits completely in each quadratic field $\mathbb Q(\sqrt a)$ with $2\le a\le M$.
+Equivalently, each $a\in\{2,\dots,M\}$ is a quadratic residue modulo $q$.
+Because the Frobenius at $q$ is nontrivial on $\mathbb Q(i)$, we also have
+\[
+q\equiv 3\pmod 4.
+\]
+
+Set
+\[
+n=\frac{q-1}{2}.
+\]
+Then $n$ is odd.
+For every $2\le a\le M$, Euler's criterion gives
+\[
+a^{(q-1)/2}\equiv 1\pmod q,
+\]
+so
+\[
+q\mid a^n-1.
+\]
+Therefore
+\[
+q\mid g_M(n),
+\]
+hence
+\[
+g_M(n)>1.
+\]
+By definition of $h(n)$,
+\[
+h(n)>M.
+\]
+
+Distinct primes $q$ give distinct integers $n=(q-1)/2$.
+So the number of odd integers $n\le x$ with $h(n)>M$ is at least the number of such primes $q\le 2x+1$, which is
+\[
+\gg_M \frac{x}{\log x}.
+\]
+This proves the theorem.
+\hfill$\square$
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+The new work has four possible failure points.
+
+\begin{enumerate}
+\item \textbf{Could Theorem 1 fail when $m=4$?}  
+No.
+If $m=4$, then $m=2\cdot 2$ and the same subgroup-closure argument works.
+
+\item \textbf{Why does $p>m$ in Theorem 1?}  
+We first prove $p>m-1$.
+If $m$ is composite, then $p$ cannot equal $m$ because $p$ is prime.
+Hence indeed $p>m$.
+
+\item \textbf{Was the Round-1 odd-unboundedness proof really flawed?}  
+Yes.
+It asserted, without proof, that infinitely many primes can be chosen to split completely in a certain real field and simultaneously satisfy $q\equiv 3\pmod 4$.
+Theorem 4 fixes this by encoding both conditions inside one Galois extension $L_M$ and invoking Chebotarev once.
+
+\item \textbf{Does Theorem 4 really produce many odd $n$, not just infinitely many?}  
+Yes.
+Chebotarev gives a positive-density set of primes $q$.
+The map $q\mapsto (q-1)/2$ is injective, so the number of resulting odd integers $n\le x$ is also $\gg_M x/\log x$.
+\end{enumerate}
+
+So the Round-2 additions are gap-free.
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 gives three genuine advances.
+
+\begin{enumerate}
+\item It repairs the only actual Round-1 gap in the odd-unboundedness argument.
+\item It proves the new structural theorem that \emph{$h(n)$ is always prime}.
+\item It strengthens odd unboundedness to the quantitative statement
+\[
+\#\{n\le x:\ n \text{ odd and } h(n)>M\}\gg_M \frac{x}{\log x}.
+\]
+\end{enumerate}
+
+The density questions from Erd\H{o}s still remain open, but the structural understanding of $h(n)$ is now significantly sharper than in Round 1.
+
+\subsection*{8. COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 63\%}
+
+\subsection*{9. REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#770}, ErdosProblems.com, accessed 2026-03-07.
+\item Classical input used in the proofs: the Chebotarev density theorem and Euler's criterion.
+\end{itemize}

@@ -9,6 +9,8 @@ on:
       - 'reviews/**'
       - 'scripts/**'
       - 'build_site.py'
+      - 'requirements.txt'
+      - 'tests/**'
       - 'docs/**'
       - '.github/workflows/**'
   pull_request:
@@ -42,6 +44,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Test status synchronization
+        run: python -m unittest discover -s tests
+
+      - name: Refresh Erdos problem statuses
+        run: python scripts/sync_erdos_status.py
 
       - name: Build site data
         run: python build_site.py

@@ -1,0 +1,164 @@
+\section{Problem 786}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: identify the fatal obstruction in Round 1 and correct the statement. In Round 1 I treated the repetitions-allowed version as still open. That is incorrect. The currently curated literature record shows that, when repetitions are allowed, the problem is already settled negatively: every such set is contained in a level set of a real-valued additive function, and Erd\H{o}s--Ruzsa--S\'ark\"ozy imply an absolute upper-density barrier. The minimal corrected open problem is the \emph{distinct-elements} version.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+\begin{enumerate}
+\item The finite additive-functional criterion: for finite $A$, the repetitions-allowed property is equivalent to the existence of a rational additive functional on prime-exponent vectors taking the value $1$ on every $a \in A$.
+\item The Round-1 diagnosis that the real gap was to control level sets of additive functions.
+\item The standard examples (the class $n \equiv 2 \pmod 4$, Selfridge's construction, and the one-large-prime finite construction).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is an \emph{infinite-set extension} of the Round-1 structural lemma. Instead of working only with finitely many primes and rational coefficients, I pass to the rational vector space of finitely supported prime-exponent vectors and extend a linear functional from the span of $\{\mathbf v(a): a \in A\}$ to the whole space. This gives a real-valued additive function on all natural numbers.
+
+The second new ingredient is the corrected literature input: the updated 2026 discussion of Problem 786 records that Erd\H{o}s--Ruzsa--S\'ark\"ozy already settle the repetitions version negatively, and that the remaining open variant is the distinct-elements interpretation.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap left by Round 1 was this: the finite linear-algebra lemma had not yet been upgraded to arbitrary $A$, so it could not be combined with the known distribution theory of additive functions. I will:
+\begin{enumerate}
+\item extend the structural lemma from finite $A$ to arbitrary $A$;
+\item reduce the repetitions-allowed problem to a level set $\{n : f(n)=1\}$ of a real additive function $f$;
+\item import the Erd\H{o}s--Ruzsa--S\'ark\"ozy consequence recorded in the current literature summary, obtaining a negative answer to both the density and finite problems;
+\item isolate precisely why this argument does \emph{not} resolve the distinct-elements variant.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+Write the repetitions-allowed property as follows:
+\[
+ a_1 \cdots a_r = b_1 \cdots b_s \quad (a_i,b_j \in A)
+ \implies r=s.
+\]
+
+\paragraph{Lemma 786.1 (global additive-functional criterion).}
+Let $A$ be a subset of the natural numbers with the repetitions-allowed property. Then there exists a real-valued additive function $f$ on the natural numbers such that
+\[
+ f(a)=1 \qquad \text{for every } a \in A.
+\]
+
+\paragraph{Proof.}
+Let $P$ be the set of primes dividing at least one element of $A$. Let $V$ be the vector space over the rationals consisting of all finitely supported tuples
+\[
+ x=(x_p)_{p \in P}, \qquad x_p \in \mathbf Q.
+\]
+For a natural number $n$, let
+\[
+ \mathbf v(n) := (v_p(n))_{p \in P} \in V,
+\]
+where $v_p(n)$ is the exponent of $p$ in the factorisation of $n$.
+
+Let $W$ be the rational span of $\{\mathbf v(a): a \in A\}$ inside $V$. Define a map $L$ on $W$ by declaring
+\[
+ L\!\left(\sum_{i=1}^m q_i \mathbf v(a_i)\right) := \sum_{i=1}^m q_i
+\]
+for rational numbers $q_i$ and elements $a_i \in A$.
+
+I claim this is well-defined. Suppose
+\[
+ \sum_{i=1}^m q_i \mathbf v(a_i)=0.
+\]
+Choose a common denominator $D$ and set $m_i = D q_i \in \mathbf Z$. Then
+\[
+ \sum_{i=1}^m m_i \mathbf v(a_i)=0.
+\]
+Write $m_i = m_i^+ - m_i^-$ with $m_i^+,m_i^- \ge 0$. The equality of exponent vectors is equivalent to
+\[
+ \prod_{i=1}^m a_i^{m_i^+} = \prod_{i=1}^m a_i^{m_i^-}.
+\]
+Each side is a product of elements of $A$, with repetitions allowed. By the defining property of $A$, the total number of factors on the two sides must be equal:
+\[
+ \sum_{i=1}^m m_i^+ = \sum_{i=1}^m m_i^-.
+\]
+Hence
+\[
+ \sum_{i=1}^m m_i = 0,
+\]
+and dividing by $D$ gives $\sum_i q_i = 0$. So $L$ is well-defined.
+
+Now extend $L$ from the subspace $W$ to a linear functional on all of $V$ by choosing a basis of $W$ and extending it to a basis of $V$. Keep the same name $L$ for the extension. Define
+\[
+ f(n) := L(\mathbf v(n)).
+\]
+Because
+\[
+ \mathbf v(mn)=\mathbf v(m)+\mathbf v(n),
+\]
+we have
+\[
+ f(mn)=f(m)+f(n)
+\]
+for all natural numbers $m,n$; that is, $f$ is additive. And for every $a \in A$,
+\[
+ f(a)=L(\mathbf v(a))=1.
+\]
+This proves the lemma.
+\hfill$\square$
+
+\paragraph{Corollary 786.2.}
+Every repetitions-allowed set $A$ is contained in a level set of a real-valued additive function:
+\[
+ A \subseteq \{n : f(n)=1\}
+\]
+for some additive $f$.
+
+\paragraph{External input.}
+The current 2026 update to the Erd\H{o}s Problems page for Problem 786 records the following consequence of Erd\H{o}s--Ruzsa--S\'ark\"ozy (1973): once a set is contained in a fixed level set of a real-valued additive function, one obtains
+\[
+ \overline d(A) \le \frac12,
+\]
+and, in the finite problem, there is an absolute constant $c>0$ such that for all sufficiently large $N$,
+\[
+ |A \cap [1,N]| \le (1-c)N.
+\]
+Applying this to Corollary 786.2 gives the promised negative answers.
+
+\paragraph{Theorem 786.3 (repetitions version is already settled).}
+For the repetitions-allowed interpretation of Problem 786:
+\begin{enumerate}
+\item there is no set $A$ of density $>1-\varepsilon$ for every $\varepsilon>0$; in fact every such $A$ has upper density at most $1/2$;
+\item in the finite problem one cannot have $|A|=(1-o(1))N$; indeed $|A| \le (1-c)N$ for some absolute $c>0$ and all sufficiently large $N$.
+\end{enumerate}
+
+\paragraph{Why the distinct-elements version is genuinely different.}
+The proof above uses arbitrary integer relations among exponent vectors. Such a relation becomes a product identity only because repetitions are allowed. If one insists that all $a_i$ and all $b_j$ be distinct, then only disjoint $0$--$1$ relations are relevant; integer coefficients larger than $1$ are no longer legal. So the additive-function reduction collapses exactly at this point. This isolates the minimal corrected open statement: require the products on both sides to use distinct elements.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item The definition of $L$ uses only finitely many elements of $A$ at a time, so no infinite product or convergence issue appears.
+\item The extension step is safe because $W$ is a rational vector subspace of $V$; I am extending a linear functional on vector spaces, not claiming that a homomorphism to the integers extends on a free abelian group. This avoids the standard obstruction exemplified by $2\mathbf Z \to \mathbf Z$.
+\item The conclusion is only $A \subseteq \{f=1\}$, not equality; this is the correct statement needed for the upper-bound transfer.
+\item The distinct-elements obstruction is real: the argument from an integer relation
+\[
+ \sum m_a \mathbf v(a)=0
+\]
+produces repeated factors $a^{m_a^+}$ and $a^{m_a^-}$, which are illegal in the distinct-elements variant whenever some coefficient has absolute value bigger than $1$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{FULL SOLUTION -- COUNTEREXAMPLE / DISPROOF.}
+
+For the repetitions-allowed interpretation, both optimistic conclusions are false. Every such set is contained in a level set of a real-valued additive function, and the Erd\H{o}s--Ruzsa--S\'ark\"ozy consequences recorded in the current literature give upper density at most $1/2$ and a finite upper bound $|A| \le (1-c)N$. The minimal corrected open problem is the distinct-elements version.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{99}
+\bibitem{ERS73-786}
+P. Erd\H{o}s, I. Ruzsa, and A. S\'ark\"ozy,
+\emph{On the number of solutions of $f(n)=a$ for additive functions},
+Acta Arith. 24 (1973), 1--9.
+
+\bibitem{Bloom786}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#786}, updated 2 February 2026,
+\texttt{https://www.erdosproblems.com/786}.
+
+\bibitem{Bloom786Thread}
+T. F. Bloom, T. Tao, and others,
+\emph{Discussion thread for Erd\H{o}s Problem \#786}, especially comments of 18 October 2025 and 2 February 2026,
+\texttt{https://www.erdosproblems.com/forum/thread/786}.
+\end{thebibliography}
+

@@ -1,0 +1,228 @@
+\section{Erd\H{o}s Problem \#201: progression-free subsets inside arbitrary $N$-sets (ROUND 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I again pursue path \textbf{(C)}.  This is Erd\H{o}s Problem \#201 \cite{Bloom201}.  Round 1 gave the classical comparison
+\[
+G_k(N)\asymp_k R_k(N)
+\]
+up to unspecified constants, but it still relied on the external Koml\'os--Sulyok--Szemer\'edi theorem and did not isolate what structural feature of an arbitrary set $B$ makes it hard or easy to extract a large progression-free subset.  In this round I replace that coarse comparison by a direct theorem depending on the number of progression-types already present in $B$, and then use it to rule out an entire class of candidate ``worst-case'' sets.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+From Round 1 I use only the notation
+\[
+f_k(B):=\max\{|A|: A\subseteq B\text{ contains no nontrivial }k\text{-term AP}\}
+\]
+and
+\[
+G_k(N):=\min_{|B|=N} f_k(B),
+\qquad
+R_k(N):=f_k(\{1,2,\dots,N\}).
+\]
+I also use the trivial inequality $G_k(N)\le R_k(N)$ already proved in Round 1, together with the fact that Koml\'os--Sulyok--Szemer\'edi give the complementary comparison $R_k(N)\ll_k G_k(N)$ and that Semchankau refines this on a dense subsequence \cite{KSS75,Semchankau20}.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new tool is O'Bryant's arbitrary-set version of the Behrend construction \cite{OBryant10}.  It gives lower bounds for $f_k(B)$ not merely in terms of $|B|$, but in terms of how many progression-\emph{types} are present in $B$.
+
+For $D=1$ (ordinary arithmetic progressions), the type of a nontrivial $k$-term progression is determined by its first two terms.  So the relevant parameter is a concrete measure of how many $k$-term progression patterns $B$ actually supports.
+
+This lets us bypass the KSS theorem entirely and prove a direct lower bound for $G_k(N)$.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+The Round-1 obstacle was that constant-factor compression theorems do not get close to the ratio question $R_3(N)/G_3(N)\to 1$.
+
+The new plan is different:
+\begin{enumerate}
+\item specialize O'Bryant's theorem to ordinary arithmetic progressions ($D=1$);
+\item use the crude but universal bound that the number of $k$-term progression-types in an $N$-element set is at most $N^2$;
+\item deduce a direct lower bound for $G_k(N)$ of Behrend type, with no appeal to KSS;
+\item then sharpen it for sets with very few progression-types, thereby ruling out a large structured class of candidate hard examples.
+\end{enumerate}
+This does not solve the ratio problem, but it produces a new structural obstruction not present in Round 1.
+
+\subsection*{5) WORK (ROUND 2)}
+Fix $k\ge 3$.
+For a finite set $B\subset \mathbf Z$, let $\mathrm{Type}_k(B)$ denote the number of types of nontrivial $k$-term arithmetic progressions contained in $B$ in the sense of O'Bryant's theorem for $D=1$.
+
+\medskip
+\noindent\textbf{Theorem 5.1 (O'Bryant, specialized to $D=1$).}
+Fix an integer $n\ge 2$ with
+\[
+k>2^{n-1}.
+\]
+Let $\Psi(N)\ge 2$ be any function.  Then every finite set $B\subset \mathbf Z$ of size $N$ satisfying
+\[
+\mathrm{Type}_k(B)\le N\Psi(N)
+\]
+contains a $k$-AP-free subset of size at least
+\[
+f_k(B)\gg_{k,n,\Psi} N\, (\log \Psi(N))^{1/(2n)}
+\exp\!
+\bigl(-C_{k,n}(\log \Psi(N))^{1/n}\bigr)
+\]
+for some constant $C_{k,n}>0$ depending only on $k$ and $n$.
+
+\smallskip
+\noindent\emph{Justification.}
+This is exactly O'Bryant's Theorem 1 for $D=1$ \cite{OBryant10}, rewritten with natural logarithms and with all harmless base-change constants absorbed into $C_{k,n}$ and the Vinogradov symbol.
+
+\medskip
+\noindent\textbf{Lemma 5.2.}
+For every $N$-element set $B$,
+\[
+\mathrm{Type}_k(B)\le N^2.
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+A nontrivial $k$-term arithmetic progression is determined by its first two terms.  There are at most $N^2$ ordered choices for those two terms from $B$, so there are at most $N^2$ progression-types. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.3 (direct arbitrary-set lower bound).}
+Let
+\[
+n_k:=\lceil \log_2 k\rceil.
+\]
+Then, for every $N\ge 2$,
+\[
+G_k(N)\gg_k N\, (\log N)^{1/(2n_k)}
+\exp\!\bigl(-C_k(\log N)^{1/n_k}\bigr)
+\]
+for some constant $C_k>0$.
+
+\smallskip
+\noindent\emph{Proof.}
+By definition of $n_k$, we have $k>2^{n_k-1}$, so Theorem 5.1 applies with $n=n_k$.
+By Lemma 5.2 every $N$-element set $B$ satisfies
+\[
+\mathrm{Type}_k(B)\le N^2=N\cdot N,
+\]
+so we may take $\Psi(N)=N$.  Hence every such $B$ contains a $k$-AP-free subset of size at least
+\[
+\gg_k N\, (\log N)^{1/(2n_k)}
+\exp\!\bigl(-C_k(\log N)^{1/n_k}\bigr).
+\]
+Minimizing over all $B$ of size $N$ gives the claimed bound for $G_k(N)$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Special case $k=3$.}
+Here $n_k=2$, so Corollary 5.3 becomes
+\[
+G_3(N)\gg N\, (\log N)^{1/4}\exp\!\bigl(-C\sqrt{\log N}\bigr).
+\]
+This is a direct arbitrary-set Behrend-type lower bound, proved without using Koml\'os--Sulyok--Szemer\'edi.
+
+\medskip
+\noindent\textbf{Corollary 5.4 (ruling out low-type-complexity families).}
+Fix $A>0$.  Suppose $\mathcal B$ is a family of finite sets such that every $B\in \mathcal B$ of size $N$ satisfies
+\[
+\mathrm{Type}_k(B)\le N(\log N)^A.
+\]
+Then every such $B$ of sufficiently large size $N$ contains a $k$-AP-free subset of size at least
+\[
+f_k(B)\gg_{k,A} N\, (\log\log N)^{1/(2n_k)}
+\exp\!\bigl(-C_{k,A}(\log\log N)^{1/n_k}\bigr).
+\]
+In particular, for $k=3$ one gets
+\[
+f_3(B)\gg_A N\, (\log\log N)^{1/4}
+\exp\!\bigl(-C_A\sqrt{\log\log N}\bigr).
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+Apply Theorem 5.1 with $n=n_k$ and $\Psi(N)=(\log N)^A$.
+The conclusion follows immediately. \hfill$\square$
+
+\medskip
+\noindent\textbf{Interpretation.}
+Corollary 5.4 rules out an entire class of candidate hard examples: sets whose $k$-term progression-type count is only polylogarithmic per element automatically contain progression-free subsets \emph{far denser} than the general Behrend scale.  So any family that is genuinely difficult for Problem \#201 must have substantially richer progression-type structure than that.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Again I try to break the new work.
+\begin{itemize}
+\item \emph{Does O'Bryant's theorem really apply to ordinary arithmetic progressions?}  Yes.  It is stated for $k$-term $D$-progressions, and ordinary arithmetic progressions are exactly the case $D=1$.
+\item \emph{Is $n_k=\lceil \log_2 k\rceil$ admissible?}  Yes, because then $2^{n_k-1}<k$.
+\item \emph{Could the type count exceed $N^2$?}  No.  Once the first two terms are fixed, the common difference is fixed, hence the whole progression is fixed.
+\item \emph{Did I accidentally claim a pointwise theorem with a constant depending on the individual set $B$?}  No.  Corollary 5.3 is a uniform class statement with $\Psi(N)=N$, and Corollary 5.4 is a uniform class statement with $\Psi(N)=(\log N)^A$.
+\item \emph{Is the improvement genuinely beyond Round 1?}  Yes.  Round 1 used the external KSS comparison $R_k\ll_k G_k$; Round 2 derives a direct lower bound for $G_k$ from an arbitrary-set theorem and, more importantly, isolates a concrete structural obstruction via progression-type complexity.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 establishes a new direct theorem for Problem \#201:
+\begin{quote}
+Every $N$-element set of integers contains a $k$-AP-free subset of size at least
+\[
+\gg_k N\, (\log N)^{1/(2n_k)}\exp\!\bigl(-C_k(\log N)^{1/n_k}\bigr),
+\qquad n_k=\lceil \log_2 k\rceil,
+\]
+without using the Koml\'os--Sulyok--Szemer\'edi comparison theorem.
+\end{quote}
+In addition, any family whose $k$-AP-type count is only $N(\log N)^A$ is ruled out as a genuinely hard family: such sets automatically contain much denser progression-free subsets than the generic Behrend scale.
+
+The sharp ratio question
+\[
+\frac{R_3(N)}{G_3(N)}\to 1
+\]
+remains open, but the obstruction has been sharpened: any counterexample strategy must come from sets with very rich arithmetic-progression-type structure.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 62\%}
+
+\bigskip
+\section*{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{Bloom152}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#152},
+\texttt{https://www.erdosproblems.com/152}, accessed 2026-03-07.
+
+\bibitem{Bloom200}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#200},
+\texttt{https://www.erdosproblems.com/200}, accessed 2026-03-07.
+
+\bibitem{Bloom201}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#201},
+\texttt{https://www.erdosproblems.com/201}, accessed 2026-03-07.
+
+\bibitem{ESS94}
+P. Erd\H{o}s, A. S\'ark\"ozy, and T. S\'os,
+\emph{On sum sets of Sidon sets. I},
+Journal of Number Theory \textbf{47} (1994), 329--347.
+
+\bibitem{GT08}
+B. Green and T. Tao,
+\emph{The primes contain arbitrarily long arithmetic progressions},
+Annals of Mathematics \textbf{167} (2008), 481--547.
+
+\bibitem{KSS75}
+J. Koml\'os, M. Sulyok, and E. Szemer\'edi,
+\emph{Linear problems in combinatorial number theory},
+Acta Mathematica Academiae Scientiarum Hungaricae \textbf{26} (1975), 113--121.
+
+\bibitem{MV07}
+H. Montgomery and R. Vaughan,
+\emph{Multiplicative Number Theory I. Classical Theory},
+Cambridge Studies in Advanced Mathematics 97, Cambridge University Press, 2007.
+
+\bibitem{OBryant04}
+K. O'Bryant,
+\emph{A complete annotated bibliography of work related to Sidon sequences},
+Electronic Journal of Combinatorics \textbf{11} (2004), Dynamic Survey 11.
+
+\bibitem{OBryant10}
+K. O'Bryant,
+\emph{Thick subsets that do not contain arithmetic progressions},
+arXiv:0912.1494.
+
+\bibitem{Semchankau20}
+A. Semchankau,
+\emph{Maximal subsets free of arithmetic progressions in arbitrary sets},
+arXiv:2010.04490.
+
+\end{thebibliography}

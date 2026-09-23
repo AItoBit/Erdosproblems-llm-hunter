@@ -1,0 +1,312 @@
+\section{Round 2 continuation for Erd\H{o}s Problem \#875}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}. Round~1 contained a concrete factual gap: it treated polynomial-growth infinite admissible sets as if they might still be unknown. The most promising and necessary Round-2 move is therefore to \emph{correct the statement of what is already known}, and then to extract the strongest rigorous consequences for the growth and gap questions.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 ingredients without reproving them.
+
+\begin{enumerate}
+\item Round~1 set up the infinite admissible-set problem for
+\[
+A=\{a_1<a_2<\cdots\}\subset \mathbf{N},
+\]
+where the sets of sums of exactly \(r\) distinct elements are pairwise disjoint for different \(r\).
+\item Round~1 observed that every finite initial segment \(A\cap [1,N]\) is itself admissible.
+\item Round~1 therefore reduced universal upper bounds for infinite admissible sets to finite extremal results inside \([1,N]\).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two new external inputs.
+
+\begin{enumerate}
+\item Erd\H{o}s, Nicolas, and S\'ark\H{o}zy proved in 1991 that there exists an infinite admissible set \(A\) with
+\[
+A(x):=\#\{a\in A:a\le x\}\gg x^{5-2\sqrt 6}.
+\]
+This corrects the main factual gap in Round~1.
+\item Deshouillers and Freiman proved that, for all sufficiently large \(N\), every admissible subset \(B\subset [1,N]\) satisfies
+\[
+|B|\le 2\sqrt{N+\tfrac14}-1.
+\]
+Applied to \(A\cap [1,N]\), this yields the sharp universal upper bound
+\[
+A(N)\le 2\sqrt N+O(1).
+\]
+\end{enumerate}
+
+Together these produce a genuine growth window for infinite admissible sets.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round~1 issue was that the status summary for Problem~\#875 was too pessimistic. I will now do four things.
+
+\begin{enumerate}
+\item Correct the Round~1 error by importing the 1991 Erd\H{o}s--Nicolas--S\'ark\H{o}zy construction.
+\item Derive a polynomial upper bound for the \(n\)-th term:
+\[
+a_n\ll n^{5+2\sqrt 6}.
+\]
+\item Combine the finite Deshouillers--Freiman theorem with the initial-segment observation to obtain
+\[
+A(x)\le 2\sqrt x+O(1),\qquad a_n\ge \frac{n^2}{4}+O(n).
+\]
+\item Convert these into consequences for gaps \(a_{n+1}-a_n\), especially the bracket
+\[
+c<\frac12 \text{ impossible},\qquad c>5+2\sqrt 6 \text{ possible}.
+\]
+\end{enumerate}
+
+This directly resolves the main Round~1 gap and gives a sharper quantitative status report.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent\textbf{Correction 875.0.}
+Round~1 overlooked the following theorem of Erd\H{o}s, Nicolas, and S\'ark\H{o}zy: there exists an infinite admissible set \(A\subset \mathbf{N}\) such that
+\[
+A(x)\gg x^{5-2\sqrt 6}.
+\]
+
+\medskip
+\noindent\textbf{Claim 875.1.}
+There exists an infinite admissible sequence \(A=\{a_n\}_{n\ge 1}\) such that
+\[
+a_n\ll n^{5+2\sqrt 6}.
+\]
+Consequently,
+\[
+\liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Let
+\[
+\alpha:=5-2\sqrt 6.
+\]
+By Correction~875.0 there exists an admissible infinite set with
+\[
+A(x)\ge c x^\alpha
+\]
+for all sufficiently large \(x\), where \(c>0\). Evaluate this at \(x=a_n\). Then
+\[
+n=A(a_n)\ge c a_n^\alpha
+\]
+for all large \(n\), so
+\[
+a_n\le C n^{1/\alpha}
+\]
+for some constant \(C>0\). Since
+\[
+\frac1{5-2\sqrt6}=5+2\sqrt6,
+\]
+we obtain
+\[
+a_n\ll n^{5+2\sqrt6}.
+\]
+
+Now suppose, for contradiction, that
+\[
+\liminf_{n\to\infty}\frac{a_{n+1}}{a_n}>1.
+\]
+Then there exist \(\eta>0\) and \(n_0\) such that
+\[
+a_{n+1}\ge (1+\eta)a_n
+\]
+for all \(n\ge n_0\). Iterating gives
+\[
+a_n\ge a_{n_0}(1+\eta)^{n-n_0},
+\]
+so \(a_n\) grows exponentially. This contradicts the polynomial bound \(a_n\ll n^{5+2\sqrt6}\). Hence
+\[
+\liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.2.}
+Every infinite admissible sequence \(A=\{a_n\}\) satisfies
+\[
+A(x)\le 2\sqrt x+O(1).
+\]
+More precisely, for all sufficiently large integers \(N\),
+\[
+A(N)\le 2\sqrt{N+\tfrac14}-1.
+\]
+Consequently,
+\[
+a_n\ge \frac{n(n+2)}{4}
+\]
+for all sufficiently large \(n\), and in particular
+\[
+a_n\ge \frac{n^2}{4}+O(n).
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Fix an infinite admissible set \(A\subset \mathbf{N}\). For every sufficiently large integer \(N\), the finite set
+\[
+A\cap [1,N]
+\]
+is an admissible subset of \([1,N]\). By the Deshouillers--Freiman theorem,
+\[
+|A\cap [1,N]|\le 2\sqrt{N+\tfrac14}-1.
+\]
+This is exactly the stated bound for \(A(N)\), and replacing \(N\) by \(\lfloor x\rfloor\) yields
+\[
+A(x)\le 2\sqrt x+O(1).
+\]
+
+Now put \(x=a_n\). Then
+\[
+n=A(a_n)\le 2\sqrt{a_n+\tfrac14}-1
+\]
+for all sufficiently large \(n\). Therefore
+\[
+n+1\le 2\sqrt{a_n+\tfrac14},
+\]
+and squaring gives
+\[
+a_n\ge \frac{(n+1)^2-1}{4}=\frac{n(n+2)}{4}.
+\]
+The displayed \(n^2/4+O(n)\) bound follows immediately.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.3.}
+If an infinite admissible sequence satisfies
+\[
+a_{n+1}-a_n\le c n
+\]
+for all sufficiently large \(n\), then necessarily
+\[
+c\ge \frac12.
+\]
+Equivalently,
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}-a_n}{n}\ge \frac12.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Assume instead that there exist \(\varepsilon>0\) and \(n_0\) such that
+\[
+a_{n+1}-a_n\le \Big(\frac12-\varepsilon\Big)n
+\]
+for all \(n\ge n_0\). Summing from \(n_0\) to \(n-1\) yields
+\[
+a_n\le a_{n_0}+\Big(\frac12-\varepsilon\Big)\sum_{j=n_0}^{n-1}j
+= \Big(\frac14-\frac{\varepsilon}{2}\Big)n^2+O(n).
+\]
+But Claim~875.2 shows that every admissible sequence satisfies
+\[
+a_n\ge \frac{n(n+2)}{4}=\frac14 n^2+\frac12 n
+\]
+for all sufficiently large \(n\). The quadratic coefficients are incompatible:
+\[
+\frac14-\frac{\varepsilon}{2}<\frac14.
+\]
+So the assumed eventual gap bound is impossible. This proves the claim.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Claim 875.4.}
+For every real number \(c>5+2\sqrt 6\), there exists an infinite admissible sequence with
+\[
+a_{n+1}-a_n\le n^c
+\]
+for all sufficiently large \(n\).
+
+\medskip
+\noindent\emph{Proof.}
+Take the admissible sequence from Claim~875.1. For some constant \(C>0\),
+\[
+a_n\le C n^{5+2\sqrt 6}
+\]
+for all sufficiently large \(n\). Hence
+\[
+a_{n+1}-a_n\le a_{n+1}\le C(n+1)^{5+2\sqrt 6}.
+\]
+If \(c>5+2\sqrt 6\), then
+\[
+C(n+1)^{5+2\sqrt 6}\le n^c
+\]
+for all sufficiently large \(n\). Therefore the same sequence satisfies
+\[
+a_{n+1}-a_n\le n^c
+\]
+eventually.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Updated quantitative status.}
+The original Problem~\#875 remains open, but the Round~1 status summary must be replaced by the following corrected bracket:
+\[
+c<\frac12 \text{ is impossible},\qquad c>5+2\sqrt 6 \text{ is possible}.
+\]
+Moreover there exists an admissible infinite set of polynomial growth, and in particular one with
+\[
+\liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+The main points that could fail are the following.
+
+\begin{enumerate}
+\item \emph{Did Round~2 really identify an error in Round~1?} Yes. Round~1 treated polynomial-growth admissible sets as still potentially unknown, but Erd\H{o}s--Nicolas--S\'ark\H{o}zy already constructed one in 1991.
+\item \emph{Does polynomial growth imply \(a_{n+1}/a_n\to 1\)?} No, and I do \emph{not} claim that. The rigorous conclusion proved above is only
+\[
+\liminf_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+\item \emph{Does the finite Deshouillers--Freiman theorem really transfer to the infinite problem?} Yes. Every initial segment \(A\cap [1,N]\) is admissible, so the finite extremal theorem applies directly.
+\item \emph{Is the gap obstruction coefficient-level sharp?} The proof of Claim~875.3 uses only the leading quadratic coefficient, so lower-order terms cannot repair the contradiction.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 corrects a concrete Round~1 error and substantially sharpens the status of Problem~\#875.
+
+\begin{enumerate}
+\item Infinite admissible sets of polynomial growth already exist:
+\[
+A(x)\gg x^{5-2\sqrt 6},\qquad a_n\ll n^{5+2\sqrt 6}.
+\]
+\item Every infinite admissible set satisfies the universal upper bound
+\[
+A(x)\le 2\sqrt x+O(1),
+\]
+hence
+\[
+a_n\ge \frac{n^2}{4}+O(n).
+\]
+\item For the gap exponent question, one now has the rigorous bracket
+\[
+c<\frac12 \text{ impossible},\qquad c>5+2\sqrt 6 \text{ possible}.
+\]
+\end{enumerate}
+
+The full optimal growth law is still unknown, so the original Erd\H{o}s problem remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 72\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#875}, problem page.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#874}, problem page.
+\item P. Erd\H{o}s, J.-L. Nicolas, and A. S\'ark\H{o}zy, \emph{Sommes de sous-ensembles}, Journal de Th\'eorie des Nombres de Bordeaux 3 (1991), 55--72.
+\item J.-M. Deshouillers and G. A. Freiman, \emph{On an additive problem of Erd\H{o}s and Straus, 2}, Ast\'erisque 258 (1999), 141--148.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT NOTE}
+
+This file intentionally starts at \verb|\section| and contains no preamble and no \verb|\begin{document}|, so it can be pasted directly into an existing LaTeX document.

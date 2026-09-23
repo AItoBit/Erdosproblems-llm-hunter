@@ -1,0 +1,501 @@
+
+\section{Problem 50: derivatives of the totient distribution function (consolidated progress report)}
+
+\subsection{Problem statement and final status}
+
+Let
+\[
+G(c):=\lim_{X\to\infty}\frac1X\#\Bigl\{n\le X:\frac{\varphi(n)}n\le c\Bigr\}
+\qquad(0\le c\le 1).
+\]
+By continuity of $G$ (see the references below), this is the same function as the density
+\[
+ f(c)=\lim_{X\to\infty}\frac1X\#\{n\le X:\varphi(n)<cn\}.
+\]
+The original Erd\H{o}s problem asks whether there exists \emph{no} point $x\in[0,1]$ such that
+\[
+G'(x)=f'(x)
+\]
+exists and is strictly positive.
+
+This note consolidates all rigorous advances established in the thread. It does \emph{not} claim a full proof or disproof of the original problem. The present status is therefore
+\[
+\boxed{\text{UNRESOLVED}}.
+\]
+
+\subsection{Verified literature input used throughout}
+
+We use the following standard facts.
+
+\begin{enumerate}
+\item \textbf{(Schoenberg)} The limiting distribution function $G$ exists, is continuous, and is strictly increasing on $[0,1]$.
+
+\item \textbf{(Erd\H{o}s)} The measure
+\[
+\mu:=dG
+\]
+is purely singular with respect to Lebesgue measure $\lambda$. In particular,
+\[
+G'(x)=0\qquad\text{for }\lambda\text{-a.e. }x\in(0,1).
+\]
+
+\item \textbf{(Tenenbaum--Toulmonde; Toulmonde)} Write
+\[
+\mathcal E:=\Bigl\{\frac{\varphi(n)}n:n\ge1\Bigr\}.
+\]
+For
+\[
+K(t):=\sum_{\varphi(m)/m=t}\frac1m,
+\qquad
+\mathcal A(\varepsilon):=\Bigl\{\frac{\varphi(n)}n:1\le n\le \varepsilon^{-1/8}\Bigr\},
+\]
+and
+\[
+L(x):=\exp\!\bigl(\sqrt{\log x\,\log\log x}\bigr),
+\]
+one has, uniformly for $0<\varepsilon<1/3$ and $t\in\mathcal A(\varepsilon)$,
+\[
+G(t)-G(t-\varepsilon t)=K(t)\bigl(G(1)-G(1-\varepsilon)\bigr)+O\bigl(L(1/\varepsilon)^{-1/5}\bigr),
+\]
+\[
+G(t+\varepsilon t)-G(t)\ll L(1/\varepsilon)^{-1/5},
+\]
+and, as $\varepsilon\to0^+$,
+\[
+G(1)-G(1-\varepsilon)=\frac{e^{-\gamma}}{\log(1/\varepsilon)}+O\!\left(\frac1{(\log(1/\varepsilon))^2}\right).
+\]
+\end{enumerate}
+
+Everything below is either deduced from these facts or proved directly in the thread.
+
+\subsection{Basic structure of the value set $\mathcal E$}
+
+\subsubsection*{1. Density and uniqueness of prime support}
+
+\noindent\textbf{Proposition 1.}
+The set
+\[
+\mathcal E=\Bigl\{\frac{\varphi(n)}n:n\ge1\Bigr\}
+=\Bigl\{\prod_{p\mid n}\Bigl(1-\frac1p\Bigr):n\ge1\Bigr\}
+\]
+is countable and dense in $[0,1]$.
+Moreover, if $P,Q$ are finite sets of primes and
+\[
+\prod_{p\in P}\Bigl(1-\frac1p\Bigr)=\prod_{q\in Q}\Bigl(1-\frac1q\Bigr),
+\]
+then $P=Q$.
+
+\medskip
+\noindent\textit{Proof.}
+Countability is immediate. For density, let $u\in(0,1)$ and write $y:=-\log u>0$. Since $\sum_p 1/p$ diverges and $1/p\to0$, a standard greedy subseries argument provides distinct large primes $p_1,\dots,p_k$ with
+\[
+\sum_{i=1}^k\frac1{p_i}=y+o(1).
+\]
+Because
+\[
+\log\Bigl(1-\frac1p\Bigr)=-\frac1p+O\Bigl(\frac1{p^2}\Bigr)
+\]
+and $\sum_p 1/p^2<\infty$, we obtain
+\[
+\sum_{i=1}^k\log\Bigl(1-\frac1{p_i}\Bigr)=-y+o(1),
+\]
+so
+\[
+\prod_{i=1}^k\Bigl(1-\frac1{p_i}\Bigr)=u\,e^{o(1)}\to u.
+\]
+Thus $\mathcal E$ is dense in $(0,1)$, and clearly also accumulates at $0$ and $1$.
+
+For uniqueness, rewrite the equality as
+\[
+\prod_{p\in P}\frac{p}{p-1}=\prod_{q\in Q}\frac{q}{q-1}.
+\]
+Let $r=\max(P\cup Q)$. The $r$-adic valuation of the left-hand side is $1$ if $r\in P$ and $0$ otherwise, because $r$ cannot divide any denominator factor $p-1$ with $p<r$. The same holds on the right with $Q$. Hence $r\in P$ iff $r\in Q$. Cancelling the common factor $r/(r-1)$ and descending on the largest prime gives $P=Q$. \hfill$\square$
+
+\subsubsection*{2. Closed form for $K(t)$}
+
+\noindent\textbf{Proposition 2.}
+Let $t\in\mathcal E$. Write uniquely
+\[
+t=\prod_{p\in P}\Bigl(1-\frac1p\Bigr)
+\]
+with $P$ a finite prime set. Then
+\[
+K(t)=\sum_{\varphi(m)/m=t}\frac1m=\prod_{p\in P}\frac1{p-1}.
+\]
+In particular, $K(t)>0$ for every $t\in\mathcal E$.
+
+\medskip
+\noindent\textit{Proof.}
+The value $\varphi(m)/m$ depends only on the prime support of $m$, and Proposition~1 shows that the prime support is uniquely determined by $t$. Therefore $\varphi(m)/m=t$ exactly when the set of prime divisors of $m$ is $P$. Hence
+\[
+K(t)=\prod_{p\in P}\sum_{\nu\ge1}\frac1{p^\nu}
+=\prod_{p\in P}\frac{1/p}{1-1/p}
+=\prod_{p\in P}\frac1{p-1}.
+\]
+\hfill$\square$
+
+\subsection{Sharp left-hand asymptotics at all special values $t\in\mathcal E$}
+
+\noindent\textbf{Theorem 3.}
+For every $t\in\mathcal E$,
+\[
+G(t)-G(t-h)=\frac{e^{-\gamma}K(t)+o(1)}{\log(t/h)}
+\qquad(h\to0^+).
+\]
+Equivalently,
+\[
+\frac{G(t)-G(t-h)}{h}
+\sim
+\frac{e^{-\gamma}K(t)}{h\log(t/h)}
+\qquad(h\to0^+),
+\]
+so the left derivative exists in the extended sense and equals $+\infty$:
+\[
+G'_-(t)=+\infty
+\qquad(t\in\mathcal E).
+\]
+
+\medskip
+\noindent\textit{Proof.}
+Fix $t\in\mathcal E$ and choose $n_0\ge1$ with $t=\varphi(n_0)/n_0$. For every sufficiently small $\varepsilon>0$ we have $n_0\le\varepsilon^{-1/8}$, hence $t\in\mathcal A(\varepsilon)$. The literature formula therefore gives
+\[
+G(t)-G(t-\varepsilon t)=K(t)\bigl(G(1)-G(1-\varepsilon)\bigr)+O\bigl(L(1/\varepsilon)^{-1/5}\bigr).
+\]
+Since
+\[
+G(1)-G(1-\varepsilon)=\frac{e^{-\gamma}}{\log(1/\varepsilon)}+O\!\left(\frac1{(\log(1/\varepsilon))^2}\right)
+\]
+and
+\[
+\log(1/\varepsilon)\,L(1/\varepsilon)^{-1/5}\to0,
+\]
+we obtain
+\[
+G(t)-G(t-\varepsilon t)=\frac{e^{-\gamma}K(t)+o(1)}{\log(1/\varepsilon)}.
+\]
+Now put $h=\varepsilon t$, so that $\log(1/\varepsilon)=\log(t/h)$. This yields the first asymptotic. Dividing by $h$ gives the second, and since $h\log(t/h)\to0^+$, the quotient tends to $+\infty$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 4.}
+If there exists $x\in(0,1)$ such that $G'(x)$ exists and $0<G'(x)<\infty$, then necessarily
+\[
+x\notin\mathcal E.
+\]
+
+\subsection{Measure-theoretic consequences of singularity}
+
+\subsubsection*{1. Symmetric upper densities}
+
+\noindent\textbf{Proposition 5.}
+Let $\nu$ be a finite Borel measure on $\mathbb R$ with $\nu\perp\lambda$. Then
+\[
+\limsup_{h\to0^+}\frac{\nu((x-h,x+h))}{2h}=+\infty
+\qquad\text{for }\nu\text{-a.e. }x.
+\]
+Applied to $\mu=dG$, this gives
+\[
+\limsup_{h\to0^+}\frac{G(x+h)-G(x-h)}{2h}=+\infty
+\qquad\text{for }\mu\text{-a.e. }x\in(0,1).
+\]
+
+\medskip
+\noindent\textit{Proof.}
+For $M>0$, let
+\[
+A_M:=\Bigl\{x:\limsup_{h\to0^+}\frac{\nu((x-h,x+h))}{2h}\le M\Bigr\}.
+\]
+Choose a Borel set $S$ with $\lambda(S)=0$ and $\nu(\mathbb R\setminus S)=0$. Fix $\eta>0$ and choose an open set $O\supset S$ with $\lambda(O)<\eta$. For each $x\in A_M\cap S$, there exists $r_x>0$ such that
+\[
+\nu((x-r,x+r))\le 2(M+1)r\qquad(0<r<r_x),
+\]
+and, after shrinking $r_x$, also $(x-r_x,x+r_x)\subset O$. A one-dimensional Besicovitch covering argument produces a countable cover by such intervals with overlap bounded by $2$. Summing the measure bounds over that subfamily yields
+\[
+\nu(A_M\cap S)\le 4(M+1)\lambda(O)\le 4(M+1)\eta.
+\]
+Letting $\eta\to0$ gives $\nu(A_M)=0$. Since this holds for every $M$, the claim follows. \hfill$\square$
+
+\subsubsection*{2. One-sided upper densities}
+
+\noindent\textbf{Proposition 6.}
+Let $\nu$ be a finite Borel measure on $\mathbb R$ with $\nu\perp\lambda$. Then
+\[
+\limsup_{h\to0^+}\frac{\nu((x-h,x])}{h}=+\infty,
+\qquad
+\limsup_{h\to0^+}\frac{\nu([x,x+h))}{h}=+\infty
+\]
+for $\nu$-almost every $x$.
+Applied to $\mu=dG$, this gives
+\[
+\overline D_-G(x)=\overline D_+G(x)=+\infty
+\qquad\text{for }\mu\text{-a.e. }x\in(0,1),
+\]
+where
+\[
+\overline D_-G(x):=\limsup_{h\to0^+}\frac{G(x)-G(x-h)}{h},
+\qquad
+\overline D_+G(x):=\limsup_{h\to0^+}\frac{G(x+h)-G(x)}{h}.
+\]
+In particular,
+\[
+\mu\bigl(\{x:\overline D_-G(x)=+\infty\}\bigr)=
+\mu\bigl(\{x:\overline D_+G(x)=+\infty\}\bigr)=1.
+\]
+
+\medskip
+\noindent\textit{Proof.}
+The proof is the same as in Proposition~5, using one-sided intervals $(x-r,x]$ or $[x,x+r)$ instead of symmetric intervals. \hfill$\square$
+
+\subsection{Category-theoretic consequences: residual oscillation}
+
+For $x\in(0,1)$ define the one-sided lower Dini derivatives
+\[
+\underline D_-G(x):=\liminf_{h\to0^+}\frac{G(x)-G(x-h)}{h},
+\qquad
+\underline D_+G(x):=\liminf_{h\to0^+}\frac{G(x+h)-G(x)}{h}.
+\]
+Also define the symmetric quotient
+\[
+S_h(x):=\frac{G(x+h)-G(x-h)}{2h}
+\qquad(0<h<\min\{x,1-x\}).
+\]
+
+\subsubsection*{1. Residual symmetric flatness and blow-up}
+
+\noindent\textbf{Proposition 7.}
+The sets
+\[
+A_{\mathrm{sym}}:=\Bigl\{x\in(0,1):\liminf_{h\to0^+}S_h(x)=0\Bigr\},
+\qquad
+B_{\mathrm{sym}}:=\Bigl\{x\in(0,1):\limsup_{h\to0^+}S_h(x)=+\infty\Bigr\},
+\]
+are both dense $G_\delta$ subsets of $(0,1)$. Moreover, $A_{\mathrm{sym}}$ has full Lebesgue measure, and $B_{\mathrm{sym}}$ has full $\mu$-measure.
+
+\medskip
+\noindent\textit{Proof.}
+For each fixed rational $q>0$, the map $x\mapsto S_q(x)$ is continuous on its natural domain, so both sets admit standard rational-scale $G_\delta$ descriptions. Since $G'(x)=0$ for $\lambda$-a.e. $x$, the symmetric quotient tends to $0$ for $\lambda$-a.e. $x$, whence $A_{\mathrm{sym}}$ has full measure and therefore is dense. Proposition~5 implies that $B_{\mathrm{sym}}$ has full $\mu$-measure; since every open interval has positive $\mu$-measure (because $G$ is strictly increasing), $B_{\mathrm{sym}}$ is also dense. \hfill$\square$
+
+\subsubsection*{2. Residual one-sided oscillation}
+
+\noindent\textbf{Proposition 8.}
+The sets
+\[
+A_-:=\{x\in(0,1):\underline D_-G(x)=0\},
+\qquad
+A_+:=\{x\in(0,1):\underline D_+G(x)=0\}
+\]
+are dense $G_\delta$ subsets of $(0,1)$ and each has full Lebesgue measure.
+The sets
+\[
+B_-:=\{x\in(0,1):\overline D_-G(x)=+\infty\},
+\qquad
+B_+:=\{x\in(0,1):\overline D_+G(x)=+\infty\}
+\]
+are dense $G_\delta$ subsets of $(0,1)$; in fact $\mu(B_-)=\mu(B_+)=1$.
+
+\medskip
+\noindent\textit{Proof.}
+Each set is $G_\delta$ by the same rational-scale continuity argument as above.
+
+If $x\in A_{\mathrm{sym}}$, then there exists $h_n\to0^+$ with
+\[
+\frac{G(x+h_n)-G(x-h_n)}{2h_n}\to0.
+\]
+But
+\[
+\frac{G(x+h_n)-G(x-h_n)}{2h_n}
+=
+\frac12\frac{G(x)-G(x-h_n)}{h_n}
++
+\frac12\frac{G(x+h_n)-G(x)}{h_n},
+\]
+and both summands are nonnegative because $G$ is increasing. Hence each summand tends to $0$, so $x\in A_-\cap A_+$. Thus $A_{\mathrm{sym}}\subseteq A_-\cap A_+$, and therefore $A_-$ and $A_+$ are dense and of full Lebesgue measure.
+
+For $B_-$, every $t\in\mathcal E$ satisfies $G'_-(t)=+\infty$ by Theorem~3, so $\mathcal E\subseteq B_-$. Since $\mathcal E$ is dense, $B_-$ is dense.
+
+For $B_+$, fix a nonempty open interval $I=(a,b)$ and integers $N,m\ge1$. Choose $t\in\mathcal E\cap(a+(b-a)/3,b-(b-a)/3)$ and then $h\in(0,1/m)$ so small that
+\[
+\frac{G(t)-G(t-h)}{h}>N.
+\]
+By continuity of the left secant quotient as a function of the scale, the same inequality holds at some rational $q\in(0,1/m)$ near $h$. Setting $x:=t-q$ gives $x\in I$ and
+\[
+\frac{G(x+q)-G(x)}{q}=\frac{G(t)-G(t-q)}{q}>N.
+\]
+Thus every basic open set in the rational-scale $G_\delta$ description of $B_+$ is dense, so $B_+$ is dense.
+
+Finally, the $\mu$-full statements follow from Proposition~6. \hfill$\square$
+
+\subsubsection*{3. A residual set of maximal one-sided oscillation outside $\mathcal E$}
+
+\noindent\textbf{Theorem 9.}
+Define
+\[
+\Omega:=A_-\cap A_+\cap B_-\cap B_+\cap\bigl((0,1)\setminus\mathcal E\bigr).
+\]
+Then $\Omega$ is a dense $G_\delta$ subset of $(0,1)$, and for every $x\in\Omega$ one has
+\[
+\underline D_-G(x)=\underline D_+G(x)=0,
+\qquad
+\overline D_-G(x)=\overline D_+G(x)=+\infty.
+\]
+In particular, $G$ is not differentiable at any point of $\Omega$.
+
+\medskip
+\noindent\textit{Proof.}
+By Proposition~8, the four sets $A_-,A_+,B_-,B_+$ are dense $G_\delta$ subsets of $(0,1)$. Since $\mathcal E$ is countable, its complement is also dense $G_\delta$. Their intersection is therefore dense $G_\delta$, and the stated Dini-derivative identities hold by construction. Any finite derivative would force all four one-sided Dini derivatives to agree finitely, contradiction. \hfill$\square$
+
+\subsection{Exact local secant spectra on a residual set}
+
+For $x\in(0,1)$ and $0<h<\min\{x,1-x\}$, define
+\[
+Q_h^-(x):=\frac{G(x)-G(x-h)}{h},
+\qquad
+Q_h^+(x):=\frac{G(x+h)-G(x)}{h}.
+\]
+For fixed $x$, both functions of $h$ are continuous on their natural domains.
+
+\noindent\textbf{Theorem 10.}
+Let $x\in\Omega$. Then for every $c>0$ and every
+\[
+0<\delta<\min\{x,1-x\}
+\]
+there exist $h_-,h_+\in(0,\delta)$ such that
+\[
+Q_{h_-}^-(x)=c,
+\qquad
+Q_{h_+}^+(x)=c.
+\]
+Equivalently, every positive slope is realized exactly by arbitrarily small left secants and by arbitrarily small right secants based at $x$.
+
+If
+\[
+\Sigma_-(x):=\Bigl\{L\in[0,\infty):\exists h_n\to0^+,\ Q_{h_n}^-(x)\to L\Bigr\},
+\]
+\[
+\Sigma_+(x):=\Bigl\{L\in[0,\infty):\exists h_n\to0^+,\ Q_{h_n}^+(x)\to L\Bigr\},
+\]
+then
+\[
+\Sigma_-(x)=\Sigma_+(x)=[0,\infty)
+\qquad(x\in\Omega).
+\]
+
+\medskip
+\noindent\textit{Proof.}
+Fix $x\in\Omega$, $c>0$, and $\delta$ as above. Since $\underline D_-G(x)=0$, there exists $a\in(0,\delta)$ with $Q_a^-(x)<c$. Since $\overline D_-G(x)=+\infty$, there exists $b\in(0,\delta)$ with $Q_b^-(x)>c$. By continuity of $h\mapsto Q_h^-(x)$, the intermediate value theorem yields $h_-\in(0,\delta)$ with $Q_{h_-}^-(x)=c$. The right-hand statement is identical.
+
+Applying this for each $c>0$ and a sequence $\delta_m\to0^+$ yields $c\in\Sigma_-(x)\cap\Sigma_+(x)$. Since $\underline D_-G(x)=\underline D_+G(x)=0$, the value $0$ is also attained as a limit point. Nonnegativity of the quotients shows that no negative values occur. Hence the spectra are exactly $[0,\infty)$. \hfill$\square$
+
+\subsection{Interval consequences}
+
+\noindent\textbf{Corollary 11.}
+Every nonempty open interval $I\subset(0,1)$ contains subintervals with arbitrarily small average slope and subintervals with arbitrarily large average slope:
+\[
+\inf_{\substack{a<b\\ [a,b]\subset I}}\frac{G(b)-G(a)}{b-a}=0,
+\qquad
+\sup_{\substack{a<b\\ [a,b]\subset I}}\frac{G(b)-G(a)}{b-a}=+\infty.
+\]
+
+\medskip
+\noindent\textit{Proof.}
+The lower statement follows by choosing $x\in A_{\mathrm{sym}}\cap I$ and taking $h>0$ small with $[x-h,x+h]\subset I$ and $S_h(x)$ arbitrarily small. The upper statement follows by choosing $t\in\mathcal E\cap I$ and using Theorem~3. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 12.}
+Every nonempty open interval $I\subset(0,1)$ contains secants of \emph{every} prescribed positive slope. More precisely, for every $c>0$ there exist points
+\[
+a<x<b,
+\qquad x\in I\setminus\mathcal E,
+\qquad [a,b]\subset I,
+\]
+such that
+\[
+\frac{G(x)-G(a)}{x-a}=c,
+\qquad
+\frac{G(b)-G(x)}{b-x}=c,
+\qquad
+\frac{G(b)-G(a)}{b-a}=c.
+\]
+
+\medskip
+\noindent\textit{Proof.}
+Choose $x\in\Omega\cap I$ and let $\delta>0$ be so small that $[x-\delta,x+\delta]\subset I$. Apply Theorem~10 to find $h_-,h_+\in(0,\delta)$ with $Q_{h_-}^-(x)=Q_{h_+}^+(x)=c$. Then $a:=x-h_-$ and $b:=x+h_+$ have the required properties, and the slope identity over $[a,b]$ follows by adding the two equal increments. \hfill$\square$
+
+\subsection{Final reduction of the candidate set}
+
+Define
+\[
+D_+:=\{x\in(0,1):G'(x)\text{ exists and }0<G'(x)<\infty\}.
+\]
+Also set
+\[
+\Xi:=\bigl(B_-\cap B_+\bigr)\setminus\mathcal E.
+\]
+
+\noindent\textbf{Proposition 13.}
+The set $\Xi$ is dense $G_\delta$ in $(0,1)$ and satisfies
+\[
+\mu(\Xi)=1.
+\]
+Moreover,
+\[
+D_+\subseteq (0,1)\setminus\Xi.
+\]
+Hence every $x\in D_+$ satisfies all of the following:
+\begin{enumerate}
+\item $x\notin\mathcal E$;
+\item both one-sided upper Dini derivatives at $x$ are finite;
+\item $x$ lies in a meager set;
+\item $x$ lies in a $\mu$-null set;
+\item $x$ lies in a Lebesgue-null set.
+\end{enumerate}
+In addition,
+\[
+D_+\subseteq (0,1)\setminus\Omega,
+\]
+so any candidate point must also avoid the residual exact-spectrum set of Theorem~10.
+
+\medskip
+\noindent\textit{Proof.}
+The density and $G_\delta$ property of $\Xi$ follow from Proposition~8 and countability of $\mathcal E$. The equality $\mu(\Xi)=1$ follows from Proposition~6 together with $\mu(\mathcal E)=0$. If $G'(x)$ exists finitely, then both one-sided upper Dini derivatives are finite, so $x\notin B_-\cap B_+$, hence $x\notin\Xi$. The remaining assertions follow immediately. \hfill$\square$
+
+\subsection{What has been proved, and what remains open}
+
+The thread established the following rigorous picture.
+
+\begin{enumerate}
+\item The special value set $\mathcal E=\{\varphi(n)/n:n\ge1\}$ is countable and dense in $[0,1]$.
+\item At every $t\in\mathcal E$ there is a sharp left asymptotic
+\[
+G(t)-G(t-h)\sim \frac{e^{-\gamma}K(t)}{\log(t/h)},
+\]
+so $G'_-(t)=+\infty$.
+\item The upper symmetric Dini derivative is infinite for $\mu$-almost every point.
+\item Both one-sided upper Dini derivatives are infinite for $\mu$-almost every point.
+\item There is a dense $G_\delta$ set $\Omega\subset(0,1)\setminus\mathcal E$ such that for every $x\in\Omega$,
+\[
+\underline D_-G(x)=\underline D_+G(x)=0,
+\qquad
+\overline D_-G(x)=\overline D_+G(x)=+\infty,
+\]
+and in fact every positive one-sided secant slope occurs exactly, on both sides, at arbitrarily small scales around $x$.
+\item Every nonempty open interval contains subintervals with arbitrarily small average slope, subintervals with arbitrarily large average slope, and indeed secants of every prescribed positive slope.
+\item Any hypothetical point $x$ with $0<G'(x)<\infty$ must lie outside $\mathcal E$, outside a residual exact-spectrum set, outside a residual and $\mu$-full one-sided blow-up set, and inside a set that is simultaneously meager, $\mu$-null, and Lebesgue-null.
+\end{enumerate}
+
+These are strong obstructions, but they do \emph{not} settle the original Erd\H{o}s problem. No gap-free proof or counterexample has been obtained in this thread.
+
+\subsection{References}
+
+\begin{enumerate}
+\item I. J. Schoenberg, \emph{On asymptotic distributions of arithmetical functions}, Trans. Amer. Math. Soc. \textbf{39} (1936), 315--330.
+
+\item P. Erd\H{o}s, \emph{On the distribution function of additive functions}, Ann. of Math. (2) \textbf{47} (1946), 1--20.
+
+\item G. Tenenbaum and V. Toulmonde, \emph{Sur le comportement local de la r\'epartition de l'indicatrice d'Euler}, Funct. Approx. Comment. Math. \textbf{35} (2006), 321--338.
+
+\item V. Toulmonde, \emph{Module de continuit\'e de la fonction de r\'epartition de $\varphi(n)/n$}, Acta Arith. \textbf{121} (2006), no.~4, 367--402.
+
+\item P. Mattila, \emph{Geometry of Sets and Measures in Euclidean Spaces}, Cambridge Studies in Advanced Mathematics 44, Cambridge Univ. Press, 1995.
+
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#50}, current discussion/status page, accessed 2026-03-09.
+\end{enumerate}

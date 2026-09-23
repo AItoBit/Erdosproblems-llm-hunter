@@ -1,0 +1,132 @@
+\section{Erd\H{o}s Problem \#141: consecutive primes in arithmetic progression}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}  Round-1 already isolated the basic primorial divisibility obstruction on the common difference.  The natural next question is whether \emph{local congruence considerations} could settle the problem.  The most promising strict advance is therefore to determine exactly how far those congruence obstructions can go.
+
+\subsection*{2) Round-1 foundation used}
+I use the following Round-1 results.
+\begin{enumerate}
+\item The Round-1 primorial divisibility lemma: if $a,a+d,\dots,a+(k-1)d$ are primes and all exceed $k$, then every prime $q\le k$ divides $d$.
+\item The Round-1 verification of explicit CPAP examples for $k=3,4,5,6$.
+\item The Round-1 literature summary that existence is known computationally for $k\le 10$, but remains open in general and open even for infinitude when $k=3$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a \textbf{global local-admissibility theorem}.
+After imposing the Round-1 necessary divisibility condition $k\#\mid d$, the prime positions
+\[
+a,\ a+d,\ \dots,\ a+(k-1)d
+\]
+still pass \emph{every} local congruence test simultaneously.  In Hardy--Littlewood language, the primorial-step pattern itself is admissible.
+
+This rules out an entire class of disproof strategies: one cannot prove nonexistence of CPAP-$k$ merely by checking divisibility of the designated prime positions modulo primes.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+After Round-1, the remaining gap was this: the primorial lemma gives a necessary congruence condition on $d$, but does not say whether that condition is already ``close to impossible'' or in fact perfectly compatible with all local prime obstructions.
+
+I therefore prove the following sharper statement.
+\begin{quote}
+For the step size $D_k:=\prod_{p\le k} p$, the $k$ linear forms
+\[
+L_i(n)=n+iD_k\qquad (0\le i\le k-1)
+\]
+are admissible at every prime.
+\end{quote}
+That shows the designated prime positions themselves encounter \emph{no} local obstruction whatsoever.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent\textbf{Claim 141.1 (the primorial-step pattern is admissible).}
+Let
+\[
+D_k:=\prod_{p\le k} p.
+\]
+For each $i=0,1,\dots,k-1$, define the linear form
+\[
+L_i(n)=n+iD_k.
+\]
+Then for every prime $q$, the set of residue classes
+\[
+\{-iD_k \pmod q: 0\le i\le k-1\}
+\]
+is a proper subset of $\mathbf Z/q\mathbf Z$.  Equivalently, for every prime $q$ there exists a residue class $n\pmod q$ such that
+\[
+q \nmid L_i(n) \qquad \text{for all } i=0,1,\dots,k-1.
+\]
+Thus the $k$-tuple $\{L_0,\dots,L_{k-1}\}$ is admissible in the Hardy--Littlewood sense.
+
+\smallskip
+\noindent\emph{Proof.}
+Fix a prime $q$.
+
+\smallskip
+\noindent\emph{Case 1: $q\le k$.}
+Then $q\mid D_k$, so for every $i$ we have
+\[
+L_i(n)=n+iD_k\equiv n \pmod q.
+\]
+Hence all $k$ forms are simultaneously divisible by $q$ only when $n\equiv 0\pmod q$.  So there is exactly one forbidden residue class modulo $q$, and therefore the forbidden set is a proper subset of $\mathbf Z/q\mathbf Z$.
+
+\smallskip
+\noindent\emph{Case 2: $q>k$.}
+Now $q\nmid D_k$, so $D_k$ is invertible modulo $q$.  Therefore the residues
+\[
+0,\ D_k,\ 2D_k,\ \dots,\ (k-1)D_k \pmod q
+\]
+are pairwise distinct.  Equivalently, the forbidden residues
+\[
+-iD_k \pmod q \qquad (0\le i\le k-1)
+\]
+are pairwise distinct.  There are exactly $k$ of them.  Since $q>k$, these $k$ residues cannot exhaust all $q$ residue classes modulo $q$.  So again the forbidden set is proper.
+
+In both cases there exists at least one residue class $n\pmod q$ for which no $L_i(n)$ is divisible by $q$.  Hence the tuple is admissible at every prime $q$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 141.2.}  No disproof of the existence of CPAP-$k$ can be obtained solely from local congruence obstructions on the $k$ designated prime positions.
+
+\smallskip
+\noindent\emph{Proof.}
+Round-1 already showed that any genuine prime progression of length $k$ with all terms $>k$ must have common difference divisible by $D_k$.  Claim 141.1 shows that once this mandatory divisibility is imposed, the $k$ designated prime positions still satisfy every local admissibility condition at every prime.  Therefore local divisibility of the designated prime positions cannot force nonexistence.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 141.3.}  For every finite set $S$ of primes, there are infinitely many integers $a$ such that
+\[
+\gcd\Bigl(\prod_{i=0}^{k-1}(a+iD_k),\ \prod_{q\in S} q\Bigr)=1.
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+For each $q\in S$, choose a good residue class modulo $q$ given by Claim 141.1.  The Chinese remainder theorem then yields a residue class modulo $\prod_{q\in S} q$ satisfying all these conditions simultaneously.  That residue class contains infinitely many integers $a$.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Does this solve the CPAP problem?}  No.  The theorem controls only the \emph{designated prime positions}.  A CPAP-$k$ also requires that every integer between successive terms be composite, and nothing here addresses that global/consecutive condition.
+
+\item \textbf{Did I use the Round-1 primorial lemma correctly?}  Yes.  The new theorem is explicitly designed to start from that lemma's necessary condition $D_k\mid d$ and then show that there is no further local obstruction at the prime positions.
+
+\item \textbf{Could the admissibility statement fail for $q=k$?}  No.  If $q\le k$, then because $q\mid D_k$ all forms are congruent to $n$ modulo $q$, so only the single residue class $n\equiv 0\pmod q$ is forbidden.
+
+\item \textbf{Audit of Round-1 computations.}  I rechecked the explicit Round-1 CPAP examples for $k=3,4,5,6$ by direct primality testing and by enumerating all primes in the interval from the first to the last term.  No flaw was found there.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round-2 gives a genuine new structural theorem: after imposing the mandatory primorial divisibility from Round-1, the prime positions of a length-$k$ arithmetic progression remain admissible at \emph{every} prime.  So purely local congruence arguments on the designated prime positions cannot settle CPAP-$k$.
+
+The existence question for CPAP-$k$ itself remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 34\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item Erd\H{o}s Problems database, Problem \#141 (status page checked March 7, 2026).
+\item Chris Caldwell, \emph{Consecutive Primes in Arithmetic Progression}, Prime Pages.
+\item OEIS A006560 (smallest starting prime for $n$ consecutive primes in arithmetic progression).
+\end{itemize}
+

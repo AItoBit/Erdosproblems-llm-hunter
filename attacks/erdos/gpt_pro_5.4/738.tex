@@ -1,0 +1,139 @@
+\section{Erd\H{o}s problems \#655, \#738, \#740 --- Round 2 continuation}
+
+\subsection*{Problem \#738}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+Path (C): keep the full problem open, but convert the Round-1 reduction into genuine new positive theorems for large classes of trees, and isolate a sharper obstruction for any future counterexample.
+
+This is the most promising direction because Round 1 already showed that the full problem is equivalent to a finite forcing statement, so the natural next step is to import the strongest finite theorems that are already known and lift them to the infinite triangle-free setting.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use the following vetted Round-1 ingredients.
+
+\begin{itemize}
+\item \textbf{Finite-to-infinite compactness principle.} If a finite-tree forcing theorem holds for all sufficiently large finite triangle-free graphs, then the corresponding statement holds for every triangle-free graph of infinite chromatic number.
+\item \textbf{Induced-path consequence.} Every triangle-free graph of infinite chromatic number contains induced paths of all finite lengths.
+\end{itemize}
+
+I do not re-prove these Round-1 facts.
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+Three finite theorems can now be fed through the Round-1 compactness mechanism.
+
+\begin{enumerate}
+\item Scott's induced-subdivision theorem: every bounded-clique graph of sufficiently large chromatic number contains an induced subdivision of any fixed tree \cite{Scott97}.
+\item Scott's corollary for subdivisions of stars: if $T$ is a subdivision of a star, then $\operatorname{Forb}(T)$ is $\chi$-bounded \cite{Scott97}.
+\item Nguyen--Scott--Seymour's path-induced theorem: every bounded-clique graph of sufficiently large chromatic number contains a path-induced copy of any fixed rooted tree \cite{NguyenScottSeymour24}.
+\end{enumerate}
+
+This yields new infinite-chromatic consequences that were not extracted in Round 1.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+After Round 1, the exact gap was: which nontrivial families of trees can already be forced in the infinite triangle-free setting?
+
+I will prove four new claims.
+
+\begin{enumerate}
+\item Every finite tree occurs as an \emph{induced subdivision}.
+\item Every finite subdivision of a star occurs as an \emph{induced subgraph}.
+\item Every finite tree of radius at most $2$ occurs as an \emph{induced subgraph}.
+\item Every finite rooted tree occurs as a \emph{path-induced subgraph}.
+\end{enumerate}
+
+These claims together isolate the first genuinely open family: a possible counterexample tree must lie outside both the radius-$2$ family and the subdivision-of-a-star family, and any negative example must exploit the gap between induced copies and path-induced / induced-subdivision copies.
+
+\subsubsection*{5) WORK (ROUND-2)}
+We write $\chi(G)$ for the chromatic number and say that $G$ is \emph{triangle-free} if it contains no $K_3$.
+
+\paragraph{Claim 1.} Every triangle-free graph of infinite chromatic number contains an induced subdivision of every finite tree.
+
+\paragraph{Proof.}
+Fix a finite tree $T$ and let $G$ be triangle-free with infinite chromatic number.
+By Scott's theorem \cite[Theorem~3]{Scott97}, for $k=3$ there exists an integer $c(T)$ such that every finite graph $H$ with $\chi(H)\ge c(T)$ either contains $K_3$ or contains an induced subdivision of $T$.
+
+Since $\chi(G)$ is infinite, the de Bruijn--Erd\H{o}s compactness theorem gives a finite induced subgraph $G[S]$ with $\chi(G[S])\ge c(T)$. Because $G$ is triangle-free, so is $G[S]$; hence $G[S]$ cannot contain $K_3$. Therefore $G[S]$ contains an induced subdivision of $T$. Since $G[S]$ is induced, that subdivision is also induced in $G$.
+
+So every finite tree appears in $G$ as an induced subdivision. \hfill $\square$
+
+\paragraph{Claim 2.} Every triangle-free graph of infinite chromatic number contains every finite subdivision of a star as an induced subgraph.
+
+\paragraph{Proof.}
+Let $T$ be a subdivision of a star. Scott proved that $\operatorname{Forb}(T)$ is $\chi$-bounded \cite[Corollary~2]{Scott97}. Thus there exists a finite number $b(T)$ such that every triangle-free $T$-free graph has chromatic number at most $b(T)$.
+
+Now let $G$ be triangle-free with infinite chromatic number. Choose a finite induced subgraph $G[S]$ with $\chi(G[S])>b(T)$. Then $G[S]$ cannot be $T$-free, so it contains an induced copy of $T$. Since $G[S]$ is induced, this copy is induced in $G$ as well. \hfill $\square$
+
+\paragraph{Claim 3.} Every triangle-free graph of infinite chromatic number contains every finite tree of radius at most $2$ as an induced subgraph.
+
+\paragraph{Proof.}
+Let $T$ be a tree of radius at most $2$. Scott records the theorem of Gy\'{a}rf\'{a}s, Szemer\'{e}di, and Tuza that for every such $T$ there exists a constant $c(T)$ such that every triangle-free finite graph of chromatic number at least $c(T)$ contains an induced copy of $T$; he also records the stronger theorem of Kierstead and Penrice that $\operatorname{Forb}(T)$ is $\chi$-bounded for every radius-$2$ tree \cite[p.~2, Theorem~B]{Scott97}.
+
+Applying the Round-1 compactness principle exactly as above, any triangle-free graph $G$ with infinite chromatic number has a finite induced subgraph of chromatic number at least $c(T)$, and hence contains an induced copy of $T$. \hfill $\square$
+
+\paragraph{Claim 4.} Every triangle-free graph of infinite chromatic number contains a path-induced copy of every finite rooted tree.
+
+\paragraph{Proof.}
+Fix a finite rooted tree $(T,r)$ and let $G$ be triangle-free with infinite chromatic number.
+Nguyen, Scott, and Seymour proved that for every rooted tree $(T,r)$ and every integer $t\ge 1$, every graph with no clique of size $t$ and sufficiently large chromatic number admits a path-induced copy of $(T,r)$ \cite[Theorem~1.2 and Theorem~2.3]{NguyenScottSeymour24}.
+
+Set $t=3$. Then there exists $p(T,r)$ such that every finite graph $H$ with no $K_3$ and $\chi(H)\ge p(T,r)$ admits a path-induced copy of $(T,r)$.
+Again choose a finite induced subgraph $G[S]$ with $\chi(G[S])\ge p(T,r)$. Since $G[S]$ is triangle-free, it contains a path-induced copy of $(T,r)$, and because $G[S]$ is induced, that same copy is path-induced in $G$.
+Thus every finite rooted tree occurs path-induced in $G$. \hfill $\square$
+
+\paragraph{Sharper obstruction extracted from Claims 1--4.}
+Suppose the original Problem \#738 were false. Then there would exist a finite tree $T$ and a triangle-free graph $G$ of infinite chromatic number such that $G$ contains no induced copy of $T$.
+Claims 2 and 3 show that such a tree $T$ cannot be a subdivision of a star and cannot have radius at most $2$. Therefore any minimal unresolved tree must have radius at least $3$ and at least two vertices of degree greater than $2$.
+
+Moreover Claim 4 shows that $G$ still contains a path-induced copy of every rooted version of $T$, and Claim 1 shows that it contains an induced subdivision of $T$. So any future counterexample must exploit the difference between an induced copy of $T$ and the weaker structures ``induced subdivision of $T$'' and ``path-induced copy of $(T,r)$''.
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Persistence from finite induced subgraphs.} Every copy found inside $G[S]$ remains induced (or path-induced) in $G$ because $G[S]$ has exactly the edges of $G$ on $S$.
+\item \textbf{Triangle-free hypothesis.} In Claims 1--4, the finite theorems are applied with clique bound $2$, equivalently with forbidden clique $K_3$. This matches the hypothesis exactly.
+\item \textbf{Why path-induced is genuinely weaker than induced.} Consider the five-vertex tree with edges $ra, rb, ax, by$, rooted at $r$. Add one extra edge $xy$. The resulting graph is still triangle-free. The original tree appears as a path-induced rooted subgraph (both root-to-leaf paths $r$--$a$--$x$ and $r$--$b$--$y$ are induced), but it is not an induced subgraph because of the extra edge $xy$. So Claim 4 does not already settle the original problem.
+\item \textbf{Why induced subdivisions do not settle the original problem.} An induced subdivision of $T$ may insert extra degree-$2$ vertices on edges of $T$; that need not give an induced copy of $T$ itself. Thus Claim 1 is strictly weaker than the target statement for general $T$.
+\item \textbf{Boundary of the new positive families.} Claims 2 and 3 are incomparable families: radius-$2$ trees may have many branching vertices, whereas subdivisions of stars have at most one branching vertex. So together they strictly enlarge the known forced family.
+\end{itemize}
+
+\subsubsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round 2 proves substantially more than Round 1:
+
+\begin{enumerate}
+\item every finite tree appears as an induced subdivision;
+\item every finite subdivision of a star appears as an induced subgraph;
+\item every finite radius-$2$ tree appears as an induced subgraph;
+\item every finite rooted tree appears as a path-induced subgraph.
+\end{enumerate}
+
+So the first genuinely open trees are those of radius at least $3$ with at least two branching vertices, and any counterexample must separate induced copies from induced subdivisions / path-induced copies. The full problem remains open \cite{Bloom738}.
+
+\subsubsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 60\%
+
+\subsubsection*{9) REFERENCES}
+References used in Round 2 are listed in the global bibliography below.
+
+
+\section{References}
+\begin{thebibliography}{99}
+
+\bibitem{Bloom738}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#738}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Bloom740}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#740}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Scott97}
+A. D. Scott, \emph{Induced trees in graphs of large chromatic number}, Journal of Graph Theory \textbf{24} (1997), 297--311.
+
+\bibitem{NguyenScottSeymour24}
+T. Nguyen, A. Scott, and P. Seymour, \emph{A note on the Gy\'{a}rf\'{a}s--Sumner conjecture}, Graphs and Combinatorics \textbf{40} (2024), Article 33.
+
+\bibitem{Rodl77}
+V. R\"{o}dl, \emph{On the chromatic number of subgraphs of a given graph}, Proceedings of the American Mathematical Society \textbf{64} (1977), 370--371.
+
+\bibitem{KomjathShelah88}
+P. Komj\'{a}th and S. Shelah, \emph{Forcing constructions for uncountably chromatic graphs}, Journal of Symbolic Logic \textbf{53} (1988), 696--707.
+
+\end{thebibliography}

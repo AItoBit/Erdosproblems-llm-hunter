@@ -1,0 +1,389 @@
+\section{Erd\H{o}s Problem \#43 (Round 8)}
+
+\subsection{1) ROUND-8 OBJECTIVE}
+
+\textbf{Path chosen: (C) --- obstruction/correction for the remaining open part.}
+
+Round~7 ruled out the entire \emph{finite positive-combination} version of the Tao-style kernel method, but it still left one genuine loophole: perhaps one could beat the Round~7 barrier by using a \emph{single general nonnegative positive-definite weight} that is not presented in advance as a nonnegative-generator autocorrelation, or by hiding such a weight inside a more elaborate kernel package.
+
+The most promising Round~8 direction is therefore to close that loophole completely.  I prove a \emph{universal positive-definite-kernel barrier}: among all finitely supported nonnegative positive-definite weights, the unique optimal choice is the discrete Fej\'er kernel, and the best bound obtainable is exactly the same interval-kernel bound already visible in Rounds~6--7.  This strictly strengthens Round~7 by removing both the ``nonnegative generator'' and ``finite package'' restrictions.
+
+\subsection{2) Round-7 FOUNDATION USED}
+
+I explicitly use the following Round~7 results.
+\begin{itemize}
+\item \textbf{Round~7 pointwise input.} If $A,B\subset[N]$ are Sidon and $(A-A)\cap(B-B)=\{0\}$, then, writing
+\[
+\Delta_A:=\mathbf 1_A*\mathbf 1_{-A},\qquad \Delta_B:=\mathbf 1_B*\mathbf 1_{-B},
+\]
+one has
+\[
+\Delta_A(n)+\Delta_B(n)\le (|A|+|B|)\mathbf 1_{\{0\}}(n)+1
+\qquad (n\in\mathbb Z).
+\]
+\item \textbf{Round~7 finite positive-combination barrier.} Any finite nonnegative linear combination of interval-kernel inequalities is no stronger than the best single interval kernel.
+\item \textbf{Round~4 asymptotic lower family.} There exist infinitely many feasible pairs with
+\[
+|A|+|B|=(\sqrt 2+o(1))\sqrt N.
+\]
+This will be used to quantify the strength of the new barrier.
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-8)}
+
+There are two genuinely new ingredients in this round.
+
+\paragraph{(i) Fej\'er--Riesz spectral factorisation closes the last loophole in the positive-kernel method.}
+I work with an \emph{arbitrary} finitely supported weight $w:\mathbb Z\to [0,\infty)$ whose Fourier transform
+\[
+\widehat w(\theta):=\sum_{n\in\mathbb Z} w(n)e^{2\pi i n\theta}
+\]
+is nonnegative for all $\theta\in\mathbb R/\mathbb Z$ (equivalently, $w$ is positive-definite).  By the classical Fej\'er--Riesz theorem, such a $w$ factors as
+\[
+w=\psi*\widetilde\psi
+\]
+for some finitely supported complex $\psi$.  This lets me re-run the Round~6/7 argument for the full class of nonnegative positive-definite weights, not just the special weights built from nonnegative generators.
+
+\paragraph{(ii) Exact optimisation of the whole positive-definite-weight framework.}
+If $w$ is supported in $\{-(L-1),\dots,L-1\}$, the best upper bound obtainable from $w$ is
+\[
+B_w(N,T):=(N+L-1)\left(1+T\frac{w(0)}{\sum_n w(n)}\right),
+\qquad T:=|A|+|B|.
+\]
+I prove
+\[
+\sum_n w(n)\le L\,w(0),
+\]
+with equality if and only if $w$ is a positive scalar multiple of the discrete Fej\'er kernel
+\[
+F_L(n):=\max\{L-|n|,0\}.
+\]
+Hence the exact optimum over \emph{all} admissible positive-definite weights is
+\[
+\mathcal B_{\mathrm{pd}}(N,T)=\min_{L\ge 1}(N+L-1)\left(1+\frac{T}{L}\right),
+\]
+and it is uniquely attained (up to scale) by the Fej\'er kernels.  This strictly strengthens Round~7.
+
+\subsection{4) ATTACK PLAN (ROUND-8)}
+
+\textbf{Exact gap left after Round~7.}
+Round~7 exhausted finite positive combinations of the previous interval/autocorrelation kernels, but not the larger class of all nonnegative positive-definite weights.  In principle, such a weight could arise from a sign-changing or complex generator after spectral factorisation, so Round~7 did not yet fully rule out the broader Tao-style framework.
+
+\textbf{Claims proved in this round.}
+\begin{enumerate}
+\item Every admissible positive-definite weight $w$ yields an upper bound
+\[
+S:=|A|^2+|B|^2\le B_w(N,T):=(N+L-1)\left(1+T\frac{w(0)}{\sum_n w(n)}\right),
+\]
+where $L$ is the support-length parameter of $w$.
+\item For every such $w$, one has
+\[
+\sum_n w(n)\le L\,w(0),
+\]
+with equality exactly for positive multiples of the Fej\'er kernel.
+\item Consequently,
+\[
+\inf_w B_w(N,T)=\min_{L\ge 1}(N+L-1)\left(1+\frac{T}{L}\right),
+\]
+so the whole positive-definite-weight method is \emph{exactly} optimised by the same Fej\'er/interval kernel already present in Round~6.
+\end{enumerate}
+
+This overcomes the final loophole in the positive-kernel approach and rules out an even broader class of proof strategies than Round~7.
+
+\subsection{5) WORK (ROUND-8)}
+
+\subsubsection{5.1 Admissible weights and Fej\'er--Riesz factorisation}
+
+Let $A,B\subset[N]$ be Sidon sets with $(A-A)\cap(B-B)=\{0\}$, and write
+\[
+a:=|A|,\qquad b:=|B|,\qquad S:=a^2+b^2,\qquad T:=a+b.
+\]
+
+Call a function $w:\mathbb Z\to[0,\infty)$ \emph{admissible of span $L$} if:
+\begin{itemize}
+\item $w$ is supported in $\{-(L-1),\dots,L-1\}$,
+\item $\widehat w(\theta)\ge 0$ for all $\theta\in\mathbb R/\mathbb Z$.
+\end{itemize}
+The second condition is equivalent to positive-definiteness of $w$.
+
+We will use the following classical theorem.
+
+\begin{theorem}[Fej\'er--Riesz]
+\label{thm:FR}
+Let
+\[
+p(\theta)=\sum_{n=-(L-1)}^{L-1} c_n e^{2\pi i n\theta}
+\]
+be a trigonometric polynomial that is nonnegative for all $\theta\in\mathbb R/\mathbb Z$.  Then there exists a polynomial
+\[
+P(z)=\sum_{j=0}^{L-1}\psi(j)z^j
+\]
+of degree at most $L-1$ such that
+\[
+p(\theta)=\bigl|P(e^{2\pi i\theta})\bigr|^2.
+\]
+Equivalently, the coefficients satisfy
+\[
+c_n=\sum_{j\in\mathbb Z}\psi(j+n)\overline{\psi(j)}.
+\]
+\end{theorem}
+
+Applied to $p=\widehat w$, Theorem~\ref{thm:FR} gives the following factorisation.
+
+\begin{corollary}
+\label{cor:factor}
+If $w$ is admissible of span $L$, then there exists a complex-valued function $\psi$ supported in $\{0,1,\dots,L-1\}$ such that
+\[
+w=\psi*\widetilde\psi,
+\qquad \widetilde\psi(n):=\overline{\psi(-n)}.
+\]
+\end{corollary}
+
+\begin{proof}
+Write
+\[
+\widehat w(\theta)=\sum_{n=-(L-1)}^{L-1} w(n)e^{2\pi i n\theta}.
+\]
+Since $w$ is admissible, $\widehat w(\theta)\ge 0$ for all $\theta$.  Applying Theorem~\ref{thm:FR} gives
+\[
+\widehat w(\theta)=\left|\sum_{j=0}^{L-1}\psi(j)e^{2\pi i j\theta}\right|^2.
+\]
+Comparing Fourier coefficients yields $w=\psi*\widetilde\psi$.
+\end{proof}
+
+\subsubsection{5.2 The universal positive-definite-kernel inequality}
+
+\begin{proposition}
+\label{prop:pd-bound}
+Let $w$ be an admissible weight of span $L$, and set
+\[
+W:=\sum_{n\in\mathbb Z} w(n).
+\]
+Then
+\begin{equation}
+\label{eq:pd-master}
+S\le (N+L-1)\left(1+T\frac{w(0)}{W}\right).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:factor}, write $w=\psi*\widetilde\psi$ with $\operatorname{supp}(\psi)\subseteq\{0,\dots,L-1\}$.
+
+First, using the Round~7 pointwise estimate,
+\[
+\Delta_A(n)+\Delta_B(n)\le T\mathbf 1_{\{0\}}(n)+1,
+\]
+and the fact that $w(n)\ge0$, we obtain
+\begin{align}
+\sum_n w(n)\Delta_A(n)+\sum_n w(n)\Delta_B(n)
+&\le T w(0)+\sum_n w(n)\notag\\
+&=T w(0)+W.
+\label{eq:upperpd}
+\end{align}
+
+On the other hand,
+\[
+\sum_n w(n)\Delta_A(n)=\sum_n (\psi*\widetilde\psi)(n)(\mathbf 1_A*\mathbf 1_{-A})(n)=\|\mathbf 1_A*\psi\|_2^2,
+\]
+and similarly
+\[
+\sum_n w(n)\Delta_B(n)=\|\mathbf 1_B*\psi\|_2^2.
+\]
+Now $\mathbf 1_A*\psi$ is supported in an interval of length at most $N+L-1$, so Cauchy--Schwarz gives
+\[
+\|\mathbf 1_A*\psi\|_2^2\ge \frac{\left|\sum_x (\mathbf 1_A*\psi)(x)\right|^2}{N+L-1}
+=\frac{a^2\left|\sum_j \psi(j)\right|^2}{N+L-1}.
+\]
+Likewise,
+\[
+\|\mathbf 1_B*\psi\|_2^2\ge \frac{b^2\left|\sum_j \psi(j)\right|^2}{N+L-1}.
+\]
+Adding and using
+\[
+W=\sum_n w(n)=\left|\sum_j \psi(j)\right|^2,
+\]
+we obtain
+\begin{equation}
+\label{eq:lowerpd}
+\sum_n w(n)\Delta_A(n)+\sum_n w(n)\Delta_B(n)
+\ge \frac{SW}{N+L-1}.
+\end{equation}
+Combining \eqref{eq:upperpd} and \eqref{eq:lowerpd} yields \eqref{eq:pd-master}.
+\end{proof}
+
+\subsubsection{5.3 Fej\'er's inequality and the unique optimiser}
+
+\begin{lemma}[Fej\'er inequality in coefficient form]
+\label{lem:fejer-ineq}
+If $w$ is admissible of span $L$, then
+\begin{equation}
+\label{eq:fejer-coeff}
+W\le L\,w(0).
+\end{equation}
+Moreover, equality holds if and only if
+\[
+w(n)=c\,F_L(n)
+\qquad (n\in\mathbb Z)
+\]
+for some $c>0$, where
+\[
+F_L(n):=\max\{L-|n|,0\}
+\]
+is the discrete Fej\'er kernel.
+\end{lemma}
+
+\begin{proof}
+By Corollary~\ref{cor:factor}, write $w=\psi*\widetilde\psi$ with $\operatorname{supp}(\psi)\subseteq\{0,\dots,L-1\}$.
+Then
+\[
+W=\left|\sum_{j=0}^{L-1}\psi(j)\right|^2,
+\qquad
+w(0)=\sum_{j=0}^{L-1}|\psi(j)|^2.
+\]
+Applying Cauchy--Schwarz to the length-$L$ vector $(\psi(0),\dots,\psi(L-1))$ gives
+\[
+\left|\sum_{j=0}^{L-1}\psi(j)\right|^2\le L\sum_{j=0}^{L-1}|\psi(j)|^2,
+\]
+which is exactly \eqref{eq:fejer-coeff}.
+
+Equality in Cauchy--Schwarz holds if and only if all $\psi(j)$ have the same phase and the same modulus.  Thus, after multiplying by a unimodular constant, one has
+\[
+\psi(j)=c^{1/2}
+\qquad (0\le j\le L-1)
+\]
+for some $c>0$.  In that case,
+\[
+w(n)=\sum_j \psi(j+n)\overline{\psi(j)}=c\,\#\{j:0\le j\le L-1,\ 0\le j+n\le L-1\}=c\,F_L(n).
+\]
+Conversely, $w=cF_L$ is generated by the constant vector $\psi\equiv c^{1/2}$ on $\{0,\dots,L-1\}$, so equality holds.
+\end{proof}
+
+\begin{theorem}[Universal positive-definite-kernel barrier]
+\label{thm:universal-barrier}
+Let $\mathcal B_{\mathrm{pd}}(N,T)$ denote the strongest upper bound on $S=|A|^2+|B|^2$ obtainable from the Round~7 pointwise estimate by summing against an arbitrary admissible positive-definite weight and using only the Cauchy--Schwarz lower bound above.  Then
+\begin{equation}
+\label{eq:Bpd}
+\mathcal B_{\mathrm{pd}}(N,T)=\min_{L\ge 1}(N+L-1)\left(1+\frac{T}{L}\right).
+\end{equation}
+For each fixed $L$, the unique optimiser (up to positive scalar multiple) is the discrete Fej\'er kernel $F_L$.
+\end{theorem}
+
+\begin{proof}
+Fix an admissible weight $w$ of span $L$.  Proposition~\ref{prop:pd-bound} gives
+\[
+S\le (N+L-1)\left(1+T\frac{w(0)}{W}\right).
+\]
+By Lemma~\ref{lem:fejer-ineq},
+\[
+\frac{w(0)}{W}\ge \frac1L,
+\]
+so every admissible weight of span $L$ yields a bound at least
+\[
+(N+L-1)\left(1+\frac{T}{L}\right).
+\]
+Conversely, taking $w=F_L=\mathbf 1_{[0,L-1]}*\mathbf 1_{-[0,L-1]}$ gives
+\[
+W=L^2,
+\qquad
+w(0)=L,
+\]
+so Proposition~\ref{prop:pd-bound} yields exactly
+\[
+S\le (N+L-1)\left(1+\frac{T}{L}\right).
+\]
+Minimising over $L\ge 1$ proves \eqref{eq:Bpd}.  The uniqueness statement for fixed $L$ follows from the equality case in Lemma~\ref{lem:fejer-ineq}.
+\end{proof}
+
+\subsubsection{5.4 Consequences and relation to Round~7}
+
+\begin{corollary}
+\label{cor:subsumes-r7}
+Round~7's finite positive-combination barrier is a special case of Theorem~\ref{thm:universal-barrier}.
+\end{corollary}
+
+\begin{proof}
+A finite nonnegative combination of Round~7 kernels has the form
+\[
+w=\sum_{i=1}^m \lambda_i (\phi_i*\widetilde\phi_i),
+\qquad \lambda_i\ge0.
+\]
+Such a $w$ is entrywise nonnegative, finitely supported, and positive-definite because
+\[
+\widehat w(\theta)=\sum_{i=1}^m \lambda_i\,|\widehat{\phi_i}(\theta)|^2\ge 0.
+\]
+Therefore $w$ is admissible, so Theorem~\ref{thm:universal-barrier} applies directly.
+\end{proof}
+
+\begin{corollary}[The barrier is genuinely of order $N^{3/4}$ on near-extremal families]
+\label{cor:n34}
+For the infinite family from Round~4 with
+\[
+T=|A|+|B|=(\sqrt2+o(1))\sqrt N,
+\]
+the optimum of the whole positive-definite-weight method satisfies
+\[
+\mathcal B_{\mathrm{pd}}(N,T)
+\ge N+T-1+2\sqrt{T(N-1)}
+= N+2^{5/4}N^{3/4}+o(N^{3/4}).
+\]
+In particular, no proof inside this framework can yield a uniform $N+O(1)$ bound for $S$, and hence none can prove the original $O(1)$-gap conjecture.
+\end{corollary}
+
+\begin{proof}
+From Theorem~\ref{thm:universal-barrier},
+\[
+\mathcal B_{\mathrm{pd}}(N,T)=\min_{L\ge 1}\left(N+T+L-1+\frac{T(N-1)}{L}\right).
+\]
+By AM--GM,
+\[
+L+\frac{T(N-1)}{L}\ge 2\sqrt{T(N-1)}.
+\]
+Hence
+\[
+\mathcal B_{\mathrm{pd}}(N,T)\ge N+T-1+2\sqrt{T(N-1)}.
+\]
+Substituting $T=(\sqrt2+o(1))\sqrt N$ gives
+\[
+2\sqrt{T(N-1)}=(2^{5/4}+o(1))N^{3/4},
+\]
+and the result follows.
+\end{proof}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Did Round~8 really strengthen Round~7?}
+Yes.  Round~7 treated finite positive combinations of pre-chosen autocorrelation kernels generated by nonnegative functions.  Round~8 removes both restrictions: the weight may now be any finitely supported nonnegative positive-definite sequence, equivalently any nonnegative trigonometric polynomial in the frequency side.  Theorem~\ref{thm:universal-barrier} therefore subsumes Round~7.
+
+\paragraph{(ii) Hidden hypothesis in Fej\'er--Riesz.}
+Theorem~\ref{thm:FR} applies because $\widehat w$ is a one-variable nonnegative trigonometric polynomial of degree at most $L-1$.  This exactly matches the admissible-weight setup.
+
+\paragraph{(iii) Why is $W=\sum_n w(n)$ nonzero?}
+If $w\not\equiv 0$ and $w(n)\ge0$ for all $n$, then $W>0$.  The zero weight yields no information and is excluded from optimisation.
+
+\paragraph{(iv) Equality case in Lemma~\ref{lem:fejer-ineq}.}
+The equality statement uses only the equality case of Cauchy--Schwarz.  Once all coefficients $\psi(0),\dots,\psi(L-1)$ have the same phase and modulus, the resulting autocorrelation is exactly a positive multiple of $F_L$.  There is no additional hidden symmetry assumption.
+
+\paragraph{(v) Does this settle the first question?}
+No.  It settles only a \emph{methodological} question: every proof that uses only the pointwise bound and a single nonnegative positive-definite weight (equivalently any finite positive combination of such weights) is now exhausted, and its optimum is exactly known.  The first question itself remains open.
+
+\subsection{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~8 proves a genuinely stronger barrier theorem than Round~7.  The whole nonnegative positive-definite-kernel method is now optimised exactly:
+\[
+\mathcal B_{\mathrm{pd}}(N,T)=\min_{L\ge 1}(N+L-1)\left(1+\frac{T}{L}\right),
+\]
+and the unique optimisers are the discrete Fej\'er kernels.  Thus the interval/Fej\'er kernel was not merely a convenient choice in earlier rounds --- it is the best possible kernel in the entire positive-definite-weight framework.  This rules out an even broader proof strategy for the first question.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 93\%}
+
+\subsection{9) REFERENCES}
+
+\begin{itemize}
+\item Round~7 write-up supplied in this task.
+\item M. A. Dritschel and J. Rovnyak, \emph{The Operator Fej\'er--Riesz Theorem}, for the classical one-variable Fej\'er--Riesz factorisation statement used here.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#43}, problem page and discussion thread.
+\end{itemize}

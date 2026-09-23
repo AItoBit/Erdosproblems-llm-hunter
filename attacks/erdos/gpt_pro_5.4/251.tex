@@ -1,0 +1,327 @@
+\section{Erd\H{o}s Problem \#251}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): identify and fix a fatal error in Round-1, then replace it with the strongest correct rationality consequence I can extract.
+
+Round-1 tried to deduce from ``$S\in \mathbf{Q}$'' that the tail quantities
+\[
+Y_N:=\sum_{m=1}^{\infty}\frac{p_{N+m}}{2^m}
+\]
+are integers for infinitely many $N$. That implication is false. The most promising Round-2 direction is therefore not to keep pushing the old integrality argument, but to repair it and obtain a valid structural consequence of rationality.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use only the following Round-1 facts.
+
+\begin{itemize}
+\item The series
+\[
+S:=\sum_{n=1}^{\infty}\frac{p_n}{2^n}
+\]
+converges absolutely.
+\item The exact tail recurrence holds:
+\[
+Y_{N+1}=2Y_N-p_{N+1}\qquad (N\ge 0).
+\]
+\item The numerical computation from Round-1 is not used in any proof here.
+\end{itemize}
+
+I do \emph{not} reuse the Round-1 claim that ``$S\in\mathbf{Q}$ with odd denominator implies $Y_N\in\mathbf{Z}$ infinitely often'', because that claim is incorrect.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are three genuinely new pieces in this round.
+
+\begin{itemize}
+\item First, I isolate the exact Round-1 error and prove the corrected replacement: rationality of $S$ implies only that the fractional parts of $Y_N$ are eventually periodic.
+\item Second, I prove an equivalent integrality statement that \emph{is} correct:
+there exist integers $q\ge 1$ and $N_0$ such that
+\[
+(2^q-1)Y_N\in \mathbf{Z}\qquad (N\ge N_0).
+\]
+\item Third, I rewrite $Y_N$ exactly in terms of the prime gaps $g_n:=p_{n+1}-p_n$:
+\[
+Y_N=p_{N+1}+\sum_{r=1}^{\infty}\frac{g_{N+r}}{2^r}.
+\]
+This yields a finite-window criterion: if $S$ were rational, then short binary-weighted blocks of future prime gaps would have to lie very close to a fixed lattice for all large $N$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap is now clear.
+
+\begin{itemize}
+\item The old plan incorrectly tried to force actual integrality of $Y_N$.
+\item The corrected plan is to show that rationality implies eventual periodicity of the fractional parts of $Y_N$, and hence the weaker but still rigid condition $(2^q-1)Y_N\in\mathbf{Z}$ eventually.
+\item After rewriting $Y_N$ in terms of prime gaps, the problem becomes: can one rule out the possibility that a fixed odd multiplier $(2^q-1)$ sends these weighted gap tails to integers for all large $N$?
+\end{itemize}
+
+This overcomes the Round-1 obstruction by replacing a false lemma with a true one, and it converts the problem from ``binary carries in the primes themselves'' to ``binary-weighted prime-gap tails''.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Claim 1 (the Round-1 integrality deduction was false).}
+The statement
+\[
+\text{``if }x=\frac{a}{b}\in\mathbf{Q}\text{ with }b\text{ odd, then }2^N x\in\mathbf{Z}\text{ for infinitely many }N\text{''}
+\]
+is false.
+
+\paragraph{Proof.}
+Take $x=1/3$. Then $b=3$ is odd, but $2^N/3\notin \mathbf{Z}$ for every $N\ge 0$ because $3\nmid 2^N$.
+\hfill$\square$
+
+Thus the specific Round-1 implication
+\[
+S\in\mathbf{Q}\Longrightarrow Y_N\in\mathbf{Z}\text{ infinitely often}
+\]
+does not follow from rationality alone.
+
+\medskip
+
+\paragraph{Claim 2 (correct rationality consequence: eventual periodicity modulo $1$).}
+If $S\in\mathbf{Q}$, then the fractional parts of $Y_N$ are eventually periodic.
+
+\paragraph{Proof.}
+Write $S=a/b$ in lowest terms, and factor
+\[
+b=2^u c
+\]
+with $u\ge 0$ and $c$ odd. Since
+\[
+Y_N=2^N S-\sum_{j=1}^{N} p_j 2^{N-j},
+\]
+we have
+\[
+Y_N-\lfloor Y_N\rfloor = 2^N S-\lfloor 2^N S\rfloor,
+\]
+so the fractional part of $Y_N$ equals the fractional part of $2^N S$.
+
+For $N\ge u$,
+\[
+2^N S = \frac{a2^{N-u}}{c}.
+\]
+Because $c$ is odd, the residues $2^m \bmod c$ are periodic in $m$; if $q$ is the multiplicative order of $2$ modulo $c$, then
+\[
+2^{m+q}\equiv 2^m \pmod c
+\]
+for every $m\ge 0$. Hence the fractional parts of $a2^m/c$ are periodic in $m$ with period $q$. Therefore the fractional parts of $Y_N$ are eventually periodic in $N$.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Claim 3 (correct eventual integrality statement).}
+Assume there exist integers $q\ge 1$ and $N_0\ge 0$ such that the fractional parts of $Y_N$ and $Y_{N+q}$ agree for every $N\ge N_0$. Then
+\[
+(2^q-1)Y_N\in \mathbf{Z}\qquad (N\ge N_0).
+\]
+In particular, if $S\in\mathbf{Q}$ then such $q,N_0$ exist.
+
+\paragraph{Proof.}
+From the exact recurrence,
+\[
+2Y_N=p_{N+1}+Y_{N+1},
+\]
+and iterating this identity $q$ times gives
+\[
+2^q Y_N-Y_{N+q} = \sum_{m=1}^{q} 2^{q-m} p_{N+m}.
+\]
+The right-hand side is an integer.
+
+If $Y_{N+q}$ and $Y_N$ have the same fractional part, then $Y_{N+q}-Y_N\in\mathbf{Z}$. Subtracting this integer from the previous integer identity yields
+\[
+(2^q-1)Y_N = (2^qY_N-Y_{N+q}) + (Y_{N+q}-Y_N) \in \mathbf{Z}.
+\]
+The final sentence follows from Claim 2.
+\hfill$\square$
+
+So the correct replacement for the false Round-1 statement is:
+
+\begin{quote}
+If $S\in\mathbf{Q}$, then there exist integers $q\ge 1$ and $N_0$ such that
+\[
+(2^q-1)Y_N\in\mathbf{Z}\qquad (N\ge N_0).
+\]
+Equivalently, the fractional parts of $Y_N$ eventually lie in the finite set
+\[
+\left\{\frac{m}{2^q-1}:0\le m<2^q-1\right\}.
+\]
+\end{quote}
+
+\medskip
+
+\paragraph{Claim 4 (exact prime-gap expansion).}
+Let
+\[
+g_n:=p_{n+1}-p_n\qquad (n\ge 1).
+\]
+Then for every $N\ge 0$,
+\[
+Y_N = p_{N+1}+\sum_{r=1}^{\infty}\frac{g_{N+r}}{2^r}.
+\]
+
+\paragraph{Proof.}
+For $m\ge 1$ we have
+\[
+p_{N+m}=p_{N+1}+\sum_{r=1}^{m-1} g_{N+r}.
+\]
+Substituting into the definition of $Y_N$ and interchanging summation gives
+\[
+Y_N
+= \sum_{m=1}^{\infty}\frac{p_{N+1}}{2^m}
+  + \sum_{m=1}^{\infty}\sum_{r=1}^{m-1}\frac{g_{N+r}}{2^m}
+= p_{N+1}\sum_{m=1}^{\infty}\frac1{2^m}
+  + \sum_{r=1}^{\infty} g_{N+r}\sum_{m=r+1}^{\infty}\frac1{2^m}.
+\]
+Now
+\[
+\sum_{m=1}^{\infty}2^{-m}=1,
+\qquad
+\sum_{m=r+1}^{\infty}2^{-m}=2^{-r},
+\]
+so the identity follows.
+\hfill$\square$
+
+Because every prime gap after $g_1$ is even, the first gap term $g_{N+1}/2$ is an integer as soon as $N\ge 1$. Thus for large $N$ the nontrivial fractional information in $Y_N$ is carried by the deeper tail
+\[
+\sum_{r=2}^{\infty}\frac{g_{N+r}}{2^r}.
+\]
+
+\medskip
+
+\paragraph{Corollary 5 (rationality implies a weighted-gap lattice condition).}
+If $S\in\mathbf{Q}$, then there exist integers $q\ge 1$ and $N_0$ such that for every $N\ge N_0$,
+\[
+(2^q-1)\sum_{r=1}^{\infty}\frac{g_{N+r}}{2^r}\in \mathbf{Z}.
+\]
+Equivalently, for every $M\ge 1$,
+\[
+\min_{m\in\mathbf{Z}}
+\left|
+(2^q-1)\sum_{r=1}^{M}\frac{g_{N+r}}{2^r}-m
+\right|
+\le (2^q-1)\sum_{r>M}\frac{g_{N+r}}{2^r}.
+\]
+
+\paragraph{Proof.}
+By Claim 3, $(2^q-1)Y_N\in\mathbf{Z}$ for all large $N$. By Claim 4 and the fact that $p_{N+1}$ is an integer,
+\[
+(2^q-1)\sum_{r=1}^{\infty}\frac{g_{N+r}}{2^r}
+= (2^q-1)(Y_N-p_{N+1})
+\in\mathbf{Z}.
+\]
+Subtracting the truncated sum gives the displayed distance estimate.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Claim 6 (finite-window approximation).}
+Assume $S\in\mathbf{Q}$ and let $q$ be as in Corollary 5. Then
+\[
+\min_{m\in\mathbf{Z}}
+\left|
+(2^q-1)\sum_{r=1}^{M}\frac{g_{N+r}}{2^r}-m
+\right|
+\ll_q \frac{(N+M)\log(N+M)}{2^M}
+\]
+for all large $N$ and all $M\ge 1$. In particular, if
+\[
+M=2\left\lceil \log_2(N+2)\right\rceil,
+\]
+then
+\[
+\min_{m\in\mathbf{Z}}
+\left|
+(2^q-1)\sum_{r=1}^{M}\frac{g_{N+r}}{2^r}-m
+\right|
+\ll_q \frac{\log N}{N}.
+\]
+
+\paragraph{Proof.}
+By Corollary 5 it suffices to bound
+\[
+\sum_{r>M}\frac{g_{N+r}}{2^r}.
+\]
+Using $g_{N+r}\le p_{N+r+1}$ and the standard bound $p_n\ll n\log n$, we get
+\[
+\sum_{r>M}\frac{g_{N+r}}{2^r}
+\ll \sum_{r>M}\frac{(N+r)\log(N+r)}{2^r}.
+\]
+Write $a:=N+M+1$ and substitute $r=M+s$:
+\[
+\sum_{r>M}\frac{(N+r)\log(N+r)}{2^r}
+\ll \frac1{2^M}\sum_{s\ge 1}\frac{(a+s)\log(a+s)}{2^s}.
+\]
+Split the inner sum into $1\le s\le a$ and $s>a$.
+
+If $1\le s\le a$, then $a+s\le 2a$, hence
+\[
+\sum_{1\le s\le a}\frac{(a+s)\log(a+s)}{2^s}
+\le 2a\log(2a)\sum_{s\ge 1}\frac1{2^s}
+\ll a\log a.
+\]
+
+If $s>a$, then $a+s\le 2s$, so
+\[
+\sum_{s>a}\frac{(a+s)\log(a+s)}{2^s}
+\ll \sum_{s>a}\frac{s\log(2s)}{2^s}
+\ll 1,
+\]
+because the full series $\sum_{s\ge 1} s\log(2s)\,2^{-s}$ converges.
+
+Therefore
+\[
+\sum_{r>M}\frac{g_{N+r}}{2^r}
+\ll \frac{a\log a}{2^M}
+\ll \frac{(N+M)\log(N+M)}{2^M}.
+\]
+The special choice $M=2\lceil\log_2(N+2)\rceil$ gives $2^M\gg N^2$, so the bound becomes $\ll (\log N)/N$.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item The Round-1 error is real: the counterexample $1/3$ completely breaks the old implication.
+\item Claim 2 uses only the standard eventual periodicity of $2^N a/b$ modulo $1$ after removing the $2$-part of the denominator.
+\item Claim 3 is exact: the identity
+\[
+2^qY_N-Y_{N+q}=\sum_{m=1}^{q}2^{q-m}p_{N+m}
+\]
+is obtained by iterating the tail recurrence and has an integer right-hand side.
+\item Claim 4 was checked term-by-term by expanding $p_{N+m}$ in prime gaps and interchanging absolutely convergent series.
+\item Claim 6 uses only the classical bound $p_n\ll n\log n$; no unproved information on prime gaps enters.
+\end{itemize}
+
+No contradiction with rationality has been obtained; what \emph{has} been obtained is a corrected and strictly sharper obstruction than in Round-1.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is this:
+
+\begin{itemize}
+\item I identified a fatal flaw in the Round-1 reduction and proved that the old integrality consequence was invalid.
+\item I replaced it by the correct statement that rationality of $S$ forces eventual periodicity of the fractional parts of $Y_N$, equivalently
+\[
+(2^q-1)Y_N\in\mathbf{Z}
+\]
+for all large $N$ and some fixed $q$.
+\item I then rewrote this as a precise weighted prime-gap condition and derived a finite-window approximation:
+for $M\asymp \log N$, a short binary-weighted block of prime gaps would have to lie within $O((\log N)/N)$ of a fixed lattice for every sufficiently large $N$.
+\end{itemize}
+
+The remaining missing step is now sharply formulated: prove that no fixed odd multiplier $(2^q-1)$ can make these weighted prime-gap blocks shadow the integer lattice for all large $N$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+Only references actually used or checked.
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#251}, \texttt{https://www.erdosproblems.com/251}, accessed 2026-03-07.
+\item P. Erd\H{o}s, \emph{Sur certaines s\'eries \`a valeur irrationnelle}, Enseign. Math. (2) 4 (1958), 93--100.
+\item P. Erd\H{o}s, \emph{On the irrationality of certain series: problems and results}, in \emph{New advances in transcendence theory} (Durham, 1986), 1988, 102--109.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

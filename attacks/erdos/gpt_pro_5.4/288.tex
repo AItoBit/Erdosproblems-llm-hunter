@@ -1,0 +1,200 @@
+\section{Erd\H{o}s Problem 288}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: isolate a sharp obstruction and give an exact reformulation of the singleton subcase.
+
+Why this direction is the right continuation of Round~1: Round~1 already had a clean one-interval non-integrality lemma and a general ``uniquely occurring prime'' obstruction, but it did \emph{not} rigidly reformulate the still-open singleton case $|I_2|=1$, nor did it prove any structural theorem for ordered disjoint solutions. Those are the two gaps I close here.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 results without reproving them.
+
+\begin{itemize}
+	\item[(F1)] If $[a,b]$ is a nontrivial interval, then $\sum_{n=a}^b \frac1n \notin \mathbb Z$.
+	\item[(F2)] If a prime $p$ divides the common denominator to exponent exactly $1$, and among the denominators in the relevant union of intervals there is exactly one multiple of $p$, then the total reciprocal sum cannot be an integer.
+	\item[(F3)] The exact small solutions found in Round~1 up to endpoint $300$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new ingredients.
+
+\begin{itemize}
+	\item[(N1)] \textbf{Singleton forcing.} In the singleton variant
+	\[
+	H(a,b)+\frac1m\in\mathbb Z,\qquad H(a,b):=\sum_{n=a}^b \frac1n,
+	\]
+	there is at most one possible $m$ for a fixed interval $[a,b]$: namely, $m$ must equal the reduced denominator of $H(a,b)$.
+	
+	\item[(N2)] \textbf{Terminal composite tail obstruction.} In any ordered disjoint two-interval solution
+	\[
+	\sum_{n=a}^b\frac1n+\sum_{n=c}^d\frac1n\in\mathbb Z,\qquad b<c,
+	\]
+	the later interval $[c,d]$ must lie entirely inside the terminal prime-free tail below $d$. In particular its length is $o(d)$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact unresolved gap after Round~1 was this:
+
+\begin{quote}
+	there was no rigid reduction for the singleton case, and no theorem showing that the interval containing the maximal denominator must be extremely short in any ordered disjoint solution.
+\end{quote}
+
+I therefore prove two claims.
+
+\begin{itemize}
+	\item[(C1)] If $H(a,b)=u/v$ in lowest terms and $H(a,b)+1/m\in\mathbb Z$, then necessarily $m=v$.
+	\item[(C2)] If $b<c$ and $\sum_{n=a}^b 1/n+\sum_{n=c}^d 1/n\in\mathbb Z$, then $[c,d]$ contains no prime in $(d/2,d]$, hence in fact no prime at all, and so $d-c+1=o(d)$.
+\end{itemize}
+
+These two claims are enough to give strict progress beyond Round~1.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Proposition 288.1 (singleton forcing).}
+Let
+\[
+H(a,b)=\sum_{n=a}^b\frac1n=\frac uv
+\]
+with $\gcd(u,v)=1$ and $v>0$.
+Then
+\[
+H(a,b)+\frac1m\in\mathbb Z
+\]
+for some positive integer $m$ if and only if
+\[
+u+1\equiv 0\pmod v,
+\]
+and in that case necessarily $m=v$.
+
+\paragraph{Proof.}
+Assume
+\[
+\frac uv+\frac1m=k\in\mathbb Z.
+\]
+Then
+\[
+\frac1m=k-\frac uv=\frac{kv-u}{v}.
+\]
+Now
+\[
+\gcd(kv-u,v)=\gcd(u,v)=1,
+\]
+so the fraction $(kv-u)/v$ is already in lowest terms. But $1/m$ in lowest terms has numerator $1$. Therefore
+\[
+kv-u=1,
+\]
+and hence necessarily
+\[
+m=v.
+\]
+Conversely, if $u+1\equiv 0\pmod v$, say $u+1=kv$, then
+\[
+\frac uv+\frac1v=\frac{u+1}{v}=k\in\mathbb Z,
+\]
+so $m=v$ works. \hfill$\square$
+
+\medskip
+
+So the singleton subcase is equivalent to the exact congruence condition
+\[
+H(a,b)=\frac uv\text{ in lowest terms and }u\equiv -1\pmod v.
+\]
+For each interval $[a,b]$ there is at most one candidate singleton.
+
+\paragraph{Proposition 288.2 (terminal composite tail obstruction).}
+Assume
+\[
+1\le a\le b<c\le d
+\]
+and
+\[
+\sum_{n=a}^b\frac1n+\sum_{n=c}^d\frac1n\in\mathbb Z.
+\]
+Let $p^\star(d)$ denote the largest prime in $(d/2,d]$.
+Then
+\[
+c>p^\star(d).
+\]
+Consequently $[c,d]$ contains no primes at all, and
+\[
+d-c+1\le d-p^\star(d)=o(d).
+\]
+
+\paragraph{Proof.}
+By Bertrand's postulate there exists at least one prime in $(d/2,d]$, so $p^\star(d)$ is well-defined for $d\ge 2$.
+
+Suppose for contradiction that $c\le p^\star(d)\le d$. Then $p^\star(d)\in[c,d]$.
+Since $p^\star(d)>d/2$, there is no other multiple of $p^\star(d)$ in $[1,d]$; indeed $2p^\star(d)>d$.
+Because the first interval lies entirely below $c$, the denominator $p^\star(d)$ occurs exactly once in the union of denominators from $[a,b]\cup[c,d]$.
+By Round~1 foundation (F2), this forces
+\[
+\sum_{n=a}^b\frac1n+\sum_{n=c}^d\frac1n\notin\mathbb Z,
+\]
+a contradiction.
+Hence $c>p^\star(d)$.
+
+Now every prime in $[c,d]$ would be $>p^\star(d)$, contradicting maximality of $p^\star(d)$ among primes $\le d$. So $[c,d]$ is prime-free.
+Also
+\[
+d-c+1\le d-p^\star(d).
+\]
+Finally, by the prime number theorem, for every $\varepsilon>0$ and all sufficiently large $d$ there is a prime in $((1-\varepsilon)d,d]$. Thus $p^\star(d)>(1-\varepsilon)d$ for large $d$, giving
+\[
+0\le d-p^\star(d)<\varepsilon d,
+\]
+so indeed $d-p^\star(d)=o(d)$ and hence $d-c+1=o(d)$. \hfill$\square$
+
+\paragraph{Corollary 288.3.}
+In any ordered disjoint solution, the interval containing the maximal denominator is a terminal block of consecutive composite numbers, of sublinear length.
+
+\paragraph{Empirical check (clearly labeled as computation, not proof).}
+Using exact rational arithmetic, I checked the singleton subcase up to $b\le 1600$. The only intervals $[a,b]$ for which Proposition~288.1 succeeds are
+\[
+[1,1],\ [1,2],\ [1,3],\ [2,2],\ [2,3],\ [3,6],
+\]
+with corresponding singleton values
+\[
+m=1,\ 2,\ 6,\ 2,\ 6,\ 20.
+\]
+Thus up to this range the only singleton solutions are the already-known ones.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I now try to break the new work.
+
+\begin{itemize}
+	\item \textbf{Quantifier issue in Proposition~288.1.} Could there be more than one integer $k$? No. Once $u/v$ is fixed, any solution must satisfy $1/m=k-u/v>0$, so necessarily $k=\lceil u/v\rceil$. The proof did not require naming this $k$, but it is unique.
+	
+	\item \textbf{Hidden coprimality issue in Proposition~288.1.} The step
+	\[
+	\gcd(kv-u,v)=\gcd(u,v)=1
+	\]
+	is correct because $kv-u\equiv -u\pmod v$.
+	
+	\item \textbf{Scope of Proposition~288.2.} The proof uses the ordering $b<c$. It does \emph{not} apply to overlapping solutions such as $([1,2],[1,2])$ from Round~1; this is intended.
+	
+	\item \textbf{Small-$d$ issue in Proposition~288.2.} Bertrand gives a prime in $(d/2,d]$ for every integer $d\ge 2$, so there is no exceptional range to patch.
+	
+	\item \textbf{Does the proof really imply prime-free tail?} Yes. Once $c>p^\star(d)$ and $p^\star(d)$ is the largest prime in $(d/2,d]$, any prime in $[c,d]$ would be $>p^\star(d)$ and still $\le d$, impossible.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+What is new in Round~2 is rigorous, not heuristic:
+
+\begin{itemize}
+	\item the singleton case is reduced to a \emph{single exact candidate} $m=v(a,b)$ with a congruence condition $u(a,b)\equiv -1\pmod{v(a,b)}$;
+	\item in every ordered disjoint solution, the later interval must be a terminal composite block of length $o(d)$.
+\end{itemize}
+
+These statements are strictly stronger than the Round~1 output, but they do not settle the full problem.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 40\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+	\item [Er288] T. F. Bloom, \emph{Erd\H{o}s Problem \#288}, website entry, accessed 2026-03-07.
+	\item [ErGr80] P. Erd\H{o}s and R. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique, 1980.
+\end{itemize}
+
+

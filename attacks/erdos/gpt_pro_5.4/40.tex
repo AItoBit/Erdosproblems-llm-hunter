@@ -1,0 +1,232 @@
+\section{Erd\H{o}s Problem \#40 --- Round 5}
+
+\subsection*{1) ROUND-5 OBJECTIVE}
+\textbf{Path (C): obstruction / correction by ruling out the natural reduction from the remaining $B_2[\lambda]$-core to the Sidon problem.}
+
+Round~4 reduced the unresolved subpolynomial sector of Problem~\#40 to the existence of an
+infinite $B_2[\lambda]$ set whose counting function is $N^{1/2-o(1)}$ in the strong
+``for all sufficiently large $N$'' sense. The most promising next step is therefore to test
+whether this remaining $B_2[\lambda]$-problem can be collapsed to the Sidon problem
+(Problem~\#39) by a structural theorem.
+
+In this round I show that two of the most natural reduction principles are \emph{false}:
+\begin{itemize}
+\item bounded-representation sets need \emph{not} be finite unions of Sidon sets;
+\item even a strong \emph{local} Sidon-richness property (every finite subset contains a large
+Sidon subset) still does \emph{not} force such a decomposition.
+\end{itemize}
+Thus the Round~4 exact core is genuinely broader than the Sidon case, and any eventual
+reduction to Problem~\#39 would require a new global density-preserving theorem of a different kind.
+
+\subsection*{2) ROUND-4 FOUNDATION USED}
+I rely on the following Round~4 results without re-proving them.
+\begin{itemize}
+\item \textbf{Round~4 exact subpolynomial reformulation:} Problem~\#40 fails for some
+subpolynomial $g(N)\to\infty$ if and only if there exists an integer $\lambda\ge 1$ and an
+infinite set $A\subset\mathbb N$ with $A\in B_2[\lambda]$ and
+\[
+|A\cap[1,N]|\gg_{\varepsilon} N^{1/2-\varepsilon}
+\qquad\text{for every }\varepsilon>0.
+\]
+\item \textbf{Round~4 one-way link:} a positive answer to Problem~\#39 implies a negative answer
+to Problem~\#40 for some subpolynomial $g$.
+\item \textbf{Round~4 gap:} the converse direction remained open; in particular, it was unclear
+whether the Round~4 $B_2[\lambda]$-core was essentially equivalent to the Sidon problem.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-5)}
+The new ingredient is a recent theorem of Reiher--R\"odl--Schacht on
+\emph{Ramsey-type generalised Sidon sets}. Specialised to $k=2$, it yields the following.
+
+\begin{theorem}[External theorem, $k=2$ case]\label{thm:RRS}
+For every integer $\ell\ge 2$ there exists an infinite set $X\subset\mathbb N$ such that:
+\begin{enumerate}
+\item[(i)] $X$ is a $B_2[\ell]$ set, i.e. every integer has at most $\ell$ nondecreasing
+representations $n=x_1+x_2$ with $x_1\le x_2$ and $x_1,x_2\in X$;
+\item[(ii)] for every finite colouring $X=X_1\cup\cdots\cup X_r$ there exists a colour class
+$X_q$ for which some integer has exactly $\ell$ nondecreasing representations as a sum of two
+members of $X_q$;
+\item[(iii)] every finite subset $Y\subset X$ contains a Sidon subset $Z\subset Y$ with
+\[
+|Z|\ge \frac14 |Y|.
+\]
+\end{enumerate}
+\end{theorem}
+
+Theorem~\ref{thm:RRS} is new relative to the previous rounds. It gives a bounded-representation
+set that is \emph{locally very Sidon-rich}, yet whose finite colourings always contain a colour
+class with repeated two-sums.
+
+\subsection*{4) ATTACK PLAN (ROUND-5)}
+The exact gap left after Round~4 was:
+\begin{quote}
+Can the remaining $B_2[\lambda]$-core be reduced to Problem~\#39 by converting bounded-representation
+sets into Sidon sets?
+\end{quote}
+
+Round~5 attacks this by testing two precise reduction principles.
+\begin{enumerate}
+\item[(P1)] For each fixed $\lambda\ge 2$, every $B_2[\lambda]$ set is a finite union of Sidon sets.
+\item[(P2)] There exists $\delta>0$ such that every set $X\subset\mathbb N$ with the local
+property
+\[
+\forall\text{ finite }Y\subset X\ \exists\text{ Sidon }Z\subset Y\text{ with }|Z|\ge \delta |Y|
+\]
+is a finite union of Sidon sets.
+\end{enumerate}
+
+If either principle were true, then the Round~4 $B_2[\lambda]$-core would be much closer to
+Problem~\#39. I will prove that both are false, with (P2) already false for $\delta=1/4$.
+This rules out an entire class of natural local-to-global reduction strategies.
+
+\subsection*{5) WORK (ROUND-5)}
+\paragraph{5.1. Notation.}
+For $S\subset\mathbb N$ let
+\[
+\rho_{S,2}(n):=|\{(a,b)\in S^2:a\le b,\ a+b=n\}|.
+\]
+Thus $S$ is Sidon exactly when $\sup_n \rho_{S,2}(n)\le 1$, and $S\in B_2[\ell]$ exactly when
+$\sup_n \rho_{S,2}(n)\le \ell$.
+
+\paragraph{5.2. A structural obstruction.}
+\begin{proposition}\label{prop:mainobstruction}
+For every integer $\ell\ge 2$ there exists an infinite set $X\subset\mathbb N$ such that:
+\begin{enumerate}
+\item[(a)] $X\in B_2[\ell]$;
+\item[(b)] $X$ is \emph{not} a finite union of Sidon sets;
+\item[(c)] every finite subset $Y\subset X$ contains a Sidon subset $Z\subset Y$ with
+$|Z|\ge |Y|/4$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Fix $\ell\ge 2$, and let $X$ be as in Theorem~\ref{thm:RRS}.
+Property (a) is exactly part (i) of Theorem~\ref{thm:RRS}, while property (c) is exactly part (iii).
+
+It remains to prove (b). Suppose for contradiction that
+\[
+X=S_1\cup\cdots\cup S_r
+\]
+for some finite family of Sidon sets $S_1,\dots,S_r$.
+Since this is only a covering, not necessarily a partition, define a colouring
+$c:X\to [r]$ by choosing for each $x\in X$ one index $c(x)$ with $x\in S_{c(x)}$.
+Let
+\[
+X_i:=\{x\in X:c(x)=i\}\subset S_i
+\qquad (1\le i\le r).
+\]
+Each colour class $X_i$ is a subset of the Sidon set $S_i$, hence itself Sidon. Therefore
+\[
+\sup_n \rho_{X_i,2}(n)\le 1
+\qquad\text{for every }i=1,\dots,r.
+\]
+But Theorem~\ref{thm:RRS}(ii) says that for \emph{every} finite colouring of $X$ there is a colour
+class, say $X_q$, for which some integer has exactly $\ell$ nondecreasing two-term
+representations inside $X_q$. Equivalently,
+\[
+\sup_n \rho_{X_q,2}(n)\ge \ell\ge 2,
+\]
+contradicting that $X_q$ is Sidon.
+This contradiction proves (b).
+\end{proof}
+
+\paragraph{5.3. Two false reduction principles.}
+Proposition~\ref{prop:mainobstruction} immediately yields the following.
+
+\begin{corollary}[Failure of finite Sidon decomposition]\label{cor:P1false}
+For every integer $\lambda\ge 2$, the following statement is false:
+\begin{quote}
+Every $B_2[\lambda]$ set is a finite union of Sidon sets.
+\end{quote}
+\end{corollary}
+
+\begin{proof}
+Take $\ell=\lambda$ in Proposition~\ref{prop:mainobstruction}. Then $X\in B_2[\lambda]$ but
+$X$ is not a finite union of Sidon sets.
+\end{proof}
+
+\begin{corollary}[Failure of the Alon--Erd\H{o}s local-to-global principle]\label{cor:P2false}
+The following statement is false, already with $\delta=1/4$:
+\begin{quote}
+If $X\subset\mathbb N$ is such that every finite subset $Y\subset X$ contains a Sidon subset
+$Z\subset Y$ with $|Z|\ge \delta |Y|$, then $X$ is a finite union of Sidon sets.
+\end{quote}
+\end{corollary}
+
+\begin{proof}
+Again use Proposition~\ref{prop:mainobstruction}. The set $X$ there satisfies the stated local
+property with $\delta=1/4$, but is not a finite union of Sidon sets.
+\end{proof}
+
+\paragraph{5.4. Consequence for Problem~\#40.}
+Round~4 identified the unresolved core of Problem~\#40 as the possible existence of a dense
+$B_2[\lambda]$ set with counting function $N^{1/2-o(1)}$. Corollaries~\ref{cor:P1false} and
+\ref{cor:P2false} show that this core cannot be collapsed to Problem~\#39 by either of the two
+most obvious mechanisms:
+\begin{enumerate}
+\item[(i)] decomposing bounded-representation sets into finitely many Sidon pieces;
+\item[(ii)] proving only a local positive-density Sidon extraction statement for finite subsets.
+\end{enumerate}
+
+This yields the following corrected structural formulation.
+
+\begin{corollary}[Minimal corrected obstruction statement]\label{cor:corrected}
+The remaining open sector of Problem~\#40 is a genuinely \emph{generalised Sidon} problem.
+More precisely, any reduction of the Round~4 exact core to Problem~\#39 must use a theorem
+strictly stronger than both false principles above.
+\end{corollary}
+
+\begin{proof}
+By Corollary~\ref{cor:P1false}, finite Sidon decomposition fails even inside the class $B_2[\lambda]$.
+By Corollary~\ref{cor:P2false}, even strong local Sidon-richness does not force such a
+global decomposition. Therefore neither principle can justify replacing the $B_2[\lambda]$-core
+from Round~4 by the Sidon problem.
+\end{proof}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Compatibility of notation:} The external theorem uses $\rho_{X,2}(n)$ to count
+nondecreasing representations, which is exactly the standard $B_2[\ell]$ convention used in the
+previous rounds after converting from ordered counts.
+
+\item \emph{Colouring vs covering:} In Proposition~\ref{prop:mainobstruction}(b), the sets
+$S_1,\dots,S_r$ may overlap. Choosing for each $x\in X$ a single colour $c(x)$ produces colour
+classes $X_i\subset S_i$, which is enough because subsets of Sidon sets are Sidon.
+
+\item \emph{Local property is genuinely strong:} Corollary~\ref{cor:P2false} does not merely say
+that some finite subsets of $X$ contain large Sidon subsets; it says \emph{every} finite subset does,
+with a fixed proportion $1/4$.
+
+\item \emph{No density conclusion is being smuggled in:} Theorem~\ref{thm:RRS} says nothing about
+$|X\cap[1,N]|$, so Round~5 does \emph{not} solve the remaining density question of Problem~\#40.
+It only rules out two natural ways of reducing that density question to the Sidon case.
+
+\item \emph{Could there still be some deeper equivalence with Problem~\#39?} Yes. Round~5 does not
+exclude all possible future reductions. It excludes only reductions based on finite Sidon
+decomposition or on the local positive-density extraction principle above.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~5 gives a substantive structural advance beyond Round~4:
+\begin{quote}
+The unresolved subpolynomial sector of Problem~\#40 is \emph{not} presently reducible to the
+Sidon problem by the two most natural local-to-global mechanisms. In fact, for every
+$\ell\ge 2$ there exists an infinite $B_2[\ell]$ set that is locally Sidon-rich (every finite subset
+contains a Sidon subset of size at least one quarter) but is nevertheless not a finite union
+of Sidon sets.
+\end{quote}
+Thus the remaining core of Problem~\#40 must be treated as a genuinely generalised Sidon
+problem, not merely as Problem~\#39 in disguise.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 76\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T.~F.~Bloom (ed.), \emph{Erd\H{o}s Problem \#39} and \emph{Erd\H{o}s Problem \#40},
+Erd\H{o}s Problems website, accessed 2026-03-07.
+\item C.~Reiher, V.~R\"odl, and M.~Schacht, \emph{Ramsey-type problems for generalised Sidon sets},
+arXiv:2409.04809v3 (2025), to appear in \emph{Proceedings of the American Mathematical Society}.
+\end{enumerate}

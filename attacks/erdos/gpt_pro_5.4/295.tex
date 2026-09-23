@@ -1,0 +1,313 @@
+\section{Erd\H{o}s Problem \#295}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path (C): correct a concrete Round-1 error and isolate a sharp obstruction to the Round-1 proof strategy.
+
+The Round-1 proof correctly established the necessary condition
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i},
+\]
+but the final algebraic simplification contained an off-by-one error. After correcting that, I sharpen the analysis of the same necessary condition and prove that this \emph{entire harmonic-comparison strategy} can at best yield a bounded additive correction to $(e-1)N$. That does not settle the problem, but it cleanly identifies why the Round-1 approach cannot prove
+\[
+k(N)-(e-1)N\to\infty.
+\]
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+From Round~1 I use only the following valid ingredient.
+
+\medskip
+\noindent\textbf{Round-1 Proposition.}
+If
+\[
+N\le n_1<n_2<\cdots<n_k
+\qquad\mbox{and}\qquad
+\frac1{n_1}+\cdots+\frac1{n_k}=1,
+\]
+then
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i}.
+\]
+
+I do \emph{not} use the Round-1 corollary
+\[
+k(N)\ge (e-1)(N-1)+1,
+\]
+because it came from a faulty algebraic simplification; I correct that below.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two new ingredients.
+
+\begin{itemize}
+\item First, a correction: the same integral argument from Round~1 gives only
+\[
+k(N)\ge (e-1)N-(e-1),
+\]
+not $(e-1)(N-1)+1$.
+\item Second, define the \emph{harmonic threshold}
+\[
+L(N):=\min\left\{k\ge 1:\ \sum_{i=0}^{k-1}\frac1{N+i}\ge 1\right\}.
+\]
+Then every valid representation must satisfy $k(N)\ge L(N)$, and
+\[
+L(N)=(e-1)N-\frac{e-1}{2}+O(1).
+\]
+Hence any argument that uses only the Round-1 necessary condition can never prove divergence of $k(N)-(e-1)N$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The precise Round-1 gap is this:
+
+\begin{itemize}
+\item the Round-1 necessary condition was correct;
+\item the final lower bound had an algebra slip;
+\item even after correcting that slip, the method is too weak to imply any unbounded additive term.
+\end{itemize}
+
+So I will:
+\begin{itemize}
+\item correct the Round-1 lower bound;
+\item identify the exact threshold $L(N)$ coming from the harmonic method;
+\item show asymptotically that $L(N)$ differs from $(e-1)N$ by only a bounded term;
+\item extend the exact computation of $k(N)$ from $N\le 3$ to $N\le 11$.
+\end{itemize}
+
+This addresses the Round-1 obstacle directly: it proves that the obstacle is \emph{structural}, not just a matter of doing the same calculation more carefully.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent\textbf{Step 1: correcting the Round-1 algebra.}
+
+By the Round-1 proposition,
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i}.
+\]
+Since $x\mapsto 1/x$ decreases,
+\[
+\frac1{N+i}\le \int_{N+i-1}^{N+i}\frac{dx}{x},
+\]
+and therefore
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i}
+\le \int_{N-1}^{N+k-1}\frac{dx}{x}
+= \log\!\left(\frac{N+k-1}{N-1}\right).
+\]
+Thus
+\[
+\frac{N+k-1}{N-1}\ge e,
+\]
+so
+\[
+N+k-1\ge e(N-1),
+\]
+and hence
+\[
+k\ge e(N-1)-N+1=(e-1)N-(e-1).
+\]
+
+This is the \emph{correct} conclusion from the Round-1 integral comparison.
+
+\medskip
+\noindent\textbf{Step 2: the exact harmonic threshold.}
+
+Define
+\[
+H_m:=1+\frac12+\cdots+\frac1m,
+\]
+and
+\[
+L(N):=\min\{k\ge 1:\ H_{N+k-1}-H_{N-1}\ge 1\}.
+\]
+Then the Round-1 proposition is equivalent to
+
+\medskip
+\noindent\textbf{Lemma 1.}
+For every $N\ge 1$,
+\[
+k(N)\ge L(N).
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+Immediate from
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i}=H_{N+k-1}-H_{N-1}.
+\]
+
+\medskip
+\noindent\textbf{Step 3: asymptotics of $L(N)$.}
+
+I use the standard harmonic-number expansion
+\[
+H_n=\log n+\gamma+\frac1{2n}+O\!\left(\frac1{n^2}\right)
+\qquad (n\to\infty).
+\]
+Equivalently,
+\[
+H_n=\log\!\left(n+\frac12\right)+\gamma+O\!\left(\frac1{n^2}\right),
+\]
+because
+\[
+\log\!\left(n+\frac12\right)=\log n+\frac1{2n}+O\!\left(\frac1{n^2}\right).
+\]
+
+Therefore, uniformly for $k=O(N)$,
+\[
+H_{N+k-1}-H_{N-1}
+=
+\log\!\left(\frac{N+k-\frac12}{\,N-\frac12\,}\right)
++
+O\!\left(\frac1{N^2}\right).
+\]
+
+Set
+\[
+r_N:=(e-1)\left(N-\frac12\right)=(e-1)N-\frac{e-1}{2}.
+\]
+Then for any fixed real $C$,
+\[
+N+(r_N+C)-\frac12=e\left(N-\frac12\right)+C,
+\]
+so
+\[
+\frac{N+(r_N+C)-\frac12}{N-\frac12}
+=
+e+\frac{C}{N-\frac12}.
+\]
+Hence
+\[
+\log\!\left(\frac{N+(r_N+C)-\frac12}{N-\frac12}\right)
+=
+1+\frac{C}{e(N-\frac12)}+O\!\left(\frac1{N^2}\right).
+\]
+
+Because the crude bound above already shows $L(N)=O(N)$, the threshold regime indeed has $k=O(N)$. Choosing $C=2$ and $C=-2$, the last display shows that for all sufficiently large $N$,
+\[
+H_{N+\lfloor r_N-2\rfloor-1}-H_{N-1}<1,
+\qquad
+H_{N+\lceil r_N+2\rceil-1}-H_{N-1}>1.
+\]
+By the definition of $L(N)$ this implies
+\[
+r_N-2 < L(N) \le r_N+3
+\]
+for all sufficiently large $N$. Therefore
+\[
+L(N)=r_N+O(1)=(e-1)N-\frac{e-1}{2}+O(1).
+\]
+
+Thus we have proved:
+
+\medskip
+\noindent\textbf{Theorem 2.}
+As $N\to\infty$,
+\[
+L(N)=(e-1)N-\frac{e-1}{2}+O(1).
+\]
+
+\medskip
+\noindent\textbf{Corollary 3 (sharp obstruction to the Round-1 method).}
+Any lower bound obtained solely from the necessary condition
+\[
+1\le \sum_{i=0}^{k-1}\frac1{N+i}
+\]
+can improve $(e-1)N$ by at most a bounded additive term. In particular, this method cannot prove
+\[
+k(N)-(e-1)N\to\infty.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+Such an argument can give at best $k(N)\ge L(N)$, and Theorem~2 shows
+\[
+L(N)-(e-1)N=-\frac{e-1}{2}+O(1),
+\]
+which is bounded.
+
+\medskip
+\noindent\textbf{Step 4: exact computation for $N\le 11$.}
+
+I extended the Round-1 computation from $N\le 3$ to $N\le 11$.
+
+The search is rigorous and finite. If one is trying to represent a positive rational remainder $\rho$ as a sum of $r$ distinct reciprocals with next denominator $d$, then necessarily
+\[
+d\ge \left\lceil \frac1{\rho}\right\rceil
+\qquad\mbox{and}\qquad
+d\le \left\lfloor \frac{r}{\rho}\right\rfloor,
+\]
+since even $r$ copies of $1/d$ cannot reach $\rho$ when $d>r/\rho$. Moreover, if
+\[
+\frac1d+\frac1{d+1}+\cdots+\frac1{d+r-1}<\rho,
+\]
+then the branch is impossible. This gives an exhaustive finite recursion.
+
+The exact values obtained are:
+\[
+\begin{array}{c|ccccccccccc}
+N & 1&2&3&4&5&6&7&8&9&10&11\\ \hline
+L(N) & 1&3&5&7&8&10&12&13&15&17&19\\
+k(N) & 1&3&5&8&10&11&13&15&17&19&21
+\end{array}
+\]
+
+For example, the search found
+\[
+1=\sum_{n=11}^{28}\frac1n+\frac1{561}+\frac1{71820}+\frac1{1315600},
+\]
+so $k(11)\le 21$, while exhaustive search shows that no representation exists with $19$ or $20$ terms and denominators all at least $11$. Hence $k(11)=21$.
+
+Similarly,
+\[
+1=\sum_{n=10}^{22}\frac1n+\frac1{24}+\frac1{26}+\frac1{28}+\frac1{45}
++\frac1{11088}+\frac1{9699690},
+\]
+so $k(10)=19$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Round-1 error check.} The corrected inequality
+\[
+k\ge e(N-1)-N+1=(e-1)N-(e-1)
+\]
+comes from a direct rearrangement of $N+k-1\ge e(N-1)$. The discarded Round-1 constant was indeed an algebra mistake.
+\item \emph{Is the obstruction too strong?} No. I am not claiming that the original Erd\H{o}s problem is false; I am only proving that the particular ``compare with the first $k$ reciprocals'' strategy cannot prove divergence.
+\item \emph{Uniformity of the asymptotic expansion.} The formula for $H_{N+k-1}-H_{N-1}$ is used only in the range $k=O(N)$, which is already guaranteed by the crude integral lower bound together with the trivial upper comparison defining $L(N)$.
+\item \emph{Computational exactness.} The recursion is finite because the next denominator is bounded above by $\lfloor r/\rho\rfloor$ at every stage. Thus negative outcomes are genuine exhaustive nonexistence results, not heuristic failures to find a solution.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 does \emph{not} settle whether
+\[
+k(N)-(e-1)N\to\infty,
+\]
+but it makes two strict advances:
+\begin{itemize}
+\item it corrects the Round-1 lower bound;
+\item it proves that the entire Round-1 harmonic-comparison strategy is inherently incapable of proving the desired divergence.
+\end{itemize}
+In addition, it extends the exact computation of $k(N)$ from $N\le 3$ to $N\le 11$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 40\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T.~F.~Bloom, Erd\H{o}s Problem \#295, \texttt{erdosproblems.com/295}, accessed 2026-03-07.
+\item The estimate
+\[
+-c<k(N)-(e-1)N\ll \frac{N}{\log N}
+\]
+was checked from the problem page above.
+\item The harmonic-number asymptotic used above is the standard Euler--Maclaurin expansion.
+\end{enumerate}
+

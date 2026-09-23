@@ -1,0 +1,257 @@
+\section*{Problem 377. Is $\displaystyle f(n)=\sum_{p\le n,\ p\nmid \binom{2n}{n}}\frac1p$ bounded? --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): strict progress by proving a new theorem that localizes any possible unboundedness to \emph{arbitrarily small primes}.
+
+Round 1 recorded the average-order results of Erd\H{o}s--Graham--Ruzsa--Straus and left open whether $f(n)$ is bounded.
+In this round I prove a new uniform upper bound for the contribution of all primes in the range $n^{1/(m+1)}<p\le n$, for every fixed $m$.
+In particular, primes $\sqrt{n}<p\le n$ can contribute at most $\log 2+o(1)$.
+So if $f(n)$ is unbounded, the entire growth must come from smaller and smaller primes.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use only the Round-1 Kummer reformulation:
+for a prime $p$,
+\[
+p\nmid \binom{2n}{n}
+\]
+if and only if every base-$p$ digit of $n$ is at most $(p-1)/2$.
+No other Round-1 proof is reproved.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new observation is a size-digit lemma:
+
+if
+\[
+n^{1/(k+1)}<p\le n^{1/k}
+\]
+and $p\nmid \binom{2n}{n}$, then the base-$p$ expansion of $n$ has exactly $k+1$ digits, each at most $(p-1)/2$, hence
+\[
+n\le \frac{p^{k+1}-1}{2}.
+\]
+This forces
+\[
+p\ge (2n+1)^{1/(k+1)}.
+\]
+So in each dyadic-like prime window $(n^{1/(k+1)},\,n^{1/k}]$, the ``good'' primes can only occupy the much shorter terminal interval
+\[
+[(2n+1)^{1/(k+1)},\,n^{1/k}].
+\]
+Summing reciprocal primes over these terminal intervals gives a new explicit bound.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 was that there was no structural theorem explaining \emph{where} a possible blow-up of $f(n)$ could come from.
+
+I now prove:
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid \binom{2n}{n}}}\frac1p
+\le \log(m+1)+o(1)
+\qquad (m \text{ fixed}).
+\]
+This will imply that any unboundedness of $f(n)$ must be caused by primes
+\[
+p\le n^{1/(m+1)}
+\]
+for every fixed $m$, since the complementary range $n^{1/(m+1)}<p\le n$ has uniformly bounded total weight.
+That is a genuine narrowing of the problem.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Write
+\[
+C_n:=\binom{2n}{n}.
+\]
+
+\subsubsection*{Lemma 5.1 (window lemma)}
+Fix an integer $k\ge 1$.
+For each $n$, define
+\[
+I_k(n):=\sum_{\substack{n^{1/(k+1)}<p\le n^{1/k}\\ p\nmid C_n}}\frac1p.
+\]
+Then, as $n\to\infty$ with $k$ fixed,
+\[
+I_k(n)\le \log\!\left(\frac{k+1}{k}\right)+o(1).
+\]
+
+\paragraph{Proof.}
+Let
+\[
+n^{1/(k+1)}<p\le n^{1/k}
+\]
+and suppose $p\nmid C_n$.
+By Kummer's theorem, every base-$p$ digit of $n$ is at most $(p-1)/2$.
+
+Because $p\le n^{1/k}$, we have $p^k\le n$, so the base-$p$ expansion of $n$ has at least $k+1$ digits.
+Because $p>n^{1/(k+1)}$, we have $p^{k+1}>n$, so the expansion has at most $k+1$ digits.
+Hence $n$ has exactly $k+1$ base-$p$ digits:
+\[
+n=a_0+a_1p+\cdots + a_kp^k,
+\qquad
+0\le a_j\le \frac{p-1}{2}.
+\]
+Therefore
+\[
+n\le \frac{p-1}{2}\sum_{j=0}^k p^j
+ = \frac{p-1}{2}\cdot \frac{p^{k+1}-1}{p-1}
+ = \frac{p^{k+1}-1}{2}.
+\]
+Rearranging gives
+\[
+p\ge (2n+1)^{1/(k+1)}.
+\]
+So every prime counted by $I_k(n)$ lies in the interval
+\[
+(2n+1)^{1/(k+1)}\le p\le n^{1/k}.
+\]
+Hence
+\[
+I_k(n)\le \sum_{(2n+1)^{1/(k+1)}\le p\le n^{1/k}}\frac1p.
+\]
+Now use the classical Mertens asymptotic
+\[
+\sum_{p\le x}\frac1p=\log\log x + B_1 + o(1).
+\]
+Taking the difference at the two endpoints yields
+\[
+I_k(n)\le
+\log\log(n^{1/k})-\log\log((2n+1)^{1/(k+1)})+o(1).
+\]
+Since
+\[
+\log\log(n^{1/k})=\log\log n - \log k
+\]
+and
+\[
+\log\log((2n+1)^{1/(k+1)})
+=
+\log\log(2n+1)-\log(k+1),
+\]
+we obtain
+\[
+I_k(n)\le
+\log\!\left(\frac{k+1}{k}\right)
++
+\log\!\left(\frac{\log n}{\log(2n+1)}\right)
++o(1)
+=
+\log\!\left(\frac{k+1}{k}\right)+o(1).
+\]
+This proves the lemma. \hfill$\square$
+
+\subsubsection*{Theorem 5.2 (large-prime contribution is uniformly bounded)}
+Fix $m\ge 1$.
+Then
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid C_n}}\frac1p
+\le \log(m+1)+o(1)
+\qquad (n\to\infty).
+\]
+
+\paragraph{Proof.}
+For primes $p\le n$, the condition $n^{1/(m+1)}<p\le n$ partitions uniquely into the windows
+\[
+n^{1/(k+1)}<p\le n^{1/k},
+\qquad
+k=1,2,\dots,m.
+\]
+Therefore
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid C_n}}\frac1p
+=
+\sum_{k=1}^m I_k(n).
+\]
+Applying Lemma 5.1 to each fixed $k$ and summing,
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid C_n}}\frac1p
+\le
+\sum_{k=1}^m \left(\log\!\left(\frac{k+1}{k}\right)+o(1)\right).
+\]
+Because $m$ is fixed,
+\[
+\sum_{k=1}^m o(1)=o(1),
+\]
+and the logarithms telescope:
+\[
+\sum_{k=1}^m \log\!\left(\frac{k+1}{k}\right)=\log(m+1).
+\]
+Hence
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid C_n}}\frac1p
+\le \log(m+1)+o(1).
+\]
+This proves the theorem. \hfill$\square$
+
+\subsubsection*{Corollary 5.3 (all possible unboundedness comes from very small primes)}
+Assume that $f(n)$ is unbounded.
+Then for every fixed $m\ge 1$ there exists a sequence $n_j\to\infty$ such that
+\[
+\sum_{\substack{p\le n_j^{1/(m+1)}\\ p\nmid C_{n_j}}}\frac1p \to \infty.
+\]
+
+\paragraph{Proof.}
+By definition,
+\[
+f(n)
+=
+\sum_{\substack{p\le n^{1/(m+1)}\\ p\nmid C_n}}\frac1p
++
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid C_n}}\frac1p.
+\]
+The second sum is at most $\log(m+1)+o(1)$ by Theorem 5.2.
+So if $f(n)$ is unbounded, the first sum must be unbounded along some sequence.
+\hfill$\square$
+
+\subsubsection*{Special case}
+Taking $m=1$ gives
+\[
+\sum_{\substack{\sqrt{n}<p\le n\\ p\nmid C_n}}\frac1p\le \log 2+o(1).
+\]
+Thus primes in the range $\sqrt{n}<p\le n$ can never be responsible for an unbounded growth of $f(n)$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Checks on the new argument:
+\begin{itemize}
+\item \emph{Number of digits.}  
+For $n^{1/(k+1)}<p\le n^{1/k}$, indeed $p^k\le n<p^{k+1}$, so the base-$p$ expansion has exactly $k+1$ digits.  No edge case is missed.
+
+\item \emph{Could the top digit be smaller than $(p-1)/2$ and ruin the bound?}  
+No.  Replacing the top digit by the maximal allowed value only enlarges the right-hand side, so the inequality
+\[
+n\le \frac{p^{k+1}-1}{2}
+\]
+remains valid.
+
+\item \emph{Dependence on $m$.}  
+The theorem is for each fixed $m$.  The $o(1)$ term may depend on $m$, which is harmless.
+
+\item \emph{Does this prove boundedness of $f(n)$?}  
+No.  It only proves that the contribution from primes in the range $n^{1/(m+1)}<p\le n$ is uniformly bounded for each fixed $m$.  The unresolved part is the cumulative contribution of much smaller primes.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The new theorem is:
+for every fixed $m\ge 1$,
+\[
+\sum_{\substack{n^{1/(m+1)}<p\le n\\ p\nmid \binom{2n}{n}}}\frac1p
+\le \log(m+1)+o(1).
+\]
+In particular,
+\[
+\sum_{\substack{\sqrt{n}<p\le n\\ p\nmid \binom{2n}{n}}}\frac1p
+\le \log 2+o(1).
+\]
+Therefore any possible unboundedness of $f(n)$ must come from primes
+\[
+p\le n^{1/(m+1)}
+\]
+for every fixed $m$.
+This sharply localizes the remaining difficulty.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 57\%
+
+\subsection*{9) REFERENCES}
+[EGRS75] P.~Erd\H{o}s, R.~L.~Graham, I.~Z.~Ruzsa, and E.~G.~Straus, \emph{On the prime factors of $\binom{2n}{n}$}, Math. Comp. \textbf{29} (1975), 83--92.
+
+[RS62] J.~B.~Rosser and L.~Schoenfeld, \emph{Approximate formulas for some functions of prime numbers}, Illinois J. Math. \textbf{6} (1962), 64--94.

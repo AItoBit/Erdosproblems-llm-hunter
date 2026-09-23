@@ -1,0 +1,361 @@
+\section{Erd\H{o}s Problem \#38 --- Round 4 (continuation \& gap-closure)}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round~3 pushed the one-block periodic obstruction as far as it naturally goes, obtaining the necessary bound
+\[
+ f(\alpha)\le \min(\alpha,1-\alpha)
+\]
+for rational $\alpha$, together with central-interval constraints on any candidate set $B$. The most promising remaining gap is the classical ``random-set barrier'': Erd\H{o}s observed that even for $B=\mathbb N$ one should not hope for an improvement larger than $\alpha(1-\alpha)$. Round~3 did not make this rigorous.
+
+The goal of Round~4 is therefore to replace the highly structured block test sets by \emph{pseudorandom periodic} test sets and prove a strictly sharper universal obstruction:
+\[
+ f(\alpha)\le \alpha(1-\alpha)
+\qquad\text{for every rational }\alpha\in(0,1).
+\]
+This is a genuine strengthening of the Round~3 restriction, since
+\[
+\alpha(1-\alpha)\le \min(\alpha,1-\alpha)
+\]
+with strict inequality for every $\alpha\in(0,1)\setminus\{1/2\}$.
+
+\subsection*{2) ROUND-3 FOUNDATION USED}
+I use the following specific Round~3 ingredients.
+\begin{itemize}
+\item \textbf{Round~3 formal restatement and notation} for Erd\H{o}s Problem~\#38.
+\item \textbf{Round~3 periodic-test-set viewpoint:} the property can be challenged by constructing a single set $A$ of prescribed Schnirelmann density and evaluating the inequality at one carefully chosen $N$.
+\item \textbf{Round~3 obstruction baseline:} for rational $\alpha$, one already has the weaker necessary bound
+\[
+ f(\alpha)\le \min(\alpha,1-\alpha).
+\]
+The new work in this round is to sharpen this to $f(\alpha)\le \alpha(1-\alpha)$.
+\end{itemize}
+I will not re-prove the Round~3 interval lemmas; instead I replace that entire obstruction family by a different periodic construction.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new ingredient is a \emph{rotation-and-randomisation} principle for periodic sets.
+
+\begin{itemize}
+\item First, any binary word of length $Q$ with exactly $\alpha Q$ ones can be rotated so that its periodic extension has \emph{exact Schnirelmann density} $\alpha$. This is a cycle-lemma type observation obtained by rotating at a minimum of the discrepancy function.
+\item Second, a random binary word of density $\alpha$ has, with positive probability, near-random pair correlations for \emph{every} nonzero cyclic shift simultaneously. After conditioning on having exactly $\alpha Q$ ones, this gives a deterministic period whose cyclic self-intersections all satisfy
+\[
+|R\cap(R+t)|\ge (\alpha^2-\varepsilon)Q
+\qquad (t\neq 0).
+\]
+\item Combining the two facts yields a periodic set $A$ of exact Schnirelmann density $\alpha$ for which \emph{every} shift $b$ satisfies
+\[
+|(A\cup(A+b))\cap[1,Q]|\le (\alpha+\alpha(1-\alpha)+\varepsilon)Q.
+\]
+This turns Erd\H{o}s' random heuristic into a rigorous rational-density obstruction.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+The exact gap left after Round~3 is that all previous obstructions came from highly structured interval-type periods, so they only forced the coarse upper bound $f(\alpha)\le \min(\alpha,1-\alpha)$. To go beyond that I will:
+\begin{enumerate}
+\item prove a \emph{rotation lemma} showing that any cyclic word with density $\alpha$ can be turned into an infinite periodic set with Schnirelmann density exactly $\alpha$;
+\item prove, by the probabilistic method, that for every rational $\alpha$ and every $\varepsilon>0$ there exists a period whose nonzero cyclic shifts all have self-intersection at least $(\alpha^2-\varepsilon)Q$;
+\item use that period as a test set at $N=Q$ to show that no shift can improve the density by more than $\alpha(1-\alpha)+\varepsilon$.
+\end{enumerate}
+This directly overcomes the main Round~3 obstacle: instead of trying to optimise within the interval family, it switches to a family whose correlations are asymptotically as small as the random model allows.
+
+\subsection*{5) WORK (ROUND-4)}
+
+\subsubsection*{5.1 Rotation lemma: turning a cyclic word into a Schnirelmann-extremal periodic set}
+Let $Q\ge 2$, let $0<L<Q$, and put $\alpha=L/Q$. Let $w=(w_1,\dots,w_Q)\in\{0,1\}^Q$ with
+\[
+\sum_{i=1}^Q w_i=L.
+\]
+For $0\le n\le Q$ define the discrepancy sums
+\[
+D_n:=\sum_{i=1}^n (w_i-\alpha),
+\qquad D_0:=0.
+\]
+Since $D_Q=L-\alpha Q=0$, the finite set $\{D_0,D_1,\dots,D_{Q-1}\}$ has a minimum. Choose $m\in\{0,1,\dots,Q-1\}$ such that
+\[
+D_m=\min_{0\le j\le Q-1} D_j.
+\]
+Now rotate the word by $m$ places and define
+\[
+ w'_r := w_{m+r}
+ \qquad (1\le r\le Q),
+\]
+with indices understood modulo $Q$.
+
+\subsubsection*{Lemma 5.1 (rotation lemma).}
+For every $1\le r\le Q$ one has
+\[
+\sum_{i=1}^r w'_i \ge \alpha r.
+\]
+Consequently, if $A\subseteq\mathbb N$ is the infinite periodic set obtained by repeating $w'$ with period $Q$, then
+\[
+ d_s(A)=\alpha.
+\]
+
+\emph{Proof.}
+Fix $1\le r\le Q$.
+If $m+r\le Q$, then
+\[
+\sum_{i=1}^r w'_i - \alpha r
+ = \sum_{i=m+1}^{m+r}(w_i-\alpha)
+ = D_{m+r}-D_m\ge 0
+\]
+because $D_m$ is minimal.
+If $m+r>Q$, then using $D_Q=0$ we get
+\[
+\sum_{i=1}^r w'_i - \alpha r
+= \sum_{i=m+1}^{Q}(w_i-\alpha)+\sum_{i=1}^{m+r-Q}(w_i-\alpha)
+= (D_Q-D_m)+D_{m+r-Q}
+= D_{m+r-Q}-D_m\ge 0.
+\]
+Thus every prefix of $w'$ has at least $\alpha$-density.
+
+Let $c_r:=\sum_{i=1}^r w'_i$ for $0\le r\le Q$ (with $c_0=0$). Then $c_r\ge \alpha r$ for all $r$, and $c_Q=L=\alpha Q$. If $N=kQ+r$ with $k\ge 0$ and $0\le r<Q$, then the periodic extension $A$ satisfies
+\[
+|A\cap[1,N]| = kL+c_r \ge k\alpha Q + \alpha r = \alpha N.
+\]
+Hence $d_s(A)\ge \alpha$. On the other hand, for every $k\ge 1$,
+\[
+\frac{|A\cap[1,kQ]|}{kQ} = \frac{kL}{kQ}=\alpha,
+\]
+so $d_s(A)\le \alpha$. Therefore $d_s(A)=\alpha$. \hfill$\square$
+
+\subsubsection*{5.2 Pseudorandom periods with exact density}
+Fix a rational number $\alpha\in(0,1)$ and $\varepsilon>0$. Write $\alpha=a/q_0$ in lowest terms. Let $Q$ be a large multiple of $q_0$, so that $\alpha Q\in\mathbb N$.
+
+Consider independent Bernoulli random variables $(\xi_x)_{x\in\mathbb Z/Q\mathbb Z}$ with
+\[
+\mathbb P(\xi_x=1)=\alpha,
+\qquad \mathbb P(\xi_x=0)=1-\alpha.
+\]
+Let
+\[
+R:=\{x\in\mathbb Z/Q\mathbb Z: \xi_x=1\}.
+\]
+For each nonzero $t\in\mathbb Z/Q\mathbb Z$, define
+\[
+X_t:=|R\cap(R+t)| = \sum_{x\in\mathbb Z/Q\mathbb Z} \xi_x\xi_{x+t}.
+\]
+Also set
+\[
+Y:=|R|=\sum_{x\in\mathbb Z/Q\mathbb Z}\xi_x.
+\]
+
+\subsubsection*{Lemma 5.2 (uniform correlation lower bound on one random period).}
+For each fixed nonzero $t\in\mathbb Z/Q\mathbb Z$ one has
+\[
+\mathbb E X_t = \alpha^2 Q,
+\]
+and
+\[
+\mathbb P\bigl(X_t< (\alpha^2-\varepsilon)Q\bigr)
+\le \exp\Bigl(-\frac{\varepsilon^2Q}{2}\Bigr).
+\]
+Hence
+\[
+\mathbb P\Bigl(\forall t\neq 0,\ X_t\ge (\alpha^2-\varepsilon)Q\Bigr)
+\ge 1-(Q-1)\exp\Bigl(-\frac{\varepsilon^2Q}{2}\Bigr).
+\]
+
+\emph{Proof.}
+For $t\neq 0$, the variables $\xi_x$ and $\xi_{x+t}$ are independent, so
+\[
+\mathbb E(\xi_x\xi_{x+t})=\alpha^2.
+\]
+Summing over $x\in\mathbb Z/Q\mathbb Z$ gives $\mathbb E X_t=\alpha^2Q$.
+
+Now view $X_t$ as a function of the independent family $(\xi_x)_{x\in\mathbb Z/Q\mathbb Z}$. Changing a single coordinate $\xi_y$ can affect only the two summands
+\[
+\xi_y\xi_{y+t}
+\qquad\text{and}\qquad
+\xi_{y-t}\xi_y,
+\]
+so the value of $X_t$ changes by at most $2$. By the bounded-differences inequality,
+\[
+\mathbb P\bigl(X_t\le \mathbb EX_t-u\bigr)
+\le \exp\Bigl(-\frac{2u^2}{\sum_{x\in\mathbb Z/Q\mathbb Z} 2^2}\Bigr)
+=\exp\Bigl(-\frac{u^2}{2Q}\Bigr).
+\]
+Taking $u=\varepsilon Q$ gives the displayed tail bound. The final estimate follows by the union bound over the $Q-1$ nonzero shifts. \hfill$\square$
+
+\subsubsection*{Lemma 5.3 (forcing the random period onto the exact rational slice).}
+There exists $Q_1=Q_1(\alpha,\varepsilon)$ such that for every multiple $Q\ge Q_1$ of $q_0$ there is a deterministic set
+\[
+R\subseteq \mathbb Z/Q\mathbb Z
+\qquad\text{with}\qquad
+|R|=\alpha Q
+\]
+and
+\[
+|R\cap(R+t)|\ge (\alpha^2-\varepsilon)Q
+\qquad\text{for every }t\neq 0.
+\]
+
+\emph{Proof.}
+The event $\{Y=\alpha Q\}$ has probability
+\[
+\mathbb P(Y=\alpha Q)
+= \binom{Q}{\alpha Q}\alpha^{\alpha Q}(1-\alpha)^{(1-\alpha)Q}.
+\]
+By Stirling's formula there exists a constant $c_\alpha>0$ such that, for all sufficiently large multiples $Q$ of $q_0$,
+\[
+\mathbb P(Y=\alpha Q)\ge c_\alpha Q^{-1/2}.
+\]
+On the other hand, Lemma~5.2 gives
+\[
+\mathbb P\Bigl(\exists t\neq 0:\ X_t< (\alpha^2-\varepsilon)Q\Bigr)
+\le (Q-1)\exp\Bigl(-\frac{\varepsilon^2Q}{2}\Bigr).
+\]
+Since $Qe^{-\varepsilon^2Q/2}=o(Q^{-1/2})$, for all sufficiently large $Q$ we have
+\[
+\mathbb P(Y=\alpha Q)
+>
+\mathbb P\Bigl(\exists t\neq 0:\ X_t< (\alpha^2-\varepsilon)Q\Bigr).
+\]
+Therefore
+\[
+\mathbb P\Bigl(Y=\alpha Q\ \text{and}\ \forall t\neq 0,\ X_t\ge (\alpha^2-\varepsilon)Q\Bigr)>0.
+\]
+So some deterministic realisation of $R$ has all the required properties. \hfill$\square$
+
+\subsubsection*{5.3 Sharpened obstruction on the admissible size of $f(\alpha)$}
+We now turn the pseudorandom period into a counterexample to any putative inequality with gain exceeding $\alpha(1-\alpha)$.
+
+\subsubsection*{Theorem 5.4 (random-model ceiling, rigorously proved for rational densities).}
+Assume that $B\subseteq\mathbb N$ satisfies the Erd\H{o}s Problem~\#38 property with some function $f:(0,1)\to(0,\infty)$.
+Then for every rational $\alpha\in(0,1)$ one has
+\[
+ f(\alpha)\le \alpha(1-\alpha).
+\]
+
+\emph{Proof.}
+Fix rational $\alpha\in(0,1)$ and suppose, for contradiction, that
+\[
+ f(\alpha)>\alpha(1-\alpha).
+\]
+Choose
+\[
+\varepsilon:=\frac{f(\alpha)-\alpha(1-\alpha)}{3}>0.
+\]
+By Lemma~5.3, for some sufficiently large multiple $Q$ of the denominator of $\alpha$ there exists a set
+\[
+R\subseteq \mathbb Z/Q\mathbb Z
+\qquad\text{with}\qquad
+|R|=\alpha Q
+\]
+such that
+\[
+|R\cap(R+t)|\ge (\alpha^2-\varepsilon)Q
+\qquad (t\neq 0).
+\]
+Apply Lemma~5.1 to a binary word representing $R$. After a cyclic rotation, we obtain an infinite periodic set $A\subseteq\mathbb N$ with
+\[
+ d_s(A)=\alpha
+\]
+and whose first period has residue set equal to a translate of $R$. Since cyclic translation preserves all intersection numbers $|R\cap(R+t)|$, we may continue to denote the first-period residue set by $R$.
+
+Now set $N:=Q$. Fix any positive integer $b$.
+
+If $b\ge Q$, then $(A+b)\cap[1,Q]=\varnothing$, so
+\[
+|(A\cup(A+b))\cap[1,Q]| = |A\cap[1,Q]|=\alpha Q.
+\]
+
+If $1\le b\le Q-1$, then shifting inside the first period can only \emph{lose} wrapped points, so
+\[
+|(A\cup(A+b))\cap[1,Q]|
+\le |R\cup(R+b)|,
+\]
+where $R+b$ denotes cyclic translation in $\mathbb Z/Q\mathbb Z$. Hence
+\[
+|(A\cup(A+b))\cap[1,Q]|
+\le 2|R|-|R\cap(R+b)|
+\le 2\alpha Q-(\alpha^2-\varepsilon)Q
+= \bigl(\alpha+\alpha(1-\alpha)+\varepsilon\bigr)Q.
+\]
+Therefore for \emph{every} $b\in\mathbb N$,
+\[
+|(A\cup(A+b))\cap[1,Q]|
+\le \bigl(\alpha+\alpha(1-\alpha)+\varepsilon\bigr)Q.
+\]
+By the choice of $\varepsilon$,
+\[
+\alpha+\alpha(1-\alpha)+\varepsilon
+< \alpha + f(\alpha).
+\]
+So for this set $A$ and this $N=Q$, no $b\in B$ can satisfy
+\[
+|(A\cup(A+b))\cap[1,Q]|\ge (\alpha+f(\alpha))Q,
+\]
+contradicting the defining property of $B$.
+
+This contradiction proves
+\[
+ f(\alpha)\le \alpha(1-\alpha)
+\qquad\text{for every rational }\alpha\in(0,1).
+\]
+\hfill$\square$
+
+\subsubsection*{5.4 Consequences and comparison with Round~3}
+Theorem~5.4 strictly strengthens the Round~3 rational obstruction.
+
+\subsubsection*{Corollary 5.5.}
+Under the Erd\H{o}s Problem~\#38 hypothesis, for every rational $\alpha\in(0,1)$,
+\[
+0<f(\alpha)\le \alpha(1-\alpha)\le \min(\alpha,1-\alpha).
+\]
+In particular,
+\[
+ f(1/2)\le 1/4.
+\]
+
+\emph{Proof.}
+The first inequality is the problem hypothesis, the second is Theorem~5.4, and the third is elementary. \hfill$\square$
+
+This also rules out an entire class of proof strategies: one cannot hope to settle the problem by proving the stronger statement with some function $f$ that exceeds the random-set barrier $\alpha(1-\alpha)$ at even a single rational density.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Does the rotation lemma really force positive Schnirelmann density, not just asymptotic density?}
+Yes. The key point is that after rotating at a discrepancy minimum, \emph{every} prefix of the first period has at least $\alpha$-density. Repeating the period then preserves this bound on every prefix of the infinite set. In particular the first entry of the rotated word must be $1$, so the ``missing $1$'' pathology from Round~2 cannot occur.
+
+\item \textbf{Could the probabilistic construction fail after conditioning on the exact size $|R|=\alpha Q$?}
+No conditioning argument is needed. The proof only uses that the event ``$|R|=\alpha Q$'' has probability $\gg Q^{-1/2}$ while the bad-correlation event has exponentially small probability. The difference of these two probabilities is positive for all sufficiently large $Q$.
+
+\item \textbf{Is the bounded-differences estimate valid for $X_t$?}
+Yes. For fixed $t\neq 0$, changing one Bernoulli coordinate $\xi_y$ changes only the two summands with indices $x=y$ and $x=y-t$. Hence the Lipschitz constant is exactly $2$.
+
+\item \textbf{Could boundary effects at $N=Q$ invalidate the cyclic correlation bound?}
+No. Boundary effects only \emph{remove} wrapped points from $(A+b)\cap[1,Q]$. Therefore the actual first-period union is bounded above by the cyclic union $|R\cup(R+b)|$; this is precisely the inequality needed for the contradiction.
+
+\item \textbf{Interaction with Round~3.}
+There is no conflict. Round~3 used interval periods and obtained the weaker obstruction $f(\alpha)\le \min(\alpha,1-\alpha)$. Round~4 uses a different family of periods and sharpens the admissible upper bound on $f(\alpha)$ to the random-model ceiling $\alpha(1-\alpha)$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~4 does not resolve Erd\H{o}s Problem~\#38, but it makes a substantive advance beyond Round~3:
+\begin{enumerate}
+\item it proves, rigorously and not just heuristically, the random-set ceiling
+\[
+ f(\alpha)\le \alpha(1-\alpha)
+\qquad (\alpha\in \mathbb Q\cap(0,1));
+\]
+\item this strictly improves the Round~3 obstruction
+\[
+ f(\alpha)\le \min(\alpha,1-\alpha);
+\]
+\item it introduces a new tool --- discrepancy-minimising rotation of pseudorandom periods --- which is qualitatively different from the earlier interval/block constructions.
+\end{enumerate}
+In particular, any future positive solution must work with a function $f$ lying below the random-model barrier at every rational density, and any future negative solution will need ideas beyond the one-block periodic obstructions used in the first three rounds.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 58\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#38}, \texttt{erdosproblems.com/38}, accessed 2026-03-07.
+\item \emph{Formal Conjectures}, file \texttt{FormalConjectures/ErdosProblems/38.lean}, checked 2026-03-07.
+\item C. McDiarmid, \emph{On the method of bounded differences}, in \emph{Surveys in Combinatorics, 1989 (Norwich, 1989)}, London Math. Soc. Lecture Note Ser. \textbf{141}, Cambridge Univ. Press, 1989, 148--188.
+\end{itemize}

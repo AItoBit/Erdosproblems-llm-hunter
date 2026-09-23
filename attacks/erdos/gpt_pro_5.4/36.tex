@@ -1,0 +1,222 @@
+\section{Round 2: A variance method lower bound}
+
+\subsection{Round-2 objective}
+We pursue path \textbf{(A)} (proof direction: a stronger universal lower bound).
+Round~1 established the averaging bound
+\(\max_x r(x)>N/4\) (Lemma~36.1) and exhibited an interval construction with
+\(\max_x r(x)=N/2\) for even \(N\) (Lemma~36.2).
+The principal gap left in Round~1 is to improve the universal lower bound toward the best-known constants.
+In this round we prove a strictly stronger, fully rigorous universal estimate:
+\[
+\max_x r(x)\ \ge\ \frac{N}{\sqrt{8-\frac{1}{N^2}}}\ >\ \frac{N}{\sqrt 8}.
+\]
+In particular, the minimum overlap constant satisfies \(c\ge 1/\sqrt 8\approx 0.353553\), improving the Round~1 bound \(c\ge 1/4\).
+
+\subsection{Round-1 foundation used}
+We use the following Round~1 results as black boxes (no re-proofs):
+\begin{itemize}
+\item The setup: a partition \(A\sqcup B=\{1,2,\dots,2N\}\) with \(|A|=|B|=N\), and
+\(r(x)=\#\{(a,b)\in A\times B: a-b=x\}\).
+\item The counting identity \(\sum_x r(x)=N^2\), hence Lemma~36.1:
+\(\max_x r(x)\ge N^2/(4N-1)>N/4\).
+\item Lemma~36.2 (interval construction) as a sanity check; it is not used in the proofs below.
+\end{itemize}
+
+\subsection{New insight / tool (Round-2)}
+The new ingredient is a second-moment constraint.
+Choose independent random variables
+\(a\sim \mathrm{Unif}(A)\) and \(b\sim \mathrm{Unif}(B)\), and set
+\(D:=a-b\).
+Then
+\[
+\mathbb P(D=x)=\frac{r(x)}{N^2},\qquad \max_x\mathbb P(D=x)=\frac{\max_x r(x)}{N^2}.
+\]
+We combine:
+\begin{itemize}
+\item an \emph{upper} bound on \(\mathrm{Var}(D)\) coming only from the fact that \(A\) and \(B\) are complementary equal halves of \([2N]\), and
+\item a \emph{lower} bound on \(\mathrm{Var}(D)\) in terms of the maximum atom \(\max_x\mathbb P(D=x)\), obtained by smoothing an integer-valued law by a continuous uniform random variable.
+\end{itemize}
+
+\subsection{Attack plan (Round-2)}
+The Round~1 gap is that averaging alone forces only \(\max_x r(x)\gtrsim N/4\).
+To improve this, we:
+\begin{enumerate}
+\item interpret \(r(x)/N^2\) as the law of \(D=a-b\);
+\item show \(\mathrm{Var}(D)\le (4N^2-1)/6\);
+\item show that if \(p:=\max_x\mathbb P(D=x)\) then
+\(\mathrm{Var}(D)\ge \frac{1}{12p^2}-\frac{1}{12}\);
+\item combine (2)--(3) and solve for \(p\), hence for \(\max_x r(x)\).
+\end{enumerate}
+
+\subsection{Work (Round-2)}
+Let
+\[
+M:=\max_x r(x).
+\]
+With \(D=a-b\) as above, we have
+\[
+\max_x\mathbb P(D=x)=\frac{M}{N^2}.
+\]
+
+\medskip
+\noindent\textbf{Lemma 36.3 (variance upper bound for \(D=a-b\)).}
+For every partition \(A\sqcup B=[2N]\) with \(|A|=|B|=N\),
+\[
+\mathrm{Var}(D)\ \le\ \frac{4N^2-1}{6}.
+\]
+
+\noindent\emph{Proof.}
+Since \(a\) and \(b\) are independent,
+\(\mathrm{Var}(D)=\mathrm{Var}(a)+\mathrm{Var}(b)\).
+Write
+\[
+S:=\sum_{i=1}^{2N} i = N(2N+1),\qquad
+Q:=\sum_{i=1}^{2N} i^2=\frac{(2N)(2N+1)(4N+1)}{6}.
+\]
+Let
+\(A_1:=\sum_{a\in A}a\) and \(A_2:=\sum_{a\in A}a^2\), so
+\(B_1=S-A_1\), \(B_2=Q-A_2\).
+Then
+\[
+\mathrm{Var}(a)=\frac{A_2}{N}-\left(\frac{A_1}{N}\right)^2,
+\qquad
+\mathrm{Var}(b)=\frac{B_2}{N}-\left(\frac{B_1}{N}\right)^2.
+\]
+Hence
+\[
+\mathrm{Var}(a)+\mathrm{Var}(b)
+=\frac{A_2+B_2}{N}-\frac{A_1^2+B_1^2}{N^2}
+=\frac{Q}{N}-\frac{A_1^2+(S-A_1)^2}{N^2}.
+\]
+But
+\[
+A_1^2+(S-A_1)^2
+=2\left(A_1-\frac{S}{2}\right)^2+\frac{S^2}{2}\ \ge\ \frac{S^2}{2}.
+\]
+Therefore
+\[
+\mathrm{Var}(D)\le \frac{Q}{N}-\frac{S^2}{2N^2}.
+\]
+Compute
+\(\frac{Q}{N}=\frac{(2N+1)(4N+1)}{3}\) and
+\(\frac{S^2}{2N^2}=\frac{(2N+1)^2}{2}\), so
+\[
+\mathrm{Var}(D)
+\le (2N+1)\left(\frac{4N+1}{3}-\frac{2N+1}{2}\right)
+=(2N+1)\cdot\frac{2N-1}{6}
+=\frac{4N^2-1}{6}.
+\]
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 36.4 (integer-valued variance lower bound from bounded atoms).}
+Let \(X\) be an integer-valued random variable such that
+\(\mathbb P(X=k)\le p\) for all \(k\in\mathbb Z\), where \(0<p\le 1\).
+Then
+\[
+\mathrm{Var}(X)\ \ge\ \frac{1}{12p^2}-\frac{1}{12}.
+\]
+
+\noindent\emph{Proof.}
+Let \(U\sim\mathrm{Unif}(-\tfrac12,\tfrac12)\) be independent of \(X\), and set \(Y:=X+U\).
+For each integer \(k\), on the interval \([k-\tfrac12,k+\tfrac12)\) the density of \(Y\) equals \(\mathbb P(X=k)\), so \(Y\) has a density \(f\) satisfying
+\[
+0\le f(y)\le p\ \text{ for all }y\in\mathbb R,\qquad \int_{\mathbb R} f(y)\,dy=1.
+\]
+Let \(\mu:=\mathbb E[Y]\) and \(Z:=Y-\mu\). Then \(\mathrm{Var}(Y)=\mathbb E[Z^2]\) and the density of \(Z\) is a translate of \(f\), hence also bounded by \(p\).
+Therefore, for any \(r\ge 0\),
+\[
+\mathbb P(|Z|\le r)\le \int_{-r}^{r} p\,dt=2rp,
+\quad\text{so}\quad
+\mathbb P(|Z|>r)\ge \max(0,1-2rp).
+\]
+Using the tail integral identity
+\[
+\mathbb E[Z^2]=\int_0^{\infty} \mathbb P(Z^2>t)\,dt
+=\int_0^{\infty} 2r\,\mathbb P(|Z|>r)\,dr
+\]
+(the second equality is the substitution \(t=r^2\), \(dt=2r\,dr\)), we obtain
+\[
+\mathrm{Var}(Y)=\mathbb E[Z^2]
+\ge \int_0^{1/(2p)} 2r(1-2rp)\,dr
+=\left[r^2-\frac{4p}{3}r^3\right]_{0}^{1/(2p)}
+=\frac{1}{12p^2}.
+\]
+Finally, since \(Y=X+U\) with \(X\perp U\),
+\(
+\mathrm{Var}(Y)=\mathrm{Var}(X)+\mathrm{Var}(U)=\mathrm{Var}(X)+1/12
+\).
+Thus
+\(
+\mathrm{Var}(X)+1/12\ge 1/(12p^2)
+\), i.e.
+\(
+\mathrm{Var}(X)\ge 1/(12p^2)-1/12
+\).
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 36.5 (universal lower bound \(>N/\sqrt8\)).}
+For every \(N\ge 1\) and every partition \(A\sqcup B=[2N]\) with \(|A|=|B|=N\),
+\[
+M=\max_x r(x)\ \ge\ \frac{N}{\sqrt{8-\frac{1}{N^2}}}\ >\ \frac{N}{\sqrt 8}.
+\]
+Consequently the minimum overlap constant satisfies \(c\ge 1/\sqrt 8\approx 0.353553\).
+
+\noindent\emph{Proof.}
+Apply Lemma~36.4 to \(X=D\). Here
+\(p:=\max_x\mathbb P(D=x)=M/N^2\), so Lemma~36.4 gives
+\[
+\mathrm{Var}(D)\ \ge\ \frac{1}{12p^2}-\frac{1}{12}
+=\frac{N^4}{12M^2}-\frac{1}{12}.
+\]
+Lemma~36.3 gives the universal upper bound
+\(\mathrm{Var}(D)\le (4N^2-1)/6\).
+Combining,
+\[
+\frac{N^4}{12M^2}-\frac{1}{12}\ \le\ \frac{4N^2-1}{6}
+\quad\Rightarrow\quad
+\frac{N^4}{12M^2}\ \le\ \frac{8N^2-1}{12}.
+\]
+Multiplying by \(12\) and rearranging yields
+\(
+N^4/M^2\le 8N^2-1
+\), hence
+\[
+M^2\ \ge\ \frac{N^4}{8N^2-1}
+\quad\Rightarrow\quad
+M\ \ge\ \frac{N^2}{\sqrt{8N^2-1}}=\frac{N}{\sqrt{8-\frac{1}{N^2}}}.
+\]
+This proves the theorem.
+\hfill$\square$
+
+\subsection{Adversarial verification}
+\begin{itemize}
+\item \emph{Distribution identity.} Each ordered pair \((a,b)\in A\times B\) is equally likely, so
+\(\mathbb P(D=x)=r(x)/N^2\) exactly.
+\item \emph{Lemma 36.4 hypotheses.} The only hypothesis is that \(X\) is integer-valued and its atoms are bounded by \(p\). Smoothing by \(U\) converts the discrete law to a continuous density bounded by \(p\) on \emph{all} of \(\mathbb R\), so the interval bound \(\mathbb P(|Z|\le r)\le 2rp\) is valid.
+\item \emph{Tail integral identity.} The identity
+\(\mathbb E[Z^2]=\int_0^{\infty} \mathbb P(Z^2>t)dt\)
+holds for nonnegative random variables by Tonelli's theorem; the substitution \(t=r^2\) is elementary.
+\item \emph{Small \(N\).} For \(N=1\), the bound gives \(M\ge 1/\sqrt 7\), which forces \(M\ge 1\) since \(M\in\mathbb Z_{\ge 1}\). No exceptional cases arise.
+\item \emph{Consistency with Round~1 computations.} The exhaustive table for \(N\le 11\) in Round~1 has
+\(M(N)/N\ge 0.429\ldots\), which is comfortably above \(1/\sqrt 8\).
+\end{itemize}
+
+\subsection{Final}
+\textbf{UNRESOLVED (but strictly advanced).}
+We have improved the universal lower bound from Lemma~36.1:
+\(\max_x r(x) > N/4\)
+to the stronger bound of Theorem~36.5:
+\(\max_x r(x) > N/\sqrt 8\).
+The exact optimal constant \(c\) remains open.
+
+\subsection{Completion estimate}
+\textbf{COMPLETION: 45\%}.
+
+\subsection{References}
+\begin{itemize}
+\item Round~1 notes and computations contained in \texttt{36.tex}.
+\item Ethan Patrick White, ``Erd\H{o}s' minimum overlap problem,'' arXiv:2201.05704.
+\end{itemize}
+

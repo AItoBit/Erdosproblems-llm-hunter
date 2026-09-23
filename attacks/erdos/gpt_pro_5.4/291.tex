@@ -1,0 +1,262 @@
+\section{Erd\H{o}s Problem 291}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: correct and substantially strengthen the Round~1 understanding of the already-solved ``$(a_n,L_n)>1$ infinitely often'' half, while keeping the ``$(a_n,L_n)=1$ infinitely often'' half clearly separated as the unresolved part.
+
+Why this is the right continuation of Round~1: Round~1 proved only the easy infinite family coming from the prime $3$. The real missing opportunity was to exploit the leading-digit criterion much more systematically.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 result.
+
+\begin{itemize}
+	\item[(F1)] If $q_n:=\gcd(a_n,L_n)$ and $p\le n$ is prime, then
+	\[
+	p\mid q_n
+	\iff
+	p\mid \operatorname{num}(H_k),
+	\]
+	where $k$ is the leading base-$p$ digit of $n$ and $H_k=1+\frac12+\cdots+\frac1k$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are three new ingredients.
+
+\begin{itemize}
+	\item[(N1)] An exact set-theoretic description of
+	\[
+	Q_p:=\{n\ge 1: p\mid q_n\}
+	\]
+	in terms of base-$p$ leading digits.
+	
+	\item[(N2)] An exact counting formula for $Q_p\cap [1,p^b]$.
+	
+	\item[(N3)] A new unconditional theorem: for any two distinct odd primes $p<q$, there are \emph{infinitely many} $n$ with
+	\[
+	pq\mid q_n.
+	\]
+	So the easy ``$3\mid q_n$ infinitely often'' family from Round~1 can be strengthened to simultaneous divisibility by any prescribed \emph{pair} of odd primes.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round~1 was that the leading-digit criterion was only used one prime at a time.
+
+I therefore prove the following claims.
+
+\begin{itemize}
+	\item[(C1)] For each odd prime $p$, the set $Q_p$ is a union of explicit base-$p$ digit blocks.
+	\item[(C2)] For each odd prime $p$, the digit $p-1$ is always bad, so $Q_p$ is infinite.
+	\item[(C3)] For any two odd primes $p<q$, infinitely many of the $p$-blocks and $q$-blocks overlap.
+\end{itemize}
+
+Claim (C3) is the real new theorem of this round.
+
+\subsection*{5) WORK (ROUND-2)}
+Let $H_n=u_n/v_n$ be reduced, so that $q_n=L_n/v_n=\gcd(a_n,L_n)$.
+For an odd prime $p$, define
+\[
+E_p:=\{m\in\{1,2,\dots,p-1\}: p\mid \operatorname{num}(H_m)\},
+\qquad
+Q_p:=\{n\ge 1: p\mid q_n\}.
+\]
+
+\paragraph{Proposition 291.1 (exact structure of $Q_p$).}
+For every odd prime $p$,
+\[
+Q_p=\bigcup_{m\in E_p}\ \bigcup_{a\ge 1}[mp^a,(m+1)p^a-1].
+\]
+
+\paragraph{Proof.}
+Fix $n\ge 1$ and write its leading base-$p$ digit as $m$, so
+\[
+n=mp^a+r,
+\qquad 1\le m\le p-1,
+\qquad 0\le r<p^a.
+\]
+Then by the Round~1 criterion (F1),
+\[
+p\mid q_n \iff p\mid \operatorname{num}(H_m) \iff m\in E_p.
+\]
+But the condition that the leading base-$p$ digit of $n$ equals $m$ is exactly
+\[
+mp^a\le n<(m+1)p^a.
+\]
+Since $n$ is an integer, this is precisely
+\[
+mp^a\le n\le (m+1)p^a-1.
+\]
+Taking the union over all possible $a\ge 1$ and all bad digits $m\in E_p$ gives the formula. \hfill$\square$
+
+\paragraph{Corollary 291.2 (exact counting on powers of $p$).}
+For every integer $b\ge 1$,
+\[
+|Q_p\cap[1,p^b]|=|E_p|\,\frac{p^b-p}{p-1}.
+\]
+
+\paragraph{Proof.}
+Inside $[1,p^b]$, the blocks in Proposition~291.1 are exactly those with $a=1,2,\dots,b-1$, because the block $[mp^a,(m+1)p^a-1]$ lies below $p^b$ if and only if $a\le b-1$.
+For fixed $m$ and fixed $a$, the block length is exactly $p^a$. Hence
+\[
+|Q_p\cap[1,p^b]|
+=|E_p|\sum_{a=1}^{b-1}p^a
+=|E_p|\,\frac{p^b-p}{p-1}.
+\]
+\hfill$\square$
+
+\paragraph{Corollary 291.3 ($Q_p$ is infinite for every odd prime $p$).}
+For every odd prime $p$, one has $p-1\in E_p$. Hence $Q_p$ is infinite.
+
+\paragraph{Proof.}
+Write
+\[
+H_{p-1}=\sum_{j=1}^{p-1}\frac1j
+=\sum_{j=1}^{(p-1)/2}\left(\frac1j+\frac1{p-j}\right)
+=\sum_{j=1}^{(p-1)/2}\frac{p}{j(p-j)}.
+\]
+Each denominator $j(p-j)$ is prime to $p$, so the reduced numerator of $H_{p-1}$ is divisible by $p$.
+Thus $p-1\in E_p$.
+Now Proposition~291.1 shows that for every $a\ge 1$,
+\[
+[(p-1)p^a,p^{a+1}-1]\subseteq Q_p,
+\]
+so $Q_p$ is infinite. \hfill$\square$
+
+\paragraph{Theorem 291.4 (new unconditional two-prime theorem).}
+Let $p<q$ be distinct odd primes. Then there are infinitely many integers $n$ such that
+\[
+pq\mid q_n=\gcd(a_n,L_n).
+\]
+
+\paragraph{Proof.}
+By Corollary~291.3, for every $a\ge 1$ the interval
+\[
+I_a:=[(p-1)p^a,p^{a+1}-1]
+\]
+is contained in $Q_p$, and for every $b\ge 1$ the interval
+\[
+J_b:=[(q-1)q^b,q^{b+1}-1]
+\]
+is contained in $Q_q$.
+Thus it suffices to show that $I_a\cap J_b\neq\emptyset$ for infinitely many pairs $(a,b)$.
+
+Set
+\[
+\alpha:=\frac{\log p}{\log q}.
+\]
+This number is irrational: otherwise $\alpha=r/s\in\mathbb Q$ would imply
+\[
+p^s=q^r,
+\]
+impossible for distinct primes.
+Hence the set of fractional parts $\{a\alpha\}$ is dense in $[0,1]$.
+
+For each $a\ge 1$, let
+\[
+b:=\lfloor a\alpha\rfloor,
+\qquad
+\Delta_a:=a\log p-b\log q=\log q\cdot \{a\alpha\}.
+\]
+Then $0\le \Delta_a<\log q$.
+Consider the open interval
+\[
+\mathcal J:=\left(\log\frac{q-1}{p},\ \log\frac{q}{p-1}\right).
+\]
+This interval is nonempty because
+\[
+\frac{q-1}{p}<\frac{q}{p-1}
+\iff
+(q-1)(p-1)<pq,
+\]
+and the last inequality is equivalent to $p+q-1>0$.
+Also $\mathcal J\subset(0,\log q)$ because $q-1>p$ (distinct odd primes differ by at least $2$) and $p-1>1$.
+
+By density of $\{a\alpha\}$, there are infinitely many $a$ for which
+\[
+\Delta_a\in\mathcal J.
+\]
+For such $a$ (with $b=\lfloor a\alpha\rfloor$) we have
+\[
+\log\frac{q-1}{p}<a\log p-b\log q<\log\frac{q}{p-1}.
+\]
+Exponentiating gives
+\[
+(q-1)q^b<p^{a+1},
+\qquad
+(p-1)p^a<q^{b+1}.
+\]
+Since all quantities are integers, these strict inequalities are exactly what is needed for the integer intervals $I_a$ and $J_b$ to overlap.
+Hence for infinitely many pairs $(a,b)$ there exists some integer
+\[
+n\in I_a\cap J_b.
+\]
+For such $n$, Proposition~291.1 yields simultaneously
+\[
+p\mid q_n
+\qquad\text{and}\qquad
+q\mid q_n,
+\]
+so $pq\mid q_n$.
+Because there are infinitely many such pairs $(a,b)$, there are infinitely many such $n$. \hfill$\square$
+
+\paragraph{Example.}
+Taking $(p,q)=(3,5)$, one explicit overlap occurs at $n=20$.
+Indeed $20$ begins with digit $2$ in base $3$ and digit $4$ in base $5$, so $15\mid q_{20}$.
+In fact
+\[
+H_{20}=\frac{55835135}{15519504},
+\qquad
+L_{20}=232792560,
+\qquad
+q_{20}=\frac{L_{20}}{15519504}=15.
+\]
+
+\paragraph{Literature note.}
+Proposition~291.1 is exactly the block description behind Shiu's Theorem~2, and Shiu also proves the harmonic density formula
+\[
+\delta(Q_p)=\frac{1}{\log p}\sum_{m\in E_p}\log\left(1+\frac1m\right).
+\]
+This is stronger than mere infinitude of $Q_p$, but it is not needed for Theorem~291.4.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+	\item \textbf{Critical check on irrationality.} The proof of Theorem~291.4 only uses the irrationality of $\log p/\log q$, which is unconditional. This is safe.
+	
+	\item \textbf{Important correction of a tempting overclaim.} Shiu's multivariate theorem for finitely many primes requires linear independence of
+	\[
+	\frac{\log p_1}{\log p_i}
+	\quad (1\le i\le k),
+	\]
+	which is equivalent to linear independence of the reciprocals $1/\log p_i$ over $\mathbb Q$. That hypothesis is \emph{not} known in general. So one must \emph{not} upgrade Theorem~291.4 from pairs of primes to arbitrary finite sets without adding an explicit hypothesis.
+	
+	\item \textbf{Interval-overlap criterion.} The inequalities
+	\[
+	(q-1)q^b<p^{a+1},
+	\qquad
+	(p-1)p^a<q^{b+1}
+	\]
+	are exactly the right integer conditions for $I_a\cap J_b\neq\emptyset$ because the right endpoints are $p^{a+1}-1$ and $q^{b+1}-1$.
+	
+	\item \textbf{Dependence on Round~1.} The only place Round~1 is used is Proposition~291.1, via the already-proved leading-digit criterion.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 makes genuinely new, rigorous progress:
+
+\begin{itemize}
+	\item it gives an exact structural description of each one-prime divisibility set $Q_p$;
+	\item it derives an exact counting formula for $Q_p\cap[1,p^b]$;
+	\item it proves unconditionally that for any two distinct odd primes $p<q$, there are infinitely many $n$ with $pq\mid \gcd(a_n,L_n)$.
+\end{itemize}
+
+Thus the ``$(a_n,L_n)>1$'' half is now strengthened far beyond the easy base-$3$ family from Round~1. The remaining hard part is still the infinitude of $n$ with $\gcd(a_n,L_n)=1$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 55\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+	\item [Er291] T. F. Bloom, \emph{Erd\H{o}s Problem \#291}, website entry, accessed 2026-03-07.
+	\item [Sh24] P. Shiu, \emph{The denominators of harmonic numbers (Revised)}, arXiv:1607.02863v2, 2024.
+	\item [WuYa22] B.-L. Wu and X.-H. Yan, \emph{On the denominators of harmonic numbers. IV}, C. R. Math. Acad. Sci. Paris \textbf{360} (2022), 53--57.
+\end{itemize}

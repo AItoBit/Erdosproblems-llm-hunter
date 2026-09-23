@@ -1,0 +1,357 @@
+
+\section{Problem 616 (\#616)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (C): identify a minimal formal correction to the Round-1 restatement, and then use it to obtain exact information for small uniformities. Concretely, I will replace the Round-1 ``induced subhypergraph'' phrasing by the original subgraph/edge-subfamily formulation, and then prove the exact values
+\[
+t(3)=t(4)=t(5)=1,\qquad t(6)=2,
+\]
+together with a general improvement of the Round-1 bound from $\tau(G)\le r$ to $\tau(G)\le r-1$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 consequences of the local hypothesis.
+
+\begin{enumerate}
+\item For $r\ge 3$, any two edges of $G$ intersect.
+\item For $r\ge 3$, any three edges of $G$ intersect.
+\item For $r\ge 3$, for any two edges $e,f$, the set $e\cap f$ is a transversal of $G$.
+\end{enumerate}
+
+I will not re-prove these; I use them as vetted Round-1 input.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a ``minimal non-Helly subfamily'' lemma.
+
+If $\mathcal{F}=\{E_1,\dots,E_m\}$ is an $r$-uniform family with empty total intersection and minimal with respect to that property, then
+\[
+m\le r+1
+\quad\text{and}\quad
+\left|\bigcup_{i=1}^m E_i\right|\le m(r-m+2).
+\]
+
+This turns the local threshold $3r-3$ into a concrete obstruction for small $r$.
+
+A second new observation is that if $T$ is a minimal transversal of size at least $2$, then two witness edges for distinct vertices of $T$ intersect in at most $r-1$ vertices; since every pair-intersection is a transversal by Round~1, this yields the global improvement
+\[
+\tau(G)\le r-1.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left by Round~1 was this: the local condition forced $3$-wise intersection, but there was no mechanism turning that into either (i) exact small-$r$ values or (ii) a sharper global upper bound than $\tau(G)\le r$.
+
+The plan is:
+
+\begin{enumerate}
+\item reformulate the original hypothesis exactly in terms of edge-subfamilies;
+\item study a minimal edge-subfamily with empty total intersection;
+\item bound the union size of such a minimal obstruction;
+\item compare that bound with $3r-3$.
+\end{enumerate}
+
+For $r\le 5$, this forces a contradiction, giving $\tau(G)=1$. For $r=6$, only a $4$-edge obstruction survives; that obstruction has enough rigid structure to force a $2$-vertex transversal.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Corrected local formulation.}
+The original problem is about \emph{all subgraphs} on at most $3r-3$ vertices, not just induced subgraphs. The exact equivalent formulation is:
+
+\medskip
+\noindent
+\emph{For every nonempty edge-subfamily $\mathcal{H}\subseteq E(G)$ with}
+\[
+\left|\bigcup \mathcal{H}\right|\le 3r-3,
+\]
+\emph{we have}
+\[
+\bigcap_{e\in \mathcal{H}} e\neq \varnothing.
+\]
+
+Indeed, such an edge-subfamily spans a subgraph on $\left|\bigcup \mathcal{H}\right|$ vertices, and conversely every subgraph is determined by its edge set.
+
+\paragraph{Lemma 5.1 (minimal non-Helly subfamily).}
+Let $\mathcal{F}=\{E_1,\dots,E_m\}$ be an $r$-uniform family such that
+\[
+\bigcap_{i=1}^m E_i=\varnothing,
+\]
+but every proper subfamily has nonempty intersection. Then:
+
+\begin{enumerate}
+\item $m\le r+1$;
+\item $\left|\bigcup_{i=1}^m E_i\right|\le m(r-m+2)$.
+\end{enumerate}
+
+\paragraph{Proof.}
+For each $i$, minimality gives a vertex
+\[
+x_i\in \bigcap_{j\ne i} E_j\setminus E_i.
+\]
+The vertices $x_1,\dots,x_m$ are distinct: if $x_i=x_j$ with $i\ne j$, then that common vertex would belong to $E_j$ (because $x_i\in \cap_{k\ne i} E_k$) and would also fail to belong to $E_j$ (because $x_j\notin E_j$), a contradiction.
+
+Now fix $i$. Since $x_j\in E_i$ for every $j\ne i$, the edge $E_i$ contains at least the $m-1$ distinct vertices
+\[
+\{x_j:\ j\ne i\}.
+\]
+As $|E_i|=r$, this implies $m-1\le r$, so $m\le r+1$.
+
+Let
+\[
+X=\{x_1,\dots,x_m\}.
+\]
+Each $E_i$ already contains the $m-1$ vertices $X\setminus\{x_i\}$, so it contributes at most
+\[
+r-(m-1)=r-m+1
+\]
+additional vertices outside $X$. Therefore
+\[
+\left|\bigcup_{i=1}^m E_i\right|
+\le |X|+\sum_{i=1}^m \bigl(r-m+1\bigr)
+= m+m(r-m+1)
+= m(r-m+2).
+\]
+This proves the lemma.
+\hfill $\square$
+
+\paragraph{Corollary 5.2.}
+If $r\in\{3,4,5\}$ and $G$ satisfies the local hypothesis, then all edges of $G$ have a common vertex. Equivalently,
+\[
+t(3)=t(4)=t(5)=1.
+\]
+
+\paragraph{Proof.}
+Assume for contradiction that $G$ has no common vertex. By Round~1, every three edges intersect. Hence any minimal edge-subfamily with empty total intersection has size
+\[
+m\ge 4.
+\]
+By Lemma~5.1, necessarily $m\le r+1$ and its union has size at most $m(r-m+2)$.
+
+Now check the finitely many cases.
+
+\begin{itemize}
+\item If $r=3$, then necessarily $m=4$, and
+\[
+m(r-m+2)=4(3-4+2)=4\le 6=3r-3.
+\]
+\item If $r=4$, then $m\in\{4,5\}$, and
+\[
+4(4-4+2)=8\le 9,\qquad 5(4-5+2)=5\le 9.
+\]
+\item If $r=5$, then $m\in\{4,5,6\}$, and
+\[
+4(5-4+2)=12=3r-3,\qquad 5(5-5+2)=10\le 12,\qquad 6(5-6+2)=6\le 12.
+\]
+\end{itemize}
+
+So in every case the minimal obstruction has union size at most $3r-3$. By the local hypothesis, such a subfamily must have nonempty intersection, contradicting the choice of the obstruction.
+
+Therefore all edges of $G$ intersect, so $\tau(G)=1$.
+\hfill $\square$
+
+\paragraph{Proposition 5.3 (general improvement of the Round-1 upper bound).}
+For every $r\ge 3$, if $G$ satisfies the local hypothesis, then
+\[
+\tau(G)\le r-1.
+\]
+
+\paragraph{Proof.}
+If $\tau(G)=1$ there is nothing to prove. Assume $\tau(G)\ge 2$, and let $T$ be a minimal transversal of size $\tau(G)$.
+
+For each $x\in T$, choose a witness edge $E_x$ with
+\[
+E_x\cap T=\{x\}.
+\]
+Pick two distinct vertices $x,y\in T$. By the Round-1 foundation, the set
+\[
+E_x\cap E_y
+\]
+is a transversal of $G$, so
+\[
+\tau(G)\le |E_x\cap E_y|.
+\]
+On the other hand, because $E_x\cap T=\{x\}$ and $E_y\cap T=\{y\}$ with $x\ne y$, the intersection $E_x\cap E_y$ contains no vertex of $T$, hence
+\[
+|E_x\cap E_y|\le r-1.
+\]
+Therefore $\tau(G)\le r-1$.
+\hfill $\square$
+
+\paragraph{Construction 5.4 (a $2$-cover example for every $r\ge 6$).}
+Let
+\[
+X=\{x_1,x_2,x_3,x_4\},
+\]
+and let $A_1,A_2,A_3,A_4$ be pairwise disjoint sets of size $r-3$, all disjoint from $X$.
+Define four $r$-edges by
+\[
+E_i=(X\setminus \{x_i\})\cup A_i
+\qquad (1\le i\le 4).
+\]
+
+Then:
+
+\begin{enumerate}
+\item every three of the four edges intersect;
+\item the total intersection is empty;
+\item the local hypothesis holds whenever $r\ge 6$;
+\item $\tau(\{E_1,E_2,E_3,E_4\})=2$.
+\end{enumerate}
+
+\paragraph{Verification.}
+Any three edges contain the unique witness vertex omitted by the fourth. The total intersection is empty because no $x_i$ belongs to $E_i$, and the $A_i$ are disjoint.
+
+The union of all four edges has size
+\[
+|X|+\sum_{i=1}^4 |A_i|=4+4(r-3)=4r-8.
+\]
+For $r\ge 6$,
+\[
+4r-8>3r-3.
+\]
+So a subfamily on at most $3r-3$ vertices can contain at most three of the four edges; every such subfamily has nonempty intersection. Hence the local condition holds.
+
+Finally, no single vertex hits all four edges, so $\tau\ge 2$. But if $a\in A_1$, then the $2$-set $\{x_1,a\}$ hits $E_1$ via $a$ and hits $E_2,E_3,E_4$ via $x_1$. Hence $\tau=2$.
+
+Thus
+\[
+t(r)\ge 2 \qquad\text{for all } r\ge 6.
+\]
+\hfill $\square$
+
+\paragraph{Theorem 5.5.}
+\[
+t(6)=2.
+\]
+
+\paragraph{Proof.}
+Construction~5.4 gives $t(6)\ge 2$, so it remains to prove $t(6)\le 2$.
+
+Let $G$ be a $6$-uniform hypergraph satisfying the local hypothesis. If all edges have a common vertex, then $\tau(G)=1$. So assume $G$ has no common vertex.
+
+By Round~1, every three edges intersect. Choose a minimal edge-subfamily
+\[
+\mathcal{F}=\{E_1,\dots,E_m\}
+\]
+with empty total intersection. Then $m\ge 4$.
+
+By Lemma~5.1,
+\[
+\left|\bigcup \mathcal{F}\right|\le m(8-m).
+\]
+If $m=5,6,$ or $7$, then
+\[
+5(8-5)=15,\qquad 6(8-6)=12,\qquad 7(8-7)=7,
+\]
+all of which are at most $15=3r-3$. That would contradict the local hypothesis. Hence the only possibility is
+\[
+m=4.
+\]
+
+Now apply Lemma~5.1 to this minimal $4$-edge obstruction. Choose witnesses
+\[
+x_i\in \bigcap_{j\ne i} E_j\setminus E_i
+\qquad (i=1,2,3,4),
+\]
+and let
+\[
+X=\{x_1,x_2,x_3,x_4\}.
+\]
+Each $E_i$ contains $X\setminus\{x_i\}$ and has size $6$, so it has exactly three additional vertices outside $X$. Therefore
+\[
+\left|\bigcup_{i=1}^4 E_i\right|\le 4+4\cdot 3=16.
+\]
+Because $\mathcal{F}$ has empty intersection, the local hypothesis forces
+\[
+\left|\bigcup_{i=1}^4 E_i\right|>15.
+\]
+Hence the union has size exactly $16$, so the upper bound is tight. Therefore the three extra vertices of each $E_i$ are disjoint from $X$ and pairwise disjoint across $i=1,2,3,4$. In particular,
+\[
+E_i\cap E_j = X\setminus\{x_i,x_j\}
+\qquad (i\ne j).
+\]
+
+Now let $F$ be any edge of $G$. By the Round-1 foundation, any three edges intersect, so for every pair $i\ne j$,
+\[
+F\cap E_i\cap E_j\ne \varnothing.
+\]
+Since $E_i\cap E_j=X\setminus\{x_i,x_j\}$, it follows that
+\[
+F\cap (X\setminus\{x_i,x_j\})\ne \varnothing
+\qquad\text{for every } i\ne j.
+\]
+Equivalently, the set $F\cap X$ meets every $2$-subset of $X$. This is possible only if
+\[
+|F\cap X|\ge 3.
+\]
+Indeed, if $|F\cap X|\le 2$, then the complement $X\setminus (F\cap X)$ contains a $2$-subset disjoint from $F\cap X$.
+
+Fix the pair
+\[
+P=\{x_1,x_2\}.
+\]
+Each of the four core edges $E_1,E_2,E_3,E_4$ meets $P$, because each $E_i$ contains three of the four vertices of $X$. Any other edge $F$ also meets $P$, because $F\cap X$ has size at least $3$, and every $3$-subset of a $4$-set meets every fixed $2$-subset.
+
+Thus $P$ is a transversal of $G$, so $\tau(G)\le 2$.
+
+Combining this with the lower construction gives
+\[
+t(6)=2.
+\]
+\hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item The only formal correction made to Round~1 is replacing the stronger ``induced subhypergraph'' wording by the original subgraph/edge-subfamily formulation. All Round-1 lemmas used here remain valid under the original statement.
+\item In Lemma~5.1, the witness vertices $x_i$ are indeed distinct; this is the only subtle point in the proof.
+\item In Corollary~5.2, the contradiction uses only the existence of \emph{one} minimal empty-intersection subfamily with union at most $3r-3$, so the local hypothesis applies exactly as required.
+\item In Construction~5.4, every potentially problematic subfamily is either:
+\begin{itemize}
+\item a subfamily of at most three edges, which has nonempty intersection, or
+\item the full $4$-edge family, whose union has size $4r-8>3r-3$.
+\end{itemize}
+So the local condition is verified.
+\item In the proof of $t(6)=2$, the step forcing $|F\cap X|\ge 3$ uses only the exact form of the six pair-intersections
+\[
+E_i\cap E_j=X\setminus\{x_i,x_j\},
+\]
+which was justified by the equality case in the union bound.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main new results of this round are:
+
+\begin{enumerate}
+\item the exact values
+\[
+t(3)=t(4)=t(5)=1,\qquad t(6)=2;
+\]
+\item the general lower construction
+\[
+t(r)\ge 2 \qquad (r\ge 6);
+\]
+\item the general upper bound
+\[
+\tau(G)\le r-1
+\]
+for every admissible $r$-uniform hypergraph.
+\end{enumerate}
+
+So the global problem is still open for $r\ge 7$, but the small cases are now settled through $r=6$, and the Round-1 bound $\tau(G)\le r$ has been sharpened to $\tau(G)\le r-1$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 72\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#616}, accessed 2026-03-08.
+\item Round-1 notes from the previous iteration of this investigation (used only for the three structural lemmas listed in Section~2).
+\end{itemize}
+

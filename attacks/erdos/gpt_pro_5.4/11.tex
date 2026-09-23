@@ -1,0 +1,310 @@
+\section{Problem \#11 -- Round 5: many integers have no squarefree shift by a small power of $2$}
+
+\subsection{1) ROUND-5 OBJECTIVE}
+\textbf{Path pursued: (C) obstruction / correction of proof strategy.}
+
+Round~4 showed that there are infinitely many odd integers $n$ for which every exponent
+\[
+0\le e\le c\,\frac{\log n}{\log\log n}
+\]
+is bad (that is, $n-2^e$ is not squarefree), but only in a one-point existence form. The most promising next step is to strengthen that obstruction from \emph{existence} to \emph{abundance}. The goal of this round is therefore to prove that for every fixed $c<\tfrac12$, there are \emph{many} odd integers $n\le X$ whose first possible good exponent exceeds
+\[
+ c\,\frac{\log X}{\log\log X}.
+\]
+This rules out an entire class of proof strategies: any argument that only inspects exponents up to $(\tfrac12-\varepsilon)\log n/\log\log n$ cannot possibly settle the problem.
+
+\subsection{2) Round-4 FOUNDATION USED}
+I use the following Round~4 results without reproving them:
+\begin{enumerate}
+\item \textbf{Definition of $e_{\min}(n)$:}
+\[
+ e_{\min}(n):=\min\{e\ge 0: n-2^e\ge 1\text{ and }n-2^e\text{ is squarefree}\},
+\]
+with $e_{\min}(n)=+\infty$ if no such exponent exists.
+\item \textbf{Lemma~11.8 (corrected finite-range CRT killing):} for every finite exponent set $E\subset\mathbb Z_{\ge 0}$ there are infinitely many odd integers $n>2^{\max E}$ such that $n-2^e$ is not squarefree for every $e\in E$.
+\item \textbf{Theorem~11.10 (primorial-scale finite-range killing):} using the first $K+1$ odd primes gives an odd integer $n$ with $2^K<n<4((K+2)!)^4$ and $n-2^e$ non-squarefree for all $0\le e\le K$.
+\end{enumerate}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-5)}
+The new ingredient is that the Round~4 CRT construction does not merely produce one integer for each $K$; it produces a full \emph{arithmetic progression} of such integers. Estimating the modulus of that progression sharply enough shows:
+\begin{itemize}
+\item for every fixed $0<c<\tfrac12$, the set of odd integers $n\le X$ with
+\[
+ e_{\min}(n)>c\,\frac{\log X}{\log\log X}
+\]
+has size at least $X^{1-2c-o(1)}$;
+\item equivalently,
+\[
+ \max_{\substack{n\le X\\ n\text{ odd}}} e_{\min}(n)\ge \left(\frac12-o(1)\right)\frac{\log X}{\log\log X}.
+\]
+\end{itemize}
+Thus Round~5 upgrades the Round~4 infinite-sequence obstruction to a quantitative counting theorem.
+
+\subsection{4) ATTACK PLAN (ROUND-5)}
+The exact gap left after Round~4 is that the obstruction was only existential: it showed that some odd integers force large good exponents, but it did not measure how often this happens.
+
+The plan is:
+\begin{enumerate}
+\item strengthen the Round~4 CRT argument into a \emph{progression lemma}: for each $K$, one residue class modulo a modulus $M_K$ forces every shift $n-2^e$ with $0\le e\le K$ to be non-squarefree;
+\item bound $M_K$ from above by
+\[
+ \log M_K\le 2K\log K+O(K\log\log K);
+\]
+\item count how many terms of that residue class lie below $X$ when
+\[
+ K=\left\lfloor c\frac{\log X}{\log\log X}\right\rfloor,
+\qquad 0<c<\frac12.
+\]
+This produces a lower bound of order $X^{1-2c-o(1)}$.
+\end{enumerate}
+
+\subsection{5) WORK (ROUND-5)}
+Throughout this round, all unadorned logarithms are natural logarithms.
+
+\subsubsection{5.1. A progression version of the finite-range CRT obstruction}
+Let $p_m$ denote the $m$-th prime, so $p_1=2$, $p_2=3$, $p_3=5$, and so on. For $K\ge 0$, define
+\[
+ M_K:=2\prod_{m=2}^{K+2} p_m^2.
+\]
+
+\textbf{Lemma 11.12 (CRT progression certificate).}
+For every integer $K\ge 0$, there exists a residue class $a_K\pmod{M_K}$ such that for every integer $n\equiv a_K\pmod{M_K}$ one has
+\[
+ p_{e+2}^2\mid (n-2^e)\qquad (0\le e\le K).
+\]
+Consequently, every such $n$ with $n>2^K$ satisfies
+\[
+ e_{\min}(n)\ge K+1.
+\]
+
+\textbf{Proof.}
+Consider the congruence system
+\[
+ n\equiv 1\pmod 2,
+ \qquad
+ n\equiv 2^e\pmod{p_{e+2}^2}
+ \qquad (0\le e\le K).
+\]
+The moduli $2,p_2^2,p_3^2,\dots,p_{K+2}^2$ are pairwise coprime, so by the Chinese remainder theorem there is a unique residue class $a_K\pmod{M_K}$ satisfying all congruences.
+
+If $n\equiv a_K\pmod{M_K}$, then in particular $n\equiv 2^e\pmod{p_{e+2}^2}$ for each $0\le e\le K$, hence
+\[
+ p_{e+2}^2\mid (n-2^e)
+ \qquad (0\le e\le K).
+\]
+Therefore each $n-2^e$ is not squarefree. If moreover $n>2^K$, then $n-2^e\ge 1$ for every $0\le e\le K$, so all exponents $e\le K$ are genuinely inadmissible as witnesses, and hence $e_{\min}(n)\ge K+1$. \qed
+
+\subsubsection{5.2. Size of the progression modulus}
+
+\textbf{Lemma 11.13 (upper bound for $M_K$).}
+As $K\to\infty$,
+\[
+ \log M_K\le 2K\log K+O(K\log\log K).
+\]
+Also,
+\[
+ M_K>2^K
+\]
+for every $K\ge 0$.
+
+\textbf{Proof.}
+The lower bound is immediate:
+\[
+ M_K=2\prod_{m=2}^{K+2}p_m^2\ge 2\cdot 3^{2(K+1)}>2^K.
+\]
+
+For the upper bound, use the explicit Rosser--Schoenfeld estimate (already used in Round~4): for all sufficiently large $m$,
+\[
+ p_m<m(\log m+\log\log m).
+\]
+Hence for all sufficiently large $m$,
+\[
+ p_m\le 3m\log m,
+\]
+so
+\[
+ \log p_m\le \log m+\log\log m+O(1).
+\]
+Therefore
+\[
+ \log M_K
+=\log 2+2\sum_{m=2}^{K+2}\log p_m
+\le C+2\sum_{m=2}^{K+2}\log m+2\sum_{m=2}^{K+2}\log\log m,
+\]
+for some absolute constant $C$.
+
+Now
+\[
+ \sum_{m=2}^{K+2}\log m=\log((K+2)!)=K\log K+O(K)
+\]
+by Stirling's formula, while trivially
+\[
+ \sum_{m=2}^{K+2}\log\log m\le (K+1)\log\log(K+2)=O(K\log\log K).
+\]
+Combining these estimates gives
+\[
+ \log M_K\le 2K\log K+O(K\log\log K),
+\]
+as claimed. \qed
+
+\subsubsection{5.3. A counting theorem for large least good exponent}
+For $0<c<\tfrac12$ and $X\ge 3$, define
+\[
+ \mathcal B_c(X):=\Bigl\{n\le X:\ n\text{ odd and }e_{\min}(n)>c\frac{\log X}{\log\log X}\Bigr\}.
+\]
+
+\textbf{Theorem 11.14 (many odd integers have no good small exponent).}
+Fix $0<c<\tfrac12$. Then
+\[
+ |\mathcal B_c(X)|\ge X^{1-2c-o(1)}
+ \qquad (X\to\infty).
+\]
+Equivalently: for every fixed $0<c<\tfrac12$, there are at least $X^{1-2c-o(1)}$ odd integers $n\le X$ such that every exponent
+\[
+ 0\le e\le c\frac{\log X}{\log\log X}
+\]
+is bad.
+
+\textbf{Proof.}
+Fix $0<c<\tfrac12$ and let
+\[
+ K:=\left\lfloor c\frac{\log X}{\log\log X}\right\rfloor.
+\]
+Apply Lemma~11.12 to this $K$, obtaining a residue class $a_K\pmod{M_K}$ with the property that every $n\equiv a_K\pmod{M_K}$ satisfies
+\[
+ p_{e+2}^2\mid (n-2^e)
+ \qquad (0\le e\le K).
+\]
+Let $b_K$ be the smallest positive integer congruent to $a_K\pmod{M_K}$ and exceeding $2^K$.
+Because $0<a_K<M_K$ and $M_K>2^K$ by Lemma~11.13, we have
+\[
+ b_K<2M_K.
+\]
+Then every integer of the form
+\[
+ n=b_K+tM_K\qquad (t\ge 0)
+\]
+is odd, satisfies $n>2^K$, and obeys $e_{\min}(n)\ge K+1$ by Lemma~11.12. Hence all such $n\le X$ belong to $\mathcal B_c(X)$.
+
+The number of such integers is at least
+\[
+ \left\lfloor\frac{X-b_K}{M_K}\right\rfloor+1\ge \frac{X}{M_K}-2.
+\]
+So it remains to bound $M_K$.
+
+By Lemma~11.13,
+\[
+ \log M_K\le 2K\log K+O(K\log\log K).
+\]
+Since
+\[
+ K=c\frac{\log X}{\log\log X}+O(1),
+\]
+we have
+\[
+ K\log K=c\log X+O\!\left(\frac{\log X\,\log\log\log X}{\log\log X}\right),
+\]
+and similarly $K\log\log K=o(\log X)$. Therefore
+\[
+ \log M_K\le (2c+o(1))\log X,
+\]
+that is,
+\[
+ M_K\le X^{2c+o(1)}.
+\]
+Substituting into the counting bound yields
+\[
+ |\mathcal B_c(X)|\ge X^{1-2c-o(1)},
+\]
+which proves the theorem. \qed
+
+\subsubsection{5.4. Consequences}
+
+\textbf{Corollary 11.14.1 (maximal order lower bound).}
+As $X\to\infty$,
+\[
+ \max_{\substack{n\le X\\ n\text{ odd}}} e_{\min}(n)
+ \ge \left(\frac12-o(1)\right)\frac{\log X}{\log\log X}.
+\]
+
+\textbf{Proof.}
+Let $\varepsilon>0$ be fixed. Apply Theorem~11.14 with $c=\tfrac12-\varepsilon$. Then for all sufficiently large $X$,
+\[
+ |\mathcal B_{1/2-\varepsilon}(X)|\ge X^{2\varepsilon-o(1)}>0,
+\]
+so there exists an odd integer $n\le X$ with
+\[
+ e_{\min}(n)>\left(\frac12-\varepsilon\right)\frac{\log X}{\log\log X}.
+\]
+Taking the maximum over odd $n\le X$ gives
+\[
+ \max_{\substack{n\le X\\ n\text{ odd}}} e_{\min}(n)
+ \ge \left(\frac12-\varepsilon\right)\frac{\log X}{\log\log X}
+\]
+for all sufficiently large $X$. Since $\varepsilon>0$ is arbitrary, the stated $(\tfrac12-o(1))$ lower bound follows. \qed
+
+\textbf{Corollary 11.14.2 (proof strategies ruled out).}
+Fix any $\varepsilon>0$. No proof strategy that, for each odd $n$, only inspects exponents
+\[
+ e\le \left(\frac12-\varepsilon\right)\frac{\log n}{\log\log n}
+\]
+can prove the Erd\H{o}s conjecture.
+
+\textbf{Proof.}
+By Corollary~11.14.1, for arbitrarily large $X$ there is an odd $n\le X$ with
+\[
+ e_{\min}(n)\ge \left(\frac12-\frac\varepsilon2\right)\frac{\log X}{\log\log X}.
+\]
+Since the function $t\mapsto \log t/\log\log t$ is increasing for all sufficiently large $t$, we have
+\[
+ \frac{\log n}{\log\log n}\le \frac{\log X}{\log\log X},
+\]
+so, for large $X$,
+\[
+ e_{\min}(n)>\left(\frac12-\varepsilon\right)\frac{\log n}{\log\log n}.
+\]
+Thus every exponent in that range is bad for this $n$, and any method confined to inspecting only those exponents must fail on infinitely many inputs. \qed
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+\textbf{Use of Round~4.} The new progression lemma is a genuine strengthening of the Round~4 CRT obstruction: Round~4 produced one integer for each $K$, whereas Lemma~11.12 identifies an entire arithmetic progression of such integers.
+
+\textbf{Admissibility of exponents.} The original problem only cares about exponents $e$ with $n-2^e\ge 1$. This is why the proof explicitly introduces $b_K>2^K$. Without that step, the CRT congruences alone would not guarantee relevance to the representation problem.
+
+\textbf{Counting bound.} The estimate
+\[
+ \left\lfloor\frac{X-b_K}{M_K}\right\rfloor+1\ge \frac{X}{M_K}-2
+\]
+is valid because $b_K<2M_K$. This is exactly where the bound $M_K>2^K$ is used.
+
+\textbf{Asymptotic regime.} The theorem requires $c<\tfrac12$. This is not an artefact of a sloppy estimate; it comes from the exponent $2c$ in the bound $M_K\le X^{2c+o(1)}$. The present one-prime-per-exponent CRT method does not by itself cross the natural barrier $c=\tfrac12$.
+
+\textbf{Monotonicity in Corollary~11.14.2.} The function $t\mapsto \log t/\log\log t$ is increasing for all sufficiently large $t$, so replacing $X$ by a smaller $n\le X$ is legitimate there.
+
+\textbf{No conflict with Round~2's Wieferich obstruction.} The present construction still uses one distinct prime square per exponent. Therefore it does not contradict, bypass, or weaken Round~2's structural results about reusing a non-Wieferich prime across multiple exponents. Rather, it isolates what can already be forced \emph{without any reuse at all}.
+
+\subsection{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~5 strictly strengthens Round~4 in a mathematically substantive way:
+\begin{enumerate}
+\item it upgrades the finite-range CRT obstruction from an existence theorem to an arithmetic-progression theorem (Lemma~11.12);
+\item it proves a quantitative counting statement: for every fixed $0<c<\tfrac12$,
+\[
+ \#\Bigl\{n\le X:\ n\text{ odd and }e_{\min}(n)>c\frac{\log X}{\log\log X}\Bigr\}\ge X^{1-2c-o(1)};
+\]
+\item it yields the sharp obstruction, within this proof paradigm, that
+\[
+ \max_{n\le X\atop n\text{ odd}} e_{\min}(n)
+ \ge \left(\frac12-o(1)\right)\frac{\log X}{\log\log X}.
+\]
+\end{enumerate}
+Thus any eventual proof of Problem~\#11 must cope not merely with isolated integers, but with many integers whose first good exponent is forced above $(\tfrac12-o(1))\log n/\log\log n$.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 78\%}
+
+\subsection{9) REFERENCES}
+\begin{itemize}
+\item J. B. Rosser and L. Schoenfeld, \emph{Approximate formulas for some functions of prime numbers}, Illinois J. Math. \textbf{6} (1962), 64--94. Used for the explicit upper bound $p_m<m(\log m+\log\log m)$.
+\item Stirling's formula for $\log((K+2)!)=K\log K+O(K)$.
+\end{itemize}

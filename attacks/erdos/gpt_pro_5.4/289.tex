@@ -1,0 +1,133 @@
+\section{Erd\H{o}s Problem 289}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: isolate a sharp obstruction for the still-open $k=2$ case under the full restrictions (distinct, non-overlapping, non-adjacent intervals of length at least $2$).
+
+Why this direction is the right continuation of Round~1: Round~1 only had bounded computation showing no $k=2$ example up to endpoint $300$. The missing step was a rigorous structural theorem explaining what a hypothetical two-interval solution would have to look like.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 facts.
+
+\begin{itemize}
+	\item[(F1)] The weaker variant allowing overlap/repetition is solvable (Kovac's construction).
+	\item[(F2)] No $k=2$ solution was found by exact search up to endpoint $300$.
+	\item[(F3)] From Round~2 of Problem~288 above: in any ordered disjoint two-interval integer-sum representation, the later interval is a terminal composite block of sublinear length.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new insight is that a hypothetical $k=2$ solution is forced into a very narrow asymptotic shape:
+
+\begin{quote}
+	if
+	\[
+	1=\sum_{n=a}^b\frac1n+\sum_{n=c}^d\frac1n,
+	\qquad b+1<c,
+	\]
+	then the second interval $[c,d]$ is a terminal composite block with length $o(d)$, so its total contribution is $o(1)$, and hence the first interval sum must be $1-o(1)$ from below.
+\end{quote}
+
+This sharply reframes the $k=2$ problem as a ``near-$1$ interval sum'' problem.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round~1 was: there was no theorem explaining why a second interval of positive relative size should be impossible.
+
+I therefore prove the following claim.
+
+\begin{itemize}
+	\item[(C)] Any hypothetical $k=2$ solution must satisfy
+	\[
+	\sum_{n=c}^d \frac1n\le \frac{d-p^\star(d)}{p^\star(d)+1}=o(1),
+	\]
+	where $p^\star(d)$ is the largest prime in $(d/2,d]$. Hence the first interval sum must be arbitrarily close to $1$ from below.
+\end{itemize}
+
+This does not solve the problem, but it rules out a large family of naive constructions and isolates a single sharp obstruction.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Assume there exists a two-interval solution under the full restrictions:
+\[
+1=\sum_{n=a}^b\frac1n+\sum_{n=c}^d\frac1n,
+\qquad b+1<c,
+\qquad b-a+1\ge 2,
+\qquad d-c+1\ge 2.
+\]
+Let
+\[
+T:=\sum_{n=c}^d\frac1n.
+\]
+
+By Proposition~288.2 from the previous section, the second interval is a terminal composite block and satisfies
+\[
+c>p^\star(d),
+\]
+where $p^\star(d)$ is the largest prime in $(d/2,d]$. Therefore
+\[
+d-c+1\le d-p^\star(d).
+\]
+Since each summand in $T$ is at most $1/c$, we obtain the exact bound
+\[
+0<T\le \frac{d-c+1}{c}
+\le \frac{d-p^\star(d)}{p^\star(d)+1}.
+\]
+By the prime number theorem, $d-p^\star(d)=o(d)$, while $p^\star(d)\sim d$. Hence
+\[
+T=o(1).
+\]
+Consequently
+\[
+\sum_{n=a}^b\frac1n=1-T=1-o(1).
+\]
+
+Since $T>0$, the first interval sum is strictly less than $1$. In particular $a\neq 1$ (indeed every interval of length at least $2$ beginning at $1$ has sum $>1$), so any hypothetical $k=2$ solution must come from an interval $[a,b]$ with $a\ge 2$ and
+\[
+\sum_{n=a}^b\frac1n<1
+\qquad\text{but}\qquad
+\sum_{n=a}^b\frac1n\to 1
+\]
+along any large family of such solutions.
+
+Thus the problem is reduced to the following sharply formulated obstruction:
+
+\begin{quote}
+	Can a length-$\ge 2$ interval harmonic sum with $a\ge 2$ approach $1$ closely enough to absorb a terminal composite tail of size $O((d-p^\star(d))/d)$?
+\end{quote}
+
+That is a strictly more precise bottleneck than anything obtained in Round~1.
+
+\paragraph{Empirical check (clearly labeled as computation, not proof).}
+Using exact rational arithmetic, I checked the full $k=2$ problem up to endpoint $d\le 1000$. No such pair of intervals exists in that range.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+	\item \textbf{Relabeling issue.} I may assume the intervals are ordered because the hypotheses are symmetric; once ordered, the non-adjacent condition is exactly $b+1<c$.
+	
+	\item \textbf{Does the argument use more than proved?} No. The only nontrivial external input is Proposition~288.2, which was proved in the preceding section.
+	
+	\item \textbf{Boundary cases.} The conclusion $T=o(1)$ is asymptotic; it does not forbid finitely many small exceptional $k=2$ solutions. So the theorem is a genuine obstruction, not a full disproof.
+	
+	\item \textbf{Scope.} This argument only treats $k=2$. It does not yet constrain general large $k$ configurations, where the last interval may be tiny but many earlier intervals can interact.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict new progress is a rigorous obstruction for $k=2$:
+
+\begin{itemize}
+	\item the second interval must be a terminal composite block of length $o(d)$;
+	\item therefore the first interval must have harmonic sum $1-o(1)$ from below.
+\end{itemize}
+
+This sharply narrows the shape of any hypothetical two-interval solution, replacing Round~1's bounded search evidence by a theorem.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 25\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+	\item [Er289] T. F. Bloom, \emph{Erd\H{o}s Problem \#289}, website entry, accessed 2026-03-07.
+	\item [ErGr80] P. Erd\H{o}s and R. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique, 1980.
+\end{itemize}
+
+

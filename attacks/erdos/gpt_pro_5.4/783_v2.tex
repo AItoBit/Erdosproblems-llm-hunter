@@ -1,0 +1,311 @@
+\section{Problem \#783}
+
+\subsection*{1. ROUND-3 OBJECTIVE}
+
+I pursue path \textbf{(C)}.  Round 2 already established the correct obstruction: the literal finite-\(N\) prescription
+\[
+\mbox{``take the consecutive largest primes''}
+\]
+is not always exactly extremal, while Tao's repaired 2026 note proves the correct asymptotic lower bound for the minimum uncovered density.  The remaining task is to close the two logical gaps left in the Round-2 writeup:
+
+\begin{enumerate}
+    \item the lower bound for
+    \[
+    F_N(C):=\min_A |U_A(N)|
+    \]
+    requires an error term that is \emph{uniform in \(A\)}, because the minimizing set may depend on \(N\);
+    \item the upper bound should use an \emph{exactly admissible} prime-tail competitor with
+    \[
+    \sum_{a\in A}\frac1a\leq C
+    \]
+    from the outset, rather than first allowing \(C+o(1)\) and then trimming.
+\end{enumerate}
+
+Once these two points are handled, the minimal corrected statement is fully proved: the exact optimizer problem remains open, but the asymptotic minimum \emph{value} is completely determined.
+
+\subsection*{2. Round-2 FOUNDATION USED}
+
+I use the following Round-2 results without reproving them.
+
+\begin{enumerate}
+    \item The notation
+    \[
+    U_A(N):=\{1\le n\le N:\ a \not\mid  n \mbox{ for all } a\in A\}.
+    \]
+    \item The extremal quantity
+    \[
+    F_N(C):=\min\left\{|U_A(N)|:\ A\subseteq\{2,\dots,N\}\ \mbox{pairwise coprime},\ \sum_{a\in A}\frac1a\le C\right\}.
+    \]
+    \item The Round-2 finite obstruction: at \((N,C)=(30,1)\), the literal largest-prime tail
+    \[
+    A_0=\{29,23,19,17,13,11,7,5\}
+    \]
+    leaves \(12\) integers uncovered, while
+    \[
+    A_1=\{23,19,17,13,11,7,5,3\}
+    \]
+    is admissible and leaves only \(6\) integers uncovered.  Thus the literal exact finite-\(N\) prescription is false.
+    \item The Round-2 identification of Tao's theorem as the missing universal lower bound.
+\end{enumerate}
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND-3)}
+
+There are two genuinely new ingredients in this round.
+
+\begin{enumerate}
+    \item \textbf{Uniformity in the lower bound.}  In the repaired February 22, 2026 version of Tao's note, the abstract states that the \(o(1)\) in Theorem~1.1 is taken with \(N\to\infty\), holding \(C\) fixed but \emph{allowing \(A\) to vary}.  This is exactly the uniformity needed to pass from a pointwise bound for each admissible \(A\) to a bound for the minimum \(F_N(C)\).
+    \item \textbf{An exact-budget prime tail.}  Instead of taking a prime tail with reciprocal mass \(C+o(1)\) and trimming it, one can define the cutoff prime \(q_N\) so that
+    \[
+    \sum_{q_N<p\le N}\frac1p\le C<\sum_{q_N\le p\le N}\frac1p.
+    \]
+    Then
+    \[
+    0\le C-\sum_{q_N<p\le N}\frac1p<\frac1{q_N}=o(1),
+    \]
+    so the prime tail is already exactly admissible and still has cutoff \(q_N=N^{e^{-C}+o(1)}\).
+\end{enumerate}
+
+This removes the last ambiguity in the Round-2 proof and upgrades the correction to a complete one.
+
+\subsection*{4. ATTACK PLAN (ROUND-3)}
+
+The exact gaps left after Round 2 are:
+
+\begin{enumerate}
+    \item justify rigorously that Tao's lower bound may be minimized over \emph{all} admissible \(A=A(N)\);
+    \item give an upper-bound construction with the budget condition \(\le C\) satisfied exactly;
+    \item separate clearly the \emph{solved} asymptotic minimum-value problem from the still-open \emph{optimizer-classification} problem.
+\end{enumerate}
+
+The plan is therefore:
+
+\begin{enumerate}
+    \item use Tao's \emph{uniform} theorem to obtain
+    \[
+    F_N(C)\ge (\rho(e^C)+o(1))N;
+    \]
+    \item construct an exact-budget prime tail \(A_N\) and evaluate its uncovered set by the Dickman--de Bruijn asymptotic, giving
+    \[
+    F_N(C)\le (\rho(e^C)+o(1))N;
+    \]
+    \item conclude that the corrected asymptotic statement is proved, while the original exact choice-of-\(A\) problem remains open.
+\end{enumerate}
+
+\subsection*{5. WORK (ROUND-3)}
+
+\paragraph{5.1 The literal finite-\(N\) optimizer prescription is false.}
+
+By the Round-2 computation at \((N,C)=(30,1)\), the consecutive-largest-primes choice \(A_0\) is admissible but leaves \(12\) integers uncovered, whereas the admissible set \(A_1\) leaves only \(6\).  Thus the literal finite statement
+\[
+\mbox{``the extremal set is the consecutive tail of largest primes''}
+\]
+is false.
+
+So the exact optimizer-classification problem cannot be solved by that prescription.
+
+\paragraph{5.2 The corrected asymptotic statement.}
+
+For fixed \(C>0\), define
+\[
+F_N(C):=\min\left\{|U_A(N)|:\ A\subseteq\{2,\dots,N\}\ \mbox{pairwise coprime},\ \sum_{a\in A}\frac1a\le C\right\}.
+\]
+
+The minimal corrected statement is:
+
+\medskip
+
+\noindent\textbf{Theorem.}
+For every fixed \(C>0\),
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N
+\qquad (N\to\infty),
+\]
+where \(\rho\) is the Dickman function.
+
+\medskip
+
+I now prove this theorem.
+
+\paragraph{5.3 Uniform lower bound.}
+
+Let \(C>0\) be fixed.  Tao's repaired Theorem~1.1 states that if \(A\) is a finite pairwise coprime set not containing \(1\) and \(\mu(A):=\sum_{a\in A}1/a\le C\), then
+\[
+\sigma_N(A):=\frac{|U_A(N)|}{N}\ge \rho(e^{\mu(A)})+o(1),
+\]
+where the \(o(1)\) is with respect to \(N\to\infty\), \emph{holding \(C\) fixed and allowing \(A\) to vary}.
+
+Also, for \(u>1\) the Dickman equation
+\[
+u\rho'(u)+\rho(u-1)=0
+\]
+implies
+\[
+\rho'(u)=-\frac{\rho(u-1)}{u}\le 0,
+\]
+so \(\rho\) is decreasing on \([1,\infty)\).  Since \(\mu(A)\le C\), we obtain
+\[
+\rho(e^{\mu(A)})\ge \rho(e^C).
+\]
+Hence, uniformly for every admissible \(A\),
+\[
+\sigma_N(A)\ge \rho(e^C)+o(1).
+\]
+
+Equivalently: for every \(\varepsilon>0\), there exists \(N_0(C,\varepsilon)\) such that for all \(N\ge N_0(C,\varepsilon)\) and all admissible \(A\),
+\[
+|U_A(N)|\ge (\rho(e^C)-\varepsilon)N.
+\]
+Taking the minimum over admissible \(A\) gives
+\[
+F_N(C)\ge \bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+
+\paragraph{5.4 Exact-budget prime-tail upper bound.}
+
+Let \(q_N\) be the minimal prime for which
+\[
+\sum_{q_N\le p\le N}\frac1p>C,
+\]
+and define
+\[
+A_N:=\{p\ \mbox{prime}: q_N<p\le N\}.
+\]
+Then \(A_N\subseteq\{2,\dots,N\}\), its elements are pairwise coprime, and by minimality of \(q_N\),
+\[
+\mu(A_N)=\sum_{q_N<p\le N}\frac1p\le C<\mu(A_N)+\frac1{q_N}.
+\]
+Thus \(A_N\) is exactly admissible.
+
+Since \(\sum_{p\le N}1/p\to\infty\), we necessarily have \(q_N\to\infty\), and therefore
+\[
+0\le C-\mu(A_N)<\frac1{q_N}=o(1).
+\]
+So
+\[
+\mu(A_N)=C+o(1).
+\]
+
+By Mertens' theorem for the prime harmonic series,
+\[
+\sum_{q_N<p\le N}\frac1p
+=
+\log\log N-\log\log q_N+o(1),
+\]
+hence
+\[
+\log\log N-\log\log q_N=C+o(1).
+\]
+Exponentiating,
+\[
+\log q_N=e^{-C+o(1)}\log N,
+\]
+or equivalently
+\[
+q_N=N^{e^{-C}+o(1)}.
+\]
+Define
+\[
+u_N:=\frac{\log N}{\log q_N}.
+\]
+Then
+\[
+u_N=e^C+o(1).
+\]
+
+Now an integer \(n\le N\) is not divisible by any prime in \(A_N\) if and only if every prime factor of \(n\) is at most \(q_N\).  Therefore
+\[
+|U_{A_N}(N)|=\Psi(N,q_N),
+\]
+where
+\[
+\Psi(x,y):=\#\{n\le x:\ P^+(n)\le y\}
+\]
+is the smooth-number counting function.
+
+By the classical Dickman--de Bruijn asymptotic for smooth numbers, whenever
+\[
+\frac{\log x}{\log y}\to u\in[1,\infty),
+\]
+one has
+\[
+\Psi(x,y)=x\rho(u)+o(x).
+\]
+Applying this with \(x=N\), \(y=q_N\), and \(u=u_N=e^C+o(1)\), and using continuity of \(\rho\), we conclude that
+\[
+|U_{A_N}(N)|=\Psi(N,q_N)=\bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+Since \(A_N\) is admissible, it follows that
+\[
+F_N(C)\le \bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+
+\paragraph{5.5 Conclusion.}
+
+Combining the lower and upper bounds gives
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+
+This completely proves the corrected asymptotic minimum-value theorem.
+
+\paragraph{5.6 What is solved and what is not.}
+
+The argument above proves the minimum \emph{value}
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+It does \emph{not} determine the exact extremizing set \(A\) for each finite \(N\), nor does it prove uniqueness or even asymptotic uniqueness of minimizers.  Thus the original optimizer-classification problem remains open, but the minimal corrected asymptotic statement is now fully settled.
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+I checked the new work against the most likely failure modes.
+
+\begin{enumerate}
+    \item \emph{Uniformity in \(A\).}  
+    This was the main logical gap in Round 2.  It is now explicitly addressed: Tao's repaired note states that the \(o(1)\) is taken with \(N\to\infty\), holding \(C\) fixed but allowing \(A\) to vary.  Therefore the lower bound may indeed be passed to the minimum \(F_N(C)\).
+
+    \item \emph{Exact budget versus \(C+o(1)\).}  
+    The new prime-tail competitor \(A_N\) satisfies \(\mu(A_N)\le C\) by construction.  No trimming or Lipschitz estimate is needed.
+
+    \item \emph{Does \(q_N\to\infty\)?}  
+    Yes.  If \(q_N\) stayed bounded, then \(\sum_{q_N<p\le N}1/p\) would diverge like \(\log\log N\), contradicting \(\mu(A_N)\le C\).
+
+    \item \emph{Applicability of the smooth-number asymptotic.}  
+    We only use the fixed-\(u\) regime \(u_N\to e^C\), which is exactly the classical Dickman regime.
+
+    \item \emph{What exactly has been disproved?}  
+    The false statement is the literal finite-\(N\) optimizer prescription ``take the consecutive largest primes.''  The proven corrected statement concerns only the asymptotic minimum \emph{value}.  No stronger optimizer-classification claim is asserted.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+
+\textbf{FULL SOLUTION -- COUNTEREXAMPLE / DISPROOF.}
+
+The literal exact finite-\(N\) prescription ``take the consecutive largest primes'' is false, by the explicit Round-2 counterexample at \((N,C)=(30,1)\).
+
+The minimal corrected statement is the asymptotic minimum-value theorem
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N,
+\]
+and this is now proved completely:
+
+\begin{enumerate}
+    \item the lower bound follows from Tao's repaired Theorem~1.1, using the crucial uniformity in \(A\);
+    \item the matching upper bound is attained by an exactly admissible prime tail \(A_N=\{p: q_N<p\le N\}\), whose uncovered set is counted by \(\Psi(N,q_N)\).
+\end{enumerate}
+
+So path \textbf{(C)} is complete: the exact optimizer prescription is disproved, the exact optimizer problem remains open, and the asymptotic minimum-value problem has a full proof.
+
+\subsection*{8. COMPLETION ESTIMATE}
+
+COMPLETION: 100\%
+
+\subsection*{9. REFERENCES}
+
+\begin{enumerate}
+    \item[\textbf{[EP783]}] T.~F.~Bloom, \emph{Erd\H{o}s Problem \#783}, \texttt{https://www.erdosproblems.com/783}, accessed 2026-03-08.
+    \item[\textbf{[Er73]}] P.~Erd\H{o}s, \emph{Problems and results on combinatorial number theory}, in \emph{A Survey of Combinatorial Theory} (Proc.\ Internat.\ Sympos., Colorado State Univ., Fort Collins, Colo., 1971), North-Holland, Amsterdam, 1973, pp.~117--138.
+    \item[\textbf{[Tao26]}] T.~Tao, \emph{Sieving by coprime numbers}, repaired third version dated 2026-02-22.
+    \item[\textbf{[Hi86]}] A.~Hildebrand, \emph{On the number of positive integers \(\le x\) and free of prime factors \(>y\)}, J.~Number Theory \textbf{22} (1986), 289--307.
+    \item[\textbf{[Hi87]}] A.~Hildebrand, \emph{Quantitative mean value theorems for nonnegative multiplicative functions II}, Acta Arith.\ \textbf{48} (1987), no.~3, 209--260.
+\end{enumerate}

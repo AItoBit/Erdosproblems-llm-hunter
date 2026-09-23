@@ -1,0 +1,359 @@
+\section{Erd\H{o}s Problem \#43 (Round 5)}
+
+\subsection{1) ROUND-5 OBJECTIVE}
+
+\textbf{Path chosen: (C) --- obstruction/correction, with full proof of the corrected asymptotic statement.}
+
+Round~4 already produced an explicit infinite-family disproof of the \emph{second} (equal-size) question, but only on an infinite subsequence and without extracting the full asymptotic consequence for \emph{all} $N$.  The most promising Round~5 direction is therefore to turn that disproof into a precise corrected theorem.
+
+The new goal is to prove that the correct equal-size asymptotic is
+\[
+M(N):=\max\bigl\{m:\exists\text{ Sidon }A,B\subset[N],\ |A|=|B|=m,\ (A-A)\cap(B-B)=\{0\}\bigr\}
+=\left(\frac{1}{\sqrt2}+o(1)\right)\sqrt N,
+\]
+and then to extend this to the unrestricted extremal quantity
+\[
+g(N):=\max\left\{\binom{|A|}{2}+\binom{|B|}{2}: A,B\subset[N]\ \text{Sidon},\ (A-A)\cap(B-B)=\{0\}\right\}.
+\]
+This will show that the second question is false in the strongest possible asymptotic sense, and that the first question is asymptotically correct up to an $o(N)$ error, leaving only the fine $O(1)$ scale unresolved.
+
+\subsection{2) Round-4 FOUNDATION USED}
+
+I explicitly use the following Round~4 results.
+\begin{itemize}
+\item \textbf{Round~4 parity-splitting construction.} For every odd prime power $q$, with
+\[
+N_q:=\frac{q^2-1}{2},
+\]
+there exist Sidon sets $A_q,B_q\subset[N_q]$ with $|A_q|=|B_q|=:m_q$, $(A_q-A_q)\cap(B_q-B_q)=\{0\}$, and
+\[
+m_q\ge \frac{q-\sqrt{2q-3}}{2} = \frac q2-O(\sqrt q).
+\]
+\item \textbf{Round~3 corrected convolution inequality.} If $A,B\subset[N]$ are Sidon and $(A-A)\cap(B-B)=\{0\}$, then for every integer $H\ge 1$,
+\[
+\frac{(|A|^2+|B|^2)H^2}{N+H}\le (|A|+|B|)H+H^2.
+\]
+\item \textbf{Round~4 status correction.} The second question is false; what remained open after Round~4 was to identify the \emph{correct} asymptotic statement and to advance the first question beyond finite computations.
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-5)}
+
+There are three genuinely new ingredients in this round.
+\begin{itemize}
+\item A \textbf{strengthened upper bound} that extends the Round~4 equal-size estimate to \emph{arbitrary} Sidon pairs:
+\[
+g(N)\le \frac N2+O(N^{3/4}).
+\]
+\item A \textbf{monotonicity + prime-number-theorem upgrade} of the Round~4 prime-power construction, which promotes the lower bound from an infinite subsequence to \emph{all sufficiently large $N$}.
+\item Combining these yields a full corrected asymptotic theorem:
+\[
+M(N)=\left(\frac1{\sqrt2}+o(1)\right)\sqrt N,
+\qquad
+D_{\mathrm{eq}}(N):=2\binom{M(N)}2=\left(\frac12+o(1)\right)N,
+\]
+and also
+\[
+g(N)=\left(\frac12+o(1)\right)N=\binom{f(N)}2+o(N).
+\]
+\end{itemize}
+
+\subsection{4) ATTACK PLAN (ROUND-5)}
+
+\textbf{Exact gap left after Round~4.}
+Round~4 settled the equal-size question only on an infinite subsequence and did not extract a theorem for the unrestricted extremal function $g(N)$.  The remaining tasks are:
+\begin{enumerate}
+\item prove a nontrivial upper bound for \emph{all} feasible pairs $(A,B)$, not just the equal-size case;
+\item upgrade the Round~4 lower construction from the prime-power subsequence $N=(q^2-1)/2$ to all large $N$;
+\item deduce the exact asymptotic scale of both $M(N)$ and $g(N)$.
+\end{enumerate}
+
+\textbf{Why this overcomes the earlier obstacle.}
+The Round~3 corrected inequality is already strong enough to force an $N/2+O(N^{3/4})$ upper bound once one controls $|A|+|B|$.  Meanwhile the Round~4 parity-splitting construction already gives near-extremizers on a dense-enough subsequence; the prime number theorem allows us to pull those constructions down to arbitrary large $N$ by monotonicity.
+
+\subsection{5) WORK (ROUND-5)}
+
+\subsubsection{5.1 Definitions and monotonicity}
+
+Define
+\[
+M(N):=\max\bigl\{m:\exists\text{ Sidon }A,B\subset[N],\ |A|=|B|=m,\ (A-A)\cap(B-B)=\{0\}\bigr\},
+\]
+and
+\[
+g(N):=\max\left\{\binom{|A|}{2}+\binom{|B|}{2}: A,B\subset[N]\ \text{Sidon},\ (A-A)\cap(B-B)=\{0\}\right\}.
+\]
+Both $M(N)$ and $g(N)$ are nondecreasing in $N$, because any feasible pair inside $[N']$ is also feasible inside $[N]$ whenever $N'\le N$.
+
+For later use, note that if $S\subset[N]$ is Sidon and $|S|=s$, then its positive differences are distinct elements of $\{1,\dots,N-1\}$, so
+\[
+\binom{s}{2}\le N-1.
+\]
+Hence every Sidon subset of $[N]$ has size
+\begin{equation}\label{eq:sidon-size-trivial}
+s\le \frac{1+\sqrt{8N-7}}{2}=\sqrt{2N}+O(1).
+\end{equation}
+
+\subsubsection{5.2 A new upper bound for arbitrary pairs}
+
+\begin{proposition}\label{prop:g-upper}
+Let $A,B\subset[N]$ be Sidon sets with $(A-A)\cap(B-B)=\{0\}$.  Write
+\[
+a:=|A|,\qquad b:=|B|,\qquad S:=a^2+b^2,\qquad T:=a+b.
+\]
+Then
+\[
+S\le N+O(N^{3/4}).
+\]
+Consequently,
+\[
+\binom{|A|}{2}+\binom{|B|}{2}\le \frac N2+O(N^{3/4}),
+\]
+and therefore
+\[
+g(N)\le \frac N2+O(N^{3/4}).
+\]
+\end{proposition}
+
+\begin{proof}
+We use the Round~3 corrected convolution inequality:
+\[
+\frac{SH^2}{N+H}\le TH+H^2
+\qquad (H\ge 1,\ H\in\mathbb Z).
+\]
+Rearranging gives
+\begin{equation}\label{eq:S-basic}
+S\le \frac{(T+H)(N+H)}{H}=N+T+H+\frac{TN}{H}.
+\end{equation}
+
+By \eqref{eq:sidon-size-trivial}, each of $a,b$ is $O(\sqrt N)$, hence
+\begin{equation}\label{eq:T-upper}
+T=O(\sqrt N).
+\end{equation}
+If $T=0$ there is nothing to prove.  Otherwise choose
+\[
+H:=\left\lceil\sqrt{TN}\right\rceil.
+\]
+Then
+\[
+H\le \sqrt{TN}+1,
+\qquad
+\frac{TN}{H}\le \sqrt{TN}.
+\]
+Substituting into \eqref{eq:S-basic},
+\[
+S\le N+T+2\sqrt{TN}+1.
+\]
+Using \eqref{eq:T-upper}, we have $T=O(\sqrt N)$ and therefore $\sqrt{TN}=O(N^{3/4})$.  Hence
+\[
+S\le N+O(N^{3/4}).
+\]
+Finally,
+\[
+\binom{|A|}{2}+\binom{|B|}{2}
+=\frac{a(a-1)+b(b-1)}{2}
+=\frac{S-T}{2}
+\le \frac N2+O(N^{3/4}),
+\]
+proving the proposition.
+\end{proof}
+
+\begin{corollary}\label{cor:M-upper}
+For the equal-size extremal function one has
+\[
+M(N)\le \frac1{\sqrt2}\sqrt N+O(N^{1/4}).
+\]
+\end{corollary}
+
+\begin{proof}
+If $|A|=|B|=m$, then Proposition~\ref{prop:g-upper} gives
+\[
+2m^2\le N+O(N^{3/4}),
+\]
+whence
+\[
+m\le \frac1{\sqrt2}\sqrt N+O(N^{1/4}).
+\qedhere
+\]
+\end{proof}
+
+\subsubsection{5.3 Upgrading the Round~4 lower bound to all large $N$}
+
+The Round~4 construction gives large equal-size pairs only for $N_q=(q^2-1)/2$ with $q$ an odd prime power.  To pass to arbitrary $N$, we use monotonicity together with the prime number theorem.
+
+\begin{lemma}\label{lem:prime-below}
+For every real $x\to\infty$, there exists an odd prime $q\le x$ such that
+\[
+q=(1-o(1))x.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $\varepsilon\in(0,1)$.  By the prime number theorem,
+\[
+\pi(x)-\pi((1-\varepsilon)x)\sim \frac{\varepsilon x}{\log x}\to\infty
+\qquad (x\to\infty).
+\]
+Therefore, for all sufficiently large $x$, the interval $[(1-\varepsilon)x,x]$ contains a prime.  Since $\varepsilon>0$ is arbitrary, there exists a prime $q\le x$ with $q=(1-o(1))x$.  For large $x$ this prime is automatically odd.
+\end{proof}
+
+\begin{proposition}\label{prop:M-lower-allN}
+One has
+\[
+M(N)\ge \left(\frac1{\sqrt2}-o(1)\right)\sqrt N.
+\]
+In particular,
+\[
+M(N)=\left(\frac1{\sqrt2}+o(1)\right)\sqrt N.
+\]
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+x:=\sqrt{2N+1}.
+\]
+By Lemma~\ref{lem:prime-below}, choose an odd prime $q\le x$ such that $q=(1-o(1))x$.  Since every prime is a prime power, we may apply the Round~4 parity-splitting construction at this $q$.  Let
+\[
+N_q:=\frac{q^2-1}{2}\le \frac{x^2-1}{2}=N.
+\]
+Round~4 then supplies Sidon sets $A_q,B_q\subset[N_q]$ with
+\[
+|A_q|=|B_q|=:m_q\ge \frac{q-\sqrt{2q-3}}{2} = \frac q2-O(\sqrt q).
+\]
+By monotonicity of $M$,
+\[
+M(N)\ge M(N_q)\ge m_q.
+\]
+Because $q=(1-o(1))x=(1-o(1))\sqrt{2N+1}$ and $\sqrt q=o(\sqrt N)$, we conclude that
+\[
+M(N)\ge \frac q2-o(\sqrt N)
+=\left(\frac1{\sqrt2}-o(1)\right)\sqrt N.
+\]
+Combining this with Corollary~\ref{cor:M-upper} yields
+\[
+M(N)=\left(\frac1{\sqrt2}+o(1)\right)\sqrt N.
+\]
+\end{proof}
+
+\subsubsection{5.4 The corrected asymptotic theorem}
+
+\begin{theorem}[Equal-size case]
+\label{thm:eq-corrected}
+Let
+\[
+D_{\mathrm{eq}}(N):=2\binom{M(N)}{2}=M(N)(M(N)-1).
+\]
+Then
+\[
+D_{\mathrm{eq}}(N)=\left(\frac12+o(1)\right)N.
+\]
+Equivalently, the sharp asymptotic constant in the equal-size problem is $1/\sqrt2$, and there is no fixed positive gap below it.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:M-lower-allN},
+\[
+M(N)=\left(\frac1{\sqrt2}+o(1)\right)\sqrt N.
+\]
+Therefore
+\[
+D_{\mathrm{eq}}(N)=M(N)(M(N)-1)=\left(\frac12+o(1)\right)N.
+\]
+This proves the claim.
+\end{proof}
+
+\begin{theorem}[Unrestricted case]
+\label{thm:g-corrected}
+One has
+\[
+g(N)=\left(\frac12+o(1)\right)N.
+\]
+Since $f(N)\sim \sqrt N$, this is equivalent to
+\[
+g(N)=\binom{f(N)}{2}+o(N).
+\]
+\end{theorem}
+
+\begin{proof}
+The lower bound follows from the equal-size case:
+\[
+g(N)\ge D_{\mathrm{eq}}(N)=\left(\frac12+o(1)\right)N.
+\]
+The upper bound is Proposition~\ref{prop:g-upper}, namely
+\[
+g(N)\le \frac N2+O(N^{3/4})=\left(\frac12+o(1)\right)N.
+\]
+Hence
+\[
+g(N)=\left(\frac12+o(1)\right)N.
+\]
+Finally, the classical asymptotic $f(N)\sim \sqrt N$ implies
+\[
+\binom{f(N)}2=\left(\frac12+o(1)\right)N,
+\]
+so indeed
+\[
+g(N)=\binom{f(N)}2+o(N).
+\qedhere
+\]
+\end{proof}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Did Round~5 improperly reprove Round~4 material?}
+No.  The Round~4 parity-splitting construction is used as a black box in Proposition~\ref{prop:M-lower-allN}.  The only proof repeated from earlier rounds is the convolution-based upper estimate, and there it is \emph{strengthened} from the equal-size setting to arbitrary pairs, which is explicitly permitted.
+
+\paragraph{(ii) Hidden dependence on prime powers?}
+There is none.  Proposition~\ref{prop:M-lower-allN} uses primes, and every prime is a prime power, so the Round~4 construction applies unchanged.
+
+\paragraph{(iii) Monotonicity check.}
+If $A,B\subset[N_q]$ are feasible, then $A,B\subset[N]$ for every $N\ge N_q$.  Thus both $M(N)$ and $g(N)$ are indeed nondecreasing.  No rescaling or translation is required.
+
+\paragraph{(iv) Prime-number-theorem quantifiers.}
+Lemma~\ref{lem:prime-below} is uniform in the needed sense: for every fixed $\varepsilon>0$ and all sufficiently large $x$, a prime exists in $[(1-\varepsilon)x,x]$.  This is exactly what is needed to make the multiplicative loss $o(1)$.
+
+\paragraph{(v) Does Proposition~\ref{prop:g-upper} really give an $o(N)$ error?}
+Yes.  The proof yields $g(N)\le N/2+O(N^{3/4})$, and $N^{3/4}=o(N)$.  Hence Theorem~\ref{thm:g-corrected} is rigorous.
+
+\paragraph{(vi) What remains open after Round~5?}
+The original first question asked for the much sharper estimate
+\[
+g(N)\le \binom{f(N)}2+O(1).
+\]
+Round~5 proves only
+\[
+g(N)=\binom{f(N)}2+o(N),
+\]
+so the fine error term remains unresolved.  The second question, however, is fully settled negatively, and its corrected asymptotic form is now proved.
+
+\subsection{7) FINAL}
+
+\textbf{FULL SOLUTION --- FULL PROOF.}
+
+The second question is false, and the corrected asymptotic statement is now proved in full:
+\[
+M(N)=\left(\frac1{\sqrt2}+o(1)\right)\sqrt N,
+\qquad
+D_{\mathrm{eq}}(N)=\left(\frac12+o(1)\right)N.
+\]
+Equivalently, in the equal-size case the sharp asymptotic constant is exactly $1/\sqrt2$, so no fixed positive gap $c>0$ can occur.
+
+Moreover, for the unrestricted extremal quantity,
+\[
+g(N)=\left(\frac12+o(1)\right)N=\binom{f(N)}2+o(N).
+\]
+Thus the \emph{asymptotic} form of the first question is true, but the original $O(1)$ refinement remains open.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 90\%}
+
+\subsection{9) REFERENCES}
+
+\begin{itemize}
+\item Round~4 write-up supplied in this task, especially the parity-splitting Bose--Chowla construction for $N=(q^2-1)/2$.
+\item M. B. Nathanson, \emph{The Bose--Chowla argument for Sidon sets}, J. Number Theory 238 (2022), 133--146.
+\item B. Green, \emph{The number of squares and $B_h[g]$ sets}, especially the summary of the Erd\H{o}s--Tur\'an upper bound and Singer lower bound implying $f(N)\sim \sqrt N$.
+\item The prime number theorem (standard).
+\item Erd\H{o}s Problems, Problem \#43 page and discussion thread (current status of the two questions).
+\end{itemize}

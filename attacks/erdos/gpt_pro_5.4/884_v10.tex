@@ -1,0 +1,468 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}: sharpen the first genuinely unresolved obstruction in the three-prime family.
+
+Round-(round\_no-1) already reduced the boundedness problem on
+\[
+\omega(n)\le 3
+\]
+to the mixed one-vs-two reciprocal power-difference series
+\[
+C(p,q,r):=
+\sum_{u,v,w\ge 1}
+\left(
+\frac{1}{|p^u-q^v r^w|}
++
+\frac{1}{|q^v-p^u r^w|}
++
+\frac{1}{|r^w-p^u q^v|}
+\right)
+\]
+for distinct primes \(p<q<r\).
+
+The exact remaining gap was that this obstruction still allowed \emph{all} mixed differences. In the previous round, only a subpower reduction was available. The new result of this round strengthens that substantially: up to a uniform absolute error, only collisions that are smaller than an arbitrary \emph{admissible threshold function} matter. In particular, one may replace the full mixed sum by a sum over only \emph{polylogarithmically close} one-vs-two collisions.
+
+More precisely, let \(\Psi:[1,\infty)\to [1,\infty)\) be nondecreasing and define
+\[
+\Sigma_\Psi:=\sum_{m=1}^{\infty} \Psi(2^m)^{-1/2}.
+\]
+If \(\Sigma_\Psi<\infty\), define the truncated mixed sum
+\[
+\begin{aligned}
+C_\Psi(p,q,r):=
+\sum_{u,v,w\ge 1}
+\Bigg(
+&\frac{\mathbf 1_{|p^u-q^v r^w|<\Psi(p^u)}}{|p^u-q^v r^w|}
++
+\frac{\mathbf 1_{|q^v-p^u r^w|<\Psi(q^v)}}{|q^v-p^u r^w|}
+\\
+&+
+\frac{\mathbf 1_{|r^w-p^u q^v|<\Psi(r^w)}}{|r^w-p^u q^v|}
+\Bigg).
+\end{aligned}
+\]
+The main theorem proved below is:
+\[
+0\le C(p,q,r)-C_\Psi(p,q,r)\le 3300\,\Sigma_\Psi
+\qquad\text{for all }p<q<r.
+\]
+Consequently,
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\sup_{p<q<r} C_\Psi(p,q,r)<\infty.
+\]
+
+A particularly useful special case is
+\[
+\Psi(x)=(1+\log x)^A\qquad (A>2),
+\]
+which shows that only \emph{polylogarithmically close} one-vs-two collisions matter.
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i},
+\]
+where \(1=d_1<\cdots<d_t=n\) are the positive divisors of \(n\).
+
+\item The already-vetted uniform bound on the full two-prime family:
+\[
+S_{\mathrm{all}}(n)<147
+\qquad\text{for every }n\text{ with }\omega(n)\le 2.
+\tag{F1}
+\]
+
+\item The interval-energy lower bound established earlier: if \(x_1<\cdots<x_k\) are \(k\ge 2\) points in an interval of length \(L>0\), then
+\[
+\sum_{1\le i<j\le k}\frac{1}{x_j-x_i}\ge \frac{1}{32}\,\frac{k^2\log k}{L}.
+\tag{F2}
+\]
+
+\item The uniform packing and tail-potential estimates proved in the previous round. For distinct primes \(q<r\), define
+\[
+\mathcal A_{q,r}:=\{q^v r^w : v,w\in \mathbf N\}.
+\]
+Then:
+\begin{enumerate}
+\item any interval \(I\subset \mathbf R\) of length \(L\ge 0\) satisfies
+\[
+\#(\mathcal A_{q,r}\cap I)\le 100\sqrt{L+1};
+\tag{F3}
+\]
+\item for every real \(x\) and every \(D\ge 1\),
+\[
+\sum_{\substack{a\in \mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+\le 1100\,D^{-1/2}.
+\tag{F4}
+\]
+\end{enumerate}
+
+\item The already-vetted three-prime reduction: if
+\[
+\Gamma_3:=\sup_{p<q<r} C(p,q,r),
+\]
+then
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3<\infty.
+\tag{F5}
+\]
+\end{enumerate}
+
+I do not re-prove any of these facts here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is an \emph{admissible-threshold reduction} for the three-prime obstruction.
+
+The previous round showed that the non-subpower part of \(C(p,q,r)\) is harmless. The key observation now is that the proof only used the tail-potential estimate \((\mathrm{F4})\), whose right-hand side depends on the exclusion scale \(D\) solely through \(D^{-1/2}\). Therefore the same argument works for \emph{any} threshold function \(\Psi\) whose values along the geometric progression \(2^m\) satisfy
+\[
+\sum_{m\ge 1}\Psi(2^m)^{-1/2}<\infty.
+\]
+
+This strictly strengthens the previous-round subpower theorem, which corresponds to the special choice \(\Psi(x)=x^\theta\) with \(0<\theta<1\). In particular, taking
+\[
+\Psi(x)=(1+\log x)^A \qquad (A>2)
+\]
+shows that, for the three-prime boundedness problem, one may discard all mixed terms except those with \emph{polylogarithmically small} difference.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-(round\_no-1) was:
+
+\begin{quote}
+The three-prime obstruction still allowed all one-vs-two differences. It was unknown whether polynomially, or even polylogarithmically, separated mixed terms could still drive divergence.
+\end{quote}
+
+I now prove the following.
+
+\begin{enumerate}
+\item A general admissible-threshold theorem: if \(\Psi\) is nondecreasing with
+\[
+\Sigma_\Psi:=\sum_{m\ge 1}\Psi(2^m)^{-1/2}<\infty,
+\]
+then
+\[
+0\le C(p,q,r)-C_\Psi(p,q,r)\le 3300\,\Sigma_\Psi
+\]
+uniformly in all prime triples \(p<q<r\).
+
+\item Consequently,
+\[
+\Gamma_3<\infty \iff \sup_{p<q<r} C_\Psi(p,q,r)<\infty.
+\]
+
+\item Combining with \((\mathrm{F5})\), boundedness of \(S_{\mathrm{all}}\) on \(\omega(n)\le 3\) is equivalent to boundedness of the \emph{truncated} three-prime obstruction.
+
+\item Specialising to \(\Psi(x)=(1+\log x)^A\) with \(A>2\), I obtain the concrete statement that only polylogarithmically close one-vs-two collisions matter.
+\end{enumerate}
+
+This is strict progress because it rules out an entire further class of possible divergence mechanisms inside the unresolved three-prime problem.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. Definition of the truncated mixed sum}
+
+Fix a nondecreasing function
+\[
+\Psi:[1,\infty)\to [1,\infty).
+\]
+For distinct primes \(p<q<r\), define
+\[
+\begin{aligned}
+C_\Psi(p,q,r):=
+\sum_{u,v,w\ge 1}
+\Bigg(
+&\frac{\mathbf 1_{|p^u-q^v r^w|<\Psi(p^u)}}{|p^u-q^v r^w|}
++
+\frac{\mathbf 1_{|q^v-p^u r^w|<\Psi(q^v)}}{|q^v-p^u r^w|}
+\\
+&+
+\frac{\mathbf 1_{|r^w-p^u q^v|<\Psi(r^w)}}{|r^w-p^u q^v|}
+\Bigg).
+\end{aligned}
+\]
+Also set
+\[
+\Gamma_{3,\Psi}:=\sup_{p<q<r} C_\Psi(p,q,r).
+\]
+
+\subsection*{2. General admissible-threshold reduction}
+
+\paragraph{Theorem 1.}
+Let \(\Psi:[1,\infty)\to [1,\infty)\) be nondecreasing, and assume that
+\[
+\Sigma_\Psi:=\sum_{m=1}^{\infty}\Psi(2^m)^{-1/2}<\infty.
+\]
+Then for every distinct primes \(p<q<r\),
+\[
+0\le C(p,q,r)-C_\Psi(p,q,r)\le 3300\,\Sigma_\Psi.
+\tag{2.1}
+\]
+Consequently,
+\[
+\Gamma_3<\infty \iff \Gamma_{3,\Psi}<\infty.
+\tag{2.2}
+\]
+
+\emph{Proof.}
+Write
+\[
+C(p,q,r)=C_{p\mid qr}(p,q,r)+C_{q\mid pr}(p,q,r)+C_{r\mid pq}(p,q,r),
+\]
+where, for example,
+\[
+C_{p\mid qr}(p,q,r):=\sum_{u,v,w\ge 1}\frac{1}{|p^u-q^v r^w|}.
+\]
+Similarly, write
+\[
+C_\Psi(p,q,r)=C_{p\mid qr}^{\Psi}(p,q,r)+C_{q\mid pr}^{\Psi}(p,q,r)+C_{r\mid pq}^{\Psi}(p,q,r),
+\]
+where
+\[
+C_{p\mid qr}^{\Psi}(p,q,r):=
+\sum_{u,v,w\ge 1}
+\frac{\mathbf 1_{|p^u-q^v r^w|<\Psi(p^u)}}{|p^u-q^v r^w|}.
+\]
+
+Consider first the difference in the \(p\mid qr\) term. For each fixed \(u\ge 1\), apply the tail-potential estimate \((\mathrm{F4})\) to the set
+\[
+\mathcal A_{q,r}=\{q^v r^w:v,w\in \mathbf N\},
+\]
+with
+\[
+x:=p^u,
+\qquad
+D:=\Psi(p^u).
+\]
+Since \(\Psi\ge 1\), the hypothesis \(D\ge 1\) of \((\mathrm{F4})\) is satisfied. Therefore
+\[
+\sum_{\substack{v,w\ge 1\\ |p^u-q^v r^w|\ge \Psi(p^u)}}
+\frac{1}{|p^u-q^v r^w|}
+\le 1100\,\Psi(p^u)^{-1/2}.
+\]
+Summing over \(u\ge 1\),
+\[
+C_{p\mid qr}(p,q,r)-C_{p\mid qr}^{\Psi}(p,q,r)
+\le
+1100\sum_{u=1}^{\infty}\Psi(p^u)^{-1/2}.
+\]
+Because \(p\ge 2\) and \(\Psi\) is nondecreasing,
+\[
+\Psi(p^u)\ge \Psi(2^u)
+\qquad (u\ge 1),
+\]
+so
+\[
+\sum_{u=1}^{\infty}\Psi(p^u)^{-1/2}
+\le
+\sum_{u=1}^{\infty}\Psi(2^u)^{-1/2}
+=
+\Sigma_\Psi.
+\]
+Hence
+\[
+C_{p\mid qr}(p,q,r)-C_{p\mid qr}^{\Psi}(p,q,r)
+\le 1100\,\Sigma_\Psi.
+\]
+By symmetry, the same bound holds for the \(q\mid pr\) and \(r\mid pq\) terms. Adding the three inequalities gives
+\[
+0\le C(p,q,r)-C_\Psi(p,q,r)\le 3300\,\Sigma_\Psi,
+\]
+which proves \((2.1)\).
+
+Now take the supremum over all prime triples \(p<q<r\). Since \(C_\Psi(p,q,r)\le C(p,q,r)\) termwise, one has
+\[
+\Gamma_{3,\Psi}\le \Gamma_3.
+\]
+Conversely, \((2.1)\) gives
+\[
+C(p,q,r)\le C_\Psi(p,q,r)+3300\,\Sigma_\Psi,
+\]
+hence
+\[
+\Gamma_3\le \Gamma_{3,\Psi}+3300\,\Sigma_\Psi.
+\]
+Thus \(\Gamma_3<\infty\) if and only if \(\Gamma_{3,\Psi}<\infty\), proving \((2.2)\).
+\hfill\(\Box\)
+
+\subsection*{3. Consequence for the boundedness problem on \(\omega(n)\le 3\)}
+
+\paragraph{Corollary 2.}
+Let \(\Psi:[1,\infty)\to [1,\infty)\) be nondecreasing and satisfy
+\[
+\sum_{m=1}^{\infty}\Psi(2^m)^{-1/2}<\infty.
+\]
+Then
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_{3,\Psi}<\infty.
+\tag{3.1}
+\]
+
+\emph{Proof.}
+By \((\mathrm{F5})\),
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3<\infty.
+\]
+Now apply Theorem 1.
+\hfill\(\Box\)
+
+\subsection*{4. Polylogarithmic reduction}
+
+For \(A>2\), define
+\[
+\Psi_A(x):=(1+\log x)^A
+\qquad (x\ge 1).
+\]
+Also define
+\[
+\begin{aligned}
+C_A(p,q,r):=
+\sum_{u,v,w\ge 1}
+\Bigg(
+&\frac{\mathbf 1_{|p^u-q^v r^w|<(1+\log p^u)^A}}{|p^u-q^v r^w|}
++
+\frac{\mathbf 1_{|q^v-p^u r^w|<(1+\log q^v)^A}}{|q^v-p^u r^w|}
+\\
+&+
+\frac{\mathbf 1_{|r^w-p^u q^v|<(1+\log r^w)^A}}{|r^w-p^u q^v|}
+\Bigg),
+\end{aligned}
+\]
+and
+\[
+\Gamma_{3,A}:=\sup_{p<q<r} C_A(p,q,r).
+\]
+
+\paragraph{Corollary 3 (polylogarithmic obstruction theorem).}
+Let \(A>2\). Then for every distinct primes \(p<q<r\),
+\[
+0\le C(p,q,r)-C_A(p,q,r)
+\le
+3300\,(\log 2)^{-A/2}\zeta(A/2).
+\tag{4.1}
+\]
+In particular,
+\[
+\Gamma_3<\infty \iff \Gamma_{3,A}<\infty,
+\tag{4.2}
+\]
+and hence
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_{3,A}<\infty.
+\tag{4.3}
+\]
+
+\emph{Proof.}
+For \(\Psi_A(x)=(1+\log x)^A\), one has
+\[
+\Psi_A(2^m)^{-1/2}=(1+m\log 2)^{-A/2}
+\le
+(m\log 2)^{-A/2}
+\qquad (m\ge 1).
+\]
+Therefore
+\[
+\Sigma_{\Psi_A}:=\sum_{m=1}^{\infty}\Psi_A(2^m)^{-1/2}
+\le
+(\log 2)^{-A/2}\sum_{m=1}^{\infty}m^{-A/2}
+=
+(\log 2)^{-A/2}\zeta(A/2).
+\]
+Because \(A>2\), the zeta-value \(\zeta(A/2)\) is finite, so Theorem 1 applies and yields \((4.1)\). The equivalences \((4.2)\) and \((4.3)\) follow from Theorem 1 and Corollary 2.
+\hfill\(\Box\)
+
+\paragraph{Corollary 4.}
+Fix any \(A>2\). Then any hypothetical failure of uniform boundedness on \(\omega(n)\le 3\) must be driven by infinitely many one-vs-two mixed differences satisfying
+\[
+|p^u-q^v r^w|<(1+\log p^u)^A,
+\]
+or one of its two cyclic analogues.
+In other words, all mixed differences that are larger than a polylogarithmic function of the one-prime term are automatically harmless.
+
+\emph{Proof.}
+If all three polylogarithmically truncated sums were uniformly bounded, then \(\Gamma_{3,A}<\infty\), and Corollary 3 would imply
+\[
+\sup_{\omega(n)\le 3}S_{\mathrm{all}}(n)<\infty.
+\]
+Thus any failure of boundedness must force divergence in the polylogarithmically truncated obstruction.
+\hfill\(\Box\)
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Dependence on previous-round inputs.}
+The only prior results used nontrivially are the tail-potential estimate \((\mathrm{F4})\) and the equivalence \((\mathrm{F5})\). The new argument does not alter or weaken them; it only plugs an arbitrary threshold \(D=\Psi(p^u)\) into \((\mathrm{F4})\).
+
+\paragraph{2. Monotonicity of \(\Psi\).}
+The inequality
+\[
+\Psi(p^u)\ge \Psi(2^u)
+\]
+used in Theorem 1 requires only that \(\Psi\) be nondecreasing and that \(p\ge 2\). Both are part of the hypotheses.
+
+\paragraph{3. Finiteness of the error term.}
+The argument needs only the summability condition
+\[
+\Sigma_\Psi=\sum_{m\ge 1}\Psi(2^m)^{-1/2}<\infty.
+\]
+No other regularity of \(\Psi\) is required. Thus the theorem applies to many thresholds much smaller than any power of \(x\), including polylogarithmic thresholds.
+
+\paragraph{4. Polylogarithmic specialisation.}
+For \(A>2\), the estimate
+\[
+\Sigma_{\Psi_A}\le (\log 2)^{-A/2}\zeta(A/2)
+\]
+is correct because \(1+m\log 2\ge m\log 2\) for \(m\ge 1\). The convergence condition is precisely \(A/2>1\), i.e. \(A>2\).
+
+\paragraph{5. What this round does \emph{not} claim.}
+The theorem does \emph{not} prove boundedness on \(\omega(n)\le 3\). It proves that polynomial-scale, subpower-scale, and even polylogarithmic-scale exclusions are all harmless once their corresponding \(\Psi(2^m)^{-1/2}\)-series converges. The unresolved core is therefore strictly narrower than in the previous round.
+
+\paragraph{6. Strict advance beyond Round-(round\_no-1).}
+The previous round only reduced the three-prime problem to subpower collisions. The present round shows that one may discard everything outside \emph{any admissible threshold}, and in particular outside any polylogarithmic window \((1+\log x)^A\) with \(A>2\). This is a genuine strengthening.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a new sharpening of the first genuinely unresolved obstruction:
+
+\begin{quote}
+For the three-prime family \(\omega(n)\le 3\), the full mixed one-vs-two obstruction may be replaced, up to a uniform absolute error, by its truncation at \emph{any} nondecreasing threshold \(\Psi\) satisfying
+\[
+\sum_{m\ge 1}\Psi(2^m)^{-1/2}<\infty.
+\]
+In particular, boundedness on \(\omega(n)\le 3\) is equivalent to boundedness of the obstruction restricted to only \emph{polylogarithmically close} one-vs-two collisions.
+\end{quote}
+
+Equivalently: the remaining three-prime difficulty is now confined to a much thinner Diophantine set than before. Polynomial-scale, subpower-scale, and even all non-polylogarithmic-scale near-collisions are automatically harmless.
+
+This is strict progress beyond Round-(round\_no-1): it rules out an entire further class of counterexample mechanisms and narrows the unresolved core of the problem to collisions of size at most \((1+\log x)^A\) for every \(A>2\).
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 99.2\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}, \texttt{https://www.erdosproblems.com/884}, accessed 2026-03-09.
+\item Previous vetted rounds of the present investigation (used here as fixed foundational input under the continuation protocol).
+\end{enumerate}

@@ -1,0 +1,218 @@
+\section{Erd\H{o}s Problem \#312 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path A (prove the original statement, or at least obtain a rigorous general quantitative bound).}
+
+Round 1 only gave an obstruction family and a lower bound inside that family. The most promising Round-2 direction is therefore to prove a \emph{universal theorem} applying to \emph{every} multiset $A$ with large reciprocal sum. I do not reach the conjectured exponential bound, but I do obtain a fully self-contained general estimate
+\[
+\varepsilon(A)\le \frac{1}{K+\log K+O(1)},
+\]
+valid for every finite multiset with total reciprocal sum $>K$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 result.
+
+\begin{itemize}
+\item The prime-multiplicity obstruction family
+\[
+A_N:=\bigsqcup_{p\le N}\{\underbrace{p,\ldots,p}_{p-1\text{ copies}}\}
+\]
+contains no submultiset summing exactly to $1$, and for this family one has
+\[
+\varepsilon(A_N)\ge \frac{1}{N^\#},
+\qquad
+N^\#:=\prod_{p\le N}p.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a very simple ``maximal subset below $1$'' argument.
+
+If $S$ is a submultiset maximizing the reciprocal sum subject to $R(S)\le 1$, and the gap is
+\[
+\delta:=1-R(S),
+\]
+then every omitted reciprocal must be \emph{strictly larger} than $\delta$; otherwise one could add it and get closer to $1$ from below.
+
+Combining this with the trivial observation that $n$ copies of $1/n$ would already give an exact sum $1$, one gets a global counting bound in terms of
+\[
+\sum_{n\le M}\frac{n-1}{n}=M-H_M,
+\qquad
+H_M:=1+\frac12+\cdots+\frac1M.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the absence of any self-contained upper bound for arbitrary multisets. I therefore:
+
+\begin{enumerate}
+\item prove a multiplicity lemma valid for every exact-$1$-free multiset;
+\item combine it with the maximal-subset-below-$1$ principle;
+\item deduce an explicit universal bound on the best possible gap below $1$.
+\end{enumerate}
+
+This does not match the conjectured exponential scale, but it strictly strengthens Round 1 by proving a genuine theorem for all multisets.
+
+\subsection*{5) WORK (ROUND-2)}
+For a finite multiset $A$ of positive integers write
+\[
+R(A):=\sum_{n\in A}\frac1n,
+\qquad
+\varepsilon(A):=
+\min\{1-R(S): S\subseteq A,\ R(S)\le 1\}.
+\]
+Thus $\varepsilon(A)=0$ iff some submultiset sums exactly to $1$.
+
+\medskip
+\textbf{Lemma 5.1 (multiplicity bound).}
+If no submultiset of $A$ has reciprocal sum exactly $1$, then for every integer $n\ge 1$ the denominator $n$ occurs in $A$ at most $n-1$ times.
+
+\emph{Proof.}
+If $n$ occurred at least $n$ times, then taking exactly $n$ copies of $1/n$ would give the submultiset sum
+\[
+\frac1n+\cdots+\frac1n=1.
+\]
+This is excluded by hypothesis. \hfill $\square$
+
+\medskip
+\textbf{Lemma 5.2 (denominator cutoff from a maximal subset).}
+Let $S\subseteq A$ be a submultiset for which $R(S)$ is maximal under the constraint $R(S)\le 1$, and let
+\[
+\delta:=1-R(S).
+\]
+If $\delta>0$, then every element of $A\setminus S$ has denominator strictly smaller than $1/\delta$.
+
+\emph{Proof.}
+Take any $n\in A\setminus S$. If $1/n\le \delta$, then
+\[
+R(S)+\frac1n\le 1,
+\]
+contradicting the maximality of $R(S)$. Hence $1/n>\delta$, i.e.
+\[
+n<\frac1\delta.
+\]
+\hfill $\square$
+
+\medskip
+\textbf{Theorem 5.3.}
+Let $K>1$, and let $A$ be any finite multiset of positive integers with
+\[
+R(A)>K.
+\]
+Let $m(K)$ be the smallest positive integer satisfying
+\[
+m(K)-H_{m(K)} > K-1.
+\]
+Then
+\[
+\varepsilon(A)\le \frac{1}{m(K)}.
+\]
+In particular,
+\[
+\varepsilon(A)\le \frac1K.
+\]
+
+\emph{Proof.}
+Choose $S\subseteq A$ maximizing $R(S)$ under the constraint $R(S)\le 1$, and write
+\[
+\delta:=1-R(S)=\varepsilon(A).
+\]
+If $\delta=0$, there is nothing to prove. So assume $\delta>0$.
+
+Then no submultiset of $A$ sums exactly to $1$, so Lemma 5.1 applies. Also, by Lemma 5.2, every denominator appearing in $A\setminus S$ is at most
+\[
+M:=\left\lfloor \frac1\delta\right\rfloor.
+\]
+Therefore the total reciprocal sum of all omitted elements is at most
+\[
+\sum_{n=2}^{M}\frac{n-1}{n}=M-H_M.
+\]
+On the other hand,
+\[
+R(A\setminus S)=R(A)-R(S)>K-(1-\delta)=K-1+\delta>K-1.
+\]
+Hence
+\[
+M-H_M > K-1.
+\]
+By the minimality of $m(K)$ we get $M\ge m(K)$, and therefore
+\[
+\delta\le \frac1M\le \frac{1}{m(K)}.
+\]
+This proves the main claim.
+
+For the simpler bound, note that $m(K)>K-1$, so $m(K)\ge K$ (because $m(K)$ is an integer). Hence
+\[
+\varepsilon(A)=\delta\le \frac{1}{m(K)}\le \frac1K.
+\]
+\hfill $\square$
+
+\medskip
+\textbf{Corollary 5.4.}
+One has
+\[
+m(K)=K+\log K+O(1),
+\]
+and therefore
+\[
+\varepsilon(A)\le \frac{1}{K+\log K+O(1)}.
+\]
+
+\emph{Proof.}
+This is immediate from the standard asymptotic
+\[
+H_m=\log m+\gamma+O(1/m).
+\]
+Then
+\[
+m-H_m = m-\log m-\gamma+O(1/m),
+\]
+and solving the inequality $m-H_m>K-1$ gives
+\[
+m=K+\log K+O(1).
+\]
+Substituting into Theorem 5.3 completes the argument. \hfill $\square$
+
+\medskip
+\textbf{Remark.}
+Theorem 5.3 is weaker than the already-known Erd\H{o}s--Graham type bound $\varepsilon(A)\ll 1/K^2$ quoted on the current problem page, but it is a fully self-contained theorem proved here. It also removes the vague phrase ``sufficiently large'' entirely: for this weaker bound, no size hypothesis on $A$ is needed.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item Lemma 5.1 only uses one denominator at a time, so there is no hidden interaction issue.
+\item In Lemma 5.2 the maximality is with respect to \emph{all} submultisets $S$ satisfying $R(S)\le 1$, not a greedy or ordered construction. That is enough.
+\item The proof of Theorem 5.3 uses $\delta>0$ only to ensure there is no exact-$1$ submultiset and to define $M=\lfloor 1/\delta\rfloor$.
+\item The omitted-sum upper bound
+\[
+R(A\setminus S)\le \sum_{n=2}^M \frac{n-1}{n}
+\]
+is valid because each denominator $n\le M$ can occur at most $n-1$ times in \emph{all} of $A$, hence certainly in $A\setminus S$.
+\item The argument is uniform in non-integer $K$ as well, because $m(K)$ is defined by an inequality, not by divisibility.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round 1 is a genuine universal theorem:
+for every finite multiset $A$ with reciprocal sum $>K$,
+\[
+\varepsilon(A)\le \frac{1}{m(K)}=\frac{1}{K+\log K+O(1)}\le \frac1K.
+\]
+
+This is still far weaker than the conjectured exponential bound
+\[
+\varepsilon(A)\le e^{-cK},
+\]
+and it is also weaker than the already-known $O(1/K^2)$ bound cited in the literature context. But it is a rigorous theorem proved in full detail here, and it converts Round 1 from ``context plus an obstruction family'' into an actual general quantitative result.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 66\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item P. Erd\H{o}s and R. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, problem source for \#312.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#312}, Erd\H{o}s Problems website, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#312 -- Discussion thread}, Erd\H{o}s Problems website, accessed 2026-03-07.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This file is already in drop-in LaTeX format with no preamble.

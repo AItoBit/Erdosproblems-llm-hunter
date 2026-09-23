@@ -1,0 +1,149 @@
+\section*{Erd\H{o}s Problem \#385}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/partial reduction}. Round-1 already localized every possible bad value of $n$ to the even prime-shift case $n=p+1$, so the most promising next step is not to re-run the original argument but to extract sharp consequences from the Round-1 bounds. The goal in this round is to prove two genuinely stronger statements: first, that the set of bad integers has density $0$; second, that the trivial upper bound $F(n)-n\leq \sqrt n$ is attained on the correct scale infinitely often, in the precise sense that
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}=1.
+\]
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results.
+
+\begin{enumerate}
+\item Round-1 Lemma 1: if $n\geq 5$ is odd, then $F(n)\geq n+1$.
+\item Round-1 Lemma 2: if $n\geq 6$ is even, then $F(n)\geq n$.
+\item Round-1 Lemma 3: if $n\geq 6$ is even and $n-1$ is composite, then $F(n)>n$.
+\item Round-1 Corollary 4: if $F(n)\leq n$, then $n$ is even, $n-1$ is prime, and in fact $F(n)=n$.
+\item Round-1 Lemma 5: for $n=q^2+1$ with $q$ prime, one has $F(n)-n\geq q-1$.
+\item Round-1 Lemma 6: for all $n\geq 5$, one has $F(n)\leq n+\sqrt n$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new idea is to combine the Round-1 square-sequence lower bound with the Round-1 trivial upper bound \emph{at the level of the normalized ratio} $(F(n)-n)/\sqrt n$. This turns the earlier weak statement
+\[
+\limsup_{n\to\infty}(F(n)-n)=\infty
+\]
+into the sharp asymptotic statement
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}=1.
+\]
+A second new observation is that Round-1 Corollary 4 immediately forces the bad set into a subset of the shifted primes $\{p+1\}$, giving an unconditional zero-density theorem.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gaps left after Round-1 were:
+
+\begin{enumerate}
+\item The main questions $F(n)>n$ eventually and $F(n)-n\to\infty$ were still open.
+\item The earlier lower bound only showed that $F(n)-n$ is unbounded on a subsequence, without identifying the true maximal order.
+\item The earlier reduction to the case $n-1$ prime had not yet been converted into a density statement.
+\end{enumerate}
+
+The plan is therefore:
+
+\begin{enumerate}
+\item Use Round-1 Lemmas 5 and 6 together to pin down the exact value of the limsup ratio.
+\item Use Round-1 Corollary 4 together with the prime number theorem to show that bad integers have density $0$.
+\end{enumerate}
+
+This does not solve the original problem, but it does close two concrete gaps left by Round-1.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\textbf{Theorem 385.1.} One has
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}=1.
+\]
+
+\emph{Proof.} Round-1 Lemma 6 gives the uniform upper bound
+\[
+\frac{F(n)-n}{\sqrt n}\leq 1
+\qquad (n\geq 5),
+\]
+so
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}\leq 1.
+\]
+On the other hand, if $q$ is prime and $n=q^2+1$, then Round-1 Lemma 5 gives
+\[
+F(n)-n\geq q-1.
+\]
+Hence along this subsequence
+\[
+\frac{F(n)-n}{\sqrt n}
+\geq
+\frac{q-1}{\sqrt{q^2+1}}.
+\]
+As $q\to\infty$, the right-hand side tends to $1$. Therefore
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}\geq 1.
+\]
+Combining the upper and lower bounds gives the claim. \hfill $\square$
+
+\medskip
+
+\textbf{Corollary 385.2.} The bad set
+\[
+\mathcal B:=\{n\geq 5: F(n)\leq n\}
+\]
+has natural density $0$. More precisely,
+\[
+\#\{n\leq x: F(n)\leq n\}\leq \pi(x-1)+O(1)=o(x).
+\]
+In particular, \emph{almost all} integers are good.
+
+\emph{Proof.} By Round-1 Corollary 4, every bad integer $n\geq 6$ is even and satisfies $n-1$ prime. Thus
+\[
+\{n\leq x: F(n)\leq n\}\subseteq \{p+1\leq x: p\text{ prime}\}\cup\{5\}.
+\]
+Hence
+\[
+\#\{n\leq x: F(n)\leq n\}\leq \pi(x-1)+1.
+\]
+Since $\pi(x)=o(x)$, the density is $0$. \hfill $\square$
+
+\medskip
+
+\textbf{Corollary 385.3.} The trivial upper bound from Round-1 is asymptotically best possible on an infinite subsequence: for infinitely many $n$,
+\[
+F(n)=n+(1-o(1))\sqrt n.
+\]
+
+\emph{Proof.} This is just a restatement of Theorem 385.1. \hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The new work has three places where hidden issues could occur.
+
+\begin{enumerate}
+\item \emph{Could the subsequence $n=q^2+1$ fail to be admissible?} No. For every prime $q$, the integer $m=q^2<n=q^2+1$ is composite, so Round-1 Lemma 5 applies exactly.
+\item \emph{Could the upper bound be too weak to identify the limsup ratio?} No. The bound $F(n)-n\leq \sqrt n$ is uniform in $n$, while the square subsequence gives ratios tending to $1$ from below, so the limsup is forced to be exactly $1$.
+\item \emph{Could the density-zero claim miss some bad odd numbers?} No. Round-1 Lemma 1 already ruled out all odd $n\geq 5$, and Round-1 Corollary 4 completely characterizes the only possible bad numbers.
+\end{enumerate}
+
+No quantifier problem remains in the new claims.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance beyond Round-1 is twofold:
+
+\begin{enumerate}
+\item a sharp normalized limsup theorem,
+\[
+\limsup_{n\to\infty}\frac{F(n)-n}{\sqrt n}=1,
+\]
+which substantially strengthens the earlier statement that $F(n)-n$ is merely unbounded on a subsequence;
+\item an unconditional density theorem: the bad set has density $0$, so almost all integers are good.
+\end{enumerate}
+
+The original eventual-positivity question and the full limit $F(n)-n\to\infty$ remain open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 48\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#385}, erdosproblems.com/385, accessed 2026-03-07.
+\item T. Tao, \emph{Erdos problem \#385, the parity problem, and Siegel zeroes}, blog post, 2024.
+\end{enumerate}
+
+

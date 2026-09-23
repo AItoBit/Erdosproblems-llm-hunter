@@ -1,0 +1,350 @@
+\section{Problem 627 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path C: isolate the exact Ramsey-theoretic obstruction and convert the problem to an inverse-threshold statement on the \(n/(\log n)^2\) scale.
+
+Round 1 produced a self-contained probabilistic lower bound and a basic Ramsey-number lower bound, but it still did not identify the correct \(\limsup\), nor did it isolate the exact place where the open difficulty remains. The most promising Round-2 move is therefore to combine the new 2026 Ramsey-theoretic information with a precise inverse-threshold theorem.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts.
+
+\begin{itemize}
+\item The probabilistic lower bound
+\[
+f(n)\ge \left(\frac14+o(1)\right)\frac{n}{(\log_2 n)^2}.
+\]
+\item The Ramsey lower-bound mechanism: if \(R(k,k)\le n < R(k+1,k+1)\), then
+\[
+f(n)\ge \frac{n}{k^2}.
+\]
+\end{itemize}
+
+Throughout this section, \(\log\) means \(\log_2\).
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+
+There are two genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item A new exact theorem of Araujo--Filipe--Miyazaki gives the \emph{exact} value of
+\[
+\limsup_{n\to\infty}\frac{f(n)(\log n)^2}{n}
+\]
+in terms of a Ramsey envelope parameter \(M\), and a lower bound on the corresponding \(\liminf\) in terms of the diagonal Ramsey lower rate \(L\).
+
+\item I prove an inverse-threshold theorem for monotone functions on the \(n/(\log n)^2\) scale.
+Applied to
+\[
+Q(x):=\min\{n\in\mathbb N:f(n)\ge x\},
+\]
+it converts limsup/liminf information about \(f(n)(\log n)^2/n\) into exact liminf/limsup information about \(Q(x)/(x(\log x)^2)\).
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+
+The exact gaps after Round 1 are:
+
+\begin{itemize}
+\item Round 1 did not identify \(\limsup f(n)(\log n)^2/n\).
+\item Round 1 did not isolate the exact obstruction to the existence of the limit.
+\item Round 1 did not convert the problem to an equivalent inverse-threshold problem.
+\end{itemize}
+
+The plan is:
+
+\begin{enumerate}
+\item import the checked external theorem of Araujo--Filipe--Miyazaki;
+\item prove an inverse theorem for \(Q(x)\);
+\item combine the two to obtain an exact obstruction statement:
+the limsup side is already completely understood, and the remaining open gap is the mismatch between the diagonal quantity \(L\) and the off-diagonal envelope \(M\).
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{Checked external theorem ([AFM25], Theorems 2.1 and 2.2).}
+Define
+\[
+g(n):=\frac{f(n)(\log n)^2}{n},
+\]
+\[
+M:=\limsup_{t\to\infty}\max_{1\le s\le t}\frac{\log R(s,t)}{\sqrt{st}},
+\qquad
+L:=\liminf_{k\to\infty}\frac{\log R(k,k)}{k}.
+\]
+Then
+\[
+\limsup_{n\to\infty} g(n)=M^2,
+\qquad
+\liminf_{n\to\infty} g(n)\ge L^2.
+\]
+Moreover, [AFM25] proves the currently best asymptotic upper bound
+\[
+f(n)\le (3.71943+o(1))\frac{n}{(\log n)^2}.
+\]
+
+No extra hypotheses are needed for these statements.
+
+\paragraph{Claim 627.1 (monotonicity and logarithmic location of the inverse threshold).}
+The function \(f(n)\) is nondecreasing. If
+\[
+Q(x):=\min\{n\in\mathbb N:f(n)\ge x\},
+\]
+then \(Q(x)\) is well-defined for all sufficiently large \(x\), and
+\[
+\frac{\log Q(x)}{\log x}\to 1
+\qquad (x\to\infty).
+\]
+
+\emph{Proof.}
+Monotonicity follows by adding isolated vertices: if \(G\) witnesses \(f(n)\), then \(G\cup I_1\) has
+the same values of \(\chi\) and \(\omega\), so \(f(n+1)\ge f(n)\).
+
+By Erd\H{o}s' theorem, \(f(n)=\Theta(n/(\log n)^2)\), so there exist \(0<c<C\) and \(n_0\) such that for all \(n\ge n_0\),
+\[
+c\frac{n}{(\log n)^2}\le f(n)\le C\frac{n}{(\log n)^2}.
+\]
+Let \(n:=Q(x)\). Then \(x\le f(n)\le Cn/(\log n)^2\), hence
+\[
+\log x\le \log n + O(1).
+\]
+Also \(x>f(n-1)\ge c(n-1)/(\log(n-1))^2\) for large \(x\), so
+\[
+\log x\ge \log(n-1)-2\log\log(n-1)+O(1).
+\]
+Thus
+\[
+\log n-\log x=O(\log\log n),
+\]
+and dividing by \(\log x\sim \log n\) gives
+\[
+\frac{\log Q(x)}{\log x}\to 1.
+\]
+\(\square\)
+
+\paragraph{Claim 627.2 (inverse theorem on the \(n/(\log n)^2\) scale).}
+Let
+\[
+\gamma_-:=\liminf_{n\to\infty}\frac{f(n)(\log n)^2}{n},
+\qquad
+\gamma_+:=\limsup_{n\to\infty}\frac{f(n)(\log n)^2}{n}.
+\]
+Then
+\[
+\liminf_{x\to\infty}\frac{Q(x)}{x(\log x)^2}=\frac{1}{\gamma_+},
+\qquad
+\limsup_{x\to\infty}\frac{Q(x)}{x(\log x)^2}=\frac{1}{\gamma_-}.
+\]
+
+\emph{Proof.}
+We first prove the formula for the liminf.
+
+Fix \(\varepsilon>0\). By the definition of \(\gamma_+\), for all large \(n\),
+\[
+f(n)\le (\gamma_++\varepsilon)\frac{n}{(\log n)^2}.
+\]
+Let \(n:=Q(x)\). Then \(x\le f(n)\), so
+\[
+x\le (\gamma_++\varepsilon)\frac{n}{(\log n)^2},
+\]
+that is,
+\[
+\frac{Q(x)}{x(\log x)^2}
+=
+\frac{n}{x(\log x)^2}
+\ge
+\frac{1}{\gamma_++\varepsilon}\cdot \frac{(\log n)^2}{(\log x)^2}.
+\]
+By Claim 627.1, \(\log n/\log x\to 1\). Hence
+\[
+\liminf_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\ge \frac{1}{\gamma_++\varepsilon}.
+\]
+Letting \(\varepsilon\downarrow 0\) gives
+\[
+\liminf_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\ge \frac{1}{\gamma_+}.
+\]
+
+For the reverse inequality, choose a sequence \(n_j\to\infty\) such that
+\[
+\frac{f(n_j)(\log n_j)^2}{n_j}\to \gamma_+.
+\]
+Set \(x_j:=f(n_j)\). Then \(Q(x_j)\le n_j\), so
+\[
+\frac{Q(x_j)}{x_j(\log x_j)^2}
+\le
+\frac{n_j}{f(n_j)(\log x_j)^2}
+=
+\frac{1}{\frac{f(n_j)(\log n_j)^2}{n_j}}\cdot \frac{(\log n_j)^2}{(\log x_j)^2}.
+\]
+Since \(x_j=f(n_j)=\Theta(n_j/(\log n_j)^2)\), we have \(\log x_j/\log n_j\to 1\). Therefore
+\[
+\liminf_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\le \frac{1}{\gamma_+}.
+\]
+This proves the liminf identity.
+
+Now prove the formula for the limsup.
+
+Fix \(\varepsilon>0\). By the definition of \(\gamma_-\), for all large \(n\),
+\[
+f(n)\ge (\gamma_--\varepsilon)\frac{n}{(\log n)^2}.
+\]
+Let \(m:=Q(x)-1\). Then \(f(m)<x\), so
+\[
+x> (\gamma_--\varepsilon)\frac{m}{(\log m)^2}.
+\]
+Hence
+\[
+\frac{Q(x)}{x(\log x)^2}
+=
+\frac{m+1}{x(\log x)^2}
+<
+\frac{m+1}{(\gamma_--\varepsilon)m}\cdot \frac{(\log m)^2}{(\log x)^2}.
+\]
+Since \(x>f(m)\) and \(x\le f(m+1)\), while \(f(n)=\Theta(n/(\log n)^2)\), we also have \(\log m/\log x\to 1\). Hence
+\[
+\limsup_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\le \frac{1}{\gamma_--\varepsilon}.
+\]
+Let \(\varepsilon\downarrow 0\) to get
+\[
+\limsup_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\le \frac{1}{\gamma_-}.
+\]
+
+For the reverse inequality, choose \(m_j\to\infty\) such that
+\[
+\frac{f(m_j)(\log m_j)^2}{m_j}\to \gamma_-.
+\]
+Set
+\[
+x_j:=f(m_j)+\frac{1}{j}.
+\]
+Then \(x_j>f(m_j)\), so \(Q(x_j)\ge m_j+1\). Also \(x_j/f(m_j)\to 1\), and \(f(m_j)=\Theta(m_j/(\log m_j)^2)\), so \(\log x_j/\log m_j\to 1\). Therefore
+\[
+\frac{Q(x_j)}{x_j(\log x_j)^2}
+\ge
+\frac{m_j+1}{x_j(\log x_j)^2}
+\to
+\frac{1}{\gamma_-}.
+\]
+Thus
+\[
+\limsup_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\ge \frac{1}{\gamma_-}.
+\]
+This proves the second identity. \(\square\)
+
+\paragraph{Corollary 627.3 (exact inverse reformulation of Problem 627).}
+The limit
+\[
+\lim_{n\to\infty}\frac{f(n)}{n/(\log n)^2}
+\]
+exists if and only if the limit
+\[
+\lim_{x\to\infty}\frac{Q(x)}{x(\log x)^2}
+\]
+exists, and in that case the two limits are reciprocal.
+
+\emph{Proof.}
+This is immediate from Claim 627.2. \(\square\)
+
+\paragraph{Corollary 627.4 (the exact Ramsey-theoretic obstruction).}
+With \(Q(x)\), \(L\), and \(M\) as above,
+\[
+\liminf_{x\to\infty}\frac{Q(x)}{x(\log x)^2}=\frac{1}{M^2},
+\qquad
+\limsup_{x\to\infty}\frac{Q(x)}{x(\log x)^2}\le \frac{1}{L^2}.
+\]
+
+\emph{Proof.}
+By the checked theorem of Araujo--Filipe--Miyazaki,
+\[
+\gamma_+=M^2,\qquad \gamma_-\ge L^2.
+\]
+Apply Claim 627.2:
+\[
+\liminf \frac{Q(x)}{x(\log x)^2}=\frac{1}{\gamma_+}=\frac{1}{M^2},
+\]
+and
+\[
+\limsup \frac{Q(x)}{x(\log x)^2}=\frac{1}{\gamma_-}\le \frac{1}{L^2}.
+\]
+\(\square\)
+
+\paragraph{Corollary 627.5 (a clean sufficient condition for the original limit).}
+If \(L=M\), i.e. if
+\[
+\liminf_{k\to\infty}\frac{\log R(k,k)}{k}
+=
+\limsup_{t\to\infty}\max_{1\le s\le t}\frac{\log R(s,t)}{\sqrt{st}},
+\]
+then
+\[
+\lim_{n\to\infty}\frac{f(n)}{n/(\log n)^2}
+\]
+exists and equals \(L^2=M^2\).
+
+\emph{Proof.}
+The checked theorem gives
+\[
+\liminf g(n)\ge L^2,\qquad \limsup g(n)=M^2.
+\]
+If \(L=M\), then
+\[
+M^2\le \liminf g(n)\le \limsup g(n)=M^2,
+\]
+so \(g(n)\to M^2\). \(\square\)
+
+\paragraph{Corollary 627.6 (updated interval for any putative limit).}
+If the limit
+\[
+\lim_{n\to\infty}\frac{f(n)}{n/(\log n)^2}
+\]
+exists, then it lies in the interval \([1/4,\,3.71943]\).
+
+\emph{Proof.}
+The lower bound \(1/4\) is exactly the Round-1 probabilistic bound.
+The upper bound \(3.71943\) is the checked asymptotic upper bound from [AFM25]. \(\square\)
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new material against the main hidden pitfalls.
+
+\begin{itemize}
+\item \emph{Plateaux of \(f(n)\).}  
+Because \(f(n)\) is only nondecreasing, not strictly increasing, the choice
+\(x_j=f(m_j)+1/j\) in Claim 627.2 is essential. It guarantees \(Q(x_j)\ge m_j+1\)
+even if \(f\) stays constant for long intervals.
+
+\item \emph{Replacement of \(\log Q(x)\) by \(\log x\).}  
+This was justified separately in Claim 627.1 using only the known theorem \(f(n)=\Theta(n/(\log n)^2)\).
+
+\item \emph{Use of external results.}  
+The Araujo--Filipe--Miyazaki theorem was stated exactly as checked; no extra hypothesis was inserted into Corollary 627.4. Only Corollary 627.5 adds the extra condition \(L=M\), and it is explicitly isolated there.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advances over Round 1 are:
+
+\begin{enumerate}
+\item the limsup side of Problem 627 is now exact via the checked theorem
+\[
+\limsup_{n\to\infty}\frac{f(n)(\log n)^2}{n}=M^2;
+\]
+\item the problem has been converted exactly into an inverse-threshold statement for
+\(Q(x)\);
+\item the remaining obstruction is sharply isolated: the original limit would follow from the collapse of the diagonal lower Ramsey rate \(L\) and the off-diagonal envelope \(M\).
+\end{enumerate}
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 58\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item[\textbf{[AFM25]}] I. Araujo, R. Filipe, and R. Miyazaki, \emph{A note on the maximum ratio between chromatic number and clique number}, arXiv:2512.16062v2, 2026.
+\item[\textbf{[Bloom627]}] T. F. Bloom, \emph{Erd\H{o}s Problem \#627}, accessed 2026-03-08.
+\end{itemize}
+

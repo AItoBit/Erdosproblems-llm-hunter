@@ -1,0 +1,120 @@
+\section{Erd\H{o}s problems \#655, \#738, \#740 --- Round 2 continuation}
+
+\subsection*{Problem \#655}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+Path (C): turn the Round-1 disproof into the exact corrected statement. Round 1 already produced a regular $n$-gon counterexample, so the natural gap to close is the sharp lower bound that actually follows from the stated hypothesis.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use the following vetted Round-1 fact.
+
+The regular $n$-gon satisfies the hypothesis of the problem and determines exactly $\lfloor n/2\rfloor$ distinct distances. Therefore the claimed bound $(1+c)n/2$ is false for every fixed $c>0$.
+
+I do not re-prove that counterexample here.
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The hypothesis controls the multiplicity of \emph{each radius around a fixed point}. If one fixes a point $x_i$, then among the $n-1$ distances from $x_i$ to the other points, each distinct value can occur at most twice. Therefore $x_i$ itself determines at least $\lceil (n-1)/2\rceil$ distinct distances. Since these are all global interpoint distances, the whole configuration determines at least that many distinct distances.
+
+Combined with the Round-1 regular $n$-gon construction, this gives the exact optimum.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+The only remaining gap after Round 1 is to identify the best possible lower bound replacing the false inequality
+\[
+|D|\geq (1+c)\frac n2.
+\]
+I will prove the sharp correction
+\[
+|D|\geq \left\lfloor\frac n2\right\rfloor,
+\]
+and then use the Round-1 regular $n$-gon to show equality is attainable for every $n$.
+
+\subsubsection*{5) WORK (ROUND-2)}
+Let $x_1,\dots,x_n$ be distinct points in the plane satisfying the hypothesis that for every $i$ and every radius $\rho>0$, the circle centred at $x_i$ with radius $\rho$ contains at most two of the other points.
+
+Let
+\[
+D:=\{\,|x_i-x_j|:1\leq i<j\leq n\,\}
+\]
+be the global distance set.
+
+For a fixed index $i$, define the set of distances seen from $x_i$ by
+\[
+D_i:=\{\,|x_i-x_j|:j\neq i\,\}.
+\]
+Every value in $D_i$ belongs to $D$, so
+\[
+|D|\geq |D_i| \qquad \text{for every } i.
+\]
+Now fix $i$. There are $n-1$ points other than $x_i$. By hypothesis, each radius about $x_i$ can hit at most two of them. Hence each element of $D_i$ accounts for at most two points, and therefore
+\[
+2|D_i|\geq n-1.
+\]
+So
+\[
+|D_i|\geq \left\lceil\frac{n-1}{2}\right\rceil = \left\lfloor\frac n2\right\rfloor.
+\]
+Since $|D|\ge |D_i|$, we obtain the sharp universal lower bound
+\[
+|D|\geq \left\lfloor\frac n2\right\rfloor.
+\]
+
+Thus the exact corrected theorem is:
+
+\medskip
+\noindent\textbf{Corrected theorem.}
+For every $n\ge 1$, every $n$-point set in the plane satisfying the stated hypothesis determines at least $\lfloor n/2\rfloor$ distinct distances.
+
+\medskip
+To see that this is best possible, invoke the Round-1 construction: the $n$ vertices of a regular $n$-gon satisfy the hypothesis and determine exactly $\lfloor n/2\rfloor$ distinct distances. Therefore
+\[
+\min |D| = \left\lfloor\frac n2\right\rfloor
+\]
+over all such $n$-point configurations.
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Quantifiers.} The proof gives the lower bound for every $n\ge 1$, not merely for large $n$.
+\item \textbf{Odd/even parity.} The identity $\lceil (n-1)/2\rceil=\lfloor n/2\rfloor$ handles both parity cases exactly.
+\item \textbf{Edge cases.} For $n=1$, the distance set is empty and $\lfloor n/2\rfloor=0$. For $n=2$, there is exactly one distance and $\lfloor n/2\rfloor=1$. The argument still works.
+\item \textbf{No hidden assumption.} The proof uses only the stated circle-multiplicity hypothesis; it does not assume convexity, general position, or any structure beyond distinctness of the points.
+\item \textbf{Sharpness.} The regular $n$-gon from Round 1 attains equality, so the correction cannot be improved.
+\end{itemize}
+
+\subsubsection*{7) FINAL}
+\textbf{FULL SOLUTION --- COUNTEREXAMPLE / DISPROOF}
+
+The original statement is false. The exact corrected statement is:
+\[
+|D|\ge \left\lfloor\frac n2\right\rfloor,
+\]
+and this bound is sharp for every $n$, with equality achieved by the regular $n$-gon.
+
+\subsubsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 100\%
+
+\subsubsection*{9) REFERENCES}
+No external theorem is needed for the Round-2 correction; the proof above is self-contained.
+
+
+\section{References}
+\begin{thebibliography}{99}
+
+\bibitem{Bloom738}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#738}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Bloom740}
+T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#740}, Erd\H{o}s Problems Project, accessed 8 March 2026.
+
+\bibitem{Scott97}
+A. D. Scott, \emph{Induced trees in graphs of large chromatic number}, Journal of Graph Theory \textbf{24} (1997), 297--311.
+
+\bibitem{NguyenScottSeymour24}
+T. Nguyen, A. Scott, and P. Seymour, \emph{A note on the Gy\'{a}rf\'{a}s--Sumner conjecture}, Graphs and Combinatorics \textbf{40} (2024), Article 33.
+
+\bibitem{Rodl77}
+V. R\"{o}dl, \emph{On the chromatic number of subgraphs of a given graph}, Proceedings of the American Mathematical Society \textbf{64} (1977), 370--371.
+
+\bibitem{KomjathShelah88}
+P. Komj\'{a}th and S. Shelah, \emph{Forcing constructions for uncountably chromatic graphs}, Journal of Symbolic Logic \textbf{53} (1988), 696--707.
+
+\end{thebibliography}

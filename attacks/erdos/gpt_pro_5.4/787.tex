@@ -1,0 +1,126 @@
+\section{Problem 787}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: correct the quantitative landscape and isolate a genuine obstruction. The most important Round-2 issue here is that Round 1 stated the upper-bound side incorrectly. The best current upper bound is \emph{not} Choi's historical $n^{2/5+o(1)}$ bound, but Ruzsa's much smaller stretched-exponential construction. This changes the shape of the open problem in a mathematically substantive way.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 work as fixed:
+\begin{enumerate}
+\item the graph reformulation of $g(n)$ as an extremal independence problem;
+\item the proved lower bound
+\[
+ g(n) \ge H_{\lfloor n/2 \rfloor} \gg \log n;
+\]
+\item the small-$n$ computations, which were sanity checks only.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is a correction of the upper-bound literature. The current 2026 problem page and the 2016 Tao--Vu discussion of sum-avoiding sets both record that examples are known with
+\[
+ g(n) \le \exp\!\bigl(O(\sqrt{\log n})\bigr).
+\]
+Thus the true present gap is
+\[
+ (\log n)^{1+1/68+o(1)} \ll g(n) \ll \exp\!\bigl(O(\sqrt{\log n})\bigr),
+\]
+not a polylogarithmic lower bound versus a polynomial upper bound.
+
+A sharp obstruction follows immediately: no proof strategy can possibly show a fixed positive-power lower bound $g(n) \ge n^\delta$ for any constant $\delta>0$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was a wrong statement of the best known upper bound. I will:
+\begin{enumerate}
+\item replace the outdated upper bound by the correct Ruzsa upper bound;
+\item deduce a rigorous obstruction theorem ruling out every fixed positive-power lower bound;
+\item restate the open problem in its corrected asymptotic regime.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+Let $g(n)$ be as in the problem statement.
+
+\paragraph{Corrected current bounds.}
+The current literature record gives
+\[
+ (\log n)^{1+1/68+o(1)} \ll g(n) \ll \exp\!\bigl(O(\sqrt{\log n})\bigr).
+\]
+Here the lower bound is due to Sanders and Beker, while the upper bound is due to Ruzsa. In particular, the Round-1 sentence claiming that the best upper bound was $n^{2/5+o(1)}$ was false: that is only a historical bound of Choi and is far from the current state of the art.
+
+\paragraph{Proposition 787.1 (polynomial lower bounds are impossible).}
+For every fixed $\delta>0$, one has
+\[
+ g(n) < n^{\delta}
+\]
+for all sufficiently large $n$.
+
+\paragraph{Proof.}
+By the corrected upper bound there is a constant $C>0$ such that
+\[
+ g(n) \le \exp\!\bigl(C\sqrt{\log n}\bigr)
+\]
+for all large $n$. But
+\[
+ \exp\!\bigl(C\sqrt{\log n}\bigr)
+ = \exp\!\left(\frac{C}{\sqrt{\log n}} \log n\right)
+ = n^{C/\sqrt{\log n}}.
+\]
+Since $C/\sqrt{\log n} \to 0$, for any fixed $\delta>0$ we eventually have $C/\sqrt{\log n} < \delta$, and hence
+\[
+ g(n) \le n^{C/\sqrt{\log n}} < n^{\delta}.
+\]
+This proves the claim.
+\hfill$\square$
+
+\paragraph{Consequences.}
+The live problem is therefore to narrow the gap between a super-logarithmic lower bound and a stretched-exponential upper bound. Any argument aiming for $g(n)$ of polynomial order is ruled out by Proposition 787.1.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item The only nontrivial deduction here is Proposition 787.1, and it is a direct asymptotic comparison: $\exp(C\sqrt{\log n}) = n^{o(1)}$.
+\item There is no clash with the Round-1 lower bound, because
+\[
+ (\log n)^{1+1/68+o(1)} = o\!\left(\exp\!\bigl(C\sqrt{\log n}\bigr)\right).
+\]
+\item The correction is essential: replacing $n^{2/5+o(1)}$ by $\exp(O(\sqrt{\log n}))$ changes the entire plausible range of conjectures.
+\item Choi's bound is not being denied; it is simply superseded by Ruzsa's stronger construction.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance is the correction of a concrete Round-1 error. The correct current state is
+\[
+ (\log n)^{1+1/68+o(1)} \ll g(n) \ll \exp\!\bigl(O(\sqrt{\log n})\bigr),
+\]
+and therefore $g(n)=n^{o(1)}$ on the upper-bound side. This rules out an entire class of proof strategies, namely any attempt to prove a fixed positive-power lower bound.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{99}
+\bibitem{Ruzsa787}
+I. Z. Ruzsa,
+\emph{Sum-Avoiding Subsets},
+Ramanujan J. 9 (2005), 77--82.
+
+\bibitem{Sanders787}
+T. Sanders,
+\emph{The Erd\H{o}s--Moser sum-free set problem},
+Canad. J. Math. 73 (2021), 63--107.
+
+\bibitem{Beker787}
+A. Beker,
+\emph{The Erd\H{o}s--Moser sum-free set problem via improved bounds for $k$-configurations},
+arXiv:2501.10203 (2025).
+
+\bibitem{TaoVu787}
+T. Tao and V. Vu,
+\emph{Sum-avoiding sets in groups},
+Discrete Analysis 2016:15; see also the editorial introduction for the summary of the known integer-case bounds.
+
+\bibitem{Bloom787}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#787}, updated January 2026,
+\texttt{https://www.erdosproblems.com/787}.
+\end{thebibliography}
+

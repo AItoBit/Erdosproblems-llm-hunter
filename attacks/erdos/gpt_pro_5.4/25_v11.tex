@@ -1,0 +1,362 @@
+\section{Round-13 Objective}
+We pursue \textbf{(C) obstruction/correction}.  The immediately previous round proposed an exact decomposition
+\[
+A=B\sqcup E,
+\]
+where
+\[
+B:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall i\ge 1\}
+\]
+is the thresholdless core and \(E\) is the exceptional contribution coming from future congruence classes.  That reduction was promising, but one crucial claim from that round was too strong: it implicitly treated the exceptional set as negligible (indeed, ``automatically logarithmic-density \(0\)'') once the core \(B\) was understood.
+
+This round identifies a fatal obstruction to that strategy.
+We prove that the exceptional set can itself have \emph{arbitrarily large logarithmic density}, even in the extreme case where the thresholdless core is empty:
+\[
+B=\varnothing,
+\qquad
+\delta_{\log}(A)>1-\varepsilon.
+\]
+So the previous-round reduction to the thresholdless core alone is false as a route to the full problem.
+
+The most promising direction, given the previous round, is therefore to correct that reduction rigorously and then rule out the whole class of proof strategies that try to solve Problem~25 by proving the thresholdless core is well behaved while declaring the exceptional set negligible.
+
+\section{Round-12 Foundation Used}
+We rely on the following specific pieces of the immediately previous round.
+\begin{itemize}
+\item The definition of the thresholdless core
+\[
+B:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall i\ge 1\}.
+\]
+\item The idea that the difference between \(A\) and \(B\) comes only from the least nonnegative representatives of the residue classes \(a_i\pmod{n_i}\).
+\item From Round~11, the corrected summable-reciprocals theorem: if
+\[
+\sum_{i=1}^{\infty}\frac1{n_i}<\infty,
+\]
+then \(\delta_{\log}(A)\) exists and equals
+\[
+\lim_{k\to\infty} d(A^{(k)}),
+\qquad
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall 1\le i\le k\}.
+\]
+\end{itemize}
+We do \emph{not} reuse the previous round's stronger characterization of the exceptional set without proof; instead we identify and correct a concrete error in it below.
+
+\section{New Insight / Tool (Round-13)}
+The new ingredient has two parts.
+
+\subsection*{(i) Corrected exact decomposition}
+If \(r_i\in\{0,1,\dots,n_i-1\}\) denotes the least nonnegative representative of \(a_i\pmod{n_i}\) and
+\[
+R:=\{r_i:\ i\ge 1\},
+\]
+then the exact decomposition is
+\[
+A=B\sqcup (A\cap R).
+\]
+This is the right formulation.  The stronger-looking previous-round characterization
+\[
+E=\{r_i:\ r_i\in A^{(i-1)}\}
+\]
+is false in general.
+
+\subsection*{(ii) Explicit obstruction family}
+For any integer \(Q\ge 2\), consider
+\[
+n_i:=Q^i+i,
+\qquad
+ a_i\equiv i\pmod{n_i}.
+\]
+Then every positive integer is the least residue representative of a future congruence class, so the thresholdless core is empty:
+\[
+B=\varnothing.
+\]
+Nevertheless, because
+\[
+\sum_{i\ge 1}\frac1{Q^i+i}<\infty,
+\]
+Round~11 gives existence of \(\delta_{\log}(A)\), and a simple union bound shows
+\[
+\delta_{\log}(A)\ge 1-\sum_{i\ge 1}\frac1{Q^i+i}>1-\frac1{Q-1}.
+\]
+Thus the exceptional set alone can carry logarithmic density arbitrarily close to \(1\).
+
+\section{Attack Plan (Round-13)}
+The exact gap left by the previous round is this:
+\begin{quote}
+Is the thresholdless core \(B\) the only genuinely difficult part, with the exceptional contribution automatically negligible?
+\end{quote}
+We answer this negatively.
+
+The plan is:
+\begin{enumerate}
+\item Correct the previous-round exceptional-set formula by proving the exact decomposition
+\[
+A=B\sqcup (A\cap R).
+\]
+\item Exhibit a concrete counterexample to the stronger previous-round characterization of \(E\).
+\item Produce an explicit infinite family with \(B=\varnothing\).
+\item Prove, using the Round~11 summable-reciprocals theorem, that for this family the full set \(A\) (hence the exceptional part) has logarithmic density bounded below by a positive constant, indeed arbitrarily close to \(1\).
+\item Conclude that any proof strategy reducing Problem~25 to the thresholdless core alone is fatally obstructed.
+\end{enumerate}
+
+\section{Work (Round-13)}
+\subsection*{13.1. Corrected exact decomposition}
+For each \(i\ge 1\), let \(r_i\in\{0,1,\dots,n_i-1\}\) be the least nonnegative representative of the residue class \(a_i\pmod{n_i}\), and set
+\[
+R:=\{r_i:\ i\ge 1\}.
+\]
+Recall
+\[
+B:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall i\ge 1\}.
+\]
+
+\paragraph{Lemma 13.1 (exact corrected decomposition).}
+One has
+\begin{equation}
+A=B\sqcup (A\cap R).
+\tag{13.1}
+\end{equation}
+In particular,
+\begin{equation}
+A\setminus B=A\cap R.
+\tag{13.2}
+\end{equation}
+
+\emph{Proof.}
+First, \(B\subseteq A\): if \(n\in B\), then \(n\) avoids every congruence class \(a_i\pmod{n_i}\), hence certainly avoids every \emph{active} congruence class, so \(n\in A\).
+
+Now let \(n\in A\setminus B\).  Since \(n\notin B\), there exists some \(i\) such that
+\[
+n\equiv a_i\pmod{n_i}.
+\]
+But \(n\in A\) means that for every active index \(j\) one has \(n\not\equiv a_j\pmod{n_j}\).  Therefore the index \(i\) above cannot be active, so necessarily \(n<n_i\).  Since \(n\) is a positive integer with \(0\le n<n_i\) and is congruent to \(a_i\pmod{n_i}\), it must equal the least residue representative:
+\[
+n=r_i.
+\]
+Hence \(n\in A\cap R\).
+
+Conversely, if \(n\in A\cap R\), then \(n=r_i\) for some \(i\), so \(n<n_i\) and
+\[
+n\equiv a_i\pmod{n_i}.
+\]
+Thus \(n\notin B\).  Since also \(n\in A\), we have \(n\in A\setminus B\).
+
+So \(A\setminus B=A\cap R\), which proves \eqref{13.2}; together with \(B\subseteq A\), this yields the disjoint union \eqref{13.1}. \hfill \(\square\)
+
+\paragraph{Lemma 13.2 (the previous-round stronger characterization is false).}
+The implication
+\[
+r_i\in A\ \Longrightarrow\ r_i\in A^{(i-1)}
+\]
+is false in general.
+
+\emph{Proof.}
+Take
+\[
+n_1=5,\ a_1\equiv 1\pmod 5,
+\qquad
+n_2=7,\ a_2\equiv 1\pmod 7.
+\]
+Then \(r_2=1\).  Since \(1<n_1\), no constraint is active at \(n=1\), so \(1\in A\).  However,
+\[
+1\equiv 1\pmod 5,
+\]
+so \(1\notin A^{(1)}\).  Thus the displayed implication fails. \hfill \(\square\)
+
+\subsection*{13.2. A family with empty thresholdless core but large logarithmic density}
+Fix an integer \(Q\ge 3\), and define
+\begin{equation}
+n_i:=Q^i+i,
+\qquad
+ a_i:=i \pmod{n_i}
+\qquad (i\ge 1).
+\tag{13.3}
+\end{equation}
+Since \(Q^i+i<i+Q^{i+1}=n_{i+1}\), the moduli are strictly increasing.  Also \(0<i<n_i\), so the least nonnegative representative is exactly
+\[
+r_i=i.
+\]
+Let \(A\) be the associated set, and let \(B\) be its thresholdless core.
+
+\paragraph{Lemma 13.3 (the thresholdless core is empty).}
+For the family \eqref{13.3}, one has
+\begin{equation}
+B=\varnothing.
+\tag{13.4}
+\end{equation}
+Consequently,
+\begin{equation}
+A=A\cap R,
+\qquad
+R=\mathbb N.
+\tag{13.5}
+\end{equation}
+
+\emph{Proof.}
+Let \(n\in\mathbb N\) be arbitrary.  Choosing the index \(i=n\), we have
+\[
+n<n_n=Q^n+n
+\]
+and
+\[
+n\equiv n\equiv a_n\pmod{n_n}.
+\]
+Therefore \(n\) violates the thresholdless condition defining \(B\).  Since \(n\) was arbitrary, \(B=\varnothing\).
+
+Also \(r_i=i\) for every \(i\), so
+\[
+R=\{r_i:\ i\ge 1\}=\mathbb N.
+\]
+Now apply Lemma~13.1:
+\[
+A=B\sqcup (A\cap R)=\varnothing\sqcup (A\cap\mathbb N)=A.
+\]
+This proves \eqref{13.5}. \hfill \(\square\)
+
+\paragraph{Lemma 13.4 (uniform positive lower bound for the stage densities).}
+Let
+\[
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall 1\le i\le k\}
+\]
+and write
+\[
+\delta_k:=d(A^{(k)}).
+\]
+Then for every \(k\ge 1\),
+\begin{equation}
+\delta_k\ge 1-\sum_{i=1}^{k}\frac1{Q^i+i}
+\ge 1-\sum_{i=1}^{\infty}\frac1{Q^i+i}
+>1-\frac1{Q-1}.
+\tag{13.6}
+\end{equation}
+
+\emph{Proof.}
+The complement of \(A^{(k)}\) is the union of the \(k\) residue classes
+\[
+\{n\in\mathbb N:\ n\equiv a_i\pmod{n_i}\},
+\qquad 1\le i\le k.
+\]
+Each such residue class has natural density \(1/n_i=1/(Q^i+i)\).  By the union bound for natural densities,
+\[
+1-\delta_k=d\!\left(\bigcup_{i=1}^{k}\{n:\ n\equiv a_i\pmod{n_i}\}\right)
+\le \sum_{i=1}^{k}\frac1{Q^i+i}.
+\]
+This proves the first inequality in \eqref{13.6}.  The second is immediate, and the third follows from
+\[
+\sum_{i=1}^{\infty}\frac1{Q^i+i}<\sum_{i=1}^{\infty}\frac1{Q^i}=\frac1{Q-1}.
+\]
+\hfill \(\square\)
+
+\paragraph{Theorem 13.5 (the exceptional set alone can have arbitrarily large logarithmic density).}
+For the family \eqref{13.3}, the logarithmic density \(\delta_{\log}(A)\) exists and satisfies
+\begin{equation}
+\delta_{\log}(A)=\lim_{k\to\infty}\delta_k
+\ge 1-\sum_{i=1}^{\infty}\frac1{Q^i+i}
+>1-\frac1{Q-1}.
+\tag{13.7}
+\end{equation}
+Since \(B=\varnothing\), this means the exceptional set \(A\cap R=A\) has logarithmic density \(>1-1/(Q-1)\).
+
+\emph{Proof.}
+Because
+\[
+\sum_{i=1}^{\infty}\frac1{n_i}=\sum_{i=1}^{\infty}\frac1{Q^i+i}<\infty,
+\]
+the corrected summable-reciprocals theorem from Round~11 applies.  Therefore \(\delta_{\log}(A)\) exists and equals
+\[
+\delta:=\lim_{k\to\infty}\delta_k.
+\]
+Now Lemma~13.4 gives the uniform bound
+\[
+\delta_k\ge 1-\sum_{i=1}^{\infty}\frac1{Q^i+i}
+\qquad (k\ge 1),
+\]
+so passing to the limit yields
+\[
+\delta\ge 1-\sum_{i=1}^{\infty}\frac1{Q^i+i}>1-\frac1{Q-1}.
+\]
+Finally, Lemma~13.3 gives \(B=\varnothing\) and \(A=A\cap R\), so the whole logarithmic density comes from the exceptional part. \hfill \(\square\)
+
+\paragraph{Corollary 13.6 (arbitrarily dense exceptional-only examples).}
+For every \(\varepsilon>0\), there exists an instance of Problem~25 for which
+\begin{equation}
+B=\varnothing,
+\qquad
+\delta_{\log}(A)>1-\varepsilon.
+\tag{13.8}
+\end{equation}
+Indeed, it suffices to choose any integer \(Q>1+1/\varepsilon\) and use the family \eqref{13.3}.
+
+\emph{Proof.}
+Choose \(Q\) so large that \(1/(Q-1)<\varepsilon\).  Then Theorem~13.5 gives
+\[
+\delta_{\log}(A)>1-\frac1{Q-1}>1-\varepsilon.
+\]
+The identity \(B=\varnothing\) comes from Lemma~13.3. \hfill \(\square\)
+
+\paragraph{Minimal corrected statement.}
+The strongest exact reduction justified by the previous round is
+\[
+A=B\sqcup (A\cap R).
+\]
+However, there is \emph{no} general negligibility statement for \(A\cap R\): by Corollary~13.6, this exceptional part can already have logarithmic density arbitrarily close to \(1\) while \(B=\varnothing\).
+
+So any successful resolution of Problem~25 must control the exceptional part as a genuine second component; controlling the thresholdless core alone is insufficient.
+
+\section{Adversarial Verification}
+We try to break the new work.
+\begin{itemize}
+\item \textbf{Correctness of the decomposition.}  The proof of Lemma~13.1 uses only the definition of \(A\) and the fact that if \(n<n_i\) and \(n\equiv a_i\pmod{n_i}\), then \(n\) must equal the least nonnegative representative \(r_i\).  No hidden assumptions are used.
+
+\item \textbf{The previous-round stronger formula really fails.}  Lemma~13.2 gives a concrete two-modulus counterexample, so we are not merely expressing doubt; we identify and prove an actual error.
+
+\item \textbf{Why \(B=\varnothing\) in the obstruction family.}  For each \(n\), the single index \(i=n\) already excludes \(n\) from the thresholdless core because \(n\equiv a_n\pmod{n_n}\).  This is exact and requires no asymptotic argument.
+
+\item \textbf{Why \(R=\mathbb N\).}  In the family \eqref{13.3}, the least residue representative is \(r_i=i\), so every positive integer appears as one of the representatives.  Hence \(A=A\cap R\) once \(B=\varnothing\).
+
+\item \textbf{Use of Round~11 is legitimate.}  The only imported theorem is the corrected summable-reciprocals result, and its hypothesis
+\(
+\sum_i 1/n_i<\infty
+\)
+holds because \(n_i=Q^i+i\).
+
+\item \textbf{Lower bound on stage densities.}  Lemma~13.4 uses only the trivial union bound on the complement of \(A^{(k)}\).  It does not rely on independence or coprimality.
+
+\item \textbf{What this does \emph{not} prove.}  We do \emph{not} claim that the exceptional set can realize every possible logarithmic density or every oscillatory behaviour.  What is proved is already enough to kill the previous reduction: the exceptional part can have logarithmic density arbitrarily close to \(1\) even when the core is empty.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round proves a fatal obstruction to the immediately previous reduction.
+
+\begin{enumerate}
+\item The exact decomposition is
+\[
+A=B\sqcup (A\cap R),
+\]
+with \(R\) the set of least residue representatives of the classes \(a_i\pmod{n_i}\).  The stronger characterization used in the previous round is false.
+
+\item More importantly, the exceptional part is \emph{not} negligible in any general sense.  For every \(\varepsilon>0\) there exists an explicit family with
+\[
+B=\varnothing,
+\qquad
+\delta_{\log}(A)>1-\varepsilon.
+\]
+Equivalently, the exceptional part alone can carry logarithmic density arbitrarily close to \(1\).
+\end{enumerate}
+
+So the thresholdless-core approach is not a valid reduction of Problem~25.  The minimal corrected statement is that one must understand both pieces in the exact decomposition
+\[
+A=B\sqcup (A\cap R),
+\]
+and the second piece can already be essentially as large as possible.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 98\%}.
+
+\section{References}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#25}, official problem page, \texttt{https://www.erdosproblems.com/25}, accessed 2026-03-09.
+\item No external mathematical references were used in the proofs of this round.
+\end{itemize}

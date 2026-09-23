@@ -1,0 +1,218 @@
+\section{Erd\H{o}s Problem \#52 --- Round 4 (upgrade to the strongest located exponent)}
+
+\subsection{1) ROUND-4 OBJECTIVE}
+\textbf{Path pursued: (A) proof-track (partial, but strictly stronger than Round~3).}
+
+Let
+\[
+M(A):=\max\{|A+A|,|AA|\}.
+\]
+Round~3 established the self-contained lower bound
+\[
+M(A)\gg \frac{|A|^{4/3}}{(\log(2|A|))^{1/3}}
+\qquad (A\subset\mathbb Z\text{ finite}).
+\]
+The exact remaining gap after Round~3 was to remove the logarithmic loss and obtain a \emph{fixed} power improvement beyond the Solymosi exponent $4/3$.
+
+In this round we import the strongest theorem located in the current literature search. This yields
+\[
+M(A)\gg_{\varepsilon} |A|^{\frac43+\frac{10}{4407}-\varepsilon}
+\qquad (A\subset\mathbb Z\text{ finite},\ \varepsilon>0),
+\]
+which is a strict improvement over Round~3.
+
+\subsection{2) ROUND-3 FOUNDATION USED}
+We treat the Round~3 output as correct and use the following items without reproving them.
+\begin{enumerate}
+\item \textbf{Round~3 Theorem 5.5:} for every finite nonempty $A\subset\mathbb Z$,
+\[
+M(A)\gg \frac{|A|^{4/3}}{(\log(2|A|))^{1/3}}.
+\]
+\item \textbf{Round~3 conclusion on the remaining gap:} the Solymosi-type multiplicative-energy route reaches the $4/3$ threshold up to a logarithmic loss, but does not by itself produce a fixed power improvement above $4/3$.
+\end{enumerate}
+These are used only as the benchmark from which Round~4 must strictly advance.
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new ingredient is the following external theorem.
+
+\paragraph{Theorem 3.1 (Cushman, Theorem~1.3).}
+For every $\varepsilon>0$ there exists $c_{\varepsilon}>0$ such that for every finite set $X\subset\mathbb R$,
+\[
+\max\{|X+X|,|XX|\}\ge c_{\varepsilon}|X|^{\frac43+\frac{10}{4407}-\varepsilon}.
+\]
+Since
+\[
+\frac43+\frac{10}{4407}=\frac{1962}{1469}=1.335602\ldots,
+\]
+this gives a genuine fixed gain above $4/3$.
+
+For comparison with the exponent quoted in the Round~3 context,
+\[
+\frac{1962}{1469}-\frac{1270}{951}
+=\frac{232}{1397019}>0,
+\]
+so Theorem~3.1 is also strictly stronger than Bloom's $1270/951$ exponent.
+
+\subsection{4) ATTACK PLAN (ROUND-4)}
+\textbf{Exact gap left after Round~3.} Round~3 achieved only
+\[
+M(A)\gg |A|^{4/3}(\log|A|)^{-1/3},
+\]
+so the missing step was a bound of the form
+\[
+M(A)\gg_{\eta}|A|^{4/3+\delta-\eta}
+\]
+for some fixed $\delta>0$.
+
+\textbf{Claims to prove now.}
+\begin{enumerate}
+\item[(i)] State the strongest located external theorem that applies to arbitrary finite subsets of $\mathbb R$.
+\item[(ii)] Verify that its hypotheses apply verbatim to finite integer sets.
+\item[(iii)] Derive a fixed-exponent corollary with an absolute constant.
+\item[(iv)] Prove that the new bound strictly dominates the Round~3 bound.
+\end{enumerate}
+
+\textbf{Why this overcomes the Round~3 obstacle.} The new theorem bypasses the Solymosi-energy bottleneck identified in Round~3 by importing a more refined control/energy argument from the recent literature. Since the theorem is stated for all finite real sets, no additional structural reduction is required.
+
+\subsection{5) WORK (ROUND-4)}
+\subsubsection{5.1 The upgraded sum-product bound for integers}
+We first record the external theorem in the form needed for the present problem.
+
+\paragraph{Theorem 5.1 (external input).}
+For every $\varepsilon>0$ there exists $c_{\varepsilon}>0$ such that every finite set $X\subset\mathbb R$ satisfies
+\[
+M(X):=\max\{|X+X|,|XX|\}\ge c_{\varepsilon}|X|^{\frac{1962}{1469}-\varepsilon}.
+\]
+
+\paragraph{Corollary 5.2.}
+For every $\varepsilon>0$ there exists $c_{\varepsilon}>0$ such that every finite set $A\subset\mathbb Z$ satisfies
+\[
+M(A)\ge c_{\varepsilon}|A|^{\frac{1962}{1469}-\varepsilon}.
+\]
+
+\paragraph{Proof.}
+A finite set of integers is, in particular, a finite set of reals. Therefore Theorem~5.1 applies directly to $X=A\subset\mathbb Z\subset\mathbb R$, yielding
+\[
+M(A)\ge c_{\varepsilon}|A|^{\frac{1962}{1469}-\varepsilon}.
+\]
+No further reduction is needed.
+\hfill $\square$
+
+\subsubsection{5.2 An explicit fixed-exponent corollary}
+The $\varepsilon$-form above immediately yields an absolute-constant version.
+
+\paragraph{Corollary 5.3.}
+There exists an absolute constant $c>0$ such that every finite set $A\subset\mathbb Z$ satisfies
+\[
+M(A)\ge c|A|^{\frac43+\frac{5}{4407}}=c|A|^{\frac{5881}{4407}}.
+\]
+
+\paragraph{Proof.}
+Apply Corollary~5.2 with the fixed choice
+\[
+\varepsilon:=\frac{5}{4407}.
+\]
+Then there exists a constant $c=c_{5/4407}>0$ such that
+\[
+M(A)\ge c|A|^{\frac43+\frac{10}{4407}-\frac{5}{4407}}
+=c|A|^{\frac43+\frac{5}{4407}}
+=c|A|^{\frac{5881}{4407}}.
+\]
+This is exactly the claimed bound.
+\hfill $\square$
+
+\subsubsection{5.3 Strict comparison with Round~3}
+We now prove that the Round~4 theorem is asymptotically stronger than the Round~3 bound.
+
+\paragraph{Proposition 5.4.}
+Fix any $\eta$ with
+\[
+0<\eta<\frac{10}{4407}.
+\]
+Then, as $n\to\infty$,
+\[
+n^{\frac43+\frac{10}{4407}-\eta}
+\gg
+\frac{n^{4/3}}{(\log(2n))^{1/3}}.
+\]
+In particular, the Round~4 bound is a strict asymptotic improvement over the Round~3 bound.
+
+\paragraph{Proof.}
+Consider the ratio
+\[
+R(n):=
+\frac{n^{\frac43+\frac{10}{4407}-\eta}}{n^{4/3}(\log(2n))^{-1/3}}
+=
+ n^{\frac{10}{4407}-\eta}(\log(2n))^{1/3}.
+\]
+Because $\frac{10}{4407}-\eta>0$, the power of $n$ tends to infinity. Hence $R(n)\to\infty$ as $n\to\infty$. Therefore
+\[
+n^{\frac43+\frac{10}{4407}-\eta}
+\gg
+\frac{n^{4/3}}{(\log(2n))^{1/3}},
+\]
+as claimed.
+\hfill $\square$
+
+\subsubsection{5.4 Precise statement of the Round~4 advance}
+Combining Corollary~5.2 with Proposition~5.4, we may summarise the new outcome as follows.
+
+\paragraph{Theorem 5.5 (Round~4 upgrade).}
+For every $\varepsilon>0$ there exists $c_{\varepsilon}>0$ such that every finite set $A\subset\mathbb Z$ satisfies
+\[
+\max\{|A+A|,|AA|\}\ge c_{\varepsilon}|A|^{\frac{1962}{1469}-\varepsilon}.
+\]
+Equivalently,
+\[
+\max\{|A+A|,|AA|\}\gg_{\varepsilon}|A|^{\frac43+\frac{10}{4407}-\varepsilon}.
+\]
+This strictly strengthens the Round~3 bound.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+We check carefully that no hidden issue has been introduced.
+\begin{enumerate}
+\item \textbf{Applicability of the external theorem.} Theorem~5.1 is stated for \emph{every finite set} $X\subset\mathbb R$. Our target sets satisfy $A\subset\mathbb Z\subset\mathbb R$, so the hypothesis is satisfied verbatim.
+
+\item \textbf{Dependence of constants on $\varepsilon$.} The theorem only gives a constant $c_{\varepsilon}$ depending on $\varepsilon$. This is why Corollary~5.3 fixes one explicit value of $\varepsilon$ before claiming an absolute constant. No illicit uniformity in $\varepsilon$ is assumed.
+
+\item \textbf{Exponent arithmetic.} We verified
+\[
+\frac43+\frac{10}{4407}=\frac{1962}{1469},
+\qquad
+\frac{1962}{1469}-\frac{1270}{951}=\frac{232}{1397019}>0.
+\]
+Thus the new exponent is genuinely larger than both $4/3$ and Bloom's $1270/951$ exponent.
+
+\item \textbf{Comparison with Round~3.} The superiority over Round~3 is not merely numerical at a single point: Proposition~5.4 proves an asymptotic domination statement.
+
+\item \textbf{No hidden use of positivity or non-zeroness.} Unlike the Round~2 and Round~3 self-contained arguments, the imported theorem is already stated for arbitrary finite real sets. Therefore no separate handling of signs or of the element $0$ is necessary.
+\end{enumerate}
+The only genuine caveat is bibliographic rather than logical: the improvement comes from a very recent preprint. Within this round we have used it exactly as an external theorem, with its statement checked directly from the cited source.
+
+\subsection{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~4 upgrades the proven lower bound from
+\[
+\max\{|A+A|,|AA|\}\gg \frac{|A|^{4/3}}{(\log(2|A|))^{1/3}}
+\]
+from Round~3 to the stronger statement
+\[
+\max\{|A+A|,|AA|\}\gg_{\varepsilon}|A|^{\frac{1962}{1469}-\varepsilon}
+\]
+for all finite $A\subset\mathbb Z$ and all $\varepsilon>0$. In particular, there is an absolute constant $c>0$ such that
+\[
+\max\{|A+A|,|AA|\}\ge c|A|^{\frac{5881}{4407}}.
+\]
+The original Erd\H{o}s--Szemer\'edi conjecture with exponent $2-\varepsilon$ remains open.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 74\%}.
+
+\subsection{9) REFERENCES}
+Only references actually used or checked in this round are listed.
+\begin{enumerate}
+\item Adam Cushman, \emph{A Note on the Sum-Product Problem and the Convex Sumset Problem}, arXiv:2512.13849v2, 2026. In particular, Theorem~1.3.
+\item Thomas F. Bloom, \emph{Control and its applications in additive combinatorics}, arXiv:2501.09470, 2025. In particular, Theorem~4.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#52}, ErdosProblems.com, accessed 2026-03-07.
+\end{enumerate}

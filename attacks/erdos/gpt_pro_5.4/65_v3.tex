@@ -1,0 +1,269 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 6}
+
+\subsection*{1) ROUND-6 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~5 proved that on the complete-bipartite line
+\[
+|E(G)|=2|V(G)|-4,
+\]
+one has
+\[
+\min S(G)=\frac14
+\qquad\text{for all }7\le n\le 23,
+\]
+with equality attained by $K_{2,n-2}$, and identified $n=24$ as the first place where the old ``force $C_5$ and $C_6$'' argument stops.
+
+In this round I keep the same target family but change the forcing pair: instead of trying to force $C_5$ and $C_6$, I force $C_6$ and $C_8$.
+This yields a substantial extension:
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14
+\qquad\text{for every }7\le n\le 39,
+\]
+again with extremal graph $K_{2,n-2}$.
+
+\subsection*{2) Round-5 FOUNDATION USED}
+
+I rely on the following vetted Round~5 results without re-proving them.
+
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^a\frac1{2j}=\frac12(H_a-1).
+\]
+In particular,
+\[
+S(K_{2,n-2})=\frac14.
+\]
+
+\item[(F2)] Round~5 theorem: for every $7\le n\le 23$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-6)}
+
+The new idea is to replace the Round~5 forcing pair $(C_5,C_6)$ by the pair $(C_6,C_8)$.
+The relevant exact extremal numbers are
+\[
+\alpha_n:=\operatorname{ex}(n;\{C_3,C_4,C_6\}),
+\qquad
+\beta_n:=\operatorname{ex}(n;\{C_4,C_8\}).
+\]
+From the exact ANU tables one has, for $24\le n\le 39$,
+\[
+\begin{array}{c|cccccccccccccccc}
+ n & 24&25&26&27&28&29&30&31&32&33&34&35&36&37&38&39\\\hline
+ \alpha_n & 38&40&42&45&46&48&51&53&55&57&60&62&65&67&69&72\\
+ \beta_n  & 38&40&42&44&46&48&50&52&54&56&58&59&61&63&65&67\\
+ 2n-4      & 44&46&48&50&52&54&56&58&60&62&64&66&68&70&72&74
+\end{array}
+\]
+so throughout this whole range,
+\[
+2n-4>\alpha_n
+\qquad\text{and}\qquad
+2n-4>\beta_n.
+\]
+Hence any $n$-vertex graph with $2n-4$ edges and no $C_3,C_4$ must contain a $C_6$; and if it also has no $C_5$, then the absence of a $C_4$ plus the inequality $2n-4>\beta_n$ forces a $C_8$.
+
+This is genuinely new beyond Round~5, because $C_5$ is no longer forceable from $n=24$ onward, while $C_8$ still is.
+
+\subsection*{4) ATTACK PLAN (ROUND-6)}
+
+The exact gap left by Round~5 was the unresolved tail of the line $m=2n-4$ beyond $n=23$.
+
+The Round~6 plan is:
+\begin{enumerate}
+\item Use the exact values of $\alpha_n=\operatorname{ex}(n;\{C_3,C_4,C_6\})$ to force a $6$-cycle whenever $24\le n\le 39$.
+\item Use the exact values of $\beta_n=\operatorname{ex}(n;\{C_4,C_8\})$ to force an $8$-cycle whenever $24\le n\le 39$ and $G$ has no $4$-cycle.
+\item Split into cases:
+  \begin{itemize}
+  \item if $G$ has $C_3$ or $C_4$, then automatically $S(G)\ge 1/4$;
+  \item if $G$ has no $C_3,C_4$ but has a $C_5$, then together with the forced $C_6$ we get
+  \[
+  S(G)\ge \frac15+\frac16>\frac14;
+  \]
+  \item if $G$ has no $C_3,C_4,C_5$, then the forced $C_6$ and $C_8$ give
+  \[
+  S(G)\ge \frac16+\frac18=\frac7{24}>\frac14.
+  \]
+  \end{itemize}
+\item Compare with $K_{2,n-2}$, which always gives equality $S=1/4$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-6)}
+
+As before, for a graph $G$ let
+\[
+\mathcal C(G):=\{\ell\ge 3 : \text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+\begin{theorem}[Extension of the $K_{2,n-2}$ line through $n=39$]\label{thm:round6-main}
+For every integer $7\le n\le 39$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14.
+\]
+The minimum is attained by the complete bipartite graph $K_{2,n-2}$.
+\end{theorem}
+
+\begin{proof}
+By (F2), the statement is already known for $7\le n\le 23$.
+So it remains only to consider $24\le n\le 39$.
+
+Fix such an $n$, and let $G$ be any graph on $n$ vertices with $2n-4$ edges.
+By (F1), the complete bipartite graph $K_{2,n-2}$ has only $4$-cycles, so
+\[
+S(K_{2,n-2})=\frac14.
+\]
+Thus it suffices to prove that every such $G$ satisfies $S(G)\ge \frac14$.
+
+We split into cases.
+
+\smallskip
+\noindent\textbf{Case 1: $G$ contains a triangle $C_3$.}
+Then
+\[
+S(G)\ge \frac13>\frac14.
+\]
+
+\smallskip
+\noindent\textbf{Case 2: $G$ contains a $4$-cycle $C_4$.}
+Then
+\[
+S(G)\ge \frac14.
+\]
+
+\smallskip
+\noindent\textbf{Case 3: $G$ has no $C_3$ and no $C_4$.}
+We now use the exact extremal tables introduced above.
+Since
+\[
+|E(G)|=2n-4>\alpha_n=\operatorname{ex}(n;\{C_3,C_4,C_6\}),
+\]
+$G$ cannot be $\{C_3,C_4,C_6\}$-free. As we are already assuming $G$ has no $C_3$ and no $C_4$, it follows that $G$ contains a $6$-cycle. Hence
+\[
+6\in\mathcal C(G).
+\]
+
+We now subdivide Case~3.
+
+\smallskip
+\noindent\textbf{Case 3a: $G$ contains a $5$-cycle.}
+Then $5,6\in\mathcal C(G)$, and so
+\[
+S(G)\ge \frac15+\frac16=\frac{11}{30}>\frac14.
+\]
+
+\smallskip
+\noindent\textbf{Case 3b: $G$ has no $5$-cycle.}
+Then $G$ has no $C_4$ and no $C_5$; moreover, from the previous paragraph it already has a $C_6$.
+Now use the second exact extremal table:
+\[
+|E(G)|=2n-4>\beta_n=\operatorname{ex}(n;\{C_4,C_8\}).
+\]
+Therefore $G$ cannot be $\{C_4,C_8\}$-free. Since we are already assuming $G$ has no $C_4$, it follows that $G$ contains an $8$-cycle. Hence
+\[
+6,8\in\mathcal C(G),
+\]
+and therefore
+\[
+S(G)\ge \frac16+\frac18=\frac7{24}>\frac14.
+\]
+
+In all cases we have proved $S(G)\ge \frac14$.
+Since equality is attained by $K_{2,n-2}$, the theorem follows.
+\end{proof}
+
+\begin{corollary}[New exact range on the $a=2$ complete-bipartite line]
+For every $24\le n\le 39$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+with minimiser $K_{2,n-2}$.
+\end{corollary}
+
+\begin{proof}
+This is the $24\le n\le 39$ portion of Theorem~\ref{thm:round6-main}.
+\end{proof}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I check the new argument against the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{Dependence on Round~5.}
+The only Round~5 inputs used are the already-settled range $7\le n\le 23$ and the formula $S(K_{2,n-2})=1/4$.
+No earlier proof is reproved.
+
+\item \textbf{Exactness of the extremal values.}
+The ANU data page explicitly states that when the entry ``ne'' is not preceded by ``$\ge$'', the Tur\'an number is exact.
+For every value of $\alpha_n$ and $\beta_n$ used here, the edge-number entry is exact.
+For $\beta_n$ at $n=37,38,39$, the number of extremal graphs is recorded only as a lower bound, but the edge maximum itself is still exact, which is all the proof needs.
+
+\item \textbf{Logical use of the forbidden-family bounds.}
+In Case~3, the implication
+\[
+|E(G)|>\operatorname{ex}(n;\{C_3,C_4,C_6\}) \Longrightarrow C_6\subseteq G
+\]
+is valid because Case~3 has already excluded $C_3$ and $C_4$.
+Likewise,
+\[
+|E(G)|>\operatorname{ex}(n;\{C_4,C_8\}) \Longrightarrow C_8\subseteq G
+\]
+is valid because Case~3b has already excluded $C_4$.
+
+\item \textbf{Boundary of the new range.}
+The inequalities are strict for every $24\le n\le 39$:
+\[
+2n-4>\alpha_n,
+\qquad
+2n-4>\beta_n.
+\]
+In particular, no equality case needs special handling.
+
+\item \textbf{Why the method stops at $n=40$.}
+The $C_6$ forcing still causes no difficulty near $n=40$, but the $C_8$ forcing argument uses exact values of $\operatorname{ex}(n;\{C_4,C_8\})$ only up to $n=39$ from the checked table.
+Thus $n=40$ is the first value where the present exact-table proof no longer closes the argument.
+This is a genuine limitation of the current method, not a logical gap in the proved range.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~6 proves a strictly stronger theorem than Round~5:
+for every $7\le n\le 39$, among all graphs with $n$ vertices and $2n-4$ edges,
+\[
+\min S(G)=\frac14,
+\]
+and the complete bipartite graph $K_{2,n-2}$ is a minimiser.
+Thus the entire $a=2$ line is now settled through $n=39$.
+The first unresolved value by the present method is $n=40$.
+The full Erd\H{o}s--Hajnal minimiser question for arbitrary $(n,m)$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 94\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{AfzalyMcKayData}
+N.~Afzaly and B.~D.~McKay,
+\emph{Extremal Graphs and Turan numbers},
+Australian National University combinatorial data page.
+Used here for the exact values of
+$\operatorname{ex}(n;\{C_3,C_4,C_6\})$
+and
+$\operatorname{ex}(n;\{C_4,C_8\})$,
+as well as for the page's convention explaining when an edge-number entry is exact.
+
+\end{thebibliography}

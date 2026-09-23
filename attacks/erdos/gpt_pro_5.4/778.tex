@@ -1,0 +1,158 @@
+\section{Problem \#778}
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+
+I invoke the fail-safe ``strict advance'' clause rather than claiming a full proof or disproof. Relative to Round 1, the most promising gap to close is the finite verified range for the symmetric games. The new goal is to extend the exact solved range for Clique$(n)$ and Star$(n)$ from $n \leq 6$ to the largest range currently justified by the later literature, and to separate that from the still-open biased game Clique$^{(1,2)}(n)$.
+
+\subsection*{2. Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without re-proving them.
+
+\begin{enumerate}
+\item The reformulation of Clique$(n)$ at game end as
+\[
+\omega(G_R) > \omega(G_B) = \alpha(G_R),
+\]
+so Bob wins iff $\alpha(G_R)\geq \omega(G_R)$.
+\item The reformulation of Star$(n)$ at game end as
+\[
+\Delta(G_B)=n-1-\delta(G_R),
+\]
+so Alice wins iff $\Delta(G_R)+\delta(G_R)>n-1$.
+\item The exact computations from Round 1:
+Bob wins Clique$(n)$ for $n=3,4,5,6$; Bob wins Clique$^{(1,2)}(n)$ for $n=4,5,6$; Alice wins Star$(3)$ and Bob wins Star$(n)$ for $n=4,5,6$.
+\end{enumerate}
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 2)}
+
+The substantive new input is the 2025 paper of Cambie--Provoost [CaPr25], which contains two pieces of information not used in Round 1:
+
+\begin{enumerate}
+\item Proposition 9 of [CaPr25] proves:
+\[
+\mbox{Bob wins Clique}(n)\ \mbox{for every } 3 \leq n \leq 8.
+\]
+\item Table 1 of [CaPr25] gives the exact Star-game outcomes on complete graphs up to $K_8$, namely
+\[
+\mathrm{out}_{\Delta}(K_7)=(4,4), \qquad \mathrm{out}_{\Delta}(K_8)=(5,5),
+\]
+together with the previously known values for $K_3,\dots,K_6$.
+\end{enumerate}
+
+The same paper also explains the computer verification method: two independent implementations were used, and the C implementation works by generating all non-isomorphic terminal states and then solving the game backwards using canonical labellings from \texttt{nauty}; see Section~6 of [CaPr25].
+
+\subsection*{4. ATTACK PLAN (ROUND 2)}
+
+Round 1 left two concrete finite-range gaps:
+
+\begin{enumerate}
+\item Clique$(n)$ was only verified up to $n=6$.
+\item Star$(n)$ was only verified up to $n=6$.
+\end{enumerate}
+
+The Round-2 plan is therefore to import the strongest later exact results for these ranges, check carefully that the quoted statements really concern the original clique and star games on complete graphs (not just the colex variant), and update the strongest verified finite range.
+
+No genuinely new theorem for the biased game Clique$^{(1,2)}(n)$ was found in the sources checked, so for that part I only report that the Round-1 state of knowledge remains the best verified information in this write-up.
+
+\subsection*{5. WORK (ROUND 2)}
+
+\paragraph{5.1 Clique$(n)$: exact range extended to $n \leq 8$.}
+
+Cambie--Provoost state in Proposition~9 that:
+
+\begin{quote}
+If Alice wins Clique$(n)$ for some $n \geq 8$, then Bob wins Clique$(n+3)$. Bob wins Clique$(n)$ for $3 \leq n \leq 8$.
+\end{quote}
+
+Therefore the exact solved range from Round 1 extends immediately to
+\[
+\mbox{Bob wins Clique}(n)\ \mbox{for every } 3 \leq n \leq 8.
+\]
+
+This is a strict advance over Round 1, which only verified $3 \leq n \leq 6$.
+
+\paragraph{5.2 Star$(n)$: exact range extended to $n \leq 8$.}
+
+Table~1 of [CaPr25] records the Star-game outcome $\mathrm{out}_{\Delta}(G)$ for the colex graphs $C(m)$ with small $m$. For the complete graphs, the relevant rows are
+\[
+K_3,\ K_4,\ K_5,\ K_6,\ K_7,\ K_8,
+\]
+corresponding to
+\[
+m=3,6,10,15,21,28.
+\]
+From the table one reads:
+\[
+\mathrm{out}_{\Delta}(K_3)=(2,1),\quad
+\mathrm{out}_{\Delta}(K_4)=(2,2),\quad
+\mathrm{out}_{\Delta}(K_5)=(3,3),
+\]
+\[
+\mathrm{out}_{\Delta}(K_6)=(4,4),\quad
+\mathrm{out}_{\Delta}(K_7)=(4,4),\quad
+\mathrm{out}_{\Delta}(K_8)=(5,5).
+\]
+
+Hence:
+\[
+\mbox{Alice wins Star}(3),
+\]
+and
+\[
+\mbox{Bob wins Star}(n)\ \mbox{for every } 4 \leq n \leq 8.
+\]
+
+Again this strictly strengthens Round 1, which only established the cases up to $n=6$.
+
+\paragraph{5.3 The biased game Clique$^{(1,2)}(n)$.}
+
+No later theorem in the checked sources resolves Erd\H{o}s's original biased question with bias $(1,2)$. The later paper [CaPr25] proves the stronger-bias statement Clique$^{(1,3)}(n)$ is a Bob win for every $n \geq 4$, and explicitly remarks that the $(1,2)$ case remains difficult. Thus the only concrete verified information retained from Round 1 in this write-up is:
+\[
+\mbox{Bob wins Clique}^{(1,2)}(n)\ \mbox{for } n=4,5,6.
+\]
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+I checked the main possible failure modes.
+
+\begin{enumerate}
+\item \emph{Was Table~1 about the wrong game?}  
+No. The table has separate columns. The Star-game information is in the column $\mathrm{out}_{\Delta}(G)$, so the entries quoted above really are Star-game outcomes.
+
+\item \emph{Was Proposition~9 only about the colex game?}  
+No. Proposition~9 explicitly names Clique$(n)$, i.e.\ the original clique game on $K_n$.
+
+\item \emph{Could the computation be fragile?}  
+The same paper states that two independent implementations were used for the computer-aided verifications, and Section~6 explains the reverse dynamic-programming method over non-isomorphic states using canonical labellings. This does not turn the result into a hand proof, but it addresses the main concern about transcription or implementation error.
+
+\item \emph{Did Round 2 accidentally overclaim something about the biased $(1,2)$ game?}  
+No. I make no new theorem there; I only preserve the Round-1 exact computations for $n \leq 6$ and record that the literature checked still leaves the full question open.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is the extension of the exactly verified finite range:
+\[
+\mbox{Bob wins Clique}(n)\ \mbox{for } 3 \leq n \leq 8,
+\]
+and
+\[
+\mbox{Alice wins Star}(3),\ \mbox{Bob wins Star}(n)\ \mbox{for } 4 \leq n \leq 8.
+\]
+
+The full conjectures for Clique$(n)$ and Star$(n)$ remain open, and no new rigorous progress was found here on Clique$^{(1,2)}(n)$ beyond the Round-1 range $n \leq 6$.
+
+\subsection*{8. COMPLETION ESTIMATE}
+
+COMPLETION: 52\%
+
+\subsection*{9. References used in this section}
+
+\begin{enumerate}
+\item[\textbf{[EP778]}] Erd\H{o}s Problems and conjectures, Problem \#778, \texttt{erdosproblems.com/778}. Checked March 7, 2026.
+\item[\textbf{[MaSp24]}] A.~Malekshahian and N.~Spiro, \emph{On a clique-building game of Erd\H{o}s}, arXiv:2410.18304, 2024.
+\item[\textbf{[CaPr25]}] S.~Cambie and H.~Provoost, \emph{On edge-colouring-games by Erd\H{o}s, and Bensmail and Mc Inerney}, arXiv:2505.03497v2, 2025.
+\end{enumerate}
+

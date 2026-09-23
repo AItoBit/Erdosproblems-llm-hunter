@@ -1,0 +1,372 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 9}
+
+\subsection*{1) ROUND-9 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~8 isolated the remaining obstruction on the line
+\[
+|E(G)|=2|V(G)|-4
+\]
+for $43\le n\le 51$: any graph with $S(G)<1/4$ must be non-bipartite, must contain a $6$-cycle, and must have no other cycle length below $13$.
+
+In this round I strengthen that obstruction sharply. I prove a new structural theorem classifying \emph{all} $2$-connected graphs whose only cycle length is $6$, and derive from it a global density bound
+\[
+|E(G)|\le \frac32\bigl(|V(G)|-1\bigr)
+\]
+for every connected graph whose cycle-length set is $\{6\}$.
+As a consequence, the Round~8 obstruction collapses from
+\[
+6\in \mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}
+\]
+to the much sharper statement
+\[
+\mathcal C(G)=\{6,L\}\quad\text{for some }L\ge 13.
+\]
+Thus, for $43\le n\le 51$, any putative counterexample must have \emph{exactly two} distinct cycle lengths.
+
+\subsection*{2) Round-8 FOUNDATION USED}
+
+I use the following vetted Round~8 results as black boxes.
+
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^{a}\frac1{2j}=\frac12(H_a-1).
+\]
+In particular,
+\[
+S(K_{2,n-2})=\frac14.
+\]
+
+\item[(F2)] Round~7/8 already proved that for every bipartite graph $G$ with $7\le |V(G)|\le 55$ and $|E(G)|=2|V(G)|-4$, one has
+\[
+S(G)\ge \frac14.
+\]
+
+\item[(F3)] Round~8 corollary (sharp obstruction, first form): if $43\le n\le 51$, $|V(G)|=n$, $|E(G)|=2n-4$, and $S(G)<1/4$, then
+\[
+G\text{ is non-bipartite},
+\qquad
+6\in \mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}.
+\]
+Equivalently, such a graph has no cycle length in
+\[
+\{3,4,5,7,8,9,10,11,12\}.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-9)}
+
+The genuinely new ingredient is a \emph{self-contained structural classification} of graphs whose only cycle length is $6$.
+
+Write $\Theta_t^{(3)}$ for the graph consisting of two branch vertices $x,y$ joined by $t\ge 2$ internally disjoint $x$--$y$ paths, each of length $3$.
+Thus $\Theta_2^{(3)}\cong C_6$, and for general $t$ one has
+\[
+|V(\Theta_t^{(3)})|=2+2t,
+\qquad
+|E(\Theta_t^{(3)})|=3t=\frac32\bigl(|V(\Theta_t^{(3)})|-2\bigr).
+\]
+
+The new theorem shows:
+\begin{quote}
+\emph{Every $2$-connected graph all of whose cycles have length $6$ is exactly some $\Theta_t^{(3)}$.}
+\end{quote}
+This immediately yields a density bound for arbitrary connected graphs with cycle-length set $\{6\}$, and therefore rules out an entire class of candidate counterexamples globally.
+
+\subsection*{4) ATTACK PLAN (ROUND-9)}
+
+The exact Round~8 gap was this: for $43\le n\le 51$, a graph with $|E|=2|V|-4$ and $S<1/4$ could still, in principle, have cycle-length set
+\[
+\{6\}\cup L,
+\qquad L\subseteq \{13,14,\dots,n\}.
+\]
+
+The Round~9 plan is:
+\begin{enumerate}
+\item classify all $2$-connected graphs with cycle-length set exactly $\{6\}$;
+\item deduce from that classification that any connected graph with cycle-length set $\{6\}$ has at most $\frac32(n-1)$ edges;
+\item combine this with the Round~8 obstruction to show that, for $43\le n\le 51$, a graph with $S<1/4$ cannot have cycle-length set just $\{6\}$;
+\item use the reciprocal-sum inequality to show that it also cannot have \emph{two or more} distinct cycle lengths greater than or equal to $13$.
+\end{enumerate}
+
+This leaves a single sharply formulated obstruction: exactly two cycle lengths, one of them $6$.
+
+\subsection*{5) WORK (ROUND-9)}
+
+As before,
+\[
+\mathcal C(G):=\{\ell\ge 3:\text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+\subsubsection*{5.1. Pairs of vertices in a $3$-path bundle}
+
+\textbf{Lemma 5.1.}
+Let $H=\Theta_t^{(3)}$ with branch vertices $x,y$, so the $x$--$y$ paths are
+\[
+P_i: x-a_i-b_i-y\qquad (1\le i\le t).
+\]
+Assume that every $u$--$v$ path in $H$ has the same length.
+Then either
+\begin{itemize}
+\item $u=x$ and $v=y$, in which case every $u$--$v$ path has length $3$, or
+\item $t=2$ and $u,v$ are one of the other two opposite pairs on the $6$-cycle $C_6\cong \Theta_2^{(3)}$, in which case again every $u$--$v$ path has length $3$.
+\end{itemize}
+In particular, whenever $t\ge 3$, the only such pair is $\{x,y\}$.
+
+\medskip
+\textit{Proof.}
+We check cases.
+
+If $u,v$ lie on the same path $P_i$, then the path between them inside $P_i$ has length $d\in\{1,2,3\}$, while going the other way around through any other $x$--$y$ path has length $6-d$.
+These are equal only when $d=3$, i.e. only when $\{u,v\}=\{x,y\}$.
+
+Now suppose $u\in P_i\setminus\{x,y\}$ and $v\in P_j\setminus\{x,y\}$ with $i\ne j$.
+Write $\alpha$ for the distance from $x$ to $u$ along $P_i$, and $\beta$ for the distance from $x$ to $v$ along $P_j$.
+Then $\alpha,\beta\in\{1,2\}$.
+There is always a $u$--$v$ path through $x$ of length $\alpha+\beta$, and a $u$--$v$ path through $y$ of length $(3-\alpha)+(3-\beta)=6-(\alpha+\beta)$.
+So if all $u$--$v$ paths have the same length, we must have $\alpha+\beta=3$, hence these two lengths are both $3$.
+This means one of $u,v$ is an $a$-vertex and the other is a $b$-vertex.
+If $t\ge 3$, choose a third $x$--$y$ path $P_k$ with $k\notin\{i,j\}$.
+Going from $u$ to $v$ through $x$, then along $P_k$, then to $v$ through $y$, gives a $u$--$v$ path of length
+\[
+\alpha+3+(3-\beta)=6+\alpha-\beta\in\{5,7\},
+\]
+which is not $3$.
+So for $t\ge 3$ this is impossible.
+If $t=2$, this is exactly the remaining pair of opposite vertices on the $6$-cycle.
+
+No other cases occur. \hfill$\square$
+
+\subsubsection*{5.2. Classification of $2$-connected all-$6$-cycle graphs}
+
+\textbf{Theorem 5.2.}
+Let $B$ be a $2$-connected graph.
+Assume that every cycle of $B$ has length $6$.
+Then
+\[
+B\cong \Theta_t^{(3)}
+\qquad\text{for some }t\ge 2.
+\]
+
+\medskip
+\textit{Proof.}
+Since $B$ has a cycle and every cycle has length $6$, the graph $B$ contains a copy of $C_6\cong \Theta_2^{(3)}$.
+Choose a subgraph $H\subseteq B$ that is isomorphic to $\Theta_t^{(3)}$ for some $t\ge 2$, and is maximal with this property.
+We will show that $H=B$.
+
+Assume for contradiction that $H\ne B$.
+Because $B$ is $2$-connected and $H$ is a proper connected subgraph, there exists an $H$-path $P$ in $B$: a path whose endpoints $u,v$ lie in $H$, whose internal vertices lie outside $H$, and with at least one internal vertex.
+Write $\ell:=|E(P)|\ge 1$.
+
+Every $u$--$v$ path $Q$ in $H$ together with $P$ forms a cycle in $B$, hence a $6$-cycle.
+Therefore for every $u$--$v$ path $Q$ in $H$ we have
+\[
+|E(Q)|+\ell=6.
+\]
+So \emph{all} $u$--$v$ paths in $H$ have the same length.
+By Lemma~5.1, this common length is $3$.
+Hence $\ell=3$.
+Moreover, either $u,v$ are the branch vertices of $H$, or else $H\cong C_6$ and $u,v$ are one of the other opposite pairs on that $6$-cycle.
+In either case, the path $P$ is a new internally disjoint $3$-edge path between a pair of opposite vertices of $H$.
+So $H\cup P$ is isomorphic to $\Theta_{t+1}^{(3)}$ (possibly after choosing a different opposite pair as branch vertices when $t=2$).
+This contradicts the maximality of $H$.
+
+Hence $H=B$, proving the theorem. \hfill$\square$
+
+\subsubsection*{5.3. Density bound for graphs whose only cycle length is $6$}
+
+\textbf{Corollary 5.3.}
+Let $G$ be a graph all of whose cycles have length $6$.
+If $c(G)$ denotes the number of connected components of $G$, then
+\[
+|E(G)|\le \frac32\bigl(|V(G)|-c(G)\bigr).
+\]
+In particular, if $\mathcal C(G)=\{6\}$ and $|V(G)|=n\ge 7$, then
+\[
+|E(G)|\le \frac32(n-1)<2n-4.
+\]
+
+\medskip
+\textit{Proof.}
+It is enough to prove that every connected component $X$ of $G$ satisfies
+\[
+|E(X)|\le \frac32\bigl(|V(X)|-1\bigr).
+\]
+If $X$ is a tree, then $|E(X)|=|V(X)|-1$, so the claim is immediate.
+If $X$ contains a cycle, then every cycle of $X$ has length $6$ and we induct on the number of blocks of $X$.
+If $X$ has only one block, then either $X\cong K_2$ or $X$ is $2$-connected with cycle-length set $\{6\}$.
+In the latter case Theorem~5.2 gives
+\[
+X\cong \Theta_t^{(3)}
+\]
+for some $t\ge 2$, and therefore
+\[
+|E(X)|=3t=\frac32\bigl((2+2t)-2\bigr)=\frac32\bigl(|V(X)|-2\bigr)
+<\frac32\bigl(|V(X)|-1\bigr).
+\]
+
+Now assume $X$ has at least two blocks, and let $B$ be a leaf block in the block tree of $X$.
+Write $H$ for the rest of the component, so that $X$ is obtained by identifying one vertex of $B$ with one vertex of $H$.
+Then
+\[
+|V(X)|=|V(B)|+|V(H)|-1,
+\qquad
+|E(X)|=|E(B)|+|E(H)|.
+\]
+By induction,
+\[
+|E(H)|\le \frac32\bigl(|V(H)|-1\bigr).
+\]
+Also, as in the base case, either $B\cong K_2$ or else $B\cong \Theta_t^{(3)}$ for some $t\ge 2$, so in either case
+\[
+|E(B)|\le \frac32\bigl(|V(B)|-1\bigr),
+\]
+and in fact the inequality is strict unless $B\cong K_2$.
+Hence
+\[
+|E(X)|
+\le \frac32\bigl(|V(H)|-1\bigr)+\frac32\bigl(|V(B)|-1\bigr)
+=\frac32\bigl(|V(X)|-1\bigr).
+\]
+Summing over all components gives
+\[
+|E(G)|\le \frac32\sum_X \bigl(|V(X)|-1\bigr)=\frac32\bigl(|V(G)|-c(G)\bigr).
+\]
+Finally, if $\mathcal C(G)=\{6\}$ then $G$ has at least one cyclic component, so $c(G)\ge 1$ and therefore
+\[
+|E(G)|\le \frac32(n-1).
+\]
+Since
+\[
+2n-4-\frac32(n-1)=\frac{n-5}{2}>0
+\qquad (n\ge 7),
+\]
+we get $|E(G)|<2n-4$. \hfill$\square$
+
+\subsubsection*{5.4. The obstruction for $43\le n\le 51$ collapses to exactly two cycle lengths}
+
+\textbf{Theorem 5.4.}
+Let $43\le n\le 51$, and let $G$ be a graph with
+\[
+|V(G)|=n,
+\qquad
+|E(G)|=2n-4.
+\]
+If
+\[
+S(G)<\frac14,
+\]
+then there exists an integer $L\ge 13$ such that
+\[
+\mathcal C(G)=\{6,L\}.
+\]
+In particular, any such graph has exactly two distinct cycle lengths.
+
+\medskip
+\textit{Proof.}
+By the Round~8 obstruction (Foundation (F3)), we already know that
+\[
+6\in \mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}.
+\]
+So no cycle length from $\{3,4,5,7,8,9,10,11,12\}$ occurs.
+
+We first rule out the possibility
+\[
+\mathcal C(G)=\{6\}.
+\]
+Indeed, Corollary~5.3 would then imply
+\[
+|E(G)|\le \frac32(n-1),
+\]
+whereas $|E(G)|=2n-4>\frac32(n-1)$ for every $n\ge 7$.
+So $G$ must contain at least one additional cycle length $L\ge 13$.
+
+Now suppose there were \emph{two} distinct additional cycle lengths $L_1<L_2$, both at least $13$.
+Then
+\[
+S(G)\ge \frac16+\frac1{L_1}+\frac1{L_2}
+\ge \frac16+\frac1{13}+\frac1{14}
+=\frac{172}{546}=\frac{86}{273} > \frac14,
+\]
+contradicting the assumption $S(G)<1/4$.
+Therefore there is exactly one additional cycle length $L\ge 13$, and hence
+\[
+\mathcal C(G)=\{6,L\}.
+\]
+This proves the theorem. \hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new work against the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{Dependence on Round~8.}
+The only Round~8 input used is the previously proved obstruction
+\[
+6\in \mathcal C(G)\subseteq \{6\}\cup\{13,14,\dots,n\}
+\]
+for $43\le n\le 51$ and $S(G)<1/4$.
+Everything new in this round is proved from scratch.
+
+\item \textbf{Potential gap in Theorem~5.2.}
+The key step is the existence of an $H$-path when $H$ is a proper connected subgraph of a $2$-connected graph $B$.
+This is standard and easy: some component of $B-V(H)$ must have at least two neighbors in $H$, producing a path with internal vertices outside $H$ and endpoints in $H$.
+No ear-decomposition theorem is required.
+
+\item \textbf{Lemma~5.1 and the $t=2$ exception.}
+The statement explicitly isolates the exceptional opposite pairs in $C_6\cong \Theta_2^{(3)}$.
+This is essential, and Theorem~5.2 handles it correctly by allowing the maximal bundle to re-choose its branch pair when $H\cong C_6$.
+
+\item \textbf{Density calculation in Corollary~5.3.}
+For a $3$-path bundle one has
+\[
+|V|=2+2t,
+\qquad
+|E|=3t,
+\]
+so
+\[
+|E|=\frac32(|V|-2).
+\]
+The induction over the block tree preserves the bound because each new leaf block is attached at a single cutvertex.
+
+\item \textbf{Sharpness of Theorem~5.4.}
+The reciprocal estimate
+\[
+\frac16+\frac1{13}+\frac1{14}>\frac14
+\]
+is the exact reason the obstruction collapses to \emph{one} extra long cycle length rather than merely ``some subset of $\{13,14,\dots,n\}$''.
+No stronger conclusion is claimed.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~9 proves a genuinely stronger obstruction theorem than Round~8.
+For $43\le n\le 51$, any graph with $n$ vertices, $2n-4$ edges, and reciprocal cycle-length sum $S(G)<1/4$ must satisfy
+\[
+\mathcal C(G)=\{6,L\}
+\qquad\text{for some }L\ge 13.
+\]
+Equivalently: the entire classes
+\begin{itemize}
+\item graphs with no $6$-cycle,
+\item graphs with cycle-length set $\{6\}$,
+\item and graphs with three or more distinct cycle lengths,
+\end{itemize}
+have now all been ruled out in the unresolved range $43\le n\le 51$.
+Only a single sharply formulated obstruction remains.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 98\%}
+
+\subsection*{9) REFERENCES}
+
+No new external references were needed for the new proofs in this round.
+The only imported inputs are the vetted Round~8 results recorded in \S2.

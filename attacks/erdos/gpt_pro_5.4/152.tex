@@ -1,0 +1,272 @@
+\section{Erd\H{o}s Problem \#152: isolated sums in the sumset of a Sidon set (ROUND 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue path \textbf{(C)}.  The problem is Erd\H{o}s Problem \#152 \cite{Bloom152}, and the relevant sumset background comes from Erd\H{o}s--S\'ark\"ozy--S\'os and O'Bryant \cite{ESS94,OBryant04}.  The Round-1 writeup reduced the problem to understanding whether many runs in $A+A$ force many singleton runs, but left open the possibility that $A+A$ might be built mostly from runs of length $2$.  In this round I rule out the extreme version of that obstruction completely: a finite Sidon set with at least $3$ elements can never have zero isolated sums, and every finite Sidon set with at least $4$ elements has at least $2$ isolated sums.  This is not the full Erd\H{o}s statement, but it is a genuine structural theorem beyond Round 1.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+From Round 1 I use only the following already-established facts.
+\begin{itemize}
+\item If $A$ is a finite Sidon set of size $n$, then $|A+A|=n(n+1)/2$.
+\item If $S\subset \mathbf Z$ is finite and $B(S)$ denotes the number of maximal runs of consecutive integers in $S$, while $I(S)$ denotes the number of singleton runs, then
+\[
+I(S)\ge 2B(S)-|S|.
+\]
+\item The Round-1 obstacle was that a lower bound on $B(A+A)$ alone does not exclude the possibility that every run has length $2$.
+\end{itemize}
+I do \emph{not} re-prove those facts here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new tool is an elementary but decisive observation about consecutive elements.
+
+\medskip
+\noindent\textbf{Key new observation.}
+A Sidon set contains at most one pair of consecutive integers.
+
+\medskip
+This single lemma forces isolated sums at the edges of the sumset and kills the most obvious zero-isolated-sum constructions.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+The exact Round-1 gap was this: many runs in $A+A$ need not imply any singleton run.
+
+I now attack that gap directly by working with the \emph{outermost sums} of $A+A$.
+Write
+\[
+A=\{a_1<a_2<\cdots<a_n\}.
+\]
+The sums $2a_1$, $a_1+a_2$, $a_{n-1}+a_n$, and $2a_n$ are the natural candidates for isolated points.  The plan is:
+\begin{enumerate}
+\item prove that $A$ has at most one consecutive pair;
+\item show that if the bottom end of $A$ has no consecutive pair then $2a_1$ is isolated, and similarly at the top end $2a_n$ is isolated;
+\item if there \emph{is} a consecutive pair at one end, prove that the two largest (or two smallest) extremal sums are isolated instead.
+\end{enumerate}
+This overcomes the Round-1 obstruction because it proves that the configuration $I(A)=0$ is impossible for all $n\ge 3$, and moreover gives a sharp universal lower bound $I(A)\ge 2$ for $n\ge 4$.
+
+\subsection*{5) WORK (ROUND 2)}
+Throughout this section,
+\[
+A=\{a_1<a_2<\cdots<a_n\}\subset \mathbf Z
+\]
+is a finite Sidon set, and
+\[
+I(A):=\bigl|\{s\in A+A: s-1\notin A+A\text{ and }s+1\notin A+A\}\bigr|.
+\]
+By translation invariance, nothing depends on where $A$ sits in $\mathbf Z$.
+
+\medskip
+\noindent\textbf{Lemma 5.1.}
+A Sidon set contains at most one pair of consecutive integers.
+
+\smallskip
+\noindent\emph{Proof.}
+Suppose first that $x,x+1,y,y+1\in A$ with $x+1<y$.  Then
+\[
+x+(y+1)=(x+1)+y,
+\]
+and the two unordered pairs $\{x,y+1\}$ and $\{x+1,y\}$ are distinct, contradicting the Sidon property.
+
+If instead the two consecutive pairs overlap, then $x,x+1,x+2\in A$, and
+\[
+x+(x+2)=2(x+1),
+\]
+again contradicting the Sidon property.  Therefore there is at most one consecutive pair in $A$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 5.2.}
+If $a_2\ge a_1+2$, then $2a_1$ is isolated in $A+A$.
+
+\smallskip
+\noindent\emph{Proof.}
+Clearly $2a_1-1<2a_1$ is smaller than the least element of $A+A$, so only $2a_1+1$ needs attention.
+If $2a_1+1=u+v$ with $u,v\in A$ and $u\le v$, then $u,v\ge a_1$.  Since
+\[
+u+v=2a_1+1,
+\]
+we cannot have $u\ge a_1+1$, because then $u+v\ge 2a_1+2$.  Hence $u=a_1$, so $v=a_1+1$, contradicting $a_2\ge a_1+2$.  Thus $2a_1+1\notin A+A$, and $2a_1$ is isolated. \hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 5.3.}
+If $a_n\ge a_{n-1}+2$, then $2a_n$ is isolated in $A+A$.
+
+\smallskip
+\noindent\emph{Proof.}
+Now $2a_n+1$ is larger than the maximum of $A+A$, so only $2a_n-1$ matters.  If $2a_n-1=u+v$ with $u,v\in A$ and $u\le v$, then $u,v\le a_n$.  Since
+\[
+u+v=2a_n-1,
+\]
+we cannot have $v\le a_n-1$, because then $u+v\le 2a_n-2$.  Hence $v=a_n$, so $u=a_n-1$, contradicting $a_n\ge a_{n-1}+2$.  Thus $2a_n-1\notin A+A$, and $2a_n$ is isolated. \hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 5.4.}
+Assume $n\ge 4$ and $a_2=a_1+1$.  Then both $a_{n-1}+a_n$ and $2a_n$ are isolated in $A+A$.
+
+\smallskip
+\noindent\emph{Proof.}
+By Lemma 5.1, the consecutive pair $\{a_1,a_2\}$ is the unique consecutive pair in $A$.  In particular,
+\[
+a_n\ge a_{n-1}+2.
+\]
+So $2a_n$ is isolated by Lemma 5.3.
+
+It remains to show that $a_{n-1}+a_n$ is isolated.
+
+First, no larger sum lies at distance $1$ above it.  Indeed, the next larger sum in $A+A$ is at least $2a_n$, and
+\[
+2a_n-(a_{n-1}+a_n)=a_n-a_{n-1}\ge 2.
+\]
+Hence
+\[
+a_{n-1}+a_n+1\notin A+A.
+\]
+
+Second, suppose for contradiction that
+\[
+u+v=a_{n-1}+a_n-1
+\]
+with $u,v\in A$ and $u\le v$.
+If $v=a_n$, then $u=a_{n-1}-1$.  But then $u,u+1=a_{n-1}\in A$, giving a second consecutive pair in $A$, impossible by Lemma 5.1.
+If instead $v\le a_{n-1}$, then
+\[
+u+v\le 2a_{n-1}<a_{n-1}+a_n-1,
+\]
+since $a_n\ge a_{n-1}+2$.
+Both cases are impossible, so
+\[
+a_{n-1}+a_n-1\notin A+A.
+\]
+Therefore $a_{n-1}+a_n$ is isolated. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.5.}
+Assume $n\ge 4$ and $a_n=a_{n-1}+1$.  Then both $2a_1$ and $a_1+a_2$ are isolated in $A+A$.
+
+\smallskip
+\noindent\emph{Proof.}
+Apply Lemma 5.4 to the reflected Sidon set $-A=\{-a_n<\cdots<-a_1\}$ and then negate the resulting isolated sums. \hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 5.6.}
+Let $A$ be a finite Sidon set.
+\begin{enumerate}
+\item $I(A)=0$ if and only if $A=\{x,x+1\}$ for some integer $x$.
+\item If $|A|\ge 3$, then $I(A)\ge 1$.
+\item If $|A|\ge 4$, then $I(A)\ge 2$.
+\end{enumerate}
+
+\smallskip
+\noindent\emph{Proof.}
+For $|A|=2$, write $A=\{x,y\}$ with $x<y$.
+Then
+\[
+A+A=\{2x,x+y,2y\}.
+\]
+If $y=x+1$, this is $\{2x,2x+1,2x+2\}$ and indeed $I(A)=0$.
+If $y\ge x+2$, then $2x$ and $2y$ are isolated, so $I(A)=2$.
+This proves part (1) for $|A|=2$.
+
+Now assume $|A|\ge 3$.  By Lemma 5.1, at least one of the end gaps $a_2-a_1$ and $a_n-a_{n-1}$ is at least $2$, so Lemma 5.2 or Lemma 5.3 gives at least one isolated sum.  Hence $I(A)\ge 1$, proving part (2).
+
+Finally assume $|A|\ge 4$.  There are three cases.
+\begin{itemize}
+\item If $a_2\ge a_1+2$ and $a_n\ge a_{n-1}+2$, then Lemmas 5.2 and 5.3 show that $2a_1$ and $2a_n$ are both isolated.
+\item If $a_2=a_1+1$, then Lemma 5.4 gives two isolated sums, namely $a_{n-1}+a_n$ and $2a_n$.
+\item If $a_n=a_{n-1}+1$, then Corollary 5.5 gives two isolated sums, namely $2a_1$ and $a_1+a_2$.
+\end{itemize}
+These cases are exhaustive because Lemma 5.1 forbids simultaneous consecutive pairs at both ends.  Thus $I(A)\ge 2$ for every Sidon set with at least $4$ elements. \hfill$\square$
+
+\medskip
+\noindent\textbf{Sharpness.}
+The bound in part (3) is best possible.  For example,
+\[
+A=\{0,1,3,7\}
+\]
+is Sidon and
+\[
+A+A=\{0,1,2,3,4,6,7,8,10,14\},
+\]
+whose isolated sums are exactly $10$ and $14$.  Likewise,
+\[
+A=\{0,1,6,9,13\}
+\]
+is Sidon and has exactly two isolated sums, namely $22$ and $26$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I now try to break the new argument.
+\begin{itemize}
+\item \emph{Boundary case $|A|=2$.}  This is the unique genuine exception.  The theorem explicitly isolates it and classifies it exactly.
+\item \emph{Could there be two consecutive pairs, one of them internal and one at an end?}  No.  Lemma 5.1 rules out \emph{all} pairs of distinct consecutive pairs, whether disjoint or overlapping.
+\item \emph{Does the proof of Lemma 5.4 accidentally use $n\ge 5$?}  No.  The only place where size matters is to ensure that after a bottom consecutive pair there is still a top end to talk about; $n\ge 4$ is enough.
+\item \emph{Could $a_{n-1}+a_n-1$ be represented using two elements below $a_{n-1}$?}  No, because then it would be at most $2a_{n-1}$, which is strictly smaller than $a_{n-1}+a_n-1$ when $a_n-a_{n-1}\ge 2$.
+\item \emph{Does translation matter?}  No.  Replacing $A$ by $A+t$ adds $2t$ to every sum and preserves isolation.
+\end{itemize}
+No hidden quantifier issue remains: the theorem is uniform over all finite Sidon sets.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 proves a new theorem not present in Round 1:
+\begin{quote}
+If $A$ is a finite Sidon set with at least $4$ elements, then $A+A$ contains at least $2$ isolated sums.  Equivalently, the Erd\H{o}s property in Problem \#152 is already true with $M=2$ once $|A|\ge 4$.
+\end{quote}
+In particular, the Round-1 candidate obstruction ``perhaps $A+A$ can have no isolated points'' is now completely ruled out for all $|A|\ge 3$, and the stronger candidate ``perhaps every run has length $2$'' is impossible as well.
+
+The full statement that the number of isolated sums must tend to infinity with $|A|$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 48\%}
+
+\bigskip
+\section*{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{Bloom152}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#152},
+\texttt{https://www.erdosproblems.com/152}, accessed 2026-03-07.
+
+\bibitem{Bloom200}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#200},
+\texttt{https://www.erdosproblems.com/200}, accessed 2026-03-07.
+
+\bibitem{Bloom201}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#201},
+\texttt{https://www.erdosproblems.com/201}, accessed 2026-03-07.
+
+\bibitem{ESS94}
+P. Erd\H{o}s, A. S\'ark\"ozy, and T. S\'os,
+\emph{On sum sets of Sidon sets. I},
+Journal of Number Theory \textbf{47} (1994), 329--347.
+
+\bibitem{GT08}
+B. Green and T. Tao,
+\emph{The primes contain arbitrarily long arithmetic progressions},
+Annals of Mathematics \textbf{167} (2008), 481--547.
+
+\bibitem{KSS75}
+J. Koml\'os, M. Sulyok, and E. Szemer\'edi,
+\emph{Linear problems in combinatorial number theory},
+Acta Mathematica Academiae Scientiarum Hungaricae \textbf{26} (1975), 113--121.
+
+\bibitem{MV07}
+H. Montgomery and R. Vaughan,
+\emph{Multiplicative Number Theory I. Classical Theory},
+Cambridge Studies in Advanced Mathematics 97, Cambridge University Press, 2007.
+
+\bibitem{OBryant04}
+K. O'Bryant,
+\emph{A complete annotated bibliography of work related to Sidon sequences},
+Electronic Journal of Combinatorics \textbf{11} (2004), Dynamic Survey 11.
+
+\bibitem{OBryant10}
+K. O'Bryant,
+\emph{Thick subsets that do not contain arithmetic progressions},
+arXiv:0912.1494.
+
+\bibitem{Semchankau20}
+A. Semchankau,
+\emph{Maximal subsets free of arithmetic progressions in arbitrary sets},
+arXiv:2010.04490.
+
+\end{thebibliography}

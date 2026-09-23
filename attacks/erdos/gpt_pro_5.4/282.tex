@@ -1,0 +1,160 @@
+\section*{Round 2 continuation for Erd\H{o}s Problems \#282, \#283, \#287}
+
+\subsection*{Erd\H{o}s Problem \#282}
+
+\subsubsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/correction} for the broad ``for which pairs $(x,A)$ does the greedy process terminate?'' part of the problem. Round 1 left the Stein case $(A=$ all odd numbers$,\ x$ of odd denominator$)$ unresolved, but it did not yet separate that case from the behaviour of sparse allowed sets. The most promising Round-2 target is therefore to produce an explicit infinite family of rational pairs $(x,A)$ for which the greedy process provably \emph{does not} terminate, and to sharpen the arithmetic obstruction for finite odd expansions.
+
+\subsubsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 items without reproving them.
+\begin{enumerate}
+\item The corrected \emph{distinct-denominator} greedy algorithm: at each step choose the least unused $n\in A$ with $1/n\le x$.
+\item The basic odd-denominator obstruction: if a finite sum of distinct odd unit fractions equals $a/b$ in lowest terms, then $b$ is odd.
+\item The classical Fibonacci--Sylvester termination proof for $A$ equal to the full set of positive integers.
+\item The Round-1 computational fact that the odd greedy algorithm terminated for all reduced $a/b\in(0,1)$ with odd $b\le 51$.
+\end{enumerate}
+
+\subsubsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new ingredients in this round.
+\begin{enumerate}
+\item A \textbf{Sylvester-tail nontermination family}: for every integer $m\ge 3$ there is an explicit infinite set $A_m$ and a rational $x_m=1/(m-1)$ such that the restricted greedy algorithm on $(x_m,A_m)$ follows a closed-form infinite trajectory and never terminates.
+\item A \textbf{mod $8$ terminal invariant for odd expansions}: if
+\[
+\frac{a}{b}=\frac1{n_1}+\cdots+\frac1{n_t}
+\]
+with all $n_i$ odd and $a/b$ in lowest terms, then
+\[
+ n_1+\cdots+n_t\equiv a b^{-1}\pmod 8,
+\]
+where $b^{-1}$ is the inverse of $b$ modulo $8$.
+\end{enumerate}
+The first result shows that rational nontermination is abundant for sparse allowed sets, even inside odd sets and even inside a single residue class. The second result strengthens the Round-1 parity obstruction.
+
+\subsubsection*{4) ATTACK PLAN (ROUND-2)}
+Round 1 identified the main gap as the absence of either a global monotone quantity or an explicit nonterminating trajectory. I therefore prove the following two precise claims.
+\begin{enumerate}
+\item For each $m\ge 3$, the pair
+\[
+ x_m=\frac1{m-1},\qquad A_m=\{a_1,a_2,a_3,\dots\}
+\]
+with
+\[
+ a_1=m,\qquad a_{r+1}=(m-1)a_1a_2\cdots a_r+1
+\]
+produces an infinite greedy expansion.
+\item Any \emph{finite} odd Egyptian expansion satisfies a stronger congruence modulo $8$.
+\end{enumerate}
+These claims do not settle the Stein case, but they overcome two specific Round-1 obstacles: they exhibit explicit nontermination for rational input, and they sharpen the arithmetic constraints on any hypothetical terminal odd expansion.
+
+\subsubsection*{5) WORK (ROUND-2)}
+
+\paragraph{5.1. An explicit infinite nonterminating family.}
+Fix an integer $m\ge 3$. Define
+\[
+ a_1=m,\qquad a_{r+1}=(m-1)a_1a_2\cdots a_r+1\quad (r\ge 1),
+\]
+and let
+\[
+ A_m:=\{a_1,a_2,a_3,\dots\},\qquad x_m:=\frac1{m-1}.
+\]
+Let
+\[
+ P_r:=a_1a_2\cdots a_r.
+\]
+I claim that the greedy algorithm for $(x_m,A_m)$ chooses $a_1,a_2,\dots$ in order and has remainder
+\[
+R_r:=x_m-\sum_{j=1}^r \frac1{a_j}=\frac1{(m-1)P_r}\qquad (r\ge 0),
+\]
+where by convention $P_0=1$.
+
+For $r=0$ this is exactly $R_0=x_m=1/(m-1)$. Assume the formula holds for some $r\ge 0$. Then
+\[
+ \frac1{R_r}=(m-1)P_r,
+\]
+so by definition of the sequence,
+\[
+ a_{r+1}=\frac1{R_r}+1.
+\]
+Hence
+\[
+ R_r-\frac1{a_{r+1}}
+ =\frac1{(m-1)P_r}-\frac1{(m-1)P_r+1}
+ =\frac1{(m-1)P_r\bigl((m-1)P_r+1\bigr)}
+ =\frac1{(m-1)P_{r+1}}.
+\]
+Thus the remainder formula holds for all $r$ by induction.
+
+It remains to check the greedy choice. Since $a_{r+1}=1/R_r+1$, we have $a_{r+1}>1/R_r$, so $1/a_{r+1}<R_r$. Also $a_1<a_2<a_3<\cdots$, because
+\[
+ a_{r+1}=(m-1)P_r+1>(m-1)a_r+1>a_r.
+\]
+Therefore every previously used denominator is $<a_{r+1}$, and every unused element of $A_m$ is at least $a_{r+1}$. So among unused elements of $A_m$, the least one satisfying $1/n\le R_r$ is exactly $a_{r+1}$. This is precisely the corrected greedy rule.
+
+Since $R_r=1/((m-1)P_r)>0$ for every $r$, the algorithm never reaches $0$. Therefore
+\[
+ \frac1{m-1}=\sum_{r=1}^{\infty}\frac1{a_r}
+\]
+is an infinite greedy expansion and the greedy process does not terminate.
+
+\paragraph{5.2. Two useful corollaries of the family.}
+\begin{enumerate}
+\item If $m$ is odd, then every $a_r$ is odd. Indeed $a_1=m$ is odd, and if $a_1,\dots,a_r$ are odd then $(m-1)P_r$ is even, so $a_{r+1}=(m-1)P_r+1$ is odd. Thus for every odd $m\ge 3$ we obtain an explicit nonterminating rational pair with $A_m$ contained in the odd positive integers.
+\item If $m\equiv 1\pmod d$, then every $a_r\equiv 1\pmod d$. This is immediate from
+\[
+ a_{r+1}=(m-1)P_r+1\equiv 1\pmod d.
+\]
+Hence for every modulus $d\ge 1$ there are nonterminating rational pairs $(x,A)$ with $A$ contained in a single residue class modulo $d$.
+\end{enumerate}
+These corollaries do \emph{not} settle the open odd/full-set question, because the first family has $x_m=1/(m-1)$ and therefore even denominator when $A_m$ is odd, and the second family lies outside Graham's admissible congruence condition in the natural example $A\subseteq\{n\equiv 1\pmod d\}$ with $x=1/d$.
+
+\paragraph{5.3. A stronger terminal obstruction for odd expansions.}
+Suppose
+\[
+\frac{a}{b}=\frac1{n_1}+\cdots+\frac1{n_t}
+\]
+with all $n_i$ odd and $a/b$ in lowest terms. Because $b$ is odd, the residue class $b^{-1}\pmod 8$ is defined.
+
+For any odd integer $u$ one has $u^2\equiv 1\pmod 8$, hence $u^{-1}\equiv u\pmod 8$. Therefore, in the ring of rationals with odd denominator modulo $8$,
+\[
+ \frac1{n_i}\equiv n_i\pmod 8.
+\]
+Summing over $i$ gives
+\[
+ \frac{a}{b}=\sum_{i=1}^t \frac1{n_i}\equiv \sum_{i=1}^t n_i\pmod 8.
+\]
+Multiplying by $b$ yields the equivalent integer congruence
+\[
+ n_1+\cdots+n_t\equiv a b^{-1}\pmod 8.
+\]
+This strictly strengthens the Round-1 parity statement: reducing modulo $2$ only recovers the fact that $b$ must be odd, whereas modulo $8$ one gets a definite residue class for the total denominator sum.
+
+\subsubsection*{6) ADVERSARIAL VERIFICATION}
+I checked the new work against the main failure modes.
+\begin{enumerate}
+\item \textbf{Greedy-rule ambiguity.} The proof uses the \emph{Round-1 corrected} greedy rule with distinct denominators. This matters: the sequence $A_m$ is strictly increasing, so the least unused allowed denominator is unambiguous at every step.
+\item \textbf{Could an earlier unused element of $A_m$ be large enough to interfere?} No. There are no earlier unused elements: the greedy trajectory uses $a_1,a_2,\dots$ in order, and $A_m$ is strictly increasing.
+\item \textbf{Could the family accidentally solve the Stein case?} No. When $A_m$ is odd, $x_m=1/(m-1)$ has even denominator. So this family lies deliberately outside Stein's hypothesis.
+\item \textbf{Could the residue-class corollary refute the admissible congruence-class question?} No. For the natural choice $A\subseteq\{n\equiv 1\pmod d\}$ and $x=1/d$, Graham's admissibility condition fails, so these examples do not contradict the open admissible case.
+\item \textbf{Is the mod $8$ congruence really stronger than Round 1?} Yes: it gives a specific residue class for the terminal denominator sum, not merely oddness of the reduced denominator.
+\end{enumerate}
+
+\subsubsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The Stein problem for the full odd set remains open, but Round 2 makes two substantive advances beyond Round 1.
+\begin{enumerate}
+\item It gives an explicit infinite family of rational nonterminating greedy trajectories, including examples with $A$ odd and examples with $A$ contained in one residue class modulo an arbitrary $d$.
+\item It upgrades the odd-denominator terminal obstruction from a parity statement to a sharp congruence modulo $8$.
+\end{enumerate}
+So the broad ``for which pairs $(x,A)$?'' question is now sharply separated from the special full-set odd case: sparse allowed sets can force rational nontermination, while the Stein case remains the real unresolved core.
+
+\subsubsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 45\%}
+
+\subsubsection*{9) REFERENCES}
+Checked or used in this round:
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#282}, webpage accessed 2026-03-07.
+\item W. van Doorn, \emph{Partitions with prescribed sum of reciprocals: computational results}, arXiv:2502.01409 (checked for context; the congruence used above was reproved directly).
+\end{enumerate}
+

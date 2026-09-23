@@ -1,0 +1,272 @@
+\section*{Erd\H{o}s Problem \#236 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: obstruction/gap-closure. Round 1 proved only a first-moment statement,
+\[
+\frac{1}{N}\sum_{n\le N} f(n)\to \frac{1}{\log 2},
+\]
+which implies $f(n)=o(\log n)$ for a density-$1$ set of integers but says nothing about the size of rare exceptional values. The strict next step is to control \emph{correlations} among the events ``$n-2^k$ is prime''. I will prove a second-moment bound
+\[
+\sum_{n\le N} f(n)^2 \ll N\log\log N,
+\]
+which is substantially stronger than Round 1 and yields a quadratic tail bound for large values of $f(n)$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without re-proving them.
+
+\begin{itemize}
+\item Round-1 Lemma 236.1: the trivial pointwise bound $f(n)\ll \log n$.
+\item Round-1 Lemma 236.2: assuming the prime number theorem,
+\[
+\frac{1}{N}\sum_{n\le N} f(n)\to \frac{1}{\log 2}.
+\]
+\item Round-1 Corollary 236.3: for every fixed $\varepsilon>0$,
+\[
+\frac{1}{N}\#\{n\le N:f(n)\ge \varepsilon \log N\}\to 0.
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new structural observation is that the differences between two powers of $2$ factor as
+\[
+2^j-2^k = 2^k(2^{j-k}-1).
+\]
+Thus pair correlations of the translate set $\{n-2^k\}$ reduce to prime-pair counts with differences of the very special form $2^k(2^m-1)$. Combined with the Selberg-sieve prime-pair upper bound and the classical estimate
+\[
+\frac{m}{\phi(m)}\ll \log\log(3m),
+\]
+this yields a workable second moment.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+After Round 1, the exact gap was the lack of any control on exceptional $n$ where many of the numbers $n-2^k$ are prime simultaneously. The claim now to prove is:
+
+\medskip
+\noindent
+\textbf{Claim 236-R2.} Assuming the prime number theorem and the standard Selberg-sieve upper bound for prime pairs,
+\[
+\sum_{n\le N} f(n)^2 \ll N\log\log N.
+\]
+Hence for every $\lambda\ge 1$,
+\[
+\#\{n\le N:f(n)\ge \lambda\}\ll \frac{N\log\log N}{\lambda^2}.
+\]
+\medskip
+
+This overcomes the Round-1 obstacle of having only first-moment information.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let
+\[
+f(n)=\#\{k\ge 0:2^k<n,\ n-2^k\text{ is prime}\}.
+\]
+As in Problem \#234, I use the standard prime-pair upper bound
+\[
+\Pi(X;h)\ll \frac{h}{\phi(h)}\frac{X}{(\log X)^2}
+\qquad (h\ge 2),
+\]
+uniformly for $X\ge h+2$.
+
+The only extra elementary input is the standard estimate
+\[
+\frac{m}{\phi(m)}\ll \log\log(3m)
+\qquad (m\ge 1).
+\]
+
+\medskip
+\noindent
+\textbf{Theorem 236.2.1.}
+Assume the prime number theorem and the prime-pair upper bound above. Then
+\[
+\sum_{n\le N} f(n)^2 \ll N\log\log N.
+\]
+
+\emph{Proof.}
+Let
+\[
+K:=\left\lfloor \log_2\!\left(\frac{N}{4}\right)\right\rfloor.
+\]
+There are at most two powers of $2$ in the interval $(N/4,N]$, so for every $n\le N$,
+\[
+f(n)\le g(n)+2,
+\]
+where
+\[
+g(n):=\#\{0\le k\le K: n-2^k\text{ is prime}\}.
+\]
+Hence
+\[
+f(n)^2\le 2g(n)^2+8,
+\]
+and therefore
+\[
+\sum_{n\le N} f(n)^2 \ll N + \sum_{n\le N} g(n)^2.
+\]
+So it remains to bound
+\[
+M(N):=\sum_{n\le N} g(n)^2.
+\]
+
+Expanding the square gives
+\[
+M(N)=\sum_{0\le j,k\le K} S_{j,k}(N),
+\]
+where
+\[
+S_{j,k}(N):=\#\{n\le N: n-2^j\text{ and }n-2^k\text{ are both prime}\}.
+\]
+
+\paragraph{Diagonal terms.}
+For $j=k$ we have
+\[
+S_{j,j}(N)=\#\{n\le N:n-2^j\text{ prime}\}=\pi(N-2^j)\le \pi(N)\ll \frac{N}{\log N}.
+\]
+Summing over $0\le j\le K$ gives
+\[
+\sum_{0\le j\le K} S_{j,j}(N)\ll \frac{KN}{\log N}\ll N.
+\]
+
+\paragraph{Off-diagonal terms with one exponent equal to $0$.}
+Suppose $j>0$ and $k=0$. Then the two primes differ by $2^j-1$, which is odd. Two odd primes cannot differ by an odd number, so one of the two primes must be $2$. Hence there is at most one such $n$, namely possibly $n=2^j+2$. Therefore
+\[
+S_{j,0}(N)\ll 1,
+\qquad
+S_{0,j}(N)\ll 1.
+\]
+Summing over $1\le j\le K$ contributes only $O(K)=O(\log N)$.
+
+\paragraph{Remaining off-diagonal terms.}
+Now assume $1\le k<j\le K$. Put
+\[
+m:=j-k,
+\qquad
+d:=2^j-2^k = 2^k(2^m-1).
+\]
+Because $j\le K$, we have $2^j\le N/4$, so the larger prime in the pair is at most $N-2^k$ and the smaller is at most $N-2^j\ge 3N/4$. Thus the prime-pair upper bound applies with $X\asymp N$ and gives
+\[
+S_{j,k}(N)\ll \frac{d}{\phi(d)}\frac{N}{(\log N)^2}.
+\]
+Since $2^m-1$ is odd,
+\[
+\frac{d}{\phi(d)}=
+\frac{2^k(2^m-1)}{\phi(2^k)\phi(2^m-1)}
+\le
+2\,\frac{2^m-1}{\phi(2^m-1)}.
+\]
+Hence
+\[
+S_{j,k}(N)\ll \frac{N}{(\log N)^2}\,\frac{2^m-1}{\phi(2^m-1)}.
+\]
+For a fixed $m\ge 1$, the number of pairs $(j,k)$ with $1\le k<j\le K$ and $j-k=m$ is $K-m$. Therefore
+\[
+\sum_{1\le k<j\le K} S_{j,k}(N)
+\ll
+\frac{N}{(\log N)^2}
+\sum_{m=1}^{K-1}(K-m)\frac{2^m-1}{\phi(2^m-1)}.
+\]
+Now use the standard bound $u/\phi(u)\ll \log\log(3u)$ with $u=2^m-1$:
+\[
+\frac{2^m-1}{\phi(2^m-1)}\ll \log\log(2^{m+1})\ll \log(m+1).
+\]
+Thus
+\[
+\sum_{1\le k<j\le K} S_{j,k}(N)
+\ll
+\frac{N}{(\log N)^2}
+\sum_{m=1}^{K-1}(K-m)\log(m+1).
+\]
+Since
+\[
+\sum_{m=1}^{K-1}(K-m)\log(m+1)\ll K^2\log K,
+\]
+and $K\asymp \log N$, we obtain
+\[
+\sum_{1\le k<j\le K} S_{j,k}(N)\ll N\log\log N.
+\]
+The same bound holds for the symmetric sum with $j<k$. Combining the diagonal, $k=0$, and off-diagonal contributions gives
+\[
+M(N)\ll N\log\log N.
+\]
+Therefore
+\[
+\sum_{n\le N} f(n)^2 \ll N + M(N)\ll N\log\log N,
+\]
+as claimed.
+\hfill$\square$
+\medskip
+
+\noindent
+\textbf{Corollary 236.2.2 (quadratic tail bound).}
+For every $\lambda\ge 1$,
+\[
+\#\{n\le N:f(n)\ge \lambda\}\ll \frac{N\log\log N}{\lambda^2}.
+\]
+In particular, for every fixed $\varepsilon>0$,
+\[
+\frac{1}{N}\#\{n\le N:f(n)\ge (\log\log N)^{1/2+\varepsilon}\}\to 0.
+\]
+
+\emph{Proof.}
+Apply Chebyshev's inequality to Theorem 236.2.1:
+\[
+\lambda^2\#\{n\le N:f(n)\ge \lambda\}
+\le
+\sum_{n\le N} f(n)^2
+\ll N\log\log N.
+\]
+Taking $\lambda=(\log\log N)^{1/2+\varepsilon}$ yields the second statement.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Did I lose control of large exponents $2^k>N/4$?} No. There are at most two such exponents, so their total contribution is absorbed in the inequality $f(n)^2\le 2g(n)^2+8$.
+
+\item \emph{Was the prime-pair theorem used only where $X\asymp N$?} Yes. I applied it only after restricting to $j,k\le K$, which ensures $N-2^j\ge 3N/4$.
+
+\item \emph{What about odd differences?} Those occur only when one exponent is $0$. I handled them separately and used the parity obstruction rather than the sieve.
+
+\item \emph{Could the sum over $m$ be underestimated?} No. The combinatorial count of pairs with $j-k=m$ is exactly $K-m$ for $1\le m\le K-1$.
+
+\item \emph{Does this prove the original pointwise conjecture?} No. The second moment still allows a sparse exceptional set of integers with much larger $f(n)$, so the uniform statement $f(n)=o(\log n)$ remains open.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict new progress beyond Round 1 is the second-moment theorem
+\[
+\sum_{n\le N} f(n)^2 \ll N\log\log N,
+\]
+which implies the tail bound
+\[
+\#\{n\le N:f(n)\ge \lambda\}\ll \frac{N\log\log N}{\lambda^2}.
+\]
+This is substantially stronger than the previous first-moment argument and shows that values as large as $(\log\log N)^{1/2+\varepsilon}$ already occur on a density-$0$ set.
+
+The remaining gap is still the genuinely difficult one: excluding a sparse exceptional sequence $n_j$ with $f(n_j)$ as large as a positive proportion of $\log n_j$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 58\%
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{References}
+
+Only references actually used or checked in this round are listed.
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#234}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#236}, erdosproblems.com, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#238}, erdosproblems.com, accessed 2026-03-07.
+\item H. Halberstam and H.-E. Richert, \emph{Sieve Methods}, Academic Press, 1974.
+\item H. L. Montgomery and R. C. Vaughan, \emph{Multiplicative Number Theory I: Classical Theory}, Cambridge University Press, 2007.
+\end{enumerate}

@@ -1,0 +1,192 @@
+\section*{Problem \#302}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path C (obstruction/correction).}
+Round~1 already showed that the specific conjecture
+\[
+  f(N)=(1/2+o(1))N
+\]
+is false by proving the explicit lower bound \(f(N)\ge (5/8+o(1))N\).
+The most promising round-2 task is therefore not to re-open the false \(1/2\)-claim, but to sharpen the corrected picture.
+In this round I prove a new \emph{family} of solution-free sets, containing the parity construction as a special case, and I show that within this whole family the density \(5/8\) is already optimal.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 results without re-proving them.
+\begin{enumerate}
+\item If \(1\le a,b,c\le N\) are pairwise distinct and \(1/a=1/b+1/c\), then \(a<N/2\).
+\item The identity \(bc=a(b+c)\) is equivalent to \(1/a=1/b+1/c\).
+\item The Round~1 construction
+\[
+  [\lceil N/2\rceil,N]\ \cup\ \{n\le N/4:\ n\text{ odd}\}
+\]
+is solution-free and has size \((5/8+o(1))N\).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a \emph{single-residue-class modular obstruction}.
+Instead of taking the low block to be the odd numbers, I take it to be one fixed invertible residue class modulo an arbitrary modulus \(m\ge 2\).
+The parity construction is exactly the case \((m,r)=(2,1)\).
+This gives a larger theorem and, after optimizing the interval parameter, proves that \(5/8\) is the best density obtainable from any construction of this one-residue/one-interval type.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The gap left after Round~1 was that the \((5/8)\)-construction looked somewhat ad hoc.
+To improve on that, I will:
+\begin{enumerate}
+\item prove a general theorem for sets of the form
+\[
+  \{n\le \beta N/2:\ n\equiv r\pmod m\}\cup [\beta N,N],
+\]
+with \(1/2\le \beta\le 1\) and \((r,m)=1\);
+\item optimize the resulting density over \(\beta\) and \(m\);
+\item check carefully that the modular argument still works when \(m\) is composite and one of \(b,c\) is not coprime to \(m\).
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+\textbf{Theorem.}
+Fix integers \(m\ge 2\) and \(r\) with \((r,m)=1\), and fix a real number \(\beta\) with \(1/2\le \beta\le 1\).
+Define
+\[
+  L_N(m,r,\beta):=\{n\in\{1,\dots,N\}: n\le \lfloor \beta N/2\rfloor,\ n\equiv r\pmod m\},
+\]
+\[
+  U_N(\beta):=\{\lceil \beta N\rceil,\lceil \beta N\rceil+1,\dots,N\},
+\]
+and
+\[
+  A_N(m,r,\beta):=L_N(m,r,\beta)\cup U_N(\beta).
+\]
+Then \(A_N(m,r,\beta)\) contains no pairwise distinct \(a,b,c\) with
+\[
+  \frac1a=\frac1b+\frac1c.
+\]
+Consequently,
+\[
+  f(N)\ge \left(1-\beta+\frac{\beta}{2m}\right)N+O(1).
+\]
+Within this family the density is maximized at \(\beta=1/2\), where it becomes
+\[
+  \frac12+\frac{1}{4m}.
+\]
+Hence the best member of this entire family is the parity construction \((m,r,\beta)=(2,1,1/2)\), which recovers density \(5/8\).
+
+\medskip
+\textit{Proof.}
+Assume for contradiction that distinct \(a,b,c\in A_N(m,r,\beta)\) satisfy \(1/a=1/b+1/c\).
+By the Round~1 lemma, the smallest denominator in any such triple satisfies \(a<N/2\).
+Since \(\beta\ge 1/2\), every element of \(U_N(\beta)\) is at least \(N/2\), so necessarily
+\[
+  a\in L_N(m,r,\beta).
+\]
+In particular,
+\[
+  a\le \beta N/2,
+  \qquad a\equiv r\pmod m,
+  \qquad (a,m)=1.
+\]
+
+I now show that neither \(b\) nor \(c\) can lie in \(L_N(m,r,\beta)\).
+Suppose first that \(b\in L_N(m,r,\beta)\).
+Then also \(b\equiv r\pmod m\) and \((b,m)=1\).
+There are two cases.
+
+\smallskip
+\emph{Case 1: \((c,m)=1\).}
+Then \(a,b,c\) are all invertible modulo \(m\), and from
+\[
+  bc=a(b+c)
+\]
+we may divide by \(abc\) modulo \(m\) to get
+\[
+  a^{-1}\equiv b^{-1}+c^{-1}\pmod m.
+\]
+But \(a\equiv b\equiv r\pmod m\), so \(a^{-1}\equiv b^{-1}\equiv r^{-1}\pmod m\), hence
+\[
+  r^{-1}\equiv r^{-1}+c^{-1}\pmod m,
+\]
+which gives \(c^{-1}\equiv 0\pmod m\), impossible.
+
+\smallskip
+\emph{Case 2: \((c,m)>1\).}
+Choose a prime \(q\mid (c,m)\).
+Since \(a\equiv b\equiv r\pmod m\) and \((r,m)=1\), we have \(q\nmid a\) and \(q\nmid b\), whereas \(q\mid c\).
+Reducing
+\[
+  bc=a(b+c)
+\]
+modulo \(q\), the left-hand side is \(0\), while the right-hand side is congruent to \(ab\not\equiv 0\pmod q\).
+Contradiction.
+
+Thus \(b\notin L_N(m,r,\beta)\).
+By symmetry \(c\notin L_N(m,r,\beta)\) as well.
+Therefore both \(b\) and \(c\) must lie in \(U_N(\beta)\), so
+\[
+  b,c\ge \beta N.
+\]
+Assume \(b\le c\).
+Then, because the denominators are distinct,
+\[
+  \frac1a=\frac1b+\frac1c<\frac{2}{b}\le \frac{2}{\beta N},
+\]
+so
+\[
+  a>\beta N/2.
+\]
+But we already know \(a\le \beta N/2\), contradiction.
+This proves that \(A_N(m,r,\beta)\) is solution-free.
+
+For the size estimate, we have
+\[
+  |U_N(\beta)|=(1-\beta)N+O(1),
+\qquad
+  |L_N(m,r,\beta)|=\frac{\beta}{2m}N+O(1),
+\]
+so
+\[
+  |A_N(m,r,\beta)|=\left(1-\beta+\frac{\beta}{2m}\right)N+O(1).
+\]
+Since \(m\ge 2\), the coefficient of \(\beta\) here is
+\[
+  -1+\frac{1}{2m}<0,
+\]
+so the density is maximized when \(\beta\) is as small as allowed, namely \(\beta=1/2\).
+This gives the best density inside the family as
+\[
+  \frac12+\frac{1}{4m}.
+\]
+Finally, this is maximized over \(m\ge 2\) at \(m=2\), giving \(5/8\).
+\hfill \(\square\)
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Could the modular step fail for composite \(m\)?}
+No. If \((c,m)=1\), inverses modulo \(m\) exist and the proof is direct. If \((c,m)>1\), one passes to a prime divisor \(q\mid (c,m)\) and obtains a contradiction modulo \(q\).
+\item \textbf{Could \(b\) and \(c\) both be in the upper block without contradiction when \(b=\beta N\)?}
+No. Distinctness gives
+\[
+  \frac1b+\frac1c<\frac2b\le \frac{2}{\beta N},
+\]
+so the resulting inequality for \(a\) is strict.
+\item \textbf{Did I accidentally use a larger family than I actually proved?}
+No. The theorem covers exactly one residue class modulo \(m\) in the low interval, not an arbitrary set of residues. I am not claiming optimality beyond this family.
+\item \textbf{Does the density computation double-count an overlap between low and upper blocks?}
+No. Since \(\beta/2<\beta\), the intervals \([1,\beta N/2]\) and \([\beta N,N]\) are disjoint for every \(\beta>0\).
+\end{enumerate}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+Round~2 proves a genuine new theorem: the Round~1 parity construction is the optimal member of the entire one-residue/one-interval family
+\[
+  \{n\le \beta N/2:\ n\equiv r\pmod m\}\cup [\beta N,N].
+\]
+This does not determine the true asymptotic of \(f(N)\), but it does explain rigorously why the Round~1 \((5/8)\)-construction is the best possible within a broad modular template.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item Round~1 output in this conversation (used as fixed foundation).
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#302}.
+\end{itemize}
+
+

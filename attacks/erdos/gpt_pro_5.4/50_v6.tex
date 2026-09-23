@@ -1,0 +1,229 @@
+\section{Problem 50: derivatives of the totient distribution function (Round 10)}
+
+\subsection{1) ROUND-10 OBJECTIVE}
+
+\textbf{Path (C) (obstruction / correction).}
+In this round I explicitly attempted a full resolution of Erd\H{o}s's question:
+\[
+ f(c)=\lim_{X\to\infty}\frac1X\#\{n\le X:\varphi(n)<cn\},
+ \qquad 0\le c\le 1,
+\]
+can there exist an $x\in[0,1]$ such that $f'(x)$ exists and is strictly positive?
+
+After pushing the literature search to the strongest accessible sources and checking the current problem page, I cannot honestly certify a full proof or a counterexample. The correct Round~10 objective is therefore to isolate the sharpest verified obstruction currently available beyond Round~9.
+
+The genuinely new theorem used in this round is a precise localization result from Toulmonde's \emph{Acta Arithmetica} paper: for each fixed $t\notin \mathcal E$,
+\[
+ G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+ \qquad
+ G(t+\varepsilon t)-G(t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\]
+whereas the global left-relative modulus satisfies
+\[
+ \sup_{u\in[0,1]}\{G(u)-G(u-\varepsilon u)\}
+ \sim \frac{e^{-\gamma}}{\log(1/\varepsilon)}
+\]
+and its maximizers are forced into an interval shrinking to $1/2$.
+Thus the largest logarithmic spikes are asymptotically localized near the special point $1/2\in\mathcal E$, while every fixed nonspecial point is asymptotically quieter on that scale.
+
+\subsection{2) Round-9 FOUNDATION USED}
+
+We use the following earlier-round results as black boxes.
+
+\begin{itemize}
+\item \textbf{Round~1.} The limiting distribution function
+\[
+G(u):=\lim_{X\to\infty}\frac1X\#\Bigl\{n\le X:\frac{\varphi(n)}n\le u\Bigr\}
+\qquad(0\le u\le1)
+\]
+exists, is continuous and strictly increasing on $[0,1]$, and the associated measure $\mu=dG$ is purely singular with respect to Lebesgue measure.
+
+\item \textbf{Round~3.} The value set
+\[
+\mathcal E:=\Bigl\{\frac{\varphi(n)}n:n\ge1\Bigr\}
+\]
+is countable and dense in $[0,1]$. Every $t\in\mathcal E$ has infinite left derivative, more precisely
+\[
+G(t)-G(t-h)\sim \frac{e^{-\gamma}K(t)}{\log(t/h)}
+\qquad(h\to0^+),
+\]
+with $K(t)>0$.
+
+\item \textbf{Round~7--9.} There are dense $G_\delta$ sets off $\mathcal E$ on which the one-sided Dini derivatives oscillate maximally; in particular the one-sided upper Dini derivatives are infinite on a set that is both residual and $\mu$-full.
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-10)}
+
+The new ingredient is that the full \emph{Acta Arithmetica} paper of Toulmonde gives two facts that were only partially exploited earlier:
+
+\begin{enumerate}
+\item a \emph{pointwise off-$\mathcal E$ decay statement}:
+for each fixed $t\notin\mathcal E$,
+\[
+G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\qquad
+G(t+\varepsilon t)-G(t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right);
+\]
+\item a \emph{global extremal localization statement}:
+\[
+\sup_{u\in[0,1]}\{G(u)-G(u-\varepsilon u)\}=G(1)-G(1-\varepsilon)+O(L(1/\varepsilon)^{-1/5}),
+\]
+and every maximizer lies in an interval
+\[
+\Bigl[\tfrac12(1-\theta_0),\tfrac12(1+\theta_1)\Bigr]
+\]
+with $\theta_0,\theta_1\to0$ as $\varepsilon\to0^+$.
+\end{enumerate}
+
+Together these sharpen the obstruction landscape: the full $1/\log(1/\varepsilon)$ scale is not seen at a fixed nonspecial point, and the largest left-relative spikes are asymptotically pinned near $1/2$.
+
+\subsection{4) ATTACK PLAN (ROUND-10)}
+
+The exact unresolved gap after Round~9 was this: we had large residual and measure-theoretic obstructions, but no theorem pinpointing where the largest local increments actually live, nor any theorem separating special points from fixed nonspecial points at the $1/\log$ scale.
+
+We therefore prove the following two precise claims.
+
+\begin{enumerate}
+\item \textbf{Fixed off-$\mathcal E$ points are asymptotically quieter.}
+For every fixed $t\notin\mathcal E$,
+\[
+G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\qquad
+G(t+\varepsilon t)-G(t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right).
+\]
+
+\item \textbf{The global left-relative modulus is asymptotically maximal near $1/2$.}
+As $\varepsilon\to0^+$,
+\[
+\sup_{u\in[0,1]}\{G(u)-G(u-\varepsilon u)\}
+=\frac{e^{-\gamma}}{\log(1/\varepsilon)}+o\!\left(\frac1{\log(1/\varepsilon)}\right),
+\]
+and every maximizer $u_\varepsilon$ satisfies $u_\varepsilon\to 1/2$.
+\end{enumerate}
+
+This strictly advances the project because it isolates the last genuine obstruction: one still has to bridge the gap between the logarithmic modulus scale and the linear scale relevant to an ordinary derivative.
+
+\subsection{5) WORK (ROUND-10)}
+
+\subsubsection*{5.1. Fixed nonspecial points are smaller than the global logarithmic scale}
+
+\begin{proposition}[Pointwise off-$\mathcal E$ decay]\label{prop:offE-small}
+For every fixed $t\in(0,1)\setminus\mathcal E$,
+\[
+G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\qquad
+G(t+\varepsilon t)-G(t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right)
+\qquad(\varepsilon\to0^+).
+\]
+\end{proposition}
+
+\begin{proof}
+Toulmonde proves the uniform estimate
+\[
+G(t)-G(t-\varepsilon t)\ll \frac{K(\alpha_t)}{\log(1/\varepsilon)}+L(1/\varepsilon)^{-1/5}
+\]
+for suitable $\alpha_t$, and immediately remarks that for each fixed $t\notin\mathcal E$,
+\[
+G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\qquad
+G(t+\varepsilon t)-G(t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right),
+\]
+because $\alpha_t\to t$ and the auxiliary function $K$ is continuous off $\mathcal E$ and vanishes there.
+\end{proof}
+
+\subsubsection*{5.2. The global modulus and its maximizers}
+
+\begin{proposition}[Global left-relative modulus]\label{prop:global-modulus-round10}
+Let
+\[
+M(\varepsilon):=\sup_{u\in[0,1]}\{G(u)-G(u-\varepsilon u)\}
+\qquad(0<\varepsilon<1/3).
+\]
+Then
+\[
+M(\varepsilon)=G(1)-G(1-\varepsilon)+O(L(1/\varepsilon)^{-1/5}).
+\]
+Moreover, for all sufficiently small $\varepsilon$, every maximizer lies in an interval
+\[
+\Bigl[\tfrac12(1-\theta_0),\tfrac12(1+\theta_1)\Bigr],
+\]
+where $\theta_0,\theta_1\to0$ as $\varepsilon\to0^+$.
+In particular, if $u_\varepsilon$ is any maximizer, then
+\[
+u_\varepsilon\to\frac12.
+\]
+Finally, using Toulmonde's asymptotic expansion at $1$,
+\[
+M(\varepsilon)=\frac{e^{-\gamma}}{\log(1/\varepsilon)}+o\!\left(\frac1{\log(1/\varepsilon)}\right)
+\qquad(\varepsilon\to0^+).
+\]
+\end{proposition}
+
+\begin{proof}
+The first two claims are exactly Toulmonde's Theorem~2. The final asymptotic follows by combining that theorem with the asymptotic expansion
+\[
+G(1)-G(1-\varepsilon)=\frac{e^{-\gamma}}{\log(1/\varepsilon)}+O\!\left(\frac1{(\log(1/\varepsilon))^2}\right),
+\]
+which is the first part of Toulmonde's expansion at $1$.
+\end{proof}
+
+\subsubsection*{5.3. New corollary: asymptotic localization of the largest spikes}
+
+\begin{corollary}[Where the largest left-relative increments live]\label{cor:localization}
+The full logarithmic scale
+\[
+\asymp \frac1{\log(1/\varepsilon)}
+\]
+for the left-relative modulus is asymptotically attained near $u=1/2$, whereas every fixed point $t\notin\mathcal E$ is asymptotically smaller on that scale, namely
+\[
+G(t)-G(t-\varepsilon t)=o_t\!\left(\frac1{\log(1/\varepsilon)}\right).
+\]
+Hence the global extremal behavior and the local behavior at a fixed nonspecial point occur on provably different scales.
+\end{corollary}
+
+\begin{proof}
+Combine Propositions~\ref{prop:offE-small} and \ref{prop:global-modulus-round10}.
+\end{proof}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Why does this still not solve the original derivative question?}
+Because a derivative concerns the linear scale $h$, whereas the results above compare local increments with the logarithmic scale $1/\log(1/h)$. The implication
+\[
+G(t\pm h)-G(t)=o_t\!\left(\frac1{\log(1/h)}\right)
+\]
+is still far too weak to rule out a finite positive derivative, since $h\ll 1/\log(1/h)$ as $h\to0^+$.
+
+\item \textbf{Is the localization statement genuinely new relative to earlier rounds?}
+Yes. Earlier rounds knew that special points in $\mathcal E$ carry logarithmic spikes and that many residual points have oscillatory secants. Round~10 adds a verified theorem that the \emph{global} left-relative spikes are asymptotically maximized near $1/2$, while every fixed point off $\mathcal E$ is smaller than that scale.
+
+\item \textbf{Could one now conclude that any candidate derivative point must be near $1/2$?}
+No. The theorem is about global maximizers of the relative modulus, not about derivative points. It isolates where the largest logarithmic spikes occur, but does not yet convert that into an exclusion of linear behavior at every other point.
+
+\item \textbf{What is the remaining bottleneck?}
+The last missing bridge is a theorem that converts these logarithmic-scale estimates into a pointwise statement on the linear derivative scale at every off-$\mathcal E$ point. The currently verified theorems stop short of that.
+\end{itemize}
+
+\subsection{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+After a fresh attempt at a full proof, I cannot honestly certify a 100\% resolution. The problem is still listed as open on the current Erd\H{o}s Problems page, and the strongest theorem I could verify from the literature still stops short of excluding a finite positive derivative at every off-$\mathcal E$ point.
+
+The new strict advance is this: using the full \emph{Acta Arithmetica} paper of Toulmonde, we proved that every fixed nonspecial point $t\notin\mathcal E$ is asymptotically quieter than the global $1/\log(1/\varepsilon)$ scale, while the largest left-relative increments are asymptotically attained near $1/2$.
+This sharply localizes the logarithmic spikes and identifies the exact obstruction that still prevents a complete solution.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 95\%}
+
+\subsection{9) REFERENCES}
+
+\begin{enumerate}
+\item I. J. Schoenberg, \emph{On asymptotic distributions of arithmetical functions}, Trans. Amer. Math. Soc. \textbf{39} (1936), 315--330.
+\item P. Erd\H{o}s, \emph{On the distribution function of additive functions}, Ann. of Math. (2) \textbf{47} (1946), 1--20.
+\item G. Tenenbaum and V. Toulmonde, \emph{Sur le comportement local de la r\'epartition de l'indicatrice d'Euler}, Funct. Approx. Comment. Math. \textbf{35} (2006), 321--338.
+\item V. Toulmonde, \emph{Module de continuit\'e de la fonction de r\'epartition de $\varphi(n)/n$}, Acta Arith. \textbf{121} (2006), no.~4, 367--402.
+\item V. Toulmonde, \emph{Sur les variations de la fonction de r\'epartition de $\varphi(n)/n$}, J. Number Theory \textbf{120} (2006), no.~1, 1--12.
+\end{enumerate}

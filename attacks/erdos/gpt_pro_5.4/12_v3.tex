@@ -1,0 +1,404 @@
+\section{Erd\H{o}s Problem \#12 --- Round 4 (Continuation \& Gap-Closure Mode)}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+
+\textbf{Path (C): obstruction/correction via reduction to the primitive case.}
+
+Round~3 pushed one important primitive construction paradigm (the square-based one) to its natural asymptotic limit. The next unresolved issue is whether \emph{nonprimitive} behaviour could fundamentally change the problem: perhaps by adjoining carefully chosen larger multiples of existing elements one could obtain denser sets or a divergent reciprocal sum, even if the primitive core remains sparse.
+
+The most promising Round-4 direction is therefore to determine whether the original questions are genuinely more general than their \emph{primitive} analogues.
+
+I will prove that they are not. More precisely, every infinite set $A$ satisfying~$(*)$ has an infinite primitive kernel $K\subseteq A$ satisfying~$(*)$ such that:
+\[
+|A\cap[1,N]|\le |K\cap[1,N]|+|K\cap[1,N/2]|\le 2|K\cap[1,N]|
+\]
+for every $N$, and
+\[
+\sum_{a\in A}\frac1a\le \frac32\sum_{k\in K}\frac1k,
+\qquad
+\sum_{a\in A}\frac1{a\log a}\le \frac32\sum_{k\in K}\frac1{k\log k}.
+\]
+Consequently:
+\begin{itemize}
+\item Q1 is \emph{exactly equivalent} to its restriction to primitive sets;
+\item Q3 is \emph{exactly equivalent} to its restriction to primitive sets;
+\item Q2 is equivalent at the yes/no level to its restriction to primitive sets (the exponent may shrink by an arbitrarily small amount when passing back to general sets).
+\end{itemize}
+Thus any eventual counterexample to Q1 or Q3, and any eventual proof of Q1--Q3, may be sought entirely inside the primitive case.
+
+This is a genuine obstruction to further progress by ``decorating'' existing primitive constructions with larger multiples: such decorations change counting functions by at most a factor $2$ and reciprocal sums by at most a factor $3/2$.
+
+\subsection*{2) ROUND-3 FOUNDATION USED}
+
+I rely on the following previously established result.
+
+\begin{itemize}
+\item \textbf{Round-2 Corollary 12.1b (part of the vetted earlier foundation).} If $A$ satisfies~$(*)$ and $a\in A$, then there is at most one element $b\in A$ with $b>a$ and $a\mid b$. In particular, an infinite such $A$ contains neither $1$ nor $2$.
+\end{itemize}
+
+No other earlier lemma is needed in the new proofs below.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+
+The new tool is the \textbf{primitive-kernel decomposition}.
+
+Given $A$, define its divisibility-minimal kernel
+\[
+K:=\{a\in A:\text{there is no }d\in A\text{ with }d<a\text{ and }d\mid a\}.
+\]
+The key observation is that every nonminimal element of $A$ can be assigned to one of its minimal divisors in $K$, and this assignment is automatically \emph{injective} because Round-2 Corollary~12.1b forbids two distinct larger multiples of the same kernel element.
+
+This converts the whole set $A$ into ``one kernel element plus at most one satellite'' at each kernel point. That yields the sharp transfer inequalities stated above.
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+
+\textbf{Gap left after Round~3.}
+Round~3 analysed a large primitive construction class, but it did not rule out the possibility that the \emph{nonprimitive} part of a general solution could carry the real difficulty.
+
+\textbf{Claims to prove now.}
+\begin{enumerate}
+\item Construct a canonical primitive subset $K\subseteq A$.
+\item Prove that nonkernel elements inject into $K$.
+\item Deduce the pointwise counting bound
+\[
+|A\cap[1,N]|\le |K\cap[1,N]|+|K\cap[1,N/2]|.
+\]
+\item Deduce the reciprocal inequalities
+\[
+\sum_{a\in A}\frac1a\le \frac32\sum_{k\in K}\frac1k,
+\qquad
+\sum_{a\in A}\frac1{a\log a}\le \frac32\sum_{k\in K}\frac1{k\log k}.
+\]
+\item Use these to reduce Q1--Q3 to primitive sets.
+\item As an unconditional bonus, use a theorem on primitive sets to prove
+\[
+\sum_{a\in A}\frac1{a\log a}<2.4
+\]
+for every infinite $A$ satisfying~$(*)$.
+\end{enumerate}
+
+\textbf{Why this overcomes the earlier obstacle.}
+It shows that the nonprimitive part of $A$ is never more than a constant-factor perturbation of a primitive set. So the genuinely hard core of the Erd\H{o}s--S\'ark\"ozy problem is already present in the primitive case.
+
+\subsection*{5) WORK (ROUND-4)}
+
+\paragraph{\textbf{Notation.}}
+For real $x\ge 1$ write
+\[
+A(x):=|A\cap[1,x]|.
+\]
+Given an infinite $A\subseteq\mathbb N$ satisfying~$(*)$, define its \emph{primitive kernel}
+\[
+K:=\{a\in A:\text{there is no }d\in A\text{ with }d<a\text{ and }d\mid a\}.
+\]
+Write similarly
+\[
+K(x):=|K\cap[1,x]|.
+\]
+Since property~$(*)$ is hereditary under passing to subsets, every subset of $A$ also satisfies~$(*)$.
+
+\bigskip
+
+\paragraph{\textbf{Lemma 12.11 (primitive-kernel injection).}}
+Let $A$ be infinite and satisfy~$(*)$, and let $K$ be its primitive kernel.
+Then:
+\begin{enumerate}
+\item[(i)] $K$ is an infinite primitive subset of $A$, hence also satisfies~$(*)$.
+\item[(ii)] For every $n\in A\setminus K$ there exists at least one element $\kappa(n)\in K$ with $\kappa(n)<n$ and $\kappa(n)\mid n$.
+\item[(iii)] Any such choice of $\kappa(n)$ defines an injective map
+\[
+\kappa:A\setminus K\longrightarrow K.
+\]
+\end{enumerate}
+
+\emph{Proof.}
+(i) By definition, no element of $K$ is divisible by a smaller element of $A$; in particular no two distinct elements of $K$ divide one another, so $K$ is primitive.
+Since $K\subseteq A$, it also satisfies~$(*)$.
+
+To see that $K$ is infinite, suppose instead that $K$ were finite.
+By Round-2 Corollary~12.1b, each $k\in K$ has at most one larger multiple in $A$.
+Hence $A$ would contain at most the elements of $K$ together with at most one further element above each $k\in K$, so
+\[
+|A|\le 2|K|<\infty,
+\]
+contradicting that $A$ is infinite.
+Thus $K$ is infinite.
+
+(ii) Fix $n\in A\setminus K$.
+Consider the finite set
+\[
+D_n:=\{d\in A:d\mid n\}.
+\]
+This set is nonempty because $n\in D_n$.
+Choose $d_0\in D_n$ minimal with respect to the usual order on $\mathbb N$.
+Since $n\notin K$, we have $d_0<n$.
+By minimality of $d_0$ inside $D_n$, there is no element $e\in A$ with $e<d_0$ and $e\mid d_0$.
+Hence $d_0\in K$.
+Define $\kappa(n):=d_0$.
+Then $\kappa(n)\in K$, $\kappa(n)<n$, and $\kappa(n)\mid n$.
+
+(iii) Suppose $n_1,n_2\in A\setminus K$ are distinct and satisfy
+\[
+\kappa(n_1)=\kappa(n_2)=k.
+\]
+Then $k\in K$, and $k\mid n_1$, $k\mid n_2$, with both $n_1,n_2>k$.
+This contradicts Round-2 Corollary~12.1b, which says that a fixed element of $A$ can have at most one larger multiple in $A$.
+Therefore $\kappa$ is injective.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Proposition 12.12 (counting and reciprocal transfer to the primitive kernel).}}
+Let $A$ and $K$ be as in Lemma~12.11.
+Then for every $N\ge 1$,
+\begin{equation}
+\label{eq:count-transfer}
+A(N)\le K(N)+K(N/2)\le 2K(N).
+\end{equation}
+Moreover,
+\begin{equation}
+\label{eq:reciprocal-transfer}
+\sum_{a\in A}\frac1a\le \frac32\sum_{k\in K}\frac1k,
+\end{equation}
+and
+\begin{equation}
+\label{eq:weighted-transfer}
+\sum_{a\in A}\frac1{a\log a}\le \frac32\sum_{k\in K}\frac1{k\log k}.
+\end{equation}
+
+\emph{Proof.}
+Split
+\[
+A=K\sqcup B,
+\qquad B:=A\setminus K.
+\]
+By Lemma~12.11 there is an injective map $\kappa:B\to K$ with $\kappa(b)\mid b$ and $\kappa(b)<b$ for every $b\in B$.
+Since $\kappa(b)$ is a proper divisor of $b$, we have
+\[
+b\ge 2\kappa(b).
+\]
+
+Now fix $N\ge 1$ and let $b\in B\cap[1,N]$.
+Then
+\[
+\kappa(b)\le b/2\le N/2.
+\]
+Since $\kappa$ is injective, the map $b\mapsto \kappa(b)$ injects $B\cap[1,N]$ into $K\cap[1,N/2]$.
+Therefore
+\[
+|B\cap[1,N]|\le K(N/2).
+\]
+Adding the kernel elements gives
+\[
+A(N)=K(N)+|B\cap[1,N]|\le K(N)+K(N/2)\le 2K(N),
+\]
+which proves \eqref{eq:count-transfer}.
+
+For the unweighted reciprocal sum, use $b\ge 2\kappa(b)$:
+\[
+\sum_{b\in B}\frac1b
+\le \sum_{b\in B}\frac1{2\kappa(b)}
+\le \frac12\sum_{k\in K}\frac1k,
+\]
+where the last inequality again uses injectivity of $\kappa$.
+Hence
+\[
+\sum_{a\in A}\frac1a
+= \sum_{k\in K}\frac1k+\sum_{b\in B}\frac1b
+\le \frac32\sum_{k\in K}\frac1k,
+\]
+proving \eqref{eq:reciprocal-transfer}.
+
+For the logarithmically weighted sum, note first that $K\subseteq A$ and, by the earlier foundation, $2\notin A$ for infinite sets satisfying~$(*)$.
+Hence every $k\in K$ satisfies $k\ge 3$, so $\log k>0$.
+Also $b\ge 2\kappa(b)$ implies
+\[
+\log b\ge \log \kappa(b).
+\]
+Therefore
+\[
+\frac1{b\log b}
+\le \frac1{2\kappa(b)\log \kappa(b)}.
+\]
+Summing over $b\in B$ and using injectivity of $\kappa$ again yields
+\[
+\sum_{b\in B}\frac1{b\log b}
+\le \frac12\sum_{k\in K}\frac1{k\log k}.
+\]
+Adding the kernel contribution gives \eqref{eq:weighted-transfer}.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Theorem 12.13 (reduction of Q1, Q2, Q3 to primitive sets).}}
+Let \textnormal{(Q1$_{\mathrm{prim}}$)}, \textnormal{(Q2$_{\mathrm{prim}}$)}, \textnormal{(Q3$_{\mathrm{prim}}$)} denote the versions of \textnormal{(Q1)}, \textnormal{(Q2)}, \textnormal{(Q3)} in which one additionally assumes that $A$ is primitive.
+Then:
+\begin{enumerate}
+\item[(a)] \textnormal{(Q1)} is true if and only if \textnormal{(Q1$_{\mathrm{prim}}$)} is true.
+\item[(b)] \textnormal{(Q3)} is true if and only if \textnormal{(Q3$_{\mathrm{prim}}$)} is true.
+\item[(c)] At the yes/no level, \textnormal{(Q2)} is true if and only if \textnormal{(Q2$_{\mathrm{prim}}$)} is true.
+More precisely: if \textnormal{(Q2$_{\mathrm{prim}}$)} holds with some exponent $c>0$, then for every $0<c'<c$, \textnormal{(Q2)} holds with exponent $c'$.
+\end{enumerate}
+
+\emph{Proof.}
+The implications from the general statements to the primitive statements are immediate, since primitive sets are a special case.
+
+(a) Suppose \textnormal{(Q1)} holds, and let $A$ be an infinite set satisfying~$(*)$ with
+\[
+\liminf_{N\to\infty}\frac{A(N)}{\sqrt N}>0.
+\]
+Let $K$ be its primitive kernel.
+By \eqref{eq:count-transfer},
+\[
+K(N)\ge \frac12 A(N)
+\qquad\text{for every }N.
+\]
+Hence
+\[
+\liminf_{N\to\infty}\frac{K(N)}{\sqrt N}
+\ge \frac12 \liminf_{N\to\infty}\frac{A(N)}{\sqrt N}>0.
+\]
+Since $K$ is infinite, primitive, and satisfies~$(*)$, this proves \textnormal{(Q1$_{\mathrm{prim}}$)}.
+The converse is trivial.
+
+(b) If \textnormal{(Q3$_{\mathrm{prim}}$)} holds and $A$ is arbitrary satisfying~$(*)$, let $K$ be its primitive kernel.
+Then by \eqref{eq:reciprocal-transfer},
+\[
+\sum_{a\in A}\frac1a\le \frac32\sum_{k\in K}\frac1k.
+\]
+The right-hand side converges by \textnormal{(Q3$_{\mathrm{prim}}$)}, so \textnormal{(Q3)} holds.
+The converse is again trivial because primitive sets are a special case.
+
+(c) First, if \textnormal{(Q2)} holds for all sets, then it certainly holds for primitive ones.
+Conversely, assume \textnormal{(Q2$_{\mathrm{prim}}$)} holds with exponent $c>0$.
+Fix any $c'$ with $0<c'<c$.
+Let $A$ be arbitrary satisfying~$(*)$, and let $K$ be its primitive kernel.
+By assumption, there are infinitely many $N$ with
+\[
+K(N)<N^{1-c}.
+\]
+For such $N$, Proposition~12.12 gives
+\[
+A(N)\le 2K(N)<2N^{1-c}.
+\]
+Since $c-c'>0$, for all sufficiently large $N$ one has $2<N^{c-c'}$, hence
+\[
+2N^{1-c}<N^{1-c'}.
+\]
+Therefore there are infinitely many $N$ such that
+\[
+A(N)<N^{1-c'}.
+\]
+Thus \textnormal{(Q2)} holds with exponent $c'$.
+Since the original question only asks for the existence of \emph{some} positive exponent, the yes/no status of \textnormal{(Q2)} is unchanged by restricting to primitive sets.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Corollary 12.13a (unconditional weighted reciprocal theorem).}}
+For every infinite set $A\subseteq\mathbb N$ satisfying~$(*)$,
+\[
+\sum_{a\in A}\frac1{a\log a}<2.4.
+\]
+In particular,
+\[
+\sum_{a\in A}\frac1{a\log a}<\infty.
+\]
+
+\emph{Proof.}
+Let $K$ be the primitive kernel of $A$.
+By Proposition~12.12,
+\[
+\sum_{a\in A}\frac1{a\log a}
+\le \frac32\sum_{k\in K}\frac1{k\log k}.
+\]
+Now $K$ is primitive and $2\notin K$ because $K\subseteq A$ and infinite such sets $A$ avoid $2$ by Round-2 Corollary~12.1b.
+Therefore Theorem~4.4 of Lichtman applies and gives
+\[
+\sum_{k\in K}\frac1{k\log k}<1.60.
+\]
+Multiplying by $3/2$ yields
+\[
+\sum_{a\in A}\frac1{a\log a}<2.40.
+\]
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Interpretation relative to Round~3.}}
+Round~3 showed that a large square-based primitive class cannot reach the target in \textnormal{(Q1)}.
+Round~4 now shows that this is not a defect of having insisted on primitiveness: \emph{adding nonprimitive multiples can only change the counting function by a factor at most $2$}. Thus any genuine progress on Q1 or Q3 must come from finding a qualitatively new \emph{primitive} construction, or from proving a theorem for primitive sets.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\textbf{(i) Could a divisibility component have long chains and break the reduction?}
+No. In fact, Round-2 Corollary~12.1b is much stronger: a fixed $a\in A$ has at most one larger multiple in $A$ \emph{in total}. So chains of length $\ge 3$ are impossible automatically, because if $a\mid b\mid c$ with $a<b<c$, then $a$ would have two larger multiples $b$ and $c$.
+
+\textbf{(ii) Is the map $\kappa$ well-defined when a nonkernel element has several minimal divisors?}
+Yes. One may choose \emph{any} minimal divisor in $K$. Injectivity does not depend on uniqueness: if two distinct elements were assigned the same $k\in K$, then $k$ would divide two distinct larger elements of $A$, contradicting Round-2 Corollary~12.1b.
+
+\textbf{(iii) Could the counting bound fail near the endpoint $N/2$?}
+No. If $b\in A\setminus K$ and $\kappa(b)=k$, then $b\ge 2k$. Hence $b\le N$ implies $k\le N/2$. This is the only place where $N/2$ enters.
+
+\textbf{(iv) Is there any issue with logarithms at small numbers?}
+No. Infinite sets satisfying~$(*)$ contain neither $1$ nor $2$, by the earlier foundation. Hence every $k\in K$ satisfies $k\ge 3$, so $\log k>0$.
+
+\textbf{(v) Does the reduction really preserve the open questions?}
+For Q1 and Q3, yes exactly: primitive is a special case in one direction, and Proposition~12.12 gives the reverse transfer.
+For Q2, the exponent may shrink from $c$ to any $c'<c$ when passing from primitive sets back to general sets, but since Q2 only asks whether \emph{some} positive exponent exists, the yes/no status is preserved.
+
+\textbf{(vi) Could the primitive kernel $K$ be finite even when $A$ is infinite?}
+No. If $K$ were finite, each $k\in K$ could support at most one larger multiple in $A$, so $A$ would have at most $2|K|$ elements.
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round does not solve the original Erd\H{o}s--S\'ark\"ozy questions outright, but it isolates the true core of the problem.
+
+\begin{quote}
+\emph{The three open questions may be reduced to primitive sets. In particular, any eventual counterexample to Q1 or Q3 must already be primitive, and any proof of Q1--Q3 may be carried out after restricting to primitive sets.}
+\end{quote}
+
+This is a strict advance beyond Round~3 because it proves that the nonprimitive part of a set satisfying~$(*)$ is asymptotically inessential:
+\begin{itemize}
+\item it can increase counting functions by at most a factor $2$;
+\item it can increase reciprocal sums by at most a factor $3/2$;
+\item it yields an unconditional explicit theorem
+\[
+\sum_{a\in A}\frac1{a\log a}<2.4.
+\]
+\end{itemize}
+
+So the unresolved core has now been sharply reformulated as follows:
+\begin{quote}
+\emph{Does there exist an infinite \textbf{primitive} set $A$ satisfying~$(*)$ with}
+\[
+\liminf_{N\to\infty}\frac{|A\cap[1,N]|}{\sqrt N}>0?
+\]
+\emph{Must every primitive such $A$ satisfy}
+\[
+\sum_{a\in A}\frac1a<\infty?
+\]
+\emph{And does some positive-exponent gap in Q2 already hold in the primitive case?}
+\end{quote}
+
+That primitive reformulation is the minimal corrected statement isolated by this round.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 70\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T.~F.~Bloom, \emph{Erd\H{o}s Problem \#12}, accessed 2026-03-07.
+\item J.~D.~Lichtman, \emph{A proof of the Erd\H{o}s primitive set conjecture}, Forum of Mathematics, Pi \textbf{11} (2023), e18, 1--21.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+Here $x=12$, so the requested export filename is
+\[
+\texttt{12\_solutions.tex}.
+\]

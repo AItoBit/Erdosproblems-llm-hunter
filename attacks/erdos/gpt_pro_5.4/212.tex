@@ -1,0 +1,224 @@
+\section*{Erd\H{o}s Problem \#212 (Round 2)}
+
+Question recalled. Does there exist a dense set $S\subset \mathbb{R}^2$ such that every pairwise distance between points of $S$ is rational?
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+Path C: obstruction/structure. Round 1 already identified the core extension gap, so the most promising strict advance is not to restart the existence search but to prove unconditional theorems ruling out two major classes of candidate counterexamples. In this round I prove that an infinite rational distance set cannot have infinitely many points on a line or on a circle unless all but at most four points lie there. I also prove a quadratic-field normal form for every non-collinear rational distance set.
+
+\subsection*{2. Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+\begin{enumerate}
+\item Lemma 4.1: every rational distance set in $\mathbb{R}^2$ is countable.
+\item Propositions 4.2 and 4.3: there are dense rational-distance sets on a line and on a circle.
+\item The Round-1 gap statement: no mechanism was available to add a point near an arbitrary target while preserving rationality of all distances.
+\end{enumerate}
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 2)}
+There are three genuinely new ingredients in this round.
+\begin{enumerate}
+\item A \emph{quadratic-field normal form}: after a rational similarity, every non-collinear rational distance set lies in $\mathbb{Q}\times \mathbb{Q}\sqrt{k}$ for one fixed squarefree integer $k$.
+\item A \emph{line obstruction}: if infinitely many points of a rational distance set lie on one line, then at most four points lie off that line.
+\item A \emph{circle obstruction}: by rational-distance-preserving inversion, the same bound holds for a circle.
+\end{enumerate}
+The last two statements imply a new corollary directly relevant to the dense-set problem: a dense rational distance set, if it exists at all, must meet \emph{every} line and \emph{every} circle in only finitely many points.
+
+\subsection*{4. ATTACK PLAN (ROUND 2)}
+Round 1 had only a weak structural fact (countability). The exact missing ingredient was a theorem showing that natural ``one-dimensional skeleton'' constructions cannot be dense in the plane. I therefore prove, in order:
+\begin{enumerate}
+\item a coordinate rigidity lemma for rational distance sets;
+\item a sharp line theorem using a hyperelliptic-curve argument and Faltings' theorem;
+\item a circle theorem by inversion around a point of the set.
+\end{enumerate}
+This overcomes a concrete Round-1 obstacle: any construction built from infinitely many points on one line or one circle plus finitely many auxiliary points is now rigorously ruled out.
+
+\subsection*{5. WORK (ROUND 2)}
+
+\medskip
+\noindent\textbf{Lemma 5.1 (quadratic-field normal form).}
+Let $S$ be a rational distance set containing three non-collinear points. Then there exist a squarefree integer $k>0$ and a similarity of the plane whose scale factor is rational such that the image of $S$ is contained in
+\[
+\{(r_1,r_2\sqrt{k}) : r_1,r_2\in \mathbb{Q}\}.
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+Choose distinct points $A,B\in S$. Since $d(A,B)\in \mathbb{Q}_{>0}$, after a translation, a rotation, and then a scaling by the rational factor $1/d(A,B)$, we may assume
+\[
+A=(0,0), \qquad B=(1,0).
+\]
+Let $P=(x,y)$ be any point of the transformed set. Write
+\[
+a=d(P,A)\in \mathbb{Q}, \qquad b=d(P,B)\in \mathbb{Q}.
+\]
+Then
+\[
+x^2+y^2=a^2, \qquad (x-1)^2+y^2=b^2.
+\]
+Subtracting gives
+\[
+x=\frac{a^2-b^2+1}{2}\in \mathbb{Q},
+\]
+and therefore
+\[
+y^2=a^2-x^2\in \mathbb{Q}.
+\]
+
+Now choose a point $C=(u,v)$ of the set with $v\neq 0$; this is possible because the set contains a non-collinear triple. Since $u\in \mathbb{Q}$ and $v^2\in \mathbb{Q}_{>0}$, we may write
+\[
+v=r\sqrt{k}
+\]
+with $r\in \mathbb{Q}_{\neq 0}$ and $k>0$ squarefree.
+
+Take any point $P=(x,y)$ in the set. Because $d(P,C)\in \mathbb{Q}$,
+\[
+d(P,C)^2=(x-u)^2+(y-v)^2
+\]
+is rational. Expanding,
+\[
+(x-u)^2+y^2+v^2-2yv \in \mathbb{Q}.
+\]
+The first three terms are rational, so $2yv\in \mathbb{Q}$. Since $v=r\sqrt{k}$ with $r\in\mathbb{Q}_{\neq 0}$, it follows that
+\[
+\frac{y}{\sqrt{k}}\in \mathbb{Q}.
+\]
+Hence $y\in \mathbb{Q}\sqrt{k}$, as required.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 5.2 (inversion preserves rationality).}
+Let $S$ be a rational distance set, let $O\in S$, and let $\rho\in \mathbb{Q}_{>0}$. Define the inversion
+\[
+I(P)=O+\frac{\rho^2(P-O)}{|P-O|^2}
+\]
+for $P\neq O$. Then $I(S\setminus\{O\})$ is again a rational distance set.
+
+\smallskip
+\noindent\emph{Proof.}
+For distinct $P,Q\neq O$ the standard inversion formula gives
+\[
+|I(P)-I(Q)|=\frac{\rho^2\,|P-Q|}{|P-O|\,|Q-O|}.
+\]
+Here $|P-Q|$, $|P-O|$, and $|Q-O|$ are all rational because $O,P,Q\in S$. Since $\rho^2\in \mathbb{Q}$, the right-hand side is rational.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 5.3 (line theorem).}
+Let $S$ be a rational distance set in the plane. If $S$ has infinitely many points on a line $L$, then at most four points of $S$ lie off $L$.
+
+\smallskip
+\noindent\emph{Proof.}
+Assume for contradiction that $S\cap L$ is infinite and that there are at least five points of $S$ off $L$.
+
+Choose distinct points $A,B\in S\cap L$. After a translation, rotation, and rational scaling as in Lemma 5.1, we may assume
+\[
+L=\{(x,0):x\in \mathbb{R}\},\qquad A=(0,0),\qquad B=(1,0).
+\]
+If $(x,0)\in S\cap L$, then, exactly as in Lemma 5.1,
+\[
+x=\frac{d((x,0),A)^2-d((x,0),B)^2+1}{2}\in \mathbb{Q}.
+\]
+So the set
+\[
+X:=\{x\in \mathbb{Q} : (x,0)\in S\cap L\}
+\]
+is infinite.
+
+Every off-line point has the form $P=(a,b)$ with $b\neq 0$, where $a\in \mathbb{Q}$ and $b^2\in \mathbb{Q}$ by the same calculation as in Lemma 5.1. Points reflected across $L$ give the same pair $(a,b^2)$, so a reflection class contains at most two points. Since there are at least five off-line points, there are at least three distinct reflection classes. Choose representatives
+\[
+P_j=(a_j,b_j),\qquad j=1,2,3,
+\]
+from three distinct reflection classes. Then the quadratic polynomials
+\[
+f_j(x):=(x-a_j)^2+b_j^2
+\]
+lie in $\mathbb{Q}[x]$, have degree $2$, and are pairwise distinct. Because $b_j\neq 0$, each $f_j$ has two distinct non-real roots $a_j\pm i b_j$, so each $f_j$ is squarefree. Distinct reflection classes give distinct pairs $(a_j,b_j^2)$, hence distinct root sets, so the product
+\[
+F(x):=f_1(x)f_2(x)f_3(x)
+\]
+is squarefree of degree $6$.
+
+For every $x\in X$, each $f_j(x)$ is the square of the rational distance from $(x,0)$ to $P_j$, hence each $f_j(x)$ is a rational square. Therefore
+\[
+y^2=F(x)
+\]
+has a rational solution $y$ for every $x\in X$. So the affine curve
+\[
+C:\ y^2=F(x)
+\]
+has infinitely many rational points.
+
+Now $F$ is squarefree of degree $6$, so the smooth projective model of $C$ is a hyperelliptic curve of genus
+\[
+g=\frac{6-2}{2}=2.
+\]
+By Faltings' theorem, a curve over $\mathbb{Q}$ of genus at least $2$ has only finitely many rational points. This contradicts the infinitude of $X$.
+
+Therefore at most four points of $S$ lie off $L$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.4.}
+If a dense rational distance set $S\subset \mathbb{R}^2$ exists, then $S$ meets every line in only finitely many points.
+
+\smallskip
+\noindent\emph{Proof.}
+If some line contained infinitely many points of $S$, then by Theorem 5.3 all but at most four points of $S$ would lie on that line. The closure of such a set is contained in that line together with finitely many isolated points, so it cannot be all of $\mathbb{R}^2$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 5.5 (circle theorem).}
+Let $S$ be a rational distance set in the plane. If $S$ has infinitely many points on a circle $C$, then at most four points of $S$ lie off $C$.
+
+\smallskip
+\noindent\emph{Proof.}
+Choose a point $O\in S\cap C$; this is possible because $S\cap C$ is infinite. Apply inversion centered at $O$ with radius $\rho=1$. By Lemma 5.2,
+\[
+S':=I(S\setminus\{O\})
+\]
+is a rational distance set.
+
+A circle through the inversion center maps to a line, so $C\setminus\{O\}$ maps to a line $L$. Since $S\cap C$ is infinite, the set $S'\cap L$ is infinite. By Theorem 5.3, at most four points of $S'$ lie off $L$. These correspond exactly to the points of $S$ off $C$. Hence at most four points of $S$ lie off $C$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.6.}
+If a dense rational distance set $S\subset \mathbb{R}^2$ exists, then $S$ meets every circle in only finitely many points.
+
+\smallskip
+\noindent\emph{Proof.}
+Exactly as in Corollary 5.4, using Theorem 5.5 instead of Theorem 5.3.
+\hfill$\square$
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+I checked the new argument against the main failure modes.
+\begin{enumerate}
+\item \emph{Repeated quadratic factors.} This is the subtle point in the line theorem. If two off-line points are reflections across $L$, they produce the same quadratic $(x-a)^2+b^2$. I handled this by passing to reflection classes. Since each class has size at most $2$, five off-line points force at least three distinct classes.
+\item \emph{Rationality of coefficients.} After the normalization $A=(0,0)$ and $B=(1,0)$, every point $(a,b)$ of the rational distance set satisfies $a\in \mathbb{Q}$ and $b^2\in \mathbb{Q}$, so the curve really is defined over $\mathbb{Q}$.
+\item \emph{Genus computation.} The product polynomial has degree $6$ and is squarefree, so the hyperelliptic genus formula gives genus $2$ exactly.
+\item \emph{Inversion.} The inversion center $O$ is removed, but that does not affect the exceptional-point count because $O$ lies on the original circle.
+\item \emph{Relevance to density.} The corollaries do not solve the Erd\H{o}s--Ulam problem, but they do sharply rule out any construction that uses infinitely many points on one line or one circle.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The new Round-2 advances over Round 1 are:
+\begin{enumerate}
+\item Every non-collinear rational distance set admits a common quadratic-field normal form.
+\item If infinitely many points lie on one line, then all but at most four points lie on that line.
+\item If infinitely many points lie on one circle, then all but at most four points lie on that circle.
+\item Therefore any dense rational distance set, if it exists, must intersect every line and every circle only finitely many times.
+\end{enumerate}
+
+The first unresolved gap is now very sharp: one would have to rule out (or construct) a countable rational distance set which is dense in $\mathbb{R}^2$ \emph{and} has only finite intersection with every line and every circle.
+
+\subsection*{8. COMPLETION ESTIMATE}
+COMPLETION: 45\%
+
+\subsection*{9. REFERENCES}
+\begin{enumerate}
+\item G. Faltings, \emph{Endlichkeitss\"atze f\"ur abelsche Variet\"aten \"uber Zahlk\"orper}, Invent. Math. 73 (1983), 349--366.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#212}, problem page accessed 2026-03-07.
+\end{enumerate}
+
+

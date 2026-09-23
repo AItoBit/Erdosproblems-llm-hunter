@@ -1,0 +1,542 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)} in the following precise sense: I isolate the first concrete arithmetic obstruction inside the genuine divisor family with exactly two distinct prime factors.
+
+Round-(round\_no-1) proved general positive results for fixed smoothness classes and for several structured subfamilies, but it still left the basic two-prime-power family
+\[
+n=p^a q^b \qquad (p<q\text{ distinct primes},\ a,b\ge 0)
+\]
+without a sharp internal reduction. In this round I prove that the full reciprocal-gap sum on this family has an \emph{exact} decomposition into:
+\begin{enumerate}
+\item an elementary same-sign part which is uniformly bounded absolutely, and
+\item a genuinely arithmetic mixed part
+\[
+B(p,q):=\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}.
+\]
+\end{enumerate}
+
+The main new theorem shows that for each fixed pair of distinct primes \(p<q\),
+\[
+L_{p,q}:=\sup_{a,b\ge 0} S_{\mathrm{all}}(p^a q^b)
+\]
+is finite, is given by an explicit series, and satisfies
+\[
+B(p,q)\le L_{p,q}\le 12+3B(p,q).
+\]
+Hence the stronger subproblem
+\[
+\sup_{p<q,\,a,b\ge 0} S_{\mathrm{all}}(p^a q^b)<\infty
+\]
+is \emph{equivalent} to the single concrete question whether
+\[
+\sup_{p<q} B(p,q)<\infty.
+\]
+
+This is strict progress beyond the previous round: it replaces a diffuse obstruction by a single explicit reciprocal power-difference series.
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i},
+\]
+where \(1=d_1<\cdots<d_t=n\) are the positive divisors of \(n\).
+\item The Round-(round\_no-1) fixed-smoothness theorem: for every fixed finite set \(S\) of primes there is a constant \(C_S\) such that
+\[
+S_{\mathrm{all}}(n)\le C_S
+\qquad\text{for every }S\text{-smooth }n.
+\]
+In particular, for every fixed pair of distinct primes \(p<q\),
+\[
+\sup_{a,b\ge 0} S_{\mathrm{all}}(p^a q^b)<\infty.
+\]
+\item The previously established contextual fact that the global Erd\H{o}s problem remains unresolved unconditionally, while Tao's 2025 note provides a conditional disproof under a prime-tuples hypothesis.
+\end{enumerate}
+
+I do not re-prove any of these results here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is an exact displacement decomposition for the divisor pairs of \(p^a q^b\).
+
+If
+\[
+D_{a,b}:=\{p^i q^j:0\le i\le a,\ 0\le j\le b\},
+\]
+then every ordered pair of distinct divisors may be written uniquely as
+\[
+(p^i q^j,\ p^{i+u}q^{j+v})
+\]
+for an integer displacement vector \((u,v)\neq(0,0)\) satisfying \(p^u q^v>1\). Grouping contributions by \((u,v)\) yields an exact formula for \(S_{\mathrm{all}}(p^a q^b)\).
+
+After passing to the limit \(a,b\to\infty\), the displacement formula splits into:
+\[
+A(p,q):=\sum_{\substack{u,v\ge 0\\(u,v)\neq(0,0)}}\frac{1}{p^u q^v-1}
+\]
+and
+\[
+B(p,q):=\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}.
+\]
+The first series is elementary and uniformly bounded; the second is the genuine arithmetic obstruction.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap after Round-(round\_no-1) was this:
+
+\begin{quote}
+Even in the first genuinely nontrivial divisor family \(n=p^a q^b\), there was no sharp formula isolating the arithmetic source of difficulty.
+\end{quote}
+
+I now prove the following claims.
+
+\begin{enumerate}
+\item An exact finite displacement formula for \(S_{\mathrm{all}}(p^a q^b)\).
+\item A limit formula for
+\[
+L_{p,q}:=\lim_{a,b\to\infty}S_{\mathrm{all}}(p^a q^b)=\sup_{a,b\ge 0}S_{\mathrm{all}}(p^a q^b),
+\]
+using the Round-(round\_no-1) fixed-smoothness theorem to guarantee finiteness.
+\item Explicit inequalities
+\[
+B(p,q)\le L_{p,q}\le 12+3B(p,q).
+\]
+\item The equivalence
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty
+\iff
+\sup_{p<q}B(p,q)<\infty.
+\]
+\end{enumerate}
+
+This isolates a single sharply formulated obstruction for the two-prime-power subproblem.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. Setup}
+
+Fix distinct primes \(p<q\). For integers \(a,b\ge 0\), let
+\[
+D_{a,b}:=\{p^i q^j:0\le i\le a,\ 0\le j\le b\}.
+\]
+Then \(D_{a,b}\) is exactly the divisor set of \(p^a q^b\). Write
+\[
+L_{p,q}:=\sup_{a,b\ge 0}S_{\mathrm{all}}(p^a q^b).
+\]
+By the Round-(round\_no-1) fixed-smoothness theorem with \(S=\{p,q\}\), one has
+\[
+L_{p,q}<\infty.
+\]
+
+\subsection*{2. Exact displacement formula}
+
+\paragraph{Proposition 1.}
+For every \(a,b\ge 0\),
+\[
+S_{\mathrm{all}}(p^a q^b)
+=
+\sum_{\substack{u,v\in\mathbf Z\\(u,v)\neq(0,0)\\p^u q^v>1}}
+\frac{W_{a,b}(u,v)}{p^u q^v-1},
+\]
+where
+\[
+W_{a,b}(u,v)
+:=
+\left(\sum_{i=\max(0,-u)}^{a-\max(0,u)}p^{-i}\right)
+\left(\sum_{j=\max(0,-v)}^{b-\max(0,v)}q^{-j}\right),
+\]
+with the convention that an empty sum is \(0\).
+
+\emph{Proof.}
+Every ordered pair of distinct divisors of \(p^a q^b\) can be written uniquely as
+\[
+(x,y)=(p^i q^j,\ p^{i+u}q^{j+v})
+\]
+with integers \(i,j,u,v\) such that
+\[
+0\le i\le a,\quad 0\le j\le b,\quad 0\le i+u\le a,\quad 0\le j+v\le b,
+\]
+and
+\[
+y>x \iff p^u q^v>1.
+\]
+For such a pair,
+\[
+\frac{1}{y-x}
+=
+\frac{1}{p^i q^j(p^u q^v-1)}.
+\]
+Fix \((u,v)\neq(0,0)\) with \(p^u q^v>1\). The admissible values of \(i\) are exactly
+\[
+\max(0,-u)\le i\le a-\max(0,u),
+\]
+and similarly the admissible values of \(j\) are exactly
+\[
+\max(0,-v)\le j\le b-\max(0,v).
+\]
+Summing \(p^{-i}q^{-j}/(p^u q^v-1)\) over all such admissible \((i,j)\) gives precisely the term
+\[
+\frac{W_{a,b}(u,v)}{p^u q^v-1}.
+\]
+Finally, summing over all nonzero displacements \((u,v)\) with \(p^u q^v>1\) yields the formula.
+\hfill\(\Box\)
+
+\subsection*{3. Exact limit formula}
+
+For integers \(u,v\), define
+\[
+W_{\infty}(u,v)
+:=
+\frac{p^{-\max(0,-u)}}{1-p^{-1}}\cdot \frac{q^{-\max(0,-v)}}{1-q^{-1}}.
+\]
+
+\paragraph{Proposition 2.}
+For each fixed pair of distinct primes \(p<q\), the limit
+\[
+\lim_{a,b\to\infty}S_{\mathrm{all}}(p^a q^b)
+\]
+exists, equals \(L_{p,q}\), and is given by
+\[
+L_{p,q}
+=
+\sum_{\substack{u,v\in\mathbf Z\\(u,v)\neq(0,0)\\p^u q^v>1}}
+\frac{W_{\infty}(u,v)}{p^u q^v-1}.
+\]
+Moreover,
+\[
+L_{p,q}
+=
+\frac{A(p,q)+B(p,q)}{(1-p^{-1})(1-q^{-1})},
+\]
+where
+\[
+A(p,q):=\sum_{\substack{u,v\ge 0\\(u,v)\neq(0,0)}}\frac{1}{p^u q^v-1}
+\]
+and
+\[
+B(p,q):=\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}.
+\]
+In particular, for every fixed pair of distinct primes \(p<q\), the series \(B(p,q)\) converges.
+
+\emph{Proof.}
+By Proposition 1, one has
+\[
+S_{\mathrm{all}}(p^a q^b)
+=
+\sum_{u,v\in\mathbf Z}F_{a,b}(u,v),
+\]
+where
+\[
+F_{a,b}(u,v)
+:=
+\mathbf 1_{(u,v)\neq(0,0)}\mathbf 1_{p^u q^v>1}
+\frac{W_{a,b}(u,v)}{p^u q^v-1}.
+\]
+For each fixed \((u,v)\), the quantity \(W_{a,b}(u,v)\) is nondecreasing in \(a\) and \(b\), and
+\[
+W_{a,b}(u,v)\uparrow W_{\infty}(u,v)
+\qquad (a,b\to\infty).
+\]
+Therefore
+\[
+F_{a,b}(u,v)\uparrow F_{\infty}(u,v)
+:=
+\mathbf 1_{(u,v)\neq(0,0)}\mathbf 1_{p^u q^v>1}
+\frac{W_{\infty}(u,v)}{p^u q^v-1}.
+\]
+Since all terms are nonnegative, the monotone convergence theorem on counting measure gives
+\[
+\lim_{a,b\to\infty}S_{\mathrm{all}}(p^a q^b)
+=
+\sum_{u,v\in\mathbf Z}F_{\infty}(u,v).
+\]
+Because the Round-(round\_no-1) fixed-smoothness theorem gives a uniform bound on
+\(S_{\mathrm{all}}(p^a q^b)\) for fixed \(p,q\), the limit is finite and equals \(L_{p,q}\).
+This proves the first formula.
+
+It remains to simplify the sum.
+
+If \(u\ge 0\) and \(v\ge 0\), not both zero, then
+\[
+W_{\infty}(u,v)=\frac{1}{(1-p^{-1})(1-q^{-1})},
+\]
+so these terms contribute exactly
+\[
+\frac{1}{(1-p^{-1})(1-q^{-1})}
+\sum_{\substack{u,v\ge 0\\(u,v)\neq(0,0)}}\frac{1}{p^u q^v-1}
+=
+\frac{A(p,q)}{(1-p^{-1})(1-q^{-1})}.
+\]
+
+If \(u=-r<0\) and \(v=s\ge 0\), then \(r\ge 1\), and the condition \(p^u q^v>1\) is
+\[
+q^s>p^r.
+\]
+In this case,
+\[
+\frac{W_{\infty}(u,v)}{p^u q^v-1}
+=
+\frac{p^{-r}}{(1-p^{-1})(1-q^{-1})}\cdot \frac{1}{q^s/p^r-1}
+=
+\frac{1}{(1-p^{-1})(1-q^{-1})}\cdot \frac{1}{q^s-p^r}.
+\]
+Similarly, if \(u=r\ge 0\) and \(v=-s<0\), then \(s\ge 1\), the condition is
+\[
+p^r>q^s,
+\]
+and the contribution is
+\[
+\frac{1}{(1-p^{-1})(1-q^{-1})}\cdot \frac{1}{p^r-q^s}.
+\]
+Combining these two mixed-sign cases gives exactly
+\[
+\frac{1}{(1-p^{-1})(1-q^{-1})}
+\sum_{r\ge 1}\sum_{s\ge 1}\frac{1}{|p^r-q^s|}
+=
+\frac{B(p,q)}{(1-p^{-1})(1-q^{-1})}.
+\]
+Thus
+\[
+L_{p,q}=
+\frac{A(p,q)+B(p,q)}{(1-p^{-1})(1-q^{-1})}.
+\]
+Since \(L_{p,q}<\infty\), this identity also shows that \(B(p,q)<\infty\) for each fixed pair \(p<q\).
+\hfill\(\Box\)
+
+\subsection*{4. The elementary part is uniformly bounded}
+
+\paragraph{Lemma 3.}
+For every pair of distinct primes \(p<q\),
+\[
+A(p,q)\le 4.
+\]
+
+\emph{Proof.}
+Write
+\[
+A(p,q)
+=
+\sum_{u\ge 1}\frac{1}{p^u-1}
++
+\sum_{v\ge 1}\frac{1}{q^v-1}
++
+\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{p^u q^v-1}.
+\]
+For the first sum, since \(p\ge 2\), one has
+\[
+\sum_{u\ge 1}\frac{1}{p^u-1}
+\le
+1+\sum_{u\ge 2}\frac{1}{2^{u-1}}=2.
+\]
+For the second sum, since \(q\ge 3\),
+\[
+q^v-1\ge 2\cdot 3^{v-1}
+\qquad (v\ge 1),
+\]
+so
+\[
+\sum_{v\ge 1}\frac{1}{q^v-1}
+\le
+\sum_{v\ge 1}\frac{1}{2\cdot 3^{v-1}}=1.
+\]
+Finally, since \(p^u q^v\ge 2^u 3^v\ge 6\), we have
+\[
+p^u q^v-1\ge \frac12 p^u q^v,
+\]
+whence
+\[
+\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{p^u q^v-1}
+\le
+2\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{p^u q^v}
+\le
+2\left(\sum_{u\ge 1}2^{-u}\right)\left(\sum_{v\ge 1}3^{-v}\right)=1.
+\]
+Adding the three bounds gives \(A(p,q)\le 4\).
+\hfill\(\Box\)
+
+\subsection*{5. The precise reduction to the reciprocal power-difference series}
+
+\paragraph{Theorem 4.}
+For every pair of distinct primes \(p<q\),
+\[
+B(p,q)\le L_{p,q}\le 12+3B(p,q).
+\]
+Consequently,
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty
+\iff
+\sup_{p<q}B(p,q)<\infty.
+\]
+
+\emph{Proof.}
+We first prove the lower bound. For any \(a,b\ge 1\), the divisors
+\[
+p,p^2,\dots,p^a,\qquad q,q^2,\dots,q^b
+\]
+all belong to the divisor set of \(p^a q^b\). Therefore
+\[
+\sum_{u=1}^{a}\sum_{v=1}^{b}\frac{1}{|p^u-q^v|}
+\le S_{\mathrm{all}}(p^a q^b)
+\le L_{p,q}.
+\]
+Letting \(a,b\to\infty\) and using monotone convergence yields
+\[
+B(p,q)\le L_{p,q}.
+\]
+
+For the upper bound, Proposition 2 and Lemma 3 give
+\[
+L_{p,q}
+=
+\frac{A(p,q)+B(p,q)}{(1-p^{-1})(1-q^{-1})}
+\le
+\frac{4+B(p,q)}{(1-p^{-1})(1-q^{-1})}.
+\]
+Since \(p\ge 2\) and \(q\ge 3\),
+\[
+(1-p^{-1})(1-q^{-1})\ge \frac12\cdot \frac23 = \frac13,
+\]
+so
+\[
+L_{p,q}\le 3(4+B(p,q))=12+3B(p,q).
+\]
+This proves
+\[
+B(p,q)\le L_{p,q}\le 12+3B(p,q).
+\]
+
+Now suppose
+\[
+\sup_{p<q} B(p,q)<\infty.
+\]
+Then the upper bound implies
+\[
+\sup_{p<q}L_{p,q}<\infty,
+\]
+and hence
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty.
+\]
+Conversely, if
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty,
+\]
+then certainly \(\sup_{p<q}L_{p,q}<\infty\), and the lower bound \(B(p,q)\le L_{p,q}\) yields
+\[
+\sup_{p<q}B(p,q)<\infty.
+\]
+This proves the equivalence.
+\hfill\(\Box\)
+
+\subsection*{6. Interpretation}
+
+Theorem 4 yields two rigorous consequences.
+
+\begin{enumerate}
+\item For each fixed pair of distinct primes \(p<q\), the series
+\[
+\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}
+\]
+converges.
+\item The stronger subproblem of proving
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty
+\]
+on the entire two-prime-power family is \emph{equivalent} to the single concrete uniform question
+\[
+\sup_{p<q}\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}<\infty.
+\]
+\end{enumerate}
+
+Since absolute boundedness of \(S_{\mathrm{all}}\) would immediately imply the Erd\H{o}s inequality on the whole two-prime-power family,
+Theorem 4 isolates the first genuine arithmetic barrier there.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Exact pair counting in Proposition 1.}
+For a fixed displacement \((u,v)\), the admissible initial indices are exactly those for which both
+\((i,j)\) and \((i+u,j+v)\) lie in the rectangle \([0,a]\times[0,b]\). This gives the ranges
+\[
+\max(0,-u)\le i\le a-\max(0,u),
+\qquad
+\max(0,-v)\le j\le b-\max(0,v),
+\]
+which is exactly what appears in \(W_{a,b}(u,v)\). No displacement is counted twice.
+
+\paragraph{2. Monotone convergence in Proposition 2.}
+Every summand is nonnegative, and for fixed \((u,v)\) the factor \(W_{a,b}(u,v)\) increases to \(W_{\infty}(u,v)\). Therefore the monotone convergence theorem applies directly on counting measure. The only place where finiteness is used is to conclude that the resulting infinite series is finite; that is exactly where the Round-(round\_no-1) fixed-smoothness theorem enters.
+
+\paragraph{3. Mixed-sign simplification.}
+If \(u=-r<0\) and \(v=s\ge 0\), then
+\[
+\frac{p^{-r}}{q^s/p^r-1}=\frac{1}{q^s-p^r}.
+\]
+If \(u=r\ge 0\) and \(v=-s<0\), then
+\[
+\frac{q^{-s}}{p^r/q^s-1}=\frac{1}{p^r-q^s}.
+\]
+These are the only mixed-sign cases compatible with \(p^u q^v>1\), so the mixed part is exactly \(B(p,q)\).
+
+\paragraph{4. Lower bound \(B(p,q)\le L_{p,q}\).}
+The partial sums
+\[
+\sum_{u=1}^{a}\sum_{v=1}^{b}\frac{1}{|p^u-q^v|}
+\]
+are genuine subsums of \(S_{\mathrm{all}}(p^a q^b)\), because \(p^u\) and \(q^v\) are themselves divisors of \(p^a q^b\). No comparison or approximation is used here.
+
+\paragraph{5. What is and is not reduced by Theorem 4.}
+Theorem 4 reduces the stronger statement
+\[
+\sup_{p<q,\,a,b}S_{\mathrm{all}}(p^a q^b)<\infty
+\]
+to the uniform boundedness of \(B(p,q)\). It does \emph{not} prove that the original Erd\H{o}s ratio problem on two-prime powers is equivalent to uniform boundedness of \(B(p,q)\), because the ratio problem allows \(S_{\mathrm{gap}}\) in the denominator. I do not claim such an equivalence.
+
+\paragraph{6. Strict advance beyond the previous round.}
+The previous round only proved boundedness on each fixed smoothness class and several structured families. The new result isolates an explicit arithmetic series that exactly measures the extra difficulty in the first genuinely free family \(p^a q^b\). This is stronger and more concrete than the earlier abstract obstructions.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a new theorem that strictly sharpens the two-prime-power subproblem:
+
+\begin{quote}
+For each pair of distinct primes \(p<q\), the quantity
+\[
+L_{p,q}:=\sup_{a,b\ge 0}S_{\mathrm{all}}(p^a q^b)
+\]
+is finite and satisfies
+\[
+B(p,q)\le L_{p,q}\le 12+3B(p,q),
+\qquad
+B(p,q):=\sum_{u\ge 1}\sum_{v\ge 1}\frac{1}{|p^u-q^v|}.
+\]
+Hence
+\[
+\sup_{p<q,\,a,b\ge 0}S_{\mathrm{all}}(p^a q^b)<\infty
+\iff
+\sup_{p<q}B(p,q)<\infty.
+\]
+\end{quote}
+
+This isolates a single, sharply formulated arithmetic obstruction that was not present in previous rounds. Any attempt to prove the stronger absolute boundedness of \(S_{\mathrm{all}}\) on the entire two-prime-power family must control the reciprocal power-difference series \(B(p,q)\) uniformly in \(p,q\). Conversely, if \(B(p,q)\) were unbounded, then even that stronger absolute boundedness would already fail on the family \(n=p^a q^b\).
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 95\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item J.-H. Evertse, \emph{Diophantine Equations}, Chapter 5, especially Theorem 5.6 (Tijdeman's gap theorem for fixed smoothness classes).
+\item T. Tao, \emph{On the sum of reciprocals of gaps between divisors}, September 2025.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}.
+\end{enumerate}

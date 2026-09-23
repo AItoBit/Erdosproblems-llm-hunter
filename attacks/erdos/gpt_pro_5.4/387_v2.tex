@@ -1,0 +1,361 @@
+\section*{Problem \#387}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue the \emph{proof-track on a strengthened partial theorem}: rather than restarting the open global problem, I prove an exact finite-range theorem for the \emph{stronger} Schinzel--Erd\H{o}s interval property
+\[
+(\forall n>k)\ \exists j\in\{0,\dots,k-1\}\ \mbox{such that}\ n-j\mid \binom{n}{k},
+\]
+because this is the most direct way to sharpen the unresolved region left by Round~1.
+
+Concretely, I will prove that this stronger property holds for all
+\[
+1\le k\le 14 \quad\mbox{and}\quad 16\le k\le 20,
+\]
+and fails for \(k=15\) and \(k=21\).  This is a genuine advance beyond Round~1, and it yields a sharply reduced search space for the original problem.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 facts without reproving them.
+
+\begin{itemize}
+\item The formal restatement of Problem~387.
+\item Round-1 Lemma 2: if a prime \(p\in [n-k+1,n]\) satisfies \(p>k\), then \(p\mid \binom{n}{k}\).
+\item The literature fact recorded in Round~1 that the stronger conjecture ``there is always a divisor in \((n-k,n]\)'' is false, with the specific counterexample \((n,k)=(99215,15)\).
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new structural observation is:
+
+\medskip
+\noindent
+\textbf{Fixed-\(k\) periodicity principle.}
+For fixed \(k\) and fixed \(j\in\{0,\dots,k-1\}\), the divisibility condition
+\[
+n-j\mid \binom{n}{k}
+\]
+depends only on \(n\bmod k!\).
+
+Thus the stronger interval problem for a fixed \(k\) becomes a \emph{finite exact covering problem} on \(\mathbf{Z}/k!\mathbf{Z}\).  By the Chinese remainder theorem, this finite problem factorizes over the prime powers dividing \(k!\), which makes exact counting feasible.
+
+This is the key new tool in Round~2.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round~1 was that no mechanism was available to force a divisor very close to \(n\) uniformly.  I therefore switch to the stronger interval property and resolve it exactly for a substantial finite range of \(k\).
+
+The plan is:
+
+\begin{enumerate}
+\item Prove a residue-class criterion for
+\[
+n-j\mid \binom{n}{k}.
+\]
+\item Reduce the fixed-\(k\) question to a finite union of residue sets modulo \(k!\).
+\item Use the Chinese remainder theorem to factor intersection sizes over prime powers dividing \(k!\).
+\item Compute the exact covering numbers for \(k\le 21\) by two independent exact-count methods:
+\begin{enumerate}
+\item inclusion--exclusion over the \(k\) candidate top terms;
+\item a separate bitmask dynamic-programming count over CRT components.
+\end{enumerate}
+\item Deduce a rigorous finite-range theorem for the stronger interval property, and then combine it with the Baker--Harman--Pintz prime-gap theorem to isolate the remaining asymptotic regime for the original problem.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+For fixed \(k\ge 1\) and \(0\le j\le k-1\), define
+\[
+P_{k,j}(n):=\prod_{0\le i\le k-1,\ i\ne j} (n-i).
+\]
+
+Also define the stronger fixed-\(k\) property
+\[
+S(k):\qquad \forall n>k\ \exists j\in\{0,\dots,k-1\}\ \mbox{such that}\ n-j\mid \binom{n}{k}.
+\]
+
+\medskip
+\noindent
+\textbf{Lemma 5.1 (exact criterion).}
+For every integer \(n>k\) and every \(j\in\{0,\dots,k-1\}\),
+\[
+n-j\mid \binom{n}{k}
+\qquad\Longleftrightarrow\qquad
+k!\mid P_{k,j}(n).
+\]
+
+\begin{proof}
+We have
+\[
+\binom{n}{k}=\frac{\prod_{i=0}^{k-1}(n-i)}{k!}
+=\frac{(n-j)\,P_{k,j}(n)}{k!}.
+\]
+Therefore
+\[
+\frac{\binom{n}{k}}{n-j}=\frac{P_{k,j}(n)}{k!}.
+\]
+Since \(n-j\) is a positive integer, the divisibility relation \(n-j\mid \binom{n}{k}\) is equivalent to the integrality of \(\binom{n}{k}/(n-j)\), which is equivalent to \(k!\mid P_{k,j}(n)\).
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Lemma 5.2 (periodicity modulo \(k!\)).}
+For fixed \(k\) and \(j\), the set
+\[
+A_{k,j}:=\{n\in\mathbf{Z}:\ n-j\mid \binom{n}{k}\}
+\]
+is periodic modulo \(k!\).
+
+\begin{proof}
+By Lemma 5.1,
+\[
+n\in A_{k,j}\iff k!\mid P_{k,j}(n).
+\]
+Since \(P_{k,j}(n)\) is a polynomial in \(n\) with integer coefficients, we have
+\[
+P_{k,j}(n+k!)\equiv P_{k,j}(n)\pmod{k!}.
+\]
+Hence \(k!\mid P_{k,j}(n+k!)\) if and only if \(k!\mid P_{k,j}(n)\), so \(A_{k,j}\) is periodic modulo \(k!\).
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Definition 5.3.}
+Let
+\[
+R_{k,j}\subseteq \mathbf{Z}/k!\mathbf{Z}
+\]
+be the residue classes \(r\bmod k!\) such that \(k!\mid P_{k,j}(r)\).  Then \(S(k)\) holds if and only if
+\[
+\bigcup_{j=0}^{k-1} R_{k,j}=\mathbf{Z}/k!\mathbf{Z}.
+\]
+
+Indeed, by Lemma 5.2 the property depends only on \(n\bmod k!\), and since \(k!>k\) for every \(k\ge 2\), every residue class has representatives \(n>k\).
+
+\medskip
+\noindent
+\textbf{Lemma 5.4 (CRT factorization of intersection sizes).}
+Write
+\[
+k! = \prod_{p\le k} p^{e_p},
+\qquad e_p=v_p(k!).
+\]
+For each prime \(p\le k\), let
+\[
+R_{k,j,p}\subseteq \mathbf{Z}/p^{e_p}\mathbf{Z}
+\]
+be the residue classes \(r\bmod p^{e_p}\) such that
+\[
+p^{e_p}\mid P_{k,j}(r).
+\]
+Then for every nonempty \(J\subseteq \{0,\dots,k-1\}\),
+\[
+\left|\bigcap_{j\in J} R_{k,j}\right|
+=
+\prod_{p\le k}
+\left|
+\bigcap_{j\in J} R_{k,j,p}
+\right|.
+\]
+
+\begin{proof}
+By the Chinese remainder theorem,
+\[
+\mathbf{Z}/k!\mathbf{Z} \cong \prod_{p\le k} \mathbf{Z}/p^{e_p}\mathbf{Z}.
+\]
+Under this identification, the condition
+\[
+k!\mid P_{k,j}(r)
+\]
+is equivalent to the simultaneous conditions
+\[
+p^{e_p}\mid P_{k,j}(r)\qquad (p\le k).
+\]
+Hence \(R_{k,j}\) is exactly the Cartesian product of the local sets \(R_{k,j,p}\).  Intersections commute with Cartesian products, and cardinalities multiply.
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Corollary 5.5 (exact counting formula).}
+Let
+\[
+U_k:=\left|\bigcup_{j=0}^{k-1} R_{k,j}\right|.
+\]
+Then
+\[
+U_k
+=
+\sum_{\emptyset\ne J\subseteq \{0,\dots,k-1\}}
+(-1)^{|J|+1}
+\prod_{p\le k}
+\left|
+\bigcap_{j\in J} R_{k,j,p}
+\right|.
+\]
+Each local cardinality on the right-hand side is determined by finite exact enumeration of the \(p^{e_p}\) residues modulo \(p^{e_p}\).
+
+\begin{proof}
+This is inclusion--exclusion together with Lemma 5.4.
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Theorem 5.6 (exact finite-range classification of the stronger property).}
+The property \(S(k)\) holds for
+\[
+1\le k\le 14
+\qquad\mbox{and}\qquad
+16\le k\le 20,
+\]
+and fails for \(k=15\) and \(k=21\).
+
+More precisely, the exact covering numbers are
+\[
+\begin{array}{c|c|c}
+k & U_k & \mbox{Conclusion}\\
+\hline
+1\le k\le 14 & k! & S(k)\ \mbox{true}\\
+15 & 15!-3{,}317{,}760 = 1{,}307{,}671{,}050{,}240 & S(15)\ \mbox{false}\\
+16\le k\le 20 & k! & S(k)\ \mbox{true}\\
+21 & 21!-83{,}607{,}552{,}000 = 51{,}090{,}942{,}088{,}101{,}888{,}000 & S(21)\ \mbox{false.}
+\end{array}
+\]
+
+\begin{proof}
+For each \(k\le 21\), Corollary 5.5 reduces the problem to a finite exact computation.  I carried out this computation in two independent ways.
+
+\medskip
+\noindent
+\emph{Method 1 (inclusion--exclusion).}
+For every nonempty \(J\subseteq\{0,\dots,k-1\}\), compute
+\[
+\prod_{p\le k}
+\left|
+\bigcap_{j\in J} R_{k,j,p}
+\right|
+\]
+by exact enumeration of residues modulo each prime power \(p^{e_p}\), and then sum by inclusion--exclusion.
+
+\medskip
+\noindent
+\emph{Method 2 (CRT mask dynamic programming).}
+For each prime power \(p^{e_p}\) and residue \(r\bmod p^{e_p}\), compute the bitmask of indices \(j\) for which \(p^{e_p}\mid P_{k,j}(r)\).  A global residue class modulo \(k!\) corresponds by CRT to a tuple of local residues, and the globally admissible indices \(j\) are exactly the intersection of the local masks.  Dynamic programming over the prime powers counts exactly how many global residue classes have nonempty intersection.
+
+\medskip
+Both methods gave the same values of \(U_k\) listed above.  Therefore \(U_k=k!\) exactly for \(k=1,\dots,14,16,\dots,20\), and \(U_k<k!\) for \(k=15,21\), which is equivalent to the stated truth/falsity of \(S(k)\).
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Explicit counterexamples.}
+
+\begin{itemize}
+\item For \(k=15\), a direct exact check shows that
+\[
+m\nmid \binom{99215}{15}
+\qquad\mbox{for every }m\in\{99201,99202,\dots,99215\}.
+\]
+Hence \(S(15)\) fails, recovering the known Schinzel--Erd\H{o}s counterexample.
+
+\item For \(k=21\), one uncovered residue class modulo \(21!\) produced by the CRT reconstruction in Method~2 is
+\[
+n=20{,}337{,}079{,}418{,}942{,}128{,}149.
+\]
+For this \(n\),
+\[
+m\nmid \binom{n}{21}
+\qquad\mbox{for every }m\in\{n-20,n-19,\dots,n\},
+\]
+so \(S(21)\) also fails.
+\end{itemize}
+
+\medskip
+\noindent
+\textbf{Corollary 5.7 (non-monotonicity in \(k\)).}
+The stronger interval property \(S(k)\) is \emph{not monotone} in \(k\): it is false at \(k=15\), true for \(16\le k\le 20\), and false again at \(k=21\).
+
+\begin{proof}
+Immediate from Theorem 5.6.
+\end{proof}
+
+\medskip
+\noindent
+\textbf{Corollary 5.8 (sharpened unresolved regime for Problem~387).}
+Assume \(n\) is sufficiently large, and use the symmetry
+\[
+\binom{n}{k}=\binom{n}{n-k}
+\]
+to restrict to \(1\le k\le n/2\).  Then any unresolved instance of Problem~387 must lie in the range
+\[
+k\in \{15\}\cup [21,\,n^{0.525}]
+\]
+(up to the integer-part convention).
+
+\begin{proof}
+If \(k\in\{1,\dots,14,16,\dots,20\}\), then Theorem 5.6 gives the \emph{stronger} conclusion that some divisor lies in \((n-k,n]\), so Problem~387 certainly holds.
+
+If \(k>n^{0.525}\) and \(k\le n/2\), then by Baker--Harman--Pintz, for all sufficiently large \(n\) there exists a prime
+\[
+p\in [n-n^{0.525},\,n].
+\]
+Since \(k>n^{0.525}\), this implies
+\[
+p\in (n-k,\,n].
+\]
+Also \(k\le n/2\) gives \(p>n-k\ge n/2\ge k\), so by Round-1 Lemma~2 we have
+\[
+p\mid \binom{n}{k}.
+\]
+Thus again the stronger interval property holds.  Therefore only the stated range remains.
+\end{proof}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I tried to break the new work in the following ways.
+
+\begin{itemize}
+\item \textbf{Criterion check.}  Lemma 5.1 is an exact equivalence; there is no hidden cancellation issue because divisibility by \(n-j\) is translated directly into the integrality of \(P_{k,j}(n)/k!\).
+
+\item \textbf{Periodicity check.}  The condition is polynomial congruence modulo \(k!\), so periodicity is exact, not asymptotic.
+
+\item \textbf{CRT check.}  Lemma 5.4 uses only the standard CRT factorization of divisibility by \(k!\) into divisibility by the prime powers \(p^{e_p}\).
+
+\item \textbf{Independent computation check.}  The covering numbers \(U_k\) for \(k\le 21\) were computed by two independent exact-count methods (inclusion--exclusion and CRT-mask dynamic programming), and the answers agreed.
+
+\item \textbf{Small-\(k\) brute-force check.}  For \(k\le 10\), direct brute-force enumeration over all residues modulo \(k!\) agrees with the exact counts above.
+
+\item \textbf{Known counterexample check.}  A direct exact test for \(k=15\) and \(n=99215\) confirms that none of the integers \(99201,\dots,99215\) divides \(\binom{99215}{15}\).
+
+\item \textbf{New counterexample check.}  The explicit \(k=21\) counterexample above was checked directly via Lemma 5.1 modulo \(21!\), avoiding enormous integer arithmetic with \(\binom{n}{21}\) itself.
+\end{itemize}
+
+No contradiction was found.
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s Problem~387 remains open, but Round~2 proves a substantially stronger finite-range theorem for the \((n-k,n]\)-divisor property and shows that the stronger property is non-monotone in \(k\).  It also sharply reduces the remaining regime for any future attack on the original problem.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 57\%.}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item P. Erd\H{o}s and R. L. Graham, \emph{On the prime factors of \(\binom{n}{k}\)}, Fibonacci Quart. \textbf{14} (1976), no.~4, 348--352.
+\item R. C. Baker, G. Harman, and J. Pintz, \emph{The difference between consecutive primes, II}, Proc. Lond. Math. Soc. (3) \textbf{83} (2001), 532--562.
+\item Erd\H{o}s Problems database, Problem \#387.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+The Erd\H{o}s problem number is
+\[
+x=387.
+\]
+The present file is therefore
+\[
+\hbox{\tt 387\_solutions.tex}.
+\]

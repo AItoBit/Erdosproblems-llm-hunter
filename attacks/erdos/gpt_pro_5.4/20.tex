@@ -1,0 +1,261 @@
+\section{Problem 20 (Sunflowers): Round 3 --- extremal structure closure for the $n=2$ slice}
+
+\subsection{1) ROUND-3 OBJECTIVE}
+\textbf{Path (A) inside the nontrivial special slice already opened in Round~2.}
+
+Round~2 determined the exact value of $f(2,k)$ for every $k\ge 2$, but it stopped at the level of the \emph{numerical extremal value}. The remaining structural gap in that slice is to determine \emph{all} extremal $2$-uniform families of size $f(2,k)-1$.
+
+In this round I close that gap completely: I prove a full extremal-structure theorem for the entire $n=2$ slice. In particular:
+\begin{itemize}
+\item for odd $k$, the extremal family is unique up to relabeling;
+\item for even $k>2$, I characterize all extremal families by their degree sequence on the support, and I exhibit two explicit nonisomorphic extremal constructions.
+\end{itemize}
+This is the most promising continuation because it strictly strengthens Round~2's exact formula into a complete classification theorem for the same infinite family of cases.
+
+\subsection{2) Round-2 FOUNDATION USED}
+I use only the following Round~2 results.
+\begin{itemize}
+\item \textbf{Round~2 Lemma~20.4:} for $2$-sets, a $k$-sunflower is equivalent to either a matching of size $k$ or a star $K_{1,k}$.
+\item \textbf{Round~2 Theorem~20.5:} for every $k\ge 2$,
+\[
+ f(2,k)=
+ \begin{cases}
+  k(k-1)+1, & k\ \text{odd},\\[3pt]
+  \left\lfloor \dfrac{(k-1)(2k-1)}{2}\right\rfloor+1, & k\ \text{even}.
+ \end{cases}
+\]
+Equivalently, if
+\[
+M(k):=\max\{|E(G)|:\Delta(G)\le k-1,\ \nu(G)\le k-1\},
+\]
+then $f(2,k)=M(k)+1$.
+\item \textbf{Round~2 explicit constructions:} the odd case $K_k\cup K_k$, and the even-case circulant construction on $2k-1$ vertices.
+\end{itemize}
+I do not reprove these facts.
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-3)}
+\textbf{New tool: the \emph{equality characterization} in the Abbott--Hanson--Sauer theorem.}
+
+Round~2 used only the numerical upper bound from Abbott--Hanson--Sauer. The new ingredient here is the \emph{extremal-case classification} (as stated in Theorem~3.2 of \cite{KupavskiiNoskov2025}): once equality holds, the extremal graph is either
+\begin{itemize}
+\item exactly $K_k\cup K_k$ when $k$ is odd, or
+\item when $k$ is even and $k>2$, a graph on $2k-1$ vertices with one vertex of degree $k-2$ and all other vertices of degree $k-1$.
+\end{itemize}
+A second new point is the \emph{support reduction}: for a $2$-uniform family $\mathcal F$, viewing its support graph on $\bigcup\mathcal F$ automatically removes isolated vertices, which is exactly the hypothesis needed to apply the equality case.
+
+\subsection{4) ATTACK PLAN (ROUND-3)}
+\textbf{Gap left by Round~2.}
+Round~2 computed the exact number $f(2,k)$, but it did not determine whether the extremal family is unique, nor did it characterize all equality cases.
+
+\textbf{Claims proved in this round.}
+\begin{enumerate}
+\item Every extremal $k$-sunflower-free family of $2$-sets is completely classified.
+\item For odd $k$, the extremal family is unique up to isomorphism.
+\item For even $k>2$, extremal families are not unique; indeed there are at least two explicit nonisomorphic extremal families for every even $k\ge 4$.
+\end{enumerate}
+
+\textbf{Why this overcomes the previous obstacle.}
+The only missing ingredient after Round~2 was structural, not numerical. Equality in Theorem~3.2 of \cite{KupavskiiNoskov2025} supplies exactly the missing structure.
+
+\subsection{5) WORK (ROUND-3)}
+
+\paragraph{Setup.}
+Let $\mathcal F$ be a family of $2$-element sets, and let $G$ be its support graph:
+\[
+V(G)=\bigcup\mathcal F,
+\qquad
+E(G)=\mathcal F.
+\]
+Then $G$ has no isolated vertices by definition.
+
+By Round~2 Lemma~20.4, $\mathcal F$ is $k$-sunflower-free if and only if
+\[
+\Delta(G)\le k-1
+\qquad\text{and}\qquad
+\nu(G)\le k-1.
+\]
+If moreover $|\mathcal F|=f(2,k)-1$, then Round~2 Theorem~20.5 gives
+\[
+|E(G)|=M(k).
+\]
+So extremal $2$-uniform sunflower-free families are exactly the edge sets of graphs achieving equality in the graph extremal problem defining $M(k)$.
+
+\paragraph{Theorem 20.7 (Abbott--Hanson--Sauer with equality structure).}
+Let $s\ge 2$. Let $G$ be a graph with no isolated vertices, no matching of size $s$, and no vertex of degree $s$. Then
+\[
+|E(G)|\le
+\begin{cases}
+ s(s-1), & s\ \text{odd},\\[3pt]
+ (s-1)^2+\dfrac{s-2}{2}, & s\ \text{even}.
+\end{cases}
+\]
+Moreover, if equality holds, then:
+\begin{enumerate}
+\item if $s$ is odd, $G\cong K_s\cup K_s$;
+\item if $s$ is even and $s>2$, then $|V(G)|=2s-1$ and the degree multiset is
+\[
+\{s-2,(s-1)^{(2s-2)}\};
+\]
+\item if $s=2$, then $G\cong K_2$.
+\end{enumerate}
+This is exactly Theorem~3.2 of \cite{KupavskiiNoskov2025}, where the equality characterization is stated under the standing assumption that $G$ has no isolated vertices.
+
+\paragraph{Theorem 20.8 (Full extremal classification for $f(2,k)$).}
+Let $k\ge 2$. Let $\mathcal F$ be a family of $2$-sets with no $k$-sunflower and with
+\[
+|\mathcal F|=f(2,k)-1.
+\]
+Let $G$ be its support graph. Then exactly one of the following holds.
+\begin{enumerate}
+\item If $k=2$, then $G\cong K_2$.
+\item If $k$ is odd, then
+\[
+G\cong K_k\cup K_k.
+\]
+In particular $|V(G)|=2k$, and the extremal family is unique up to relabeling.
+\item If $k$ is even and $k>2$, then
+\[
+|V(G)|=2k-1,
+\qquad
+\deg_G(v)=k-1\ \text{for }2k-2\text{ vertices},
+\qquad
+\deg_G(u)=k-2\ \text{for one vertex }u.
+\]
+Conversely, every graph with this degree multiset is $k$-sunflower-free and has exactly $f(2,k)-1$ edges.
+\end{enumerate}
+
+\emph{Proof.}
+Because $\mathcal F$ is $k$-sunflower-free, Round~2 Lemma~20.4 gives
+\[
+\Delta(G)\le k-1,
+\qquad
+\nu(G)\le k-1.
+\]
+Because $|\mathcal F|=f(2,k)-1=M(k)$, the graph $G$ attains equality in the extremal problem for $M(k)$. Since $G$ has no isolated vertices (it is the support graph), Theorem~20.7 applies with $s=k$.
+
+If $k=2$, Theorem~20.7 gives $G\cong K_2$.
+
+If $k$ is odd, Theorem~20.7 gives $G\cong K_k\cup K_k$.
+
+If $k$ is even and $k>2$, Theorem~20.7 gives that $G$ has $2k-1$ vertices and degree multiset
+\[
+\{k-2,(k-1)^{(2k-2)}\}.
+\]
+This proves the forward implication.
+
+For the converse in the even case, let $G$ be any graph on $2k-1$ vertices with one vertex of degree $k-2$ and all other vertices of degree $k-1$. Then $\Delta(G)=k-1$, and also $\nu(G)\le k-1$ because $|V(G)|=2k-1<2k$. Therefore, by Round~2 Lemma~20.4, $E(G)$ is $k$-sunflower-free.
+
+Finally, by the handshake lemma,
+\[
+|E(G)|=\frac{(k-2)+(2k-2)(k-1)}{2}
+=(k-1)^2+\frac{k-2}{2}
+=\left\lfloor \frac{(k-1)(2k-1)}{2}\right\rfloor
+=f(2,k)-1,
+\]
+where the last equality is Round~2 Theorem~20.5. Hence every such graph is extremal.
+\hfill$\square$
+
+\paragraph{Corollary 20.9 (Parity dichotomy on uniqueness).}
+For the $n=2$ slice, the extremal family of size $f(2,k)-1$ is unique up to isomorphism when $k$ is odd, and nonunique when $k$ is even and greater than $2$.
+
+\emph{Proof.}
+The odd case is immediate from Theorem~20.8. To show nonuniqueness for even $k>2$, it suffices to give two nonisomorphic extremal constructions. This is done in Proposition~20.10 below.
+\hfill$\square$
+
+\paragraph{Proposition 20.10 (Two explicit nonisomorphic extremal families for each even $k\ge 4$).}
+Fix an even integer $k\ge 4$. Then there exist at least two nonisomorphic extremal $k$-sunflower-free families of $2$-sets.
+
+\emph{Proof.}
+We describe two support graphs.
+
+\smallskip
+\noindent
+\emph{Construction A (circulant type).}
+Take the even-case graph from Round~2: on $\mathbb Z/(2k-1)\mathbb Z$, let $H$ be the circulant graph with step set
+\[
+\{\pm 1,\pm 2,\dots,\pm (k/2-1)\},
+\]
+and let $C$ be the cycle consisting of the step-$k/2$ edges. Add to $H$ a maximum matching $M$ of $C$ leaving one vertex, say $0$, uncovered. Call the resulting graph $G^{\mathrm{circ}}_k$.
+
+Round~2 already proved that $G^{\mathrm{circ}}_k$ is extremal.
+
+\smallskip
+\noindent
+\emph{Construction B (bipartite type).}
+Let $A=\{a_1,\dots,a_{k-1}\}$ and $B=\{b_1,\dots,b_{k-1}\}$, and start with the complete bipartite graph $K_{k-1,k-1}$ on $A\sqcup B$. Let
+\[
+M_0=\{a_i b_i:1\le i\le (k-2)/2\}
+\]
+be a matching of size $(k-2)/2$. Delete the edges of $M_0$. Then add one new vertex $u$ and join $u$ to all $2\cdot (k-2)/2=k-2$ endpoints of the deleted matching.
+Call the resulting graph $G^{\mathrm{bip}}_k$.
+
+We now verify that $G^{\mathrm{bip}}_k$ is extremal. The new vertex $u$ has degree $k-2$. Every endpoint of a deleted matching edge loses one edge in $K_{k-1,k-1}$ and gains the edge to $u$, so its degree is again $k-1$. Every other old vertex still has degree $k-1$. Thus $G^{\mathrm{bip}}_k$ has degree multiset
+\[
+\{k-2,(k-1)^{(2k-2)}\}.
+\]
+By Theorem~20.8, it is extremal.
+
+It remains to prove that the two extremal graphs are not isomorphic. In each graph there is a unique vertex of degree $k-2$; call it $u_{\mathrm{circ}}$ in $G^{\mathrm{circ}}_k$ and $u_{\mathrm{bip}}$ in $G^{\mathrm{bip}}_k$.
+
+Now,
+\[
+G^{\mathrm{bip}}_k-u_{\mathrm{bip}}=K_{k-1,k-1}-M_0,
+\]
+which is bipartite.
+
+On the other hand, $G^{\mathrm{circ}}_k-u_{\mathrm{circ}}$ is not bipartite. Indeed:
+\begin{itemize}
+\item if $k\ge 6$, then the vertices $1,2,3$ form a triangle, because the differences $1$ and $2$ belong to the step set of $H$;
+\item if $k=4$, then $G^{\mathrm{circ}}_4-u_{\mathrm{circ}}$ contains the triangle $\{2,3,4\}$: the edges $23$ and $34$ lie on the base $7$-cycle, while $24$ is one of the added matching edges.
+\end{itemize}
+So one deletion graph is bipartite and the other is not; hence $G^{\mathrm{circ}}_k\not\cong G^{\mathrm{bip}}_k$.
+
+Therefore there are at least two nonisomorphic extremal families for every even $k\ge 4$.
+\hfill$\square$
+
+\paragraph{Consequence for the global problem.}
+Round~2 already ruled out any counterexample strategy living purely in $2$-uniform families. Round~3 strengthens this: the full $2$-uniform extremal picture is now completely understood, including the parity-dependent uniqueness/nonuniqueness dichotomy. In particular, any future attack on the full sunflower conjecture cannot hope to extract a single parity-blind ``canonical'' extremal $2$-uniform core.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+\textbf{(i) Isolated-vertex hypothesis in Theorem~20.7.}
+The equality characterization quoted from \cite{KupavskiiNoskov2025} assumes no isolated vertices. This is harmless here because I work with the support graph $V(G)=\bigcup\mathcal F$, which has no isolated vertices by definition.
+
+\textbf{(ii) Converse in the even case.}
+I checked that no hidden matching argument is needed: any graph on $2k-1$ vertices is automatically free of a matching of size $k$. Thus degree sequence alone really suffices.
+
+\textbf{(iii) Boundary cases.}
+For $k=2$, Theorem~20.8 returns the unique one-edge family. For $k=3$, it recovers the Round~1/2 extremal graph $K_3\cup K_3$. For $k=4$, Proposition~20.10 gives two concrete $10$-edge extremal graphs on $7$ vertices.
+
+\textbf{(iv) Nonisomorphism certificate in Proposition~20.10.}
+The certificate uses the unique degree-$(k-2)$ vertex in each graph, so it is isomorphism-invariant. Deleting that vertex produces a bipartite graph in Construction~B and a nonbipartite graph in Construction~A.
+
+\textbf{(v) Reference correction.}
+Round~2 cited arXiv:2511.17142 as a single-author paper ``Erd\H{o}s's forbidden sunflower problem.'' The checked source is the two-author paper \emph{Exact results and the structure of extremal families for the Duke--Erd\H{o}s forbidden sunflower problem} by Kupavskii and Noskov; this is the source used here for Theorem~3.2.
+
+\subsection{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s--Rado sunflower conjecture remains open. However, the $n=2$ slice is now closed at the structural level as well as the numerical level: not only is $f(2,k)$ known exactly for every $k\ge 2$, but all extremal $2$-uniform families of size $f(2,k)-1$ are now fully classified.
+
+\subsection{8) COMPLETION ESTIMATE}
+\noindent\textbf{COMPLETION: 38\%}
+
+\subsection{9) REFERENCES}
+\begin{thebibliography}{99}
+
+\bibitem{AHS72}
+H.~L.~Abbott, D.~Hanson, and N.~Sauer,
+\emph{Intersection theorems for systems of sets},
+Journal of Combinatorial Theory, Series~A \textbf{12} (1972), 381--389.
+
+\bibitem{KupavskiiNoskov2025}
+A.~Kupavskii and F.~Noskov,
+\emph{Exact results and the structure of extremal families for the Duke--Erd\H{o}s forbidden sunflower problem},
+arXiv:2511.17142 (2025).
+
+\bibitem{Rao2025}
+A.~Rao,
+\emph{The Story of Sunflowers},
+preprint, September 2025.
+
+\end{thebibliography}

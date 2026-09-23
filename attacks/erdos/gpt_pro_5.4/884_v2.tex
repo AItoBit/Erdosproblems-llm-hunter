@@ -1,0 +1,610 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I continue on the proof side. Round-(round\_no-1) already established the notation and isolated the global obstruction: the general conjecture is still open unconditionally, while Tao's 2025 note gives only a conditional disproof under a qualitative Hardy--Littlewood prime tuples conjecture.
+
+The most promising strict advance is therefore to enlarge the unconditional positive family. In this round I prove a new theorem that strictly extends the previous \(r^a s\) case.
+
+\medskip
+
+\noindent\textbf{Main new theorem.}
+\emph{Let \(r\) be a prime, let \(a\geq 0\), and let \(m\geq 1\) be an integer with \((r,m)=1\). Write}
+\[
+M:=\tau(m).
+\]
+\emph{Let \(1=d_1<\cdots<d_t=n\) be the increasing list of divisors of}
+\[
+n=r^a m.
+\]
+\emph{Then}
+\[
+\sum_{1\leq i<j\leq t}\frac{1}{d_j-d_i}
+\leq
+H_{M-1}\sum_{1\leq i<t}\frac{1}{d_{i+1}-d_i}
++\frac{10}{3}M^2,
+\]
+\emph{where \(H_{M-1}:=\sum_{u=1}^{M-1}\frac1u\), with the convention \(H_0:=0\).}
+
+Consequently, for every fixed \(M\), all integers of the form \(n=r^a m\) with \((r,m)=1\) and \(\tau(m)\leq M\) satisfy
+\[
+S_{\mathrm{all}}(n)\leq C_M\bigl(1+S_{\mathrm{gap}}(n)\bigr)
+\]
+with
+\[
+C_M:=H_{M-1}+\frac{10}{3}M^2.
+\]
+
+As a sharper special case, if \(n=p^a q^b\) with distinct primes \(p,q\) and
+\[
+m:=\min(a,b),
+\]
+then
+\[
+S_{\mathrm{all}}(n)\leq H_m\,S_{\mathrm{gap}}(n)+5(m+1),
+\]
+hence
+\[
+S_{\mathrm{all}}(n)\leq \bigl(H_m+5(m+1)\bigr)\bigl(1+S_{\mathrm{gap}}(n)\bigr).
+\]
+
+This strictly strengthens the previous round, which only handled the case \(m=1\).
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The formal definitions
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}.
+\]
+\item The previously isolated structural idea that the proof for \(n=r^a s\) works because the divisor set is the merge of two geometric progressions.
+\item The previously established global status: the unconditional problem remains open, while Tao's 2025 note provides only a conditional disproof under a qualitative prime tuples conjecture.
+\end{enumerate}
+
+I do \emph{not} re-prove those facts here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a general ``\(M\)-progressions'' lemma.
+
+If the divisors of \(n\) can be written as
+\[
+d=r^e
+\]
+with exponents \(e\) lying in a union of \(M\) translates of \(\mathbb Z\),
+\[
+E\subseteq \bigcup_{\nu=1}^{M} (\gamma_\nu+\mathbb Z),
+\qquad 0\leq \gamma_\nu<1,
+\]
+then from a fixed starting divisor \(d_i=r^{e_i}\),
+
+\begin{itemize}
+\item there are at most \(M-1\) later divisors whose exponent difference from \(e_i\) lies in \((0,1)\), and
+\item for each integer \(k\geq 1\), there are at most \(M\) later divisors whose exponent difference lies in \([k,k+1)\).
+\end{itemize}
+
+This lets one split the tail from \(d_i\) into:
+
+\begin{enumerate}
+\item a \emph{short-range part}, controlled by the first \(M-1\) forward neighbours of \(d_i\), and
+\item a \emph{long-range part}, controlled by a convergent geometric series times \(1/d_i\).
+\end{enumerate}
+
+A second new lemma then bounds the total contribution of all \(u\)-step neighbours,
+\[
+\sum_{i=1}^{t-u}\frac{1}{d_{i+u}-d_i},
+\]
+by \(\frac1u S_{\mathrm{gap}}(n)\). Summing this for \(u=1,\dots,M-1\) yields the factor \(H_{M-1}\).
+
+This is the exact extension of the previous ``two progressions'' argument to an arbitrary fixed number \(M\) of progressions.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-(round\_no-1) was this:
+
+\begin{quote}
+The previous unconditional proof handled only the case of \emph{two} exponent progressions (equivalently \(n=r^a s\)). It broke as soon as one had more than one exceptional subunit exponent difference from a given starting divisor.
+\end{quote}
+
+To overcome that, I now prove:
+
+\begin{enumerate}
+\item a general \(u\)-step gap lemma for arbitrary increasing sequences;
+\item a tail lemma for exponent sets lying in a union of \(M\) translates of \(\mathbb Z\);
+\item the resulting theorem for \(n=r^a m\) with \(\tau(m)=M\);
+\item a sharper corollary for \(n=p^a q^b\).
+\end{enumerate}
+
+This strictly advances the previous round because it replaces the ``two progressions only'' phenomenon by a full theorem for \emph{any fixed number \(M\)} of progressions.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. A general \(u\)-step gap estimate}
+
+Let
+\[
+x_1<x_2<\cdots<x_t
+\]
+be any strictly increasing real sequence. Set
+\[
+g_i:=x_{i+1}-x_i \qquad (1\leq i<t).
+\]
+
+\paragraph{Lemma 1.}
+For every integer \(u\) with \(1\leq u<t\),
+\[
+\sum_{i=1}^{t-u}\frac{1}{x_{i+u}-x_i}
+\leq
+\frac1u \sum_{i=1}^{t-1}\frac{1}{g_i}.
+\]
+
+\emph{Proof.}
+Fix \(u\). For each \(i\in\{1,\dots,t-u\}\),
+\[
+x_{i+u}-x_i=g_i+g_{i+1}+\cdots+g_{i+u-1}.
+\]
+By Cauchy--Schwarz,
+\[
+\bigl(g_i+\cdots+g_{i+u-1}\bigr)\left(\frac1{g_i}+\cdots+\frac1{g_{i+u-1}}\right)\geq u^2.
+\]
+Hence
+\[
+\frac{1}{x_{i+u}-x_i}
+\leq
+\frac1{u^2}\sum_{k=i}^{i+u-1}\frac1{g_k}.
+\]
+Summing over \(i=1,\dots,t-u\) gives
+\[
+\sum_{i=1}^{t-u}\frac{1}{x_{i+u}-x_i}
+\leq
+\frac1{u^2}\sum_{i=1}^{t-u}\sum_{k=i}^{i+u-1}\frac1{g_k}.
+\]
+For a fixed \(k\), the term \(1/g_k\) can occur only when \(i\leq k\leq i+u-1\), that is,
+\[
+k-u+1\leq i\leq k.
+\]
+There are at most \(u\) such integers \(i\). Therefore
+\[
+\sum_{i=1}^{t-u}\sum_{k=i}^{i+u-1}\frac1{g_k}
+\leq
+u\sum_{k=1}^{t-1}\frac1{g_k}.
+\]
+Substituting this into the previous estimate yields
+\[
+\sum_{i=1}^{t-u}\frac{1}{x_{i+u}-x_i}
+\leq
+\frac1u\sum_{k=1}^{t-1}\frac1{g_k}.
+\]
+This is exactly the claim.
+
+\subsection*{2. The \(M\)-progressions tail lemma}
+
+Let \(r\geq 2\) be an integer. Let
+\[
+e_1<e_2<\cdots<e_t
+\]
+be real numbers, and define
+\[
+x_i:=r^{e_i}\qquad (1\leq i\leq t).
+\]
+Assume that there exist distinct real numbers
+\[
+0\leq \gamma_1,\dots,\gamma_M<1
+\]
+such that
+\[
+\{e_1,\dots,e_t\}\subseteq \bigcup_{\nu=1}^{M}(\gamma_\nu+\mathbb Z).
+\]
+
+Also set
+\[
+C_r:=\sum_{k=1}^{\infty}\frac{1}{r^k-1}.
+\]
+
+\paragraph{Lemma 2.}
+For each \(i\in\{1,\dots,t-1\}\),
+\[
+\sum_{j=i+1}^{t}\frac{1}{x_j-x_i}
+\leq
+\sum_{u=1}^{\min(M-1,t-i)}\frac{1}{x_{i+u}-x_i}
++\frac{M\,C_r}{x_i}.
+\]
+
+\emph{Proof.}
+Fix \(i<t\). Since \(x_j=r^{e_j}\),
+\[
+\sum_{j=i+1}^{t}\frac{1}{x_j-x_i}
+=
+\frac{1}{x_i}\sum_{j=i+1}^{t}\frac{1}{r^{e_j-e_i}-1}.
+\tag{2.1}
+\]
+
+Let
+\[
+D_i:=\{e_j-e_i:\ j=i+1,\dots,t\}.
+\]
+Then every element of \(D_i\) is positive.
+
+Write \(e_i\in \gamma_\mu+\mathbb Z\) for some \(\mu\in\{1,\dots,M\}\). If \(e_j\in \gamma_\nu+\mathbb Z\), then
+\[
+e_j-e_i\in (\gamma_\nu-\gamma_\mu)+\mathbb Z.
+\]
+Thus, for each fixed \(\nu\), the differences contributed by the \(\nu\)-th translate form a subset of a single translate of \(\mathbb Z\).
+
+From this we obtain two counting facts.
+
+\medskip
+
+\noindent\textbf{Fact 1.} The interval \((0,1)\) contains at most \(M-1\) elements of \(D_i\).
+
+Indeed, when \(\nu=\mu\), the differences are integers and hence contribute nothing to \((0,1)\). For each \(\nu\neq \mu\), the set \((\gamma_\nu-\gamma_\mu)+\mathbb Z\) contains at most one element of \((0,1)\). Summing over the \(M-1\) choices of \(\nu\neq \mu\) proves the claim.
+
+\medskip
+
+\noindent\textbf{Fact 2.} For every integer \(k\geq 1\), the interval \([k,k+1)\) contains at most \(M\) elements of \(D_i\).
+
+Indeed, for each \(\nu\), the set \((\gamma_\nu-\gamma_\mu)+\mathbb Z\) contains at most one point in any interval of length \(1\). Summing over \(\nu=1,\dots,M\) gives the claim.
+
+\medskip
+
+Now order the elements of \(D_i\) increasingly. Since \(\Delta_u:=e_{i+u}-e_i\) are exactly the first positive differences from \(e_i\), the first
+\[
+\min(M-1,t-i)
+\]
+elements of \(D_i\) are
+\[
+e_{i+1}-e_i,\ e_{i+2}-e_i,\ \dots,\ e_{i+\min(M-1,t-i)}-e_i.
+\]
+By Fact 1, after removing these first \(\min(M-1,t-i)\) elements, every remaining element of \(D_i\) lies in \([1,\infty)\). By Fact 2, for each \(k\geq 1\), there are at most \(M\) remaining elements in \([k,k+1)\).
+
+Since the function
+\[
+x\mapsto \frac{1}{r^x-1}
+\]
+is strictly decreasing on \((0,\infty)\), we conclude that
+\[
+\sum_{x\in D_i}\frac{1}{r^x-1}
+\leq
+\sum_{u=1}^{\min(M-1,t-i)}\frac{1}{r^{e_{i+u}-e_i}-1}
++
+M\sum_{k=1}^{\infty}\frac{1}{r^k-1}.
+\]
+Using the definition of \(C_r\), this becomes
+\[
+\sum_{x\in D_i}\frac{1}{r^x-1}
+\leq
+\sum_{u=1}^{\min(M-1,t-i)}\frac{1}{r^{e_{i+u}-e_i}-1}
++
+M C_r.
+\]
+Multiplying by \(1/x_i\) and recalling (2.1) yields
+\[
+\sum_{j=i+1}^{t}\frac{1}{x_j-x_i}
+\leq
+\sum_{u=1}^{\min(M-1,t-i)}\frac{1}{x_{i+u}-x_i}
++
+\frac{M C_r}{x_i},
+\]
+which is exactly the desired bound.
+
+\subsection*{3. A general theorem for \(n=r^a m\)}
+
+\paragraph{Theorem 3.}
+Let \(r\) be a prime, let \(a\geq 0\), and let \(m\geq 1\) satisfy \((r,m)=1\). Set
+\[
+M:=\tau(m).
+\]
+Let
+\[
+1=d_1<\cdots<d_t=n
+\]
+be the divisors of
+\[
+n=r^a m
+\]
+in increasing order. Then
+\[
+S_{\mathrm{all}}(n)\leq H_{M-1}S_{\mathrm{gap}}(n)+\frac{10}{3}M^2.
+\]
+
+\emph{Proof.}
+List the positive divisors of \(m\) as
+\[
+c_1,\dots,c_M.
+\]
+Every divisor of \(n=r^a m\) is uniquely of the form
+\[
+r^u c_\nu
+\qquad (0\leq u\leq a,\ 1\leq \nu\leq M).
+\]
+Define
+\[
+\gamma_\nu:=\{\log_r c_\nu\}\in [0,1).
+\]
+I claim that the \(\gamma_\nu\) are distinct.
+
+Indeed, if \(\gamma_\nu=\gamma_{\nu'}\), then
+\[
+\log_r c_\nu-\log_r c_{\nu'}\in \mathbb Z,
+\]
+so
+\[
+\frac{c_\nu}{c_{\nu'}}=r^k
+\]
+for some integer \(k\). But \(c_\nu,c_{\nu'}\mid m\) and \((r,m)=1\), so the only possible power of \(r\) dividing \(m\) is \(r^0=1\). Hence \(c_\nu=c_{\nu'}\), so \(\nu=\nu'\). This proves the claim.
+
+Thus the divisors of \(n\) can be written as
+\[
+r^e
+\]
+with exponents \(e\) lying in the union of the \(M\) translates
+\[
+\gamma_\nu+\mathbb Z,
+\qquad 1\leq \nu\leq M.
+\]
+Apply Lemma 2 to the ordered divisor sequence \(d_i=r^{e_i}\), and sum over \(i=1,\dots,t-1\). This gives
+\[
+S_{\mathrm{all}}(n)
+\leq
+\sum_{u=1}^{M-1}\sum_{i=1}^{t-u}\frac{1}{d_{i+u}-d_i}
++
+M C_r\sum_{i=1}^{t-1}\frac{1}{d_i}.
+\tag{3.1}
+\]
+By Lemma 1, for each \(u\in\{1,\dots,M-1\}\),
+\[
+\sum_{i=1}^{t-u}\frac{1}{d_{i+u}-d_i}
+\leq
+\frac1u \sum_{i=1}^{t-1}\frac{1}{d_{i+1}-d_i}
+=
+\frac1u\,S_{\mathrm{gap}}(n).
+\]
+Summing over \(u\) yields
+\[
+\sum_{u=1}^{M-1}\sum_{i=1}^{t-u}\frac{1}{d_{i+u}-d_i}
+\leq
+H_{M-1} S_{\mathrm{gap}}(n).
+\tag{3.2}
+\]
+
+Next,
+\[
+\sum_{d\mid n}\frac1d
+=
+\left(\sum_{u=0}^{a}\frac{1}{r^u}\right)\left(\sum_{c\mid m}\frac1c\right).
+\]
+Since \(r\geq 2\),
+\[
+\sum_{u=0}^{a}\frac1{r^u}\leq \sum_{u=0}^{\infty}\frac1{2^u}=2.
+\]
+Also every divisor \(c\mid m\) is at least \(1\), so
+\[
+\sum_{c\mid m}\frac1c \leq \tau(m)=M.
+\]
+Therefore
+\[
+\sum_{d\mid n}\frac1d \leq 2M.
+\tag{3.3}
+\]
+In particular,
+\[
+\sum_{i=1}^{t-1}\frac1{d_i}\leq 2M.
+\tag{3.4}
+\]
+
+Finally, because \(r\geq 2\),
+\[
+C_r=\sum_{k=1}^{\infty}\frac{1}{r^k-1}
+\leq
+\sum_{k=1}^{\infty}\frac{1}{2^k-1}.
+\]
+For \(k\geq 2\),
+\[
+2^k-1\geq 3\cdot 2^{k-2},
+\]
+hence
+\[
+\sum_{k=1}^{\infty}\frac{1}{2^k-1}
+=
+1+\sum_{k=2}^{\infty}\frac{1}{2^k-1}
+\leq
+1+\sum_{k=2}^{\infty}\frac{1}{3\cdot 2^{k-2}}
+=
+1+\frac23
+=
+\frac53.
+\]
+So
+\[
+C_r\leq \frac53.
+\tag{3.5}
+\]
+
+Substituting (3.2), (3.4), and (3.5) into (3.1) gives
+\[
+S_{\mathrm{all}}(n)
+\leq
+H_{M-1}S_{\mathrm{gap}}(n)+M\cdot \frac53\cdot 2M
+=
+H_{M-1}S_{\mathrm{gap}}(n)+\frac{10}{3}M^2.
+\]
+This is exactly the required estimate.
+
+\subsection*{4. A sharper corollary for two-prime powers}
+
+\paragraph{Corollary 4.}
+Let \(n=p^a q^b\), where \(p\neq q\) are primes and \(a,b\geq 1\). Set
+\[
+m:=\min(a,b).
+\]
+Then
+\[
+S_{\mathrm{all}}(n)\leq H_m\,S_{\mathrm{gap}}(n)+5(m+1).
+\]
+Consequently,
+\[
+S_{\mathrm{all}}(n)\leq \bigl(H_m+5(m+1)\bigr)\bigl(1+S_{\mathrm{gap}}(n)\bigr).
+\]
+
+\emph{Proof.}
+By symmetry in \(p,q\), we may assume
+\[
+b\leq a,
+\]
+so \(m=b\). Apply Theorem 3 with
+\[
+r:=p,
+\qquad
+m_{\mathrm{cof}}:=q^b.
+\]
+Then
+\[
+\tau(m_{\mathrm{cof}})=b+1=m+1.
+\]
+Thus Lemma 2 and the proof of Theorem 3 give
+\[
+S_{\mathrm{all}}(n)
+\leq
+H_m\,S_{\mathrm{gap}}(n)+(m+1)C_p\sum_{d\mid n}\frac1d.
+\tag{4.1}
+\]
+
+It remains to bound \(\sum_{d\mid n}1/d\). Since the divisors are \(p^u q^v\) with \(0\leq u\leq a\), \(0\leq v\leq b\),
+\[
+\sum_{d\mid n}\frac1d
+=
+\left(\sum_{u=0}^{a}\frac1{p^u}\right)\left(\sum_{v=0}^{b}\frac1{q^v}\right)
+\leq
+\frac{1}{1-\frac1p}\cdot \frac{1}{1-\frac1q}.
+\]
+Because \(p,q\) are distinct primes, the largest possible value of the right-hand side occurs for \(\{p,q\}=\{2,3\}\), giving
+\[
+\sum_{d\mid n}\frac1d \leq 2\cdot \frac32 = 3.
+\tag{4.2}
+\]
+Also \(C_p\leq \frac53\) by the proof of Theorem 3. Substituting this and (4.2) into (4.1) yields
+\[
+S_{\mathrm{all}}(n)
+\leq
+H_m\,S_{\mathrm{gap}}(n)+(m+1)\cdot \frac53\cdot 3
+=
+H_m\,S_{\mathrm{gap}}(n)+5(m+1).
+\]
+This proves the first claim. The second follows immediately from
+\[
+H_m\,S_{\mathrm{gap}}(n)+5(m+1)\leq \bigl(H_m+5(m+1)\bigr)\bigl(1+S_{\mathrm{gap}}(n)\bigr).
+\]
+This proves Corollary 4.
+
+\subsection*{5. Consequences}
+
+For every fixed integer \(B\geq 1\), if
+\[
+n=p^a q^b
+\qquad\text{with}\qquad
+\min(a,b)\leq B,
+\]
+then Corollary 4 gives
+\[
+S_{\mathrm{all}}(n)\leq C_B\bigl(1+S_{\mathrm{gap}}(n)\bigr),
+\qquad
+C_B:=H_B+5(B+1).
+\]
+
+Thus the conjectured type of estimate is now proved unconditionally for all two-prime numbers with one exponent bounded, and more generally for all numbers \(n=r^a m\) with \(\tau(m)\) bounded.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Distinct fractional parts in Theorem 3.}
+The proof used that if
+\[
+\{\log_r c_\nu\}=\{\log_r c_{\nu'}\},
+\]
+then \(c_\nu/c_{\nu'}=r^k\) for some integer \(k\). Because both \(c_\nu,c_{\nu'}\mid m\) and \((r,m)=1\), the quotient cannot be a nontrivial power of \(r\). Hence \(k=0\) and \(c_\nu=c_{\nu'}\). This step is valid.
+
+\paragraph{2. Counting of short differences in Lemma 2.}
+For a fixed translate \((\gamma_\nu-\gamma_\mu)+\mathbb Z\), an interval of length \(1\) contains at most one point. Therefore \((0,1)\) contains at most one point from each translate, and \([k,k+1)\) contains at most one point from each translate. Summing over \(M\) translates gives the stated bounds. No hidden multiplicity was missed.
+
+\paragraph{3. End effects near \(i=t\).}
+Lemma 2 uses
+\[
+\min(M-1,t-i)
+\]
+rather than \(M-1\). Thus if there are fewer than \(M-1\) later divisors, the statement still makes sense and is correct.
+
+\paragraph{4. The \(u\)-step gap lemma.}
+In Lemma 1, for fixed \(k\), the term \(1/g_k\) appears for at most \(u\) values of \(i\). This is the only combinatorial input in that proof, and it is correct.
+
+\paragraph{5. Conversion to a \(C_M(1+S_{\mathrm{gap}})\) bound.}
+From Theorem 3 we have
+\[
+S_{\mathrm{all}}(n)\leq H_{M-1}S_{\mathrm{gap}}(n)+\frac{10}{3}M^2.
+\]
+Since
+\[
+H_{M-1}S_{\mathrm{gap}}(n)\leq C_M(1+S_{\mathrm{gap}}(n))
+\quad\text{and}\quad
+\frac{10}{3}M^2\leq C_M(1+S_{\mathrm{gap}}(n))
+\]
+for
+\[
+C_M:=H_{M-1}+\frac{10}{3}M^2,
+\]
+the corollary is valid.
+
+\paragraph{6. Interaction with the previous round.}
+There is no contradiction with the earlier conditional disproof. The new theorem applies only when the divisor exponents lie in a \emph{bounded} number \(M\) of translates of \(\mathbb Z\). Tao's conditional counterexamples come from products of many nearly consecutive primes, where the number of such translates grows with the construction parameter.
+
+\paragraph{7. Sharp remaining obstruction.}
+The present method makes the dependence on \(M\) explicit. The first unresolved barrier is therefore now sharply isolated:
+
+\begin{quote}
+Can one control the contribution of the first \(M-1\) exceptional short exponent differences \emph{uniformly in \(M\)}?
+\end{quote}
+
+Without a new idea, Lemma 2 necessarily produces an \(M\)-dependent term, and this is exactly where the proof stops short of the full conjecture.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round proves a theorem strictly stronger than the previous round:
+
+\begin{quote}
+If \(n=r^a m\) with \(r\) prime, \((r,m)=1\), and \(\tau(m)\leq M\), then
+\[
+S_{\mathrm{all}}(n)\leq H_{M-1}S_{\mathrm{gap}}(n)+\frac{10}{3}M^2,
+\]
+hence
+\[
+S_{\mathrm{all}}(n)\leq C_M\bigl(1+S_{\mathrm{gap}}(n)\bigr)
+\]
+for an explicit constant \(C_M\) depending only on \(M\).
+\end{quote}
+
+In particular, for \(n=p^a q^b\) with
+\[
+m:=\min(a,b),
+\]
+one has the sharper bound
+\[
+S_{\mathrm{all}}(n)\leq H_m\,S_{\mathrm{gap}}(n)+5(m+1).
+\]
+
+So the original Erd\H{o}s problem remains open unconditionally, but the unconditional positive family has been enlarged from the previous two-progression case to all fixed-\(M\) progression families of the form \(r^a m\) with \(\tau(m)\) bounded.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 88\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. Tao, \emph{On the sum of reciprocals of gaps between divisors}, September 9, 2025.
+\end{enumerate}

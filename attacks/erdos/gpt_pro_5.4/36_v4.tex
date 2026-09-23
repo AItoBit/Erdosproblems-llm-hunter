@@ -1,0 +1,191 @@
+\section{Round 3: Sharpness of the variance method and a barrier at $1/\sqrt 8$}
+
+\subsection{Round-3 objective}
+We pursue path \textbf{(A)} (proof direction), but in ``gap-closure'' mode: the Round~2 lower bound
+\(c\ge 1/\sqrt 8\) is still far below the current record range.
+The main goal of this round is to isolate (with proof) why the variance method of Round~2 cannot be
+pushed past \(1/\sqrt 8\) \emph{without injecting genuinely new structure}.
+Concretely, we prove that both ingredients of Round~2---the variance upper bound (Lemma~36.3) and the atom/variance lower bound (Lemma~36.4)---are individually sharp, and hence the constant \(1/\sqrt 8\) is an intrinsic barrier for any argument that treats \(D=a-b\) only as an arbitrary integer-valued law with bounded variance.
+
+For context (not used in the proofs below), the current record bounds for the asymptotic constant are extremely narrow:
+\(0.379005 < c < 0.380924\) (White's lower bound and AlphaEvolve's upper bound).
+
+\subsection{Round-2 foundation used}
+We use the following Round~2 statements as black boxes:
+\begin{itemize}
+\item Lemma~36.3: for every partition \(A\sqcup B=[2N]\) with \(|A|=|B|=N\), the random difference \(D=a-b\) satisfies
+\(\mathrm{Var}(D)\le (4N^2-1)/6\).
+\item Lemma~36.4: for any integer-valued random variable \(X\) with \(\max_k \mathbb P(X=k)\le p\),
+\(\mathrm{Var}(X)\ge 1/(12p^2)-1/12\).
+\item Theorem~36.5: combining the two yields
+\(\max_x r(x)\ge N/\sqrt{8-1/N^2}>N/\sqrt 8\).
+\end{itemize}
+
+\subsection{New insight / tool (Round-3)}
+The new content is a \emph{sharpness and barrier analysis}:
+\begin{itemize}
+\item We identify an equality case for Lemma~36.4 (discrete uniform distributions), proving that Lemma~36.4 cannot be improved under its stated hypotheses.
+\item We give an explicit partition \(A\sqcup B=[2N]\) (for even \(N\)) achieving equality in Lemma~36.3, proving that the variance upper bound is also best possible.
+\item We combine these to formalize a ``variance-method barrier'': no proof that only inputs ``\(D\) is integer-valued'' and ``\(\mathrm{Var}(D)\le (4N^2-1)/6\)'' can yield a universal constant better than \(1/\sqrt 8\).
+\item As a byproduct, we extract a structural necessary condition: any near-extremal configuration with \(\max_x r(x)\) close to \(N/\sqrt 8\) must have its first moment nearly balanced (\(\sum_{a\in A} a\) close to \(\sum_{b\in B} b\)).
+\end{itemize}
+
+\subsection{Attack plan (Round-3)}
+The gap after Round~2 is that the best-known constants are near \(0.38\), while the variance method yields only \(1/\sqrt 8\approx 0.3536\).
+To understand what is missing, we:
+\begin{enumerate}
+\item prove sharpness of the atom/variance inequality (Lemma~36.4);
+\item prove sharpness of the variance upper bound (Lemma~36.3);
+\item conclude that improving Theorem~36.5 requires 
+\emph{new constraints on the law of \(D\) beyond its variance} (e.g. constraints coming from the fact that \(D\) is a difference of two uniform measures supported on complementary subsets of \([2N]\)).
+\end{enumerate}
+
+\subsection{Work (Round-3)}
+
+\medskip
+\noindent\textbf{Lemma 36.6 (sharpness of Lemma~36.4).}
+For each integer \(m\ge 0\), let \(X\) be uniform on \(\{-m,-m+1,\dots,m\}\).
+Then \(\max_k \mathbb P(X=k)=p=1/(2m+1)\) and
+\[
+\mathrm{Var}(X)=\frac{1}{12p^2}-\frac{1}{12}.
+\]
+In particular, Lemma~36.4 is best possible as stated.
+
+\noindent\emph{Proof.}
+Here \(p=1/(2m+1)\).
+By symmetry \(\mathbb E[X]=0\) and
+\[
+\mathrm{Var}(X)=\mathbb E[X^2]=\frac{1}{2m+1}\sum_{k=-m}^m k^2
+=\frac{2}{2m+1}\sum_{k=1}^m k^2
+=\frac{2}{2m+1}\cdot\frac{m(m+1)(2m+1)}{6}
+=\frac{m(m+1)}{3}.
+\]
+On the other hand,
+\[
+\frac{1}{12p^2}-\frac{1}{12}=\frac{(2m+1)^2-1}{12}=\frac{4m(m+1)}{12}=\frac{m(m+1)}{3},
+\]
+so equality holds.
+\qed
+
+\medskip
+\noindent\textbf{Lemma 36.7 (sharpness of Lemma~36.3 for even \(N\)).}
+Assume \(N\) is even and set
+\[
+A:=\{1,2,\dots,\tfrac{N}{2}\}\ \cup\ \{\tfrac{3N}{2}+1,\tfrac{3N}{2}+2,\dots,2N\},
+\qquad B:=[2N]\setminus A.
+\]
+Then \(|A|=|B|=N\) and for the associated random difference \(D=a-b\),
+\[
+\mathrm{Var}(D)=\frac{4N^2-1}{6}.
+\]
+Hence the variance upper bound of Lemma~36.3 is attained.
+
+\noindent\emph{Proof.}
+The set \(A\) consists of \(N/2\) pairs
+\((i,2N+1-i)\) for \(1\le i\le N/2\).
+Each such pair sums to \(2N+1\), hence
+\[
+A_1:=\sum_{a\in A} a=\frac{N}{2}(2N+1)=\frac{S}{2},
+\qquad S:=\sum_{j=1}^{2N} j = N(2N+1).
+\]
+Therefore also \(B_1=S-A_1=S/2\), i.e. \(A_1=B_1\).
+In the computation of Lemma~36.3 we had
+\[
+\mathrm{Var}(D)=\frac{Q}{N}-\frac{A_1^2+B_1^2}{N^2},
+\qquad Q:=\sum_{j=1}^{2N} j^2.
+\]
+Since \(A_1=B_1=S/2\), we have \(A_1^2+B_1^2=S^2/2\), which is exactly the minimal value used in Lemma~36.3.
+Thus equality holds throughout the proof of Lemma~36.3 and
+\(\mathrm{Var}(D)=Q/N-S^2/(2N^2)=(4N^2-1)/6\).
+\qed
+
+\medskip
+\noindent\textbf{Theorem 36.8 (variance-method barrier at \(1/\sqrt 8\)).}
+Consider the class of all integer-valued random variables \(X\) with
+\(\mathrm{Var}(X)\le (4N^2-1)/6\).
+For such \(X\), any lower bound of the form
+\(\max_k \mathbb P(X=k)\ge C/N\) valid for all \(N\) must satisfy
+\(C\le 1/\sqrt 8\).
+Equivalently, the constant \(1/\sqrt 8\) appearing in Theorem~36.5 is optimal for any argument that uses only the information ``\(D\) is integer-valued'' and ``\(\mathrm{Var}(D)\le (4N^2-1)/6\)''.
+
+\noindent\emph{Proof.}
+Fix \(N\ge 1\) and define
+\(m:=\lfloor \sqrt{2}\,N-1\rfloor\).
+Let \(X\) be uniform on \(\{-m,-m+1,\dots,m\}\).
+Then by Lemma~36.6,
+\[
+\max_k \mathbb P(X=k)=\frac{1}{2m+1}
+\quad\text{and}\quad
+\mathrm{Var}(X)=\frac{m(m+1)}{3}.
+\]
+Using \(m\le \sqrt{2}N-1\), we have
+\[
+ m(m+1)\le (\sqrt{2}N-1)(\sqrt{2}N)=2N^2-\sqrt{2}N\le 2N^2-\tfrac12,
+\]
+hence
+\[
+\mathrm{Var}(X)=\frac{m(m+1)}{3}\le \frac{2N^2-\tfrac12}{3}=\frac{4N^2-1}{6}.
+\]
+Therefore \(X\) belongs to the stated variance-bounded class. But also
+\[
+\frac{1}{2m+1}=\frac{1+o(1)}{2\sqrt{2}\,N}=\frac{1+o(1)}{\sqrt{8}\,N}
+\qquad (N\to\infty).
+\]
+Consequently, no universal inequality of the form
+\(\max_k \mathbb P(X=k)\ge C/N\)
+can hold with \(C>1/\sqrt 8\) on this class.
+\qed
+
+\medskip
+\noindent\textbf{Corollary 36.9 (near-extremizers force near-balanced first moment).}
+Let \(A\sqcup B=[2N]\), \(|A|=|B|=N\), and write
+\(A_1:=\sum_{a\in A} a\), \(S:=\sum_{j=1}^{2N} j=N(2N+1)\), and
+\(\delta:=A_1-S/2\).
+Let \(M:=\max_x r(x)\).
+Then
+\[
+\delta^2\ \le\ \frac{N^2}{2}\left(\frac{4N^2-1}{6}-\frac{N^4}{12M^2}+\frac{1}{12}\right).
+\]
+In particular, if \(M\le cN\) for some fixed \(c\), then \(|\delta|=O(N^2)\), and as \(c\downarrow 1/\sqrt 8\) the right-hand side forces \(|\delta|=o(N^2)\).
+
+\noindent\emph{Proof.}
+From the identity in the proof of Lemma~36.3 we have the \emph{exact} formula
+\[
+\mathrm{Var}(D)=\frac{Q}{N}-\frac{A_1^2+(S-A_1)^2}{N^2}
+=\frac{4N^2-1}{6}-\frac{2\delta^2}{N^2}.
+\]
+(Indeed, \(A_1^2+(S-A_1)^2=2\delta^2+S^2/2\).)
+On the other hand, Theorem~36.5 begins with the inequality (from Lemma~36.4)
+\(
+\mathrm{Var}(D)\ge N^4/(12M^2)-1/12.
+\)
+Combining yields
+\[
+\frac{4N^2-1}{6}-\frac{2\delta^2}{N^2}\ \ge\ \frac{N^4}{12M^2}-\frac{1}{12},
+\]
+which rearranges to the claimed bound on \(\delta^2\).
+\qed
+
+\subsection{Adversarial verification}
+\begin{itemize}
+\item \emph{Lemma 36.6.} The variance computation is exact and the equality check against \(1/(12p^2)-1/12\) is algebraic; no hidden regularity assumptions are used.
+\item \emph{Lemma 36.7.} The construction requires \(N\) even to make the endpoints \(N/2\) and \(3N/2\) integral. The sum identity uses the explicit pairing \((i,2N+1-i)\). Equality in Lemma~36.3 is correctly characterized by \(A_1=B_1\), which holds here.
+\item \emph{Theorem 36.8.} We only claim a \emph{methodological barrier} for variance-only arguments. The random variables \(X\) used in the proof need not arise as \(a-b\) for any partition; this is intentional, as the theorem is about what can be deduced from variance constraints alone.
+\item \emph{Corollary 36.9.} The exact variance formula is consistent with Lemma~36.3 (it immediately implies Lemma~36.3 because \(\delta^2\ge 0\)). The rearrangement is straightforward.
+\end{itemize}
+
+\subsection{Final}
+\textbf{UNRESOLVED (but strictly advanced).}
+Beyond the Round~2 bound \(c\ge 1/\sqrt 8\), we have now proved that \(1/\sqrt 8\) is a genuine barrier for the entire ``variance-only'' proof strategy: improving the universal lower bound requires additional structural constraints on the representation function \(r\), not just its second moment.
+We also extracted a quantitative structural condition (Corollary~36.9) showing that near-extremizers must have nearly balanced first moment.
+
+\subsection{Completion estimate}
+\textbf{COMPLETION: 55\%}.
+
+\subsection{References}
+\begin{itemize}
+\item Round~2 notes in \texttt{36\_v2.tex}.
+\item T. F. Bloom (ed.), Erd\H{o}s Problem \#36 discussion thread (``minimum overlap problem''), online resource. 
+\item Ethan Patrick White, ``Erd\H{o}s' minimum overlap problem,'' arXiv:2201.05704.
+\end{itemize}
+

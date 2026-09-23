@@ -1,0 +1,251 @@
+\section{Erd\H{o}s Problem \#252}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): keep the successful Round-1 factorial-tail framework, but sharpen it into an exact finite-dimensional reduction for the unresolved cases.
+
+Round-1 already gave complete proofs for $k=1$ and $k=2$. The genuine remaining issue is the general case, where the naive prime-tail estimate is too crude. The most promising Round-2 move is therefore to determine exactly how many local terms one must keep, and exactly how small the remaining tail becomes.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without re-proving them.
+
+\begin{itemize}
+\item If
+\[
+\alpha_k:=\sum_{n=1}^{\infty}\frac{\sigma_k(n)}{n!}
+\]
+is rational and $N$ is at least the denominator, then the factorial tail
+\[
+R_{N,k}:=\sum_{n=N+1}^{\infty}\sigma_k(n)\frac{N!}{n!}
+\]
+is an integer.
+\item The cases $k=1$ and $k=2$ were completely settled in Round-1.
+\end{itemize}
+
+In this round I work only with $k\ge 2$ and with the prime choice $N=p-1$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is an exact truncation threshold for the prime-tail method.
+
+For a prime $p$ define
+\[
+R_{p-1,k}=\sum_{j=0}^{\infty}U_{j,k}(p),
+\qquad
+U_{j,k}(p):=\frac{\sigma_k(p+j)}{p(p+1)\cdots(p+j)}.
+\]
+Then:
+
+\begin{itemize}
+\item If one truncates after fewer than $k$ local terms, the omitted tail is still at least $1$ (in fact usually much larger).
+\item If one keeps exactly the first $k$ local terms, the remaining tail is already $O_k(1/p)$.
+\end{itemize}
+
+Thus the irrationality problem for fixed $k\ge 2$ is reduced to understanding the near-integrality of the single finite expression
+\[
+Q_{p,k}:=\sum_{j=0}^{k-1}U_{j,k}(p)
+\]
+along large primes $p$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round-1 identified the obstruction qualitatively: for $k\ge 3$ the early terms of $R_{p-1,k}$ are too large for the $k=1,2$ argument to work directly.
+
+The exact claims to prove now are:
+
+\begin{itemize}
+\item a lower-bound statement showing that truncating after $L+1$ terms with $L\le k-2$ can \emph{never} produce a subunit error term;
+\item an upper-bound statement showing that truncating after the first $k$ terms \emph{always} leaves an error of size $O_k(1/p)$.
+\end{itemize}
+
+This turns the vague Round-1 obstruction into a sharp theorem: the first unresolved term count is exactly $k$.
+
+\subsection*{5) WORK (ROUND-2)}
+Fix $k\ge 2$ and let $p$ be a prime.
+
+\paragraph{Claim 1 (lower bound on each local term).}
+For every $j$ with $0\le j\le k-1$,
+\[
+U_{j,k}(p)\ge p^{k-j-1}.
+\]
+
+\paragraph{Proof.}
+Since $p+j$ is a divisor of itself,
+\[
+\sigma_k(p+j)=\sum_{d\mid (p+j)} d^k \ge (p+j)^k.
+\]
+Also,
+\[
+p(p+1)\cdots(p+j)\le p\,(p+j)^j.
+\]
+Therefore
+\[
+U_{j,k}(p)
+=\frac{\sigma_k(p+j)}{p(p+1)\cdots(p+j)}
+\ge \frac{(p+j)^k}{p\,(p+j)^j}
+=\frac{(p+j)^{k-j}}{p}
+\ge p^{k-j-1}.
+\]
+\hfill$\square$
+
+\medskip
+
+\paragraph{Corollary 2 (fewer than $k$ terms can never give a small remainder).}
+Let $L$ be an integer with $0\le L\le k-2$. Then
+\[
+\sum_{j=L+1}^{\infty}U_{j,k}(p)\ge p^{k-L-2}.
+\]
+In particular, for every sufficiently large prime $p$ the remainder after truncating after the first $L+1$ terms is larger than $1$.
+
+\paragraph{Proof.}
+The omitted tail is positive, so it is at least its first term:
+\[
+\sum_{j=L+1}^{\infty}U_{j,k}(p)\ge U_{L+1,k}(p).
+\]
+Apply Claim 1 with $j=L+1$.
+\hfill$\square$
+
+This proves a genuine barrier: the Round-1 style argument cannot work after keeping fewer than $k$ local terms.
+
+\medskip
+
+\paragraph{Claim 3 (uniform $O_k(1/p)$ tail after $k$ terms).}
+Define
+\[
+Q_{p,k}:=\sum_{j=0}^{k-1}U_{j,k}(p),
+\qquad
+E_{p,k}:=\sum_{j=k}^{\infty}U_{j,k}(p).
+\]
+Then for every prime $p\ge 2^k$,
+\[
+0<E_{p,k}\le \frac{2^{k+1}\zeta(k)}{p}.
+\]
+
+\paragraph{Proof.}
+For $k\ge 2$ one has the standard bound
+\[
+\sigma_k(n)=n^k\sum_{d\mid n}\frac1{(n/d)^k}
+\le n^k\sum_{m=1}^{\infty}\frac1{m^k}
+=\zeta(k)n^k.
+\]
+Hence, with
+\[
+\nu_{j,k}(p):=\zeta(k)\frac{(p+j)^k}{p(p+1)\cdots(p+j)},
+\]
+we have $U_{j,k}(p)\le \nu_{j,k}(p)$ for every $j$.
+
+First,
+\[
+\nu_{k,k}(p)
+\le \zeta(k)\frac{(p+k)^k}{p^{k+1}}
+\le \zeta(k)\frac{(2p)^k}{p^{k+1}}
+=\frac{2^k\zeta(k)}{p},
+\]
+because $p\ge k$.
+
+Second, for every $j\ge k$,
+\[
+\frac{\nu_{j+1,k}(p)}{\nu_{j,k}(p)}
+=\frac{(p+j+1)^k}{(p+j)^k}\cdot\frac1{p+j+1}
+=\frac{(p+j+1)^{k-1}}{(p+j)^k}
+\le \frac{2^{k-1}}{p+j}
+\le \frac12,
+\]
+since $p\ge 2^k$.
+
+Therefore the majorant tail is geometric:
+\[
+E_{p,k}
+\le \sum_{j=k}^{\infty}\nu_{j,k}(p)
+\le 2\nu_{k,k}(p)
+\le \frac{2^{k+1}\zeta(k)}{p}.
+\]
+The positivity $E_{p,k}>0$ is obvious.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Corollary 4 (finite-dimensional reduction).}
+Assume $\alpha_k\in\mathbf{Q}$. Then for every sufficiently large prime $p$,
+\[
+R_{p-1,k}\in\mathbf{Z}
+\]
+and hence
+\[
+\min_{m\in\mathbf{Z}}
+\left|
+\sum_{j=0}^{k-1}\frac{\sigma_k(p+j)}{p(p+1)\cdots(p+j)}-m
+\right|
+\le \frac{2^{k+1}\zeta(k)}{p}.
+\]
+
+\paragraph{Proof.}
+The Round-1 factorial-tail lemma gives $R_{p-1,k}\in\mathbf{Z}$ for every sufficiently large prime $p$. Since
+\[
+R_{p-1,k}=Q_{p,k}+E_{p,k},
+\]
+Claim 3 shows that the distance from $Q_{p,k}$ to the nearest integer is at most $E_{p,k}\le 2^{k+1}\zeta(k)/p$.
+\hfill$\square$
+
+\medskip
+
+\paragraph{Interpretation.}
+The open part of Problem \#252 is now reduced to the following explicit task:
+
+\begin{quote}
+For fixed $k\ge 3$, show that for infinitely many large primes $p$ the finite sum
+\[
+Q_{p,k}=\sum_{j=0}^{k-1}\frac{\sigma_k(p+j)}{p(p+1)\cdots(p+j)}
+\]
+is \emph{not} within $O_k(1/p)$ of any integer.
+\end{quote}
+
+This is a strict strengthening of the Round-1 obstruction, because it identifies the exact number of local terms that must be controlled.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item Claim 1 only uses the trivial divisor $d=p+j$ and the elementary denominator bound
+\[
+p(p+1)\cdots(p+j)\le p(p+j)^j.
+\]
+No hidden hypothesis is present.
+\item Corollary 2 is sharp in the sense relevant here: when $L=k-2$, the omitted tail is still at least $1$, so no interval of length $<1$ can arise from such a truncation.
+\item Claim 3 uses only the convergent Euler sum $\zeta(k)$ and a geometric-ratio estimate valid for every $p\ge 2^k$.
+\item The reduction in Corollary 4 is fully rigorous and depends only on the Round-1 integer-tail lemma.
+\end{itemize}
+
+Thus there is no logical gap in the new reduction: the unresolved issue is purely the arithmetic behavior of the explicit $k$-term local sum $Q_{p,k}$.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is an exact threshold theorem for the prime-tail method.
+
+\begin{itemize}
+\item Truncating after fewer than $k$ local terms can never leave a subunit remainder.
+\item Truncating after exactly the first $k$ local terms always leaves an error $O_k(1/p)$.
+\item Therefore rationality of $\alpha_k$ would force the explicit $k$-term quantity
+\[
+Q_{p,k}=\sum_{j=0}^{k-1}\frac{\sigma_k(p+j)}{p(p+1)\cdots(p+j)}
+\]
+to be $O_k(1/p)$-close to an integer for every sufficiently large prime $p$.
+\end{itemize}
+
+This is a genuine finite-dimensional reduction of the unresolved cases.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 55\%
+
+\subsection*{9) REFERENCES}
+Only references actually used or checked.
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#252}, \texttt{https://www.erdosproblems.com/252}, accessed 2026-03-07.
+\item P. Erd\H{o}s, \emph{Problem 4493}, Amer. Math. Monthly 59 (1952), 557--558.
+\item J.-C. Schlage-Puchta, \emph{The irrationality of a number theoretical series}, Ramanujan J. 15 (2008), 149--158; arXiv version checked at \texttt{https://arxiv.org/abs/1105.1452}.
+\item J. B. Friedlander, F. Luca, and M. Stoiciu, \emph{On the irrationality of a divisor function series}, Integers 7 (2007), A36.
+\item K. Pratt, \emph{The irrationality of a divisor function series of Erd\H{o}s and Kac}, arXiv:2209.11124.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

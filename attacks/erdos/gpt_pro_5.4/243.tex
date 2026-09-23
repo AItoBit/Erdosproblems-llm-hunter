@@ -1,0 +1,245 @@
+\section{Erd\H{o}s Problem \#243}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am pursuing \textbf{(C) obstruction/correction}. Round-1 produced only the very soft inequality
+\[
+ a_{n+1}\le 2q\,L_n
+\]
+where $L_n=\mathrm{lcm}(a_1,\dots,a_n)$ and $\sum 1/a_n=p/q$. The natural Round-2 objective is to sharpen this to the correct first-order scale and then combine it with the classical Erd\H{o}s--Straus criterion to isolate a strong obstruction that every non-Sylvester counterexample would have to satisfy.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results.
+\begin{enumerate}
+\item If $S=\sum_{m\ge 1}1/a_m=p/q$ in lowest terms and
+\[
+ T_n:=\sum_{m\ge n+1}\frac{1}{a_m},
+\qquad L_n:=\mathrm{lcm}(a_1,\dots,a_n),
+\]
+then $T_n$ is a positive rational number whose denominator divides $qL_n$.
+\item In particular,
+\[
+ T_n\ge \frac{1}{qL_n}.
+\]
+\item Sylvester's recurrence
+\[
+ a_{n+1}=a_n^2-a_n+1
+\]
+implies a telescoping identity and hence rationality of the reciprocal sum.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two new ingredients.
+\begin{enumerate}
+\item A refined tail asymptotic:
+\[
+ T_n=\frac{1}{a_{n+1}}+\frac{1+o(1)}{a_{n+1}^2}.
+\]
+This upgrades the Round-1 crude estimate $T_n\le 2/a_{n+1}$.
+\item An external theorem of Erd\H{o}s and Strauss (quoted explicitly in Duverney's 2001 paper): if $L_n/a_{n+1}$ is bounded and $a_{n+1}/a_n^2$ has limsup at least $1$, then rationality already forces eventual Sylvester recurrence.
+\end{enumerate}
+Combining these yields a strong new obstruction: any non-Sylvester counterexample must have
+\[
+ \liminf_{n\to\infty}\frac{qL_n}{a_{n+1}}\ge 1
+\qquad\mbox{and}\qquad
+ \limsup_{n\to\infty}\frac{L_n}{a_{n+1}}=\infty.
+\]
+So the lcm-ratio can neither go to $0$ nor stay bounded.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the factor $2$ in $a_{n+1}\le 2qL_n$, which was too weak to interact sharply with the classical lcm criterion. I will:
+\begin{enumerate}
+\item prove the tail asymptotic to first nontrivial order;
+\item use rational approximation to sharpen $a_{n+1}\le 2qL_n$ to
+\[
+ a_{n+1}\le (1+o(1))qL_n;
+\]
+\item import the Erd\H{o}s--Straus/\allowbreak Duverney theorem for the bounded-lcm-ratio regime;
+\item conclude that any genuine counterexample must force $L_n/a_{n+1}$ to be unbounded above.
+\end{enumerate}
+This rules out an entire class of possible counterexamples, namely those with $L_n=O(a_{n+1})$.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+ S:=\sum_{m=1}^{\infty}\frac{1}{a_m}=\frac{p}{q}
+\]
+with $p,q$ coprime positive integers, and let
+\[
+ T_n:=\sum_{m=n+1}^{\infty}\frac{1}{a_m},
+\qquad L_n:=\mathrm{lcm}(a_1,\dots,a_n).
+\]
+
+\paragraph{Lemma 5.1 (refined tail asymptotic).}
+Under the hypothesis
+\[
+ \frac{a_{n+1}}{a_n^2}\to 1,
+\]
+one has
+\[
+ T_n-\frac{1}{a_{n+1}}=\sum_{m=n+2}^{\infty}\frac{1}{a_m}=\frac{1+o(1)}{a_{n+1}^2}.
+\]
+Hence
+\[
+ T_n=\frac{1}{a_{n+1}}+\frac{1+o(1)}{a_{n+1}^2}.
+\]
+
+\emph{Proof.}
+Write
+\[
+ R_n:=\sum_{m=n+2}^{\infty}\frac{1}{a_m}.
+\]
+Since $a_{n+2}/a_{n+1}^2\to 1$, we already have
+\[
+ \frac{1}{a_{n+2}}=\frac{1+o(1)}{a_{n+1}^2}.
+\]
+Thus it suffices to show that the tail beyond $a_{n+2}$ is negligible compared to $1/a_{n+2}$.
+
+Fix $\varepsilon\in(0,1/2)$. For all sufficiently large $m$,
+\[
+ a_{m+1}\ge (1-\varepsilon)a_m^2.
+\]
+Applying this repeatedly gives, for $j\ge 1$,
+\[
+ a_{n+2+j}\ge (1-\varepsilon)^{2^j-1}a_{n+2}^{2^j}.
+\]
+Therefore
+\[
+ \sum_{j=1}^{\infty}\frac{1}{a_{n+2+j}}
+ \le \sum_{j=1}^{\infty}\frac{(1-\varepsilon)^{-(2^j-1)}}{a_{n+2}^{2^j}}
+ =O\!\left(\frac{1}{a_{n+2}^2}\right),
+\]
+which is $o(1/a_{n+2})$. Hence
+\[
+ R_n=\frac{1}{a_{n+2}}+o\!\left(\frac{1}{a_{n+2}}\right)=\frac{1+o(1)}{a_{n+2}}.
+\]
+Using $a_{n+2}=(1+o(1))a_{n+1}^2$ yields
+\[
+ R_n=\frac{1+o(1)}{a_{n+1}^2}.
+\]
+This proves the lemma.
+
+\paragraph{Proposition 5.2 (sharp first-order denominator obstruction).}
+One has
+\[
+ a_{n+1}\le (1+o(1))qL_n.
+\]
+Equivalently,
+\[
+ \liminf_{n\to\infty}\frac{qL_n}{a_{n+1}}\ge 1.
+\]
+
+\emph{Proof.}
+Set
+\[
+ D_n:=qL_n.
+\]
+By Round-1, $T_n$ is a positive rational number whose denominator divides $D_n$.
+
+Fix $\delta>0$ and suppose, for contradiction, that along an infinite subsequence,
+\[
+ a_{n+1}\ge (1+\delta)D_n.
+\]
+For such $n$ we certainly have $a_{n+1}>D_n$, hence $a_{n+1}$ does not divide $D_n$. Therefore $1/a_{n+1}$ is \emph{not} a rational whose denominator divides $D_n$.
+
+Now let $r=u/v$ be any rational number with $v\mid D_n$ and $r\ne 1/a_{n+1}$. Then
+\[
+ \left|r-\frac{1}{a_{n+1}}\right|
+ =\frac{|a_{n+1}u-v|}{a_{n+1}v}
+ \ge \frac{1}{a_{n+1}D_n},
+\]
+because $a_{n+1}u-v$ is a nonzero integer and $v\le D_n$.
+
+Applying this to $r=T_n$ gives
+\[
+ T_n-\frac{1}{a_{n+1}}\ge \frac{1}{a_{n+1}D_n}
+ \ge \frac{1+\delta}{a_{n+1}^2}.
+\]
+But by Lemma 5.1,
+\[
+ T_n-\frac{1}{a_{n+1}}=\frac{1+o(1)}{a_{n+1}^2},
+\]
+which is $< (1+\delta)/a_{n+1}^2$ for all sufficiently large $n$. This contradiction proves that no fixed $\delta>0$ can occur infinitely often. Hence
+\[
+ a_{n+1}\le (1+o(1))D_n=(1+o(1))qL_n.
+\]
+The liminf formulation is just a rearrangement.
+
+\paragraph{External theorem 5.3 (Erd\H{o}s--Straus criterion; quoted in Duverney).}
+Let $(u_n)$ be an increasing sequence of positive integers such that
+\[
+ \limsup_{n\to\infty}\frac{u_{n+1}}{u_n^2}\ge 1
+\]
+and
+\[
+ \frac{\mathrm{lcm}(u_1,\dots,u_n)}{u_{n+1}}
+\]
+is bounded. Then
+\[
+ \sum_{n\ge 1}\frac{1}{u_n}\in \mathbf{Q}
+\]
+if and only if
+\[
+ u_{n+1}=u_n^2-u_n+1
+\]
+for all sufficiently large $n$.
+
+\paragraph{Corollary 5.4 (new obstruction for any non-Sylvester counterexample).}
+Assume the hypotheses of Problem \#243 and suppose the sequence is \emph{not} eventually Sylvester. Then
+\[
+ \limsup_{n\to\infty}\frac{L_n}{a_{n+1}}=\infty.
+\]
+Combined with Proposition 5.2, such a counterexample would have to satisfy both
+\[
+ \liminf_{n\to\infty}\frac{qL_n}{a_{n+1}}\ge 1
+\qquad\mbox{and}\qquad
+ \limsup_{n\to\infty}\frac{L_n}{a_{n+1}}=\infty.
+\]
+
+\emph{Proof.}
+If $L_n/a_{n+1}$ were bounded, then External Theorem 5.3 would apply with $u_n=a_n$, because our problem hypothesis gives
+\[
+ \frac{a_{n+1}}{a_n^2}\to 1,
+\]
+so in particular the limsup is at least $1$, and the reciprocal sum is rational by assumption. The theorem would then force eventual Sylvester recurrence, contrary to hypothesis. Therefore $L_n/a_{n+1}$ is unbounded, which is exactly the displayed limsup statement. The liminf statement is Proposition 5.2.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Is Lemma 5.1 really sharp enough?} Yes. The first omitted term is $1/a_{n+2}=(1+o(1))/a_{n+1}^2$, and the remaining tail is smaller by another factor of order $1/a_{n+2}$.
+\item \textbf{Did Proposition 5.2 misuse the denominator-divisibility argument?} No. The lower bound
+\[
+\left|r-\frac{1}{a_{n+1}}\right|\ge \frac{1}{a_{n+1}D_n}
+\]
+was applied only in the regime $a_{n+1}>D_n$, where $1/a_{n+1}$ definitely does not itself have denominator dividing $D_n$.
+\item \textbf{Is the imported theorem applicable with our indexing?} Yes. The theorem compares $\mathrm{lcm}(u_1,\dots,u_n)$ to $u_{n+1}$; this matches exactly our $L_n$ and $a_{n+1}$ after the harmless shift from Duverney's $u_0,u_1,\dots$ notation to $a_1,a_2,\dots$.
+\item \textbf{What class of counterexamples has been ruled out?} All sequences with
+\[
+ L_n=O(a_{n+1}).
+\]
+Any counterexample must have $L_n/a_{n+1}$ unbounded above, so the lcm must sometimes be far larger than the next term.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 sharpens the Round-1 denominator obstruction from
+\[
+ a_{n+1}\le 2qL_n
+\]
+to the asymptotically sharp first-order statement
+\[
+ a_{n+1}\le (1+o(1))qL_n.
+\]
+More importantly, after combining this with the classical Erd\H{o}s--Straus criterion, we obtain a new necessary condition for any genuine counterexample:
+\[
+ \frac{L_n}{a_{n+1}}
+\]
+cannot stay bounded. So any non-Sylvester rational example would have to lie outside the entire regime $L_n=O(a_{n+1})$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item D. Duverney, \emph{Irrationality of Fast Converging Series of Rational Numbers}, J. Math. Sci. Univ. Tokyo 8 (2001), 275--316. (Used for the explicit Erd\H{o}s--Straus criterion quoted as External Theorem 5.3.)
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#243}, current discussion page on erdosproblems.com, accessed 2026-03-07.
+\end{enumerate}

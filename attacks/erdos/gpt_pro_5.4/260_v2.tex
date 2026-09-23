@@ -1,0 +1,207 @@
+
+\section{Erd\H{o}s Problem \#260}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)} in the fail-safe sense: not a full proof of the original problem, but a strictly stronger theorem than Round~1 together with a sharper identification of the remaining obstruction.  Round~1 proved irrationality under the condition
+\[
+a_{n+1}-a_n-\lfloor \log_2 a_{n+1}\rfloor \longrightarrow \infty.
+\]
+The new goal is to weaken this to a mere \emph{limsup} condition.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use only the Round~1 binary-support viewpoint:
+\[
+\frac{a_n}{2^{a_n}}
+\]
+contributes binary digits only in the interval
+\[
+[a_n-\lfloor \log_2 a_n\rfloor,\; a_n].
+\]
+Round~1 used eventual disjointness of these intervals to get a no-carry argument.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{tail-stability lemma for binary digits}: if a dyadic partial sum has denominator $2^m$ and the remaining tail is less than $2^{-M}$, then the first $M-1$ binary digits are frozen, regardless of later carries.
+
+This bypasses the Round~1 no-carry requirement entirely.  I only need infinitely many large gaps, not eventual gap separation.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round~1 gap was this: eventual disjointness of digit blocks was used to control carries.  I replace that by a quantitative tail estimate.
+
+Define
+\[
+L_n:=\lfloor \log_2 a_n\rfloor,\qquad
+\Delta_n:=a_{n+1}-L_{n+1}-a_n-1.
+\]
+Thus $\Delta_n$ is the number of binary positions strictly between the last possible nonzero digit coming from the $n$th summand and the first possible nonzero digit coming from the $(n+1)$st summand.
+
+The claim to prove is:
+
+\medskip
+\noindent
+\textbf{New theorem.}
+If
+\[
+\limsup_{n\to\infty}\Delta_n=\infty,
+\]
+then
+\[
+\sum_{n=1}^{\infty}\frac{a_n}{2^{a_n}}
+\]
+is irrational.
+\medskip
+
+This strictly strengthens the Round~1 theorem, which required $\Delta_n\to\infty$.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let
+\[
+S:=\sum_{n=1}^{\infty}\frac{a_n}{2^{a_n}},\qquad
+P_n:=\sum_{k=1}^{n}\frac{a_k}{2^{a_k}},\qquad
+T_n:=S-P_n=\sum_{k>n}\frac{a_k}{2^{a_k}}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 1: a sharp upper bound for the tail.}
+
+Since $a_{n+1}<a_{n+2}<\cdots$, we have
+\[
+T_n\leq \sum_{m=a_{n+1}}^{\infty}\frac{m}{2^m}.
+\]
+Using the standard identity
+\[
+\sum_{m=N}^{\infty}\frac{m}{2^m}=\frac{N+1}{2^{N-1}}
+\qquad (N\geq 1),
+\]
+or equivalently
+\[
+\sum_{m=N+1}^{\infty}\frac{m}{2^m}=\frac{N+2}{2^N},
+\]
+we get
+\[
+T_n\leq \frac{a_{n+1}+2}{2^{a_{n+1}}}.
+\]
+Now $a_{n+1}<2^{L_{n+1}+1}$, hence $a_{n+1}+2<2^{L_{n+1}+2}$.  Therefore
+\[
+T_n<2^{L_{n+1}+2-a_{n+1}}.
+\]
+Because
+\[
+a_{n+1}=a_n+1+\Delta_n+L_{n+1},
+\]
+this becomes
+\[
+T_n<2^{-(a_n+\Delta_n-1)}.
+\tag{260.1}
+\]
+
+\medskip
+\noindent
+\textbf{Step 2: long zero runs in the binary expansion of $S$.}
+
+The partial sum $P_n$ is a dyadic rational with denominator dividing $2^{a_n}$.  Hence in its terminating binary expansion, all digits in positions strictly after $a_n$ are $0$.
+
+From (260.1), adding $T_n$ can change only binary digits in positions at least $a_n+\Delta_n-1$.  Therefore the binary digits of $S$ in the positions
+\[
+a_n+1,\; a_n+2,\; \dots,\; a_n+\Delta_n-2
+\]
+agree with those of $P_n$, hence are all $0$.
+
+So whenever $\Delta_n\geq 2$, the binary expansion of $S$ contains a zero run of length at least
+\[
+\Delta_n-2.
+\]
+Since $\limsup \Delta_n=\infty$, the binary expansion of $S$ contains arbitrarily long zero runs.
+
+\medskip
+\noindent
+\textbf{Step 3: a rational number with arbitrarily long zero runs must be dyadic.}
+
+Take the standard binary expansion, i.e. the one not ending in an infinite tail of $1$'s.  If a rational number is not dyadic, then its standard binary expansion is eventually periodic but not eventually zero.  If the eventual period has length $q$, then every sufficiently late block of $q$ consecutive digits contains at least one $1$; otherwise one whole period would be all zero, forcing termination.  Hence the lengths of zero runs are bounded.
+
+Therefore a rational number whose standard binary expansion has arbitrarily long zero runs must be dyadic.
+
+So, to finish, it remains only to rule out the possibility that $S$ is dyadic.
+
+\medskip
+\noindent
+\textbf{Step 4: $S$ is not dyadic.}
+
+Assume for contradiction that
+\[
+S=\frac{u}{2^M}
+\]
+for some integers $u,M\geq 0$.
+
+Choose $n$ so large that $a_n\geq M$ and $\Delta_n\geq 2$; this is possible because $a_n\to\infty$ and $\limsup \Delta_n=\infty$.
+
+Then $P_n$ has denominator dividing $2^{a_n}$, and so does $S$.  Hence
+\[
+T_n=S-P_n
+\]
+is a nonnegative multiple of $2^{-a_n}$.
+
+But $T_n>0$ because there are infinitely many positive summands after the $n$th one, while by (260.1) and $\Delta_n\geq 2$ we have
+\[
+0<T_n<2^{-a_n}.
+\]
+This is impossible, because the only multiple of $2^{-a_n}$ lying in the interval $(0,2^{-a_n})$ is none at all.
+
+This contradiction shows that $S$ is not dyadic.  Combined with Step~3, it follows that $S$ is irrational.
+
+\medskip
+\noindent
+\textbf{Conclusion.}
+If
+\[
+\limsup_{n\to\infty}\bigl(a_{n+1}-a_n-\lfloor \log_2 a_{n+1}\rfloor-1\bigr)=\infty,
+\]
+then
+\[
+\sum_{n=1}^{\infty}\frac{a_n}{2^{a_n}}
+\]
+is irrational.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Carry issue.}  The proof never assumes no-carry.  The only input is that the tail is numerically too small to alter early binary digits.
+\item \textbf{Terminating-binary loophole.}  Arbitrarily long zero runs alone do not exclude dyadic rationals; this is why Step~4 is separate.
+\item \textbf{Quantifiers.}  I only need infinitely many indices with large $\Delta_n$, not eventual control.  This is exactly why the hypothesis is a $\limsup$ condition.
+\item \textbf{Strict advance over Round~1.}  Round~1 required $\Delta_n\to\infty$; the new theorem needs only $\limsup \Delta_n=\infty$.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~2 proves a strictly stronger irrationality criterion than Round~1:
+\[
+\limsup_{n\to\infty}\bigl(a_{n+1}-a_n-\lfloor \log_2 a_{n+1}\rfloor-1\bigr)=\infty
+\]
+already suffices.  The genuine remaining obstruction is therefore concentrated in the regime where
+\[
+a_{n+1}-a_n-\lfloor \log_2 a_{n+1}\rfloor
+\]
+stays bounded above, so the tail can repeatedly interact with the earlier binary digits.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 50\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item [EP260] T. F. Bloom, \emph{Erd\H{o}s Problem \#260}, problem page, accessed 2026-03-07.
+\item [Er88c] P. Erd\H{o}s, \emph{On the irrationality of certain series: problems and results}, 1988; see p.~103 for Problem \#260 and the discussion of stronger sufficient hypotheses.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+

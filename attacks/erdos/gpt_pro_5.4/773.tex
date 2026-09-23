@@ -1,0 +1,185 @@
+\section{Erd\H{o}s Problem \#773}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.} The main Round-1 gap is that the hypergraph extraction argument only produced a \emph{weak Sidon} subset of the squares, not necessarily a genuine Sidon subset in the standard sense (where equal sums with repeated summands are also forbidden). The goal in this round is to repair that gap, while keeping the Round-1 framework. The new ingredient is a conversion theorem: every weak Sidon set of size $m$ contains a genuine Sidon subset of size at least $(m+1)/2$. This turns the Round-1 weak-Sidon extraction into a correct standard-Sidon lower bound.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+
+\begin{enumerate}
+\item The Landau upper bound:
+\[
+ f(N) \ll \frac{N}{(\log N)^{1/4}},
+\]
+for the maximum size $f(N)$ of a Sidon subset of $\{1^2,2^2,\dots,N^2\}$.
+
+\item The extraction lemma from Round-1: every $B(2k)$-sequence of length $n$ (in the Round-1 sense: every integer has at most $k$ representations as $a_i+a_j$ with $i<j$) contains a \emph{weak Sidon} subsequence of size
+\[
+ \gg k^{-1/3} n^{2/3}.
+\]
+
+\item The divisor-function input from Round-1: for every $\varepsilon>0$, the first $N$ squares form a $B(2k)$-sequence with $k\le N^{3\varepsilon}$ for all sufficiently large $N$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The genuinely new ingredient is the following strengthening.
+
+\medskip
+\noindent\textbf{Theorem 3.1.} \emph{Let $A$ be a weak Sidon set of size $m$. Then $A$ contains a genuine Sidon subset of size at least}
+\[
+\left\lceil \frac{m+1}{2}\right\rceil.
+\]
+
+This is exactly the missing bridge between the Round-1 weak-Sidon extraction and the actual statement of Problem \#773.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap is the weak-vs-standard Sidon distinction. To close it, I proceed as follows.
+
+\begin{enumerate}
+\item For a weak Sidon set $A$, build the 3-uniform hypergraph $H(A)$ whose edges are the 3-term arithmetic progressions in $A$.
+\item Prove that for subsets of a weak Sidon set, being genuinely Sidon is equivalent to containing no 3-term arithmetic progression.
+\item Prove that $H(A)$ has at most $|A|-2$ edges by an injective midpoint map.
+\item Apply the Chv\'atal--McDiarmid--Tuza transversal bound
+\[
+\tau(H) \le \frac{|V(H)|+|E(H)|}{4}
+\]
+for 3-uniform hypergraphs.
+\item Convert the resulting large independent set in $H(A)$ into a large genuine Sidon subset of $A$, and then apply this to the Round-1 weak Sidon subset of the squares.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+I first isolate the precise weak-Sidon-to-Sidon conversion.
+
+\medskip
+\noindent\textbf{Definition.} A finite set $A\subset\mathbb R$ is \emph{weak Sidon} if all sums $x+y$ with $x,y\in A$ and $x<y$ are distinct. It is \emph{Sidon} if all sums $x+y$ with $x,y\in A$ and $x\le y$ are distinct.
+
+\medskip
+\noindent\textbf{Lemma 5.1.} \emph{Let $A$ be a weak Sidon set, and let $S\subseteq A$. Then $S$ is Sidon if and only if $S$ contains no 3-term arithmetic progression.}
+
+\medskip
+\noindent\emph{Proof.} If $x<y<z$ in $S$ satisfy $x+z=2y$, then the two pair-sums $x+z$ and $y+y$ are equal, so $S$ is not Sidon.
+
+Conversely, assume that $S$ is not Sidon. Then there are two distinct unordered pairs $\{u,v\}\neq\{x,y\}$, with $u\le v$ and $x\le y$, such that
+\[
+ u+v=x+y.
+\]
+If the four elements $u,v,x,y$ were all distinct, then after relabeling them as $a<b<c<d$, the equality would force
+\[
+ a+d=b+c,
+\]
+which is an equality of two sums of \emph{distinct} pairs, contradicting the weak Sidon property inherited from $A$. Hence at most three distinct elements occur.
+
+They cannot be only two distinct elements, because the unordered pairs are different. Thus there are exactly three distinct elements, say $a<b<c$. The only possible equality of two distinct unordered pairs is
+\[
+ a+c=b+b,
+\]
+so $a,b,c$ form a 3-term arithmetic progression. Therefore $S$ fails to be Sidon if and only if it contains a 3-term arithmetic progression. \hfill$\square$
+
+\medskip
+Now define $H(A)$ to be the 3-uniform hypergraph with vertex set $A$ and edge set equal to the collection of 3-term arithmetic progressions in $A$.
+
+By Lemma 5.1, the genuine Sidon subsets of $A$ are exactly the independent sets of $H(A)$. Therefore the largest genuine Sidon subset of $A$ has size
+\[
+\alpha(H(A)).
+\]
+
+\medskip
+\noindent\textbf{Lemma 5.2.} \emph{If $A=\{a_1<a_2<\cdots<a_m\}$ is weak Sidon, then}
+\[
+|E(H(A))|\le m-2.
+\]
+
+\medskip
+\noindent\emph{Proof.} Every edge $\{x,y,z\}$ of $H(A)$ has a unique midpoint $y$, with $x<y<z$ and $x+z=2y$. Thus the midpoint belongs to $\{a_2,\dots,a_{m-1}\}$.
+
+I claim that distinct edges have distinct midpoints. Indeed, if
+\[
+ x<y<z, \qquad x'<y<z'
+\]
+are two distinct 3-term arithmetic progressions with the same midpoint $y$, then
+\[
+ x+z=2y=x'+z'.
+\]
+Since the two unordered pairs $\{x,z\}$ and $\{x',z'\}$ are distinct, this contradicts the weak Sidon property of $A$. Hence the midpoint map is injective from $E(H(A))$ into $\{a_2,\dots,a_{m-1}\}$, so $|E(H(A))|\le m-2$. \hfill$\square$
+
+\medskip
+I now use the classical theorem of Chv\'atal and McDiarmid, independently proved by Tuza: if $H$ is a 3-uniform hypergraph with $n_H$ vertices and $m_H$ edges, then
+\[
+\tau(H)\le \frac{n_H+m_H}{4}.
+\]
+Since $\alpha(H)+\tau(H)=|V(H)|$ for every finite hypergraph, Lemma 5.2 yields the conversion theorem.
+
+\medskip
+\noindent\textbf{Proof of Theorem 3.1.} Let $m=|A|$, and let $H=H(A)$. Then $|V(H)|=m$, and by Lemma 5.2,
+\[
+|E(H)|\le m-2.
+\]
+Hence
+\[
+\tau(H)\le \frac{|V(H)|+|E(H)|}{4}\le \frac{m+(m-2)}{4}=\frac{m-1}{2}.
+\]
+Therefore
+\[
+\alpha(H)=m-\tau(H)\ge m-\frac{m-1}{2}=\frac{m+1}{2}.
+\]
+Since independent sets of $H$ are exactly Sidon subsets of $A$ by Lemma 5.1, the conclusion follows. \hfill$\square$
+
+\medskip
+This immediately strengthens the Round-1 extraction lemma.
+
+\medskip
+\noindent\textbf{Corollary 5.3.} \emph{Every $B(2k)$-sequence of length $n$ contains a genuine Sidon subsequence of size}
+\[
+\gg k^{-1/3}n^{2/3}.
+\]
+
+\medskip
+\noindent\emph{Proof.} By the Round-1 extraction lemma, there is a weak Sidon subsequence of size
+\[
+M\gg k^{-1/3}n^{2/3}.
+\]
+Applying Theorem 3.1 to that weak Sidon subsequence gives a genuine Sidon subsequence of size at least $(M+1)/2\gg k^{-1/3}n^{2/3}$. \hfill$\square$
+
+\medskip
+Applying this to the first $N$ squares and using the Round-1 divisor-function estimate with $k\le N^{3\varepsilon}$, I obtain:
+\[
+ f(N)\gg_\varepsilon N^{2/3-\varepsilon}
+\qquad (\forall\,\varepsilon>0).
+\]
+This is now a \emph{correct} standard-Sidon lower bound, not merely a weak-Sidon lower bound.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The only serious logical vulnerability in Round-1 was the weak-vs-standard Sidon confusion. I check that the present repair really closes it.
+
+\begin{enumerate}
+\item \emph{Could Lemma 5.1 fail because a non-Sidon configuration uses four distinct elements?} No. In a weak Sidon set, four distinct elements giving equal sums would already violate weak Sidonicity.
+
+\item \emph{Could distinct 3-term progressions share a midpoint without violating weak Sidonicity?} No. Shared midpoint $y$ gives two distinct representations of $2y$ as a sum of distinct pairs.
+
+\item \emph{Does the Chv\'atal--McDiarmid--Tuza bound apply to disconnected hypergraphs?} Yes; it is stated for all 3-uniform hypergraphs.
+
+\item \emph{Did I recover the known sharp lower bound $f(N)\gg N^{2/3}$?} No. This round only repairs the Round-1 proof to a correct bound $f(N)\gg_\varepsilon N^{2/3-\varepsilon}$. The stronger bound $f(N)\gg N^{2/3}$ remains the theorem of Lefmann and Thiele.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The Round-1 lower bound has been repaired gap-free: the hypergraph extraction plus Theorem 3.1 now gives a genuine Sidon subset of the first $N$ squares of size $\gg_\varepsilon N^{2/3-\varepsilon}$. The overall problem remains open; the current best-known bounds are still
+\[
+N^{2/3}\ll f(N)\ll \frac{N}{(\log N)^{1/4}}.
+\]
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 60\%}
+
+\subsection*{9) REFERENCES}
+[1] T. F. Bloom, \emph{Erd\H{o}s Problem \#773}, erdosproblems.com/773, accessed 2026-03-07.
+
+[2] H. Lefmann and T. Thiele, \emph{Point sets with distinct distances}, Combinatorica \textbf{15} (1995), 379--408.
+
+[3] J. Ma and Q. Tang, \emph{Largest Sidon subsets in weak Sidon sets}, arXiv:2602.23282, 2026.
+
+[4] V. Chv\'atal and C. McDiarmid, \emph{Small transversals in hypergraphs}, Combinatorica \textbf{12} (1992), 19--26.
+
+[5] Zs. Tuza, \emph{Covering all cliques of a graph}, Discrete Math. \textbf{86} (1990), 117--126.
+

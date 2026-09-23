@@ -1,0 +1,428 @@
+\section{Erd\H{o}s Problem \#43 (Round 4)}
+
+\subsection{1) ROUND-4 OBJECTIVE}
+
+\textbf{Path chosen: (C) --- fatal obstruction / correction.}
+
+Round~3 repaired the faulty Tao-type argument but still treated the equal-size strengthening as unresolved.  In this round I identify the decisive obstruction: the \emph{second} statement is false.  More precisely, I give a self-contained infinite-family disproof of
+\[
+\binom{|A|}{2}+\binom{|B|}{2}\le (1-c+o(1))\binom{f(N)}{2}
+\qquad (|A|=|B|)
+\]
+for every fixed $c>0$, and I also prove a matching upper bound up to $O(N^{1/4})$ on the common size $|A|=|B|$ by using the corrected Round~3 inequality.
+
+Thus the most promising Round~4 direction is not to keep chasing the false strengthened statement, but to \emph{close it rigorously}, state the minimal correction, and isolate the first question as the only genuinely open part.
+
+\subsection{2) Round-3 FOUNDATION USED}
+
+I explicitly use the following Round~3 results.
+\begin{itemize}
+\item \textbf{Round~3 corrected convolution inequality.} If $A,B\subset[N]$ are Sidon and $(A-A)\cap(B-B)=\{0\}$, then for every integer $H\ge 1$,
+\[
+\frac{(|A|^2+|B|^2)H^2}{N+H}\le (|A|+|B|)H+H^2.
+\]
+\item \textbf{Round~3 diagnosis of the Tao-style argument.} The earlier bound with diagonal term $(|A|^2+|B|^2)\mathbf 1_{\{0\}}$ is tautological and does \emph{not} imply $|A|^2+|B|^2\le N+O(\sqrt N)$.
+\item \textbf{Round~1/3 uniqueness of nonzero differences.} If a set is Sidon in an abelian group, then each nonzero directed difference is represented by at most one ordered pair.  I use this in the cyclic group $\mathbb Z/M\mathbb Z$.
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-4)}
+
+There are two genuinely new ingredients in this round.
+
+\paragraph{(i) A full infinite-family disproof of the equal-size strengthening.}
+Using a Bose--Chowla Sidon set modulo $q^2-1$, split by parity, I construct for infinitely many
+\[
+N=\frac{q^2-1}{2}
+\]
+Sidon sets $A,B\subset[N]$ with $|A|=|B|$ and $(A-A)\cap(B-B)=\{0\}$ such that
+\[
+\binom{|A|}{2}+\binom{|B|}{2}=\frac N2-O(N^{3/4})=(1-o(1))\binom{f(N)}{2}.
+\]
+This is a \emph{rigorous disproof} of the second statement.
+
+\paragraph{(ii) A matching upper bound on the equal-size regime.}
+Define
+\[
+M(N):=\max\bigl\{m:\exists\text{ Sidon }A,B\subset[N],\ |A|=|B|=m,\ (A-A)\cap(B-B)=\{0\}\bigr\}.
+\]
+I prove
+\[
+M(N)\le \frac1{\sqrt2}\sqrt N+O(N^{1/4})
+\]
+for all $N$, by combining the Round~3 corrected inequality with the trivial bound $\binom{m}{2}\le N-1$ for a Sidon set of size $m$ in $[N]$.
+
+Together, these show that the constant $1/\sqrt2$ is asymptotically \emph{sharp} for the equal-size problem, so no fixed positive gap below it can hold.
+
+\subsection{4) ATTACK PLAN (ROUND-4)}
+
+\textbf{Exact gap left after Round~3.}
+Round~3 showed that one previous argument toward the equal-size strengthening was invalid, but it did not settle whether the strengthening itself was true or false.
+
+\textbf{Claims to prove in Round~4.}
+\begin{enumerate}
+\item For all $N$, if $|A|=|B|=m$ then $m\le \frac1{\sqrt2}\sqrt N+O(N^{1/4})$.
+\item For infinitely many $N$, there exist such pairs with $m\ge \frac1{\sqrt2}\sqrt N-O(N^{1/4})$.
+\item Consequently,
+\[
+\limsup_{N\to\infty}\frac{M(N)}{\sqrt N}=\frac1{\sqrt2},
+\]
+and hence the second question is false as stated.
+\end{enumerate}
+
+\textbf{Why this overcomes the earlier obstacle.}
+Round~3 already isolated the correct analytic inequality; what was missing was an application strong enough to recover the $1/\sqrt2$ barrier, and an explicit construction showing that this barrier is actually attained asymptotically.  The upper bound below uses the corrected inequality correctly, and the lower bound comes from a new parity-splitting construction in a modular Sidon set.
+
+\subsection{5) WORK (ROUND-4)}
+
+\subsubsection{5.1 A universal upper bound in the equal-size case}
+
+\begin{proposition}\label{prop:upper}
+Let $A,B\subset[N]$ be Sidon sets with $(A-A)\cap(B-B)=\{0\}$ and $|A|=|B|=m$.  Then
+\[
+m\le \frac1{\sqrt2}\sqrt N+O(N^{1/4}).
+\]
+Equivalently,
+\[
+2\binom{m}{2}\le \frac N2+O(N^{3/4}).
+\]
+\end{proposition}
+
+\begin{proof}
+Apply the Round~3 corrected inequality with $|A|=|B|=m$:
+\[
+\frac{2m^2H^2}{N+H}\le 2mH+H^2
+\qquad (H\ge 1,\ H\in\mathbb Z).
+\]
+Multiplying by $N+H$ and dividing by $H$ gives
+\begin{equation}\label{eq:basic-upper}
+2m^2\le N+2m+H+\frac{2mN}{H}.
+\end{equation}
+
+Now $A$ itself is a Sidon set in $[N]$, so its positive differences are all distinct and lie in $\{1,\dots,N-1\}$.  Hence
+\[
+\binom{m}{2}\le N-1,
+\]
+so $m=O(\sqrt N)$.
+
+Choose
+\[
+H:=\left\lceil\sqrt{2mN}\right\rceil.
+\]
+Then $H\le \sqrt{2mN}+1$ and $\dfrac{2mN}{H}\le \sqrt{2mN}$.  Substituting into \eqref{eq:basic-upper},
+\[
+2m^2\le N+2m+2\sqrt{2mN}+1.
+\]
+Because $m=O(\sqrt N)$, the last two terms are $O(N^{1/2})$ and $O(N^{3/4})$ respectively, so
+\[
+2m^2\le N+O(N^{3/4}).
+\]
+Therefore
+\[
+m^2\le \frac N2+O(N^{3/4}),
+\]
+and taking square roots yields
+\[
+m\le \frac1{\sqrt2}\sqrt N+O(N^{1/4}).
+\]
+Finally,
+\[
+2\binom{m}{2}=m(m-1)=m^2-m\le \frac N2+O(N^{3/4}).
+\]
+This proves the claim.
+\end{proof}
+
+\subsubsection{5.2 The Bose--Chowla parity-splitting construction}
+
+The next ingredient is classical.
+
+\begin{theorem}[Bose--Chowla, order $2$ case]\label{thm:BC}
+For every prime power $q$ there exists a set
+\[
+S\subseteq\{1,2,\dots,q^2-2\}
+\]
+of cardinality $q$ which is Sidon modulo $q^2-1$.
+\end{theorem}
+
+Fix an \emph{odd} prime power $q$, and set
+\[
+M:=q^2-1,\qquad N:=\frac{M}{2}=\frac{q^2-1}{2}.
+\]
+Let $S\subseteq\{1,2,\dots,M-1\}$ be a Bose--Chowla Sidon set modulo $M$, with $|S|=q$.
+Partition $S$ by parity:
+\[
+S_{\mathrm{even}}:=S\cap 2\mathbb Z,\qquad S_{\mathrm{odd}}:=S\cap(2\mathbb Z+1),
+\]
+and write
+\[
+a:=|S_{\mathrm{even}}|,\qquad b:=|S_{\mathrm{odd}}|,
+\]
+so $a+b=q$.
+
+\begin{lemma}\label{lem:parity-count}
+One has
+\[
+a(a-1)+b(b-1)\le N-1,
+\]
+and therefore
+\[
+(a-b)^2\le 2q-3.
+\]
+In particular, with $m:=\min\{a,b\}$,
+\[
+m\ge \frac{q-\sqrt{2q-3}}{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Work in the cyclic group $\mathbb Z/M\mathbb Z$.  By the Round~1 uniqueness-of-differences lemma, applied to the Sidon set $S\subset \mathbb Z/M\mathbb Z$, each nonzero directed difference in $S-S$ is represented by exactly one ordered pair.
+
+Any directed difference of two even residues is an even residue modulo $M$, and the same is true for two odd residues.  Therefore the ordered pairs in $S_{\mathrm{even}}\times S_{\mathrm{even}}$ with distinct entries give $a(a-1)$ distinct nonzero even residues modulo $M$; similarly, the ordered pairs in $S_{\mathrm{odd}}\times S_{\mathrm{odd}}$ with distinct entries give $b(b-1)$ distinct nonzero even residues.
+
+These two collections are disjoint: if
+\[
+e_1-e_2\equiv o_1-o_2\pmod M
+\]
+with $e_i\in S_{\mathrm{even}}$ and $o_i\in S_{\mathrm{odd}}$, then the common nonzero residue would be represented by two different ordered pairs from $S$, contradicting uniqueness; and residue $0$ cannot occur because we are considering distinct entries.
+
+But the nonzero even residues modulo $M=2N$ are exactly
+\[
+2,4,\dots,2N-2,
+\]
+so there are exactly $N-1$ of them.  Hence
+\[
+a(a-1)+b(b-1)\le N-1.
+\]
+Now compute using $a+b=q$:
+\[
+a(a-1)+b(b-1)=a^2+b^2-(a+b)=\frac{(a+b)^2+(a-b)^2}{2}-q
+=\frac{q^2+(a-b)^2}{2}-q.
+\]
+Since $N-1=(q^2-3)/2$, comparison gives
+\[
+\frac{q^2+(a-b)^2}{2}-q\le \frac{q^2-3}{2},
+\]
+which simplifies to
+\[
+(a-b)^2\le 2q-3.
+\]
+Finally,
+\[
+m=\min\{a,b\}=\frac{q-|a-b|}{2}\ge \frac{q-\sqrt{2q-3}}{2}.
+\]
+\end{proof}
+
+Choose subsets
+\[
+E\subseteq S_{\mathrm{even}},\qquad O\subseteq S_{\mathrm{odd}},\qquad |E|=|O|=m.
+\]
+Define
+\[
+A_0:=\{e/2:e\in E\}\subseteq\{1,\dots,N-1\},
+\qquad
+B_0:=\{(o-1)/2:o\in O\}\subseteq\{0,\dots,N-1\},
+\]
+and then shift both by $1$:
+\[
+A:=A_0+1,\qquad B:=B_0+1.
+\]
+Thus $A,B\subset[N]$ and $|A|=|B|=m$.
+
+\begin{lemma}\label{lem:AB-works}
+The sets $A$ and $B$ are Sidon in $\mathbb Z$, and
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Shifting preserves the Sidon property and preserves difference sets, so it is enough to prove the claim for $A_0$ and $B_0$.
+
+First, $A_0$ is Sidon.  Suppose
+\[
+x_1+x_2=x_3+x_4,\qquad x_i\in A_0.
+\]
+Write $x_i=e_i/2$ with $e_i\in E\subseteq S$.  Then
+\[
+e_1+e_2=e_3+e_4
+\]
+in integers, hence also modulo $M$.  Since $S$ is Sidon modulo $M$, we get
+\[
+\{e_1,e_2\}=\{e_3,e_4\},
+\]
+so
+\[
+\{x_1,x_2\}=\{x_3,x_4\}.
+\]
+Thus $A_0$ is Sidon.  The same argument shows $B_0$ is Sidon.
+
+Next, suppose
+\[
+d\in(A_0-A_0)\cap(B_0-B_0).
+\]
+Then for some $e_1,e_2\in E$ and $o_1,o_2\in O$,
+\[
+d=\frac{e_1-e_2}{2}=\frac{o_1-o_2}{2}.
+\]
+Hence
+\[
+e_1-e_2=o_1-o_2
+\]
+as integers, and therefore also modulo $M$.
+If this common residue were nonzero modulo $M$, then the Round~1 uniqueness-of-differences lemma in $\mathbb Z/M\mathbb Z$ would force
+\[
+(e_1,e_2)=(o_1,o_2),
+\]
+which is impossible because the $e_i$ are even and the $o_i$ are odd.
+Therefore the common residue is $0$ modulo $M$.
+But since the equality already holds in integers and each side lies in $(-(M-1),M-1)$, the only multiple of $M$ it can equal is $0$.  Hence $e_1=e_2$ and $o_1=o_2$, so $d=0$.
+Thus
+\[
+(A_0-A_0)\cap(B_0-B_0)=\{0\},
+\]
+and the same holds after shifting, i.e.
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{proof}
+
+\begin{theorem}\label{thm:lower}
+For infinitely many $N$ (namely $N=(q^2-1)/2$ with $q$ an odd prime power) there exist Sidon sets $A,B\subset[N]$ with $|A|=|B|$ and $(A-A)\cap(B-B)=\{0\}$ such that
+\[
+|A|=|B|\ge \frac1{\sqrt2}\sqrt N-O(N^{1/4})
+\]
+and therefore
+\[
+\binom{|A|}{2}+\binom{|B|}{2}=\frac N2-O(N^{3/4}).
+\]
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:parity-count} and Lemma~\ref{lem:AB-works}, the sets $A,B$ above satisfy $|A|=|B|=m$ with
+\[
+m\ge \frac{q-\sqrt{2q-3}}{2}.
+\]
+Since $q^2=2N+1$, this becomes
+\[
+m\ge \frac{\sqrt{2N+1}}{2}-O(q^{1/2})
+= \frac1{\sqrt2}\sqrt N-O(N^{1/4}).
+\]
+Because $|A|=|B|=m$,
+\[
+\binom{|A|}{2}+\binom{|B|}{2}=2\binom{m}{2}=m(m-1).
+\]
+Substituting $m=\frac1{\sqrt2}\sqrt N-O(N^{1/4})$ yields
+\[
+m(m-1)=\frac N2-O(N^{3/4}).
+\]
+\end{proof}
+
+\subsubsection{5.3 Consequences for the equal-size question}
+
+\begin{corollary}\label{cor:limsup}
+With $M(N)$ as above,
+\[
+\limsup_{N\to\infty}\frac{M(N)}{\sqrt N}=\frac1{\sqrt2}.
+\]
+Equivalently,
+\[
+\limsup_{N\to\infty}\frac{1}{N}
+\max_{\substack{A,B\subset[N]\ \text{Sidon},\ |A|=|B|,\ (A-A)\cap(B-B)=\{0\}}}
+\left(\binom{|A|}{2}+\binom{|B|}{2}\right)=\frac12.
+\]
+\end{corollary}
+
+\begin{proof}
+The upper bound on the limsup follows from Proposition~\ref{prop:upper}; the matching lower bound on an infinite subsequence follows from Theorem~\ref{thm:lower}.
+\end{proof}
+
+Now recall the standard asymptotic for finite Sidon sets,
+\[
+f(N)=(1+o(1))\sqrt N.
+\]
+Hence
+\[
+\binom{f(N)}{2}=\left(\frac12+o(1)\right)N.
+\]
+Combining this with Theorem~\ref{thm:lower} gives
+\[
+\binom{|A|}{2}+\binom{|B|}{2}
+=\frac N2-O(N^{3/4})
+\ge (1-o(1))\binom{f(N)}{2}
+\]
+for infinitely many $N$.
+Therefore there is \emph{no} fixed constant $c>0$ such that for all sufficiently large $N$ and all equal-size pairs,
+\[
+\binom{|A|}{2}+\binom{|B|}{2}\le (1-c+o(1))\binom{f(N)}{2}.
+\]
+This disproves the second statement.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Did I improperly discard Round~3?}
+No.  I use Round~3's corrected inequality as the analytic input for Proposition~\ref{prop:upper}.  The only status correction is that Round~3's global ``unresolved'' verdict overlooked a now-available infinite-family obstruction to the \emph{second} statement.
+
+\paragraph{(ii) Does modular Sidon really imply uniqueness of nonzero differences?}
+Yes: this is exactly the Round~1 uniqueness-of-differences lemma, applied in the abelian group $\mathbb Z/M\mathbb Z$.
+
+\paragraph{(iii) Could the parity split fail because of wrap-around modulo $M$?}
+No.  In Lemma~\ref{lem:parity-count} all counting is done in $\mathbb Z/M\mathbb Z$, where the available nonzero even residues are exactly $N-1$ in number.  In Lemma~\ref{lem:AB-works}, whenever a common difference is shown to be $0$ modulo $M$, it is already an \emph{integer} lying in $(-(M-1),M-1)$, so it must actually be $0$ in $\mathbb Z$.
+
+\paragraph{(iv) Could passing to subsets $E\subseteq S_{\mathrm{even}}$, $O\subseteq S_{\mathrm{odd}}$ break the argument?}
+No.  The Sidon property and the disjoint-differences property are hereditary under passing to subsets, so trimming to equal size is harmless.
+
+\paragraph{(v) Is the upper bound in Proposition~\ref{prop:upper} circular?}
+No.  It uses only the Round~3 corrected inequality and the elementary bound $\binom{m}{2}\le N-1$ for a Sidon set in $[N]$.
+
+\paragraph{(vi) What remains open?}
+The \emph{first} question,
+\[
+\binom{|A|}{2}+\binom{|B|}{2}\le \binom{f(N)}{2}+O(1),
+\]
+remains open.  What is fully settled here is the failure of the \emph{second}, equal-size strengthening.
+
+\subsection{7) FINAL}
+
+\textbf{Partial SOLUTION --- COUNTEREXAMPLE / DISPROOF.}
+
+The second statement of Erd\H{o}s Problem~\#43 is false.
+There is an explicit infinite family $N=(q^2-1)/2$ (with $q$ an odd prime power) for which one can construct Sidon sets $A,B\subset[N]$ with
+\[
+|A|=|B|=\frac1{\sqrt2}\sqrt N-O(N^{1/4}),
+\qquad
+(A-A)\cap(B-B)=\{0\},
+\]
+and therefore
+\[
+\binom{|A|}{2}+\binom{|B|}{2}=\frac N2-O(N^{3/4})=(1-o(1))\binom{f(N)}{2}.
+\]
+So no inequality of the form
+\[
+\binom{|A|}{2}+\binom{|B|}{2}\le (1-c+o(1))\binom{f(N)}{2}
+\]
+can hold for any fixed $c>0$.
+
+The minimal corrected statement is:
+\begin{quote}
+\emph{In the equal-size case, the sharp asymptotic constant is $1/\sqrt2$, not $1/\sqrt2-c$.  Equivalently,}
+\[
+\limsup_{N\to\infty}\frac{M(N)}{\sqrt N}=\frac1{\sqrt2},
+\]
+\emph{so there is no fixed positive multiplicative gap below $\binom{f(N)}{2}$.}
+\end{quote}
+
+The first question remains open.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 80\%}
+
+\subsection{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#43}, problem page and discussion thread (checked March 7, 2026).
+\item M. B. Nathanson, \emph{The Bose-Chowla argument for Sidon sets}, Theorem~1 (Bose--Chowla modular Sidon construction).
+\item G. Martin and K. O'Bryant, \emph{Constructions of Generalized Sidon Sets}, for the summary of the Erd\H{o}s--Tur\'an upper bound and the asymptotic $f(N)=(1+o(1))\sqrt N$.
+\item Round~3 write-up supplied in this task, especially the corrected convolution inequality.
+\end{itemize}
+
+[1]: https://www.erdosproblems.com/forum/thread/43 "https://www.erdosproblems.com/forum/thread/43"

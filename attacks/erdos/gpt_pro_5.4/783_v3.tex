@@ -1,0 +1,236 @@
+\section{Problem \#783}
+
+\subsection*{1. ROUND-4 OBJECTIVE}
+
+I pursue path \textbf{(C)}.  I am \emph{not} trying to re-solve the asymptotic value problem from scratch; Round 3 already identified the right corrected asymptotic statement and explained how Tao's repaired 2026 argument proves it.  The genuine remaining issue is a \emph{status correction}: Round 3 incorrectly labeled the investigation as fully complete for Problem~\#783.  That overstates what has been achieved, because the original Erd\H{o}s problem asks for the \emph{choice of the minimizing set}~$A$, whereas the argument supplied in Round 3 only determines the asymptotic minimum \emph{value}
+\[
+F_N(C):=\min_A |U_A(N)|.
+\]
+
+So the Round-4 objective is to identify this fatal mismatch precisely, formulate the minimal corrected theorem that has actually been proved, and separate it rigorously from the still-open optimizer-classification problem.
+
+\subsection*{2. Round-3 FOUNDATION USED}
+
+I use the following Round-3 conclusions as fixed input.
+
+\begin{enumerate}
+	\item The explicit finite counterexample at $(N,C)=(30,1)$ disproving the literal exact prescription
+	\[
+	\text{``take the consecutive largest primes''.}
+	\]
+	\item The asymptotic extremal-value theorem
+	\[
+	F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N,
+	\qquad (N\to\infty),
+	\]
+	proved by combining Tao's 2026 lower bound for arbitrary pairwise coprime sets with the prime-tail upper bound.
+	\item The exact-budget prime-tail construction and the identification of its uncovered set with a smooth-number counting function.
+\end{enumerate}
+
+I do \emph{not} reprove any of these facts below.
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND-4)}
+
+The new ingredient in this round is a precise \emph{logical separation lemma}: knowledge of the asymptotic minimum value
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N
+\]
+does \emph{not} determine, even asymptotically, which admissible sets $A$ attain or nearly attain that minimum.  In particular, it does not answer the original phrasing
+\[
+\text{``What choice of such an $A$ minimises \dots ?''}
+\]
+except in the weakened sense ``a prime tail is asymptotically value-optimal up to $o(N)$''.
+
+Thus the mathematically correct outcome is:
+
+\begin{enumerate}
+	\item the exact finite optimizer prescription proposed by Erd\H{o}s is false;
+	\item the asymptotic minimum \emph{value} is known;
+	\item the original exact optimizer-classification problem remains open.
+\end{enumerate}
+
+\subsection*{4. ATTACK PLAN (ROUND-4)}
+
+The exact gap left after Round 3 is not a missing estimate inside the asymptotic proof; it is a mismatch between:
+
+\begin{enumerate}
+	\item the \emph{original target} --- identify the minimizing set(s) $A$;
+	\item the \emph{proved statement} --- identify only the asymptotic minimum value $F_N(C)$.
+\end{enumerate}
+
+So I will prove the following three claims.
+
+\begin{enumerate}
+	\item[(i)] Round 3 does \emph{not} imply a full solution of the original problem.
+	\item[(ii)] The strongest theorem actually established so far is the asymptotic value theorem for $F_N(C)$.
+	\item[(iii)] The minimal corrected final status for Problem~\#783 is therefore \textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}.
+\end{enumerate}
+
+This overcomes the main logical obstacle: it prevents us from conflating a full solution of a weaker asymptotic problem with a full solution of the original optimizer problem.
+
+\subsection*{5. WORK (ROUND-4)}
+
+\paragraph{5.1 Restating the original target exactly.}
+
+Problem~\#783 asks:
+
+\begin{quote}
+	Fix some constant $C>0$ and let $N$ be large.  Let $A\subseteq\{2,\dots,N\}$ be such that $(a,b)=1$ for all distinct $a,b\in A$ and
+	\[
+	\sum_{n\in A}\frac1n\le C.
+	\]
+	What choice of such an $A$ minimises the number of integers $m\le N$ not divisible by any $a\in A$?
+\end{quote}
+
+This is an optimizer-classification question: it asks for the \emph{choice of $A$}, not merely for the asymptotic size of the minimum.
+
+\paragraph{5.2 What Round 3 actually proves.}
+
+Round 3 proves that if
+\[
+F_N(C):=\min\left\{|U_A(N)|:\ A\subseteq\{2,\dots,N\}\ \text{pairwise coprime},\ \sum_{a\in A}\frac1a\le C\right\},
+\]
+then
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+This determines the minimum \emph{value} asymptotically.
+
+It also gives an admissible family of prime tails $A_N$ with
+\[
+|U_{A_N}(N)|=\bigl(\rho(e^C)+o(1)\bigr)N,
+\]
+so prime tails are asymptotically optimal \emph{in value}.
+
+But this does \emph{not} show any of the following:
+
+\begin{enumerate}
+	\item that for each large $N$ a prime tail is an exact minimizer;
+	\item that every minimizer is a prime tail;
+	\item that every near-minimizer must be close to a prime tail in any natural metric;
+	\item that one can classify the finite-$N$ minimizers.
+\end{enumerate}
+
+Therefore Round 3 does not solve the original question as stated.
+
+\paragraph{5.3 Formal separation of value and optimizer problems.}
+
+I now record the precise logical implication.
+
+\medskip
+
+\noindent\textbf{Lemma.}
+Knowledge of the asymptotic minimum value
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N
+\]
+does not by itself determine the minimizing sets for Problem~\#783.
+
+\medskip
+
+\noindent\emph{Proof.}
+The quantity $F_N(C)$ is a single number.  The optimizer problem asks for the subset or family of subsets
+\[
+\mathcal M_N(C):=\left\{A:\ |U_A(N)|=F_N(C)\right\}.
+\]
+Even exact knowledge of $F_N(C)$ leaves open the structure of $\mathcal M_N(C)$.  In particular, two distinct admissible sets $A,B$ may satisfy
+\[
+|U_A(N)|=|U_B(N)|=F_N(C),
+\]
+or one may have a unique minimizer, or many unrelated near-minimizers.  None of this can be inferred from the scalar asymptotic formula for $F_N(C)$ alone.
+
+Therefore the asymptotic value theorem does not answer the optimizer-classification question posed by Problem~\#783. \qed
+
+\paragraph{5.4 Explicit obstruction to exact prime-tail optimality.}
+
+Round 3 already gave the explicit counterexample at $(N,C)=(30,1)$ showing that the literal exact finite-
+$N$ prescription ``take the consecutive largest primes'' is false.  This immediately rules out the strongest possible interpretation of Erd\H{o}s's suggestion.
+
+Hence the original problem cannot presently be declared solved by exhibiting that prescription.
+
+\paragraph{5.5 Minimal corrected theorem.}
+
+Combining the Round-3 asymptotic theorem with the previous paragraph, the strongest mathematically justified corrected statement is the following.
+
+\medskip
+
+\noindent\textbf{Corrected theorem.}
+For every fixed $C>0$,
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N
+\qquad (N\to\infty).
+\]
+Moreover, a tail of large primes is asymptotically optimal in value, but the literal finite-
+$N$ prescription of consecutive largest primes is not always an exact minimizer.
+
+\medskip
+
+This is a theorem about the asymptotic minimum \emph{value}; it is not a classification of the minimizing sets.
+
+\paragraph{5.6 Correct final status for the original problem.}
+
+Since the original problem asks for the choice of minimizing $A$, and since neither Round 3 nor the cited 2026 discussion classifies exact minimizers for all large $N$, the original problem remains open.
+
+What has been achieved is a strict advance: the asymptotic minimum value is known, and one natural exact candidate family has been disproved as a universal optimizer.
+
+Thus the proper final status is:
+\[
+\boxed{\text{Problem \#783 remains open in its original optimizer form, but its asymptotic value problem is solved.}}
+\]
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+I checked the possible failure points in this status correction.
+
+\begin{enumerate}
+	\item \emph{Am I discarding Round-3 mathematics?}  
+	No.  I keep the asymptotic theorem intact.  I only correct the over-strong \emph{interpretation} of what that theorem resolves.
+	
+	\item \emph{Could the asymptotic value theorem implicitly determine minimizers?}  
+	No.  A scalar minimum value does not determine the argmin set without an additional uniqueness or rigidity theorem, and no such theorem was proved in Round 3.
+	
+	\item \emph{Does the explicit finite counterexample really matter?}  
+	Yes.  It rules out the strongest exact finite formulation and shows that even if prime tails are asymptotically optimal in value, the finite optimizer question is subtler.
+	
+	\item \emph{Is this merely semantic rather than mathematical?}  
+	No.  The distinction between proving
+	\[
+	F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N
+	\]
+	and classifying minimizers is a genuine logical distinction between two different mathematical statements.
+	
+	\item \emph{Could one still call the original problem solved in a weak sense?}  
+	Only after changing the problem statement to the asymptotic value version.  For the original optimizer question, that would be inaccurate.
+\end{enumerate}
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 3 correctly established the asymptotic minimum-value theorem
+\[
+F_N(C)=\bigl(\rho(e^C)+o(1)\bigr)N,
+\]
+and correctly disproved the literal exact finite-
+$N$ consecutive-largest-primes prescription.  However, this does \emph{not} fully answer the original Erd\H{o}s question, which asks for the \emph{choice} of minimizing admissible set $A$.
+
+Therefore the correct Round-4 conclusion is:
+
+\begin{enumerate}
+	\item the exact finite optimizer problem remains open;
+	\item the asymptotic minimum value is solved;
+	\item the proper corrected status of Problem~\#783 is \emph{open, with a solved asymptotic value variant}.
+\end{enumerate}
+
+\subsection*{8. COMPLETION ESTIMATE}
+
+COMPLETION: 85\%
+
+\subsection*{9. REFERENCES}
+
+\begin{enumerate}
+	\item[\textbf{[EP783]}] T.~F.~Bloom, \emph{Erd\H{o}s Problem \#783}, \texttt{https://www.erdosproblems.com/783}, accessed 2026-03-09.
+	\item[\textbf{[Er73]}] P.~Erd\H{o}s, \emph{Problems and results on combinatorial number theory}, in \emph{A Survey of Combinatorial Theory} (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971), North-Holland, Amsterdam, 1973, pp.~117--138.
+	\item[\textbf{[Tao26]}] T.~Tao, \emph{Sieving by coprime numbers}, repaired 2026 version discussed in the Problem~\#783 forum thread.
+	\item[\textbf{[Hi87]}] A.~Hildebrand, \emph{Quantitative mean value theorems for nonnegative multiplicative functions II}, Acta Arith. \textbf{48} (1987), no.~3, 209--260.
+\end{enumerate}

@@ -1,0 +1,226 @@
+
+\section{Problem \#380 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path C (obstruction / structural reduction). In Round 1 the main unresolved gap was the lack of a rigid description of a bad interval beyond ``it contains no primes''. The new goal is to prove a sharper internal structure theorem for bad intervals, then use it to isolate exactly what would have to happen in any counterexample to the conjectural behaviour of very bad intervals.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use only the following Round-1 results.
+
+\begin{enumerate}
+\item If $[u,v]$ is bad, then it contains no primes.
+\item Consequently, every bad interval satisfies $v<2u$.
+\item Hence if $n\le x$ lies in a bad interval, then the whole interval lies below $2x$.
+\item For singletons, $[n,n]$ is bad if and only if $P(n)^2\mid n$, and $[n,n]$ is very bad if and only if $n$ is powerful.
+\end{enumerate}
+
+I do \emph{not} re-prove these.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is the following ``anchor-smooth reduction''.
+
+\medskip
+
+\noindent\textbf{Anchor-smooth reduction.}
+If $[u,v]$ is bad, write
+\[
+L=v-u,\qquad N(u,v)=\prod_{m=u}^{v}m,\qquad Q=P(N(u,v)).
+\]
+Then:
+\begin{enumerate}
+\item $Q>L$;
+\item there is a unique $t\in [u,v]$ divisible by $Q$, and in fact $Q^2\mid t$;
+\item every element of $[u,v]$ is $Q$-smooth.
+\end{enumerate}
+
+So every bad interval is a run of consecutive $Q$-smooth integers of length $L+1<Q+1$ containing an ``anchor'' $t$ with $P(t)=Q$ and $Q^2\mid t$.
+
+This is strictly stronger than the Round-1 information ``bad $\Rightarrow$ prime-free''.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was this: even though bad intervals contain no primes, that alone did not explain how they are tied to the set
+\[
+\{n:\ P(n)^2\mid n\}.
+\]
+
+The new plan is:
+
+\begin{enumerate}
+\item prove the anchor-smooth reduction;
+\item deduce a covering lemma showing that every integer counted by $B(x)$ lies within distance $<P(t)$ of an anchor $t$ with $P(t)^2\mid t$;
+\item analyse the first genuinely new case for very bad intervals, namely intervals of length $1$ and $2$, to isolate the precise obstruction to proving $V(x)\sim$ (powerful numbers).
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem 1 (anchor-smooth reduction).}
+Let $[u,v]$ be bad. Put $L=v-u$ and $Q=P\!\left(\prod_{m=u}^{v}m\right)$.
+Then for $L\ge 1$ one has:
+\begin{enumerate}
+\item $Q>L$;
+\item exactly one element $t\in [u,v]$ is divisible by $Q$;
+\item $Q^2\mid t$;
+\item every $m\in [u,v]$ has all prime factors at most $Q$.
+\end{enumerate}
+
+\paragraph{Proof.}
+By the Round-1 lemma, $[u,v]$ contains no primes, hence $v<2u$. Therefore
+\[
+L=v-u<u,
+\]
+so every integer in the block
+\[
+u,u+1,\dots,v-1
+\]
+is strictly greater than $L$.
+
+Now $u(u+1)\cdots (v-1)$ is a product of $L$ consecutive integers, each greater than $L$. By the Sylvester--Schur theorem, this product has a prime divisor exceeding $L$. Since $Q$ is the largest prime divisor of the larger product $\prod_{m=u}^{v}m$, we get
+\[
+Q>L.
+\]
+
+Because the interval length is $L$, two distinct multiples of $Q$ cannot both lie in $[u,v]$: their difference would be at least $Q>L$. Thus at most one element of $[u,v]$ is divisible by $Q$.
+
+On the other hand, the interval is bad, so the exponent of $Q$ in $\prod_{m=u}^{v}m$ is at least $2$. Hence the unique multiple $t$ of $Q$ in the interval must actually satisfy
+\[
+Q^2\mid t.
+\]
+
+Finally, $Q=P\!\left(\prod_{m=u}^{v}m\right)$ by definition, so no element of the interval can have a prime factor exceeding $Q$. Thus every element of $[u,v]$ is $Q$-smooth.
+This proves the theorem.
+
+\medskip
+
+\noindent The degenerate case $L=0$ is even easier: then $[u,v]=[n,n]$, and badness means exactly $P(n)^2\mid n$.
+
+\paragraph{Corollary 2 (covering by anchor neighbourhoods).}
+Let $n\le x$ lie in some bad interval. Then there exists an integer $t\le 2x$ such that
+\[
+P(t)^2\mid t
+,\qquad
+|n-t|<P(t).
+\]
+
+\paragraph{Proof.}
+Choose a bad interval $[u,v]$ containing $n$, and let $t$ be the anchor supplied by Theorem 1. Then
+\[
+P(t)=Q,\qquad P(t)^2\mid t,\qquad |n-t|\le v-u=L<Q=P(t).
+\]
+Also, by the Round-1 bound $v<2u$ and the fact that $u\le n\le v$,
+\[
+t\le v<2u\le 2n\le 2x.
+\]
+So $t\le 2x$, as claimed.
+This proves the corollary.
+
+\paragraph{Corollary 3 (set-theoretic reduction of Problem \#380(a)).}
+For every $x\ge 1$,
+\[
+\{n\le x:\ n \mbox{ lies in a bad interval}\}
+\subseteq
+\bigcup_{t\le 2x,\ P(t)^2\mid t}
+\{m:\ |m-t|<P(t)\}.
+\]
+
+Equivalently, every integer counted by $B(x)$ is captured by a neighbourhood of radius $P(t)-1$ around an anchor $t$ counted by the singleton set from Round 1.
+
+\paragraph{Short very-bad intervals.}
+The anchor-smooth theorem does not settle the powerful case, but it does sharply reduce the first unsolved lengths.
+
+\medskip
+
+\noindent\textbf{Length $1$ (two consecutive integers).}
+If $[n,n+1]$ is very bad, then
+\[
+n(n+1)
+\]
+is powerful and $\gcd(n,n+1)=1$. Therefore every prime divisor of the product comes from exactly one factor, with the same exponent as in that factor. Hence both $n$ and $n+1$ are powerful.
+
+So a very bad interval of length $1$ is \emph{exactly} a pair of consecutive powerful numbers.
+
+\medskip
+
+\noindent\textbf{Length $2$ (three consecutive integers), odd start.}
+If $[n,n+2]$ is very bad and $n$ is odd, then $n,n+1,n+2$ are pairwise coprime. Therefore the same reasoning shows that each of
+\[
+n,\ n+1,\ n+2
+\]
+must itself be powerful.
+
+Thus any odd-start very bad interval of length $2$ produces three consecutive powerful numbers.
+
+\medskip
+
+\noindent\textbf{Length $2$ (three consecutive integers), even start.}
+Write the interval as
+\[
+[2a,2a+2].
+\]
+Then
+\[
+(2a)(2a+1)(2a+2)=2^{2+\alpha+\beta}AB(2a+1),
+\]
+where
+\[
+a=2^{\alpha}A,\qquad a+1=2^{\beta}B,
+\]
+with $A,B$ odd. The odd integers $A$, $B$, and $2a+1$ are pairwise coprime. Therefore, if the product is powerful, then each of
+\[
+A,\ B,\ 2a+1
+\]
+must be powerful.
+
+So any even-start very bad interval of length $2$ forces a very restricted configuration:
+the odd part of $a$ is powerful, the odd part of $a+1$ is powerful, and $2a+1$ is powerful.
+
+This is the first place where the Round-1 heuristic ``maybe every very bad interval consists only of powerful numbers'' meets a genuinely arithmetic obstruction.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the following possible failure points.
+
+\begin{enumerate}
+\item \emph{Does Theorem 1 accidentally use a Round-1 proof again?} No. It only cites the Round-1 conclusion $v<2u$ and then adds a genuinely new Sylvester--Schur step.
+\item \emph{Could the anchor be non-unique?} No, because $Q>L$ and two multiples of $Q$ differ by at least $Q$.
+\item \emph{Does the theorem claim the interval contains $Q^2$ itself?} No. It only claims that the unique multiple of $Q$ in the interval is divisible by $Q^2$. This distinction matters: for example, $[242,243]$ is bad with $Q=11$, and the unique multiple is $242=2\cdot 11^2$, not $11^2$ itself.
+\item \emph{In the even-start very-bad case, do we really get that $a$ and $a+1$ are powerful?} No, and I have deliberately \emph{not} claimed that. The extra factor $4$ can repair the $2$-adic defect. The correct statement is only about the odd parts of $a$ and $a+1$.
+\item \emph{Boundary case $L=0$.} This was separated off explicitly.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The new Round-2 progress is:
+
+\begin{enumerate}
+\item a rigorous anchor-smooth reduction for every bad interval;
+\item a covering lemma reducing Problem \#380(a) to neighbourhoods of singleton anchors $t$ with $P(t)^2\mid t$;
+\item an exact classification of very bad intervals of length $1$;
+\item a sharp reduction of the first new three-term cases to highly constrained powerful-number configurations.
+\end{enumerate}
+
+This is a real advance over Round 1, but it does not yet prove either
+\[
+B(x)\sim \#\{n\le x:\ P(n)^2\mid n\}
+\]
+or
+\[
+V(x)\sim \#\{n\le x:\ n \mbox{ is powerful}\}.
+\]
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#380}, accessed 2026-03-08, \texttt{https://www.erdosproblems.com/380}.
+\item T. N. Shorey and R. Tijdeman, \emph{Arithmetic properties of blocks of consecutive integers}, especially the discussion of Sylvester's theorem in Section 3.1.
+\end{enumerate}
+

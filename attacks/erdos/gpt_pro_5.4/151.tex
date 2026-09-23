@@ -1,0 +1,222 @@
+
+\section{Erd\H{o}s Problem \#151 (Round 2): a new obstruction via common neighbourhoods}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+For Problem \#151 I pursue path (C): I do not have a full proof or a counterexample, so the correct Round-2 goal is to isolate a \emph{sharp structural obstruction} that any counterexample would have to satisfy.
+
+Round~1 already proved the general inequality
+\[
+\tau(G)\le n-\alpha(G),
+\]
+where $\alpha(G)$ is the independence number. The new Round-2 goal is to add a second, genuinely different mechanism that also forces small clique transversals.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts.
+
+\begin{enumerate}
+\item The Round-1 lemma
+\[
+\tau(G)\le n-\alpha(G).
+\]
+\item The Round-1 proof that the conjecture holds trivially for triangle-free graphs.
+\item The Round-1 observation that the general bound $\tau(G)\le n-\sqrt n$ is easy but much weaker than the target $\tau(G)\le n-H(n)$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new tool is a codegree lemma.
+
+For an edge $uv\in E(G)$, let
+\[
+\mathrm{codeg}(u,v):=|N(u)\cap N(v)|.
+\]
+The new observation is that
+\[
+\tau(G)\le n-\mathrm{codeg}(u,v)
+\]
+for \emph{every} edge $uv$.
+
+This is different in nature from the Round-1 bound involving $\alpha(G)$: it uses a dense local configuration (a large common neighbourhood of one edge), not a sparse global configuration (a large independent set).
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+The exact gap after Round~1 was that we only had one broad sufficient condition for the conjecture:
+\[
+\alpha(G)\ge H(n)\quad\Longrightarrow\quad \tau(G)\le n-H(n).
+\]
+I will prove a second broad sufficient condition:
+\[
+\exists\, uv\in E(G)\mbox{ with }|N(u)\cap N(v)|\ge H(n)
+\quad\Longrightarrow\quad
+\tau(G)\le n-H(n).
+\]
+
+Combining the two will give a structural obstruction:
+every counterexample must satisfy simultaneously
+\[
+\alpha(G)<H(n)
+\quad\mbox{and}\quad
+|N(u)\cap N(v)|<H(n)\ \mbox{for every edge }uv.
+\]
+In particular, every counterexample must also satisfy
+\[
+\omega(G)\le H(n)+1,
+\]
+because any clique of size $r$ gives an edge with at least $r-2$ common neighbours.
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{Lemma (common-neighbourhood transversal).}
+For every graph $G$ on $n$ vertices and every edge $uv\in E(G)$,
+\[
+\tau(G)\le n-|N(u)\cap N(v)|.
+\]
+
+\paragraph{Proof.}
+Fix an edge $uv$. Let
+\[
+S:=N(u)\cap N(v),
+\qquad
+T:=V(G)\setminus S.
+\]
+Then
+\[
+|T|=n-|S|=n-|N(u)\cap N(v)|.
+\]
+I claim that $T$ is a clique transversal.
+
+Suppose not. Then there exists a maximal clique $C$ of size at least $2$ with
+\[
+C\cap T=\emptyset.
+\]
+So $C\subseteq S=N(u)\cap N(v)$. In particular, every vertex of $C$ is adjacent to $u$. Therefore
+\[
+C\cup\{u\}
+\]
+is a clique strictly larger than $C$, contradicting the maximality of $C$.
+
+So $T$ is indeed a clique transversal, and hence
+\[
+\tau(G)\le |T|=n-|N(u)\cap N(v)|.
+\]
+
+
+\paragraph{Corollary 1.}
+If $G$ has an edge $uv$ such that
+\[
+|N(u)\cap N(v)|\ge H(n),
+\]
+then
+\[
+\tau(G)\le n-H(n).
+\]
+
+\paragraph{Proof.}
+Apply the lemma to that edge.
+
+
+\paragraph{Corollary 2.}
+If
+\[
+\max\Bigl\{\alpha(G),\ \max_{uv\in E(G)} |N(u)\cap N(v)|\Bigr\}\ge H(n),
+\]
+then
+\[
+\tau(G)\le n-H(n).
+\]
+
+\paragraph{Proof.}
+If $\alpha(G)\ge H(n)$, use the Round-1 bound $\tau(G)\le n-\alpha(G)$. Otherwise, if some edge has common neighbourhood size at least $H(n)$, use Corollary~1.
+
+
+\paragraph{Corollary 3 (clique obstruction).}
+If $G$ is a counterexample to the conjectured inequality
+\[
+\tau(G)\le n-H(n),
+\]
+then
+\[
+\omega(G)\le H(n)+1.
+\]
+
+\paragraph{Proof.}
+Suppose $\omega(G)\ge H(n)+2$, and let $K$ be a clique of that size. Pick any edge $uv$ of $K$. Then every vertex of $K\setminus\{u,v\}$ lies in $N(u)\cap N(v)$, so
+\[
+|N(u)\cap N(v)|\ge |K|-2\ge H(n).
+\]
+By Corollary~1 the conjectured inequality would then hold, contradiction.
+
+
+\paragraph{Corollary 4 (triangle-count version).}
+Let $t(G)$ denote the number of triangles of $G$ and $e(G)$ the number of edges. Then
+\[
+\tau(G)\le n-\left\lceil \frac{3t(G)}{e(G)}\right\rceil
+\]
+whenever $e(G)>0$.
+
+\paragraph{Proof.}
+The average value of $|N(u)\cap N(v)|$ over all edges $uv$ equals
+\[
+\frac{1}{e(G)}\sum_{uv\in E(G)} |N(u)\cap N(v)|
+=
+\frac{3t(G)}{e(G)},
+\]
+since each triangle contributes $1$ to the codegree of each of its $3$ edges. Therefore some edge $uv$ satisfies
+\[
+|N(u)\cap N(v)|\ge \left\lceil \frac{3t(G)}{e(G)}\right\rceil.
+\]
+Now apply the lemma.
+
+
+\paragraph{Round-2 structural obstruction.}
+Combining Round~1 with Corollary~2, any counterexample $G$ on $n$ vertices must satisfy
+\[
+\alpha(G)<H(n)
+\quad\mbox{and}\quad
+|N(u)\cap N(v)|<H(n)\ \mbox{for every edge }uv.
+\]
+Equivalently, every counterexample must simultaneously have:
+\begin{enumerate}
+\item no independent set of size $H(n)$, and
+\item no edge lying in $H(n)$ or more triangles.
+\end{enumerate}
+This sharply narrows the possible shape of a counterexample.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the possible pitfalls.
+
+\begin{enumerate}
+\item \textbf{Why does a clique contained in $N(u)\cap N(v)$ contradict maximality?} Because every vertex of that clique is adjacent to $u$, so adjoining $u$ enlarges the clique. There is no need to use both $u$ and $v$.
+\item \textbf{Does the lemma fail for isolated edges or sparse graphs?} No. If $N(u)\cap N(v)=\emptyset$, the lemma simply gives the trivial estimate $\tau(G)\le n$.
+\item \textbf{Does Corollary 3 use more than is proved?} No. A clique of size $r$ gives an edge with at least $r-2$ common neighbours, and that is exactly what the lemma needs.
+\item \textbf{Is the triangle-count version correct?} Yes. Each triangle contributes to the common-neighbour count of exactly its three edges, so the averaging identity is exact.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 does not prove the Erd\H{o}s--Gallai--Tuza conjecture, but it adds a genuinely new sufficient condition and a sharp obstruction:
+
+\begin{enumerate}
+\item Round~1 showed the conjecture whenever $\alpha(G)\ge H(n)$.
+\item Round~2 now also shows the conjecture whenever some edge has at least $H(n)$ common neighbours.
+\item Therefore any counterexample must have both
+\[
+\alpha(G)<H(n)
+\quad\mbox{and}\quad
+\max_{uv\in E(G)}|N(u)\cap N(v)|<H(n),
+\]
+and in particular
+\[
+\omega(G)\le H(n)+1.
+\]
+\end{enumerate}
+
+This is a real narrowing of the search space for counterexamples and a clear structural advance beyond Round~1.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 58\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item Erd\H{o}s Problems, Problem \#151, checked on 7 March 2026.
+\item Erd\H{o}s Problems, Problem \#610 (for the currently recorded general bound $\tau(G)\le n-\sqrt{2n}+O(1)$), checked on 7 March 2026.
+\end{enumerate}

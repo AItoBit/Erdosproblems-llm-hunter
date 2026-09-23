@@ -1,0 +1,500 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}: sharpen the first genuinely unresolved obstruction in the three-prime family.
+
+Round-(round\_no-1) proved two key facts:
+
+\begin{enumerate}
+\item the whole family \(\omega(n)\le 2\) is already harmless, with a uniform absolute bound
+\[
+S_{\mathrm{all}}(n)<147;
+\]
+\item for distinct primes \(p<q<r\), the boundedness of
+\[
+L_{p,q,r}:=\sup_{a,b,c\ge 0} S_{\mathrm{all}}(p^a q^b r^c)
+\]
+is equivalent to the boundedness of the mixed one-vs-two sum
+\[
+C(p,q,r):=
+\sum_{u,v,w\ge 1}
+\left(
+\frac{1}{|p^u-q^v r^w|}
++\frac{1}{|q^v-p^u r^w|}
++\frac{1}{|r^w-p^u q^v|}
+\right).
+\]
+\end{enumerate}
+
+The exact remaining gap was that \(C(p,q,r)\) still allowed \emph{all} mixed differences, large and small. In this round I prove that, up to a uniform absolute error, only \emph{subpower} one-vs-two collisions matter.
+
+\medskip
+
+For \(0<\theta<1\), define
+\[
+C_\theta(p,q,r):=
+\sum_{u,v,w\ge 1}
+\left(
+\frac{\mathbf 1_{|p^u-q^v r^w|<p^{\theta u}}}{|p^u-q^v r^w|}
++
+\frac{\mathbf 1_{|q^v-p^u r^w|<q^{\theta v}}}{|q^v-p^u r^w|}
++
+\frac{\mathbf 1_{|r^w-p^u q^v|<r^{\theta w}}}{|r^w-p^u q^v|}
+\right).
+\]
+Also set
+\[
+\Gamma_3:=\sup_{p<q<r} C(p,q,r),
+\qquad
+\Gamma_3^{(\theta)}:=\sup_{p<q<r} C_\theta(p,q,r).
+\]
+
+The main new theorem proved in this round is:
+
+\medskip
+
+\noindent\textbf{Subpower obstruction theorem.}
+For every fixed \(0<\theta<1\) and every distinct primes \(p<q<r\),
+\[
+0\le C(p,q,r)-C_\theta(p,q,r)\le \frac{3300}{2^{\theta/2}-1}.
+\]
+Consequently,
+\[
+\Gamma_3<\infty \iff \Gamma_3^{(\theta)}<\infty.
+\]
+Combining this with the previous-round equivalence
+\[
+L_{p,q,r}<\infty \iff C(p,q,r)<\infty,
+\]
+one obtains
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3^{(\theta)}<\infty
+\qquad (0<\theta<1).
+\]
+
+Thus the entire unresolved three-prime problem is reduced further: only \emph{subpower} one-vs-two near-collisions can matter.
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i},
+\]
+where \(1=d_1<\cdots<d_t=n\) are the positive divisors of \(n\).
+
+\item The interval-energy lower bound proved in earlier rounds: if \(x_1<\cdots<x_k\) are \(k\ge 2\) points in an interval of length \(L>0\), then
+\[
+\sum_{1\le i<j\le k}\frac{1}{x_j-x_i}\ge \frac{1}{32}\,\frac{k^2\log k}{L}.
+\tag{F1}
+\]
+
+\item The previously proved uniform bound for the entire family \(\omega(n)\le 2\):
+\[
+S_{\mathrm{all}}(n)<147
+\qquad\text{for every }n\text{ with }\omega(n)\le 2.
+\tag{F2}
+\]
+
+\item The previously proved three-prime reduction: for distinct primes \(p<q<r\),
+\[
+C(p,q,r)\le L_{p,q,r}<527+4\,C(p,q,r),
+\tag{F3}
+\]
+where
+\[
+L_{p,q,r}:=\sup_{a,b,c\ge 0}S_{\mathrm{all}}(p^a q^b r^c).
+\]
+In particular,
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3<\infty.
+\tag{F4}
+\]
+\end{enumerate}
+
+I do not re-prove these earlier facts here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a local packing estimate for two-prime products, obtained by combining the already-settled \(\omega(n)\le 2\) case with the interval-energy lower bound.
+
+For distinct primes \(q<r\), define
+\[
+\mathcal A_{q,r}:=\{q^v r^w : v,w\in \mathbf N\}.
+\]
+The key observation is:
+
+\begin{quote}
+Any interval of length \(L\) can contain only \(O(\sqrt L)\) elements of \(\mathcal A_{q,r}\), uniformly in \(q,r\).
+\end{quote}
+
+Indeed, if an interval contained \(k\) such elements, then these \(k\) integers form a subset of the divisor set of \(q^V r^W\) for large enough \(V,W\), so by \((\mathrm{F2})\) their internal reciprocal energy is \(<147\); but by \((\mathrm{F1})\), \(k\) points packed into length \(L\) force energy \(\gg k^2/L\).
+
+A dyadic shell decomposition then shows that, for any real \(x\) and any threshold \(D\ge 1\),
+\[
+\sum_{\substack{a\in \mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+\ll D^{-1/2},
+\]
+uniformly in \(q,r,x\). Applying this with \(x=p^u\) and \(D=p^{\theta u}\) yields a convergent geometric sum over \(u\).
+
+This is what turns the general mixed sum \(C(p,q,r)\) into the subpower-restricted sum \(C_\theta(p,q,r)\) up to an absolute error.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-(round\_no-1) was:
+
+\begin{quote}
+The three-prime obstruction \(C(p,q,r)\) still included every mixed difference, even those that are polynomially large compared with the one-prime term. It was not yet known whether those polynomial-scale terms could contribute to a uniform blowup.
+\end{quote}
+
+I prove that they cannot.
+
+The precise claims are:
+
+\begin{enumerate}
+\item A uniform interval-packing lemma for the sets \(\mathcal A_{q,r}=\{q^v r^w:v,w\ge 1\}\).
+\item A uniform tail-potential estimate
+\[
+\sum_{\substack{a\in \mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}\ll D^{-1/2}.
+\]
+\item Hence, for every fixed \(0<\theta<1\), the part of \(C(p,q,r)\) coming from terms with
+\[
+|p^u-q^v r^w|\ge p^{\theta u},
+\quad
+|q^v-p^u r^w|\ge q^{\theta v},
+\quad
+|r^w-p^u q^v|\ge r^{\theta w}
+\]
+is uniformly bounded.
+\item Therefore the entire unresolved three-prime problem is equivalent to the boundedness of the \emph{subpower-collision} sums \(C_\theta(p,q,r)\).
+\end{enumerate}
+
+This is strict progress because it rules out all proof strategies that only control mixed differences on polynomial scales: such terms are automatically harmless.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. A uniform packing bound for two-prime products}
+
+\paragraph{Lemma 1.}
+Let \(q<r\) be distinct primes, and let \(I\subset \mathbf R\) be an interval of length \(L\ge 0\). Then
+\[
+\#(\mathcal A_{q,r}\cap I)\le 100\sqrt{L+1}.
+\]
+
+\emph{Proof.}
+Set
+\[
+k:=\#(\mathcal A_{q,r}\cap I).
+\]
+If \(k\le 1\), the claim is immediate. Assume now that \(k\ge 2\), and list the points of \(\mathcal A_{q,r}\cap I\) as
+\[
+x_1<\cdots<x_k.
+\]
+Choose integers
+\[
+V:=\max\{v: q^v r^w\in \mathcal A_{q,r}\cap I\},
+\qquad
+W:=\max\{w: q^v r^w\in \mathcal A_{q,r}\cap I\}.
+\]
+Then every \(x_i\) is a divisor of \(q^V r^W\). Therefore the pairwise reciprocal sum over the set \(\{x_1,\dots,x_k\}\) is bounded by the full divisor energy:
+\[
+\sum_{1\le i<j\le k}\frac{1}{x_j-x_i}
+\le
+S_{\mathrm{all}}(q^V r^W)
+<147
+\]
+by \((\mathrm{F2})\).
+
+On the other hand, since \(x_1,\dots,x_k\) lie in an interval of length at most \(L+1\), the interval-energy lower bound \((\mathrm{F1})\) gives
+\[
+\sum_{1\le i<j\le k}\frac{1}{x_j-x_i}
+\ge
+\frac{1}{32}\,\frac{k^2\log k}{L+1}.
+\]
+Combining the two inequalities yields
+\[
+\frac{1}{32}\,\frac{k^2\log k}{L+1}<147.
+\]
+Since \(k\ge 2\), one has \(\log k\ge \log 2\), and therefore
+\[
+k^2<\frac{32\cdot 147}{\log 2}(L+1)<10000(L+1).
+\]
+Hence
+\[
+k<100\sqrt{L+1}.
+\]
+This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{2. A uniform tail-potential estimate}
+
+\paragraph{Lemma 2.}
+Let \(q<r\) be distinct primes. For every real \(x\) and every \(D\ge 1\),
+\[
+\sum_{\substack{a\in\mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+\le 1100\,D^{-1/2}.
+\]
+
+\emph{Proof.}
+For each integer \(m\ge 0\), define the dyadic shell
+\[
+\mathcal S_m:=\{a\in \mathcal A_{q,r}: 2^m D\le |a-x|<2^{m+1}D\}.
+\]
+Then
+\[
+\sum_{\substack{a\in\mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+=
+\sum_{m=0}^{\infty}\sum_{a\in \mathcal S_m}\frac{1}{|a-x|}
+\le
+\sum_{m=0}^{\infty}\frac{\#\mathcal S_m}{2^m D}.
+\tag{2.1}
+\]
+Now \(\mathcal S_m\) is contained in the interval
+\[
+[x-2^{m+1}D,\ x+2^{m+1}D],
+\]
+whose length is \(2^{m+2}D\). By Lemma 1,
+\[
+\#\mathcal S_m\le \#\bigl(\mathcal A_{q,r}\cap [x-2^{m+1}D,x+2^{m+1}D]\bigr)
+\le 100\sqrt{2^{m+2}D+1}.
+\]
+Since \(D\ge 1\),
+\[
+2^{m+2}D+1\le 2^{m+3}D,
+\]
+so
+\[
+\#\mathcal S_m\le 100\sqrt{2^{m+3}D}<300\cdot 2^{m/2}D^{1/2}.
+\]
+Substituting into \((2.1)\),
+\[
+\sum_{\substack{a\in\mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+\le
+300D^{-1/2}\sum_{m=0}^{\infty}2^{-m/2}.
+\]
+The geometric series satisfies
+\[
+\sum_{m=0}^{\infty}2^{-m/2}=\frac{1}{1-2^{-1/2}}<\frac{11}{3},
+\]
+hence
+\[
+\sum_{\substack{a\in\mathcal A_{q,r}\\ |a-x|\ge D}}\frac{1}{|a-x|}
+<1100\,D^{-1/2}.
+\]
+This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{3. The subpower reduction for the three-prime obstruction}
+
+For distinct primes \(p<q<r\), write
+\[
+C(p,q,r)=C_{p\mid qr}(p,q,r)+C_{q\mid pr}(p,q,r)+C_{r\mid pq}(p,q,r),
+\]
+where
+\[
+C_{p\mid qr}(p,q,r):=\sum_{u,v,w\ge 1}\frac{1}{|p^u-q^v r^w|},
+\]
+and similarly for the other two cyclic terms.
+
+For \(0<\theta<1\), define
+\[
+C_\theta(p,q,r)=C_{p\mid qr}^{(\theta)}(p,q,r)
++
+C_{q\mid pr}^{(\theta)}(p,q,r)
++
+C_{r\mid pq}^{(\theta)}(p,q,r),
+\]
+where
+\[
+C_{p\mid qr}^{(\theta)}(p,q,r)
+:=
+\sum_{\substack{u,v,w\ge 1\\ |p^u-q^v r^w|<p^{\theta u}}}
+\frac{1}{|p^u-q^v r^w|},
+\]
+and similarly for the cyclic permutations.
+
+\paragraph{Theorem 3 (subpower reduction).}
+Let \(0<\theta<1\). Then for every distinct primes \(p<q<r\),
+\[
+0\le C(p,q,r)-C_\theta(p,q,r)\le \frac{3300}{2^{\theta/2}-1}.
+\]
+
+\emph{Proof.}
+Consider first the \(p\mid qr\) term. For each fixed \(u\ge 1\), apply Lemma 2 with
+\[
+x:=p^u,
+\qquad
+D:=p^{\theta u},
+\]
+and with the set \(\mathcal A_{q,r}=\{q^v r^w:v,w\ge 1\}\). Since \(D\ge 2^\theta>1\), Lemma 2 gives
+\[
+\sum_{\substack{v,w\ge 1\\ |p^u-q^v r^w|\ge p^{\theta u}}}
+\frac{1}{|p^u-q^v r^w|}
+\le 1100\,p^{-\theta u/2}.
+\]
+Summing over \(u\ge 1\),
+\[
+C_{p\mid qr}(p,q,r)-C_{p\mid qr}^{(\theta)}(p,q,r)
+\le
+1100\sum_{u=1}^{\infty}p^{-\theta u/2}.
+\]
+Because \(p\ge 2\),
+\[
+\sum_{u=1}^{\infty}p^{-\theta u/2}\le \sum_{u=1}^{\infty}2^{-\theta u/2}
+=\frac{1}{2^{\theta/2}-1}.
+\]
+Hence
+\[
+C_{p\mid qr}(p,q,r)-C_{p\mid qr}^{(\theta)}(p,q,r)
+\le
+\frac{1100}{2^{\theta/2}-1}.
+\]
+By symmetry, the same estimate holds for the other two cyclic terms. Adding the three estimates gives
+\[
+0\le C(p,q,r)-C_\theta(p,q,r)\le \frac{3300}{2^{\theta/2}-1}.
+\]
+This proves the theorem.
+\hfill\(\Box\)
+
+\subsection*{4. Exact new obstruction at support size three}
+
+Define
+\[
+\Gamma_3:=\sup_{p<q<r} C(p,q,r),
+\qquad
+\Gamma_3^{(\theta)}:=\sup_{p<q<r} C_\theta(p,q,r).
+\]
+
+\paragraph{Corollary 4.}
+For every fixed \(0<\theta<1\),
+\[
+\Gamma_3^{(\theta)}\le \Gamma_3\le \Gamma_3^{(\theta)}+\frac{3300}{2^{\theta/2}-1}.
+\]
+In particular,
+\[
+\Gamma_3<\infty \iff \Gamma_3^{(\theta)}<\infty.
+\tag{4.1}
+\]
+
+\emph{Proof.}
+The left inequality is immediate from \(C_\theta(p,q,r)\le C(p,q,r)\) termwise. The right inequality follows by taking the supremum over \(p<q<r\) in Theorem 3.
+\hfill\(\Box\)
+
+\paragraph{Corollary 5.}
+For every fixed \(0<\theta<1\),
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3^{(\theta)}<\infty.
+\tag{4.2}
+\]
+
+\emph{Proof.}
+By the previous-round equivalence \((\mathrm{F4})\),
+\[
+\sup_{\omega(n)\le 3} S_{\mathrm{all}}(n)<\infty
+\iff
+\Gamma_3<\infty.
+\]
+Now apply \((4.1)\).
+\hfill\(\Box\)
+
+\paragraph{Corollary 6.}
+Any proof of boundedness on the family \(\omega(n)\le 3\) may, without loss of generality, discard all mixed terms with polynomial-size separation. More precisely: fix \(0<\theta<1\). Then the stronger statement
+\[
+\sup_{\omega(n)\le 3}S_{\mathrm{all}}(n)<\infty
+\]
+is equivalent to the boundedness of the subpower-collision sums
+\[
+\Gamma_3^{(\theta)}
+=
+\sup_{p<q<r}
+\sum_{u,v,w\ge 1}
+\left(
+\frac{\mathbf 1_{|p^u-q^v r^w|<p^{\theta u}}}{|p^u-q^v r^w|}
++
+\frac{\mathbf 1_{|q^v-p^u r^w|<q^{\theta v}}}{|q^v-p^u r^w|}
++
+\frac{\mathbf 1_{|r^w-p^u q^v|<r^{\theta w}}}{|r^w-p^u q^v|}
+\right).
+\]
+
+Equivalently, any hypothetical failure of uniform boundedness on \(\omega(n)\le 3\) must be driven by \emph{subpower one-vs-two collisions}; polynomial-scale near-misses are automatically harmless.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Use of the previous two-prime theorem.}
+In Lemma 1, I used only the already-vetted fact
+\[
+S_{\mathrm{all}}(q^V r^W)<147
+\]
+for all \(V,W\ge 0\). Since the chosen \(k\) points from \(\mathcal A_{q,r}\) are a subset of the divisor set of \(q^V r^W\), their internal pairwise reciprocal sum is indeed \(\le S_{\mathrm{all}}(q^V r^W)\). No extra assumption is hidden there.
+
+\paragraph{2. Interval length in Lemma 1.}
+The interval-energy lower bound \((\mathrm{F1})\) is stated for positive length. I used \(L+1\) rather than \(L\) to avoid degenerate cases \(L<1\). This only weakens the lower bound and is therefore safe.
+
+\paragraph{3. Dyadic shell estimate.}
+In Lemma 2, the shell \(\mathcal S_m\) is contained in an interval of length \(2^{m+2}D\). Lemma 1 therefore gives a bound depending on \(2^{m+2}D+1\), which I simplified to \(2^{m+3}D\) using \(D\ge 1\). This is the only place where the restriction \(D\ge 1\) is needed, and in Theorem 3 we always have \(D=p^{\theta u}>1\).
+
+\paragraph{4. Uniformity in the primes.}
+Theorem 3 uses only the facts \(p,q,r\ge 2\) and the absolute constants from Lemmas 1 and 2. Thus the final bound
+\[
+\frac{3300}{2^{\theta/2}-1}
+\]
+is genuinely independent of the prime triple.
+
+\paragraph{5. What this round does \emph{not} claim.}
+The result does \emph{not} prove \(\Gamma_3<\infty\), and therefore does not settle the family \(\omega(n)\le 3\). It proves instead that the non-subpower part of \(\Gamma_3\) is harmless. So the unresolved part is now strictly narrower than in Round-(round\_no-1).
+
+\paragraph{6. Strict advance beyond the previous round.}
+Round-(round\_no-1) reduced the three-prime family to the full mixed sum \(C(p,q,r)\). Theorem 3 and Corollary 5 sharpen this further: only the subpower pieces \(C_\theta(p,q,r)\) matter. This is a genuine strengthening, not a reformulation.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a new sharpening of the first genuinely unresolved obstruction:
+
+\begin{quote}
+For every fixed \(0<\theta<1\), boundedness of \(S_{\mathrm{all}}(n)\) on the class \(\omega(n)\le 3\) is equivalent to boundedness of the \emph{subpower-collision} sums \(C_\theta(p,q,r)\). The complementary polynomial-scale part of the mixed one-vs-two series is uniformly bounded absolutely.
+\end{quote}
+
+Equivalently, the remaining three-prime difficulty has now been reduced from
+\[
+\sum_{u,v,w\ge 1}\frac{1}{|p^u-q^v r^w|}
+\]
+to the strictly narrower subseries
+\[
+\sum_{\substack{u,v,w\ge 1\\ |p^u-q^v r^w|<p^{\theta u}}}\frac{1}{|p^u-q^v r^w|},
+\]
+together with the two cyclic analogues.
+
+So the next exact barrier is now sharply formulated:
+
+\begin{quote}
+To extend the uniform boundedness theorem from \(\omega(n)\le 2\) to \(\omega(n)\le 3\), it is necessary and sufficient to control one-vs-two mixed collisions that are \emph{subpower-close}. Polynomial-scale near-collisions cannot cause divergence.
+\end{quote}
+
+This is strict progress beyond Round-(round\_no-1): it rules out an entire class of possible counterexample mechanisms and narrows the unresolved core of the problem to a much more rigid Diophantine phenomenon.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 99\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}, \texttt{https://www.erdosproblems.com/884}, accessed 2026-03-09.
+\item Previous vetted rounds of the present investigation (used here as fixed foundational input under the continuation protocol).
+\end{enumerate}

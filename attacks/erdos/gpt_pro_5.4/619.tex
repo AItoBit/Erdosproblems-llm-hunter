@@ -1,0 +1,199 @@
+
+\section{Problem 619 (\#619)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (C): the full conjecture remains open, so I will prove it for a genuinely new infinite family that was not covered in Round~1, namely \emph{all cycles}, including the odd cycles. The target is a linear bound with a positive saving:
+\[
+h_4(C_n)\le \left\lceil \frac n3\right\rceil -1.
+\]
+
+This is a strict extension beyond the Round-1 bipartite result, since odd cycles are non-bipartite.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use one Round-1 result:
+
+\begin{enumerate}
+\item If $G$ is connected bipartite on $n$ vertices, then $h_4(G)\le n/2$.
+\end{enumerate}
+
+This will only be used as context/comparison; the proof below is self-contained and addresses a new non-bipartite family.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new construction replaces the bipartite ``join one side to a hub'' idea by a \emph{sparse dominating set of portals} on the cycle.
+
+The portals form a dominating set $P$ of size about $n/3$, and one carefully chosen portal $c\in P$ is at cyclic distance at least $3$ from every other portal. Adding only the star edges from $c$ to $P\setminus\{c\}$ keeps the graph triangle-free, while the portal star has diameter $2$. Since every cycle vertex is within distance $1$ of a portal, the whole augmented graph has diameter at most $4$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 obstacle was this: a single radius-$2$ hub is hard to realize in non-bipartite triangle-free graphs because indiscriminate hub attachments create triangles.
+
+For cycles, the plan overcomes that obstacle by using only a \emph{very sparse} set of hub attachments.
+
+\begin{enumerate}
+\item Choose a dominating set $P$ on $C_n$ with $|P|=\lceil n/3\rceil$.
+\item Choose a center $c\in P$ that is at cyclic distance at least $3$ from every other portal.
+\item Add the star edges $cp$ for $p\in P\setminus\{c\}$.
+\item Prove:
+\begin{itemize}
+\item no triangle is created, because $c$ has no common cycle-neighbor with any other portal;
+\item diameter is at most $4$, because every vertex is within distance $1$ of a portal and the portal graph has diameter $2$.
+\end{itemize}
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem 5.1.}
+For every cycle $C_n$ with $n\ge 5$,
+\[
+h_4(C_n)\le \max\left(0,\left\lceil \frac n3\right\rceil -1\right).
+\]
+In particular, for odd cycles,
+\[
+h_4(C_n)\le \left\lceil \frac n3\right\rceil -1 < \left(1-\frac23\right)n
+\]
+for all sufficiently large $n$.
+
+\paragraph{Proof.}
+If $n\le 9$, then
+\[
+\operatorname{diam}(C_n)=\left\lfloor \frac n2\right\rfloor \le 4,
+\]
+so $h_4(C_n)=0$. Thus assume $n\ge 10$.
+
+Label the cycle vertices by $0,1,\dots,n-1$ modulo $n$.
+
+\medskip
+\noindent
+\textbf{Case 1: $n=3q$.}
+Let
+\[
+P=\{0,3,6,\dots,3q-3\},
+\qquad c=0.
+\]
+Then $|P|=q=\lceil n/3\rceil$.
+
+\medskip
+\noindent
+\textbf{Case 2: $n=3q+1$.}
+Let
+\[
+P=\{0,3,6,\dots,3q-3,\,3q-1\},
+\qquad c=3.
+\]
+Then $|P|=q+1=\lceil n/3\rceil$.
+
+\medskip
+\noindent
+\textbf{Case 3: $n=3q+2$.}
+Let
+\[
+P=\{0,3,6,\dots,3q\},
+\qquad c=3.
+\]
+Then $|P|=q+1=\lceil n/3\rceil$.
+
+In every case, define $H$ by adding the star edges
+\[
+cp \qquad (p\in P\setminus\{c\})
+\]
+to the cycle.
+
+We now verify the three required properties.
+
+\paragraph{(i) $P$ is a dominating set of $C_n$.}
+This is immediate from the construction: along the cycle, the consecutive gaps between portals have length at most $3$, so every cycle vertex lies either in $P$ or next to a portal. Equivalently, every vertex of $C_n$ is at distance at most $1$ from some portal.
+
+\paragraph{(ii) $H$ is triangle-free.}
+On a cycle, two vertices have a common neighbor if and only if they are at cyclic distance $2$.
+
+So it is enough to check that the center $c$ is at cyclic distance at least $3$ from every other portal. This is straightforward from the case definitions:
+
+\begin{itemize}
+\item if $n=3q$, then the other portals are at distances $3,6,\dots,3q-3$ from $0$, and the wrap-around distance to the last portal is $3$;
+\item if $n=3q+1$, then $c=3$ and the other portals are $0,6,9,\dots,3q-3,3q-1$; their cyclic distances from $3$ are at least $3$;
+\item if $n=3q+2$, then $c=3$ and the other portals are $0,6,9,\dots,3q$; again their cyclic distances from $3$ are at least $3$.
+\end{itemize}
+
+Hence no added edge $cp$ can complete a triangle with cycle edges.
+
+Also, because the portals are pairwise nonadjacent on the cycle, no triangle can use two added edges $cp$ and $cq$. Therefore $H$ is triangle-free.
+
+\paragraph{(iii) $\operatorname{diam}(H)\le 4$.}
+Take any two vertices $u,v$ of the cycle. By (i), choose portals $p(u),p(v)\in P$ such that
+\[
+\operatorname{dist}_H(u,p(u))\le 1,
+\qquad
+\operatorname{dist}_H(v,p(v))\le 1.
+\]
+Inside the portal set $P$, the added edges form a star centered at $c$, so any two portals are at distance at most $2$ in $H$. Therefore
+\[
+\operatorname{dist}_H(u,v)
+\le
+\operatorname{dist}_H(u,p(u))
++
+\operatorname{dist}_H(p(u),p(v))
++
+\operatorname{dist}_H(p(v),v)
+\le 1+2+1=4.
+\]
+Thus $\operatorname{diam}(H)\le 4$.
+
+Finally, the number of added edges is exactly
+\[
+|P|-1=\left\lceil \frac n3\right\rceil -1.
+\]
+This proves the theorem.
+\hfill $\square$
+
+\paragraph{Corollary 5.2.}
+The original Erd\H{o}s--Gy\'arf\'as--Ruszink\'o question has a positive answer for the infinite family of cycles. Indeed one may take $c=2/3$ for this family.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item The small cycles $C_5,C_6,C_7,C_8,C_9$ were separated out at the start, since they already have diameter at most $4$.
+\item The only possible way to create a triangle in the construction is via one added edge and two cycle edges, or two added edges and one cycle edge. Both were checked explicitly.
+\item The diameter proof uses only two facts:
+\begin{itemize}
+\item every vertex is within distance $1$ of a portal;
+\item the portal graph is a star, hence has diameter $2$.
+\end{itemize}
+No hidden assumptions about parity are used.
+\item The edge count is exact for the construction:
+\[
+|F|=|P|-1=\left\lceil \frac n3\right\rceil -1.
+\]
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+A new non-bipartite infinite family is now settled:
+
+\[
+h_4(C_n)\le \max\left(0,\left\lceil \frac n3\right\rceil -1\right)
+\qquad\text{for every cycle } C_n.
+\]
+
+In particular, the conjectured linear saving holds for all odd cycles with a much stronger constant than Round~1 provided:
+\[
+h_4(C_n)\le \left\lceil \frac n3\right\rceil -1.
+\]
+
+The full problem for arbitrary connected triangle-free graphs remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 56\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#619}, accessed 2026-03-08.
+\item Round-1 notes from the previous iteration of this investigation (used only for the bipartite comparison bound listed in Section~2).
+\end{itemize}
+

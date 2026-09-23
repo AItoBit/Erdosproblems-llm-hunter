@@ -1,0 +1,205 @@
+\section*{Erd\H{o}s Problems \#256--\#258: Round 2 continuation}
+
+\section*{Erd\H{o}s Problem \#258}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am again using the fail-safe strict-progress option. The full problem remains open, but Round 2 will prove a broad new sufficient condition that is \emph{not} covered by the known monotone case:
+
+\begin{quote}
+If $a_n\to\infty$ and
+\[
+\frac{\tau(n)}{a_n}\to 0,
+\]
+then
+\[
+\sum_{n=1}^{\infty}\frac{\tau(n)}{a_1a_2\cdots a_n}
+\]
+is irrational.
+\end{quote}
+
+This is the most promising direction because Round 1 showed that monotonicity is the hypothesis used by Erd\H{o}s--Straus, but it did not identify a replacement mechanism. The new mechanism is a scaled-tail/fractional-part argument.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 material.
+\begin{enumerate}
+\item The convergence of
+\[
+T(a_1,a_2,\dots):=\sum_{n=1}^{\infty}\frac{\tau(n)}{a_1a_2\cdots a_n}
+\]
+for every integer sequence with $a_n\to\infty$.
+\item The known Erd\H{o}s--Straus theorem: if $(a_n)$ is monotone nondecreasing and $a_n\to\infty$, then $T(a_1,a_2,\dots)$ is irrational.
+\item The Round-1 gap: without monotonicity, there was no replacement for the mixed-radix control used in the classical proof.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the following scaled-tail criterion.
+
+\medskip
+\noindent\textbf{Scaled-tail criterion.}
+Let
+\[
+Q_n:=a_1a_2\cdots a_n,
+\qquad
+T:=\sum_{n=1}^{\infty}\frac{\tau(n)}{Q_n},
+\qquad
+R_n:=\sum_{m=n+1}^{\infty}\frac{\tau(m)}{a_{n+1}a_{n+2}\cdots a_m}.
+\]
+If $R_n\to 0$, then $T\notin\mathbb{Q}$.
+
+This is genuinely new in the present investigation. It replaces monotonicity by a direct control of the tail after multiplying by $Q_n$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The remaining Round-1 obstacle was: after multiplying by $Q_n$, how can one force a contradiction from rationality without assuming monotonicity? The plan is:
+\begin{enumerate}
+\item compute the fractional part of $Q_nT$;
+\item show it equals the scaled tail $R_n$;
+\item if $R_n\to 0$, compare this fractional part with the discrete set of possible fractional parts of a rational number.
+\end{enumerate}
+Then I will prove $R_n\to 0$ under the concrete hypothesis $\tau(n)/a_n\to 0$.
+
+\subsection*{5) WORK (ROUND-2)}
+Set
+\[
+Q_n:=a_1a_2\cdots a_n,
+\qquad
+T:=\sum_{n=1}^{\infty}\frac{\tau(n)}{Q_n}.
+\]
+For each $n\ge 1$, define the scaled tail
+\[
+R_n:=\sum_{m=n+1}^{\infty}\frac{\tau(m)}{a_{n+1}a_{n+2}\cdots a_m}.
+\]
+Because all summands are positive, we have $R_n>0$ for every $n$.
+
+\paragraph{Lemma 1 (fractional-part identity).}
+For every $n\ge 1$,
+\[
+Q_nT=\sum_{m=1}^{n}\tau(m)\frac{Q_n}{Q_m}+R_n,
+\]
+and hence, whenever $R_n<1$,
+\[
+\{Q_nT\}=R_n,
+\]
+where $\{x\}$ denotes the fractional part of $x$.
+
+\emph{Proof.}
+Multiply the series defining $T$ by $Q_n$:
+\[
+Q_nT
+=\sum_{m=1}^{n}\tau(m)\frac{Q_n}{Q_m}+\sum_{m=n+1}^{\infty}\tau(m)\frac{Q_n}{Q_m}.
+\]
+Since $Q_m=Q_n(a_{n+1}\cdots a_m)$ for $m>n$, the second sum is exactly $R_n$. For $m\le n$, the quotient $Q_n/Q_m=a_{m+1}\cdots a_n$ is an integer, so the first sum is an integer. Therefore, if $0<R_n<1$, the fractional part of $Q_nT$ is $R_n$.
+\hfill $\square$
+
+\paragraph{Lemma 2 (scaled-tail criterion).}
+If $R_n\to 0$, then $T\notin\mathbb{Q}$.
+
+\emph{Proof.}
+Assume for contradiction that $T=p/r\in\mathbb{Q}$ in lowest terms with $r\ge 1$. For each $n$, the number $Q_nT$ is rational with denominator dividing $r$, so its fractional part belongs to the finite set
+\[
+\left\{0,\frac1r,\frac2r,\dots,\frac{r-1}{r}\right\}.
+\]
+Since $R_n\to 0$ and $R_n>0$, there exists $N$ such that
+\[
+0<R_n<\frac1r\qquad (n\ge N).
+\]
+By Lemma 1, for all sufficiently large $n$ we have $\{Q_nT\}=R_n$. But no element of
+\(
+\{0,1/r,2/r,\dots,(r-1)/r\}
+\)
+lies strictly between $0$ and $1/r$. This contradiction proves $T\notin\mathbb{Q}$.
+\hfill $\square$
+
+\paragraph{Lemma 3 (a concrete sufficient condition).}
+If
+\[
+\frac{\tau(n)}{a_n}\to 0,
+\]
+then $R_n\to 0$.
+
+\emph{Proof.}
+Fix $\varepsilon>0$. Since $a_n\to\infty$, there exists $N_1$ such that $a_n\ge 2$ for all $n\ge N_1$. Since $\tau(n)/a_n\to 0$, there exists $N_2$ such that
+\[
+\frac{\tau(n)}{a_n}\le \varepsilon\qquad (n\ge N_2).
+\]
+Let $N:=\max\{N_1,N_2\}$. For $n\ge N$ we get
+\[
+R_n
+=\sum_{m=n+1}^{\infty}\frac{\tau(m)/a_m}{a_{n+1}a_{n+2}\cdots a_{m-1}}
+\le \varepsilon\sum_{m=n+1}^{\infty}\frac{1}{a_{n+1}a_{n+2}\cdots a_{m-1}}.
+\]
+For the term $m=n+1$ the denominator is the empty product, equal to $1$. For $m=n+1+j$ with $j\ge 1$, there are $j$ factors, each at least $2$, so
+\[
+\frac{1}{a_{n+1}a_{n+2}\cdots a_{m-1}}\le 2^{-j}.
+\]
+Hence
+\[
+R_n\le \varepsilon\sum_{j=0}^{\infty}2^{-j}=2\varepsilon.
+\]
+Since $\varepsilon>0$ was arbitrary, $R_n\to 0$.
+\hfill $\square$
+
+Combining Lemmas 2 and 3 yields the main round-2 theorem.
+
+\medskip
+\noindent\textbf{Theorem.}
+If $a_n\to\infty$ and $\tau(n)/a_n\to 0$, then
+\[
+\sum_{n=1}^{\infty}\frac{\tau(n)}{a_1a_2\cdots a_n}
+\]
+is irrational.
+
+\paragraph{A concrete nonmonotone family.}
+Take
+\[
+a_{2k-1}=k^3,
+\qquad
+ a_{2k}=k^2
+\qquad (k\ge 1).
+\]
+Then $a_n\to\infty$, but the sequence is not monotone since $a_{2k}=k^2<a_{2k-1}=k^3$ for every $k\ge 2$. Also $\tau(n)\le n$ for all $n$, so
+\[
+\frac{\tau(2k-1)}{a_{2k-1}}\le \frac{2k-1}{k^3}\to 0,
+\qquad
+\frac{\tau(2k)}{a_{2k}}\le \frac{2k}{k^2}\to 0.
+\]
+Thus our theorem proves that
+\[
+\sum_{n=1}^{\infty}\frac{\tau(n)}{a_1a_2\cdots a_n}
+\]
+is irrational for this explicit nonmonotone sequence, a case not covered by Erd\H{o}s--Straus.
+
+\paragraph{Obstruction to any counterexample.}
+If a rational counterexample exists, then necessarily $R_n\not\to 0$. In particular, by contrapositive of Lemma 3, it cannot satisfy $\tau(n)/a_n\to 0$. Thus any rational counterexample must have $\tau(n)$ comparable to $a_n$ infinitely often, or at least enough mass in the scaled tails to prevent $R_n$ from tending to $0$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Did I use monotonicity anywhere?} No. The proof only uses positivity, the integer nature of $Q_n/Q_m$ for $m\le n$, and the hypothesis $R_n\to 0$ (or the stronger concrete condition $\tau(n)/a_n\to 0$).
+\item \textbf{Could $R_n$ fail to be the fractional part because it is too large?} Lemma 1 only asserts $\{Q_nT\}=R_n$ when $R_n<1$, and Lemma 2 uses exactly that for all sufficiently large $n$ once $R_n\to 0$.
+\item \textbf{Is positivity essential?} Yes. The contradiction uses $0<R_n<1/r$. In the present problem all terms are positive, so this is valid.
+\item \textbf{Does the theorem really go beyond Round 1?} Yes. The explicit family $a_{2k-1}=k^3$, $a_{2k}=k^2$ is nonmonotone, so it lies outside the known Erd\H{o}s--Straus case, yet it is covered here.
+\item \textbf{Hidden dependence on stronger divisor estimates?} None. The proof of the explicit family uses only the trivial bound $\tau(n)\le n$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The full problem remains open, but Round 2 proves a new theorem:
+
+\begin{quote}
+If $a_n\to\infty$ and $\tau(n)/a_n\to 0$, then
+\[
+\sum_{n=1}^{\infty}\frac{\tau(n)}{a_1a_2\cdots a_n}
+\]
+is irrational.
+\end{quote}
+
+Equivalently, any rational counterexample must violate the scaled-tail criterion; in particular it cannot have $\tau(n)=o(a_n)$. This gives a sharp obstruction and settles an explicit infinite family of nonmonotone sequences.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 55\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item P. Erd\H{o}s and E. G. Straus, \emph{Some number theoretic results}, Pacific Journal of Mathematics \textbf{36} (1971), 635--646.
+\item T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#258}, \texttt{erdosproblems.com/258}, accessed 2026-03-07.
+\end{enumerate}

@@ -1,0 +1,164 @@
+
+\section{Problem \#383 (Round 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path A (proof-oriented constructive progress). Round 1 had examples through $k=6$ and no example for $k=7$ in the search range used there. The new aim is to push the exact search further and replace ``none found'' by explicit rigorous constructions for larger $k$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the Round-1 reformulation:
+
+for a prime $p>k$,
+\[
+P\!\left(\prod_{i=0}^{k}(p^2+i)\right)=p
+\]
+is equivalent to
+\[
+P(p^2+i)\le p\qquad (1\le i\le k).
+\]
+
+So it is enough to exhibit primes $p$ such that each of the integers
+\[
+p^2+1,\dots,p^2+k
+\]
+is $p$-smooth.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is not a new theorem but a new exact computational certificate: I found and verified explicit primes for
+\[
+k=7,\ 8,\ 9.
+\]
+This strictly advances Round 1, which only had examples through $k=6$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was the absence of any example for $k=7$ in the earlier search range. The new plan is:
+
+\begin{enumerate}
+\item search much farther than Round 1;
+\item for each successful prime $p$, give exact factorisations of $p^2+i$ for all $1\le i\le k$;
+\item conclude rigorously that the largest prime factor of the whole product is exactly $p$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Example for $k=7$.}
+Take
+\[
+p=510569.
+\]
+Then the exact factorisations are:
+
+\begin{enumerate}
+\item $p^2+1=2\cdot 37\cdot 31721\cdot 111053$;
+\item $p^2+2=3\cdot 2731\cdot 4651\cdot 6841$;
+\item $p^2+3=2^2\cdot 13\cdot 43\cdot 523\cdot 222913$;
+\item $p^2+4=5\cdot 17\cdot 29^2\cdot 641\cdot 5689$;
+\item $p^2+5=2\cdot 3\cdot 7\cdot 23\cdot 167\cdot 1061\cdot 1523$;
+\item $p^2+6=11\cdot 59\cdot 101\cdot 991\cdot 4013$;
+\item $p^2+7=2^3\cdot 71\cdot 401\cdot 449\cdot 2549$.
+\end{enumerate}
+
+Every prime shown is $<p$. Since $p>7$, none of $p^2+1,\dots,p^2+7$ is divisible by $p$. Therefore the factor $p^2$ contributes the only copies of $p$ to
+\[
+\prod_{i=0}^{7}(p^2+i),
+\]
+and all other prime divisors are $<p$. Hence
+\[
+P\!\left(\prod_{i=0}^{7}(p^2+i)\right)=p.
+\]
+
+\paragraph{Example for $k=8$.}
+Take
+\[
+p=2869123.
+\]
+Then:
+
+\begin{enumerate}
+\item $p^2+1=2\cdot 5\cdot 489337\cdot 1682249$;
+\item $p^2+2=3^6\cdot 82129\cdot 137491$;
+\item $p^2+3=2^2\cdot 7\cdot 31\cdot 5449\cdot 1740451$;
+\item $p^2+4=13\cdot 251969\cdot 2513089$;
+\item $p^2+5=2\cdot 3\cdot 43\cdot 563\cdot 1321\cdot 42901$;
+\item $p^2+6=5\cdot 11^2\cdot 149\cdot 313\cdot 291751$;
+\item $p^2+7=2^4\cdot 701\cdot 9473\cdot 77477$;
+\item $p^2+8=3\cdot 953\cdot 4003\cdot 719281$.
+\end{enumerate}
+
+Again every displayed prime is $<p$, and $p>8$ implies $p$ does not divide $p^2+i$ for $1\le i\le 8$. Therefore
+\[
+P\!\left(\prod_{i=0}^{8}(p^2+i)\right)=p.
+\]
+
+\paragraph{Example for $k=9$.}
+Take
+\[
+p=3092701.
+\]
+Then:
+
+\begin{enumerate}
+\item $p^2+1=2\cdot 1373\cdot 7237\cdot 481301$;
+\item $p^2+2=3^2\cdot 17\cdot 41\cdot 89\cdot 1289\cdot 13291$;
+\item $p^2+3=2^2\cdot 73\cdot 104947\cdot 312121$;
+\item $p^2+4=5\cdot 101\cdot 137\cdot 1553\cdot 89021$;
+\item $p^2+5=2\cdot 3\cdot 7^2\cdot 30781\cdot 1056929$;
+\item $p^2+6=11\cdot 1709\cdot 5021\cdot 101333$;
+\item $p^2+7=2^4\cdot 919\cdot 2417\cdot 269131$;
+\item $p^2+8=3\cdot 641\cdot 5939\cdot 837497$;
+\item $p^2+9=2\cdot 5\cdot 37\cdot 15313\cdot 1688161$.
+\end{enumerate}
+
+All displayed prime divisors are $<p$, and $p>9$ implies $p$ does not divide $p^2+i$ for $1\le i\le 9$. Hence
+\[
+P\!\left(\prod_{i=0}^{9}(p^2+i)\right)=p.
+\]
+
+\paragraph{Consequences for Problem \#382.}
+Each of the three examples above also gives a bad interval:
+\[
+[p^2,p^2+7],\qquad [p^2,p^2+8],\qquad [p^2,p^2+9].
+\]
+So the Problem \#383 search now yields rigorous constructions for bad intervals of lengths $7,8,9$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the key logical points.
+
+\begin{enumerate}
+\item \emph{Could one of the numbers $p^2+i$ be divisible by $p$?} No, because $1\le i\le k<p$ in all three examples, so $p$ does not divide $p^2+i$.
+\item \emph{Is it enough to factor only $p^2+1,\dots,p^2+k$?} Yes. The factor $p^2$ already contributes the prime $p$, and once all other factors are shown to have prime divisors $<p$, the largest prime divisor of the full product is exactly $p$.
+\item \emph{Could there be a larger hidden prime factor in one of the listed numbers?} No. The displayed decompositions are exact factorisations.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 replaces the Round-1 frontier
+\[
+k\le 6
+\]
+by the rigorously verified frontier
+\[
+k\le 9,
+\]
+through explicit primes for
+\[
+k=7,\ 8,\ 9.
+\]
+
+This is substantial constructive progress toward the conjecture, but it does not prove that for every fixed $k$ there are infinitely many such primes.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#383}, accessed 2026-03-08, \texttt{https://www.erdosproblems.com/383}.
+\end{enumerate}

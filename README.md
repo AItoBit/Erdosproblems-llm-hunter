@@ -13,7 +13,7 @@ This project documents and tracks LLM attempts to solve challenging open mathema
 
 - **Erdos Problems**: Open problems posed by Paul Erdos, one of the most prolific mathematicians in history
   - Problem statements: [erdosproblems.com](https://www.erdosproblems.com/)
-  - Database: [Terry Tao's Erdos Problems Database](https://teorth.github.io/erdosproblems/)
+  - Latest status and formalization links: [Terry Tao's Erdos Problems Database](https://teorth.github.io/erdosproblems/)
 
 - **MathOverflow**: Open problems from the professional mathematics Q&A site
   - Source: [mathoverflow.net](https://mathoverflow.net/)
@@ -70,14 +70,33 @@ Erdosproblems-llm-hunter/
 ## Local Development
 
 ```bash
-# Run the build script
+# Refresh the status snapshot from Tao's GitHub repository (requires network)
+python3 -m pip install -r requirements.txt
+python3 scripts/sync_erdos_status.py
+
+# Run the build script (uses the saved snapshot; works offline)
 python3 build_site.py
 
 # Serve locally (Python)
-python3 -m http.server 8000
+python3 -m http.server 8000 --directory docs
 ```
 
 Then open `http://localhost:8000` in your browser.
+
+Problem statuses are saved in `lists/erdos_status.json`, with the upstream commit
+and the time they were checked. Every problem listed in this repository must have
+a matching status; the build fails if any are missing. GitHub Actions refreshes
+this snapshot before building the published site, using the upstream GitHub data
+without scraping individual pages on erdosproblems.com.
+
+The **Problem Status** column reports Tao's database status. Problems marked
+proved, disproved, solved, or independent receive **100% Completion**, following
+the database's definition of resolved problems. For other problems, completion
+remains the existing LLM estimate. Statement formalization and solution formalization
+are reported separately; an `open (Lean)` problem remains open. LLM claims,
+attempt contents, and community reviews retain their separate meanings.
+
+Run the synchronization and build checks with `python3 -m unittest discover -s tests`.
 
 ## Contributing
 
@@ -93,7 +112,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting new LLM atte
 
 **Important:** LLM output is not fully reliable. The attempts documented on this website represent exploratory work by frontier AI models and should not be considered verified mathematical proofs.
 
-Any "solved" status indicates only that the LLM claimed to solve the problem - it does not mean the solution has been verified or accepted by the mathematical community.
+An LLM "solved" claim does not mean its solution has been verified or accepted
+by the mathematical community. The separate Erdos **Problem Status** comes from
+[Tao's collaborative database](https://teorth.github.io/erdosproblems/) and does not
+validate the LLM attempts hosted here.
 
 ## License
 

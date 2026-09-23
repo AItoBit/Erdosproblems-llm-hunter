@@ -1,0 +1,442 @@
+\section{Round-6 Objective}
+We pursue \textbf{(A) a proof strategy}.  Round~5 gave a broad existence theorem based on finite-stage inclusion--exclusion, with an error term controlled by the cumulative compatible-subfamily count
+\[
+M_k:=\#\Bigl\{I\subseteq\{1,\dots,k\}: \exists n\in\mathbb Z,\ n\equiv a_i \pmod{n_i}\ \forall i\in I\Bigr\}.
+\]
+The exact remaining weakness of that argument is that the same compatible subset is charged on \emph{every later activation interval}, so the Round~5 hypothesis involved
+\[
+\sum_{k\le K}\frac{M_k}{n_k}.
+\]
+
+The new goal of this round is to remove that repeated charging.  We do this by writing an \emph{exact global inclusion--exclusion formula for $A$ itself}, indexed by the \emph{largest active modulus} in each compatible subfamily.  This yields a strictly sharper criterion in terms of the local counts
+\[
+C_r:=\#\{I\text{ compatible finite}:\ \max I=r\},
+\]
+namely
+\[
+\sum_{r\le K}\frac{C_r}{n_r}=o(\log n_K)
+\quad\Longrightarrow\quad
+\delta_{\log}(A)\ \text{exists}.
+\]
+This is stronger than Round~5 because it counts each compatible subfamily exactly once, at the moment it first becomes active.
+
+\section{Round-5 Foundation Used}
+We rely on the following vetted Round~5 facts.
+\begin{itemize}
+\item \textbf{Activation identity (Round~1).}  For
+\[
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall 1\le i\le k\},
+\]
+one has
+\[
+\mathbf 1_A(n)=\mathbf 1_{A^{(k)}}(n)\qquad (n_k\le n<n_{k+1}).
+\]
+\item \textbf{Monotone stage densities (Round~2).}
+Each $A^{(k)}$ is periodic, its natural density
+\[
+\delta_k:=d(A^{(k)})
+\]
+exists, and $(\delta_k)$ is decreasing with limit
+\[
+\delta:=\lim_{k\to\infty}\delta_k\in[0,1].
+\]
+\item \textbf{Single progression harmonic estimate (Round~5).}
+For every modulus $m\ge 1$, every residue class $b\pmod m$, and integers $2\le X<Y$,
+\[
+\sum_{\substack{X\le n<Y\\ n\equiv b\ (\mathrm{mod}\ m)}}\frac1n
+=
+\frac1m\log\frac{Y}{X}+O\!\left(\frac1X\right),
+\]
+with an absolute implied constant, uniform in $m,b,X,Y$.
+\item \textbf{Weighted-average principle (Round~2 / Round~4).}
+If a nonnegative weight system has total mass tending to $1$, then the weighted averages of the monotone sequence $\delta_k\downarrow\delta$ converge to $\delta$.
+\end{itemize}
+
+\section{New Insight / Tool (Round-6)}
+The new tool is an \emph{exact global inclusion--exclusion expansion for $A$}, rather than a separate stage-by-stage approximation on each interval $[n_k,n_{k+1})$.
+
+For each finite compatible set of indices $I$, let $r(I):=\max I$.  The corresponding congruence progression first becomes active only when $n\ge n_{r(I)}$.  Therefore, when summing
+\[
+S(x):=\sum_{\substack{1\le n\le x\\ n\in A}}\frac1n,
+\]
+each compatible $I$ should be charged \emph{once}, from $n_{r(I)}$ onward, rather than being re-charged on every later interval.
+
+This replaces the Round~5 cumulative parameter $M_k$ by the sharper local parameter
+\[
+C_r:=\#\{I\text{ compatible finite}:\ r(I)=r\}.
+\]
+The resulting error term is
+\[
+O\!\left(\sum_{r\le K(x)}\frac{C_r}{n_r}\right),
+\]
+instead of the Round~5 stagewise error
+\[
+O\!\left(\sum_{k\le K(x)}\frac{M_k}{n_k}\right).
+\]
+
+A second new insight is graph-theoretic: by the generalized Chinese remainder theorem, a finite family of congruences is compatible if and only if it is \emph{pairwise} compatible.  Thus the compatible families are precisely the cliques of a natural compatibility graph.  The local count $C_r$ is exactly the number of cliques in the backward neighborhood of $r$.
+
+\section{Attack Plan (Round-6)}
+The exact gap left after Round~5 was that the inclusion--exclusion approximation was done \emph{separately at each stage}, causing the same compatible subfamily to be counted on every later activation interval.
+
+The Round~6 plan is:
+\begin{enumerate}
+\item Define the local compatible-subfamily counts $C_r$ by maximum index.
+\item Prove an exact global inclusion--exclusion formula for $A(n)$ in which each compatible subfamily appears only once, activated at $n_{r(I)}$.
+\item Use the Round~5 single-progression harmonic estimate on each such activated progression, obtaining a total error $O(\sum_{r\le K} C_r/n_r)$.
+\item Rewrite the main term in terms of the stage densities $\delta_r$ and apply the Round~2 weighted-average principle.
+\item Reformulate $C_r$ graph-theoretically and deduce a clean clique/degree-based corollary that rules out a broad class of counterexample strategies.
+\end{enumerate}
+
+\section{Work (Round-6)}
+\subsection*{6.1. Pairwise compatibility and the compatibility graph}
+For a finite nonempty set $I\subset\mathbb N$, call $I$ \emph{compatible} if the system of congruences
+\[
+n\equiv a_i\pmod{n_i}\qquad(i\in I)
+\]
+has an integer solution.  Write $\mathcal C_\infty$ for the family of all finite compatible nonempty sets.
+
+\paragraph{Lemma 6.1 (pairwise criterion).}
+A finite nonempty set $I$ is compatible if and only if for every $i,j\in I$,
+\begin{equation}
+a_i\equiv a_j\pmod{\gcd(n_i,n_j)}.
+\tag{6.1}
+\end{equation}
+
+\emph{Proof.}
+Necessity is immediate: any common solution must be congruent to both $a_i$ and $a_j$, hence their difference is divisible by $\gcd(n_i,n_j)$.
+
+For sufficiency, argue by induction on $|I|$.  The case $|I|=1$ is trivial.  Suppose $I=J\cup\{r\}$ with $|J|\ge 1$ and assume the claim already proved for $J$.  By induction, the subsystem indexed by $J$ has a solution
+\[
+n\equiv b\pmod{L_J},\qquad L_J:=\mathrm{lcm}(n_j:\ j\in J).
+\]
+For each $j\in J$, we have $b\equiv a_j\pmod{n_j}$ and by hypothesis also $a_j\equiv a_r\pmod{\gcd(n_j,n_r)}$, so $b-a_r$ is divisible by every $\gcd(n_j,n_r)$.  Hence $b-a_r$ is divisible by their least common multiple.  Prime-by-prime, one checks that
+\[
+\mathrm{lcm}\bigl(\gcd(n_j,n_r):\ j\in J\bigr)=\gcd(L_J,n_r).
+\]
+Thus
+\[
+b\equiv a_r\pmod{\gcd(L_J,n_r)}.
+\]
+The two-modulus Chinese remainder theorem therefore gives a simultaneous solution to
+\[
+n\equiv b\pmod{L_J},\qquad n\equiv a_r\pmod{n_r}.
+\]
+So $I$ is compatible.  \hfill $\square$
+
+Define the \emph{compatibility graph} $G$ on the vertex set $\mathbb N$ by joining $i<j$ whenever the pair $\{i,j\}$ is compatible, equivalently whenever \eqref{6.1} holds.
+By Lemma~6.1, the compatible finite subsets are exactly the finite cliques of $G$.
+
+\subsection*{6.2. Local counts by maximum index}
+For $I\in\mathcal C_\infty$, define
+\[
+r(I):=\max I,
+\qquad
+m_I:=\mathrm{lcm}(n_i:\ i\in I),
+\]
+and choose one residue class
+\[
+b_I\pmod{m_I}
+\]
+solving all congruences $n\equiv a_i\pmod{n_i}$ for $i\in I$.
+
+For each $r\ge 1$, define
+\begin{equation}
+\mathcal D_r:=\{I\in\mathcal C_\infty:\ r(I)=r\},
+\qquad
+C_r:=|\mathcal D_r|.
+\tag{6.2}
+\end{equation}
+Thus $C_r$ counts the compatible subfamilies that are \emph{first introduced} when index $r$ becomes active.
+
+Also define the local density increment
+\begin{equation}
+\gamma_r:=\sum_{I\in\mathcal D_r}(-1)^{|I|}\frac1{m_I}.
+\tag{6.3}
+\end{equation}
+Since the stage-density inclusion--exclusion formula from Round~5 gives
+\[
+\delta_k
+=
+1+\sum_{\substack{I\in\mathcal C_\infty\\ r(I)\le k}}(-1)^{|I|}\frac1{m_I},
+\]
+we have
+\begin{equation}
+\gamma_r=\delta_r-\delta_{r-1}\qquad(r\ge 1),
+\tag{6.4}
+\end{equation}
+with the convention $\delta_0:=1$.
+
+\subsection*{6.3. Exact global inclusion--exclusion for $A$}
+\paragraph{Lemma 6.2 (global activated inclusion--exclusion).}
+For every integer $n\ge 1$,
+\begin{equation}
+\mathbf 1_A(n)
+=
+1+
+\sum_{\substack{I\in\mathcal C_\infty\\ n_{r(I)}\le n}}
+(-1)^{|I|}\,\mathbf 1_{\,n\equiv b_I\ (\mathrm{mod}\ m_I)}.
+\tag{6.5}
+\end{equation}
+Only finitely many terms are present in the sum.
+
+\emph{Proof.}
+Let
+\[
+K(n):=\max\{k:\ n_k\le n\},
+\]
+with the understanding that $K(n)=0$ if $n<n_1$.  The active constraints at the integer $n$ are exactly those indexed by $\{1,\dots,K(n)\}$.  Therefore, by ordinary finite inclusion--exclusion on this active set,
+\[
+\mathbf 1_A(n)=
+\sum_{I\subseteq\{1,\dots,K(n)\}}(-1)^{|I|}\mathbf 1_{\cap_{i\in I}\{n\equiv a_i\ (\mathrm{mod}\ n_i)\}}.
+\]
+The empty subset contributes $1$.  A nonempty subset contributes $0$ unless it is compatible, in which case its intersection is exactly the single residue class $n\equiv b_I\pmod{m_I}$.  Since $I\subseteq\{1,\dots,K(n)\}$ is equivalent to $n_{r(I)}\le n$, this is precisely \eqref{6.5}.  \hfill $\square$
+
+\subsection*{6.4. A sharper general criterion}
+Let
+\[
+S(x):=\sum_{\substack{1\le n\le x\\ n\in A}}\frac1n.
+\]
+For $x\ge n_1$, let $K(x)$ be the unique index with
+\[
+n_{K(x)}\le x<n_{K(x)+1}.
+\]
+
+\paragraph{Theorem 6.3 (local compatible-subfamily criterion).}
+Assume $n_1\ge 2$ and define $C_r$ by \eqref{6.2}.  If
+\begin{equation}
+F_K:=\sum_{r=1}^{K}\frac{C_r}{n_r}=o(\log n_K)\qquad(K\to\infty),
+\tag{6.6}
+\end{equation}
+then the logarithmic density $\delta_{\log}(A)$ exists and equals
+\begin{equation}
+\delta:=\lim_{k\to\infty}\delta_k.
+\tag{6.7}
+\end{equation}
+
+\emph{Proof.}
+Fix $x\ge n_1$ and write $K:=K(x)$.  Summing \eqref{6.5} over $1\le n\le x$ with weight $1/n$ gives
+\begin{equation}
+S(x)
+=
+\sum_{n\le x}\frac1n
++
+\sum_{r=1}^{K}\ \sum_{I\in\mathcal D_r} (-1)^{|I|}
+\sum_{\substack{n_r\le n\le x\\ n\equiv b_I\ (\mathrm{mod}\ m_I)}}\frac1n.
+\tag{6.8}
+\end{equation}
+For each fixed $I\in\mathcal D_r$, apply the Round~5 single-progression harmonic estimate with $X=n_r$ and $Y=\lfloor x\rfloor+1$:
+\[
+\sum_{\substack{n_r\le n\le x\\ n\equiv b_I\ (\mathrm{mod}\ m_I)}}\frac1n
+=
+\frac1{m_I}\log\frac{x}{n_r}+O\!\left(\frac1{n_r}\right),
+\]
+uniformly in $I$ and $x$.  Therefore \eqref{6.8} becomes
+\begin{equation}
+S(x)
+=
+\log x+O(1)
++
+\sum_{r=1}^{K}\gamma_r\log\frac{x}{n_r}
++
+O\!\left(\sum_{r=1}^{K}\frac{C_r}{n_r}\right).
+\tag{6.9}
+\end{equation}
+Using \eqref{6.4}, this is
+\begin{equation}
+S(x)
+=
+\log x+O(1)
++
+\sum_{r=1}^{K}(\delta_r-\delta_{r-1})\log\frac{x}{n_r}
++
+O(F_K).
+\tag{6.10}
+\end{equation}
+Now summation by parts gives the exact identity
+\begin{equation}
+\log x+
+\sum_{r=1}^{K}(\delta_r-\delta_{r-1})\log\frac{x}{n_r}
+=
+\log n_1
++
+\sum_{r=1}^{K-1}\delta_r\log\frac{n_{r+1}}{n_r}
++
+\delta_K\log\frac{x}{n_K}.
+\tag{6.11}
+\end{equation}
+Insert this into \eqref{6.10} and divide by $\log x$:
+\begin{equation}
+\frac{S(x)}{\log x}
+=
+\frac{\log n_1}{\log x}
++
+\sum_{r=1}^{K-1}w_r(x)\,\delta_r
++
+\nu_K(x)\,\delta_K
++
+o(1),
+\tag{6.12}
+\end{equation}
+where
+\begin{equation}
+w_r(x):=\frac{\log(n_{r+1}/n_r)}{\log x},
+\qquad
+\nu_K(x):=\frac{\log(x/n_K)}{\log x}.
+\tag{6.13}
+\end{equation}
+Because of \eqref{6.6},
+\[
+\frac{F_K}{\log x}\le \frac{F_K}{\log n_K}\to 0.
+\]
+Also the weights are nonnegative and satisfy
+\begin{equation}
+\sum_{r=1}^{K-1}w_r(x)+\nu_K(x)=\frac{\log(x/n_1)}{\log x}\longrightarrow 1.
+\tag{6.14}
+\end{equation}
+It remains to show that the weighted average of $\delta_r$ tends to $\delta$.  Fix $\varepsilon>0$ and choose $R$ so large that
+\[
+\delta\le \delta_r\le \delta+\varepsilon\qquad(r\ge R)
+\]
+(using the Round~2 monotone convergence $\delta_r\downarrow\delta$).  Let
+\[
+\alpha_R(x):=\sum_{r=1}^{R-1}w_r(x).
+\]
+Then
+\[
+0\le \alpha_R(x)\le \frac{\log(n_R/n_1)}{\log x}\to 0.
+\]
+For large $x$ (so that $K\ge R$), the tail contribution in \eqref{6.12} satisfies
+\[
+\delta\Bigl(\sum_{r=R}^{K-1}w_r(x)+\nu_K(x)\Bigr)
+\le
+\sum_{r=R}^{K-1}w_r(x)\delta_r+\nu_K(x)\delta_K
+\le
+(\delta+\varepsilon)\Bigl(\sum_{r=R}^{K-1}w_r(x)+\nu_K(x)\Bigr).
+\]
+The initial contribution is bounded between $0$ and $\alpha_R(x)$.  Since the total weight tends to $1$ by \eqref{6.14}, it follows that
+\[
+\liminf_{x\to\infty}\left(\sum_{r=1}^{K-1}w_r(x)\delta_r+\nu_K(x)\delta_K\right)\ge \delta,
+\]
+and
+\[
+\limsup_{x\to\infty}\left(\sum_{r=1}^{K-1}w_r(x)\delta_r+\nu_K(x)\delta_K\right)\le \delta+\varepsilon.
+\]
+As $\varepsilon>0$ is arbitrary, the weighted average converges to $\delta$.  Equation \eqref{6.12} therefore yields
+\[
+\frac{S(x)}{\log x}\longrightarrow \delta.
+\]
+This is exactly $\delta_{\log}(A)=\delta$.  \hfill $\square$
+
+\paragraph{Comparison with Round~5.}
+Round~5 used the cumulative counts
+\[
+M_k=\#\{I\subseteq\{1,\dots,k\}: I\text{ compatible}\}.
+\]
+The new theorem replaces the stagewise error condition
+\[
+\sum_{k\le K}\frac{M_k}{n_k}=o(\log n_K)
+\]
+by the sharper local condition \eqref{6.6}.  The conceptual gain is that a compatible subfamily $I$ is now charged once, at its activation index $r(I)=\max I$, instead of being re-charged on every later interval.
+
+\subsection*{6.5. Graph-theoretic reformulation}
+For each $r\ge 1$, define the backward neighborhood of $r$ in the compatibility graph by
+\[
+N^{-}(r):=\{i<r:\ i\sim r\},
+\qquad
+d_r^{-}:=|N^{-}(r)|.
+\]
+
+\paragraph{Lemma 6.4 (local counts are clique counts).}
+For each $r\ge 1$, the number $C_r$ equals the number of cliques in the induced subgraph $G[N^{-}(r)]$, with the empty clique included.  In particular,
+\begin{equation}
+C_r\le 2^{d_r^{-}}.
+\tag{6.15}
+\end{equation}
+
+\emph{Proof.}
+A set $I\in\mathcal D_r$ has the form
+\[
+I=J\cup\{r\},\qquad J\subseteq\{1,\dots,r-1\}.
+\]
+By Lemma~6.1, $I$ is compatible if and only if it is a clique in $G$.  Since $r\in I$, this is equivalent to saying that every vertex of $J$ lies in $N^{-}(r)$ and that $J$ itself is a clique in the induced graph on $N^{-}(r)$.  Thus compatible sets with maximum index $r$ are in bijection with cliques of $G[N^{-}(r)]$, including the empty clique $J=\varnothing$.  The bound \eqref{6.15} is immediate.  \hfill $\square$
+
+\paragraph{Corollary 6.5 (degree-based criterion).}
+If
+\begin{equation}
+\sum_{r=1}^{K}\frac{2^{d_r^{-}}}{n_r}=o(\log n_K)\qquad(K\to\infty),
+\tag{6.16}
+\end{equation}
+then $\delta_{\log}(A)$ exists.
+
+\emph{Proof.}
+Combine \eqref{6.15} with Theorem~6.3.  \hfill $\square$
+
+\paragraph{Corollary 6.6 (bounded backward degree).}
+If the compatibility graph satisfies
+\[
+\sup_{r\ge 1} d_r^{-}\le D<\infty
+\]
+and
+\begin{equation}
+\sum_{r=1}^{K}\frac1{n_r}=o(\log n_K),
+\tag{6.17}
+\end{equation}
+then $\delta_{\log}(A)$ exists.  In particular, this holds whenever $d_r^{-}\le D$ uniformly and
+\[
+\sum_{r\ge 1}\frac1{n_r}<\infty
+\]
+(for example, if $n_r\gg r^{1+\eta}$ for some $\eta>0$).
+
+\emph{Proof.}
+Under the bounded-degree hypothesis, \eqref{6.15} gives $C_r\le 2^D$ for every $r$.  Hence
+\[
+\sum_{r=1}^{K}\frac{C_r}{n_r}
+\le 2^D\sum_{r=1}^{K}\frac1{n_r},
+\]
+so Theorem~6.3 applies.  \hfill $\square$
+
+\section{Adversarial Verification}
+We stress-test the new argument.
+\begin{itemize}
+\item \textbf{No illegal infinite inclusion--exclusion.}  Formula \eqref{6.5} is not an infinite alternating series at a fixed integer $n$.  Only indices with $n_i\le n$ are active, so the sum is finite and is exactly ordinary inclusion--exclusion on the active constraints.
+\item \textbf{Correct use of the generalized CRT.}  Lemma~6.1 is proved, not assumed.  The key induction step checks compatibility with the combined modulus $L_J$ through the exact identity
+\[
+\gcd(L_J,n_r)=\mathrm{lcm}\bigl(\gcd(n_j,n_r):\ j\in J\bigr).
+\]
+\item \textbf{The new error term really is local.}  In \eqref{6.8}, each compatible family $I$ contributes one activated progression beginning at $n_{r(I)}$, so its harmonic approximation error is paid once as $O(1/n_{r(I)})$.  This is the central improvement over the Round~5 stagewise bookkeeping.
+\item \textbf{Main-term algebra.}  Identity \eqref{6.11} is an exact summation-by-parts identity.  It recovers the same weighted-average structure as in Rounds~2--4, so the monotone convergence of $\delta_k$ can be reused safely.
+\item \textbf{Intermediate $x$, not just endpoints.}  The proof works for arbitrary $x$, because the final active progression sums are taken directly up to $x$ in \eqref{6.8}; no endpoint reduction is needed.
+\item \textbf{Graph reformulation.}  The identification of compatible sets with cliques is exact by Lemma~6.1.  Hence $C_r$ really is the local clique count in the backward neighborhood of $r$.
+\item \textbf{Edge case $n_1=1$.}  As in earlier rounds, if $n_1=1$ then every integer is congruent to $a_1\pmod 1$, so $A=\varnothing$ and $\delta_{\log}(A)=0$.  Theorem~6.3 is therefore stated for $n_1\ge 2$.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main new advance is Theorem~6.3, which sharpens the Round~5 inclusion--exclusion criterion from the cumulative stage counts $M_k$ to the local activation counts $C_r$:
+\[
+\sum_{r\le K}\frac{C_r}{n_r}=o(\log n_K)
+\quad\Longrightarrow\quad
+\delta_{\log}(A)\ \text{exists}.
+\]
+This is a real improvement in mechanism: each compatible subfamily is now charged exactly once, at the moment it first becomes active.
+
+The graph-theoretic reformulation in Lemma~6.4 and Corollaries~6.5--6.6 isolates a sharper obstruction than any previous round:
+\begin{quote}
+A counterexample must have \emph{large local clique counts} in the compatibility graph, on a harmonic scale,
+\[
+\sum_{r\le K}\frac{C_r}{n_r}\not=o(\log n_K).
+\]
+Equivalently, sparse backward neighborhoods (or any hypothesis forcing small clique counts in those neighborhoods) cannot support a counterexample.
+\end{quote}
+So the remaining open core is now narrower than after Round~5: one must combine large activated compatible-subfamily complexity with failure of all previously proved lcm/discrepancy criteria.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 88\%}.
+
+\section{References}
+\begin{itemize}
+\item No external references were used in this round.
+\item The argument builds directly on the vetted Round~1--Round~5 results supplied in the conversation.
+\end{itemize}

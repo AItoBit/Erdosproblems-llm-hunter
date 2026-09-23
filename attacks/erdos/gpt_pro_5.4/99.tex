@@ -1,0 +1,176 @@
+\section{Erd\H{o}s Problem \#99}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path (A): continue the proof attempt by sharpening the exact small-$n$ theory beyond Round-1. Round-1 proved the sharp $n=4$ statement, but did not determine what happens at $n=5,6,7$. The Round-2 goal is to settle these next cases exactly.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 result without re-proving it.
+
+\begin{itemize}
+\item Round-1 proposition: $D(4)=\sqrt2$, and the unit square is a diameter-minimising $4$-point set with no unit equilateral triangle.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is an exact small-$n$ transfer from known results on plane-width / minimum diameter configurations.
+
+Round-2 shows:
+
+\begin{itemize}
+\item $n=5$: every diameter-minimiser is a regular pentagon of side $1$, so no unit equilateral triangle occurs;
+\item $n=6$: there exists a diameter-minimiser consisting of the center and vertices of a regular pentagon of circumradius $1$, and it contains no unit equilateral triangle;
+\item $n=7$: every diameter-minimiser is the center plus the vertices of a regular hexagon of side $1$, so a unit equilateral triangle is forced.
+\end{itemize}
+
+Thus the Round-1 picture ``false at $n=4$'' sharpens to:
+\[
+\text{false at }n=4,5,6,\qquad \text{true at }n=7.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap after Round-1 was the absence of any sharp information between $n=4$ and the asymptotic regime.
+
+To advance, I prove three precise claims:
+\begin{itemize}
+\item determine $D(5)$ and the unique minimiser;
+\item exhibit a diameter-minimising $6$-point set with no unit equilateral triangle;
+\item determine the unique minimiser for $n=7$ and verify that it contains a unit equilateral triangle.
+\end{itemize}
+
+This directly addresses the strongest unresolved local obstruction left by Round-1: perhaps the statement already fails at several further small values of $n$.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{A preliminary observation.}
+For the complete graph $K_n$, the plane-width $pw(K_n)$ is exactly the number $D(n)$ from Problem \#99: both are defined as the minimum possible diameter of an $n$-point planar set in which every pair of distinct points is at distance at least $1$.
+So exact plane-width results for $K_n$ may be read as exact values of $D(n)$.
+
+\paragraph{Proposition 1.}
+\[
+D(5)=\frac{1+\sqrt5}{2},
+\]
+and every diameter-minimising $5$-point set is a regular pentagon of side $1$.
+In particular, no diameter-minimising $5$-point set contains a unit equilateral triangle.
+
+\paragraph{Proof.}
+By the exact computation of the plane-width of $K_5$, we have
+\[
+D(5)=pw(K_5)=\frac{1+\sqrt5}{2},
+\]
+and the optimal realization is unique up to similarity: it is the regular pentagon of side length $1$.
+
+Now inspect that configuration.
+In a regular pentagon of side length $1$, the only pairs at distance $1$ are adjacent pairs; every nonadjacent pair is at distance
+\[
+\frac{1+\sqrt5}{2}>1.
+\]
+Therefore, among any three vertices, at least one pair is nonadjacent, so the triangle cannot be equilateral of side $1$.
+Hence every diameter-minimising $5$-point set has no unit equilateral triangle. \hfill\emph{End of proof.}
+
+\paragraph{Proposition 2.}
+There exists a diameter-minimising $6$-point set with no unit equilateral triangle.
+More precisely,
+\[
+D(6)=2\sin 72^\circ,
+\]
+and one optimal configuration is the set consisting of the center $O$ and the five vertices $v_1,\dots,v_5$ of a regular pentagon of circumradius $1$.
+
+\paragraph{Proof.}
+The exact value
+\[
+D(6)=2\sin 72^\circ
+\]
+and the above optimal configuration are recorded by Bateman and Erd\H{o}s.
+
+So it remains only to verify the absence of a unit equilateral triangle in that specific minimiser.
+For the regular pentagon of circumradius $1$,
+\[
+|Ov_i|=1
+\qquad\text{for all }i,
+\]
+the side length is
+\[
+|v_i v_{i+1}|=2\sin 36^\circ>1,
+\]
+and the diagonal length is
+\[
+|v_i v_{i+2}|=2\sin 72^\circ>1.
+\]
+Therefore the only unit distances in the whole configuration are the five center--vertex distances.
+Any equilateral triangle of side $1$ would need three unit edges, but no pair of distinct outer vertices is at distance $1$.
+Hence no unit equilateral triangle exists in this diameter-minimising $6$-point set. \hfill\emph{End of proof.}
+
+\paragraph{Proposition 3.}
+\[
+D(7)=2,
+\]
+and the diameter-minimising $7$-point set is unique up to similarity: it is the center $O$ together with the vertices of a regular hexagon of side $1$.
+Consequently every diameter-minimising $7$-point set contains a unit equilateral triangle.
+
+\paragraph{Proof.}
+Bateman and Erd\H{o}s prove that
+\[
+D(7)=2
+\]
+and that the unique extremal configuration is the center plus the vertices of a regular hexagon of side $1$.
+
+In that configuration, let $v_i,v_{i+1}$ be two adjacent vertices of the regular hexagon.
+Then
+\[
+|Ov_i|=|Ov_{i+1}|=1
+\]
+because the circumradius of a regular hexagon equals its side length, and also
+\[
+|v_i v_{i+1}|=1.
+\]
+Hence the triangle $Ov_i v_{i+1}$ is an equilateral triangle of side $1$.
+Because the minimiser is unique up to similarity, every diameter-minimising $7$-point set contains such a triangle. \hfill\emph{End of proof.}
+
+\paragraph{Conclusion of the Round-2 work.}
+Combining Round-1 and the three propositions above gives the exact small-$n$ picture
+\[
+\begin{array}{c|cccc}
+n & 4 & 5 & 6 & 7\\
+\hline
+\text{``every diameter-minimiser contains a unit equilateral triangle''} &
+\text{false} & \text{false} & \text{false} & \text{true}
+\end{array}
+\]
+This still does not resolve the original ``for all sufficiently large $n$'' question, but it is a substantial sharpening of the local theory.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Did I use the exact external theorems correctly?} Yes. For $n=5$ I used the exact value and uniqueness of the plane-width of $K_5$; for $n=6,7$ I used the exact diameter values and the extremal configurations from Bateman--Erd\H{o}s.
+\item \textbf{Could there still be a unit equilateral triangle in the $n=5$ or $n=6$ extremisers?} No. In the regular pentagon, nonadjacent pairs have length $\frac{1+\sqrt5}{2}>1$, so no three vertices form a unit equilateral triangle. In the $n=6$ pentagon-plus-center configuration, the only unit edges are center--vertex edges, so three mutually unit distances are impossible.
+\item \textbf{Does the $n=7$ argument really give a forced triangle in every minimiser?} Yes, because the extremiser is unique up to similarity.
+\item \textbf{Interaction with Round-1.} Round-1 only handled $n=4$. Round-2 settles the next three cases exactly.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves exact new information:
+\[
+n=5,6 \text{ are counterexample sizes},\qquad n=7 \text{ is a positive size}.
+\]
+So the first four nontrivial cases are now completely understood:
+\[
+n=4,5,6 \text{ fail},\qquad n=7 \text{ holds}.
+\]
+The original asymptotic question remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item P. Bateman and P. Erd\H{o}s, \emph{Geometrical extrema suggested by a lemma of Besicovitch}, Amer. Math. Monthly \textbf{58} (1951), no.~5, 306--314.
+\item M. Kami\'nski, P. Medvedev, and M. Milani\v{c}, \emph{The plane-width of graphs}, J. Graph Theory \textbf{68} (2011), no.~3, 229--245.
+\end{enumerate}

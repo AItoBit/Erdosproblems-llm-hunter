@@ -1,0 +1,239 @@
+\section*{Erd\H{o}s Problem \#386}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/partial reduction}. Round-1 isolated only the very weak necessary condition that $\binom{n}{k}$ must be squarefree. The most promising next step is to prove that any hypothetical infinite family cannot live in the interior of Pascal's triangle. In this round I prove a rigorous asymptotic reduction:
+\[
+\text{if } \binom{n}{k}\text{ is a product of consecutive primes, then } k=o(n)
+\]
+(after using symmetry to assume $2\leq k\leq n/2$). Thus any infinite family must occur in a thin boundary layer.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 inputs.
+
+\begin{enumerate}
+\item Round-1 squarefree condition: if $\binom{n}{k}$ is a product of consecutive primes, then every prime exponent is $1$.
+\item Round-1 finite search up to $n\leq 200$, which found only the eight known examples.
+\end{enumerate}
+
+I also use the elementary symmetry
+\[
+\binom{n}{k}=\binom{n}{n-k},
+\]
+so it suffices to work with $2\leq k\leq n/2$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is an interval-by-interval valuation analysis of prime divisors of $\binom{n}{k}$, combined with an entropy-versus-primorial comparison.
+
+For $k$ in the interior, the prime support of $\binom{n}{k}$ is forced to contain whole prime intervals and to miss whole neighboring prime intervals. If the support were a block of consecutive primes, these forced holes create strong restrictions. When these restrictions are combined with the estimates
+\[
+\theta(x)=x+o(x)
+\qquad\text{and}\qquad
+\log\binom{n}{k}=nH(k/n)+o(n),
+\]
+where $H(c)=-c\log c-(1-c)\log(1-c)$, one gets a contradiction unless $k=o(n)$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was that squarefreeness did not explain \emph{where} in Pascal's triangle examples could occur.
+
+The new plan has two stages.
+
+\begin{enumerate}
+\item First, rule out $n/3<k\leq n/2$ for all sufficiently large $n$ by showing that the prime support would have to be both too large combinatorially and too small logarithmically.
+\item Second, once $k\leq n/3$, show that any positive-proportion regime $k\sim cn$ with $0<c\leq 1/3$ also leads to an entropy contradiction. This yields $k=o(n)$.
+\end{enumerate}
+
+This directly overcomes the main Round-1 deficiency: it replaces a local squarefree condition with a global asymptotic localization theorem.
+
+\subsection*{5) WORK (ROUND-2)}
+Write
+\[
+B_{n,k}:=\binom{n}{k},
+\]
+and assume throughout that $2\leq k\leq n/2$.
+If $B_{n,k}$ is a product of consecutive primes, let $S_{n,k}$ be the set of prime divisors of $B_{n,k}$; by definition, $S_{n,k}$ is a consecutive block in the ordered list of all primes.
+
+\medskip
+
+\textbf{Lemma 386.1.} Assume $n\geq 10$ and $n/3<k\leq n/2$. Then for every prime $p$ we have:
+
+\begin{enumerate}
+\item if $n/3<p\leq k$, then $p\nmid B_{n,k}$;
+\item if $k<p\leq n/2$, then $p\mid B_{n,k}$;
+\item if $n/2<p\leq n-k$, then $p\nmid B_{n,k}$;
+\item if $n-k<p\leq n$, then $p\mid B_{n,k}$.
+\end{enumerate}
+
+\emph{Proof.} Since $p>n/3$ and $n\geq 10$, we have $p^2>n$, so only the first $p$-adic level contributes. Therefore
+\[
+\nu_p(B_{n,k})=\left\lfloor \frac np\right\rfloor-\left\lfloor \frac kp\right\rfloor-\left\lfloor \frac{n-k}{p}\right\rfloor.
+\]
+Now evaluate this quantity on each interval.
+
+If $n/3<p\leq k$, then $\lfloor n/p\rfloor=2$, $\lfloor k/p\rfloor=1$, and $\lfloor (n-k)/p\rfloor=1$, so $\nu_p(B_{n,k})=0$.
+
+If $k<p\leq n/2$, then $\lfloor n/p\rfloor=2$, $\lfloor k/p\rfloor=0$, and $\lfloor (n-k)/p\rfloor=1$, so $\nu_p(B_{n,k})=1$.
+
+If $n/2<p\leq n-k$, then $\lfloor n/p\rfloor=1$, $\lfloor k/p\rfloor=0$, and $\lfloor (n-k)/p\rfloor=1$, so $\nu_p(B_{n,k})=0$.
+
+If $n-k<p\leq n$, then $\lfloor n/p\rfloor=1$, $\lfloor k/p\rfloor=0$, and $\lfloor (n-k)/p\rfloor=0$, so $\nu_p(B_{n,k})=1$.
+This proves all four assertions. \hfill $\square$
+
+\medskip
+
+\textbf{Theorem 386.2.} If $B_{n,k}$ is a product of consecutive primes, then for all sufficiently large $n$ one has
+\[
+k\leq \frac n3.
+\]
+
+\emph{Proof.} Suppose instead that $n/3<k\leq n/2$ for infinitely many large $n$.
+Set
+\[
+I_2=(k,n/2],\qquad I_3=(n/2,n-k].
+\]
+By Lemma 386.1, every prime in $I_2$ divides $B_{n,k}$ and no prime in $I_3$ divides $B_{n,k}$.
+
+If both $I_2$ and $I_3$ contained primes, then the prime support $S_{n,k}$ would contain primes below and above a missing prime interval, contradicting the assumption that $S_{n,k}$ is consecutive. Hence at least one of $I_2$ or $I_3$ is prime-free.
+
+But $I_2$ and $I_3$ have the same length,
+\[
+|I_2|=|I_3|=\frac n2-k.
+\]
+Fix any $\delta>0$. If $k\leq (1/2-\delta)n$, then both intervals have length at least $\delta n$, and hence both contain primes for all sufficiently large $n$ by the prime number theorem. This is impossible. Therefore, for every $\delta>0$, one must have
+\[
+k>(1/2-\delta)n
+\]
+for all sufficiently large counterexamples in the range $n/3<k\leq n/2$. Equivalently,
+\[
+k=\frac n2+o(n).
+\]
+
+Now consider
+\[
+I_1=(n/3,k],\qquad I_4=(n-k,n].
+\]
+Because $k=n/2+o(n)$, the interval $I_1$ has length
+\[
+k-\frac n3=\frac n6+o(n),
+\]
+so $I_1$ contains primes for all sufficiently large $n$. Let $q$ be the largest prime in $I_1$. By Lemma 386.1, $q\notin S_{n,k}$.
+Also $I_4$ has length $k\sim n/2$, so it contains primes, and every such prime lies in $S_{n,k}$ by Lemma 386.1.
+
+Since $S_{n,k}$ contains a prime larger than $q$ but does not contain $q$, it cannot contain any prime below $q$; otherwise $S_{n,k}$ would not be consecutive. By maximality of $q$, there are no primes in $(q,k]$, and Lemma 386.1 rules out all primes in $I_3$. Hence all prime divisors of $B_{n,k}$ lie in $I_2\cup I_4$.
+Because $B_{n,k}$ is a product of distinct consecutive primes, we obtain the upper bound
+\[
+B_{n,k}
+\leq
+\prod_{k<p\leq n/2} p\; \prod_{n-k<p\leq n} p.
+\]
+Taking logarithms gives
+\[
+\log B_{n,k}
+\leq
+\theta(n/2)-\theta(k)+\theta(n)-\theta(n-k).
+\]
+Using $\theta(x)=x+o(x)$ and $k=n/2+o(n)$,
+\[
+\log B_{n,k}\leq \frac n2+o(n).
+\]
+On the other hand, Stirling's formula yields
+\[
+\log B_{n,k}=nH(k/n)+o(n)=n\log 2+o(n),
+\]
+since $k/n\to 1/2$. Because $\log 2>1/2$, this is a contradiction.
+Therefore $k\leq n/3$ for all sufficiently large $n$. \hfill $\square$
+
+\medskip
+
+\textbf{Theorem 386.3.} If $B_{n,k}$ is a product of consecutive primes, then
+\[
+k=o(n)
+\]
+as $n\to\infty$ (again with $2\leq k\leq n/2$).
+
+\emph{Proof.} By Theorem 386.2 we may assume $k\leq n/3$ for all sufficiently large solutions.
+Suppose, for contradiction, that $k\neq o(n)$. Then there exists a subsequence with
+\[
+\frac{k}{n}\to c
+\qquad\text{for some } c\in(0,1/3].
+\]
+Set
+\[
+J_3=(n/2,n-k],\qquad J_4=(n-k,n].
+\]
+For primes $p>n/2$, the same floor-count argument gives:
+
+\begin{enumerate}
+\item if $p\in J_3$, then $p\nmid B_{n,k}$;
+\item if $p\in J_4$, then $p\mid B_{n,k}$.
+\end{enumerate}
+
+Now $J_3$ has length
+\[
+\frac n2-k\geq \frac n6+o(n),
+\]
+while $J_4$ has length $k\sim cn$. Hence both $J_3$ and $J_4$ contain primes for all sufficiently large $n$ by the prime number theorem.
+Let $r$ be the largest prime in $J_3$. Then $r\notin S_{n,k}$, while $S_{n,k}$ contains some prime larger than $r$ coming from $J_4$. As before, the consecutivity of $S_{n,k}$ implies that $S_{n,k}$ cannot contain any prime below $r$. Since there are no primes in $(r,n-k]$ by maximality of $r$, every prime divisor of $B_{n,k}$ must lie in $J_4$.
+Therefore
+\[
+B_{n,k}\leq \prod_{n-k<p\leq n} p,
+\]
+and so
+\[
+\log B_{n,k}\leq \theta(n)-\theta(n-k)=k+o(n)=cn+o(n).
+\]
+But Stirling's formula gives
+\[
+\log B_{n,k}=nH(c)+o(n),
+\]
+where
+\[
+H(c)=-c\log c-(1-c)\log(1-c).
+\]
+Since $0<c\leq 1/3<e^{-1}$, we have $-\log c>1$, and hence
+\[
+H(c)>-c\log c>c.
+\]
+Thus $nH(c)+o(n)>cn+o(n)$ for large $n$, contradicting the upper bound.
+This contradiction proves that $k=o(n)$. \hfill $\square$
+
+\medskip
+
+\textbf{Empirical note.} An exhaustive search up to $n\leq 500$ recovers only the eight known examples
+\[
+\binom{4}{2},\ \binom{6}{2},\ \binom{7}{3},\ \binom{10}{4},\ \binom{14}{4},\ \binom{15}{2},\ \binom{15}{6},\ \binom{21}{2},
+\]
+and no additional ones.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The critical points are the following.
+
+\begin{enumerate}
+\item \emph{Small examples with $k/n$ not small exist.} Yes: $\binom{7}{3}$, $\binom{10}{4}$, $\binom{14}{4}$, and $\binom{15}{6}$ all lie deep enough in Pascal's triangle to show that no non-asymptotic statement like $k\leq n/3$ can hold for every $n$. My theorem explicitly says ``for all sufficiently large $n$'' and is therefore consistent with these examples.
+\item \emph{Could the support contain primes below the chosen missing prime?} No. In both Theorems 386.2 and 386.3 I pick the \emph{largest} missing prime in a forbidden interval. Because the support contains a larger prime from the top interval, any smaller support prime would force the missing prime to lie inside the consecutive block, which is impossible.
+\item \emph{Did I use squarefreeness correctly?} Yes. The assumption ``product of consecutive primes'' means exactly that each prime divisor occurs with exponent $1$, so the numerical upper bounds by products of primes are valid.
+\item \emph{What analytic input is really needed?} Only two standard asymptotic facts: the prime number theorem in the form $\theta(x)=x+o(x)$ and the existence of primes in every interval of length $\delta x$ for fixed $\delta>0$ and large $x$, plus Stirling's formula.
+\end{enumerate}
+
+No hidden symmetry or endpoint issue remains: all arguments are made after replacing $k$ by $\min(k,n-k)$.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance beyond Round-1 is the rigorous asymptotic localization theorem:
+\[
+\text{if } \binom{n}{k}\text{ is a product of consecutive primes, then } k=o(n)
+\]
+(after symmetry reduction to $k\leq n/2$). In particular, all sufficiently large solutions are forced into a boundary layer of Pascal's triangle.
+
+This is a substantial strengthening of the Round-1 squarefree observation and sharply narrows the remaining search space. The unresolved part is exactly the edge regime $k=o(n)$, especially the delicate case of very small $k$ such as $k=2$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 58\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#386}, erdosproblems.com/386, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#386 discussion thread}, erdosproblems.com/forum/thread/386, accessed 2026-03-07.
+\end{enumerate}
+
+

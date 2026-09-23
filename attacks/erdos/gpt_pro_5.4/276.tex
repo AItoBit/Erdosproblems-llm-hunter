@@ -1,0 +1,205 @@
+\section*{Erd\H{o}s Problem \#276}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (C): incorporate the 2025 comments and separate the already-solved formal existence statement from the stronger informal question they are actually discussing.
+
+Round-1 already gave a full proof of the displayed existence statement using Vsemirnov's explicit pair.  The genuine remaining task is therefore not to re-prove existence, but to identify the precise unresolved strengthening suggested by the comments and to make the obstruction mathematically sharp.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results.
+
+\begin{enumerate}
+\item Round-1 gave a gap-free proof that the Fibonacci-like sequence with
+\[
+x_0=106276436867,\qquad x_1=35256392432
+\]
+has all terms composite and has no nontrivial common divisor.
+\item Round-1 proved the standard identity that $\gcd(x_n,x_{n+1})$ is constant along any Fibonacci-like sequence.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two new points.
+
+\begin{enumerate}
+\item The current problem page is \emph{not self-consistent if read literally}.  Its displayed statement asks only for an infinite composite Fibonacci-like sequence with no common divisor $>1$, but the page text itself says that Graham already proved the existence of such a sequence, and Round-1 re-proved this with a much smaller example.
+\item The comments show that the intended stronger question is really about excluding a \emph{finite prime / covering-congruence explanation} of compositeness, at least for the odd-indexed terms in the Ismailescu--Son construction.
+\end{enumerate}
+
+The key Round-2 tool is the following formalization of that comment-based obstruction.
+
+\medskip
+\centerline{\emph{Odd-subsequence finite-prime obstruction}}
+\[
+(\star_{\mathrm{odd}})\qquad
+\forall m>1\ \exists n\ge 0\ \mbox{such that}\ \gcd(m,x_{2n+1})=1.
+\]
+
+This says exactly that the odd-indexed terms do \emph{not} admit any finite set of primes hitting every odd term.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap after Round-1 was that the formal existence statement had already been settled, but the comment-based strengthened question had not been isolated precisely.
+
+I will now:
+
+\begin{enumerate}
+\item prove that the displayed statement is already solved and therefore cannot be the genuine remaining issue;
+\item prove that $(\star_{\mathrm{odd}})$ is equivalent to ``the odd-indexed terms have no finite prime cover'';
+\item prove that any Graham-type covering-congruence explanation of compositeness would force such a finite prime cover, so $(\star_{\mathrm{odd}})$ is a sufficient sharp obstruction;
+\item explain exactly where Ismailescu--Son stop: they prove compositeness of all terms, but they do \emph{not} prove $(\star_{\mathrm{odd}})$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Step 1: the displayed statement is already solved.}
+Round-1 already proved the displayed formal statement by exhibiting the Vsemirnov pair
+\[
+x_0=106276436867,\qquad x_1=35256392432
+\]
+and checking that the resulting sequence has all terms composite and has no common divisor greater than $1$.
+
+So the literal statement on the current page is not the real unresolved issue.
+
+\paragraph{Step 2: a precise formulation of the comment-based strengthening.}
+Define:
+
+\medskip
+\centerline{\emph{The odd terms have a finite prime cover}}
+\medskip
+
+if there exists a finite set of primes $P$ such that for every $n\ge 0$ there is some $p\in P$ with
+\[
+p\mid x_{2n+1}.
+\]
+
+\paragraph{Claim 1.}
+For any integer sequence $(x_n)$, the following are equivalent:
+
+\begin{enumerate}
+\item[(i)] the odd terms have a finite prime cover;
+\item[(ii)] there exists an integer $m>1$ such that
+\[
+\gcd(m,x_{2n+1})>1 \qquad \mbox{for every }n\ge 0.
+\]
+\end{enumerate}
+
+\paragraph{Proof.}
+If (i) holds, let $m$ be the product of the distinct primes in $P$.  Then every odd term $x_{2n+1}$ shares at least one prime factor with $m$, so $\gcd(m,x_{2n+1})>1$ for all $n$.
+
+Conversely, if (ii) holds and $P$ is the finite set of prime divisors of $m$, then for each $n$ some prime $p\in P$ divides $\gcd(m,x_{2n+1})$, hence divides $x_{2n+1}$.  So the odd terms have a finite prime cover.  This proves the equivalence.
+
+Therefore $(\star_{\mathrm{odd}})$ is exactly the negation of ``the odd terms have a finite prime cover''.
+
+\paragraph{Step 3: why finite prime covers really do produce covering congruences.}
+Fix a prime $p$ and consider the state sequence modulo $p$,
+\[
+v_n=(x_n,x_{n+1}) \in (\mathbf Z/p\mathbf Z)^2.
+\]
+The recurrence gives
+\[
+v_{n+1}=T(v_n),\qquad T(a,b)=(b,a+b).
+\]
+The map $T$ is bijective modulo $p$ because it has inverse
+\[
+T^{-1}(a,b)=(b-a,a).
+\]
+Since $(\mathbf Z/p\mathbf Z)^2$ is finite, the orbit $(v_n)$ is purely periodic from $n=0$.
+
+Hence, for each fixed prime $p$, the set
+\[
+S_p=\{n\ge 0:\ p\mid x_n\}
+\]
+is a finite union of residue classes modulo some period $\pi_p$.
+
+It follows that the set
+\[
+S^{\mathrm{odd}}_p=\{n\ge 0:\ p\mid x_{2n+1}\}
+\]
+is also a finite union of residue classes modulo $\pi_p$ (or, after simplification, modulo a divisor of $\pi_p$).
+
+Therefore, if the odd terms have a finite prime cover by primes in $P$, then the sets
+\[
+S^{\mathrm{odd}}_p \qquad (p\in P)
+\]
+together give a finite covering of the odd indices by congruence classes.
+
+So a finite prime cover of the odd terms automatically yields an ``underlying covering system of congruences'' in the natural Graham-type sense.
+
+\paragraph{Step 4: the Ismailescu--Son candidate and the exact unresolved point.}
+Ismailescu and Son construct a Fibonacci-like sequence by taking
+\[
+x_0=p^2+q^2,\qquad x_1=2pq+q^2,
+\]
+with $p=1$ and an explicit $129$-digit integer $q$.
+
+They prove two different compositeness mechanisms:
+
+\begin{enumerate}
+\item every odd term factors explicitly as
+\[
+x_{2n+1}=(pF_n+qF_{n+1})(pL_n+qL_{n+1}),
+\]
+so all odd terms are composite;
+\item every even term is divisible by one of finitely many primes coming from a finite partial covering system, so all even terms are composite.
+\end{enumerate}
+
+They also prove
+\[
+\gcd(x_0,x_1)=1.
+\]
+
+Thus they produce a bona fide composite Fibonacci-like sequence with no common divisor $>1$.
+
+However, as the 2025 comments correctly emphasize, they do \emph{not} prove $(\star_{\mathrm{odd}})$.  Equivalently, they do not prove that the odd-indexed subsequence has no finite prime cover.
+
+This is the exact unresolved obstruction left by the comments.
+
+\paragraph{Step 5: why the stronger all-terms version is too strong.}
+A natural but \emph{incorrect} sharpening would be
+\[
+\forall m>1\ \exists n\ge 0\ \mbox{such that}\ \gcd(m,x_n)=1.
+\]
+That is too strong for the Ismailescu--Son candidate, because their even terms were deliberately built to have a finite prime cover.  So the comments cannot be formalized using the whole sequence; they must focus on the odd terms (or on an equivalent weakening).
+
+This identifies the minimal sharp formalization suggested by the comments.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+Possible failure modes:
+
+\begin{enumerate}
+\item \emph{Is $(\star_{\mathrm{odd}})$ really the same as ``no finite prime cover''?}  
+Yes, by Claim 1.
+\item \emph{Does a finite prime cover really imply covering congruences?}  
+Yes.  For each fixed prime, divisibility positions are periodic because the two-dimensional state recursion modulo $p$ is a bijection on a finite set.
+\item \emph{Is $(\star_{\mathrm{odd}})$ the unique correct formalization of the comments?}  
+No.  It is a \emph{minimal sharp formalization} of the exact issue highlighted in the comments: the unknown existence of an integer $m>1$ with $\gcd(m,x_{2n+1})>1$ for every $n$.
+\item \emph{Have we accidentally weakened the problem too much?}  
+No.  Any Graham-type finite covering explanation of the whole sequence would in particular force a finite prime cover of the odd terms, hence violate $(\star_{\mathrm{odd}})$.
+\item \emph{Have we accidentally claimed Ismailescu--Son solved the comment-based strengthening?}  
+No.  The whole point of the section is that they solve the compositeness problem but not the finite-prime-cover obstruction for the odd subsequence.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The displayed formal existence statement was already solved in Round-1 and in the literature.  After incorporating the 2025 comments, the real remaining issue is the sharper condition $(\star_{\mathrm{odd}})$: whether one can obtain a composite Fibonacci-like sequence whose odd-indexed subsequence has no finite prime cover, equivalently no finite Graham-type covering-congruence explanation.  That sharpened statement remains open to me.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 80\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#276}.  Current webpage statement and status text.
+\item \emph{Erd\H{o}s Problem \#276 --- discussion thread}.  Used for the 2025 comments explaining the intended strengthening.
+\item R. L. Graham, \emph{A Fibonacci-like sequence of composite numbers}, Math. Mag. 37 (1964), 322--324.
+\item M. Vsemirnov, \emph{A new Fibonacci-like sequence of composite numbers}, J. Integer Seq. 7 (2004), Article 04.3.7.
+\item D. Ismailescu and J. Son, \emph{A New Kind of Fibonacci-Like Sequence of Composite Numbers}, J. Integer Seq. 17 (2014), Article 14.8.2.
+\item Round-1 output for Problem \#276 (full proof for the Vsemirnov example).
+\end{enumerate}

@@ -1,0 +1,283 @@
+\section{Erd\H{o}s Problem \#200: longest arithmetic progression of primes up to $N$ (ROUND 2)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I again pursue path \textbf{(C)}.  This is Erd\H{o}s Problem \#200 \cite{Bloom200}.  Round 1 proved the standard upper bound
+\[
+L(N)\le (1+o(1))\log N,
+\]
+but did not isolate where that argument fundamentally stops.  In this round I sharpen the modular argument into an exact dichotomy for the first term of a prime progression, prove a stronger upper bound in the generic case, and then give an explicit family of \emph{pseudoprogressions} showing that the primorial/congruence strategy cannot by itself prove $L(N)=o(\log N)$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+From Round 1 I use the already-proved fact that if
+\[
+a,a+d,\dots,a+(k-1)d
+\]
+is a $k$-term arithmetic progression of primes, then every prime $q\le k/2$ divides $d$.  Equivalently,
+\[
+P(k/2):=\prod_{q\le k/2} q \mid d.
+\]
+I also use the Round-1 bound $k\le (1+o(1))\log N$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new tool is a precise divisibility dichotomy.
+
+\medskip
+\noindent\textbf{Key new dichotomy.}
+For all sufficiently large $k$, either
+\begin{itemize}
+\item the first prime $a$ satisfies $a>k$, in which case \emph{every} prime $q\le k$ divides $d$; or
+\item the first prime $a$ itself is the only possible exception, and then necessarily
+\[
+a\in (k/2,k]\cap \mathbf P
+\]
+and
+\[
+P(k)/a\mid d.
+\]
+\end{itemize}
+So the only obstruction to improving the Round-1 logarithmic upper bound by the primorial method is the exceptional regime where the first term itself is a prime in $(k/2,k]$.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+The exact Round-1 gap was that the modular argument only yielded $d\gg e^{(1+o(1))k}$, which still allows $k\asymp \log N$.
+
+I now proceed in two steps.
+\begin{enumerate}
+\item Strengthen the divisibility statement from primes $\le k/2$ to primes $\le k$, up to one forced exceptional prime.
+\item Show that if the exception does not occur (that is, if $a>k$), then the extra factor of $k$ in $(k-1)P(k)$ gives the stronger upper bound
+\[
+k\le \log N-\log\log N+o(\log\log N).
+\]
+Then I explicitly construct pseudoprogressions at scale $e^{(1+o(1))k}$ that satisfy all local congruence conditions up to $k$, proving that those local conditions alone can never yield $o(\log N)$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND 2)}
+Let
+\[
+p_j=a+jd\qquad (0\le j\le k-1)
+\]
+be a $k$-term arithmetic progression of primes, with $p_{k-1}\le N$.
+Write
+\[
+P(x):=\prod_{q\le x} q,
+\qquad
+\vartheta(x):=\sum_{q\le x}\log q,
+\]
+where in both places $q$ runs over primes.
+
+\medskip
+\noindent\textbf{Proposition 5.1.}
+If $a\le k$, then in fact $a\in (k/2,k]$.
+
+\smallskip
+\noindent\emph{Proof.}
+The first term $a$ is prime.  If $a\le k/2$, then by the Round-1 divisibility lemma the prime $a$ divides $d$.  Hence
+\[
+a+d
+\]
+is divisible by $a$ and is strictly larger than $a$, so it is composite.  This contradicts the primality of the second term.  Therefore $a>k/2$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 5.2 (exact divisibility dichotomy).}
+For all sufficiently large $k$ (equivalently, whenever $P(k/2)>k$), exactly one of the following two alternatives holds:
+\begin{enumerate}
+\item $a>k$ and $P(k)\mid d$;
+\item $a\in (k/2,k]$ is prime and $P(k)/a\mid d$.
+\end{enumerate}
+
+\smallskip
+\noindent\emph{Proof.}
+By the Round-1 lemma,
+\[
+P(k/2)\mid d.
+\]
+For sufficiently large $k$ this implies $d\ge P(k/2)>k$.
+
+Now let $q$ be any prime with $k/2<q\le k$.  Suppose $q\nmid d$.  Since $d$ is invertible modulo $q$, the congruence
+\[
+a+jd\equiv 0\pmod q
+\]
+has exactly one residue class of solutions modulo $q$, so among the $k$ indices $0,1,\dots,k-1$ there is at least one $j$ with $a+jd\equiv 0\pmod q$.  Because every term of the progression is prime, that term must equal $q$.
+
+But if $j\ge 1$, then
+\[
+a+jd\ge a+d>d>k\ge q,
+\]
+so $a+jd$ cannot equal $q$.  Therefore the only possible divisible term is the first one $j=0$, and hence $q=a$.
+
+Thus every prime $q\le k$ divides $d$, except possibly the single prime $q=a$.
+If $a>k$, there is no exception at all, so $P(k)\mid d$.
+If $a\le k$, then Proposition 5.1 shows that $a\in (k/2,k]$, and the only possible missing factor is exactly $a$, so $P(k)/a\mid d$.
+This proves the dichotomy. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.3 (generic-case strengthening).}
+Assume $a>k$.  Then
+\[
+k\le \log N-\log\log N+o(\log\log N).
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+In the case $a>k$, Theorem 5.2 gives $P(k)\mid d$, so $d\ge P(k)$.  Therefore
+\[
+N\ge a+(k-1)d>(k-1)P(k).
+\]
+Taking logarithms,
+\[
+\log N\ge \log(k-1)+\vartheta(k).
+\]
+By the classical de la Vall\'ee Poussin form of the prime number theorem,
+\[
+\vartheta(k)=k+O\bigl(k e^{-c\sqrt{\log k}}\bigr)
+\]
+for some absolute $c>0$.  The error term is $o(\log k)$, so
+\[
+\log N\ge k+\log k+o(\log k).
+\]
+Round 1 already gave $k\le (1+o(1))\log N$, hence
+\[
+\log k=\log\log N+O(1).
+\]
+Substituting this into the previous display gives
+\[
+k\le \log N-\log\log N+o(\log\log N),
+\]
+as claimed. \hfill$\square$
+
+\medskip
+\noindent\textbf{Proposition 5.4 (explicit pseudoprogressions).}
+For every integer $k\ge 2$ there exists a length-$k$ arithmetic progression
+\[
+x_j=p+jP(k)\qquad (0\le j\le k-1)
+\]
+with the following properties:
+\begin{enumerate}
+\item $p$ is prime and $k<p\le 2k$;
+\item no term $x_j$ is divisible by any prime $q\le k$;
+\item the last term satisfies
+\[
+x_{k-1}\le 2k+(k-1)P(k),
+\]
+so in particular
+\[
+\log x_{k-1}=k+O(\log k).
+\]
+\end{enumerate}
+
+\smallskip
+\noindent\emph{Proof.}
+By Bertrand's postulate there exists a prime $p$ with $k<p\le 2k$.
+Set
+\[
+d:=P(k).
+\]
+For any prime $q\le k$, we have $q\mid d$, hence
+\[
+x_j=p+j d\equiv p\not\equiv 0\pmod q,
+\]
+because $p>k\ge q$.  Thus no $x_j$ has a prime divisor at most $k$.
+The bound on $x_{k-1}$ is immediate from the definition, and
+\[
+\log P(k)=\vartheta(k)=k+o(k)
+\]
+by the prime number theorem, which implies
+\[
+\log x_{k-1}=k+O(\log k).
+\]
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Consequence for proof strategies.}
+Proposition 5.4 shows that local congruence information modulo primes $q\le k$ allows length-$k$ arithmetic progressions all the way up to scale $e^{(1+o(1))k}$.  Therefore:
+\begin{quote}
+\emph{Any argument based only on congruence obstructions modulo primes up to $k$ cannot prove $L(N)=o(\log N)$.}
+\end{quote}
+Such an argument can force at most the scale $k\ll \log N$, and Round 1 already reaches that barrier.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I now test the new work for hidden weaknesses.
+\begin{itemize}
+\item \emph{Is the exceptional case real, or just an artefact of the proof?}  It is real.  The prime progression
+\[
+5,11,17,23,29
+\]
+has $k=5$, first term $a=5\in (k/2,k]$, and common difference $d=6$, which is not divisible by $5$.
+\item \emph{Did Proposition 5.4 accidentally prove something about prime progressions?}  No.  It proves only the existence of arithmetic progressions avoiding \emph{small} prime divisors.  That is exactly the intended barrier: local congruence conditions do not distinguish these pseudoprogressions from genuinely prime progressions.
+\item \emph{Does Theorem 5.2 require large $k$?}  Yes, because I used $P(k/2)>k$ to deduce $d>k$.  This is harmless for an asymptotic problem; finitely many small values can be absorbed into constants.
+\item \emph{Did Corollary 5.3 use more than was proved?}  No.  It uses only $N>(k-1)P(k)$ and the standard error term for $\vartheta(k)$.
+\item \emph{Does the round really sharpen Round 1?}  Yes.  It isolates the only local exceptional regime, proves a stronger upper bound when that regime is absent, and rigorously explains why the old primorial method stops where it stops.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 proves two genuinely new things beyond Round 1.
+\begin{enumerate}
+\item For long prime progressions, the only possible failure of full divisibility $P(k)\mid d$ is that the first term itself is a prime in $(k/2,k]$.
+\item Outside that exceptional case one has the stronger bound
+\[
+k\le \log N-\log\log N+o(\log\log N).
+\]
+Moreover, explicit pseudoprogressions show that the purely local congruence/primorial strategy cannot by itself do better than the Round-1 logarithmic bound.
+\end{enumerate}
+So the remaining difficulty has been sharply localized: any proof of $L(N)=o(\log N)$ must either exploit information beyond local congruence obstructions, or else must somehow rule out the exceptional regime $a\in (k/2,k]$ for genuinely long prime progressions.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 57\%}
+
+\bigskip
+\section*{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{Bloom152}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#152},
+\texttt{https://www.erdosproblems.com/152}, accessed 2026-03-07.
+
+\bibitem{Bloom200}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#200},
+\texttt{https://www.erdosproblems.com/200}, accessed 2026-03-07.
+
+\bibitem{Bloom201}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#201},
+\texttt{https://www.erdosproblems.com/201}, accessed 2026-03-07.
+
+\bibitem{ESS94}
+P. Erd\H{o}s, A. S\'ark\"ozy, and T. S\'os,
+\emph{On sum sets of Sidon sets. I},
+Journal of Number Theory \textbf{47} (1994), 329--347.
+
+\bibitem{GT08}
+B. Green and T. Tao,
+\emph{The primes contain arbitrarily long arithmetic progressions},
+Annals of Mathematics \textbf{167} (2008), 481--547.
+
+\bibitem{KSS75}
+J. Koml\'os, M. Sulyok, and E. Szemer\'edi,
+\emph{Linear problems in combinatorial number theory},
+Acta Mathematica Academiae Scientiarum Hungaricae \textbf{26} (1975), 113--121.
+
+\bibitem{MV07}
+H. Montgomery and R. Vaughan,
+\emph{Multiplicative Number Theory I. Classical Theory},
+Cambridge Studies in Advanced Mathematics 97, Cambridge University Press, 2007.
+
+\bibitem{OBryant04}
+K. O'Bryant,
+\emph{A complete annotated bibliography of work related to Sidon sequences},
+Electronic Journal of Combinatorics \textbf{11} (2004), Dynamic Survey 11.
+
+\bibitem{OBryant10}
+K. O'Bryant,
+\emph{Thick subsets that do not contain arithmetic progressions},
+arXiv:0912.1494.
+
+\bibitem{Semchankau20}
+A. Semchankau,
+\emph{Maximal subsets free of arithmetic progressions in arbitrary sets},
+arXiv:2010.04490.
+
+\end{thebibliography}

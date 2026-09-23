@@ -1,0 +1,223 @@
+
+\section{Erd\H{o}s Problem \#148 (Round 2): a self-contained lower bound of size $\exp(\Omega(k^2))$}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+For Problem \#148, the original task is not a single true/false statement but an \emph{estimation problem}. So paths (A) and (B) from the generic Round-2 template do not literally apply. I therefore pursue the Round-2 analogue of path (C): I keep the statement as an asymptotic estimation problem and strengthen the \emph{lower-bound side} of the estimate.
+
+Concretely, Round~1 produced the fully self-contained bound
+\[
+F(k)\ge 3^{k-3}.
+\]
+The exact Round-2 goal is to prove a substantially stronger self-contained lower bound.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 ingredients and do \emph{not} reprove them from scratch.
+
+\begin{enumerate}
+\item The Round-1 splitting identity:
+\[
+\frac1N=\frac1{N+m}+\frac1{N(N+m)/m}
+\qquad\mbox{whenever }m\mid N,\ 1\le m<N.
+\]
+\item The Round-1 strategy of always splitting the \emph{current largest denominator}.
+\item The Round-1 observation that if one always splits the current largest denominator, then all smaller denominators created in earlier steps remain untouched forever.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND 2)}
+The new ingredient is a two-phase branching scheme.
+
+\begin{enumerate}
+\item \textbf{Divisor-amplification phase.} Repeatedly use the choice $m=1$ to force the current largest denominator to acquire many divisors.
+\item \textbf{Frozen-divisor branching phase.} Once a divisor-rich denominator $M$ has been created, use \emph{every proper divisor of $M$} as a branching choice at every later step. Because every later largest denominator remains a multiple of $M$, all these choices remain valid forever.
+\end{enumerate}
+
+This replaces the Round-1 fixed three-choice branching argument by a branching factor that grows exponentially during the build-up phase.
+
+\subsection*{4) ATTACK PLAN (ROUND 2)}
+The exact gap after Round~1 was this: the lower bound came from keeping only the three divisors $1,2,3$ of the initial largest denominator $6$. That leaves a lot of unused structure, because the current largest denominator typically acquires many more divisors after repeated splittings.
+
+So I will prove the following claims.
+
+\begin{enumerate}
+\item After $r$ repeated uses of $m=1$, the largest denominator $M_r$ has at least $2^{r+2}$ positive divisors.
+\item Once the current largest denominator is divisible by $M_r$, every proper divisor of $M_r$ yields a valid next split, and this divisibility by $M_r$ is preserved forever.
+\item Distinct branching sequences in the second phase yield distinct final Egyptian-fraction representations.
+\end{enumerate}
+
+From these claims one gets a family of lower bounds
+\[
+F(3+r+s)\ge (\tau(M_r)-1)^s,
+\]
+where $\tau(n)$ denotes the number of positive divisors of $n$. Optimising over $r+s=k-3$ will then give the explicit estimate
+\[
+F(k)\ge 2^{\lfloor (k-3)^2/4\rfloor}.
+\]
+
+\subsection*{5) WORK (ROUND 2)}
+
+\paragraph{Step 1: build-up by repeated choice $m=1$.}
+Start from the Round-1 base representation
+\[
+1=\frac12+\frac13+\frac16.
+\]
+Let $M_0:=6$. For $j\ge 0$, define recursively
+\[
+M_{j+1}:=M_j(M_j+1),
+\]
+which is exactly the new largest denominator obtained from $M_j$ by the Round-1 splitting identity with $m=1$:
+\[
+\frac1{M_j}=\frac1{M_j+1}+\frac1{M_j(M_j+1)}.
+\]
+
+Thus, after $r$ such steps we obtain a valid representation of $1$ with $3+r$ terms whose largest denominator is $M_r$.
+
+\paragraph{Step 2: divisor count grows at least exponentially.}
+Let $\tau(n)$ denote the number of positive divisors of $n$. Since consecutive integers are coprime,
+\[
+\gcd(M_j,M_j+1)=1,
+\]
+hence
+\[
+\tau(M_{j+1})=\tau(M_j)\tau(M_j+1)\ge 2\tau(M_j)
+\]
+because $M_j+1>1$ and therefore $\tau(M_j+1)\ge 2$.
+
+Since $\tau(M_0)=\tau(6)=4$, induction gives
+\[
+\tau(M_r)\ge 4\cdot 2^r=2^{r+2}.
+\]
+
+\paragraph{Step 3: all proper divisors of $M_r$ stay available forever.}
+Fix $r\ge 0$, and suppose we are at some later stage of the process where the current largest denominator is $L$ and $M_r\mid L$.
+
+Let $d$ be any proper divisor of $M_r$. Then $d\mid L$ as well, so the Round-1 splitting identity gives
+\[
+\frac1L=\frac1{L+d}+\frac1{L(L+d)/d}.
+\]
+The new largest denominator is
+\[
+L':=\frac{L(L+d)}{d}=L\Bigl(\frac{L}{d}+1\Bigr).
+\]
+Since $M_r\mid L$, it follows immediately that $M_r\mid L'$. Therefore the property
+\[
+M_r \mid \mbox{(current largest denominator)}
+\]
+is preserved after every such split.
+
+Consequently, once the process reaches $M_r$, there are always at least
+\[
+\tau(M_r)-1
+\]
+available branching choices at every later step, namely all proper divisors of $M_r$.
+
+\paragraph{Step 4: injectivity of the branching phase.}
+Now fix $r\ge 0$. After the build-up phase we have a representation whose current largest denominator is $M_r$.
+
+Run a second phase of length $s\ge 0$. At each of the $s$ steps, choose an arbitrary proper divisor $d_i$ of $M_r$ and split the current largest denominator $L_i$ using $d_i$:
+\[
+\frac1{L_i}=\frac1{L_i+d_i}+\frac1{L_{i+1}},
+\qquad
+L_{i+1}=\frac{L_i(L_i+d_i)}{d_i}.
+\]
+
+I claim that distinct sequences $(d_1,\dots,d_s)$ produce distinct final Egyptian-fraction representations.
+
+Indeed, at step $i$ the split creates the denominator
+\[
+a_i:=L_i+d_i.
+\]
+Because $d_i<L_i$, one has
+\[
+a_i=L_i+d_i < \frac{L_i(L_i+d_i)}{d_i}=L_{i+1}.
+\]
+So $a_i$ is \emph{not} the new largest denominator. Since all later steps split only the current largest denominator, the denominator $a_i$ is never altered again. In particular, each $a_i$ survives to the final representation.
+
+Now suppose two branching sequences first differ at time $t$. Up to step $t-1$ they have the same current largest denominator $L_t$, but then choose different proper divisors $d_t\neq d'_t$. Hence they create different surviving denominators
+\[
+a_t=L_t+d_t \neq L_t+d'_t=a'_t.
+\]
+Since both $a_t$ and $a'_t$ persist to the end, the two final representations are different.
+
+Therefore the number of distinct final representations produced by an $s$-step branching phase is at least
+\[
+(\tau(M_r)-1)^s.
+\]
+
+\paragraph{Step 5: the general lower bound.}
+Combining the previous steps, we have proved:
+
+\medskip
+\noindent\textbf{Theorem.}
+For every pair of integers $r,s\ge 0$,
+\[
+F(3+r+s)\ge (\tau(M_r)-1)^s,
+\]
+where
+\[
+M_0=6,\qquad M_{j+1}=M_j(M_j+1).
+\]
+In particular, since $\tau(M_r)\ge 2^{r+2}$,
+\[
+F(3+r+s)\ge (2^{r+2}-1)^s.
+\]
+
+\medskip
+Now set
+\[
+r:=\Bigl\lfloor \frac{k-3}{2}\Bigr\rfloor,
+\qquad
+s:=k-3-r=\Bigl\lceil \frac{k-3}{2}\Bigr\rceil.
+\]
+Then
+\[
+F(k)\ge (2^{r+2}-1)^s \ge (2^r)^s = 2^{rs}.
+\]
+Since
+\[
+rs=\Bigl\lfloor \frac{(k-3)^2}{4}\Bigr\rfloor,
+\]
+we obtain the explicit Round-2 lower bound
+\[
+F(k)\ge 2^{\lfloor (k-3)^2/4\rfloor}.
+\]
+
+\paragraph{Conclusion for Problem \#148.}
+Round~2 therefore upgrades the Round-1 self-contained lower bound from
+\[
+F(k)\ge 3^{k-3}
+\]
+to the much stronger estimate
+\[
+F(k)\ge 2^{\lfloor (k-3)^2/4\rfloor}.
+\]
+This is a genuine quantitative improvement from merely exponential growth in $k$ to growth of order $\exp(\Omega(k^2))$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the main possible failure modes.
+
+\begin{enumerate}
+\item \textbf{Could a chosen divisor fail to remain valid later?} No. Every branching divisor $d$ is chosen from the fixed divisor set of $M_r$, and every later largest denominator remains a multiple of $M_r$, hence also a multiple of $d$.
+\item \textbf{Could two different branching sequences merge later?} The revised injectivity argument avoids this issue entirely. It does \emph{not} rely on the final largest denominator. Instead it uses the permanently surviving denominators $a_i=L_i+d_i$, which encode the first place where two sequences differ.
+\item \textbf{Could one of the survivor denominators be altered later?} No. At the moment it is created, it is smaller than the new largest denominator $L_{i+1}$, and every later operation only replaces the current largest denominator.
+\item \textbf{Are the resulting denominators still distinct and increasing?} Yes. Every newly created denominator is strictly larger than the previous largest denominator, hence larger than all pre-existing denominators.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 does not settle the full asymptotic growth problem, but it makes a real mathematical advance over Round~1: it proves the self-contained bound
+\[
+F(k)\ge 2^{\lfloor (k-3)^2/4\rfloor},
+\]
+which is much stronger than the Round-1 bound $3^{k-3}$.
+
+The remaining gap is still enormous compared with the best known lower bound recorded on the Erd\H{o}s Problems site, but the internal branching method is now meaningfully sharper.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 55\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item Erd\H{o}s Problems, Problem \#148, ``For each $k$, let $F(k)$ be the number of representations of $1$ as a sum of $k$ distinct unit fractions...'', checked on 7 March 2026.
+\end{enumerate}
+

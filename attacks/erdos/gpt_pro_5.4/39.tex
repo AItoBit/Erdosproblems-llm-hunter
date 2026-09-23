@@ -1,0 +1,436 @@
+\section{Erd\H{o}s Problem \#39 (Round 4)}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (C) --- obstruction/correction.}
+
+While adversarially checking the Round~3 construction, I found a concrete flaw in the mixed-radix/discrete-log definition: for $p\in P_k$, the digit $x_j(p)$ was defined by
+\[
+g_j^{x_j(p)}\equiv p \pmod{q_j}\qquad (1\le j\le k),
+\]
+but this congruence has \emph{no} solution when $p=q_j$, because then the right-hand side is $0$ mod $q_j$ while the left-hand side lies in $\mathbb F_{q_j}^{\times}$.
+Thus the Round~2/3 construction was not literally well-defined on the full prime index set as stated.
+
+The most promising Round~4 direction is therefore:
+\begin{enumerate}
+\item identify the exact exceptional indices where the definition fails;
+\item prove that this obstruction is only \emph{finite};
+\item give the minimal corrected statement and show that the Round~3 two-threshold theorem survives unchanged after this repair;
+\item isolate the exact point where the current bad-prime counting mechanism becomes critical.
+\end{enumerate}
+
+So the goal of this round is not to solve the original Erd\H{o}s problem outright, but to repair a genuine logical gap and convert the Round~3 progress into a fully rigorous corrected theorem.
+
+\subsection*{2) Round-3 FOUNDATION USED}
+I use the following specific Round~3 ingredients, but I do \emph{not} re-prove them unless they need modification after the correction:
+\begin{itemize}
+\item The mixed-radix/discrete-log framework with bases $b_j=4q_j$, prime blocks
+\[
+P_k=\{p\text{ prime}: 2^{c(k-1)^2-3}<p\le 2^{ck^2-3}\},
+\]
+and integers $a_p$ built from digits $x_j(p)$.
+\item The exact repeated-sum window from Round~3: if a repeated sum occurs then
+\[
+(1-c)k_1^2<k_2^2<\frac{c}{1-c}k_1^2.
+\]
+\item The Round~3 ``no deletion'' theorem for $0<c\le c_0:=\frac{3-\sqrt5}{2}$, conditional on the digit construction being well-defined.
+\item The Round~3 bad-prime exponent estimate
+\[
+|B_{k}(c)|\le 2^{\gamma(c)k^2+o(k^2)},
+\qquad
+\gamma(c):=\frac{3c-1}{1-c},
+\]
+again conditional on the digit construction being well-defined.
+\item The Round~2 endpoint argument at $c=\sqrt2-1$, which sharpened the critical exponent comparison by a constant-level estimate.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+There are three genuinely new ingredients in this round.
+
+\begin{itemize}
+\item \textbf{Finite-exception repair lemma.} The obstruction $p=q_j$ can occur only in finitely many initial blocks. This gives a minimal corrected statement: remove a finite exceptional set $E(c)$ of problematic primes.
+\item \textbf{Transfer principle.} After removing $E(c)$, every Round~3 argument applies verbatim to the corrected construction, and the counting function remains $x^{c+o(1)}$ because only finitely many indices are lost.
+\item \textbf{Sharp barrier theorem for the present counting method.} The exponent
+\[
+\gamma(c)=\frac{3c-1}{1-c}
+\]
+is the exact exponent produced by the Round~3 union-bound/divisor-counting argument. Hence that route is power-saving if and only if $c<\sqrt2-1$, critical at $c=\sqrt2-1$, and non-power-saving for $c>\sqrt2-1$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+The exact gaps left after Round~3 are:
+\begin{itemize}
+\item the construction was not literally defined for indices $p=q_j$ with $j\le k(p)$;
+\item therefore the Round~3 theorem, as written, needed a correction;
+\item the obstruction at $c=\sqrt2-1$ was described, but not isolated as a sharp theorem about the present counting method.
+\end{itemize}
+
+I will therefore prove the following claims:
+\begin{enumerate}
+\item The set of problematic primes
+\[
+E(c):=\{p\text{ prime}: p\in P_k\text{ for some }k\text{ and }p=q_j\text{ for some }1\le j\le k\}
+\]
+is finite.
+\item After replacing the index set $\mathbb P$ by $\mathbb P\setminus E(c)$, the whole Round~3 theory becomes rigorous with no loss in the exponent.
+\item The present bad-prime counting route proves $|B_k(c)|=o(|P_k|)$ exactly for $c<\sqrt2-1$ and cannot yield that conclusion by exponent comparison alone when $c>\sqrt2-1$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-4)}
+
+\subsubsection*{5.1. The concrete flaw}
+For each prime $p$, let $k(p)$ be the unique block index with $p\in P_{k(p)}$.
+In Rounds~2--3, for every $p\in P_k$ and every $1\le j\le k$, the $j$-th digit of $a_p$ was defined by
+\[
+g_j^{x_j(p)}\equiv p \pmod{q_j},
+\qquad q_j< x_j(p)<2q_j,
+\]
+where $g_j$ is a primitive root mod $q_j$.
+
+This requires $p\not\equiv 0\pmod{q_j}$, i.e. $p\neq q_j$.
+So the original definition is illegal whenever $p=q_j$ for some $1\le j\le k(p)$.
+This is not a cosmetic issue: in that case $p$ has no discrete logarithm in $\mathbb F_{q_j}^{\times}$.
+
+Thus the construction from Round~2/3 was not fully well-defined as written.
+
+\subsubsection*{5.2. The obstruction is finite}
+
+\paragraph{Lemma 5.1 (finite-exception lemma).}
+Fix $0<c<1/2$.
+If a prime $p$ lies in $P_k$ and also equals $q_j$ for some $1\le j\le k$, then
+\[
+c(k-1)^2<2k+4.
+\]
+Consequently the exceptional set
+\[
+E(c):=\{p\text{ prime}: p\in P_k,\ p=q_j\text{ for some }1\le j\le k\}
+\]
+is finite.
+
+\paragraph{Proof.}
+Assume $p\in P_k$ and $p=q_j$ with $1\le j\le k$.
+Since $p\in P_k$,
+\[
+2^{c(k-1)^2-3}<p.
+\]
+Since $p=q_j$ and $j\le k$, the defining choice of the $q_j$ gives
+\[
+p=q_j\le 2^{2j+1}\le 2^{2k+1}.
+\]
+Therefore
+\[
+2^{c(k-1)^2-3}<2^{2k+1},
+\]
+which is equivalent to
+\[
+c(k-1)^2<2k+4.
+\]
+The left-hand side is quadratic in $k$ and the right-hand side is linear, so this can hold only for finitely many $k$.
+Hence $E(c)$ is finite. \hfill$\square$
+
+\medskip
+
+A convenient explicit threshold is any integer $K(c)$ satisfying
+\[
+c(K(c)-1)^2>2K(c)+4.
+\]
+Then Lemma~5.1 implies that for every $k\ge K(c)$ and every $p\in P_k$, one has
+$p\neq q_j$ for all $1\le j\le k$.
+
+\subsubsection*{5.3. Minimal corrected statement}
+
+\paragraph{Definition 5.2 (corrected prime blocks).}
+For each $k\ge 2$, define
+\[
+P_k^{\circ}:=P_k\setminus \{q_j:1\le j\le k\}.
+\]
+Equivalently,
+\[
+\bigcup_{k\ge2}P_k^{\circ}=\mathbb P\setminus E(c).
+\]
+For $p\in P_k^{\circ}$, define the digits $x_j(p)$ for $1\le j\le k$ exactly as in Rounds~2--3:
+\[
+g_j^{x_j(p)}\equiv p\pmod{q_j},
+\qquad q_j< x_j(p)<2q_j,
+\]
+and set $x_j(p)=0$ for $j>k$.
+Then define $a_p$ and the corrected sequence
+\[
+A_{q,c}^{\circ}:=\{a_p: p\in \bigcup_{k\ge2}P_k^{\circ}\}.
+\]
+
+\paragraph{Lemma 5.3 (eventual agreement with the original blocks).}
+For all $k\ge K(c)$, one has $P_k^{\circ}=P_k$.
+In particular,
+\[
+|P_k^{\circ}|=|P_k| \qquad (k\ge K(c)).
+\]
+
+\paragraph{Proof.}
+By the defining property of $K(c)$, Lemma~5.1 rules out every equality
+$p=q_j$ with $p\in P_k$ and $1\le j\le k$ once $k\ge K(c)$.
+Thus no prime is removed from $P_k$ for $k\ge K(c)$. \hfill$\square$
+
+\medskip
+
+This is the \emph{minimal} correction: only the finitely many illegal indices are removed.
+A simpler but equivalent variant is to discard all blocks $P_k$ with $k<K(c)$; this differs from the minimal correction by only finitely many indices and leaves all asymptotic statements unchanged.
+
+\subsubsection*{5.4. Counting function after the repair}
+
+\paragraph{Proposition 5.4.}
+For every fixed $0<c<1/2$, the corrected sequence satisfies
+\[
+A_{q,c}^{\circ}(x)=x^{c+o(1)}.
+\]
+
+\paragraph{Proof.}
+Let
+\[
+B_k:=(4q_1)\cdots (4q_k).
+\]
+Round~2 already showed that
+\[
+2^{k^2+2k}<B_k\le 2^{k^2+4k},
+\]
+so if $B_k<x\le B_{k+1}$, then $k^2=\log_2 x+o(\log x)$.
+
+For the lower bound, every prime $p\le 2^{ck^2-3}$ belongs to some block $P_{\ell}$ with $\ell\le k$.
+After the correction we lose only the finite exceptional set $E(c)$, so
+\[
+A_{q,c}^{\circ}(x)\ge \pi(2^{ck^2-3})-|E(c)|.
+\]
+By the prime number theorem,
+\[
+\pi(2^{ck^2-3})=2^{ck^2+o(k^2)}=x^{c+o(1)},
+\]
+and subtracting the constant $|E(c)|$ does not change the asymptotic exponent.
+
+For the upper bound, exactly the same block argument as in Round~2 gives
+\[
+A_{q,c}^{\circ}(x)\le \pi(2^{c(k+2)^2-3})=x^{c+o(1)}.
+\]
+Hence
+\[
+A_{q,c}^{\circ}(x)=x^{c+o(1)}.
+\]
+\hfill$\square$
+
+\subsubsection*{5.5. Transfer of the Round-3 structure theorem}
+
+\paragraph{Lemma 5.5 (transfer principle).}
+After replacing each block $P_k$ by $P_k^{\circ}$, every Round~3 proof from the digit-definition stage onward applies verbatim to the corrected family.
+In particular:
+\begin{enumerate}
+\item the injectivity proof survives unchanged;
+\item the exact repeated-sum window
+\[
+(1-c)k_1^2<k_2^2<\frac{c}{1-c}k_1^2
+\]
+survives unchanged;
+\item the Round~3 bad-prime estimate
+\[
+|B_k^{\circ}(c)|\le 2^{\gamma(c)k^2+o(k^2)},
+\qquad \gamma(c)=\frac{3c-1}{1-c},
+\]
+survives unchanged;
+\item the Round~2 endpoint estimate at $c=\sqrt2-1$ survives unchanged.
+\end{enumerate}
+
+\paragraph{Proof.}
+The only place where the original proof could fail was the attempted use of a discrete logarithm when $p=q_j$.
+By Definition~5.2 that case has been removed.
+All subsequent arguments in Rounds~2--3 are purely algebraic manipulations involving:
+\begin{itemize}
+\item carry-free addition in the mixed-radix digits;
+\item the congruences $g_j^{x_j(p)}\equiv p\pmod{q_j}$ for indexed primes;
+\item size comparisons using the block bounds $p\in P_k$ and the growth conditions on the $q_j$.
+\end{itemize}
+Those ingredients are now valid for every indexed prime in the corrected construction.
+Nothing else in the proofs depends on the discarded set $E(c)$.
+Therefore all those arguments transfer without change. \hfill$\square$
+
+\subsubsection*{5.6. The corrected two-threshold theorem}
+
+Let
+\[
+c_0:=\frac{3-\sqrt5}{2},
+\qquad
+c_1:=\sqrt2-1.
+\]
+
+\paragraph{Theorem 5.6 (corrected explicit family for the full Round-3 range).}
+For the corrected construction, the following hold.
+\begin{enumerate}
+\item If $0<c\le c_0$, then $A_{q,c}^{\circ}$ is a Sidon sequence and
+\[
+A_{q,c}^{\circ}(x)=x^{c+o(1)}.
+\]
+\item If $c_0<c<c_1$, then after the same largest-element deletion as in Round~2 one obtains a corrected Sidon sequence $A_{q,c}^{\circ,*}$ with
+\[
+A_{q,c}^{\circ,*}(x)=x^{c+o(1)}.
+\]
+\item If $c=c_1=\sqrt2-1$, then the corrected deleted sequence $A_{q,c_1}^{\circ,*}$ satisfies
+\[
+A_{q,c_1}^{\circ,*}(x)=x^{\sqrt2-1+o(1)}.
+\]
+\end{enumerate}
+
+\paragraph{Proof.}
+For part (1), combine Lemma~5.5 with the Round~3 exact collision window.
+If a repeated sum existed, it would force
+\[
+(1-c)k_1^2<k_2^2<\frac{c}{1-c}k_1^2.
+\]
+When $c\le c_0$, the interval on the right is empty because
+\[
+\frac{c}{1-c}\le 1-c
+\quad\Longleftrightarrow\quad
+c\le \frac{3-\sqrt5}{2}.
+\]
+So no repeated sum exists, and $A_{q,c}^{\circ}$ is Sidon.
+The counting function is Proposition~5.4.
+
+For part (2), define the bad-prime sets $B_k^{\circ}(c)$ exactly as in Round~2 but inside the corrected family.
+By Lemma~5.5, the same largest-element deletion destroys all repeated sums, so the deleted corrected family is Sidon.
+Round~3 already identified the bad-prime exponent
+\[
+|B_k^{\circ}(c)|\le 2^{\gamma(c)k^2+o(k^2)},
+\qquad
+\gamma(c)=\frac{3c-1}{1-c}.
+\]
+If $c<c_1=\sqrt2-1$, then
+\[
+\gamma(c)-c=\frac{c^2+2c-1}{1-c}<0.
+\]
+Hence $|B_k^{\circ}(c)|=o(2^{ck^2})$.
+Since Proposition~5.4 gives $|P_k^{\circ}|=2^{ck^2+o(k^2)}$, deleting the bad primes does not change the exponent, and
+\[
+A_{q,c}^{\circ,*}(x)=x^{c+o(1)}.
+\]
+
+For part (3), when $c=c_1$, the exponent comparison becomes critical because $\gamma(c_1)=c_1$.
+Here one uses the sharper Round~2 constant-level estimate (transferred by Lemma~5.5), which shows that only a strict proportion of each block is removed.
+Therefore the deleted corrected family still has counting function
+\[
+x^{\sqrt2-1+o(1)}.
+\]
+\hfill$\square$
+
+\subsubsection*{5.7. The exact barrier inside the present method}
+
+\paragraph{Proposition 5.7 (sharp obstruction for the current deletion-counting route).}
+Inside the corrected mixed-radix/discrete-log framework, the Round~3 union-bound/divisor-counting method yields
+\[
+|B_k^{\circ}(c)|\le 2^{\gamma(c)k^2+o(k^2)},
+\qquad
+\gamma(c):=\frac{3c-1}{1-c}.
+\]
+Since
+\[
+|P_k^{\circ}|=2^{ck^2+o(k^2)},
+\]
+this method proves
+\[
+|B_k^{\circ}(c)|=o(|P_k^{\circ}|)
+\]
+if and only if $c<\sqrt2-1$.
+At $c=\sqrt2-1$ the exponent comparison is critical, and for $c>\sqrt2-1$ the exponent comparison alone cannot yield $o(|P_k^{\circ}|)$.
+
+\paragraph{Proof.}
+The upper bound
+\[
+|B_k^{\circ}(c)|\le 2^{\gamma(c)k^2+o(k^2)}
+\]
+is exactly the Round~3 exponent calculation transferred by Lemma~5.5.
+Now
+\[
+\gamma(c)-c
+=
+\frac{3c-1}{1-c}-c
+=
+\frac{c^2+2c-1}{1-c}.
+\]
+Because $1-c>0$, the sign of $\gamma(c)-c$ is the sign of $c^2+2c-1$.
+Its positive root is $c=\sqrt2-1$.
+Therefore:
+\begin{itemize}
+\item if $c<\sqrt2-1$, then $\gamma(c)<c$, so the bad-prime bound is power-saving and gives
+\[
+|B_k^{\circ}(c)|=o(|P_k^{\circ}|);
+\]
+\item if $c=\sqrt2-1$, then $\gamma(c)=c$, so exponent comparison alone is inconclusive;
+\item if $c>\sqrt2-1$, then $\gamma(c)>c$, so this exponent comparison route by itself cannot prove that the bad set is negligible.
+\end{itemize}
+This is the exact obstruction claimed. \hfill$\square$
+
+\paragraph{Interpretation.}
+To improve the explicit exponent beyond $\sqrt2-1$ inside this framework, one must introduce a \emph{new} ingredient beyond the present union-bound/divisor-counting step.
+In other words, the barrier is not in the digit construction itself, but in the present way of estimating how many primes must be deleted.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I tried to break the new work in the following ways.
+
+\begin{itemize}
+\item \textbf{Could the exceptional set be infinite?}
+No. Lemma~5.1 reduces the bad event $p=q_j$ with $j\le k(p)$ to the inequality
+\[
+c(k-1)^2<2k+4,
+\]
+which can hold for only finitely many $k$.
+
+\item \textbf{Did the correction change the exponent?}
+No. The repair removes only the finite set $E(c)$, so Proposition~5.4 differs from the Round~2 growth proof only by subtracting a constant in the lower bound.
+
+\item \textbf{Did I overstate the transfer principle?}
+No. I checked where the old proof could fail: only at the discrete-log step.
+Once the illegal indices are removed, every later algebraic step in Round~2/3 is legitimate.
+
+\item \textbf{Could the finite repair itself create a new Sidon obstruction?}
+Deleting indices cannot create repeated sums, so all positive Sidon results remain valid after the correction.
+
+\item \textbf{Could the repaired undeleted family actually stay Sidon for some $c>c_0$?}
+Possibly; I did \emph{not} settle that here.
+The correction removes only finitely many primes, so the most likely answer is ``no'', but I have not proved a persistence-of-collisions theorem after the repair.
+I therefore make no claim beyond the explicit range already justified by Theorem~5.6.
+
+\item \textbf{Does Proposition~5.7 say the construction fails for $c>\sqrt2-1$?}
+No.
+It says only that the \emph{current counting method} is not strong enough there.
+A different argument could still conceivably control the bad primes beyond the critical exponent.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~4 found and repaired a genuine flaw in the Round~2/3 mixed-radix construction: the digits were not defined when $p=q_j$ with $j\le k(p)$.
+I proved that this obstruction is only finite, gave the minimal corrected statement, and showed that after the correction the full Round~3 explicit range survives:
+\[
+0<c\le \sqrt2-1
+\quad\Longrightarrow\quad
+\text{there is an explicit corrected Sidon construction with }A(x)=x^{c+o(1)}.
+\]
+I also isolated a sharp obstruction:
+the present bad-prime counting route is power-saving exactly for $c<\sqrt2-1$, critical at $c=\sqrt2-1$, and therefore cannot by exponent comparison alone push the explicit construction past the Ruzsa--Cilleruelo exponent.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 83\%}
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{9}
+
+\bibitem{Ruzsa1998}
+I.~Z.~Ruzsa,
+\emph{An infinite Sidon sequence},
+J. Number Theory \textbf{68} (1998), no.~1, 63--71.
+
+\bibitem{Cilleruelo2014}
+J.~Cilleruelo,
+\emph{Infinite Sidon sequences},
+Adv. Math. \textbf{255} (2014), 474--486.
+
+\bibitem{ErdosProblems39}
+T.~F.~Bloom,
+\emph{Erd\H{o}s Problem \#39},
+problem page checked on 2026-03-07.
+
+\end{thebibliography}

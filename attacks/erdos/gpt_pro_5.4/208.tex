@@ -1,0 +1,178 @@
+\section{Erd\H{o}s Problem \#208}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (A) full proof of the Round~1 target statement.}
+
+Round~1 treated the statement
+\[
+s_{n+1}-s_n=o(s_n^{1/5}),
+\]
+where $s_1<s_2<\cdots$ is the increasing sequence of squarefree integers, as unresolved and only obtained the much weaker bound $s_{n+1}-s_n\ll \sqrt{s_n}$.
+
+The decisive new fact is that the Round~1 target statement is now a theorem: Pandey proved a fixed exponent improvement beyond $1/5$. Therefore the correct Round~2 objective is to convert that theorem into a short, gap-free proof of the original statement.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use only the following Round~1 items.
+
+\begin{itemize}
+\item The definition of the sequence $s_1<s_2<\cdots$ of squarefree integers.
+\item The precise target statement from Round~1:
+\[
+s_{n+1}-s_n=o(s_n^{1/5}).
+\]
+\end{itemize}
+
+I do \emph{not} reuse the Round~1 proof of the weaker bound $s_{n+1}-s_n\ll \sqrt{s_n}$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is Pandey's 2024 theorem:
+
+\medskip
+
+\emph{There exists $\eta>0$ such that, for all sufficiently large $X$, the interval}
+\[
+[X,\ X+X^{1/5-\eta}]
+\]
+\emph{contains a squarefree integer.}
+
+\medskip
+
+This is strictly stronger than the original Round~1 target. Indeed, it immediately implies
+\[
+s_{n+1}-s_n\ll s_n^{1/5-\eta},
+\]
+and therefore
+\[
+s_{n+1}-s_n=o(s_n^{1/5}).
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The Round~1 gap was simple: no theorem beyond the exponent $1/5$ was available inside the write-up.
+
+To close that gap, I will:
+
+\begin{enumerate}
+\item state Pandey's theorem precisely;
+\item substitute $X=s_n+1$ (not $X=s_n$);
+\item deduce a direct upper bound for $s_{n+1}-s_n$;
+\item divide by $s_n^{1/5}$ and let $n\to \infty$.
+\end{enumerate}
+
+The choice $X=s_n+1$ is important: if one took $X=s_n$, the guaranteed squarefree integer in $[X,X+X^{1/5-\eta}]$ could be the left endpoint $s_n$ itself, which would not control the next gap. Shifting by $1$ avoids that issue completely.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{External theorem used (Pandey).}
+There exists a constant $\eta>0$ such that for all sufficiently large real numbers $X$, the interval
+\[
+[X,\ X+X^{1/5-\eta}]
+\]
+contains at least one squarefree integer.
+
+\paragraph{Theorem 5.1.}
+For the increasing sequence $s_1<s_2<\cdots$ of squarefree integers, one has
+\[
+s_{n+1}-s_n=o(s_n^{1/5}).
+\]
+
+\paragraph{Proof.}
+Let $\eta>0$ be as in Pandey's theorem. Fix $n$ large enough that $X:=s_n+1$ lies in the range where Pandey's theorem applies. Then the interval
+\[
+[s_n+1,\ s_n+1+(s_n+1)^{1/5-\eta}]
+\]
+contains a squarefree integer.
+
+Let $t$ be such a squarefree integer. Since $t\ge s_n+1$, we have $t>s_n$. By definition, $s_{n+1}$ is the least squarefree integer strictly larger than $s_n$, so
+\[
+s_{n+1}\le t\le s_n+1+(s_n+1)^{1/5-\eta}.
+\]
+Therefore
+\[
+s_{n+1}-s_n\le 1+(s_n+1)^{1/5-\eta}.
+\]
+Now divide by $s_n^{1/5}$:
+\[
+\frac{s_{n+1}-s_n}{s_n^{1/5}}
+\le
+\frac{1}{s_n^{1/5}}
++
+\frac{(s_n+1)^{1/5-\eta}}{s_n^{1/5}}.
+\]
+As $n\to\infty$, we have $s_n\to\infty$, so
+\[
+\frac{1}{s_n^{1/5}}\to 0,
+\]
+and also
+\[
+\frac{(s_n+1)^{1/5-\eta}}{s_n^{1/5}}
+=
+\left(1+\frac{1}{s_n}\right)^{1/5-\eta}s_n^{-\eta}\to 0.
+\]
+Hence
+\[
+\frac{s_{n+1}-s_n}{s_n^{1/5}}\to 0,
+\]
+which is exactly
+\[
+s_{n+1}-s_n=o(s_n^{1/5}).
+\]
+\hfill $\square$
+
+\paragraph{What this does and does not settle.}
+The Round~1 target statement is therefore solved affirmatively. However, the \emph{current stronger formulation} recorded on the Erd\H{o}s problem page asks whether
+\[
+s_{n+1}-s_n\ll_\varepsilon s_n^\varepsilon
+\qquad\text{for every }\varepsilon>0,
+\]
+which is much stronger. Pandey's theorem gives a single fixed exponent $1/5-\eta$, not arbitrary $\varepsilon$. So the original Round~1 target is solved, while the stronger modern formulation remains open.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Why was $X=s_n+1$ chosen instead of $X=s_n$?}
+Because if $X=s_n$, Pandey's theorem only guarantees a squarefree number somewhere in
+\[
+[s_n,\ s_n+s_n^{1/5-\eta}],
+\]
+and that number could be $s_n$ itself. Then no bound on $s_{n+1}-s_n$ would follow. The shift by $1$ removes this possibility.
+
+\paragraph{(ii) Does Pandey's theorem apply to integer $X$ only?}
+The statement is formulated for sufficiently large $X$. Taking $X=s_n+1$ is legitimate since $s_n+1\to\infty$.
+
+\paragraph{(iii) Is the deduction from the existence of $t$ to the bound on $s_{n+1}$ valid?}
+Yes. By definition, $s_{n+1}$ is the smallest squarefree integer greater than $s_n$, and $t$ is one such squarefree integer. Therefore $s_{n+1}\le t$.
+
+\paragraph{(iv) Do the limits really give little-$o$?}
+Yes. Both terms on the right-hand side after division by $s_n^{1/5}$ tend to $0$, so the whole quotient tends to $0$.
+
+\paragraph{(v) Any hidden issue with endpoint conventions?}
+No. Since $t\ge s_n+1$, we have $t>s_n$ regardless of whether the interval is interpreted with closed or half-open endpoints at the left.
+
+The proof is therefore gap-free.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{FULL SOLUTION --- FULL PROOF.}
+
+Pandey's theorem implies
+\[
+s_{n+1}-s_n\le 1+(s_n+1)^{1/5-\eta}
+\]
+for some fixed $\eta>0$ and all sufficiently large $n$, and hence
+\[
+s_{n+1}-s_n=o(s_n^{1/5}).
+\]
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 100\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item M. Pandey, \emph{Squarefree numbers in short intervals}, arXiv:2401.13981, 2024.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#208}, \texttt{erdosproblems.com}, accessed 2026-03-07.
+\end{enumerate}

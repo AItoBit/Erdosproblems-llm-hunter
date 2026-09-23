@@ -1,0 +1,235 @@
+\section{Erdős Problem \#96 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue \textbf{(A) proof track}. A full resolution of the open problem still looks out of reach, but Round-1 only produced the generic planar bound $u(A)=O(n^{3/2})$, which does not use the convex structure in any essential way. The most promising strict advance is therefore to prove \emph{linear} upper bounds on natural structured subclasses of convex polygons, and to make precise the local-to-global reduction from the related equidistance problem (Problem \#97) that was only mentioned in Round-1.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without reproving them.
+
+\begin{itemize}
+\item \textbf{Round-1 Lemma 96.1:} a regular $n$-gon scaled so that its side length is $1$ has exactly $n$ unit-distance pairs.
+\item \textbf{Round-1 Lemma 96.2:} every convex $n$-gon satisfies the generic planar bound
+\[
+  u(A)\le \frac{\sqrt 2}{2}n^{3/2}+\frac14 n.
+\]
+\item Round-1 context from the problem statement: Problem \#96 asks whether $u(A)=O(n)$ for convex $n$-gons, and a positive answer would follow from the related local equidistance problem (Problem \#97).
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are three genuinely new ingredients in this round.
+
+\begin{itemize}
+\item \textbf{Exact cyclic theorem.} If the vertices lie on a circle, then for every fixed distance $r$ the corresponding distance-$r$ graph has maximum degree at most $2$, hence at most $n$ edges. In particular, among cyclic convex $n$-gons the maximum possible number of unit distances is \emph{exactly} $n$.
+\item \textbf{Parabolic linear theorem.} If the vertices lie on a parabola, then for every fixed distance $r$ each vertex has at most $4$ neighbors at distance $r$, because the distance equation reduces to a quartic. Hence the number of unit distances is at most $2n$ on this subclass.
+\item \textbf{Explicit local-to-global reduction.} If every convex polygon has a vertex from which no distance is repeated more than $k$ times, then every convex $n$-gon has at most $3+k(n-3)\le kn$ unit distances. In particular, Problem \#97 would imply the explicit bound $u(A)\le 3n-6$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gaps left after Round-1 were:
+
+\begin{itemize}
+\item the Round-1 upper bound was the generic $O(n^{3/2})$ planar bound and did not exploit convex structure;
+\item the statement ``a positive answer would follow from Problem \#97'' was not proved;
+\item no substantial subclass of convex polygons had been solved sharply.
+\end{itemize}
+
+The plan is therefore:
+
+\begin{enumerate}
+\item solve the problem exactly on the cyclic subclass;
+\item prove a second linear theorem on a different curved subclass (parabolas), to show that the obstruction is not present there either;
+\item turn the heuristic relation to Problem \#97 into a rigorous induction with an explicit constant.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+For a finite set $A\subset \mathbb R^2$ and a fixed real number $r>0$, write
+\[
+  e_r(A):=\bigl|\{\{x,y\}\subset A:\ \|x-y\|=r\}\bigr|
+\]
+for the number of unordered pairs at distance exactly $r$.
+Thus $u(A)=e_1(A)$.
+
+\medskip
+\noindent\textbf{Proposition 96.1 (exact fixed-distance bound on a circle).}
+Let $A\subset \mathbb R^2$ be a finite set of $n$ points lying on a circle. Then for every $r>0$,
+\[
+  e_r(A)\le n.
+\]
+In particular, if $A$ is the vertex set of a cyclic convex $n$-gon, then
+\[
+  u(A)\le n.
+\]
+
+\emph{Proof.}
+Fix $r>0$. Form the graph $G_r(A)$ on vertex set $A$ by joining two vertices when they are at distance $r$.
+It is enough to prove that every vertex of $G_r(A)$ has degree at most $2$.
+
+Fix $x\in A$. All points of $A$ lie on a common circle $\Gamma$. The neighbors of $x$ in $G_r(A)$ are precisely the points of $A\cap C(x,r)$, where $C(x,r)$ denotes the circle of radius $r$ centered at $x$.
+Now $\Gamma$ and $C(x,r)$ are two circles in the Euclidean plane. Since $r>0$, the center of $C(x,r)$ is $x$, while $x\in \Gamma$, so $\Gamma$ and $C(x,r)$ are not the same circle. Hence they intersect in at most two points. Therefore
+\[
+  \deg_{G_r(A)}(x)=|A\cap \Gamma\cap C(x,r)|\le 2.
+\]
+This holds for every vertex $x$, so the handshake lemma gives
+\[
+  2e_r(A)=\sum_{x\in A}\deg_{G_r(A)}(x)\le 2n.
+\]
+Thus $e_r(A)\le n$, as claimed. The case $r=1$ is exactly the unit-distance bound. \qed
+
+\medskip
+\noindent\textbf{Corollary 96.2 (cyclic subclass solved sharply).}
+Among cyclic convex $n$-gons, the maximum possible number of unit-distance pairs is exactly $n$.
+
+\emph{Proof.}
+The upper bound is Proposition 96.1 with $r=1$. The matching lower bound $n$ is exactly Round-1 Lemma 96.1, which exhibits a regular $n$-gon with exactly $n$ unit distances. \qed
+
+\medskip
+\noindent\textbf{Proposition 96.3 (linear fixed-distance bound on a parabola).}
+Let $A$ be a finite subset of the standard parabola
+\[
+  \mathcal P:=\{(t,t^2): t\in \mathbb R\}.
+\]
+Then for every $r>0$,
+\[
+  e_r(A)\le 2|A|.
+\]
+In particular, if the vertices of a convex $n$-gon lie on a parabola, then the number of unit-distance pairs is at most $2n$.
+
+\emph{Proof.}
+Fix $r>0$ and form the distance-$r$ graph $G_r(A)$ as above. It is enough to prove that every vertex has degree at most $4$.
+
+Fix a vertex $p=(a,a^2)\in A$. A point $q=(x,x^2)\in \mathcal P$ satisfies $\|p-q\|=r$ exactly when
+\[
+  (x-a)^2+(x^2-a^2)^2=r^2.
+\]
+Since $x^2-a^2=(x-a)(x+a)$, this becomes
+\[
+  (x-a)^2\bigl(1+(x+a)^2\bigr)=r^2.
+\]
+Expanding gives the quartic equation
+\[
+  x^4-2ax^3+(1+2a^2)x^2-2a(1+a^2)x+a^4+a^2-r^2=0.
+\]
+A real quartic has at most four real roots. Therefore there are at most four real numbers $x$ such that $(x,x^2)\in \mathcal P$ lies at distance $r$ from $p$. Hence
+\[
+  \deg_{G_r(A)}(p)\le 4.
+\]
+Since this holds for every $p\in A$, the handshake lemma gives
+\[
+  2e_r(A)=\sum_{p\in A}\deg_{G_r(A)}(p)\le 4|A|,
+\]
+so $e_r(A)\le 2|A|$.
+
+For the final sentence: every parabola is the image of $\mathcal P$ under a Euclidean similarity. Similarities preserve incidences of ``being at a fixed distance'', up to replacing the distance $1$ by another positive number $r$. Since the proposition was proved for every $r>0$, the same $2n$ bound holds for any finite set lying on any parabola, and in particular for convex polygons inscribed in a parabola. \qed
+
+\medskip
+\noindent\textbf{Proposition 96.4 (rigorous reduction from Problem \#97 to Problem \#96).}
+Assume the following local multiplicity hypothesis for some integer $k\ge 1$:
+
+\begin{quote}
+For every convex polygon $P$ there exists a vertex $v$ of $P$ such that no distance from $v$ to the other vertices of $P$ occurs more than $k$ times.
+\end{quote}
+
+Then every convex $n$-gon $A$ satisfies
+\[
+  u(A)\le 3+k(n-3)\le kn \qquad (n\ge 3).
+\]
+In particular, an affirmative answer to Problem \#97 (the case $k=3$) would imply
+\[
+  u(A)\le 3n-6
+\]
+for every convex $n$-gon $A$.
+
+\emph{Proof.}
+Let $U(n)$ be the maximum possible number of unit-distance pairs among convex $n$-gons.
+We prove by induction that
+\[
+  U(n)\le 3+k(n-3) \qquad (n\ge 3).
+\]
+
+Base case $n=3$: every triangle has at most $3$ unit distances, so $U(3)\le 3$, which matches the formula.
+
+Induction step: assume $n\ge 4$ and let $A=(v_1,\dots,v_n)$ be a convex $n$-gon with $u(A)=U(n)$. By the hypothesis, there exists a vertex $v=v_i$ of $A$ such that among the distances from $v$ to the other $n-1$ vertices, no value occurs more than $k$ times. In particular, the distance value $1$ occurs at most $k$ times from $v$, so $v$ is incident to at most $k$ unit-distance pairs.
+
+Remove $v$ from the vertex list. The remaining points, in the induced cyclic order, form a convex $(n-1)$-gon $A'$. Every unit-distance pair of $A$ either survives inside $A'$ or is incident to $v$. Therefore
+\[
+  U(n)=u(A)\le u(A')+k\le U(n-1)+k.
+\]
+By the induction hypothesis,
+\[
+  U(n)\le \bigl(3+k(n-4)\bigr)+k = 3+k(n-3).
+\]
+This proves the claim. The inequality $3+k(n-3)\le kn$ is immediate for $n\ge 3$ and $k\ge 1$.
+
+For Problem \#97 we have $k=3$, because ``no other $4$ vertices equidistant from it'' means exactly that each distance value from the chosen vertex is repeated at most $3$ times. Hence $U(n)\le 3n-6$. \qed
+
+\medskip
+\noindent\textbf{Proposition 96.5 (Erdős's stronger local-sum conjecture would imply the $2n$ upper bound).}
+For a convex polygon $A$, define
+\[
+  g_A(x):=\max_{r>0}\bigl|\{y\in A\setminus\{x\}:\ \|x-y\|=r\}\bigr|.
+\]
+Then
+\[
+  2u(A)\le \sum_{x\in A} g_A(x).
+\]
+Consequently, the stronger conjecture
+\[
+  \sum_{x\in A}g_A(x)<4|A|
+\]
+would imply
+\[
+  u(A)<2|A|.
+\]
+
+\emph{Proof.}
+For each vertex $x\in A$, the number of unit-distance neighbors of $x$ is
+\[
+  d_1(x):=\bigl|\{y\in A\setminus\{x\}:\ \|x-y\|=1\}\bigr|.
+\]
+Since $g_A(x)$ is the \emph{maximum} multiplicity of any distance from $x$, we have $d_1(x)\le g_A(x)$ for every $x$.
+Summing over all vertices and using the handshake lemma for the unit-distance graph,
+\[
+  2u(A)=\sum_{x\in A} d_1(x)\le \sum_{x\in A} g_A(x).
+\]
+The final implication is immediate. \qed
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Cyclic theorem:} the only geometric input is that two distinct circles intersect in at most two points. They are indeed distinct, because the circle centered at a vertex $x$ cannot coincide with the common circumcircle: its center is $x$, while $x$ lies on the circumcircle and a circle never contains its own center.
+\item \textbf{Handshake counts:} in Propositions 96.1 and 96.3, the graph is simple and undirected, so $2e_r(A)=\sum \deg(x)$ is valid.
+\item \textbf{Parabola theorem:} the quartic equation was expanded explicitly. The argument only uses ``at most four real roots'', so repeated roots and tangent cases do not cause trouble. Also $r>0$ excludes the trivial coincidence $q=p$.
+\item \textbf{Similarity step for parabolas:} a Euclidean similarity preserves the number of pairs at any prescribed distance value up to rescaling the value. Because Proposition 96.3 was proved for every $r>0$, the transfer to an arbitrary parabola is legitimate.
+\item \textbf{Reduction from Problem \#97:} deleting one vertex from a convex polygon leaves a convex polygon on the remaining vertices in cyclic order. The local multiplicity condition implies the chosen vertex has at most $k$ unit-distance neighbors because ``distance $1$'' is one of the allowed distance values. No additional assumption is hidden.
+\item \textbf{Use of Round-1:} the only Round-1 theorem used in a nontrivial way is the regular-$n$-gon lower bound to prove sharpness of the cyclic result. No Round-1 proof was re-run.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+This round strictly advances beyond Round-1 in three ways.
+
+\begin{enumerate}
+\item The problem is solved \emph{exactly} on the cyclic subclass: a cyclic convex $n$-gon has at most $n$ unit distances, and this bound is sharp by the regular $n$-gon.
+\item A second genuine linear theorem is proved on a different curved subclass: any convex $n$-gon inscribed in a parabola has at most $2n$ unit distances.
+\item The relation to Problem \#97 is now rigorous and explicit: a positive answer to Problem \#97 would imply the concrete bound $u(A)\le 3n-6$ for every convex $n$-gon. Moreover, Erdős's stronger local-sum conjecture would imply the stronger global bound $u(A)<2n$.
+\end{enumerate}
+
+The main unresolved gap is still the passage from these structured situations (cyclic, parabolic, or local multiplicity control) to \emph{arbitrary} convex polygons.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 40\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erdős Problem \#96}, checked 2026-03-07.
+\item T. F. Bloom, \emph{Erdős Problem \#97}, checked 2026-03-07.
+\end{enumerate}

@@ -1,0 +1,171 @@
+\section{Erd\H{o}s Problem \#293}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path (A): prove a strictly stronger theorem than the Round-1 upper bound. The main unresolved gap after Round~1 was that the bound
+\[
+v(k)\le u_k+1=c_0^{(1+o(1))2^k}
+\]
+came from controlling the largest denominator in a \emph{single} decomposition, whereas the definition of $v(k)$ depends on the \emph{union} of all denominators occurring in all $k$-term decompositions. The most promising Round-2 move is therefore a counting argument.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 ingredients without reproving them.
+
+\begin{itemize}
+\item The set
+\[
+D_k=\{n>1:\ \mbox{$n$ occurs as some denominator in a $k$-term decomposition of $1$}\}.
+\]
+\item The definition
+\[
+v(k):=\min\{n>1:\ n\notin D_k\}.
+\]
+\item The Round-1 upper bound $v(k)\le u_k+1$, where $u_1=1$ and $u_{j+1}=u_j(u_j+1)$.
+\item The exact values $v(1)=2$, $v(2)=2$, $v(3)=4$, $v(4)=11$, $v(5)=17$, $v(6)=103$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is to replace ``largest denominator'' control by ``number of solutions'' control.
+
+Let $F(k)$ be the number of strictly increasing $k$-tuples
+\[
+1<n_1<\cdots<n_k,\qquad \frac1{n_1}+\cdots+\frac1{n_k}=1.
+\]
+Each such solution contributes at most $k$ denominators to $D_k$. Hence $D_k$ is controlled by $F(k)$, not by the largest possible denominator alone. This yields the elementary but asymptotically much stronger inequality
+\[
+v(k)\le kF(k)+2.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap is that the previous upper bound was of size $c_0^{(1+o(1))2^k}$, whereas the best currently available upper bound for $F(k)$ is much smaller, namely $c_0^{(\frac15+o(1))2^k}$.
+
+So the plan is:
+\begin{itemize}
+\item prove the elementary inequality $v(k)\le kF(k)+2$ from the Round-1 definition of $D_k$;
+\item import the known upper bound for $F(k)$;
+\item compare the resulting bound with the Round-1 bound.
+\end{itemize}
+
+This overcomes the Round-1 obstacle because it uses the \emph{global combinatorics} of all $k$-term solutions, not just a denominator bound inside one solution.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent\textbf{Lemma 1.}
+For every $k\ge 1$,
+\[
+|D_k|\le kF(k).
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+List all $F(k)$ many $k$-term decompositions of $1$:
+\[
+1=\frac1{n_1^{(j)}}+\cdots+\frac1{n_k^{(j)}}
+\qquad (1\le j\le F(k)).
+\]
+For each fixed $j$, the solution contributes at most $k$ denominators to $D_k$. Therefore
+\[
+D_k\subseteq \bigcup_{j=1}^{F(k)} \{n_1^{(j)},\ldots,n_k^{(j)}\},
+\]
+so by the union bound
+\[
+|D_k|\le \sum_{j=1}^{F(k)} k = kF(k).
+\]
+This proves the claim.
+
+\medskip
+\noindent\textbf{Lemma 2.}
+If $S\subseteq \{2,3,4,\ldots\}$ is finite, then the least integer $>1$ not contained in $S$ is at most $|S|+2$.
+
+\medskip
+\noindent\textbf{Proof.}
+Among the $|S|+1$ integers
+\[
+2,3,\ldots,|S|+2
+\]
+at least one is not in $S$, because $S$ contains only $|S|$ elements. Hence the least missing integer is at most $|S|+2$.
+
+\medskip
+\noindent\textbf{Corollary 3.}
+For every $k\ge 1$,
+\[
+v(k)\le |D_k|+2\le kF(k)+2.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+Apply Lemma~2 with $S=D_k$, then use Lemma~1.
+
+\medskip
+\noindent\textbf{External input.}
+Elsholtz and Planitzer proved the upper bound
+\[
+F(k)\le c_0^{(\frac15+o(1))2^k},
+\qquad c_0=1.264085\ldots,
+\]
+for the number of $k$-term Egyptian fraction decompositions of $1$.
+
+\medskip
+\noindent\textbf{Theorem 4 (Round-2 upper bound).}
+As $k\to\infty$,
+\[
+v(k)\le c_0^{(\frac15+o(1))2^k}.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+By Corollary~3,
+\[
+v(k)\le kF(k)+2.
+\]
+Insert the Elsholtz--Planitzer bound for $F(k)$. Since the prefactor $k$ and the additive term $2$ are both negligible on the logarithmic scale $2^k$, they are absorbed into the $o(1)$ term in the exponent. Hence
+\[
+v(k)\le c_0^{(\frac15+o(1))2^k}.
+\]
+
+\medskip
+\noindent\textbf{Comparison with Round~1.}
+Round~1 gave
+\[
+v(k)\le u_k+1=c_0^{(1+o(1))2^k}.
+\]
+Round~2 improves the constant in the exponent from $1$ to $\frac15$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \emph{Possible double-counting issue.} The same denominator may occur in many solutions, but this only helps: the union of all denominator-sets is never larger than the sum of their sizes.
+\item \emph{Possible off-by-one issue in the passage from $|D_k|$ to $v(k)$.} This is why Lemma~2 gives $|D_k|+2$, not $|D_k|+1$: the relevant integers start at $2$, not $1$.
+\item \emph{Compatibility with small cases.} If $D_k=\emptyset$, Corollary~3 gives $v(k)\le 2$, which is sharp for $k=1,2$.
+\item \emph{Interaction with Round~1.} The new bound does not replace the Round-1 Sylvester/Takenouchi bound pointwise for every small $k$; it improves the \emph{asymptotic} upper bound. The two estimates are compatible and may be combined as
+\[
+v(k)\le \min\{u_k+1,\ kF(k)+2\}.
+\]
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 proves a substantially stronger upper bound,
+\[
+v(k)\le c_0^{(\frac15+o(1))2^k},
+\]
+improving the Round-1 exponent constant from $1$ to $\frac15$. The lower bound is still only of the shape $\exp(ck^2)$, so the main asymptotic order of growth remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 48\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T.~F.~Bloom, Erd\H{o}s Problem \#293, \texttt{erdosproblems.com/293}, accessed 2026-03-07.
+\item W.~van Doorn and Q.~Tang, \emph{The smallest denominator not contained in a unit fraction decomposition of $1$ with fixed length}, arXiv:2512.22083, 2025.
+\item C.~Elsholtz and S.~Planitzer, \emph{The number of solutions of the Erd\H{o}s--Straus equation and sums of $k$ unit fractions}, Proc. Roy. Soc. Edinburgh Sect. A 150 (2020), 1401--1427.
+\end{enumerate}
+

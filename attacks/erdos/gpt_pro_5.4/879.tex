@@ -1,0 +1,370 @@
+\section*{Erdos Problem \#879 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue path \textbf{(C)}: identify a fatal formal inconsistency in the Round-1 formalization, give the \emph{minimal corrected statement}, and then prove a genuine new theorem for the corrected formulation.
+
+The reason this is the right direction is that Round-1 quoted the classical upper bound $G(n)<H(n)$, but under the Round-1 definitions this upper bound is already false for small $n$. So before any further progress on the open lower-bound question can be trusted, the formalization itself has to be repaired.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following specific Round-1 results from the exported file \texttt{erdos\_solutions.tex}:
+\begin{itemize}
+\item Round-1 Lemma 1 for Problem \#879: under the Round-1 formalization, an elementary argument gave only
+\[
+G(n)\le H(n)+1.
+\]
+\item Round-1 Lemma 2 for Problem \#879: every prime $p\in(n/2,n]$ is forced in any maximizing admissible set.
+\item Round-1 computation table for Problem \#879: exact values of $G(n)$ were computed for several small $n$.
+\end{itemize}
+I do \emph{not} reprove those results; I only strengthen and correct the setup.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The key new insight is that the Round-1 formalization is not merely incomplete: it is \emph{internally inconsistent} with the quoted upper bound.
+
+The minimal repair has two parts.
+\begin{enumerate}
+\item The admissible set must be taken inside $\{2,3,\dots,n\}$, not $\{1,2,\dots,n\}$, because allowing $1$ always adds an automatic extra $1$ to the optimum.
+\item The $H$-term must use only primes in $(\sqrt n,n]$, namely
+\[
+H_*(n):=\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p\ +\ n\,\pi(\sqrt n),
+\]
+not the larger/incorrect Round-1 prime sum $\sum_{p<n}p$.
+\end{enumerate}
+
+For this corrected formulation I prove an \emph{exact upper bound}
+\[
+G_*(n)\le H_*(n),
+\]
+and an \emph{exact reduction} of the optimization problem to a weighted packing problem over the primes $\le \sqrt n$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+After Round-1, the exact gap was:
+\begin{quote}
+``Improve the $H$-type upper bound from $H(n)+1$ toward the quoted $H(n)$.''
+\end{quote}
+The obstruction was that Round-1 counted \emph{all} primes $<n$, which is too crude, and it also allowed $1$, which injects an unavoidable additive error.
+
+So the precise claims to settle now are:
+\begin{enumerate}
+\item prove that the Round-1 formulation is false as stated by explicit counterexample;
+\item identify the minimal corrected formulation compatible with the quoted classical upper bound;
+\item prove the corrected upper bound exactly;
+\item reformulate the remaining open lower-bound problem in a sharper optimization language.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+For clarity I distinguish the \emph{Round-1 quantities}
+\[
+G_{\mathrm{R1}}(n):=\max_{\substack{S\subseteq\{1,\dots,n\}\\ \gcd(a,b)=1\ \forall a\ne b\in S}}\ \sum_{a\in S}a,
+\qquad
+H_{\mathrm{R1}}(n):=\sum_{\substack{p\text{ prime}\\ p<n}}p\ +\ n\,\pi(\sqrt n),
+\]
+from the \emph{corrected quantities}
+\[
+G_*(n):=\max_{\substack{S\subseteq\{2,\dots,n\}\\ \gcd(a,b)=1\ \forall a\ne b\in S}}\ \sum_{a\in S}a,
+\qquad
+H_*(n):=\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p\ +\ n\,\pi(\sqrt n).
+\]
+
+\noindent\textbf{Proposition 1 (the Round-1 formalization is false, and both corrections are necessary).}
+Under the Round-1 definitions, the quoted upper bound $G(n)<H(n)$ is false.
+More precisely:
+\begin{enumerate}
+\item With the Round-1 definitions exactly as written,
+\[
+G_{\mathrm{R1}}(7)\ge 20>17=H_{\mathrm{R1}}(7).
+\]
+\item Even if one excludes $1$ but keeps the Round-1 definition of $H$, the inequality still fails:
+\[
+\max_{\substack{S\subseteq\{2,\dots,7\}\\ S\text{ admissible}}}\sum_{a\in S}a\ \ge 19>17=H_{\mathrm{R1}}(7).
+\]
+\item Even if one corrects the prime sum to $H_*$ but still allows $1$, the clean upper bound fails again:
+\[
+\max_{\substack{S\subseteq\{1,\dots,8\}\\ S\text{ admissible}}}\sum_{a\in S}a\ \ge 24>23=H_*(8).
+\]
+\end{enumerate}
+Hence the minimal consistent repair is: exclude $1$ \emph{and} replace $H_{\mathrm{R1}}$ by $H_*$.
+
+\noindent\emph{Proof.}
+(1) Take
+\[
+S=\{1,3,4,5,7\}\subseteq\{1,\dots,7\}.
+\]
+This set is admissible because $1$ is coprime to everything and the nontrivial pairwise gcds are
+\[
+\gcd(3,4)=\gcd(3,5)=\gcd(3,7)=\gcd(4,5)=\gcd(4,7)=\gcd(5,7)=1.
+\]
+Thus
+\[
+\sum_{a\in S}a=1+3+4+5+7=20.
+\]
+On the other hand,
+\[
+H_{\mathrm{R1}}(7)=\sum_{p<7}p+7\pi(\sqrt7)=(2+3+5)+7\cdot 1=17.
+\]
+So $20>17$.
+
+(2) Excluding $1$, take instead
+\[
+S'=\{3,4,5,7\}\subseteq\{2,\dots,7\}.
+\]
+The same gcd check shows $S'$ is admissible and
+\[
+\sum_{a\in S'}a=3+4+5+7=19>17=H_{\mathrm{R1}}(7).
+\]
+So the Round-1 definition of $H$ is itself wrong for the intended upper bound.
+
+(3) Now keep $H_*$ but allow $1$, and take
+\[
+T=\{1,3,5,7,8\}\subseteq\{1,\dots,8\}.
+\]
+Again $T$ is admissible because $1$ is harmless and $3,5,7,8$ are pairwise coprime. Hence
+\[
+\sum_{a\in T}a=1+3+5+7+8=24.
+\]
+But
+\[
+H_*(8)=\sum_{\sqrt8<p\le 8}p+8\pi(\sqrt8)=(3+5+7)+8\cdot 1=23.
+\]
+So $24>23$.
+Therefore both corrections are necessary.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 2 (exact corrected upper bound).}
+For every $n\ge 2$,
+\[
+G_*(n)\le H_*(n)=\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p\ +\ n\,\pi(\sqrt n).
+\]
+
+\noindent\emph{Proof.}
+Fix an admissible set $S\subseteq\{2,\dots,n\}$.
+Define
+\[
+T:=\{a\in S:\text{$a$ has at least one prime divisor }q\le \sqrt n\},
+\qquad
+L:=S\setminus T.
+\]
+Then $S=T\sqcup L$.
+
+First bound $T$.
+For each $a\in T$, define a small prime $q(a)\le \sqrt n$ as follows:
+\begin{itemize}
+\item if $a$ itself is prime, then necessarily $a\le \sqrt n$, and we set $q(a):=a$;
+\item if $a$ is composite, let $q(a)$ be its smallest prime divisor.
+\end{itemize}
+In either case $q(a)$ is a prime with $q(a)\le \sqrt n$ and $q(a)\mid a$.
+
+I claim that the map $a\mapsto q(a)$ is injective on $T$.
+Indeed, if $a,b\in T$ are distinct and $q(a)=q(b)=q$, then $q$ divides both $a$ and $b$, so
+\[
+\gcd(a,b)\ge q>1,
+\]
+contradicting admissibility of $S$.
+Thus the distinct elements of $T$ use distinct small primes, so
+\[
+|T|\le \pi(\sqrt n).
+\]
+Since each element of $T$ is at most $n$,
+\[
+\sum_{a\in T}a\le n\,\pi(\sqrt n).
+\]
+
+Now bound $L$.
+By definition, no element of $L$ has any prime divisor $\le \sqrt n$.
+I claim every element of $L$ is a prime $>\sqrt n$.
+Indeed, let $a\in L$. Since $a\ge 2$, it is either prime or composite.
+If $a$ were composite, its smallest prime divisor would be at most $\sqrt a\le \sqrt n$, contradicting $a\in L$.
+Therefore $a$ is prime, and since it has no prime divisor $\le \sqrt n$, we must have $a>\sqrt n$.
+Hence
+\[
+L\subseteq \{p\text{ prime}:\ \sqrt n<p\le n\},
+\]
+so
+\[
+\sum_{a\in L}a\le \sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p.
+\]
+
+Finally,
+\[
+\sum_{a\in S}a=\sum_{a\in T}a+\sum_{a\in L}a
+\le n\pi(\sqrt n)+\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p
+=H_*(n).
+\]
+Since $S$ was arbitrary, $G_*(n)\le H_*(n)$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 3 (exact reduction to a small-prime packing problem).}
+Let $\mathcal T_n$ be the family of sets $T\subseteq\{2,\dots,n\}$ such that:
+\begin{itemize}
+\item the elements of $T$ are pairwise coprime;
+\item every $t\in T$ has at least one prime divisor $\le \sqrt n$.
+\end{itemize}
+For $T\in\mathcal T_n$, define
+\[
+U(T):=\{p\text{ prime}:\ \sqrt n<p\le n\text{ and }p\mid t\text{ for some }t\in T\}.
+\]
+Then
+\[
+G_*(n)=\max_{T\in\mathcal T_n}\left(\sum_{t\in T}t+\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n\\ p\notin U(T)}}p\right).
+\]
+Equivalently,
+\[
+G_*(n)=\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p
+\ +\ \max_{T\in\mathcal T_n}\left(\sum_{t\in T}t-\sum_{p\in U(T)}p\right).
+\]
+
+\noindent\emph{Proof.}
+Fix any admissible set $S\subseteq\{2,\dots,n\}$.
+Let
+\[
+T:=\{a\in S:\text{$a$ has a prime divisor }\le \sqrt n\}.
+\]
+Then $T\in\mathcal T_n$ by construction, because it is a subset of an admissible set.
+Every element of $S\setminus T$ has no prime divisor $\le \sqrt n$, so by the argument in Lemma~2 it must be a prime $p$ with $\sqrt n<p\le n$.
+Moreover, such a prime $p$ belongs to $S\setminus T$ if and only if $p\notin U(T)$:
+\begin{itemize}
+\item if $p\in U(T)$, then some $t\in T$ is divisible by $p$, so $p$ cannot also lie in $S$ because then $\gcd(p,t)>1$;
+\item if $p\notin U(T)$, then $p$ shares no prime factor with any element of $T$, and it shares no prime factor with any other large prime, so $p$ can be added freely.
+\end{itemize}
+Therefore for this particular $S$ we have the exact decomposition
+\[
+\sum_{a\in S}a=\sum_{t\in T}t+\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n\\ p\notin U(T)}}p.
+\]
+This proves
+\[
+G_*(n)\le \max_{T\in\mathcal T_n}\left(\sum_{t\in T}t+\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n\\ p\notin U(T)}}p\right).
+\]
+
+For the reverse inequality, fix any $T\in\mathcal T_n$ and define
+\[
+S_T:=T\cup \{p\text{ prime}:\ \sqrt n<p\le n,\ p\notin U(T)\}.
+\]
+I claim $S_T$ is admissible.
+Indeed:
+\begin{itemize}
+\item elements inside $T$ are pairwise coprime by definition of $\mathcal T_n$;
+\item distinct added primes are pairwise coprime;
+\item if $p$ is one of the added primes and $t\in T$, then $p\notin U(T)$ implies $p\nmid t$, and since $p$ is prime, this is equivalent to $\gcd(p,t)=1$.
+\end{itemize}
+Hence
+\[
+\sum_{a\in S_T}a=\sum_{t\in T}t+\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n\\ p\notin U(T)}}p,
+\]
+so taking the maximum over $T$ gives the reverse inequality.
+Thus the formula is exact.
+The equivalent second formula follows by subtracting from the full large-prime sum.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 4 (explicit constructive lower bound).}
+For each prime $q\le \sqrt n$, let
+\[
+\ell_q:=\lfloor \log_q n\rfloor,
+\qquad
+m_q:=q^{\ell_q}.
+\]
+Then
+\[
+G_*(n)\ge \sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p\ +\ \sum_{\substack{q\text{ prime}\\ q\le \sqrt n}} q^{\ell_q}.
+\]
+Consequently,
+\[
+0\le H_*(n)-G_*(n)\le \sum_{\substack{q\text{ prime}\\ q\le \sqrt n}}\bigl(n-q^{\ell_q}\bigr).
+\]
+
+\noindent\emph{Proof.}
+The set
+\[
+T_0:=\{m_q:\ q\le \sqrt n,\ q\text{ prime}\}
+\]
+belongs to $\mathcal T_n$: each $m_q\le n$, each $m_q$ has the single prime divisor $q\le \sqrt n$, and distinct prime powers $m_q,m_{q'}$ are pairwise coprime when $q\ne q'$.
+Moreover $U(T_0)=\varnothing$, because no $m_q$ has any prime divisor $>\sqrt n$.
+Applying Lemma~3 to $T_0$ gives
+\[
+G_*(n)\ge \sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p + \sum_{q\le \sqrt n} m_q,
+\]
+as claimed.
+Subtracting this from
+\[
+H_*(n)=\sum_{\substack{p\text{ prime}\\ \sqrt n<p\le n}}p+n\pi(\sqrt n)
+\]
+yields the stated upper bound on the gap.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Interpretation of Lemma 3.}
+The corrected open lower-bound question is now equivalent to the following optimization statement:
+\begin{quote}
+Is it true that there exists a choice of $T\in\mathcal T_n$ such that
+\[
+\sum_{t\in T}t-\sum_{p\in U(T)}p\ \ge\ n\pi(\sqrt n)-n^{1+o(1)}?
+\]
+\end{quote}
+This is a strictly sharper formulation than in Round-1: instead of treating the problem as a vague ``large primes plus composites'' tradeoff, it becomes an exact weighted packing problem over numbers carrying at least one small prime.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\textbf{(a) Boundary checks for the obstruction.}
+The counterexamples in Proposition~1 are completely explicit:
+\begin{itemize}
+\item $n=7$: $\{1,3,4,5,7\}$ has pairwise gcd $1$ and sum $20>17=H_{\mathrm{R1}}(7)$.
+\item $n=7$ without $1$: $\{3,4,5,7\}$ has sum $19>17=H_{\mathrm{R1}}(7)$.
+\item $n=8$ with corrected $H_*$ but allowing $1$: $\{1,3,5,7,8\}$ has sum $24>23=H_*(8)$.
+\end{itemize}
+So the diagnosis really does force \emph{both} corrections.
+
+\textbf{(b) Hidden-assumption check in Lemma~2.}
+The only nontrivial claim is that an integer $a\le n$ with no prime divisor $\le \sqrt n$ must be a prime $>\sqrt n$.
+This is correct because any composite integer has a prime divisor at most its square root.
+
+\textbf{(c) Hidden-assumption check in Lemma~3.}
+For a prime $p>\sqrt n$ and an element $t\in T$, the statement ``$p$ is coprime to $t$'' is equivalent to ``$p\nmid t$'' because $p$ is prime. This is exactly why the completion by all primes outside $U(T)$ is valid.
+
+\textbf{(d) Consistency with Round-1.}
+Round-1 Lemma~2 (primes in $(n/2,n]$ are forced in maximizing sets) remains valid under the corrected formulation and is fully consistent with Lemma~3: such primes always lie in the added large-prime part unless one deliberately sacrifices one of them inside an element of $T$, which can happen only if the element is exactly that prime itself since $2p>n$.
+
+\textbf{(e) Computational sanity checks.}
+I recomputed exact optimal values under the corrected formulation (exclude $1$, use $H_*$). The outputs were:
+\begin{verbatim}
+Round-1 inconsistency checks:
+n=7: old H_R1(7)=17, but {1,3,4,5,7} has sum 20.
+n=7: even without 1, {3,4,5,7} has sum 19 > 17.
+n=8: corrected H_*(8)=23, but allowing 1 gives {1,3,5,7,8} with sum 24.
+
+Corrected values:
+ n   G_*(n)   H_*(n)
+ 7     19       22
+ 8     23       23
+10     29       32
+20     98      112
+30    192      209
+50    445      511
+\end{verbatim}
+These checks support the corrected upper bound and directly falsify the Round-1 formalization.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 makes strictly substantive progress beyond Round-1:
+\begin{enumerate}
+\item it identifies and proves a fatal flaw in the Round-1 formalization of Problem \#879;
+\item it gives the minimal corrected formulation compatible with the quoted classical upper bound;
+\item it proves the corrected exact upper bound $G_*(n)\le H_*(n)$;
+\item it gives an exact reduction (Lemma~3) turning the remaining lower-bound question into a concrete weighted packing problem.
+\end{enumerate}
+
+What remains open is the true lower-bound side: whether the packing term in Lemma~3 can always achieve
+\[
+n\pi(\sqrt n)-n^{1+o(1)}.
+\]
+That is exactly the surviving core difficulty.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\noindent\textbf{COMPLETION: 63\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item Round-1 exported file \texttt{/mnt/data/erdos\_solutions.tex}, Problem \#879 section.
+\item Local exact computations performed in this round (dynamic programming over prime-support masks for small $n$).
+\end{itemize}

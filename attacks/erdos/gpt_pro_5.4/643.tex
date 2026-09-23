@@ -1,0 +1,207 @@
+\section{Problem 643 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: isolate the structural obstruction left open in Round 1.  The most promising advance is to convert the 3-uniform case from a bespoke ``generalized 4-cycle'' problem into an \emph{exact standard Tur\'an problem}.  This does not solve the full conjecture for all fixed $t\ge 3$, but it strictly sharpens the problem by proving that, when $t=3$, the forbidden configuration is \emph{exactly} $K^{(3)}_{2,2}$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use only the following Round-1 items.
+
+\begin{itemize}
+\item The Round-1 lower-bound construction: for every $t\ge 2$,
+\[
+ f(n;t)\ge \binom{n-1}{t-1}+\left\lfloor \frac{n-1}{t}\right\rfloor+1.
+\]
+\item The Round-1 observation that the unresolved gap is structural: one needs either a stability theorem forcing an almost-star, or an exact reformulation in terms of a standard forbidden hypergraph.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is the following exact reduction.
+
+\medskip
+\noindent
+\textbf{New structural fact.}
+For $3$-uniform hypergraphs, the forbidden configuration
+\[
+A\cup B=C\cup D,
+\qquad
+A\cap B=C\cap D=\varnothing,
+\]
+with $A,B,C,D$ distinct, is \emph{precisely} a copy of $K^{(3)}_{2,2}$.
+
+Consequently,
+\[
+ f(n;3)-1 = \mathrm{ex}(n,K^{(3)}_{2,2}).
+\]
+This is a genuine strengthening over Round 1, which only treated the problem as an abstract union-collision condition.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 was that the $t=3$ case had not been identified with a standard extremal problem.  I therefore prove two claims:
+
+\begin{enumerate}
+\item every copy of $K^{(3)}_{2,2}$ gives a generalized $4$-cycle;
+\item conversely, every generalized $4$-cycle in a $3$-uniform hypergraph is a copy of $K^{(3)}_{2,2}$.
+\end{enumerate}
+
+This removes the main ambiguity in the $t=3$ case and shows that the remaining obstruction is exactly the still-open extremal problem for $K^{(3)}_{2,2}$.
+
+\subsection*{5) WORK (ROUND-2)}
+First recall the definition: $K^{(3)}_{2,2}$ is the $3$-uniform hypergraph with disjoint sets
+\[
+X=\{x_1,x_2\},
+\qquad
+Y_1, Y_2,
+\qquad
+|Y_1|=|Y_2|=2,
+\]
+and edge set
+\[
+\{\{x_i\}\cup Y_j : i\in\{1,2\},\ j\in\{1,2\}\}.
+\]
+It has exactly four edges.
+
+\paragraph{Claim 643.1.}
+In a $3$-uniform hypergraph, a set of four distinct edges forms a generalized $4$-cycle if and only if those four edges form a copy of $K^{(3)}_{2,2}$.
+
+\paragraph{Proof.}
+Suppose first that we have a copy of $K^{(3)}_{2,2}$ with edges
+\[
+\{x_1\}\cup Y_1,
+\quad
+\{x_2\}\cup Y_1,
+\quad
+\{x_1\}\cup Y_2,
+\quad
+\{x_2\}\cup Y_2,
+\]
+where $X=\{x_1,x_2\}$, $Y_1$, and $Y_2$ are pairwise disjoint and $|Y_1|=|Y_2|=2$.
+Set
+\[
+A=\{x_1\}\cup Y_1,
+\quad
+B=\{x_2\}\cup Y_2,
+\quad
+C=\{x_1\}\cup Y_2,
+\quad
+D=\{x_2\}\cup Y_1.
+\]
+Then $A\cap B=\varnothing$ and $C\cap D=\varnothing$, while
+\[
+A\cup B = X\cup Y_1\cup Y_2 = C\cup D.
+\]
+So these four edges form a generalized $4$-cycle.
+
+Conversely, suppose $A,B,C,D$ are four distinct $3$-edges such that
+\[
+A\cap B=C\cap D=\varnothing,
+\qquad
+A\cup B=C\cup D.
+\]
+Let
+\[
+U:=A\cup B=C\cup D.
+\]
+Since $A$ and $B$ are disjoint $3$-sets, $|U|=6$, and $A$ and $B$ partition $U$.
+Because $C$ is a $3$-subset of $U$, the number $|A\cap C|$ can only be $0,1,2,3$.
+It cannot be $0$, because then $C\subseteq B$ and $|C|=|B|=3$, forcing $C=B$, contrary to distinctness.
+It cannot be $3$, because then $C=A$, again impossible.
+Hence $|A\cap C|\in\{1,2\}$.
+After possibly swapping the names of $C$ and $D$, we may assume
+\[
+|A\cap C|=1.
+\]
+Then automatically
+\[
+|B\cap C|=2,
+\qquad
+|A\cap D|=2,
+\qquad
+|B\cap D|=1,
+\]
+because $C$ and $D$ are complementary $3$-subsets of $U$.
+Now define
+\[
+\{x_1\}:=A\cap C,
+\qquad
+\{x_2\}:=B\cap D,
+\qquad
+Y_1:=A\cap D,
+\qquad
+Y_2:=B\cap C.
+\]
+Then $|Y_1|=|Y_2|=2$, and the four pieces $\{x_1\}$, $\{x_2\}$, $Y_1$, $Y_2$ are pairwise disjoint because $A$ and $B$ are disjoint and partition $U$.
+Moreover,
+\[
+A=\{x_1\}\cup Y_1,
+\qquad
+B=\{x_2\}\cup Y_2,
+\qquad
+C=\{x_1\}\cup Y_2,
+\qquad
+D=\{x_2\}\cup Y_1.
+\]
+Thus $A,B,C,D$ are exactly the four edges of a copy of $K^{(3)}_{2,2}$.
+This proves the equivalence.
+
+\hfill$\square$
+
+\paragraph{Corollary 643.2.}
+For every $n$,
+\[
+ f(n;3)-1 = \mathrm{ex}(n,K^{(3)}_{2,2}),
+\]
+where $\mathrm{ex}(n,H)$ denotes the usual Tur\'an number of the $3$-uniform hypergraph $H$.
+
+\paragraph{Proof.}
+By definition, $f(n;3)-1$ is the maximum number of edges in a $3$-uniform hypergraph on $n$ vertices containing no generalized $4$-cycle.  By Claim 643.1, that is exactly the maximum number of edges in a $3$-uniform hypergraph on $n$ vertices containing no copy of $K^{(3)}_{2,2}$.  This is precisely $\mathrm{ex}(n,K^{(3)}_{2,2})$.
+
+\hfill$\square$
+
+\paragraph{Consequences.}
+The $t=3$ case is now completely identified with the hypergraph bipartite Tur\'an problem for $K^{(3)}_{2,2}$.  Thus the remaining difficulty is not an artefact of the union-collision formulation; it is the genuine, currently open extremal problem for $K^{(3)}_{2,2}$.
+
+Combining Corollary 643.2 with the currently recorded bounds gives, for $t=3$,
+\[
+\binom{n-1}{2}+\left\lfloor\frac{n-1}{3}\right\rfloor+1
+\le f(n;3)
+\le \frac{13}{9}\binom{n}{2},
+\]
+and for general fixed $t\ge 3$ one still has
+\[
+1\le \limsup_{n\to\infty}\frac{f(n;t)}{\binom{n}{t-1}}
+\le \min\!\left(\frac{7}{4},1+\frac{2}{\sqrt t}\right).
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The delicate point is the converse direction in Claim 643.1.
+
+\begin{itemize}
+\item The proof uses only the facts that $A$ and $B$ are disjoint $3$-sets, hence partition a $6$-set $U$, and that $C$ is a distinct $3$-subset of $U$.  Therefore $|A\cap C|$ cannot be $0$ or $3$.
+\item After renaming, $|A\cap C|=1$ is legitimate, because if $|A\cap C|=2$ then $|A\cap D|=1$, so swapping $C$ and $D$ puts us in the treated case.
+\item The decomposition into $\{x_1\},\{x_2\},Y_1,Y_2$ uses only pairwise disjoint pieces from the partition $U=A\sqcup B$, so there is no hidden overlap.
+\item No step uses any assumption special to large $n$; the equivalence is exact for every $n$.
+\end{itemize}
+
+Hence the reduction is gap-free.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The full problem remains open, but Round 2 strictly advances the investigation by proving the exact identity
+\[
+ f(n;3)-1 = \mathrm{ex}(n,K^{(3)}_{2,2}),
+\]
+thereby converting the $3$-uniform case into a standard extremal hypergraph problem.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 52\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#643}, accessed 2026-03-07.
+\item S. Kr\'al', Y. Mubayi, J. Pach, J. Volec, and M. Tyomkyn, \emph{Asymptotics of the Hypergraph Bipartite Tur\'an Problem}, Combinatorica 43 (2023), 231--257.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+This section is part of the combined drop-in file \texttt{643\_644\_650\_solutions.tex}; no preamble is used.
+
+

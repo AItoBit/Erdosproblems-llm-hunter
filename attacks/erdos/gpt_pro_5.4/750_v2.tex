@@ -1,0 +1,266 @@
+\section{Problem 750}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: correct a genuine understatement in Round-1 and then push the known result strictly further.
+
+Round-1 correctly proved the fixed \emph{linear-error} case using Erd\H{o}s--Hajnal--Szemer\'edi (EHS), but it stopped too early. In fact the same EHS input already yields a graph of infinite chromatic number for which every $m$-vertex subgraph has an independent set of size
+\[
+\frac{m}{2}-o(m).
+\]
+So the original problem remains open, but the presently provable regime is strictly stronger than the Round-1 summary claimed.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 material.
+
+\begin{itemize}
+\item Round-1 already established the implication
+\[
+\text{``induced bipartite subgraph on }(1-\delta)m\text{ vertices''}
+\Longrightarrow
+\alpha(H)\geq \left(\frac12-\frac\delta2\right)m.
+\]
+\item Round-1 used the disjoint-union trick to pass from arbitrarily large finite chromatic number to infinite chromatic number.
+\end{itemize}
+
+I strengthen that construction by letting the error parameter vary from component to component and by choosing the component sizes recursively.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a \emph{weighted majorization argument}. Fix a decreasing sequence of local error coefficients; for definiteness I take
+\[
+\lambda_j:=\frac{1}{(j+1)^2}\qquad (j\ge 1).
+\]
+For the $j$-th component I arrange a local estimate with deficit coefficient $\lambda_j$, and then choose the component sizes so large that the cumulative weighted size
+\[
+D_j:=\sum_{i\le j}\lambda_i s_i
+\]
+stays below
+\[
+\frac{T_j}{j+1},\qquad T_j:=\sum_{i\le j}s_i.
+\]
+Because the weights $\lambda_j$ decrease, the worst possible $m$-vertex deficit occurs by filling the early components first. That turns the componentwise linear estimates into a global $o(m)$ estimate.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was:
+\begin{quote}
+Can the EHS input do anything beyond a fixed proportional error?
+\end{quote}
+
+Yes. I will prove the following strengthening.
+
+\medskip
+\noindent
+\textbf{Theorem 750.1.}
+There exists a graph $G$ with $\chi(G)=\infty$ and a function $g:\mathbb N\to[0,\infty)$ with $g(m)=o(m)$ such that every subgraph $H$ of $G$ on $m$ vertices satisfies
+\[
+\alpha(H)\ge \frac m2-g(m).
+\]
+Equivalently, there exists a function $\eta:\mathbb N\to(0,\infty)$ with $\eta(m)\to 0$ such that every $m$-vertex subgraph $H$ of $G$ satisfies
+\[
+\alpha(H)\ge \left(\frac12-\eta(m)\right)m.
+\]
+
+Since deleting edges can only increase the independence number, it is enough to prove the claim for induced subgraphs. That is what the construction below provides.
+
+\subsection*{5) WORK (ROUND-2)}
+
+For each integer $j\ge 1$, set
+\[
+\lambda_j:=\frac{1}{(j+1)^2}.
+\]
+By the EHS theorem, for each $j$ there exists a graph $X_j$ with
+\[
+\chi(X_j)>j
+\]
+such that every induced subgraph $K\subseteq X_j$ on $t$ vertices contains an induced bipartite subgraph on more than $(1-2\lambda_j)t$ vertices.
+
+Because $j$ is finite, the de Bruijn--Erd\H{o}s theorem implies that $X_j$ has a finite subgraph of chromatic number $>j$; replacing that finite subgraph by the induced subgraph on the same vertex set, we obtain a finite induced subgraph $F_j\subseteq X_j$ with
+\[
+\chi(F_j)>j.
+\]
+Since the EHS property is hereditary under taking induced subgraphs, every induced subgraph $K\subseteq F_j$ on $t$ vertices still contains an induced bipartite subgraph on more than $(1-2\lambda_j)t$ vertices. Therefore
+\[
+\alpha(K)\ge \left(\frac12-\lambda_j\right)t
+\qquad\text{for every induced }K\subseteq F_j.
+\]
+Let $v_j:=|V(F_j)|$.
+
+For each $j$, let $n_j$ be a positive integer to be chosen recursively, and let $G_j$ be the disjoint union of $n_j$ copies of $F_j$. Then
+\[
+s_j:=|V(G_j)|=n_jv_j,
+\qquad
+\chi(G_j)>j,
+\]
+and the same local estimate holds on $G_j$: every induced subgraph $K\subseteq G_j$ on $t$ vertices satisfies
+\[
+\alpha(K)\ge \left(\frac12-\lambda_j\right)t.
+\]
+Indeed, $K$ splits across the copies of $F_j$, and independence numbers add over disjoint components.
+
+Now define
+\[
+T_j:=\sum_{i=1}^j s_i,
+\qquad
+D_j:=\sum_{i=1}^j \lambda_i s_i.
+\]
+I claim that we can choose the integers $n_j$ (equivalently, the multiples $s_j$ of $v_j$) so that
+\[
+D_j\le \frac{T_j}{j+1}
+\qquad\text{for all }j\ge 1.
+\]
+
+\medskip
+\noindent
+\textbf{Feasibility of the recursion.}
+Assume $s_1,\dots,s_{j-1}$ have already been chosen. Then $T_{j-1}$ and $D_{j-1}$ are fixed. We need
+\[
+D_{j-1}+\lambda_js_j\le \frac{T_{j-1}+s_j}{j+1}.
+\]
+Since $\lambda_j=1/(j+1)^2$, this is equivalent to
+\[
+D_{j-1}-\frac{T_{j-1}}{j+1}
+\le
+s_j\left(\frac{1}{j+1}-\frac{1}{(j+1)^2}\right)
+=
+ s_j\frac{j}{(j+1)^2}.
+\]
+The coefficient on the right is positive, so the inequality holds for every sufficiently large $s_j$. Because $s_j$ may be any sufficiently large multiple of $v_j$, the recursive choice is possible.
+
+Now let
+\[
+G:=\bigsqcup_{j\ge 1}G_j.
+\]
+Since $\chi(G_j)>j$ for every $j$, we have
+\[
+\chi(G)=\sup_j\chi(G_j)=\infty.
+\]
+
+Let $H$ be any induced subgraph of $G$ on $m$ vertices. Write
+\[
+m_j:=|V(H)\cap V(G_j)|,
+\qquad
+\sum_{j\ge 1}m_j=m.
+\]
+Applying the local estimate inside each component and summing gives
+\[
+\alpha(H)\ge \sum_{j\ge 1}\left(\frac12-\lambda_j\right)m_j
+=
+\frac m2-\sum_{j\ge 1}\lambda_jm_j.
+\]
+So it remains to bound the weighted deficit
+\[
+\Delta(H):=\sum_{j\ge 1}\lambda_jm_j.
+\]
+
+\medskip
+\noindent
+\textbf{Weighted majorization lemma.}
+Because $(\lambda_j)$ is strictly decreasing, the maximum possible value of $\Delta(H)$ under the constraints
+\[
+0\le m_j\le s_j,
+\qquad
+\sum_{j\ge 1}m_j=m,
+\]
+is attained by filling the early components first.
+
+Indeed, suppose $(m_j)$ maximizes $\Delta(H)$. If there exist indices $i<j$ with $m_i<s_i$ and $m_j>0$, then replacing
+\[
+m_i\mapsto m_i+1,
+\qquad
+m_j\mapsto m_j-1
+\]
+increases $\Delta(H)$ by $\lambda_i-\lambda_j>0$, a contradiction. Hence in a maximizing configuration, all components before some index $k$ are full, all components after $k$ are empty, and the $k$-th component may be partially filled.
+
+Therefore, if
+\[
+T_{k-1}<m\le T_k,
+\]
+then
+\[
+\Delta(H)\le D_{k-1}+\lambda_k(m-T_{k-1}).
+\]
+Using the recursive bound on $D_{k-1}$,
+\[
+\Delta(H)\le \frac{T_{k-1}}{k}+\frac{m-T_{k-1}}{(k+1)^2}.
+\]
+Since $T_{k-1}\le m$ and $(k+1)^{-2}\le k^{-1}$,
+\[
+\Delta(H)\le \frac{m}{k}.
+\]
+Thus every induced subgraph $H$ with
+\[
+T_{k-1}<|V(H)|\le T_k
+\]
+satisfies
+\[
+\alpha(H)\ge \frac{|V(H)|}{2}-\frac{|V(H)|}{k}.
+\]
+
+Define
+\[
+\eta(m):=\frac1k\qquad\text{whenever }T_{k-1}<m\le T_k,
+\]
+and set
+\[
+g(m):=\eta(m)m.
+\]
+Because each $s_j\ge 1$, the partial sums $T_k$ are strictly increasing and tend to infinity. Hence the interval index $k=k(m)$ also tends to infinity with $m$, so
+\[
+\eta(m)\to 0.
+\]
+Consequently
+\[
+g(m)=\eta(m)m=o(m),
+\]
+and every induced $m$-vertex subgraph $H$ of $G$ satisfies
+\[
+\alpha(H)\ge \frac m2-g(m).
+\]
+As noted earlier, the same inequality then holds for every $m$-vertex subgraph of $G$, because passing from an induced subgraph to an arbitrary subgraph on the same vertex set can only increase the independence number. This proves Theorem 750.1. \hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Induced versus arbitrary subgraphs.} The problem is stated for all subgraphs, but induced subgraphs are the worst case on a fixed vertex set: deleting edges cannot decrease $\alpha$.
+\item \textbf{Heredity of the local EHS property.} This is why it is legitimate to replace $X_j$ by a finite induced subgraph $F_j$.
+\item \textbf{Preservation under disjoint union.} If a subgraph meets different copies in sets of sizes $t_1,\dots,t_r$, then the corresponding independent sets add, giving
+\[
+\alpha\ge \sum_{\ell=1}^r\left(\frac12-\lambda_j\right)t_\ell
+=\left(\frac12-\lambda_j\right)\sum_{\ell=1}^r t_\ell.
+\]
+\item \textbf{Greedy filling really is extremal.} The exchange argument excludes any maximizing configuration with a later component occupied while an earlier component is not yet full.
+\item \textbf{Why does $\eta(m)\to 0$?} Because $T_k\to\infty$, so the interval index $k(m)$ tends to infinity.
+\item \textbf{What exactly was wrong in Round-1?} There was no proof error there; the issue was a factual underclaim. The EHS input already yields a sublinear $o(m)$ error term, not merely a fixed positive proportion of $m$.
+\item \textbf{Why does this not yet settle the full problem?} The construction only uses arbitrarily small \emph{relative} defects inside finite high-chromatic components. It gives no quantitative control on the absolute defects $\lambda_j|F_j|$, so it does not by itself realize an \emph{arbitrary prescribed} additive error $f(m)\to\infty$.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\noindent
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Problem 750 remains open, but the EHS input already proves the strictly stronger statement
+\[
+\exists\,g(m)=o(m)\ \text{such that}\ \alpha(H)\ge \frac m2-g(m)
+\]
+for every $m$-vertex subgraph $H$ of some graph $G$ with $\chi(G)=\infty$.
+
+So the real unresolved gap is narrower than Round-1 suggested. It is no longer ``fixed linear error versus sublinear error''; rather, it is:
+\begin{quote}
+Can one realize \emph{an arbitrary} diverging additive error $f(m)\to\infty$?
+\end{quote}
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 82\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item N. G. de Bruijn and P. Erd\H{o}s, \emph{A colour problem for infinite graphs and a problem in the theory of relations}, Nederl. Akad. Wetensch. Proc. Ser. A \textbf{54} (1951), 371--373.
+\item P. Erd\H{o}s, A. Hajnal, and E. Szemer\'edi, \emph{On almost bipartite large chromatic graphs}, Theory and Practice of Combinatorics, North-Holland Math. Stud. \textbf{60} (1982), 117--123.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#750}, \texttt{erdosproblems.com/750}.
+\end{itemize}

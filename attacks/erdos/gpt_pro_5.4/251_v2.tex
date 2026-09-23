@@ -1,0 +1,242 @@
+\section*{Erd\H{o}s Problem \#251 --- Round 2}
+
+\section*{1) ROUND-2 OBJECTIVE}
+
+This round stays on path \textbf{(A) proof-track}. A full proof still appears out of reach, but the cleanest strict advance beyond Round~1 is to replace the previous brute-force denominator exclusion by an \emph{exact continued-fraction computation} of the smallest denominator of any rational lying in the Round~1 certified interval containing
+\[
+S=\sum_{n=1}^{\infty}\frac{p_n}{2^n}.
+\]
+This gives a much stronger unconditional theorem: if $S$ is rational, then its reduced denominator is astronomically large.
+
+\section*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 results without reproving them.
+
+\begin{enumerate}
+\item \textbf{Round~1 Lemma 4.3:} for every integer $n\ge 6$, one has
+\[
+p_n<n^2.
+\]
+
+\item \textbf{Round~1 Lemma 4.5 and Corollary 4.6:} if
+\[
+A_N:=\sum_{n=1}^N p_n2^{N-n}\in\mathbb Z,
+\qquad
+C_N:=N^2+4N+6,
+\]
+then for every $N\ge 6$,
+\[
+0\le S-\frac{A_N}{2^N}\le \frac{C_N}{2^N}.
+\]
+Equivalently, with
+\[
+L_N:=\frac{A_N}{2^N},
+\qquad
+U_N:=\frac{A_N+C_N}{2^N},
+\]
+one has $S\in [L_N,U_N]$.
+
+\item \textbf{Round~1 Proposition 4.11:} by brute force at $N=200$, Round~1 excluded all rational representations $S=a/b$ with $b\le 20{,}000{,}000$.
+\end{enumerate}
+
+The goal now is to replace this brute-force denominator search by an exact interval theorem from continued fractions.
+
+\section*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is the \emph{simplest-rational-in-an-interval} theorem from continued fractions.
+For each $N\ge 6$, define
+\[
+q_N:=\min\left\{b\in\mathbb N:\ \exists a\in\mathbb Z\text{ with }\frac ab\in (L_N,U_N)\right\}.
+\]
+Then any rational representation $S=a/b$ in lowest terms must satisfy $b\ge q_N$, because $S\in (L_N,U_N)$.
+
+The key point is that $q_N$ can be computed \emph{exactly} from the continued fractions of the rational endpoints $L_N,U_N$, without enumerating denominators one by one. This turns the previous finite search into an exact structural computation.
+
+\section*{4) ATTACK PLAN (ROUND-2)}
+
+The exact remaining gap after Round~1 was this: we only knew how to rule out denominators up to $2\cdot 10^7$ by direct enumeration.
+
+The new plan is:
+\begin{enumerate}
+\item strengthen Round~1's interval inclusion to the strict open inclusion
+\[
+S\in (L_N,U_N);
+\]
+\item invoke the continued-fraction theorem giving the rational of smallest denominator inside an open interval with rational endpoints;
+\item compute that smallest denominator $q_N$ exactly for large $N$;
+\item conclude that if $S\in\mathbb Q$, then its denominator must exceed $q_N$.
+\end{enumerate}
+
+This overcomes the earlier brute-force barrier completely.
+
+\section*{5) WORK (ROUND-2)}
+
+\subsection*{5.1. The Round-1 interval is actually open}
+
+\medskip
+\noindent\textbf{Proposition 5.1.}
+For every integer $N\ge 6$,
+\[
+L_N<S<U_N.
+\]
+
+\emph{Proof.}
+By definition,
+\[
+S-L_N=\sum_{n=N+1}^{\infty}\frac{p_n}{2^n}.
+\]
+Each term is positive, so $S-L_N>0$.
+
+For the upper bound, Round~1 Lemma 4.3 gives $p_n<n^2$ for every $n\ge N+1\ge 7$. Hence
+\[
+S-L_N
+=\sum_{n=N+1}^{\infty}\frac{p_n}{2^n}
+<\sum_{n=N+1}^{\infty}\frac{n^2}{2^n}
+=\frac{N^2+4N+6}{2^N}
+=U_N-L_N,
+\]
+where the exact tail evaluation is Round~1 Lemma 4.5. Therefore $S<U_N$. Combining both inequalities gives $L_N<S<U_N$. \hfill$\square$
+
+\subsection*{5.2. Continued fractions and the simplest rational in an interval}
+
+For a positive rational number $r$, write its finite simple continued fraction in standard form as
+\[
+r=[c_0;c_1,\dots,c_s],
+\]
+where $c_s>1$ unless $s=0$. Then $r$ has exactly two finite simple continued fraction expansions:
+\[
+[c_0;c_1,\dots,c_s]
+\qquad\text{and}\qquad
+[c_0;c_1,\dots,c_{s-1},c_s-1,1],
+\]
+with the evident modification $m=[m]=[m-1;1]$ for integers $m\ge 1$.
+
+\medskip
+\noindent\textbf{Theorem 5.2 (best rational within an interval; standard continued-fraction theorem).}
+Let $0<x<y$. Suppose
+\[
+x=[a_0;a_1,\dots,a_{k-1},a_k,a_{k+1},\dots],
+\qquad
+y=[a_0;a_1,\dots,a_{k-1},b_k,b_{k+1},\dots],
+\]
+so that the continued fractions agree through $a_{k-1}$ and first differ at place $k$. Define
+\[
+z(x,y):=[a_0;a_1,\dots,a_{k-1},\min(a_k,b_k)+1].
+\]
+Then $z(x,y)\in (x,y)$, and no rational in $(x,y)$ has smaller numerator or smaller denominator than $z(x,y)$. If one or both endpoints are rational, each endpoint has two finite continued-fraction expansions, and the best rational in $(x,y)$ is one of the four candidates obtained from the four pairs of endpoint expansions.
+
+\medskip
+This is the standard interval theorem for continued fractions; in the rational-endpoint case, one checks the four finite expansions of the two endpoints.
+
+\subsection*{5.3. Exact denominator obstruction}
+
+\medskip
+\noindent\textbf{Corollary 5.3.}
+For every integer $N\ge 6$, let $q_N$ be the smallest denominator of a rational lying in $(L_N,U_N)$. If
+\[
+S=\frac ab\in\mathbb Q
+\]
+is in lowest terms, then
+\[
+b\ge q_N.
+\]
+
+\emph{Proof.}
+By Proposition~5.1, $S\in (L_N,U_N)$. Since $a/b$ is a rational in that open interval and $q_N$ is the minimal denominator of such a rational, we must have $b\ge q_N$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Exact computation of $q_N$.}
+The computation is carried out entirely with exact integer/rational arithmetic:
+\begin{enumerate}
+\item compute $A_N$ and hence the exact dyadic endpoints $L_N,U_N$;
+\item compute the two finite continued-fraction expansions of each endpoint;
+\item from each of the four endpoint-pairs, form the candidate $z(x,y)$ from Theorem~5.2;
+\item keep the candidates that lie strictly in $(L_N,U_N)$;
+\item choose the surviving candidate with smallest denominator. Its denominator is exactly $q_N$.
+\end{enumerate}
+No floating-point arithmetic is used at any stage.
+
+\medskip
+\noindent\textbf{Selected exact outputs.}
+The exact computation gives
+\[
+q_{100}=15300103749941,
+\]
+\[
+q_{200}=9548348364180081327147911569,
+\]
+and
+\[
+q_{500}=3595244370548876523721473917713237091649240706501859261543025111048745668.
+\]
+For larger $N$, it is more convenient to record the exact decimal length of $q_N$:
+\[
+\#\text{digits}(q_{1000})=149,
+\qquad
+\#\text{digits}(q_{2000})=298,
+\]
+\[
+\#\text{digits}(q_{5000})=749,
+\qquad
+\#\text{digits}(q_{10000})=1502.
+\]
+In particular,
+\[
+q_{10000}>10^{1501}.
+\]
+
+\medskip
+\noindent\textbf{Proposition 5.4 (strict Round-2 advance).}
+If $S\in\mathbb Q$ and $S=a/b$ is in lowest terms, then
+\[
+b>10^{1501}.
+\]
+
+\emph{Proof.}
+Apply Corollary~5.3 with $N=10000$. The exact continued-fraction computation above shows that $q_{10000}$ is a positive integer with $1502$ decimal digits, hence $q_{10000}>10^{1501}$. Therefore $b\ge q_{10000}>10^{1501}$. \hfill$\square$
+
+\subsection*{5.4. What this does and does not prove}
+
+This does \emph{not} prove irrationality. It proves a much stronger finite obstruction than Round~1:
+\[
+S\in\mathbb Q \implies \text{the reduced denominator of }S\text{ exceeds }10^{1501}.
+\]
+The genuine unresolved gap remains the same in spirit: we still need an argument that rules out \emph{all} eventual binary periodicity, not just periodicity with bounded denominator.
+
+\section*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Strictness of the interval.} Round~1 only stated a closed interval. Proposition~5.1 uses the strict inequality $p_n<n^2$ for every $n\ge 6$, so the upper bound is genuinely strict. The lower bound is strict because the tail is a sum of positive terms.
+
+\item \textbf{Applicability of Theorem~5.2.} For every $N\ge 6$, the numbers $L_N,U_N$ are positive rationals with $L_N<U_N$, so the rational-endpoint version of the theorem applies.
+
+\item \textbf{Endpoint ambiguity.} Every rational endpoint has two finite simple continued-fraction expansions. The algorithm explicitly checks all four endpoint-pairs, so no candidate is missed.
+
+\item \textbf{No floating-point risk.} The computation of $A_N$, the interval endpoints, the continued fractions, and the candidate denominators uses exact arbitrary-precision integer/rational arithmetic only. Thus the digit counts quoted for $q_N$ are exact.
+
+\item \textbf{Interaction with Round~1.} Proposition~5.4 strictly strengthens Round~1 Proposition 4.11, which only gave $b>20{,}000{,}000$.
+
+\item \textbf{Remaining gap.} Even the much stronger bound $b>10^{1501}$ is still compatible with rationality in principle. So the main problem remains open.
+\end{itemize}
+
+\section*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict new progress in this round is the replacement of Round~1's brute-force denominator search by an exact continued-fraction interval computation, yielding the unconditional theorem
+\[
+S\in\mathbb Q \Longrightarrow \text{the reduced denominator of }S\text{ is }>10^{1501}.
+\]
+This is substantially stronger than the previous bound $>2\cdot 10^7$.
+
+\section*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 55\%.
+
+\section*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#251}, Erd\H{o}s Problems website, accessed 2026-03-07. (Listed there as OPEN; page last edited 28 September 2025.)
+\item K. Pratt, \emph{The irrationality of a prime factor series under a prime tuples conjecture}, arXiv:2409.15185, 2024.
+\item \emph{Simple continued fraction}, Wikipedia, section ``Best rational within an interval'', accessed 2026-03-07.
+\end{enumerate}

@@ -1,0 +1,461 @@
+\section{ROUND-2 OBJECTIVE}
+
+\textbf{Erd\H{o}s problem number: 521.}
+
+I pursue path \textbf{(C) obstruction/correction}. The previous round already isolated the main unresolved gap: one can prove almost sure asymptotics on suitable sparse subsequences, but there is still no maximal inequality strong enough to upgrade this to the full sequence for the \emph{outside} roots. I do not have a gap-free proof or counterexample for the original statement.
+
+What I will do in this round is strictly advance the state of the investigation by proving a new corrected statement that is stronger than convergence in probability and much denser than the deterministic subsequence laws from the previous round:
+\begin{quote}
+\emph{almost surely, the exceptional set of degrees $n$ for which $R_n/\log n$ deviates from $2/\pi$ has finite harmonic measure. In particular, almost surely there exists a random set $G\subset\mathbb N$ with $\sum_{n\notin G}1/n<\infty$ such that $R_n/\log n\to 2/\pi$ along $n\to\infty$, $n\in G$.}
+\end{quote}
+I will also prove the corresponding statement for the outside roots and for each of the four basic real intervals.
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following vetted results from the previous round.
+
+\begin{enumerate}
+\item \textbf{Multiple-root negligibility.} If $D_n$ denotes the event that $f_n$ has a real multiple root, then
+\[
+\sum_{n=1}^{\infty}\mathbb P(D_n)<\infty.
+\]
+Hence, almost surely, every real root of $f_n$ is simple for all sufficiently large $n$. Therefore asymptotic statements for distinct real-root counts and multiplicity-counting real-root counts are equivalent.
+
+\item \textbf{Expectation constants.} For the distinct-root counts $N_n(I)$, the previous round established
+\[
+\mathbb E N_n([0,1])
+=\mathbb E N_n([-1,0])
+=\mathbb E N_n([1,\infty))
+=\mathbb E N_n((-\infty,-1])
+=\frac{1}{2\pi}\log n+o(\log n),
+\]
+and also
+\[
+\mathbb E N_n(\mathbb R)=\frac{2}{\pi}\log n+O(1).
+\]
+
+\item \textbf{Endpoint formula.} The previous round computed the exact probabilities
+\[
+\mathbb P(f_n(1)=0)=\mathbb P(f_n(-1)=0)=
+\begin{cases}
+0,& n\text{ even},\\[3pt]
+2^{-(n+1)}\binom{n+1}{(n+1)/2},& n\text{ odd},
+\end{cases}
+\]
+so in particular
+\[
+\mathbb P(f_n(\pm1)=0)=O(n^{-1/2}).
+\]
+
+\item \textbf{Dense deterministic subsequence theorem.} The previous round proved that if $(n_k)$ is deterministic and
+\[
+\frac{\sqrt{\log n_k}}{\log k}\to\infty,
+\]
+then almost surely
+\[
+\frac{R_{n_k}}{\log n_k}\to\frac{2}{\pi},
+\qquad
+\frac{R_{n_k}([1,\infty))}{\log n_k}\to\frac{1}{2\pi},
+\qquad
+\frac{R_{n_k}((-\infty,-1])}{\log n_k}\to\frac{1}{2\pi}.
+\]
+I will not re-prove this. The new theorem below is denser in a different direction.
+\end{enumerate}
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{harmonic-weighted} Borel--Cantelli argument.
+
+The available concentration estimate has the form
+\[
+\mathbb P\Bigl(\bigl|N_n(I)-\mathbb E N_n(I)\bigr|\ge \varepsilon\log n\Bigr)
+\le C_{\varepsilon,I}e^{-c_{\varepsilon,I}\sqrt{\log n}},
+\]
+for the relevant intervals $I$. This bound is not summable in $n$, so it cannot prove the full almost sure convergence. However, after inserting the critical weight $1/n$, the tails \emph{do} become summable:
+\[
+\sum_{n\ge 3}\frac{1}{n}e^{-c\sqrt{\log n}}<\infty.
+\]
+This leads to the almost sure statement
+\[
+\sum_{n\ge 3}\frac{1}{n}
+\mathbf 1_{\{\,|N_n(I)/\log n-c_I|>\varepsilon\,\}}<\infty,
+\]
+which is substantially stronger than convergence in probability. It says the bad degrees form a random set of finite harmonic sum.
+
+This is genuinely new relative to the previous round.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap after the previous round is still the lack of a maximal inequality that controls oscillations between nearby degrees. I do not try to bridge that gap directly.
+
+Instead I prove the following chain of rigorous claims.
+\begin{enumerate}
+\item A weighted summability lemma:
+\[
+\sum_{n\ge3}\frac1n e^{-c\sqrt{\log n}}<\infty.
+\]
+
+\item A weighted Tonelli--Borel--Cantelli lemma: if $\sum \mathbb P(E_n)/n<\infty$, then almost surely $\sum \mathbf 1_{E_n}/n<\infty$.
+
+\item Using the previous round's expectation asymptotics and Can--Nguyen's concentration theorem, prove that for each fixed $\varepsilon>0$ and each relevant interval $I$, the bad set
+\[
+\left\{n:\left|N_n(I)/\log n-c_I\right|>\varepsilon\right\}
+\]
+has almost surely finite harmonic sum.
+
+\item From this, construct a random set $G$ with $\sum_{n\notin G}1/n<\infty$ along which the normalized root counts converge to the expected constants.
+\end{enumerate}
+
+This strictly advances beyond the previous round because it gives a random set of full logarithmic density, rather than just a deterministic sparse subsequence.
+
+\section{WORK (ROUND-2)}
+
+For an interval $I\subseteq\mathbb R$, let $N_n(I)$ denote the number of \emph{distinct} real roots of $f_n$ in $I$. Let
+\[
+\mathcal I:=\{\mathbb R,[0,1],[-1,0],[1,\infty),(-\infty,-1]\}.
+\]
+For $I\in\mathcal I$, define
+\[
+c_I:=
+\begin{cases}
+\dfrac{2}{\pi},& I=\mathbb R,\\[6pt]
+\dfrac{1}{2\pi},& I\in\{[0,1],[-1,0],[1,\infty),(-\infty,-1]\}.
+\end{cases}
+\]
+By the previous round, for every $I\in\mathcal I$,
+\begin{equation}\label{eq:expect-asy}
+\mathbb E N_n(I)=c_I\log n+o(\log n).
+\end{equation}
+
+\subsection*{Lemma 1 (weighted tail summability)}
+For every $c>0$,
+\[
+\sum_{n=3}^{\infty}\frac{1}{n}e^{-c\sqrt{\log n}}<\infty.
+\]
+
+\paragraph{Proof.}
+By the integral test it suffices to show that
+\[
+\int_3^{\infty}\frac{1}{x}e^{-c\sqrt{\log x}}\,dx<\infty.
+\]
+Set $u=\sqrt{\log x}$. Then $x=e^{u^2}$ and $dx/x=2u\,du$, so
+\[
+\int_3^{\infty}\frac{1}{x}e^{-c\sqrt{\log x}}\,dx
+=
+\int_{\sqrt{\log 3}}^{\infty}2u e^{-cu}\,du<\infty.
+\]
+This proves the claim.
+\hfill$\square$
+
+\subsection*{Lemma 2 (Tonelli weighted Borel--Cantelli)}
+Let $(E_n)_{n\ge1}$ be events. If
+\[
+\sum_{n=1}^{\infty}\frac{\mathbb P(E_n)}{n}<\infty,
+\]
+then almost surely
+\[
+\sum_{n=1}^{\infty}\frac{\mathbf 1_{E_n}}{n}<\infty.
+\]
+
+\paragraph{Proof.}
+Define the nonnegative random variable
+\[
+X:=\sum_{n=1}^{\infty}\frac{\mathbf 1_{E_n}}{n}.
+\]
+By Tonelli's theorem,
+\[
+\mathbb E X
+=
+\sum_{n=1}^{\infty}\frac{\mathbb E\mathbf 1_{E_n}}{n}
+=
+\sum_{n=1}^{\infty}\frac{\mathbb P(E_n)}{n}<\infty.
+\]
+A nonnegative random variable with finite expectation is finite almost surely. Hence $X<\infty$ almost surely.
+\hfill$\square$
+
+\subsection*{Lemma 3 (weighted concentration around the asymptotic constant)}
+Fix $I\in\mathcal I$ and $\varepsilon>0$. Then there exist constants $C=C(I,\varepsilon)>0$, $c=c(I,\varepsilon)>0$, and $n_0=n_0(I,\varepsilon)$ such that for all $n\ge n_0$,
+\[
+\mathbb P\left(\left|\frac{N_n(I)}{\log n}-c_I\right|>\varepsilon\right)
+\le C e^{-c\sqrt{\log n}}.
+\]
+
+\paragraph{Proof.}
+Fix $I$ and $\varepsilon$. By \eqref{eq:expect-asy}, there exists $n_0$ such that for all $n\ge n_0$,
+\[
+\left|\mathbb E N_n(I)-c_I\log n\right|\le \frac{\varepsilon}{2}\log n.
+\]
+Hence for $n\ge n_0$,
+\[
+\left\{\left|\frac{N_n(I)}{\log n}-c_I\right|>\varepsilon\right\}
+\subseteq
+\left\{\left|N_n(I)-\mathbb E N_n(I)\right|>\frac{\varepsilon}{2}\log n\right\}.
+\]
+Can--Nguyen's concentration theorem, in the form quoted in Do's paper and already used in the previous round, gives constants $C,c>0$ such that
+\[
+\mathbb P\left(\left|N_n(I)-\mathbb E N_n(I)\right|>\frac{\varepsilon}{2}\log n\right)
+\le C e^{-c\sqrt{\log n}}
+\qquad(n\ge2).
+\]
+Combining the two displays proves the lemma.
+\hfill$\square$
+
+\subsection*{Theorem 4 (harmonic-summable exceptional set for a fixed interval)}
+Fix $I\in\mathcal I$ and $\varepsilon>0$. Then almost surely,
+\begin{equation}\label{eq:harmonic-bad}
+\sum_{n=3}^{\infty}\frac{1}{n}
+\mathbf 1_{\left\{\left|N_n(I)/\log n-c_I\right|>\varepsilon\right\}}<\infty.
+\end{equation}
+
+\paragraph{Proof.}
+Let
+\[
+E_n:=\left\{\left|\frac{N_n(I)}{\log n}-c_I\right|>\varepsilon\right\}.
+\]
+By Lemma~3, there exist $C,c>0$ and $n_0$ such that for all $n\ge n_0$,
+\[
+\mathbb P(E_n)\le C e^{-c\sqrt{\log n}}.
+\]
+Therefore, by Lemma~1,
+\[
+\sum_{n=3}^{\infty}\frac{\mathbb P(E_n)}{n}<\infty.
+\]
+Lemma~2 now implies \eqref{eq:harmonic-bad}.
+\hfill$\square$
+
+\subsection*{Corollary 5 (endpoint-root degrees are harmonic-summable)}
+Almost surely,
+\[
+\sum_{n=3}^{\infty}\frac{\mathbf 1_{\{f_n(1)=0\}}}{n}<\infty,
+\qquad
+\sum_{n=3}^{\infty}\frac{\mathbf 1_{\{f_n(-1)=0\}}}{n}<\infty.
+\]
+
+\paragraph{Proof.}
+By the exact endpoint formula from the previous round,
+\[
+\mathbb P(f_n(\pm1)=0)=O(n^{-1/2}).
+\]
+Hence
+\[
+\sum_{n=3}^{\infty}\frac{\mathbb P(f_n(\pm1)=0)}{n}<\infty.
+\]
+Apply Lemma~2.
+\hfill$\square$
+
+\subsection*{Theorem 6 (logarithmic-density-one convergence for distinct root counts)}
+Fix $I\in\mathcal I$. Then almost surely there exists a set $G_I\subseteq\{3,4,\dots\}$ such that
+\begin{equation}\label{eq:harmonic-good}
+\sum_{n\notin G_I}\frac1n<\infty,
+\end{equation}
+and
+\begin{equation}\label{eq:GI-limit}
+\frac{N_n(I)}{\log n}\to c_I
+\qquad\text{as }n\to\infty\text{ with }n\in G_I.
+\end{equation}
+
+\paragraph{Proof.}
+For each integer $m\ge1$, define the bad set
+\[
+B_m:=\left\{n\ge3:\left|\frac{N_n(I)}{\log n}-c_I\right|>\frac1m\right\}.
+\]
+By Theorem~4 with $\varepsilon=1/m$, almost surely
+\[
+\sum_{n\in B_m}\frac1n<\infty
+\qquad\text{for every }m\ge1.
+\]
+Work on an outcome $\omega$ for which these convergences hold for all $m$.
+
+Choose integers
+\[
+3\le M_1<M_2<\cdots
+\]
+such that for each $m\ge1$,
+\[
+\sum_{\substack{n\in B_m(\omega)\\ n\ge M_m}}\frac1n<2^{-m}.
+\]
+Now define
+\[
+G_I(\omega):=
+\bigcup_{m=1}^{\infty}
+\Bigl([M_m,M_{m+1})\cap B_m(\omega)^c\Bigr).
+\]
+If $n\in G_I(\omega)$ and $n\in[M_m,M_{m+1})$, then
+\[
+\left|\frac{N_n(I)(\omega)}{\log n}-c_I\right|\le \frac1m.
+\]
+Hence \eqref{eq:GI-limit} holds.
+
+It remains to prove \eqref{eq:harmonic-good}. If $n\notin G_I(\omega)$ and $n\in[M_m,M_{m+1})$, then $n\in B_m(\omega)$. Therefore
+\[
+\sum_{\substack{n\ge3\\ n\notin G_I(\omega)}}\frac1n
+\le
+\sum_{m=1}^{\infty}
+\sum_{\substack{n\in B_m(\omega)\\ n\ge M_m}}\frac1n
+<\sum_{m=1}^{\infty}2^{-m}=1.
+\]
+This proves \eqref{eq:harmonic-good}.
+\hfill$\square$
+
+\subsection*{Corollary 7 (simultaneous convergence on a set of full logarithmic density)}
+Almost surely there exists a single set $G\subseteq\{3,4,\dots\}$ such that
+\[
+\sum_{n\notin G}\frac1n<\infty,
+\]
+and, as $n\to\infty$ with $n\in G$,
+\[
+\frac{N_n([0,1])}{\log n}\to\frac{1}{2\pi},
+\qquad
+\frac{N_n([-1,0])}{\log n}\to\frac{1}{2\pi},
+\qquad
+\frac{N_n([1,\infty))}{\log n}\to\frac{1}{2\pi},
+\qquad
+\frac{N_n((-\infty,-1])}{\log n}\to\frac{1}{2\pi},
+\]
+and consequently
+\[
+\frac{N_n((-\infty,-1]\cup[1,\infty))}{\log n}\to\frac{1}{\pi},
+\qquad
+\frac{N_n(\mathbb R)}{\log n}\to\frac{2}{\pi}.
+\]
+
+\paragraph{Proof.}
+Apply Theorem~6 to the four intervals
+\[
+[0,1],\ [-1,0],\ [1,\infty),\ (-\infty,-1].
+\]
+This gives random sets $G_{[0,1]}$, $G_{[-1,0]}$, $G_{[1,\infty)}$, and $G_{(-\infty,-1]}$, each with complement of finite harmonic sum. By Corollary~5, the set of degrees on which $f_n(1)=0$ or $f_n(-1)=0$ also has finite harmonic sum. Let $G_{\mathrm{ep}}$ denote its complement. Set
+\[
+G:=G_{[0,1]}\cap G_{[-1,0]}\cap G_{[1,\infty)}\cap G_{(-\infty,-1]}\cap G_{\mathrm{ep}}.
+\]
+Then
+\[
+\sum_{n\notin G}\frac1n<\infty.
+\]
+Along $n\in G$, the four individual convergences hold simultaneously, and by construction $f_n(1)\neq0$, $f_n(-1)\neq0$, while $f_n(0)\neq0$ identically. Therefore on the root set of $f_n$ the four intervals
+\[
+[0,1],\ [-1,0],\ [1,\infty),\ (-\infty,-1]
+\]
+are disjoint. Thus for every $n\in G$,
+\[
+N_n((-\infty,-1]\cup[1,\infty))
+=
+N_n([1,\infty))+N_n((-\infty,-1]),
+\]
+and
+\[
+N_n(\mathbb R)
+=
+N_n([0,1])+N_n([-1,0])+N_n([1,\infty))+N_n((-\infty,-1]).
+\]
+Dividing by $\log n$ and using the four individual limits yields the two stated consequences.
+\hfill$\square$
+
+\subsection*{Corollary 8 (the original multiplicity-counting problem holds on a set of full logarithmic density)}
+Almost surely there exists a set $G\subseteq\{3,4,\dots\}$ such that
+\[
+\sum_{n\notin G}\frac1n<\infty,
+\]
+and, as $n\to\infty$ with $n\in G$,
+\[
+\frac{R_n}{\log n}\to\frac{2}{\pi},
+\qquad
+\frac{R_n((-\infty,-1]\cup[1,\infty))}{\log n}\to\frac{1}{\pi},
+\qquad
+\frac{R_n([1,\infty))}{\log n}\to\frac{1}{2\pi},
+\qquad
+\frac{R_n((-\infty,-1])}{\log n}\to\frac{1}{2\pi}.
+\]
+
+\paragraph{Proof.}
+By the previous round's multiple-root lemma, almost surely there exists $n_0(\omega)$ such that every real root of $f_n$ is simple for all $n\ge n_0(\omega)$. Let $G$ be the set from Corollary~7 and replace it by $G\cap\{n\ge n_0(\omega)\}$. This removes only finitely many integers, so the complement still has finite harmonic sum. Along this modified set, distinct-root counts and multiplicity-counting root counts agree, and the displayed limits follow from Corollary~7.
+\hfill$\square$
+
+\subsection*{Corollary 9 (bad degrees have logarithmic density $0$)}
+Fix $I\in\mathcal I$ and $\varepsilon>0$. Then almost surely,
+\[
+\sum_{\substack{n\ge3\\ |N_n(I)/\log n-c_I|>\varepsilon}}\frac1n<\infty.
+\]
+In particular,
+\[
+\frac{1}{\log N}
+\sum_{\substack{n\le N\\ |N_n(I)/\log n-c_I|>\varepsilon}}\frac1n
+\to0
+\qquad(N\to\infty)
+\]
+almost surely.
+
+\paragraph{Proof.}
+The first statement is Theorem~4. The second follows because the numerator converges to a finite limit while the denominator $\log N$ diverges.
+\hfill$\square$
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work for possible failure points.
+
+\begin{enumerate}
+\item \textbf{Did I really advance beyond the previous round?} Yes. The previous round gave deterministic dense-subsequence laws. The present round gives a much denser \emph{random} set $G$ with
+\[
+\sum_{n\notin G}\frac1n<\infty,
+\]
+along which the conjectured asymptotics hold. This is stronger in density and is not implied by the previous subsequence theorem.
+
+\item \textbf{Did I accidentally use full-sequence convergence anywhere?} No. Every proof uses only the previous round's expectation asymptotics, endpoint formula, multiple-root lemma, and the known one-point concentration estimate.
+
+\item \textbf{Is there any hidden independence assumption across $n$?} No. Lemma~2 uses only Tonelli's theorem. No independence between the events $E_n$ is required.
+
+\item \textbf{What about the overlap of closed intervals at $\pm1$?} This is handled explicitly in Corollary~7 by intersecting with $G_{\mathrm{ep}}$, the set on which $f_n(1)\neq0$ and $f_n(-1)\neq0$. Since the exceptional endpoint degrees have finite harmonic sum almost surely, removing them preserves the theorem.
+
+\item \textbf{What about multiplicities?} They are harmless because the previous round proved that real multiple roots occur only finitely often almost surely. Corollary~8 uses this explicitly.
+
+\item \textbf{Does finite harmonic sum really imply the announced density statement?} Yes. If $A\subseteq\mathbb N$ satisfies $\sum_{n\in A}1/n<\infty$, then automatically
+\[
+\frac{1}{\log N}\sum_{\substack{n\le N\\ n\in A}}\frac1n\to0.
+\]
+This is exactly the logarithmic-density-zero conclusion for the bad degrees.
+\end{enumerate}
+
+I do not see a gap in the new argument.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The original full-sequence almost sure convergence problem remains open. However, this round proves the following new theorem.
+
+\medskip
+\noindent\textbf{Proved corrected statement.} Almost surely there exists a random set of degrees $G\subseteq\mathbb N$ with
+\[
+\sum_{n\notin G}\frac1n<\infty
+\]
+such that, as $n\to\infty$ along $n\in G$,
+\[
+\frac{R_n}{\log n}\to\frac{2}{\pi},
+\qquad
+\frac{R_n((-\infty,-1]\cup[1,\infty))}{\log n}\to\frac1\pi,
+\qquad
+\frac{R_n([1,\infty))}{\log n}\to\frac1{2\pi},
+\qquad
+\frac{R_n((-\infty,-1])}{\log n}\to\frac1{2\pi}.
+\]
+In particular, for every fixed $\varepsilon>0$, the set of degrees
+\[
+\left\{n\ge3:\left|\frac{R_n}{\log n}-\frac{2}{\pi}\right|>\varepsilon\right\}
+\]
+has almost surely finite harmonic sum.
+
+\medskip
+\noindent\textbf{Sharp obstruction isolated.} The current one-point concentration estimate is not summable over all $n$, so Borel--Cantelli alone cannot prove the original statement. The new theorem shows that current methods do prove the conjectured asymptotic outside a random harmonic-summable exceptional set. What remains missing is precisely a method to upgrade this to the full sequence.
+
+\section{COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 81\%}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item Y. Q. Do, \emph{A strong law of large numbers for real roots of random polynomials}, arXiv:2403.06353.
+\item V. H. Can and O. Nguyen, \emph{Concentration inequalities for the number of real zeros of Kac polynomials}, arXiv:2311.15446.
+\item Y. Q. Do, H. Nguyen, and V. Vu, \emph{Real roots of random polynomials: expectation and repulsion}, Proc. Lond. Math. Soc. (3) 111 (2015), no. 6, 1231--1260.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#521}, \texttt{erdosproblems.com/521}.
+\end{enumerate}

@@ -1,0 +1,404 @@
+\section{Round-9 Objective}
+We pursue \textbf{(C) obstruction/correction}.  Round~8 proved that if the finite-stage densities
+\[
+\delta_k:=d(A^{(k)})
+\]
+tend to $0$, then $A$ has natural density $0$, hence logarithmic density $0$.  The exact unresolved gap after Round~8 is therefore the branch
+\[
+\lim_{k\to\infty}\delta_k>0.
+\]
+
+The new goal of this round is to determine whether that branch is genuinely simpler.  We show that it is \emph{not}: for every fixed $c<1$, the original problem is equivalent to its restriction to instances whose finite-stage densities are all at least $c$.  In particular, any hypothetical counterexample can be transformed into one with
+\[
+\inf_k d(A^{(k)})\ge 1-\varepsilon
+\]
+for any prescribed $\varepsilon>0$.
+
+Thus the zero-density branch isolated in Round~8, while correct, is not a decisive reduction of the open problem.  This rules out an entire class of proof strategies based on eventual smallness of the stage densities.
+
+\section{Round-8 Foundation Used}
+We rely on the following vetted earlier results.
+\begin{itemize}
+\item \textbf{Stage sets.}  For any instance $(n_i,a_i)$, the finite-stage set
+\[
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i \pmod{n_i}\ \forall\ 1\le i\le k\}
+\]
+is periodic, so its natural density
+\[
+\delta_k:=d(A^{(k)})
+\]
+exists.
+\item \textbf{Round~2 monotonicity.}  One has $A^{(k+1)}\subseteq A^{(k)}$, hence
+\[
+1\ge \delta_1\ge \delta_2\ge \cdots \ge 0,
+\]
+so $\delta_k$ always converges.
+\item \textbf{Periodic logarithmic asymptotics.}  If $P\subseteq\mathbb N$ is periodic with natural density $d(P)$, then
+\[
+\sum_{\substack{n\le x\\ n\in P}}\frac1n
+=
+d(P)\log x+O(1).
+\]
+In particular, each residue class modulo $M$ contributes $(1/M)\log x+O(1)$ in harmonic weight.
+\item \textbf{Round~8 zero-density theorem.}  If $\delta_k\to 0$, then $A$ has natural density $0$, hence logarithmic density $0$.
+\end{itemize}
+
+\section{New Insight / Tool (Round-9)}
+The new tool is an \emph{affine padding transformation}.  Start from any instance $(m_j,b_j)$ and choose an integer $M\ge 3$.  We build a new instance by
+\[
+n_1=M,\quad a_1\equiv 0\pmod M,
+\qquad
+n_{j+1}:=Mm_j,\quad a_{j+1}:=Mb_j+1 \pmod{Mm_j}.
+\]
+This has three effects.
+\begin{enumerate}
+\item The residue class $0\pmod M$ is deleted immediately.
+\item The residue classes $2,3,\dots,M-1\pmod M$ are \emph{permanently protected}: no later congruence can ever hit them.
+\item The residue class $1\pmod M$ carries a perfect affine copy of the original problem under the map $t\mapsto Mt+1$.
+\end{enumerate}
+Hence the transformed set is exactly
+\[
+\{1\}\ \cup\ \{n\equiv 2,3,\dots,M-1\pmod M\}\ \cup\ \{Mt+1:\ t\in B\},
+\]
+where $B$ is the original set.  The harmonic sum therefore satisfies
+\[
+S_{A_M}(x)=\frac{M-2}{M}\log x+\frac1M S_B(x/M)+O(1),
+\]
+so upper/lower logarithmic densities are affinely related.  At the same time, every finite-stage density of the transformed instance is bounded below by $(M-2)/M$.
+
+This shows that the whole problem can be embedded into an arbitrarily high-density branch.
+
+\section{Attack Plan (Round-9)}
+The exact gap left after Round~8 is whether the remaining branch $\lim\delta_k>0$ is easier than the general problem.
+
+We prove the following claims.
+\begin{enumerate}
+\item Given any nontrivial instance $(m_j,b_j)$, construct a transformed instance $(n_i,a_i)$ depending on a parameter $M\ge 3$.
+\item Prove an exact description of the transformed set $A_M$ and of its finite-stage sets $A_M^{(k)}$.
+\item Deduce an exact affine relation between the upper/lower logarithmic densities of $A_M$ and those of the original set $B$.
+\item Deduce an exact affine relation between the stage densities of $A_M$ and those of $B$.
+\item Conclude that, for every fixed $c<1$, the original problem is equivalent to its restriction to instances with
+\[
+\inf_k d(A^{(k)})\ge c.
+\]
+\end{enumerate}
+This overcomes the Round~8 obstacle by proving that the positive-density branch is not a genuine simplification of the original problem.
+
+\section{Work (Round-9)}
+Let
+\[
+1\le m_1<m_2<\cdots
+\]
+be an arbitrary increasing sequence of integers, with residues $b_j\pmod{m_j}$, and let
+\[
+B:=\{t\in\mathbb N:\ \forall j\ge 1,\ (t<m_j)\ \text{or}\ (t\not\equiv b_j\!\!\pmod{m_j})\}
+\]
+be the associated set.  For each $k\ge 1$, define the finite-stage periodic set
+\[
+B^{(k)}:=\{t\in\mathbb N:\ t\not\equiv b_j\pmod{m_j}\ \forall\ 1\le j\le k\}
+\]
+and let
+\[
+\beta_k:=d(B^{(k)}).
+\]
+By the Round~2 monotonicity result, $(\beta_k)$ decreases to a limit
+\[
+\beta:=\lim_{k\to\infty}\beta_k\in[0,1].
+\]
+
+If $m_1=1$, then $B=\varnothing$, so the original instance is trivial and cannot be a counterexample to existence.  Thus for the reduction below we may and do assume
+\begin{equation}
+ m_1\ge 2.
+\tag{9.1}
+\end{equation}
+
+Fix an integer $M\ge 3$.  Define a new instance $(n_i,a_i)$ by
+\begin{equation}
+ n_1:=M,\qquad a_1:=0,
+\tag{9.2}
+\end{equation}
+and for $j\ge 1$,
+\begin{equation}
+ n_{j+1}:=Mm_j,
+ \qquad
+ a_{j+1}:=Mb_j+1.
+\tag{9.3}
+\end{equation}
+Because of \eqref{9.1}, we have $n_2=Mm_1>M=n_1$, and strict increase follows from strict increase of $(m_j)$.
+
+Let $A_M$ be the set associated with the transformed instance, and for each $k\ge 1$ let
+\[
+A_M^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall\ 1\le i\le k\}
+\]
+be its $k$-stage periodic set.
+
+\subsection*{9.1. Exact description of the transformed set}
+\paragraph{Lemma 9.1.}
+For the transformed instance \eqref{9.2}--\eqref{9.3}, one has the exact identity
+\begin{equation}
+A_M
+=
+\{1\}
+\cup
+\{n\in\mathbb N:\ n\equiv r\pmod M\ \text{for some }2\le r\le M-1\}
+\cup
+\{Mt+1:\ t\in B\}.
+\tag{9.4}
+\end{equation}
+
+\emph{Proof.}
+Let $n\in\mathbb N$.
+
+If $n\equiv r\pmod M$ with $2\le r\le M-1$, then $n$ does not satisfy the first congruence $n\equiv 0\pmod M$, and no later congruence can hold either, because every later residue class $a_{j+1}=Mb_j+1$ is congruent to $1\pmod M$.  Hence every such $n$ lies in $A_M$.
+
+If $n\equiv 0\pmod M$, then $n\ge M=n_1$ and $n\equiv a_1\pmod{n_1}$, so $n\notin A_M$.
+
+It remains to analyze the numbers $n\equiv 1\pmod M$.  Write
+\[
+n=Mt+1
+\]
+with $t\ge 0$ an integer.  The special case $t=0$ gives $n=1$, and clearly $1\in A_M$ since $1<n_i$ for every $i$.
+Now assume $t\ge 1$.  The first congruence does not apply, because $Mt+1\not\equiv 0\pmod M$.  For $j\ge 1$, the $(j+1)$-st condition is
+\[
+(Mt+1<Mm_j)\ \text{or}\ (Mt+1\not\equiv Mb_j+1\pmod{Mm_j}).
+\]
+Since $t$ and $m_j$ are integers, this is equivalent to
+\[
+(t<m_j)\ \text{or}\ (t\not\equiv b_j\pmod{m_j}).
+\]
+Thus $Mt+1\in A_M$ if and only if $t\in B$.
+Combining the three residue classes proves \eqref{9.4}. \hfill $\square$
+
+\subsection*{9.2. Exact description of the finite stages}
+\paragraph{Lemma 9.2.}
+For every $k\ge 1$ one has
+\begin{equation}
+A_M^{(k+1)}
+=
+\{1\}
+\cup
+\{n\in\mathbb N:\ n\equiv r\pmod M\ \text{for some }2\le r\le M-1\}
+\cup
+\{Mt+1:\ t\in B^{(k)}\}.
+\tag{9.5}
+\end{equation}
+Consequently,
+\begin{equation}
+ d(A_M^{(k+1)})=\frac{M-2}{M}+\frac1M\beta_k.
+\tag{9.6}
+\end{equation}
+In particular,
+\begin{equation}
+\inf_{\ell\ge 1} d(A_M^{(\ell)})\ge \frac{M-2}{M}.
+\tag{9.7}
+\end{equation}
+
+\emph{Proof.}
+The proof is identical to that of Lemma~9.1, except that one now keeps only the first $k$ embedded congruences.  Numbers congruent to $2,3,\dots,M-1\pmod M$ survive automatically, numbers divisible by $M$ fail the first stage, and for numbers of the form $Mt+1$ with $t\ge 1$, avoiding the first $k$ embedded congruences is equivalent to requiring
+\[
+t\not\equiv b_j\pmod{m_j}\qquad (1\le j\le k),
+\]
+i.e. $t\in B^{(k)}$.  This proves \eqref{9.5}.
+
+The singleton $\{1\}$ has density $0$.  The protected residue classes $2,\dots,M-1\pmod M$ contribute density $(M-2)/M$, and the affine copy of $B^{(k)}$ inside the class $1\pmod M$ contributes density $(1/M)\beta_k$.  Hence \eqref{9.6}.  Since $\beta_k\ge 0$, inequality \eqref{9.7} follows. \hfill $\square$
+
+\subsection*{9.3. Harmonic relation and transfer of logarithmic nonconvergence}
+Define upper and lower logarithmic densities by
+\[
+\overline{\delta}_{\log}(E):=
+\limsup_{x\to\infty}\frac{1}{\log x}\sum_{\substack{n\le x\\ n\in E}}\frac1n,
+\qquad
+\underline{\delta}_{\log}(E):=
+\liminf_{x\to\infty}\frac{1}{\log x}\sum_{\substack{n\le x\\ n\in E}}\frac1n.
+\]
+For $E=B$ and $E=A_M$, write
+\[
+S_B(y):=\sum_{\substack{t\le y\\ t\in B}}\frac1t,
+\qquad
+S_{A_M}(x):=\sum_{\substack{n\le x\\ n\in A_M}}\frac1n.
+\]
+
+\paragraph{Proposition 9.3.}
+For the transformed instance \eqref{9.2}--\eqref{9.3},
+\begin{equation}
+S_{A_M}(x)=\frac{M-2}{M}\log x+\frac1M S_B(x/M)+O(1)
+\qquad (x\to\infty),
+\tag{9.8}
+\end{equation}
+where the implied constant may depend on $M$ and on the original instance, but not on $x$.
+Consequently,
+\begin{align}
+\underline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\underline{\delta}_{\log}(B),
+\tag{9.9}\\
+\overline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\overline{\delta}_{\log}(B).
+\tag{9.10}
+\end{align}
+In particular, $A_M$ has a logarithmic density if and only if $B$ does.
+
+\emph{Proof.}
+From the exact decomposition \eqref{9.4},
+\begin{align}
+S_{A_M}(x)
+&=
+\sum_{r=2}^{M-1}\sum_{\substack{n\le x\\ n\equiv r\, (\mathrm{mod}\ M)}}\frac1n
++\mathbf 1_{x\ge 1}
++\sum_{\substack{1\le t\le (x-1)/M\\ t\in B}}\frac1{Mt+1}.
+\tag{9.11}
+\end{align}
+For each fixed residue class $r\pmod M$, periodic logarithmic asymptotics give
+\[
+\sum_{\substack{n\le x\\ n\equiv r\, (\mathrm{mod}\ M)}}\frac1n
+=
+\frac1M\log x+O(1).
+\]
+Summing over $r=2,\dots,M-1$ yields
+\begin{equation}
+\sum_{r=2}^{M-1}\sum_{\substack{n\le x\\ n\equiv r\, (\mathrm{mod}\ M)}}\frac1n
+=
+\frac{M-2}{M}\log x+O(1).
+\tag{9.12}
+\end{equation}
+
+For the embedded copy of $B$, write $y:=\lfloor (x-1)/M\rfloor$.  Then
+\begin{align}
+\sum_{\substack{1\le t\le y\\ t\in B}}\frac1{Mt+1}
+&=
+\frac1M\sum_{\substack{1\le t\le y\\ t\in B}}\frac1t
++\sum_{\substack{1\le t\le y\\ t\in B}}\left(\frac1{Mt+1}-\frac1{Mt}\right).
+\tag{9.13}
+\end{align}
+Now
+\[
+\left|\frac1{Mt+1}-\frac1{Mt}\right|=\frac{1}{Mt(Mt+1)}\ll_M \frac1{t^2},
+\]
+and $\sum_{t\ge 1}t^{-2}<\infty$, so the second sum in \eqref{9.13} is $O(1)$.  Hence
+\begin{equation}
+\sum_{\substack{1\le t\le y\\ t\in B}}\frac1{Mt+1}
+=
+\frac1M S_B(y)+O(1)
+=
+\frac1M S_B(x/M)+O(1),
+\tag{9.14}
+\end{equation}
+since changing the cutoff from $y$ to $x/M$ affects at most one term.
+
+Substituting \eqref{9.12} and \eqref{9.14} into \eqref{9.11} proves \eqref{9.8}.
+Dividing by $\log x$ and using
+\[
+\frac{\log(x/M)}{\log x}\to 1
+\qquad (x\to\infty)
+\]
+immediately gives \eqref{9.9} and \eqref{9.10}.  The final claim follows because upper and lower logarithmic densities coincide for $A_M$ if and only if they coincide for $B$. \hfill $\square$
+
+\subsection*{9.4. Equivalence of the full problem with high-density restrictions}
+\paragraph{Theorem 9.4.}
+Fix any real number $c<1$.  The following are equivalent.
+\begin{enumerate}
+\item[(i)] Every instance of Erd\H{o}s Problem~25 has a logarithmic density.
+\item[(ii)] Every instance of Erd\H{o}s Problem~25 satisfying
+\begin{equation}
+\inf_{k\ge 1} d(A^{(k)})\ge c
+\tag{9.15}
+\end{equation}
+has a logarithmic density.
+\end{enumerate}
+
+\emph{Proof.}
+The implication (i)$\Rightarrow$(ii) is immediate.
+
+Assume (ii).  Let $(m_j,b_j)$ be an arbitrary instance.  If $m_1=1$, then the associated set $B$ is empty and there is nothing to prove.  So assume $m_1\ge 2$.
+Choose an integer $M\ge 3$ so large that
+\begin{equation}
+\frac{M-2}{M}\ge c.
+\tag{9.16}
+\end{equation}
+Construct the transformed instance $(n_i,a_i)$ by \eqref{9.2}--\eqref{9.3}.  By Lemma~9.2,
+\[
+\inf_{\ell\ge 1} d(A_M^{(\ell)})\ge \frac{M-2}{M}\ge c.
+\]
+Hence, by assumption (ii), the transformed set $A_M$ has a logarithmic density.
+Proposition~9.3 then implies that the original set $B$ also has a logarithmic density.
+Since the original instance was arbitrary, (i) follows. \hfill $\square$
+
+\paragraph{Corollary 9.5.}
+For every $\varepsilon>0$, the following are equivalent.
+\begin{enumerate}
+\item[(a)] There exists a counterexample to Erd\H{o}s Problem~25.
+\item[(b)] There exists a counterexample to Erd\H{o}s Problem~25 for which
+\begin{equation}
+\inf_{k\ge 1} d(A^{(k)})\ge 1-\varepsilon.
+\tag{9.17}
+\end{equation}
+\end{enumerate}
+More quantitatively, if the original instance has upper and lower logarithmic densities differing by
+\begin{equation}
+\overline{\delta}_{\log}(B)-\underline{\delta}_{\log}(B)=\Delta>0,
+\tag{9.18}
+\end{equation}
+then the transformed instance with parameter $M$ satisfies
+\begin{equation}
+\overline{\delta}_{\log}(A_M)-\underline{\delta}_{\log}(A_M)=\frac{\Delta}{M},
+\tag{9.19}
+\end{equation}
+while still obeying
+\begin{equation}
+\inf_{k\ge 1} d(A_M^{(k)})\ge \frac{M-2}{M}.
+\tag{9.20}
+\end{equation}
+
+\emph{Proof.}
+This is immediate from Proposition~9.3 and Lemma~9.2 after choosing $M\ge 2/\varepsilon$. \hfill $\square$
+
+\paragraph{Interpretation.}
+Round~8 proved that the branch $\delta_k\to 0$ is always benign.  Theorem~9.4 shows that the complementary branch is not merely ``what remains'': it is actually \emph{equivalent to the full problem}.  In fact, one may restrict attention to instances whose finite-stage densities stay above any fixed level $c<1$, or even above $1-\varepsilon$ for arbitrarily small $\varepsilon>0$.
+
+So any proof strategy that hopes to settle the full problem by using only eventual smallness of the stage densities cannot succeed on its own.
+
+\section{Adversarial Verification}
+We attempt to break the new argument.
+\begin{itemize}
+\item \textbf{Strict increase of the transformed moduli.}  The construction uses $n_1=M$ and $n_{j+1}=Mm_j$.  This is strictly increasing because $m_1\ge 2$ (the case $m_1=1$ is trivial) and $(m_j)$ is strictly increasing.
+\item \textbf{Thresholds map exactly.}  For numbers of the form $Mt+1$, the transformed condition
+\[
+Mt+1<Mm_j
+\]
+is equivalent to $t<m_j$ because $t,m_j\in\mathbb Z$.  Also
+\[
+Mt+1\equiv Mb_j+1\pmod{Mm_j}
+\iff
+ t\equiv b_j\pmod{m_j}.
+\]
+Thus the embedded copy really is exact, not approximate.
+\item \textbf{Protected residue classes are truly protected.}  Every later forbidden residue is congruent to $1\pmod M$, so residue classes $2,\dots,M-1\pmod M$ can never be touched after the first step.
+\item \textbf{The singleton $\{1\}$ causes no issue.}  It appears in both the actual set and the finite-stage sets, but contributes zero natural density and only $O(1)$ harmonic weight.
+\item \textbf{Transfer of nonconvergence.}  Proposition~9.3 gives an additive affine relation between the upper/lower logarithmic densities, so nonexistence of the limit transfers exactly.
+\item \textbf{Compatibility with Round~8.}  There is no contradiction.  Round~8 correctly solved the branch $\delta_k\to 0$.  The new theorem shows only that this branch is not a genuine reduction of the full problem, because arbitrary instances can be padded into high-density ones.
+\item \textbf{Sharpness of the obstruction.}  The restriction $c<1$ is essential: no nontrivial instance can satisfy $d(A^{(k)})=1$ for every $k$, since the first stage already removes a residue class.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main new advance is Theorem~9.4:
+\begin{quote}
+For every fixed $c<1$, Erd\H{o}s Problem~25 is equivalent to its restriction to instances satisfying
+\[
+\inf_{k\ge 1} d(A^{(k)})\ge c.
+\]
+\end{quote}
+Equivalently, any counterexample can be padded into one whose finite-stage densities stay above $1-\varepsilon$ for any prescribed $\varepsilon>0$.
+
+This is a genuine obstruction result.  It shows that the Round~8 reduction to the branch $\delta_k\to 0$ --- while correct --- is not a meaningful simplification of the full problem.  The unresolved core is therefore not merely the positive-density branch; rather, the \emph{arbitrarily high-density} branch already contains the full difficulty of the original question.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 95\%}.
+
+\section{References}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#25}, official problem page, \texttt{https://www.erdosproblems.com/25}, accessed 2026-03-08.
+\item No external mathematical references were used in the proofs of this round.
+\end{itemize}

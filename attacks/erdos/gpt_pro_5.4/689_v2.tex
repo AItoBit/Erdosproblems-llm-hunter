@@ -1,0 +1,335 @@
+\section{Erd\H{o}s Problem 689 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+We pursue path \textbf{(C)}: a rigorous obstruction to a major construction family.
+Round 1 identified the main unresolved issue: whether a ``first-stage'' choice
+\(a_p\equiv 0\pmod p\) for many small primes can be completed by the remaining primes.
+In this round I prove that a substantial and natural subclass of this strategy is impossible.
+In particular, for the original \(r=2\) problem I rule out every construction with
+\[
+a_p\equiv 0 \pmod p \qquad\text{for all primes }p\le y
+\]
+whenever \(y\ge \max(5,n/6)\).
+More generally, for the \(r\)-fold variant I rule out all such constructions when \(y\ge n/r\).
+This is a genuine advance beyond Round 1: it proves a theorem that excludes an entire class
+of candidate constructions that Round 1 had only discussed heuristically.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following vetted results from Round 1.
+\begin{enumerate}
+\item \textbf{CRT shift equivalence (Round-1 Lemma 4.1).}
+Choosing residues \((a_p)_{p\le n}\) is equivalent to choosing a shift \(t\pmod{P(n)}\),
+where \(P(n)=\prod_{p\le n}p\), such that
+\[
+c(m)=\#\{p\le n:\ p\mid (t+m)\}.
+\]
+Hence the original \(r=2\) problem is equivalent to asking whether there exists a length-\(n\)
+block \(t+1,\dots,t+n\) in which every integer has at least two distinct prime divisors \(\le n\).
+
+\item \textbf{Incidence bound (Round-1 Lemma 4.2).}
+If every \(m\in[1,n]\) satisfies at least \(r\) congruences, then
+\[
+\sum_{p\le n}\left\lceil \frac{n}{p}\right\rceil \ge rn.
+\]
+
+\item \textbf{All-zero choice lemma (Round-1 Lemma 4.4).}
+If \(a_p\equiv 0\pmod p\) for all primes \(p\le n\), then for \(2\le m\le n\) one has
+\[
+c(m)=\omega(m),
+\]
+where \(\omega(m)\) is the number of distinct prime divisors of \(m\).
+Thus all non-prime-powers in \([2,n]\) are already covered at least twice.
+
+\item \textbf{Computation (Round 1).}
+There is no solution for \(n\le 20\) in the original \(r=2\) problem.
+\end{enumerate}
+
+No Round-1 proof is repeated here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new idea is to quantify the \emph{residual demand} created by a partial assignment of residue classes.
+A partial assignment already forces each \(m\in[1,n]\) to require a certain number of additional hits.
+The remaining primes have only a fixed total incidence budget.
+Comparing these two quantities yields a sharp obstruction.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left by Round 1 was this: even if one starts with the natural choice
+\(a_p\equiv 0\pmod p\) for many small primes, can the remaining primes finish the job?
+
+I will prove two new results.
+\begin{enumerate}
+\item A \emph{partial-stage capacity lemma} that refines Round-1 Lemma 4.2 and measures the exact remaining demand after any partial choice of residues.
+\item Two applications:
+  \begin{itemize}
+  \item a general \(r\)-fold obstruction showing that the strategy \(a_p\equiv 0\pmod p\) for all \(p\le y\) already fails whenever \(y\ge n/r\);
+  \item a sharpened theorem for the original \(r=2\) problem showing that this all-zero strategy already fails whenever \(y\ge n/6\) (more precisely, whenever \(y\ge \max(5,n/6)\)).
+  \end{itemize}
+\end{enumerate}
+
+The second theorem strictly improves the first when \(r=2\), and it rigorously rules out a major construction family that remained viable after Round 1.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Lemma 5.1 (partial-stage capacity lemma).}
+Fix integers \(n\ge 1\) and \(r\ge 1\).
+Let \(S\subseteq \mathcal P(n)\) be any set of primes, and suppose residue classes \(a_p\pmod p\) have already been chosen for all \(p\in S\).
+For \(m\in\{1,\dots,n\}\), define the current coverage
+\[
+h_S(m):=\#\{p\in S:\ m\equiv a_p\pmod p\}
+\]
+and the residual demand
+\[
+d_S(m):=\max\{0,\,r-h_S(m)\}.
+\]
+If the partial assignment on \(S\) can be extended to a full choice of residues \((a_p)_{p\le n}\)
+such that every \(m\in[1,n]\) satisfies at least \(r\) congruences, then necessarily
+\[
+\sum_{p\in\mathcal P(n)\setminus S}\left\lceil \frac{n}{p}\right\rceil
+\ge
+\sum_{m=1}^n d_S(m).
+\]
+
+\emph{Proof.}
+Assume the partial assignment extends to a full one with final coverage
+\[
+c(m):=\#\{p\le n:\ m\equiv a_p\pmod p\}\ge r
+\qquad (1\le m\le n).
+\]
+For each remaining prime \(p\in \mathcal P(n)\setminus S\), let
+\[
+C_p:=\#\{m\in[1,n]:\ m\equiv a_p\pmod p\}.
+\]
+Then \(C_p\le \lceil n/p\rceil\) for every such \(p\).
+Also, for each \(m\in[1,n]\), the number of additional congruences contributed by the remaining primes is
+\[
+c(m)-h_S(m)\ge r-h_S(m).
+\]
+If \(h_S(m)\ge r\), then \(d_S(m)=0\), so certainly \(c(m)-h_S(m)\ge d_S(m)\).
+If \(h_S(m)<r\), then \(d_S(m)=r-h_S(m)\), and again \(c(m)-h_S(m)\ge d_S(m)\).
+Thus in all cases
+\[
+c(m)-h_S(m)\ge d_S(m).
+\]
+Summing over \(m\in[1,n]\) gives
+\[
+\sum_{m=1}^n \bigl(c(m)-h_S(m)\bigr)
+\ge
+\sum_{m=1}^n d_S(m).
+\]
+The left-hand side counts exactly the incidences coming from the remaining primes, so
+\[
+\sum_{m=1}^n \bigl(c(m)-h_S(m)\bigr)=\sum_{p\in\mathcal P(n)\setminus S} C_p.
+\]
+Hence
+\[
+\sum_{p\in\mathcal P(n)\setminus S} C_p
+\ge
+\sum_{m=1}^n d_S(m).
+\]
+Using \(C_p\le \lceil n/p\rceil\) yields
+\[
+\sum_{p\in\mathcal P(n)\setminus S}\left\lceil \frac{n}{p}\right\rceil
+\ge
+\sum_{m=1}^n d_S(m),
+\]
+as claimed.
+\hfill$\square$
+
+\paragraph{Corollary 5.2 (general \(r\)-fold obstruction at threshold \(n/r\)).}
+Fix \(r\ge 2\). Let \(y\) be a real number with \(y\ge n/r\).
+Suppose one chooses
+\[
+a_p\equiv 0\pmod p \qquad\text{for every prime }p\le y.
+\]
+Then there is no extension of these residue classes to all primes \(p\le n\) such that every \(m\in[1,n]\) satisfies at least \(r\) congruences.
+
+\emph{Proof.}
+Take \(S:=\{p\in\mathcal P(n): p\le y\}\).
+For \(m=1\) one has \(h_S(1)=0\), hence \(d_S(1)=r\).
+Also, if \(q\) is any prime with \(y<q\le n\), then \(q\) is not divisible by any prime \(\le y\), so again \(h_S(q)=0\), hence \(d_S(q)=r\).
+Therefore
+\[
+\sum_{m=1}^n d_S(m)
+\ge
+r\bigl(1+\pi(n)-\pi(y)\bigr).
+\]
+On the other hand, if \(p>y\), then \(p>n/r\), so
+\[
+\left\lceil \frac{n}{p}\right\rceil \le r.
+\]
+Hence the total capacity of the remaining primes is at most
+\[
+\sum_{p>y}\left\lceil \frac{n}{p}\right\rceil
+\le
+r\bigl(\pi(n)-\pi(y)\bigr).
+\]
+This is strictly smaller than \(r(1+\pi(n)-\pi(y))\).
+By Lemma 5.1 no extension is possible.
+\hfill$\square$
+
+\paragraph{Theorem 5.3 (sharpened \(r=2\) obstruction at threshold \(n/6\)).}
+Let \(y\) be a real number with
+\[
+y\ge \max\left(5,\frac{n}{6}\right).
+\]
+Suppose one chooses
+\[
+a_p\equiv 0\pmod p \qquad\text{for every prime }p\le y.
+\]
+Then there is no extension of these residue classes to all primes \(p\le n\) such that every \(m\in[1,n]\) satisfies at least two congruences.
+
+\emph{Proof.}
+Again let
+\[
+S:=\{p\in\mathcal P(n): p\le y\},
+\]
+and let \(h_S,d_S\) be as in Lemma 5.1 with \(r=2\).
+
+For each prime \(q\) with \(y<q\le n\), define
+\[
+U_q:=\{q,2q,3q,4q,5q\}\cap [1,n].
+\]
+Because \(q>y\ge n/6\), one has \(6q>n\), so
+\[
+U_q=\{q,2q,\dots,u_q q\},
+\qquad u_q:=\left\lfloor\frac{n}{q}\right\rfloor\in\{1,2,3,4,5\}.
+\]
+
+I first claim that the sets \(U_q\) are pairwise disjoint as \(q\) ranges over primes \(>y\).
+Indeed, suppose
+\[
+aq=bq'
+\]
+for some distinct primes \(q,q'>y\) and some integers \(1\le a,b\le 5\).
+Without loss of generality, assume \(q'>q\).
+Then \(q'\mid aq\).
+Since \(q'>q\) and \(q'\) is prime, \(q'\nmid q\).
+Also \(q>y\ge 5\), so \(q\ge 7\), hence \(q'>q\ge 7\).
+Because \(1\le a\le 5\), we have \(q'>a\), so \(q'\nmid a\).
+This is impossible.
+Hence \(q=q'\), and then necessarily \(a=b\).
+So the \(U_q\) are pairwise disjoint.
+
+Next I compute the residual demand on each \(U_q\).
+For the element \(q\in U_q\), no prime \(\le y\) divides \(q\), so
+\[
+h_S(q)=0,
+\qquad d_S(q)=2.
+\]
+Now let \(aq\in U_q\) with \(a\in\{2,3,4,5\}\).
+Since \(q>y\), the prime \(q\) does not contribute to \(h_S(aq)\).
+Among the primes \(\le y\), the only prime divisors of \(aq\) are those dividing \(a\).
+But each of \(2,3,4,5\) is a prime power, hence has exactly one distinct prime divisor.
+Therefore
+\[
+h_S(aq)=1,
+\qquad d_S(aq)=1.
+\]
+Thus the total residual demand contributed by \(U_q\) is
+\[
+\sum_{m\in U_q} d_S(m)=2+(u_q-1)=u_q+1.
+\]
+Since \(u_q=\lfloor n/q\rfloor\), we have
+\[
+u_q+1\ge \left\lceil\frac{n}{q}\right\rceil.
+\]
+Therefore
+\[
+\sum_{m\in U_q} d_S(m)
+\ge
+\left\lceil\frac{n}{q}\right\rceil.
+\]
+Because the sets \(U_q\) are pairwise disjoint and \(1\notin U_q\) for any \(q\), we may sum over all primes \(q>y\) and also include \(m=1\), for which \(h_S(1)=0\) and \(d_S(1)=2\). This yields
+\[
+\sum_{m=1}^n d_S(m)
+\ge
+2+\sum_{q>y}\left\lceil\frac{n}{q}\right\rceil.
+\]
+But the total capacity of the remaining primes is at most
+\[
+\sum_{p>y}\left\lceil\frac{n}{p}\right\rceil.
+\]
+Hence
+\[
+\sum_{m=1}^n d_S(m)
+>
+\sum_{p>y}\left\lceil\frac{n}{p}\right\rceil.
+\]
+By Lemma 5.1, no extension is possible.
+\hfill$\square$
+
+\paragraph{Corollary 5.4.}
+Any successful construction for the original \(r=2\) problem with \(n\ge 30\) must use at least one \emph{nonzero} residue among the primes \(p\le n/6\); equivalently, there exists a prime \(p\le n/6\) such that
+\[
+a_p\not\equiv 0\pmod p.
+\]
+More generally, in the \(r\)-fold problem any successful construction must use at least one nonzero residue among the primes \(p\le n/r\).
+
+\emph{Proof.}
+The \(r=2\) statement follows immediately from Theorem 5.3 once \(n\ge 30\), since then \(n/6\ge 5\).
+The general \(r\)-statement follows immediately from Corollary 5.2.
+\hfill$\square$
+
+\paragraph{What has been gained relative to Round 1.}
+Round 1 only showed that the all-zero construction is a near-solution and identified the difficulty of supplying extra hits to the leftover prime-power-type obstructions.
+Round 2 proves a rigorous no-go theorem: one cannot keep \(a_p\equiv 0\pmod p\) for \emph{all} primes up to \(n/6\) (indeed up to \(n/r\) in the \(r\)-fold variant) and hope to complete the construction later.
+This rules out an entire class of candidate constructions.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Quantifier check.}
+Lemma 5.1 applies to \emph{any} partial assignment on \(S\), not just the all-zero one. Its proof is purely double counting and does not use asymptotics.
+
+\item \textbf{Boundary cases in Corollary 5.2.}
+For \(m=1\) and primes \(q>y\), the current coverage is indeed zero when all small residues are \(0\pmod p\).
+The strict contradiction comes from the extra target \(m=1\).
+No prime number theorem is used.
+
+\item \textbf{Disjointness of the sets \(U_q\).}
+This is the only point where the hypothesis \(y\ge 5\) is used.
+It ensures all primes \(q>y\) are larger than the multipliers \(1,2,3,4,5\), so no accidental overlaps occur between different \(U_q\).
+
+\item \textbf{Demand computation on \(aq\).}
+For \(a\in\{2,3,4,5\}\), the number \(a\) has exactly one distinct prime divisor, so \(aq\) has exactly one prime divisor \(\le y\), namely that divisor of \(a\).
+Thus \(d_S(aq)=1\) is correct.
+
+\item \textbf{Why the \(n/6\) threshold appears.}
+The proof of Theorem 5.3 uses the prime powers \(2,3,4,5\) as multipliers.
+This exactly matches the remaining-prime capacity up to scale \(n/6\).
+The same device does not immediately push below \(n/6\), because once one needs multipliers up to \(6\), the set of prime powers is no longer large enough to keep pace with the capacity bound.
+So the theorem is sharp for this particular elementary method, though not necessarily sharp for the actual problem.
+
+\item \textbf{Compatibility with Round 1.}
+There is no conflict with the Round-1 computation that no full solution exists for \(n\le 20\).
+The present theorem is an asymptotic obstruction to a specific family of constructions and is strictly stronger than anything proved in Round 1.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\noindent\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+\smallskip
+The original Erd\H{o}s problem remains unresolved here, but Round 2 proves a new theorem that strictly advances beyond Round 1:
+\begin{quote}
+For the original \(r=2\) problem, any successful construction must depart from the naive choice \(a_p\equiv 0\pmod p\) by the time one reaches primes of size \(n/6\).
+More generally, for the \(r\)-fold problem one cannot keep \(a_p\equiv 0\pmod p\) for all primes \(p\le n/r\).
+\end{quote}
+This rigorously eliminates a substantial class of proof strategies and constructions.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 56\%}
+
+\subsection*{9) REFERENCES}
+
+Only references actually used or checked:
+\begin{enumerate}
+\item P. Erd\H{o}s, \emph{Some problems on number theory}, 1979; the relevant question appears on p.~79.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#689}, \texttt{https://www.erdosproblems.com/689}, accessed 2026-03-07.
+\item B. Green, \emph{100 Open Problems}, Problem 45.
+\end{enumerate}

@@ -1,0 +1,378 @@
+\section{ROUND-2 OBJECTIVE}
+
+I pursue the ``strict advancement without overclaiming'' route. The global statement is still open unconditionally, while the currently available literature gives a conditional disproof under a qualitative prime tuples conjecture. The most promising unconditional Round-2 target is therefore to prove the conjectured inequality for a substantially larger infinite family than in Round-1.
+
+The new theorem proved in this round is the following:
+
+\medskip
+
+\noindent\textbf{Theorem.}
+\emph{Let \(n=r^{a}s\), where \(a\geq 1\) and \(r\neq s\) are primes. Let}
+\[
+1=d_1<d_2<\cdots<d_t=n
+\]
+\emph{be the positive divisors of \(n\) in increasing order. Then}
+\[
+\sum_{1\leq i<j\leq t}\frac{1}{d_j-d_i}
+\leq 9\left(1+\sum_{1\leq i<t}\frac{1}{d_{i+1}-d_i}\right).
+\]
+
+This strictly strengthens the Round-1 progress, which only handled prime powers.
+
+\section{Round-1 FOUNDATION USED}
+
+I use the following Round-1 material as fixed input.
+
+\begin{enumerate}
+\item The formal notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}.
+\]
+\item The Round-1 conclusion that the unconditional global problem remains open, while Tao's 2025 note gives only a conditional disproof under a qualitative Hardy--Littlewood prime tuples conjecture.
+\item The Round-1 prime-power result, used here only as a baseline comparison: prime powers satisfy the conjectured inequality with an absolute constant.
+\end{enumerate}
+
+No Round-1 proof is re-used verbatim below; the new argument is independent.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a structural representation of the divisor set of \(n=r^a s\).
+
+Write
+\[
+\alpha:=\log_r s.
+\]
+Since \(r\neq s\) are primes, \(\alpha\notin \mathbb Z\). The divisors of \(n\) are exactly
+\[
+r^0,r^1,\dots,r^a,\qquad s r^0,s r^1,\dots,s r^a,
+\]
+that is,
+\[
+r^e \quad \text{with } e\in E:=\{0,1,\dots,a\}\cup \{\alpha,\alpha+1,\dots,\alpha+a\}.
+\]
+Thus the divisor set is the merge of \emph{two} geometric progressions with common ratio \(r\), or equivalently the exponent set is the union of \emph{two} arithmetic progressions with common difference \(1\).
+
+For a fixed divisor \(d_i=r^{e_i}\), all later divisors \(d_j=r^{e_j}\) contribute
+\[
+\frac{1}{d_j-d_i}
+=
+\frac{1}{r^{e_i}}\cdot \frac{1}{r^{e_j-e_i}-1}.
+\]
+The key point is that for fixed \(i\), among the exponent differences \(e_j-e_i\) there is at most one element in \((0,1)\), and for each integer \(m\geq 1\) there are at most two elements in \([m,m+1)\). This makes the non-nearest-neighbour tail absolutely summable with a uniform constant.
+
+This two-progressions phenomenon is the exact reason the argument works for \(r^a s\). It also isolates the first obstruction: once one has three or more progressions in exponent space (for instance \(r^a s_1 s_2\)), a fixed starting divisor can have \emph{more than one} subunit exponent difference, and the present charging argument to a single consecutive gap no longer closes.
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-1 was: produce any genuinely new unconditional infinite family for which the conjectured inequality can be proved with an absolute constant.
+
+The claim to prove now is:
+
+\medskip
+
+\noindent\textbf{Claim.}
+\emph{If \(n=r^a s\) with \(a\geq 1\) and distinct primes \(r,s\), then}
+\[
+S_{\mathrm{all}}(n)\leq 9(1+S_{\mathrm{gap}}(n)).
+\]
+
+\medskip
+
+The plan is:
+
+\begin{enumerate}
+\item encode the divisor set as \(d_i=r^{e_i}\) with \(e_i\) in the two-progressions set \(E\);
+\item for each fixed \(i\), bound the full tail \(\sum_{j>i}1/(d_j-d_i)\) by the nearest-neighbour term \(1/(d_{i+1}-d_i)\) plus a convergent error of size \(O(1/d_i)\);
+\item sum over \(i\), and use the explicit bound on \(\sum_{d\mid n}1/d\).
+\end{enumerate}
+
+This overcomes the Round-1 obstacle because the tail is no longer treated by the generic harmonic-loss bound; instead it is controlled by the rigid two-progressions structure.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{Step 1: exponent parametrisation}
+
+Let
+\[
+E:=\{0,1,\dots,a\}\cup \{\alpha,\alpha+1,\dots,\alpha+a\},
+\qquad \alpha:=\log_r s.
+\]
+Sort the elements of \(E\) in increasing order:
+\[
+e_1<e_2<\cdots<e_t,
+\qquad t=2a+2.
+\]
+Then
+\[
+d_i=r^{e_i}\qquad (1\leq i\leq t)
+\]
+is exactly the increasing list of positive divisors of \(n=r^a s\).
+
+For \(1\leq i<t\), define
+\[
+\Delta_i:=e_{i+1}-e_i>0.
+\]
+Then
+\[
+d_{i+1}-d_i
+=
+r^{e_i}(r^{\Delta_i}-1),
+\]
+so
+\[
+\frac{1}{d_{i+1}-d_i}
+=
+\frac{1}{r^{e_i}}\cdot \frac{1}{r^{\Delta_i}-1}.
+\]
+
+\subsection*{Step 2: a pointwise tail bound}
+
+\paragraph{Lemma 1.}
+For each fixed \(i\in\{1,\dots,t-1\}\),
+\[
+\sum_{j=i+1}^{t}\frac{1}{d_j-d_i}
+\leq
+\frac{1}{d_{i+1}-d_i}
++
+\frac{2}{d_i}\sum_{m=1}^{\infty}\frac{1}{r^m-1}.
+\]
+
+\emph{Proof.}
+Fix \(i<t\). Since \(d_j=r^{e_j}\), we have
+\[
+\sum_{j=i+1}^{t}\frac{1}{d_j-d_i}
+=
+\frac{1}{d_i}\sum_{j=i+1}^{t}\frac{1}{r^{e_j-e_i}-1}.
+\tag{1}
+\]
+
+We now analyse the set of positive exponent differences
+\[
+D_i:=\{e_j-e_i:\ j=i+1,\dots,t\}.
+\]
+
+There are two cases for \(e_i\):
+
+\begin{itemize}
+\item If \(e_i\in\{0,1,\dots,a\}\), then the differences to exponents in the same progression are positive integers, while the differences to exponents in the other progression form a subset of an arithmetic progression
+\[
+\gamma+\mathbb Z
+\]
+for some non-integer real \(\gamma\) (namely \(\gamma\equiv \alpha \pmod{1}\)).
+
+\item If \(e_i\in\{\alpha,\alpha+1,\dots,\alpha+a\}\), then the differences to exponents in the same progression are again positive integers, while the differences to exponents in the other progression form a subset of an arithmetic progression
+\[
+\gamma+\mathbb Z
+\]
+for some non-integer real \(\gamma\) (namely \(\gamma\equiv -\alpha \pmod{1}\)).
+\end{itemize}
+
+In either case:
+
+\begin{enumerate}
+\item there is at most one element of \(D_i\) in the interval \((0,1)\);
+\item for each integer \(m\geq 1\), the interval \([m,m+1)\) contains at most one integer from \(D_i\) and at most one non-integer element from the translated progression, hence at most two elements of \(D_i\).
+\end{enumerate}
+
+Now \(\Delta_i=e_{i+1}-e_i\) is the smallest element of \(D_i\). Therefore
+\[
+\sum_{x\in D_i}\frac{1}{r^x-1}
+\leq
+\frac{1}{r^{\Delta_i}-1}
++
+2\sum_{m=1}^{\infty}\frac{1}{r^m-1},
+\]
+because after removing the smallest term, every remaining \(x\in D_i\) lies in \([m,m+1)\) for some integer \(m\geq 1\), and there are at most two such \(x\) for each \(m\).
+
+Substituting this into (1) gives
+\[
+\sum_{j=i+1}^{t}\frac{1}{d_j-d_i}
+\leq
+\frac{1}{d_i}\cdot \frac{1}{r^{\Delta_i}-1}
++
+\frac{2}{d_i}\sum_{m=1}^{\infty}\frac{1}{r^m-1}
+=
+\frac{1}{d_{i+1}-d_i}
++
+\frac{2}{d_i}\sum_{m=1}^{\infty}\frac{1}{r^m-1},
+\]
+as required.
+\qquad \(\Box\)
+
+\subsection*{Step 3: summing over all starting divisors}
+
+Summing Lemma 1 over \(i=1,\dots,t-1\), we obtain
+\[
+S_{\mathrm{all}}(n)
+=
+\sum_{i=1}^{t-1}\sum_{j=i+1}^{t}\frac{1}{d_j-d_i}
+\leq
+\sum_{i=1}^{t-1}\frac{1}{d_{i+1}-d_i}
++
+2\left(\sum_{m=1}^{\infty}\frac{1}{r^m-1}\right)\left(\sum_{i=1}^{t-1}\frac{1}{d_i}\right).
+\]
+Hence
+\[
+S_{\mathrm{all}}(n)
+\leq
+S_{\mathrm{gap}}(n)
++
+2\left(\sum_{m=1}^{\infty}\frac{1}{r^m-1}\right)\left(\sum_{d\mid n}\frac{1}{d}\right).
+\tag{2}
+\]
+
+We now estimate the two factors on the right-hand side.
+
+\paragraph{Bound for the series.}
+Since \(r\geq 2\),
+\[
+\sum_{m=1}^{\infty}\frac{1}{r^m-1}
+\leq
+\sum_{m=1}^{\infty}\frac{1}{2^m-1}.
+\]
+Also, for every \(m\geq 2\),
+\[
+2^m-1 \geq 3\cdot 2^{m-2},
+\]
+so
+\[
+\sum_{m=1}^{\infty}\frac{1}{2^m-1}
+=
+1+\sum_{m=2}^{\infty}\frac{1}{2^m-1}
+\leq
+1+\sum_{m=2}^{\infty}\frac{1}{3\cdot 2^{m-2}}
+=
+1+\frac{2}{3}
+=
+\frac{5}{3}.
+\]
+Therefore
+\[
+2\sum_{m=1}^{\infty}\frac{1}{r^m-1}
+\leq
+\frac{10}{3}.
+\tag{3}
+\]
+
+\paragraph{Bound for the reciprocal divisor sum.}
+Since the divisors of \(n=r^a s\) are \(r^u\) and \(sr^u\) for \(0\leq u\leq a\),
+\[
+\sum_{d\mid n}\frac{1}{d}
+=
+\left(1+\frac{1}{s}\right)\sum_{u=0}^{a}\frac{1}{r^u}.
+\]
+If \(r=2\), then \(s\geq 3\), so
+\[
+\left(1+\frac{1}{s}\right)\sum_{u=0}^{a}\frac{1}{r^u}
+\leq
+\frac{4}{3}\cdot 2
+=
+\frac{8}{3}.
+\]
+If \(r\geq 3\), then
+\[
+\sum_{u=0}^{a}\frac{1}{r^u}\leq \frac{1}{1-\frac{1}{3}}=\frac{3}{2},
+\qquad
+1+\frac{1}{s}\leq \frac{3}{2},
+\]
+hence
+\[
+\left(1+\frac{1}{s}\right)\sum_{u=0}^{a}\frac{1}{r^u}
+\leq
+\frac{9}{4}
+<
+\frac{8}{3}.
+\]
+Thus in all cases
+\[
+\sum_{d\mid n}\frac{1}{d}\leq \frac{8}{3}.
+\tag{4}
+\]
+
+Substituting (3) and (4) into (2), we get
+\[
+S_{\mathrm{all}}(n)
+\leq
+S_{\mathrm{gap}}(n)
++
+\frac{10}{3}\cdot \frac{8}{3}
+=
+S_{\mathrm{gap}}(n)+\frac{80}{9}.
+\]
+Since \(\frac{80}{9}<9\), it follows that
+\[
+S_{\mathrm{all}}(n)\leq S_{\mathrm{gap}}(n)+9 \leq 9(1+S_{\mathrm{gap}}(n)).
+\]
+This proves the theorem.
+\qquad \(\Box\)
+
+\subsection*{Consequences}
+
+The Round-2 theorem gives an unconditional absolute-constant bound for every number of the form \(r^a s\) with \(r\neq s\) prime. Together with the Round-1 prime-power case, this verifies the conjectured type of estimate for the infinite families
+\[
+n=r^a
+\qquad\text{and}\qquad
+n=r^a s
+\]
+with distinct primes \(r,s\).
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new argument against failure modes.
+
+\paragraph{1. Could \(\alpha=\log_r s\) be an integer?}
+No. If \(\alpha\in\mathbb Z\), then \(s=r^\alpha\), impossible for distinct primes \(r\neq s\).
+
+\paragraph{2. Are all divisors represented exactly once as \(r^{e_i}\)?}
+Yes. The divisor set of \(r^a s\) is exactly
+\[
+\{r^u:0\leq u\leq a\}\cup \{sr^u:0\leq u\leq a\}
+=
+\{r^u:0\leq u\leq a\}\cup \{r^{\alpha+u}:0\leq u\leq a\}.
+\]
+These are distinct because \(\alpha\notin\mathbb Z\).
+
+\paragraph{3. What if the two progressions do not interleave at all?}
+That causes no problem. In that case there may be no exponent difference in \((0,1)\), but the proof of Lemma 1 still works: the smallest difference is then at least \(1\), and every interval \([m,m+1)\) still contains at most two relevant differences.
+
+\paragraph{4. Did the proof accidentally use a hidden monotonicity or convexity statement?}
+No. The only properties used are:
+\begin{enumerate}
+\item the exact representation of the exponents as a union of two arithmetic progressions with common step \(1\);
+\item the monotonicity of \(x\mapsto 1/(r^x-1)\) for \(x>0\);
+\item the explicit geometric-series bounds in (3) and (4).
+\end{enumerate}
+
+\paragraph{5. Does this conflict with the Round-1 conditional disproof?}
+No. Tao's conditional counterexamples use products of \emph{many} nearly consecutive primes. The present theorem only covers the two-progressions case \(r^a s\), which is far outside that regime.
+
+\paragraph{6. Where does this method first break?}
+The first genuine barrier is the passage from two exponent progressions to three. If the divisor exponents are a union of three translates of \(\{0,1,\dots,a\}\), then from one starting exponent there can be more than one positive difference in \((0,1)\). The present argument charges only one exceptional near term to the consecutive-gap sum, so it no longer closes verbatim. This sharply isolates the first unresolved case for this method.
+
+\section{FINAL}
+
+\paragraph{\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}}
+
+The original global Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a new unconditional theorem strictly beyond Round-1:
+
+\begin{quote}
+For every \(n=r^a s\) with \(a\geq 1\) and \(r\neq s\) prime,
+\[
+S_{\mathrm{all}}(n)\leq 9\bigl(1+S_{\mathrm{gap}}(n)\bigr).
+\]
+\end{quote}
+
+This is a substantive extension of the previously proved prime-power case and isolates a precise obstruction: the current method works exactly for divisor sets arising from a merge of two geometric progressions, and its first nontrivial failure mode is the three-progressions situation.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 82\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. Tao, \emph{On the sum of reciprocals of gaps between divisors}, dated September 9, 2025.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}, \texttt{https://www.erdosproblems.com/884}, accessed 2026-03-07.
+\end{enumerate}

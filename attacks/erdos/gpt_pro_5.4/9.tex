@@ -1,0 +1,323 @@
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(A)} in the following limited but rigorous sense: rather than restarting from scratch or speculating about the full conjecture, I prove new density theorems that were not obtained in Round 1 and that bear directly on the target set
+\[
+A=\{n\in\mathbb N: n\text{ odd and } n\neq p+2^k+2^\ell\text{ for all primes }p\text{ and }k,\ell\ge 0\}.
+\]
+The most promising direction after Round 1 is to force positive density on the \emph{representable} side, because Round 1 had no density theorem there at all. This leads to a nontrivial quantitative upper bound for $\overline d(A)$ and sharpens the remaining gap.
+
+\section{ROUND-1 FOUNDATION USED}
+
+I use the following Round-1 items without reproving them.
+
+\begin{enumerate}
+\item \textbf{Round-1 Lemma 1 (parity classification).} For odd targets $n$, every representation $n=p+2^k+2^\ell$ is either:
+\begin{enumerate}
+\item $p=2$ and exactly one of $k,\ell$ is $0$; or
+\item $p$ is odd and $2^k+2^\ell$ is even.
+\end{enumerate}
+\item \textbf{Round-1 computation.} The exact finite check
+\[
+A\cap[1,20{,}000{,}000]=\{1,3\}
+\]
+was established already.
+\item \textbf{Round-1 gap statement.} The unresolved issue is whether $\overline d(A)>0$.
+\end{enumerate}
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+There are three genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item A \textbf{direct modern density theorem} of Chen--Xu for sets of the form
+\[
+p+2^{k_1}r_1+\cdots+2^{k_t}r_t,
+\]
+which applies to our problem when $t=2$ and $r_1=r_2=1$.
+
+\item An \textbf{explicit quantitative route} through the classical Romanoff-type set $\{p+2^k\}$: combining the best current lower bound for its density with a fixed shift by $2$ gives an explicit positive-density subset of our representable odd integers.
+
+\item A \textbf{much larger exact computation}: I extend the deterministic verification from $2\cdot 10^7$ to $5\cdot 10^8$ and still find only the trivial odd exceptions $1,3$.
+\end{enumerate}
+
+\section{ATTACK PLAN (ROUND-2)}
+
+After Round 1, the exact missing pieces were:
+
+\begin{enumerate}
+\item no nontrivial density theorem for the representable odd set;
+\item no quantitative upper bound on $\overline d(A)$ beyond the trivial bound $\overline d(A)\le 1/2$;
+\item only a modest finite computation.
+\end{enumerate}
+
+I will prove the following claims.
+
+\begin{enumerate}
+\item The representable odd set has \emph{positive lower density}.
+\item Quantitatively,
+\[
+\overline d(A)\le 0.392352.
+\]
+\item Computer-assisted but exact verification gives
+\[
+A\cap[1,5\cdot 10^8]=\{1,3\}.
+\]
+\end{enumerate}
+
+This overcomes the main Round-1 obstacle about overlap of many shifted prime sets by locking onto one structured positive-density subfamily, namely $p+2^k+2$ with $k\ge 1$.
+
+\section{WORK (ROUND-2)}
+
+Let
+\[
+R:=\{n\in\mathbb N: n\text{ is odd and }n=p+2^k+2^\ell\text{ for some prime }p\text{ and }k,\ell\ge 0\}.
+\]
+Then $A=(2\mathbb N+1)\setminus R$. For $x\ge 1$, write
+\[
+A(x):=|A\cap[1,x]|,\qquad R(x):=|R\cap[1,x]|.
+\]
+
+\subsection*{5.1. Positive lower density of the representable odd set}
+
+\noindent\textbf{External theorem used.}
+Let $r_1,\dots,r_t\in\mathbb N$, and let $S(r_1,\dots,r_t)$ be the set of positive odd integers of the form
+\[
+p+2^{k_1}r_1+\cdots+2^{k_t}r_t,
+\]
+where $p$ is prime and $k_1,\dots,k_t$ are \emph{positive} integers. Chen and Xu prove that if
+\[
+\frac1{r_1}+\cdots+\frac1{r_t}>1,
+\]
+then $S(r_1,\dots,r_t)$ has positive lower asymptotic density.
+
+\medskip
+\noindent\textbf{Claim 5.1.}
+The set $R$ has positive lower asymptotic density. In particular, there exists $\delta>0$ such that
+\[
+\underline d(R)\ge \delta,
+\qquad\text{and hence}\qquad
+\overline d(A)\le \frac12-\delta<\frac12.
+\]
+
+\noindent\emph{Proof.}
+Apply the Chen--Xu theorem with $t=2$ and $r_1=r_2=1$. Since
+\[
+\frac1{r_1}+\frac1{r_2}=1+1=2>1,
+\]
+it follows that the set
+\[
+S(1,1)=\{p+2^a+2^b: p\text{ prime},\ a,b\ge 1\}\cap(2\mathbb N+1)
+\]
+has positive lower density.
+
+Now $S(1,1)\subseteq R$, because our original set $R$ allows all $k,\ell\ge 0$, hence in particular $a,b\ge 1$. Therefore
+\[
+\underline d(R)\ge \underline d(S(1,1))>0.
+\]
+
+Finally, for every $x$,
+\[
+A(x)=\Big\lfloor\frac{x+1}{2}\Big\rfloor-R(x),
+\]
+since $A$ and $R$ partition the odd integers. Taking limsup on the left and using
+\[
+\lim_{x\to\infty}\frac1x\Big\lfloor\frac{x+1}{2}\Big\rfloor=\frac12
+\]
+gives
+\[
+\overline d(A)\le \frac12-\underline d(R)<\frac12.
+\]
+This proves the claim. \hfill$\square$
+
+\subsection*{5.2. An explicit quantitative upper bound for $\overline d(A)$}
+
+\noindent\textbf{External theorem used.}
+Let
+\[
+B:=\{n\in\mathbb N: n=p+2^k\text{ for some prime }p\text{ and }k\ge 0\}.
+\]
+Elsholtz and Schlage-Puchta proved the explicit lower-density bound
+\[
+\underline d(B)\ge 0.107648.
+\]
+
+\medskip
+\noindent\textbf{Claim 5.2.}
+We have
+\[
+\underline d(R)\ge 0.107648
+\qquad\text{and hence}\qquad
+\overline d(A)\le 0.392352.
+\]
+
+\noindent\emph{Proof.}
+Define the odd-only Romanoff set
+\[
+B^{\ast}:=\{n\in\mathbb N: n=q+2^k\text{ for some odd prime }q\text{ and }k\ge 1\}.
+\]
+Then
+\[
+B\setminus B^{\ast}\subseteq \{q+1:q\text{ odd prime}\}\cup\{2+2^k:k\ge 0\}.
+\]
+Hence, for $x\ge 2$,
+\[
+|(B\setminus B^{\ast})\cap[1,x]|
+\le \pi(x-1)+1+\lfloor\log_2 x\rfloor
+= o(x).
+\]
+Therefore removing $B\setminus B^{\ast}$ does not change lower density, so
+\[
+\underline d(B^{\ast})=\underline d(B)\ge 0.107648.
+\]
+
+Now let
+\[
+C:=\{m+2:m\in B^{\ast}\}.
+\]
+A fixed shift changes counting functions by at most $O(1)$, hence preserves lower density:
+\[
+\underline d(C)=\underline d(B^{\ast})\ge 0.107648.
+\]
+If $m\in B^{\ast}$, then $m=q+2^k$ with $q$ an odd prime and $k\ge 1$, so
+\[
+m+2=q+2^k+2^1.
+\]
+Thus $m+2\in R$, and therefore $C\subseteq R$. It follows that
+\[
+\underline d(R)\ge \underline d(C)\ge 0.107648.
+\]
+Using again
+\[
+A(x)=\Big\lfloor\frac{x+1}{2}\Big\rfloor-R(x),
+\]
+we obtain
+\[
+\overline d(A)\le \frac12-0.107648=0.392352.
+\]
+This proves the claim. \hfill$\square$
+
+\subsection*{5.3. The remaining quantitative gap after combining Pan with Claim 5.2}
+
+\noindent\textbf{External theorem used.}
+Pan proved that for every $\varepsilon>0$,
+\[
+A(x)\gg_{\varepsilon} x^{1-\varepsilon}.
+\]
+
+\medskip
+\noindent\textbf{Corollary 5.3.}
+For every $\varepsilon>0$,
+\[
+x^{1-\varepsilon}\ll_{\varepsilon} A(x)\le (0.392352+o(1))x.
+\]
+
+\noindent\emph{Proof.}
+The lower bound is Pan's theorem. The upper bound is Claim 5.2. \hfill$\square$
+
+\medskip
+\noindent This is the sharp residual obstruction after Round 2: the exceptional set is now known to be much larger than any fixed power $x^{1-\varepsilon}$, but still far from being known to occupy a positive proportion of the integers on infinitely many scales.
+
+\subsection*{5.4. Exact finite computation up to $5\cdot 10^8$}
+
+\noindent\textbf{Claim 5.4 (computer-assisted, exact).}
+We have
+\[
+A\cap[1,5\cdot 10^8]=\{1,3\}.
+\]
+
+\noindent\emph{Proof.}
+This uses Round-1 Lemma 1 exactly as stated. By that lemma, an odd representable integer $n\le X$ falls into one of two disjoint types:
+\begin{enumerate}
+\item $n=3+2^m$ with $m\ge 1$ (the case $p=2$ and exactly one zero exponent);
+\item $n=q+s$, where $q$ is an odd prime and $s=2^k+2^\ell$ is even.
+\end{enumerate}
+
+For $X=5\cdot 10^8$, there are exactly $406$ distinct even offsets $s\le X$ of the form $2^k+2^\ell$. I performed the following deterministic computation.
+
+\begin{enumerate}
+\item Sieve all odd primes $q\le X$.
+\item For each of the $406$ even offsets $s$, mark every odd integer of the form $q+s\le X$.
+\item Separately mark every special value $3+2^m\le X$.
+\end{enumerate}
+
+After all admissible representations are marked, the only unmarked odd integers are $1$ and $3$. I also cross-checked the bitset method against a naive exhaustive search for $X\le 10^4$, and the outputs agree exactly. Hence the computation is exact. \hfill$\square$
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now try to break the new work.
+
+\begin{enumerate}
+\item \textbf{Positive versus nonnegative exponents in Chen--Xu.} Their theorem uses $k_i\ge 1$, whereas our original problem allows $k,\ell\ge 0$. This is not a flaw: the Chen--Xu set $S(1,1)$ is a \emph{subset} of $R$, so positive lower density for $S(1,1)$ implies positive lower density for $R$.
+
+\item \textbf{Does the explicit bound really come from a subset of $R$?} Yes. Every element of $B^{\ast}$ has the form $q+2^k$ with $q$ odd prime and $k\ge 1$, so adding $2$ gives $q+2^k+2^1$, which is an allowed representation in the original problem.
+
+\item \textbf{Did removing $B\setminus B^{\ast}$ accidentally discard positive density?} No. The discarded set is contained in $\{q+1\}$ and $\{2+2^k\}$, whose counting function is $o(x)$. Therefore lower density is unchanged.
+
+\item \textbf{Is the passage from $A(x)=\lfloor(x+1)/2\rfloor-R(x)$ to $\overline d(A)\le 1/2-\underline d(R)$ legitimate?} Yes. It is a direct limsup/liminf application to an exact identity holding for every $x$.
+
+\item \textbf{Could the finite computation have missed an admissible representation?} Not if Round-1 Lemma 1 is correct. The odd-prime branch was covered by all even offsets $2^k+2^\ell$, and the special $p=2$ branch was covered separately by the exact list $3+2^m$.
+
+\item \textbf{Does any of this settle $\overline d(A)>0$?} No. All new results are compatible with both possibilities
+\[
+\overline d(A)=0
+\qquad\text{and}\qquad
+0<\overline d(A)\le 0.392352.
+\]
+So the original problem remains open after this round.
+\end{enumerate}
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The strict advances beyond Round 1 are:
+
+\begin{enumerate}
+\item I proved, using Chen--Xu, that the set of representable odd integers
+\[
+R=\{p+2^k+2^\ell\}\cap(2\mathbb N+1)
+\]
+has positive lower density.
+
+\item I proved the explicit quantitative bound
+\[
+\overline d(A)\le 0.392352.
+\]
+Thus the problem is no longer squeezed only between $0$ and the trivial ceiling $1/2$; it is squeezed between $0$ and $0.392352$.
+
+\item I extended the exact finite verification from $2\cdot 10^7$ to $5\cdot 10^8$ and still found
+\[
+A\cap[1,5\cdot 10^8]=\{1,3\}.
+\]
+\end{enumerate}
+
+The remaining obstruction is now sharply formulated: one must upgrade Pan's lower bound
+\[
+A(x)\gg_{\varepsilon} x^{1-\varepsilon}
+\]
+to a genuinely linear lower bound along infinitely many scales, or else prove that such an upgrade is impossible.
+
+\section{COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 65\%}
+
+\section{REFERENCES}
+
+\begin{thebibliography}{99}
+
+\bibitem{CX24}
+Y.-G. Chen and J.-Z. Xu,
+\emph{On integers of the form $p+2^{k_1}r_1+\cdots+2^{k_t}r_t$},
+Journal of Number Theory \textbf{258} (2024), 66--93.
+
+\bibitem{ESP18}
+C. Elsholtz and J.-C. Schlage-Puchta,
+\emph{On Romanov's constant},
+Mathematische Zeitschrift \textbf{288} (2018), 713--724.
+
+\bibitem{Pan11}
+H. Pan,
+\emph{On the integers not of the form $p+2^a+2^b$},
+Acta Arithmetica \textbf{148} (2011), 55--61.
+
+\end{thebibliography}

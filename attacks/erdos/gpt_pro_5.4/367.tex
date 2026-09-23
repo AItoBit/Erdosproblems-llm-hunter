@@ -1,0 +1,187 @@
+\section*{Erd\H{o}s Problem \#367 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round-1 correctly disproved the stronger bound
+\[
+\prod_{n\le m<n+k} B_2(m) \ll_k n^2
+\]
+for every $k\ge 3$, but it overclaimed a full resolution of the original problem. The original main question is the weaker bound
+\[
+\prod_{n\le m<n+k} B_2(m) \ll n^{2+o(1)},
+\]
+which remains open. So the right round-2 move is to isolate the exact part that is now settled and explain the precise remaining gap.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following round-1 results as fixed input.
+\begin{itemize}
+\item For $k\le 2$,
+\[
+\prod_{n\le m<n+k} B_2(m) \ll n^2.
+\]
+In fact, for $k=1$ one has $B_2(n)\le n$, and for $k=2$ one has
+\[
+B_2(n)B_2(n+1)\le n(n+1)\le 2n^2.
+\]
+\item For every $k\ge 3$ there is an explicit infinite family $n=n_{j_t}$ such that
+\[
+\prod_{n\le m<n+k} B_2(m) \ge \prod_{n\le m<n+3} B_2(m) \gg n^2\log n
+\]
+infinitely often.
+\item In that family,
+\[
+n_j=8y_j^2,
+\]
+where $(x_j,y_j)$ solves $x^2-8y^2=1$, and for
+\[
+j_t=\frac{3\cdot 5^{t-1}-1}{2}
+\]
+one has
+\[
+5^t\mid (n_{j_t}+2).
+\]
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The genuinely new point is a \emph{scope correction} and an \emph{exact classification} of the stronger variant:
+\[
+\prod_{n\le m<n+k} B_2(m) \ll_k n^2
+\quad\Longleftrightarrow\quad
+k\le 2.
+\]
+This theorem was implicit in round-1 but not isolated as the minimal corrected statement. Equally important, the round-1 lower bound
+\[
+n^2\log n
+\]
+does \emph{not} contradict the original weaker conjecture, because $\log n=n^{o(1)}$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The round-1 mathematical construction is already enough to settle the stronger subquestion, so I will not re-prove it. Instead I will:
+\begin{itemize}
+\item package the round-1 conclusions into the exact stronger theorem;
+\item exhibit the first completely explicit counterexample from the family;
+\item explain sharply why the original $n^{2+o(1)}$ problem remains open.
+\end{itemize}
+
+\subsection*{5) WORK (ROUND-2)}
+\textbf{Theorem.} For fixed $k\ge 1$, the stronger estimate
+\[
+\prod_{n\le m<n+k} B_2(m) \ll_k n^2
+\]
+holds if and only if $k\le 2$.
+
+\medskip
+\textbf{Proof.}
+If $k=1$, then
+\[
+\prod_{n\le m<n+1} B_2(m)=B_2(n)\le n.
+\]
+If $k=2$, then
+\[
+\prod_{n\le m<n+2} B_2(m)=B_2(n)B_2(n+1)\le n(n+1)\le 2n^2.
+\]
+So the stronger bound is true for $k\le 2$.
+
+Now let $k\ge 3$. By the round-1 construction, there are infinitely many $n$ such that
+\[
+\prod_{n\le m<n+3} B_2(m) \gg n^2\log n.
+\]
+Therefore for those same $n$,
+\[
+\prod_{n\le m<n+k} B_2(m)
+\ge
+\prod_{n\le m<n+3} B_2(m)
+\gg n^2\log n.
+\]
+Since $\log n\to\infty$, the ratio
+\[
+\frac{\prod_{n\le m<n+k} B_2(m)}{n^2}
+\]
+is unbounded along that infinite sequence. Hence no constant $C_k$ can satisfy
+\[
+\prod_{n\le m<n+k} B_2(m)\le C_k n^2
+\]
+for all large $n$. So the stronger bound fails for every $k\ge 3$.
+This proves the theorem.
+
+\medskip
+\textbf{First explicit counterexample from the round-1 family.}
+Take $t=2$. Then
+\[
+j_2=\frac{3\cdot 5-1}{2}=7.
+\]
+The Pell recurrence gives
+\[
+(x_7,y_7)=(114243,40391),
+\]
+so
+\[
+n:=n_{j_2}=8y_7^2=13051463048.
+\]
+Direct factorization gives
+\[
+n=2^3\cdot 13^4\cdot 239^2,
+\qquad
+n+1=114243^2=3^2\cdot 113^2\cdot 337^2,
+\]
+and
+\[
+n+2=13051463050=2\cdot 5^2\cdot 29\cdot 269\cdot 33461.
+\]
+Hence
+\[
+B_2(n)=n,
+\qquad
+B_2(n+1)=n+1,
+\qquad
+B_2(n+2)\ge 5^2=25.
+\]
+So already for this concrete $n$,
+\[
+\prod_{n\le m<n+3} B_2(m) \ge 25n(n+1) > 25n^2,
+\]
+showing explicitly that the $\ll_3 n^2$ bound fails.
+
+\medskip
+\textbf{Why the original question is still open.}
+The original Erd\H{o}s problem asks whether for fixed $k$ one always has
+\[
+\prod_{n\le m<n+k} B_2(m) \ll n^{2+o(1)}.
+\]
+The round-1 lower bound only shows
+\[
+\prod_{n\le m<n+3} B_2(m) \gg n^2\log n
+\]
+infinitely often, and
+\[
+\log n=n^{o(1)}.
+\]
+Therefore this lower bound is still compatible with an upper bound of the form $n^{2+o(1)}$. So the main conjectural barrier survives untouched.
+
+Thus the stronger subquestion is now exactly classified, but the original weaker subquestion remains unresolved.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Quantifier check:} to refute $\ll_k n^2$ it is enough to find infinitely many $n$ with ratio to $n^2$ tending to infinity. The round-1 family gives ratio $\gg \log n$, which does tend to infinity.
+\item \emph{Main-obstruction check:} the same family does \emph{not} refute $n^{2+o(1)}$, because $\log n$ is swallowed by the $n^{o(1)}$ term.
+\item \emph{Concrete example check:} the factorization of $n$, $n+1$, and $n+2$ above confirms the mechanism already at the first nontrivial value $t=2$.
+\item \emph{No illicit reproving:} all deep Pell/5-adic input is used exactly as round-1 foundation; round-2 only repackages it into the correct global conclusion.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The exact stronger statement $\ll_k n^2$ is now fully classified: true for $k\le 2$, false for every $k\ge 3$. But the original weaker bound $n^{2+o(1)}$ remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 70\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item[Bloom367] T. F. Bloom, \emph{Erd\H{o}s Problem \#367}, \texttt{https://www.erdosproblems.com/367}, accessed 2026-03-07.
+\item[Thread367] T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#367 discussion thread}, \texttt{https://www.erdosproblems.com/forum/thread/367}, accessed 2026-03-07.
+\end{itemize}
+
+\bigskip\hrule\bigskip
+

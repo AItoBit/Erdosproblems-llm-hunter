@@ -1,0 +1,333 @@
+\section*{Erd\H{o}s Problem \#276}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+We pursue path \textbf{(C): obstruction/correction}. Round~1 already separated the weak Graham--Vsemirnov statement from the stronger Erd\H{o}s problem, but it left one conceptual gap: the informal phrase
+\begin{quote}
+``without an underlying system of covering congruences responsible''
+\end{quote}
+was not yet formalized exactly.
+
+The goal of Round~2 is to close that gap. We prove that for the recurrence
+\[
+a_{n+2}=a_{n+1}+a_n,
+\]
+the natural precise meaning of ``a finite covering system is responsible'' is \emph{equivalent} to the literal strong condition
+\[
+\forall m>1\ \exists n\ge 0:\ \gcd(m,a_n)=1.
+\]
+So the intended conjecture is \emph{not} a different one: after the minimal natural formalization, it is the same conjecture.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+We use the following Round~1 results without re-proving them.
+
+\begin{itemize}
+\item[(F1)] The weak statement is solved: there exist relatively prime positive integers $a_0,a_1$ such that every term of the corresponding Lucas sequence is composite (Graham; record-small known example due to Vsemirnov).
+\item[(F2)] Any covering-congruence construction of Graham type cannot solve the strong Erd\H{o}s problem, because the product of the finitely many covering primes has a nontrivial gcd with every term.
+\item[(F3)] For Fibonacci numbers $F_n$, one has the addition formula
+\[
+F_{u+v}=F_uF_{v+1}+F_{u-1}F_v
+\]
+and the divisibility property
+\[
+F_m\mid F_{tm}\qquad (m,t\ge 1).
+\]
+\item[(F4)] For a Fibonacci-like sequence, the gcd of consecutive terms is constant:
+\[
+\gcd(a_n,a_{n+1})=\gcd(a_0,a_1)\qquad (n\ge 0).
+\]
+In particular, any sequence satisfying the strong Erd\H{o}s condition automatically has $\gcd(a_0,a_1)=1$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new structural fact is the following.
+
+\medskip
+\noindent\textbf{Single-class zero theorem modulo a prime.}
+Fix a prime $p$ and a Fibonacci-like sequence $(a_n)_{n\ge 0}$. Then the set
+\[
+Z_p:=\{n\ge 0: p\mid a_n\}
+\]
+is of one of the following three types:
+\begin{enumerate}
+\item[(i)] $Z_p=\varnothing$;
+\item[(ii)] $Z_p=\{0,1,2,\dots\}$;
+\item[(iii)] $Z_p$ is a \emph{single} arithmetic progression
+\[
+Z_p=\{n\ge 0: n\equiv r_p\pmod{z(p)}\},
+\]
+where $z(p)$ is the least positive integer with $p\mid F_{z(p)}$.
+\end{enumerate}
+For sequences relevant to the strong Erd\H{o}s problem, case (ii) cannot occur because then $p$ would divide $a_0$ and $a_1$, contradicting $\gcd(a_0,a_1)=1$.
+
+Consequently, failure of the strong condition
+\[
+\forall m>1\ \exists n:\ \gcd(m,a_n)=1
+\]
+is \emph{equivalent} to the existence of a finite family of primes whose corresponding single congruence classes cover all indices. This gives the exact mathematical meaning of ``an underlying covering system of congruences responsible.''
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round~1 already showed that the strong problem was not settled by Graham/Vsemirnov-type constructions. The exact remaining gap was:
+\begin{quote}
+Does the literal Erd\H{o}s condition merely \emph{suggest} the absence of a covering system, or is it actually \emph{equivalent} to the absence of a finite prime-based congruence covering?
+\end{quote}
+To close this gap, we prove four claims.
+\begin{enumerate}
+\item[(A)] For every prime $p$, the Fibonacci numbers have a well-defined rank of apparition $z(p)$, and
+\[
+p\mid F_n \iff z(p)\mid n.
+\]
+\item[(B)] For every Fibonacci-like sequence and every prime $p$, the set of indices where $p$ divides the sequence is either empty, all of $\mathbf{N}_0$, or a single residue class modulo $z(p)$.
+\item[(C)] Therefore a finite common-factor obstruction
+\[
+\exists m>1\ \forall n:\ \gcd(m,a_n)>1
+\]
+is exactly the same as a finite prime-covering congruence system.
+\item[(D)] For any \emph{fixed} finite set of primes, deciding whether that set covers the sequence reduces to a finite computation.
+\end{enumerate}
+This is strict progress beyond Round~1 because it turns the informal ``covering congruences responsible'' phrase into a rigorous equivalent condition.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let $F_0=0$, $F_1=1$, and $F_{n+2}=F_{n+1}+F_n$ be the Fibonacci numbers.
+
+\medskip
+\noindent\textbf{Claim A.} For every prime $p$, there exists a least positive integer $z(p)$ such that $p\mid F_{z(p)}$. Moreover,
+\[
+p\mid F_n \iff z(p)\mid n \qquad (n\ge 0).
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Let
+\[
+A=\left(\begin{array}{cc}0&1\\ 1&1\end{array}\right).
+\]
+Modulo $p$, the matrix $A$ lies in the finite group $\mathrm{GL}_2(\mathbf{F}_p)$ because $\det A=-1\not\equiv 0\pmod p$. Hence $A$ has finite order $T_p>0$. Since
+\[
+A^n\left(\begin{array}{c}0\\ 1\end{array}\right)=
+\left(\begin{array}{c}F_n\\ F_{n+1}\end{array}\right),
+\]
+we get
+\[
+A^{T_p}\left(\begin{array}{c}0\\ 1\end{array}\right)=
+\left(\begin{array}{c}0\\ 1\end{array}\right),
+\]
+so $p\mid F_{T_p}$. Therefore the least positive such index $z(p)$ exists.
+
+If $z(p)\mid n$, then by Foundation~(F3) we have $F_{z(p)}\mid F_n$, hence $p\mid F_n$.
+
+Conversely, suppose $p\mid F_n$. If $n<z(p)$, then by minimality of $z(p)$ we must have $n=0$, so certainly $z(p)\mid n$. Now assume $n\ge z(p)$ and write
+\[
+n=qz(p)+r,\qquad q\ge 1,\qquad 0\le r<z(p).
+\]
+By the addition formula from Foundation~(F3),
+\[
+F_n=F_{qz(p)+r}=F_{qz(p)}F_{r+1}+F_{qz(p)-1}F_r.
+\]
+Since $z(p)\mid qz(p)$, the first term is $0\pmod p$, so
+\[
+F_n\equiv F_{qz(p)-1}F_r\pmod p.
+\]
+Now use Cassini's identity:
+\[
+F_{qz(p)+1}F_{qz(p)-1}-F_{qz(p)}^2=(-1)^{qz(p)}.
+\]
+Because $p\mid F_{qz(p)}$, this gives
+\[
+F_{qz(p)+1}F_{qz(p)-1}\equiv (-1)^{qz(p)}\not\equiv 0\pmod p,
+\]
+so $F_{qz(p)-1}\not\equiv 0\pmod p$. Therefore $p\mid F_n$ implies $p\mid F_r$. By the minimality of $z(p)$, this forces $r=0$. Hence $z(p)\mid n$.
+
+This proves Claim~A.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Claim B.} Let $(a_n)_{n\ge 0}$ satisfy $a_{n+2}=a_{n+1}+a_n$, and fix a prime $p$. Then the set
+\[
+Z_p=\{n\ge 0: p\mid a_n\}
+\]
+is either empty, all of $\mathbf{N}_0$, or a single residue class modulo $z(p)$.
+
+\medskip
+\noindent\emph{Proof.}
+First note that if $p\mid a_r$ and $p\mid a_{r+1}$ for some $r$, then the recurrence gives $p\mid a_{r+2}$, and the reversible form
+\[
+a_{r-1}=a_{r+1}-a_r
+\]
+gives $p\mid a_{r-1}$. Inducting forward and backward, $p$ divides every term. This is case~(ii).
+
+Now suppose case~(ii) does \emph{not} hold, but $Z_p\neq \varnothing$. Pick $r\ge 0$ with $p\mid a_r$. Then necessarily $p\nmid a_{r+1}$, for otherwise $p$ would divide all terms.
+
+Work modulo $p$, and extend the recurrence uniquely to all integers by the rule
+\[
+a_{n-1}=a_{n+1}-a_n.
+\]
+Also extend the Fibonacci sequence to all integers by
+\[
+F_{-t}=(-1)^{t+1}F_t\qquad (t\ge 1),
+\]
+so that the recurrence still holds for every integer index.
+
+Let $b$ be the residue class of $a_{r+1}$ modulo $p$. Consider the bi-infinite sequence
+\[
+u_n:=bF_{n-r}\qquad (n\in \mathbf{Z}).
+\]
+It satisfies the same recurrence as $(a_n)$ modulo $p$, and
+\[
+u_r=bF_0=0\equiv a_r\pmod p,
+\]
+\[
+u_{r+1}=bF_1=b\equiv a_{r+1}\pmod p.
+\]
+Since a second-order linear recurrence is uniquely determined by two consecutive values, we have
+\[
+a_n\equiv u_n\equiv bF_{n-r}\pmod p
+\qquad (n\in \mathbf{Z}).
+\]
+Because $b\not\equiv 0\pmod p$, this yields
+\[
+p\mid a_n \iff p\mid F_{n-r}.
+\]
+By Claim~A,
+\[
+p\mid F_{n-r} \iff z(p)\mid (n-r).
+\]
+Therefore
+\[
+Z_p=\{n\ge 0: n\equiv r\pmod{z(p)}\}.
+\]
+So in the nontrivial case, $Z_p$ is a single residue class modulo $z(p)$.
+
+This proves Claim~B.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Definition.} Let $(a_n)$ be a Fibonacci-like sequence with $\gcd(a_0,a_1)=1$. A \emph{finite prime-covering congruence system} for $(a_n)$ means a finite set of primes $p_1,\dots,p_t$ and residues $r_i$ modulo $z(p_i)$ such that
+\[
+p_i\mid a_n \iff n\equiv r_i\pmod{z(p_i)}
+\qquad (1\le i\le t),
+\]
+and the residue classes
+\[
+n\equiv r_i\pmod{z(p_i)}
+\]
+cover all integers $n\ge 0$.
+
+\medskip
+\noindent\textbf{Claim C.} Assume $\gcd(a_0,a_1)=1$. Then the following are equivalent.
+\begin{enumerate}
+\item[(1)] There exists an integer $m>1$ such that
+\[
+\gcd(m,a_n)>1\qquad \text{for all } n\ge 0.
+\]
+\item[(2)] The sequence $(a_n)$ admits a finite prime-covering congruence system.
+\end{enumerate}
+
+\medskip
+\noindent\emph{Proof.}
+Assume (1). Let $S$ be the finite set of prime divisors of $m$. Because $\gcd(a_0,a_1)=1$, no prime can divide every term of the sequence. Hence for each $p\in S$, Claim~B applies in the nontrivial case: either $p$ divides no term, or there is a unique residue class
+\[
+n\equiv r_p\pmod{z(p)}
+\]
+on which $p$ divides $a_n$. Since $\gcd(m,a_n)>1$ for every $n$, for each $n$ some prime $p\in S$ divides $a_n$. Thus the finitely many residue classes coming from those primes cover all $n\ge 0$. This is exactly (2).
+
+Conversely, assume (2), and set
+\[
+m:=\prod_{i=1}^t p_i.
+\]
+Given any $n\ge 0$, the covering property yields an index $i$ with
+\[
+n\equiv r_i\pmod{z(p_i)}.
+\]
+By definition of the prime-covering congruence system, $p_i\mid a_n$. Therefore
+\[
+\gcd(m,a_n)\ge p_i>1.
+\]
+So $\gcd(m,a_n)>1$ for every $n\ge 0$, proving (1).
+
+This proves Claim~C.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Claim D.} Let $S$ be a fixed finite set of primes. Then deciding whether
+\[
+\forall n\ge 0\ \exists p\in S:\ p\mid a_n
+\]
+holds is a finite computation.
+
+\medskip
+\noindent\emph{Proof.}
+For each $p\in S$, Claim~B shows that the set of indices $n$ with $p\mid a_n$ is either empty or a single class modulo $z(p)$ (under the nontrivial coprime assumption relevant to the strong problem). Let
+\[
+L:=\mathrm{lcm}\{z(p): p\in S\}.
+\]
+Then the condition
+\[
+\forall n\ge 0\ \exists p\in S:\ p\mid a_n
+\]
+is equivalent to the statement that every residue class modulo $L$ lies in at least one of the lifted congruence classes coming from the primes in $S$. This requires checking only the finitely many residues $0,1,\dots,L-1$.
+
+This proves Claim~D.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Consequence.} The literal Erd\H{o}s condition
+\[
+\forall m>1\ \exists n\ge 0:\ \gcd(m,a_n)=1
+\]
+is exactly equivalent to saying that \emph{no finite prime-covering congruence system exists}. Hence the phrase
+\begin{quote}
+``without an underlying system of covering congruences responsible''
+\end{quote}
+has a canonical precise formalization for this problem, and that formalization is the strong Erd\H{o}s statement itself.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+We check the new work against the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{Could $Z_p$ be a union of two residue classes?} No. Claim~B shows that once a single zero $a_r\equiv 0\pmod p$ occurs and $p$ does not divide all terms, the entire sequence modulo $p$ is forced to be a scalar multiple of $F_{n-r}$, so the zero set is exactly one class modulo $z(p)$.
+
+\item \textbf{Did the proof of Claim~A assume a theorem not justified here?} No. Existence of $z(p)$ came from the finite order of the companion matrix in $\mathrm{GL}_2(\mathbf{F}_p)$; the divisibility criterion $p\mid F_n\iff z(p)\mid n$ was proved directly from the Round~1 addition formula, the Round~1 divisibility lemma, and Cassini's identity.
+
+\item \textbf{What about the case that a prime divides all terms?} Claim~B isolates that as a separate case. In the actual Erd\H{o}s problem, any admissible sequence must satisfy $\gcd(a_0,a_1)=1$, so this case cannot occur.
+
+\item \textbf{Did Claim~C accidentally use the weak statement instead of the strong one?} No. Claim~C is purely structural: it does not assume all terms are composite. It only compares a fixed finite gcd-obstruction with a finite prime-covering congruence system.
+
+\item \textbf{Does Claim~D solve the whole problem by finite computation?} No. It only says that for a \emph{prescribed finite set of primes} $S$, checking whether $S$ covers the sequence is finite. The open difficulty is that there is no known a priori bound on which primes could appear in such a set.
+\end{itemize}
+
+No contradiction with the Round~1 foundation appears.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 proves a new equivalence that was not available in Round~1:
+
+\begin{quote}
+For Fibonacci-like sequences, the literal strong Erd\H{o}s condition
+\[
+\forall m>1\ \exists n\ge 0:\ \gcd(m,a_n)=1
+\]
+is \emph{equivalent} to the absence of any finite prime-covering congruence system.
+\end{quote}
+
+Therefore the intended actual conjecture is \emph{not} different from the literal one. After the minimal natural formalization of ``an underlying covering system is responsible'', they are the same statement.
+
+This does \emph{not} solve Problem~\#276, but it sharpens the remaining obstruction to one precise gap:
+\begin{quote}
+Construct an all-composite Fibonacci-like sequence for which no finite family of primes gives a covering by the single congruence classes $n\equiv r_p\pmod{z(p)}$.
+\end{quote}
+
+Equivalently, one must prove that for every finite set of primes $S$, there exists an index $n$ such that no prime in $S$ divides $a_n$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 80\%.
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item R. L. Graham, \emph{A Fibonacci-Like Sequence of Composite Numbers}, Mathematics Magazine 37 (1964), 322--324.
+\item M. Vsemirnov, \emph{A New Fibonacci-Like Sequence of Composite Numbers}, Journal of Integer Sequences 7 (2004), Article 04.3.7.
+\item D. Ismailescu and J. Son, \emph{A New Kind of Fibonacci-Like Sequence of Composite Numbers}, Journal of Integer Sequences 17 (2014), Article 14.8.2.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#276}, erdosproblems.com/276, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#276: discussion thread}, erdosproblems.com/forum/thread/276, accessed 2026-03-07.
+\end{itemize}

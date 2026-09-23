@@ -1,0 +1,207 @@
+\section{Round 2 continuation for Erd\H{o}s Problem \#873}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}. The most promising Round-2 advance is to identify a genuine obstruction to any \emph{fixed-\(k\)} strategy. Round~1 already explained that the known Erd\H{o}s--Szemer\'edi bound for \(k=3\) settles the problem only for exponents \(\varepsilon>1/3\). What was still missing was a rigorous reason that one cannot hope to settle the full conjecture with one universal, fixed value of \(k\). I will prove exactly that.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 results without reproving them.
+
+\begin{enumerate}
+\item Round~1 defined
+\[
+F(A,X,k)=\#\Big\{i\ge 1:\operatorname{lcm}(a_i,a_{i+1},\dots,a_{i+k-1})<X\Big\}
+\]
+for \(A=\{a_1<a_2<\cdots\}\subset \mathbf{N}\).
+\item Round~1 proved monotonicity in the block length:
+\[
+k'\ge k \implies F(A,X,k')\le F(A,X,k).
+\]
+\item Round~1 noted that the known Erd\H{o}s--Szemer\'edi theorem for \(k=3\) gives
+\[
+F(A,X,3)\ll X^{1/3}\log X,
+\]
+so the original problem is only difficult for \(\varepsilon\le 1/3\).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a \emph{divisor-block construction}. For each large parameter \(y\), take the primorial
+\[
+P(y):=\prod_{p\le y}p,
+\]
+pick a prime \(q>y\) coprime to \(P(y)\), and form the block
+\[
+B=\{qd:d\mid P(y)\}.
+\]
+Inside such a block, every \(k\) consecutive terms have least common multiple at most \(qP(y)\), while the block length is exactly the divisor count \(\tau(P(y))=2^{\pi(y)}\). By concatenating many such blocks far apart, one gets an infinite sequence for which \(F(A,X,k)\) is very large infinitely often for any fixed \(k\).
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The precise Round~1 gap was the absence of a theorem showing that \(k\) really must depend on the set \(A\). I will now prove the following claim.
+
+\medskip
+\noindent\textbf{Target claim.}
+For every fixed integer \(k\ge 1\), there exists an infinite set \(A\subset \mathbf{N}\) and a sequence \(X_t\to\infty\) such that
+\[
+F(A,X_t,k)\ge \exp\!\left((\log 2+o(1))\frac{\log X_t}{\log\log X_t}\right).
+\]
+
+This implies that no upper bound of polylogarithmic size can hold uniformly for all sets \(A\) with a single fixed \(k\). Hence any eventual proof of the original conjecture must use the freedom to choose \(k=k(A,\varepsilon)\).
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let \(k\ge 1\) be fixed once and for all.
+
+\medskip
+\noindent\textbf{Claim 873.1.}
+There exists an infinite increasing set \(A\subset \mathbf{N}\) and a sequence \(X_t\to\infty\) such that
+\[
+F(A,X_t,k)\ge \exp\!\left((\log 2+o(1))\frac{\log X_t}{\log\log X_t}\right).
+\]
+In particular, for every constant \(C>0\),
+\[
+F(A,X_t,k)>(\log X_t)^C
+\]
+for all sufficiently large \(t\).
+
+\medskip
+\noindent\emph{Proof.}
+Choose a sequence \(y_t\to\infty\) recursively so rapidly that, for every \(t\ge 2\),
+\[
+y_t>q_{t-1}P_{t-1},
+\]
+where \(P_{t-1}\) and \(q_{t-1}\) are objects defined at the previous stage.
+
+For each \(t\), define
+\[
+P_t:=\prod_{p\le y_t}p.
+\]
+By Bertrand's postulate, there exists a prime \(q_t\) with
+\[
+y_t<q_t<2y_t.
+\]
+Since every prime factor of \(P_t\) is at most \(y_t\), we have
+\[
+\gcd(q_t,P_t)=1.
+\]
+
+Now define the finite block
+\[
+B_t:=\{q_t d:d\mid P_t\},
+\]
+listed in increasing order. Because \(q_t>q_{t-1}P_{t-1}\), every element of \(B_t\) is larger than every element of \(B_{t-1}\). Hence the disjoint union
+\[
+A:=B_1\cup B_2\cup B_3\cup \cdots
+\]
+is an infinite increasing sequence.
+
+Set
+\[
+X_t:=q_tP_t+1.
+\]
+Consider any run of \(k\) consecutive elements lying entirely inside the block \(B_t\), say
+\[
+q_t d_1<q_t d_2<\cdots<q_t d_k
+\]
+with each \(d_j\mid P_t\). Since \(q_t\) is coprime to \(P_t\),
+\[
+\operatorname{lcm}(q_t d_1,\dots,q_t d_k)=q_t\,\operatorname{lcm}(d_1,\dots,d_k)\le q_tP_t<X_t.
+\]
+Therefore every starting position of a length-\(k\) window wholly contained in \(B_t\) contributes to \(F(A,X_t,k)\). So
+\[
+F(A,X_t,k)\ge |B_t|-k+1.
+\]
+
+Because \(P_t\) is squarefree, the number of divisors of \(P_t\) is
+\[
+|B_t|=\tau(P_t)=2^{\pi(y_t)},
+\]
+where \(\pi(y_t)\) is the number of primes at most \(y_t\). Hence
+\[
+F(A,X_t,k)\ge 2^{\pi(y_t)}-k+1.
+\]
+
+Now use the prime number theorem and the standard asymptotic \(\vartheta(y)\sim y\) for the Chebyshev function. Since
+\[
+\log P_t=\vartheta(y_t)\sim y_t,
+\qquad
+\pi(y_t)\sim \frac{y_t}{\log y_t},
+\]
+and \(q_t<2y_t\), we get
+\[
+\log X_t=\log(q_tP_t+1)=(1+o(1))y_t,
+\qquad
+\log\log X_t=(1+o(1))\log y_t.
+\]
+Substituting into the lower bound for \(F(A,X_t,k)\) yields
+\[
+\log F(A,X_t,k)\ge (\log 2+o(1))\frac{\log X_t}{\log\log X_t},
+\]
+which is equivalent to
+\[
+F(A,X_t,k)\ge \exp\!\left((\log 2+o(1))\frac{\log X_t}{\log\log X_t}\right).
+\]
+
+Finally, since
+\[
+\frac{\log X_t}{\log\log X_t}\gg \log\log X_t,
+\]
+the above lower bound dominates every power of \(\log X_t\). Thus for any fixed \(C>0\),
+\[
+F(A,X_t,k)>(\log X_t)^C
+\]
+for all sufficiently large \(t\).
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Corollary 873.2.}
+Fix \(k_0\ge 1\). There is no bound of the form
+\[
+F(A,X,k_0)\le (\log X)^C
+\]
+that can hold uniformly for all infinite \(A\subset \mathbf{N}\) and all large \(X\).
+
+\medskip
+\noindent\emph{Proof.}
+Apply Claim~873.1 with \(k=k_0\). The resulting set \(A\) violates any such bound along the sequence \(X_t\).
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Interpretation.}
+This does \emph{not} disprove the Erd\H{o}s--Szemer\'edi problem, because the original statement allows \(k\) to depend on \(A\) and on \(\varepsilon\). What it proves is a genuine obstruction: a proof with one fixed universal \(k\) cannot work.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I check the potential failure points one by one.
+
+\begin{enumerate}
+\item \emph{Are the blocks really increasing?} Yes. The recursive choice \(y_t>q_{t-1}P_{t-1}\) implies \(q_t>y_t>q_{t-1}P_{t-1}\), so every element of \(B_t\) exceeds every element of \(B_{t-1}\).
+\item \emph{Do the lcm computations use hidden assumptions?} No. Since \(\gcd(q_t,P_t)=1\), one has
+\[
+\operatorname{lcm}(q_t d_1,\dots,q_t d_k)=q_t\operatorname{lcm}(d_1,\dots,d_k).
+\]
+\item \emph{Do cross-block windows matter?} No. I only need a lower bound for \(F(A,X_t,k)\), so it suffices to count windows lying entirely inside \(B_t\).
+\item \emph{Is the quantitative asymptotic consistent?} Yes. The divisor count of a primorial is \(2^{\pi(y_t)}\), and the prime number theorem gives exactly the stated exponential-in-\(\log X/\log\log X\) size.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 proves a new obstruction absent from Round~1: for every fixed \(k\), there exists an infinite set \(A\) for which \(F(A,X,k)\) is larger than every power of \(\log X\) infinitely often. Thus any proof of the original conjecture must use the freedom to let \(k\) depend on \(A\) and \(\varepsilon\). The full Erd\H{o}s--Szemer\'edi question nevertheless remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 38\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#873}, problem page.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT NOTE}
+
+This file intentionally starts at \verb|\section| and contains no preamble and no \verb|\begin{document}|, so it can be pasted directly into an existing LaTeX document.

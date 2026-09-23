@@ -1,0 +1,409 @@
+\section*{Erd\H{o}s Problem \#247 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round 1 left the original statement open, but it also isolated the key gap: the only transcendence mechanism obtained there came from a very strong Liouville phenomenon, namely
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}=\infty.
+\]
+In this round I sharpen that gap in two different directions.
+
+First, I prove a strictly stronger transcendence criterion:
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}>1
+\quad\Longrightarrow\quad
+\alpha:=\sum_{n=1}^\infty 2^{-a_n}\ \text{is transcendental}.
+\]
+Second, I prove a degree obstruction:
+\[
+\alpha\ \text{algebraic of degree }D
+\quad\Longrightarrow\quad
+ a_n=O(n^D).
+\]
+These two results isolate the only possible location of any algebraic counterexample to the original Erd\H{o}s problem: it would have to lie in the \emph{nonlacunary polynomial-growth regime}
+\[
+\frac{a_{n+1}}{a_n}\to 1,
+\qquad
+ a_n=O(n^D)\ \text{for some finite }D\ge 2.
+\]
+That is the precise Round-2 obstruction/correction I will establish.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts without reproving them.
+
+\begin{itemize}
+\item \textbf{Round-1 Proposition 4.1:} under the original hypothesis
+\[
+\limsup_{n\to\infty}\frac{a_n}{n}=\infty,
+\]
+we already know that
+\[
+\alpha=\sum_{n\ge 1}2^{-a_n}
+\]
+is irrational.
+
+\item \textbf{Round-1 truncation formula:} for
+\[
+\alpha_N:=\sum_{n=1}^N2^{-a_n}=\frac{p_N}{2^{a_N}},
+\]
+we have
+\[
+0<\alpha-\alpha_N\le 2^{1-a_{N+1}}.
+\]
+(This was the tail estimate used in Round 1.)
+
+\item \textbf{Round-1 gap diagnosis:} the unresolved regime was exactly the one where the truncation denominators are dyadic, but the tail is not small enough to force a Liouville argument.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new inputs in this round.
+
+\begin{itemize}
+\item \textbf{Dyadic Ridout bound.} A consequence of Ridout's theorem, stated explicitly by Rivoal, is that if $\beta$ is an algebraic irrational number, then for every $\varepsilon>0$ one has
+\[
+\left|\beta-\frac{p}{2^m}\right|\ge 2^{-m(1+\varepsilon)}
+\]
+for all integers $p$ and all sufficiently large integers $m$.
+
+\item \textbf{Binary 1-bit lower bound for algebraic numbers.} Bailey--Borwein--Crandall--Pomerance proved that if $\beta$ is a real algebraic number of degree $D>1$, then the number $B_\beta(N)$ of 1's among the first $N$ binary digits of $\beta$ satisfies
+\[
+B_\beta(N)\ge c(\beta)N^{1/D}
+\]
+for all sufficiently large $N$, for some constant $c(\beta)>0$.
+\end{itemize}
+
+The first tool upgrades the Round-1 ``Liouville if ratios are unbounded'' argument to the much sharper threshold ``transcendence if the ratio exceeds $1$ by any fixed amount infinitely often.''
+The second tool converts algebraicity of fixed degree into a concrete upper bound on the growth of the 1-positions $a_n$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+After Round 1, the exact gap was this: the truncation estimate
+\[
+0<\alpha-\alpha_N\le 2^{1-a_{N+1}}
+\]
+only gives a Liouville contradiction when $a_{N+1}/a_N$ becomes arbitrarily large. That leaves open all sequences with bounded successive ratios.
+
+I now attack that gap in three steps.
+
+\begin{itemize}
+\item \textbf{Claim A.} Strengthen Round 1 by proving
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}>1
+\implies
+\alpha\ \text{transcendental}.
+\]
+This uses the dyadic Ridout estimate instead of a Liouville argument.
+
+\item \textbf{Claim B.} If $\alpha$ were algebraic of degree $D$, then its binary expansion would have at least $\gg N^{1/D}$ ones up to position $N$. Since for our number those 1-positions are exactly the $a_n$, this forces
+\[
+a_n=O(n^D).
+\]
+This gives a new algebraic-degree barrier.
+
+\item \textbf{Claim C.} Show that the Round-2 dyadic-approximation method is \emph{sharp for truncations}: if
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}=1,
+\]
+then the truncations $\alpha_N$ can never violate Ridout's dyadic lower bound for any fixed exponent $1+\varepsilon$. So the remaining unresolved regime is genuinely outside the reach of the simple truncation$+$Ridout strategy.
+\end{itemize}
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+A(N):=\#\{n\ge 1: a_n\le N\}.
+\]
+Because the binary expansion of $\alpha$ has a 1 exactly in positions $a_1,a_2,\dots$, the quantity $A(N)$ is exactly the number of 1's among the first $N$ binary digits of $\alpha$. In particular,
+\[
+A(a_n)=n\qquad(n\ge 1).
+\]
+
+\subsubsection*{Claim A: a Ridout upgrade of the Round-1 transcendence criterion}
+\textbf{Proposition A.}
+If
+\[
+\Lambda:=\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}>1,
+\]
+then $\alpha$ is transcendental.
+
+\paragraph{Proof.}
+I explicitly use two Round-1 facts here: first, $\alpha$ is irrational; second,
+\[
+0<\alpha-\alpha_N\le 2^{1-a_{N+1}}
+\qquad\text{for }\alpha_N=\frac{p_N}{2^{a_N}}.
+\]
+
+Choose $\varepsilon>0$ such that
+\[
+1+2\varepsilon<\Lambda.
+\]
+Then for infinitely many $N$ we have
+\[
+a_{N+1}\ge (1+2\varepsilon)a_N.
+\]
+For such $N$,
+\[
+0<\alpha-\frac{p_N}{2^{a_N}}
+\le 2^{1-a_{N+1}}
+\le 2^{1-(1+2\varepsilon)a_N}
+=2\cdot 2^{-(1+2\varepsilon)a_N}.
+\]
+For all sufficiently large such $N$, we also have $2<2^{\varepsilon a_N}$, hence
+\[
+2\cdot 2^{-(1+2\varepsilon)a_N}<2^{-(1+\varepsilon)a_N}.
+\]
+Therefore, for infinitely many $N$,
+\[
+\left|\alpha-\frac{p_N}{2^{a_N}}\right|<2^{-(1+\varepsilon)a_N}.
+\]
+
+Now assume for contradiction that $\alpha$ is algebraic. By the Round-1 irrationality result, it is then algebraic irrational. Applying Rivoal's dyadic form of Ridout's theorem to $\beta=\alpha$, we obtain that for this fixed $\varepsilon>0$,
+\[
+\left|\alpha-\frac{p}{2^m}\right|\ge 2^{-m(1+\varepsilon)}
+\]
+for every integer $p$ and every sufficiently large integer $m$. Taking $m=a_N$ contradicts the infinitely many strict inequalities above.
+
+Hence $\alpha$ is transcendental.
+\hfill$\square$
+
+\medskip
+This strictly strengthens the Round-1 Liouville criterion
+\[
+\limsup \frac{a_{n+1}}{a_n}=\infty,
+\]
+since the latter obviously implies the new hypothesis $\limsup a_{n+1}/a_n>1$.
+
+\subsubsection*{Claim B: algebraic degree forces polynomial growth of the 1-positions}
+\textbf{Proposition B.}
+Assume that $\alpha$ is algebraic of degree $D>1$. Then there exists a constant $C=C(\alpha)>0$ such that
+\[
+a_n\le Cn^D
+\qquad\text{for all sufficiently large }n.
+\]
+Equivalently,
+\[
+A(N)\ge c(\alpha)N^{1/D}
+\qquad\text{for all sufficiently large }N,
+\]
+for some constant $c(\alpha)>0$.
+
+\paragraph{Proof.}
+Bailey--Borwein--Crandall--Pomerance prove that for every real algebraic number $\beta$ of degree $D>1$, the number $B_\beta(N)$ of 1's among the first $N$ binary digits of $\beta$ satisfies
+\[
+B_\beta(N)\ge c(\beta)N^{1/D}
+\]
+for all sufficiently large $N$.
+
+Apply this with $\beta=\alpha$. Since the 1-positions of the binary expansion of $\alpha$ are exactly $a_1,a_2,\dots$, we have
+\[
+B_\alpha(N)=A(N).
+\]
+Hence
+\[
+A(N)\ge c(\alpha)N^{1/D}
+\]
+for all sufficiently large $N$.
+
+Now substitute $N=a_n$. Since $A(a_n)=n$, we get
+\[
+n\ge c(\alpha)a_n^{1/D}
+\]
+for all sufficiently large $n$, and therefore
+\[
+a_n\le c(\alpha)^{-D}n^D.
+\]
+This is the required polynomial upper bound.
+\hfill$\square$
+
+\medskip
+A useful reformulation is the following.
+
+\textbf{Corollary B1.}
+Fix an integer $d\ge 2$. If
+\[
+\limsup_{n\to\infty}\frac{a_n}{n^d}=\infty,
+\]
+then $\alpha$ is not algebraic of degree $\le d$.
+
+\paragraph{Proof.}
+If $\alpha$ had algebraic degree $D\le d$, Proposition B would give
+\[
+a_n=O(n^D)=O(n^d),
+\]
+contradicting $\limsup a_n/n^d=\infty$.
+\hfill$\square$
+
+\medskip
+In particular:
+
+\begin{itemize}
+\item taking $d=2$, we obtain a rigorous nonquadraticity criterion:
+\[
+\limsup_{n\to\infty}\frac{a_n}{n^2}=\infty
+\quad\Longrightarrow\quad
+\alpha\ \text{is not quadratic irrational};
+\]
+\item if the condition $\limsup a_n/n^d=\infty$ holds for every $d\ge 1$, then $\alpha$ is transcendental.
+\end{itemize}
+The second bullet recovers the stronger sufficient condition already recorded on the Erd\H{o}s problem page.
+
+\subsubsection*{Claim C: the truncation$+$Ridout method is sharp at the threshold $a_{n+1}/a_n\to 1$}
+\textbf{Proposition C.}
+Assume
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}=1.
+\]
+Then for every $\varepsilon>0$, the truncation approximants $\alpha_N=p_N/2^{a_N}$ satisfy
+\[
+\alpha-\frac{p_N}{2^{a_N}}\ge 2^{-(1+\varepsilon)a_N}
+\]
+for all sufficiently large $N$.
+In particular, the truncations never produce infinitely many dyadic approximations that violate Ridout's lower bound with exponent $1+\varepsilon$.
+
+\paragraph{Proof.}
+Fix $\varepsilon>0$. Since $a_{n+1}/a_n\ge 1$ for every $n$ and the limsup is $1$, in fact
+\[
+\frac{a_{n+1}}{a_n}\to 1.
+\]
+Hence, for all sufficiently large $N$,
+\[
+a_{N+1}\le (1+\varepsilon)a_N.
+\]
+Now the truncation error is the positive tail
+\[
+\alpha-\frac{p_N}{2^{a_N}}=\sum_{n>N}2^{-a_n},
+\]
+so it is bounded \emph{below} by its first omitted term:
+\[
+\alpha-\frac{p_N}{2^{a_N}}\ge 2^{-a_{N+1}}\ge 2^{-(1+\varepsilon)a_N}.
+\]
+Thus for every fixed $\varepsilon>0$, the truncations fail to satisfy
+\[
+\left|\alpha-\frac{p_N}{2^{a_N}}\right|<2^{-(1+\varepsilon)a_N}
+\]
+for all sufficiently large $N$.
+\hfill$\square$
+
+\medskip
+This shows that Proposition A is \emph{sharp for the simple truncation strategy}. The unresolved regime really begins when successive ratios tend to $1$.
+
+\subsubsection*{A sharp reduction of the original Erd\H{o}s problem}
+Combining Propositions A and B yields the most useful Round-2 reduction.
+
+\textbf{Corollary D.}
+Suppose the original Erd\H{o}s problem had an algebraic counterexample, i.e. suppose there exists an increasing sequence $(a_n)$ with
+\[
+\limsup_{n\to\infty}\frac{a_n}{n}=\infty
+\]
+such that
+\[
+\alpha=\sum_{n=1}^\infty 2^{-a_n}
+\]
+is algebraic. Then necessarily:
+\begin{enumerate}
+\item $\alpha$ has algebraic degree $D\ge 2$;
+\item $a_{n+1}/a_n\to 1$;
+\item $a_n=O(n^D)$.
+\end{enumerate}
+
+\paragraph{Proof.}
+Item (1) is exactly the Round-1 irrationality result.
+Item (2) is the contrapositive of Proposition A, together with the trivial inequality $a_{n+1}/a_n\ge 1$.
+Item (3) is Proposition B with $D=\deg(\alpha)$.
+\hfill$\square$
+
+Thus the original problem reduces to the following strictly narrower subclass:
+
+\medskip
+\centerline{\emph{nonlacunary sequences of polynomial growth.}}
+\medskip
+
+Any method that only exploits truncations as dyadic rational approximants, or only uses the power-law lower bound on the density of 1's coming from algebraicity of bounded degree, cannot by itself settle the full problem outside this reduced class.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I now check the new work against the main failure modes.
+
+\begin{itemize}
+\item \textbf{Did Proposition A accidentally assume more than Round 1 proved?}
+No. It uses only two Round-1 inputs: irrationality of $\alpha$ and the dyadic truncation tail bound. Everything else is new.
+
+\item \textbf{Does the Rivoal--Ridout bound apply in exactly the needed form?}
+Yes. The cited statement is for \emph{every} integer $p$ and all sufficiently large $m$, so there is no coprimality issue with the truncation numerators $p_N$.
+
+\item \textbf{Could the constant factor $2$ in the tail estimate spoil Proposition A?}
+No. After choosing $\varepsilon>0$ with $1+2\varepsilon<\Lambda$, one has
+\[
+2\cdot 2^{-(1+2\varepsilon)a_N}<2^{-(1+\varepsilon)a_N}
+\]
+whenever $a_N>1/\varepsilon$, which holds for all sufficiently large $N$.
+
+\item \textbf{Does Proposition B really identify $A(N)$ with the binary 1-count?}
+Yes. By construction,
+\[
+\alpha=\sum_{n\ge 1}2^{-a_n}
+\]
+has a 1 in binary position $a_n$ and a 0 elsewhere; there are no carries because each power $2^{-m}$ appears at most once.
+
+\item \textbf{Did I overstate Proposition C?}
+I have stated it carefully: it rules out only the \emph{truncation$+$Ridout} strategy, not all conceivable dyadic approximants or all possible transcendence methods.
+
+\item \textbf{What happens in the boundary case $\limsup a_{n+1}/a_n=1$?}
+Since the sequence is increasing, all ratios are at least $1$, so limsup $=1$ forces
+\[
+\frac{a_{n+1}}{a_n}\to 1.
+\]
+Thus the boundary case is handled correctly.
+
+\item \textbf{Is Corollary D logically stronger than what was proved?}
+No. It is just the direct combination of Round-1 irrationality, Proposition A, and Proposition B.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains open, but Round 2 gives three substantive advances beyond Round 1.
+
+\begin{enumerate}
+\item \textbf{New transcendence criterion.}
+I proved
+\[
+\limsup_{n\to\infty}\frac{a_{n+1}}{a_n}>1
+\quad\Longrightarrow\quad
+\sum_{n=1}^\infty 2^{-a_n}\ \text{is transcendental}.
+\]
+This strictly strengthens the Round-1 Liouville criterion.
+
+\item \textbf{New degree obstruction.}
+If $\alpha$ is algebraic of degree $D$, then necessarily
+\[
+a_n=O(n^D).
+\]
+Equivalently, if for some $d\ge 2$ one has
+\[
+\limsup_{n\to\infty}\frac{a_n}{n^d}=\infty,
+\]
+then $\alpha$ cannot have algebraic degree $\le d$.
+
+\item \textbf{Sharp reduction of the open core.}
+Any hypothetical algebraic counterexample to the original problem must satisfy
+\[
+\frac{a_{n+1}}{a_n}\to 1
+\qquad\text{and}\qquad
+ a_n=O(n^D)
+\]
+for some finite $D\ge 2$.
+So the unresolved part of the problem has now been localized to the nonlacunary polynomial-growth regime.
+\end{enumerate}
+
+The first genuine remaining gap is therefore no longer vague: one must handle sequences whose growth is superlinear in the Erd\H{o}s sense, but whose successive ratios tend to $1$ and whose growth remains bounded by some fixed power of $n$.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#247}, Erd\H{o}s Problems website, accessed 2026-03-07. The page records the problem statement, its open status, and Erd\H{o}s' stronger sufficient condition.
+
+\item T. Rivoal, \emph{On the binary expansion of irrational algebraic numbers}, Actes des Rencontres du C.I.R.M. \textbf{1} (2009), no.~1, 55--60. Used for the dyadic consequence of Ridout's theorem, especially Eq.~(2.5).
+
+\item D. H. Bailey, J. M. Borwein, R. E. Crandall, and C. Pomerance, \emph{On the binary expansions of algebraic numbers}, Journal de Th\'eorie des Nombres de Bordeaux \textbf{16} (2004), no.~3, 487--518. Used for Theorem~7.1 on lower bounds for the number of 1's in the binary expansion of an algebraic number.
+\end{enumerate}

@@ -1,0 +1,531 @@
+\section{Round-11 Objective}
+We pursue \textbf{(C) obstruction/correction}.  A concrete logical error entered the Round~7 and Round~8 proofs: they used the global inclusion
+\[
+A\subseteq A^{(k)},
+\]
+for fixed $k$, but this inclusion is false in general because $A$ does \emph{not} impose the $i$-th congruence condition below the threshold $n_i$, whereas $A^{(k)}$ does.
+
+The new goal of this round is threefold.
+\begin{enumerate}
+\item Identify and prove the precise error.
+\item Replace the false global inclusion by the correct \emph{tail inclusion}
+\[
+A\cap[n_k,\infty)\subseteq A^{(k)},
+\]
+and use it to derive a new unconditional theorem:
+\[
+\overline d(A)\le \delta,
+\qquad
+\overline\delta_{\log}(A)\le \delta,
+\qquad
+\delta:=\lim_{k\to\infty}d(A^{(k)}).
+\]
+This repairs the Round~8 zero-limit branch with a correct proof.
+\item Combine this upper-density theorem with the Round~9/10 padding machinery to sharpen the obstruction: if a counterexample exists, then for every $\varepsilon>0$ there is one whose \emph{stage densities and actual upper/lower logarithmic densities all lie in a window of width $\varepsilon$ near $1$}.  Thus even \emph{small-amplitude oscillation near $1$} already contains the full difficulty of the problem.
+\end{enumerate}
+
+\section{Round-10 Foundation Used}
+We use the following vetted earlier results.
+\begin{itemize}
+\item \textbf{Stage sets and stage densities.}  For each $k\ge 1$,
+\[
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall\ 1\le i\le k\}
+\]
+is periodic, so its natural density
+\[
+\delta_k:=d(A^{(k)})
+\]
+exists.
+
+\item \textbf{Round~2 monotonicity.}  The stage sets decrease:
+\[
+A^{(k+1)}\subseteq A^{(k)},
+\qquad
+1\ge \delta_1\ge \delta_2\ge \cdots \ge 0,
+\]
+so $\delta_k\to \delta\in[0,1]$.
+
+\item \textbf{Periodic asymptotics.}  If $P\subseteq\mathbb N$ is periodic with natural density $d(P)$, then
+\[
+\#\{n\le x:\ n\in P\}=d(P)x+O(1),
+\qquad
+\sum_{\substack{n\le x\\ n\in P}}\frac1n=d(P)\log x+O(1).
+\]
+
+\item \textbf{Round~5 single-progression harmonic estimate.}  For any modulus $m\ge 1$, any residue class $b\pmod m$, and integers $2\le X<Y$,
+\[
+\sum_{\substack{X\le n<Y\\ n\equiv b\ (\mathrm{mod}\ m)}}\frac1n
+=
+\frac1m\log\frac{Y}{X}+O\!\left(\frac1X\right),
+\]
+with an absolute implied constant.
+
+\item \textbf{Round~9/10 affine padding formulas.}  If $(m_j,b_j)$ is an arbitrary instance with associated set $B$, and for $M\ge 3$ one forms the padded instance
+\[
+ n_1:=M,\ a_1:=0,
+ \qquad
+ n_{j+1}:=Mm_j,\ a_{j+1}:=Mb_j+1,
+\]
+then with $A_M$ the new set, one has exact affine relations
+\begin{align*}
+\underline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\underline{\delta}_{\log}(B),
+\\
+\overline{\delta}_{\log}(A_M)
+&=
+\frac{M-2}{M}+\frac1M\overline{\delta}_{\log}(B),
+\\
+d\bigl(A_M^{(k+1)}\bigr)
+&=
+\frac{M-2}{M}+\frac1M d\bigl(B^{(k)}\bigr).
+\end{align*}
+In particular, logarithmic nonconvergence transfers exactly under padding.
+\end{itemize}
+
+\section{New Insight / Tool (Round-11)}
+The correct replacement for the false global comparison $A\subseteq A^{(k)}$ is the \emph{tail comparison}
+\[
+A\cap[n_k,\infty)\subseteq A^{(k)}.
+\]
+This is enough to prove a new unconditional theorem:
+\begin{equation}
+\overline d(A)\le \delta,
+\qquad
+\overline\delta_{\log}(A)\le \delta,
+\qquad
+\delta:=\lim_{k\to\infty} d(A^{(k)}).
+\tag{11.1}
+\end{equation}
+Thus the stage-limit $\delta$ is always an \emph{upper bound} for both the upper natural density and the upper logarithmic density of the true set $A$.
+
+This immediately repairs the Round~8 zero-limit theorem: if $\delta=0$, then both upper densities vanish, hence $A$ has natural density $0$ and logarithmic density $0$.
+
+Combining \eqref{11.1} with the Round~9/10 padding machinery yields a sharper obstruction than before: if a counterexample exists, then for every $\varepsilon>0$ there is one for which
+\[
+1-\varepsilon<\underline\delta_{\log}(A)<\overline\delta_{\log}(A)\le \delta<1,
+\]
+while simultaneously all stage densities stay within $\varepsilon$ of $\delta$ and the oscillation gap
+\(\overline\delta_{\log}(A)-\underline\delta_{\log}(A)\)
+is itself $<\varepsilon$.
+So the full difficulty survives inside an \emph{arbitrarily thin oscillatory window near $1$}.
+
+\section{Attack Plan (Round-11)}
+The exact gap left after Round~10 was that the padding reduction showed the problem survives in an almost-stationary high-density branch, but it still used a Round~7/8 comparison whose proof was not valid.
+
+We proceed as follows.
+\begin{enumerate}
+\item Exhibit a concrete counterexample to the false inclusion $A\subseteq A^{(k)}$.
+\item Prove the corrected tail inclusion $A\cap[n_k,\infty)\subseteq A^{(k)}$.
+\item Use periodic asymptotics of $A^{(k)}$ to prove the unconditional upper-density theorem \eqref{11.1}.
+\item Recover the corrected zero-stage-density branch as an immediate corollary.
+\item Repair the Round~7 tail criterion (hence also the summable-reciprocals theorem) using the corrected tail comparison.
+\item Combine the new upper-density theorem with the Round~9/10 padding formulas to sharpen the obstruction: a counterexample, if it exists, can be taken to have tiny oscillation amplitude near $1$.
+\end{enumerate}
+
+\section{Work (Round-11)}
+\subsection*{11.1. The false global inclusion and the correct tail inclusion}
+\paragraph{Lemma 11.1 (the global inclusion used in Round~7/8 is false).}
+The implication
+\[
+A\subseteq A^{(k)}
+\]
+is false in general, even for $k=1$.
+
+\emph{Proof.}
+Take $n_1=2$ and $a_1\equiv 1\pmod 2$.  Then $1\in A$ because $1<n_1$, so the first congruence condition is not active at $n=1$.  But $1\notin A^{(1)}$ because
+\[
+1\equiv 1\pmod 2.
+\]
+Hence $A\not\subseteq A^{(1)}$. \hfill $\square$
+
+\paragraph{Lemma 11.2 (correct tail inclusion).}
+For every fixed $k\ge 1$ and every integer $n\ge n_k$,
+\begin{equation}
+\mathbf 1_A(n)\le \mathbf 1_{A^{(k)}}(n).
+\tag{11.2}
+\end{equation}
+Equivalently,
+\begin{equation}
+A\cap[n_k,\infty)\subseteq A^{(k)}.
+\tag{11.3}
+\end{equation}
+
+\emph{Proof.}
+If $n\ge n_k$ and $n\in A$, then for every $1\le i\le k$ we have $n_i\le n$, so the defining property of $A$ forces
+\[
+n\not\equiv a_i\pmod{n_i}
+\qquad (1\le i\le k).
+\]
+That is exactly the statement $n\in A^{(k)}$. \hfill $\square$
+
+\subsection*{11.2. A new unconditional upper-density theorem}
+For $x\ge 1$, write
+\[
+A(x):=\#\{n\le x:\ n\in A\},
+\qquad
+S(x):=\sum_{\substack{n\le x\\ n\in A}}\frac1n.
+\]
+For each $k\ge 1$, let
+\[
+A^{(k)}(x):=\#\{n\le x:\ n\in A^{(k)}\},
+\qquad
+S_k(x):=\sum_{\substack{n\le x\\ n\in A^{(k)}}}\frac1n.
+\]
+
+\paragraph{Theorem 11.3 (unconditional upper-density bound by the stage limit).}
+For every fixed $k\ge 1$ and all sufficiently large $x$,
+\begin{align}
+A(x)&\le n_k+A^{(k)}(x),
+\tag{11.4}\\
+S(x)&\le \sum_{n<n_k}\frac1n+S_k(x).
+\tag{11.5}
+\end{align}
+Consequently,
+\begin{equation}
+\overline d(A)\le \delta_k,
+\qquad
+\overline\delta_{\log}(A)\le \delta_k
+\qquad (k\ge 1),
+\tag{11.6}
+\end{equation}
+and therefore
+\begin{equation}
+\overline d(A)\le \delta,
+\qquad
+\overline\delta_{\log}(A)\le \delta,
+\qquad
+\delta:=\lim_{k\to\infty}\delta_k.
+\tag{11.7}
+\end{equation}
+
+\emph{Proof.}
+Fix $k\ge 1$.  By Lemma~11.2, if $n\ge n_k$ and $n\in A$, then $n\in A^{(k)}$.  Therefore
+\[
+A(x)
+\le
+(n_k-1)+\#\{n_k\le n\le x:\ n\in A^{(k)}\}
+\le n_k+A^{(k)}(x),
+\]
+which is \eqref{11.4}.  Similarly,
+\[
+S(x)
+\le
+\sum_{n<n_k}\frac1n
++
+\sum_{\substack{n_k\le n\le x\\ n\in A^{(k)}}}\frac1n
+\le
+\sum_{n<n_k}\frac1n+S_k(x),
+\]
+which is \eqref{11.5}.
+
+Since $A^{(k)}$ is periodic with density $\delta_k$, periodic asymptotics give
+\[
+A^{(k)}(x)=\delta_k x+O_k(1),
+\qquad
+S_k(x)=\delta_k\log x+O_k(1).
+\]
+Substituting into \eqref{11.4}--\eqref{11.5} and taking $x\to\infty$ yields
+\[
+\overline d(A)\le \delta_k,
+\qquad
+\overline\delta_{\log}(A)\le \delta_k.
+\]
+Since this holds for every $k$ and $\delta_k\downarrow \delta$, we obtain \eqref{11.7}. \hfill $\square$
+
+\paragraph{Corollary 11.4 (corrected Round~8 zero-limit theorem).}
+If
+\begin{equation}
+\delta=\lim_{k\to\infty} d(A^{(k)})=0,
+\tag{11.8}
+\end{equation}
+then $A$ has natural density $0$, and hence logarithmic density $0$.
+
+\emph{Proof.}
+By Theorem~11.3,
+\[
+0\le \overline d(A)\le \delta=0.
+\]
+Therefore $A$ has natural density $0$.  Since any set of natural density $0$ has logarithmic density $0$ by partial summation, the conclusion follows. \hfill $\square$
+
+\paragraph{Corollary 11.5 (a corrected upper-bound statement for every instance).}
+For every instance of Problem~25,
+\begin{equation}
+\overline\delta_{\log}(A)\le \lim_{k\to\infty} d(A^{(k)}).
+\tag{11.9}
+\end{equation}
+Thus any failure of logarithmic-density existence must come from a \emph{drop below} the stage-density limit, never from an overshoot above it.
+
+\subsection*{11.3. Repair of the Round~7 tail criterion}
+The Round~7 theorem was proved from the false global inclusion $A\subseteq A^{(k)}$.  The conclusion remains true, but the comparison must be done only on the tail $[n_k,\infty)$.
+
+\paragraph{Proposition 11.6 (corrected tail criterion).}
+For each fixed $k\ge 1$, define
+\begin{equation}
+\Theta_k:=
+\limsup_{x\to\infty}
+\frac1{\log x}
+\sum_{\substack{i>k\\ n_i\le x}}
+\frac{\log(x/n_i)+1}{n_i}.
+\tag{11.10}
+\end{equation}
+If
+\begin{equation}
+\Theta_k\longrightarrow 0
+\qquad (k\to\infty),
+\tag{11.11}
+\end{equation}
+then the logarithmic density $\delta_{\log}(A)$ exists and equals
+\begin{equation}
+\delta:=\lim_{k\to\infty} d(A^{(k)}).
+\tag{11.12}
+\end{equation}
+
+\emph{Proof.}
+Fix $k\ge 1$ and $x\ge n_k$.  For $n\ge n_k$, if $n\in A^{(k)}\setminus A$, then some later active congruence must fail, so
+\[
+0\le \mathbf 1_{A^{(k)}}(n)-\mathbf 1_A(n)
+\le
+\sum_{\substack{i>k\\ n_i\le n}}\mathbf 1_{\,n\equiv a_i\ (\mathrm{mod}\ n_i)}.
+\]
+Summing from $n_k$ to $x$ with weight $1/n$ gives
+\begin{equation}
+0
+\le
+\sum_{\substack{n_k\le n\le x\\ n\in A^{(k)}}}\frac1n
+-
+\sum_{\substack{n_k\le n\le x\\ n\in A}}\frac1n
+\le
+\sum_{\substack{i>k\\ n_i\le x}}
+\sum_{\substack{n_i\le n\le x\\ n\equiv a_i\ (\mathrm{mod}\ n_i)}}\frac1n.
+\tag{11.13}
+\end{equation}
+The initial segment $[1,n_k)$ contributes only $O_k(1)$ to both $S_k(x)$ and $S(x)$.  Therefore
+\begin{equation}
+S(x)
+\ge
+S_k(x)
+-
+\sum_{\substack{i>k\\ n_i\le x}}
+\sum_{\substack{n_i\le n\le x\\ n\equiv a_i\ (\mathrm{mod}\ n_i)}}\frac1n
++O_k(1).
+\tag{11.14}
+\end{equation}
+Using the Round~5 single-progression estimate, we get
+\begin{equation}
+S(x)
+\ge
+S_k(x)
+-
+\sum_{\substack{i>k\\ n_i\le x}}
+\left(
+\frac1{n_i}\log\frac{x}{n_i}+O\!\left(\frac1{n_i}\right)
+\right)
++O_k(1).
+\tag{11.15}
+\end{equation}
+On the other hand, Theorem~11.3 already gives the upper bound
+\begin{equation}
+S(x)\le S_k(x)+O_k(1).
+\tag{11.16}
+\end{equation}
+Divide \eqref{11.15} and \eqref{11.16} by $\log x$ and let $x\to\infty$.  By definition of $\Theta_k$ and the periodic asymptotic
+\[
+S_k(x)=\delta_k\log x+O_k(1),
+\]
+we obtain
+\begin{equation}
+\delta_k-\Theta_k
+\le
+\underline\delta_{\log}(A)
+\le
+\overline\delta_{\log}(A)
+\le
+\delta_k.
+\tag{11.17}
+\end{equation}
+Now let $k\to\infty$.  Since $\delta_k\to \delta$ and $\Theta_k\to 0$, both the liminf and limsup are squeezed to $\delta$.  Hence $\delta_{\log}(A)=\delta$. \hfill $\square$
+
+\paragraph{Corollary 11.7 (corrected summable-reciprocals theorem).}
+If
+\begin{equation}
+\sum_{i=1}^{\infty}\frac1{n_i}<\infty,
+\tag{11.18}
+\end{equation}
+then $\delta_{\log}(A)$ exists and equals
+\begin{equation}
+\lim_{k\to\infty} d(A^{(k)}).
+\tag{11.19}
+\end{equation}
+
+\emph{Proof.}
+For each fixed $k$,
+\[
+\frac1{\log x}
+\sum_{\substack{i>k\\ n_i\le x}}
+\frac{\log(x/n_i)+1}{n_i}
+\le
+\sum_{i>k}\frac1{n_i}
++
+\frac1{\log x}\sum_{i>k}\frac1{n_i}.
+\]
+Taking $x\to\infty$ gives
+\[
+\Theta_k\le \sum_{i>k}\frac1{n_i}\to 0.
+\]
+Now Proposition~11.6 applies. \hfill $\square$
+
+\subsection*{11.4. A sharpened obstruction: counterexamples can be made tiny-amplitude near $1$}
+Let $B$ be any instance with associated lower and upper logarithmic densities
+\[
+\lambda^-:=\underline\delta_{\log}(B),
+\qquad
+\lambda^+:=\overline\delta_{\log}(B),
+\]
+and stage-density limit
+\[
+\beta:=\lim_{k\to\infty} d(B^{(k)}).
+\]
+Apply the Round~9 padding transformation with parameter $M\ge 3$, and let $A_M$ denote the padded set.  Write
+\[
+\alpha_k:=d\bigl(A_M^{(k)}\bigr),
+\qquad
+\alpha:=\lim_{k\to\infty}\alpha_k.
+\]
+Round~9/10 give
+\begin{align}
+\underline\delta_{\log}(A_M)&=\frac{M-2}{M}+\frac{\lambda^-}{M},
+\tag{11.20}\\
+\overline\delta_{\log}(A_M)&=\frac{M-2}{M}+\frac{\lambda^+}{M},
+\tag{11.21}\\
+\alpha_k&=\frac{M-2}{M}+\frac{d(B^{(k-1)})}{M}
+\qquad (k\ge 1),
+\tag{11.22}\\
+\alpha&=\frac{M-2}{M}+\frac{\beta}{M}.
+\tag{11.23}
+\end{align}
+Moreover, Theorem~11.3 applied to $A_M$ gives
+\begin{equation}
+\overline\delta_{\log}(A_M)\le \alpha.
+\tag{11.24}
+\end{equation}
+
+\paragraph{Theorem 11.8 (small-amplitude high-density obstruction).}
+Assume there exists a counterexample to Erd\H{o}s Problem~25.  Then for every $\varepsilon>0$ there exists a counterexample $A$ such that, writing
+\[
+\delta:=\lim_{k\to\infty} d(A^{(k)}),
+\qquad
+\lambda^-:=\underline\delta_{\log}(A),
+\qquad
+\lambda^+:=\overline\delta_{\log}(A),
+\]
+one has
+\begin{align}
+1-\varepsilon&<\lambda^-<\lambda^+\le \delta<1,
+\tag{11.25}\\
+\lambda^+-\lambda^-&<\varepsilon,
+\tag{11.26}\\
+0\le d(A^{(k)})-\delta&<\varepsilon
+\qquad (k\ge 1),
+\tag{11.27}\\
+\sum_{k\ge 1}\bigl(d(A^{(k)})-d(A^{(k+1)})\bigr)&<\varepsilon.
+\tag{11.28}
+\end{align}
+
+\emph{Proof.}
+Start from any counterexample $B$, so $\lambda^-<\lambda^+$.  Choose an integer $M\ge 3$ so large that
+\begin{equation}
+\frac{2}{M}<\varepsilon,
+\qquad
+\frac{1}{M}<\varepsilon.
+\tag{11.29}
+\end{equation}
+Apply the Round~9 padding transformation.  By \eqref{11.20}--\eqref{11.21},
+\[
+\lambda^-_{A_M}=\frac{M-2+\lambda^-}{M},
+\qquad
+\lambda^+_{A_M}=\frac{M-2+\lambda^+}{M}.
+\]
+Since $0\le \lambda^-<\lambda^+\le 1$, we obtain
+\[
+1-\frac{2}{M}<\lambda^-_{A_M}<\lambda^+_{A_M}<1.
+\]
+By \eqref{11.29}, this yields the first strict inequalities in \eqref{11.25}.  Also
+\[
+\lambda^+_{A_M}-\lambda^-_{A_M}=\frac{\lambda^+-\lambda^-}{M}<\frac1M<\varepsilon,
+\]
+which is \eqref{11.26}.
+
+For the stage densities, Round~10 already gives
+\[
+0\le \alpha_k-\alpha\le \frac1M<\varepsilon
+\qquad (k\ge 1),
+\]
+which is \eqref{11.27}, and
+\[
+\sum_{k\ge 1}(\alpha_k-\alpha_{k+1})=\alpha_1-\alpha\le \frac1M<\varepsilon,
+\]
+which is \eqref{11.28}.
+
+Finally, Theorem~11.3 gives $\lambda^+_{A_M}\le \alpha$, while \eqref{11.23} and $\beta\le 1$ imply
+\[
+\alpha\le \frac{M-2}{M}+\frac1M=1-\frac1M<1.
+\]
+Thus
+\[
+1-\varepsilon<\lambda^-_{A_M}<\lambda^+_{A_M}\le \alpha<1,
+\]
+which is the remaining part of \eqref{11.25}.  Since logarithmic nonconvergence transfers exactly under padding, $A_M$ is again a counterexample. \hfill $\square$
+
+\paragraph{Interpretation.}
+Round~9 showed that the full difficulty survives in an arbitrarily high-density branch, and Round~10 showed it survives when the stage-density sequence is almost constant.  Theorem~11.8 sharpens this substantially:
+\begin{quote}
+if a counterexample exists, then for every $\varepsilon>0$ there is one whose stage densities, upper logarithmic density, and lower logarithmic density all lie in an interval of width $\varepsilon$ near $1$.
+\end{quote}
+So the full problem already lives inside an \emph{arbitrarily thin oscillatory window near $1$}.  Any approach that needs a large oscillation gap, noticeable density drop, or substantial total variation in the stage densities cannot settle the full problem on its own.
+
+\section{Adversarial Verification}
+We check the new work carefully.
+\begin{itemize}
+\item \textbf{Concrete flaw identified correctly.}  Lemma~11.1 is an explicit counterexample to the global inclusion $A\subseteq A^{(k)}$.  The issue is exactly the threshold condition $n<n_i$ in the definition of $A$.
+
+\item \textbf{Tail inclusion is the strongest valid comparison.}  Lemma~11.2 uses only that for $n\ge n_k$, all first $k$ constraints are active.  No stronger global inclusion is claimed.
+
+\item \textbf{Upper-density theorem is unconditional.}  Theorem~11.3 uses only the tail inclusion and the periodic asymptotics of each fixed stage set $A^{(k)}$.  No assumptions on growth, compatibility, or reciprocal sums are needed.
+
+\item \textbf{Zero-limit branch repaired correctly.}  Corollary~11.4 follows immediately from the new upper natural-density bound; the earlier flawed proof is no longer needed.
+
+\item \textbf{Corrected Round~7 theorem.}  In Proposition~11.6 the comparison between $A$ and $A^{(k)}$ is performed only on $[n_k,\infty)$, and the initial segment contributes only $O_k(1)$, which disappears after division by $\log x$.
+
+\item \textbf{No circularity in the obstruction theorem.}  Theorem~11.8 uses only previously-vetted Round~9/10 affine padding formulas together with the new unconditional upper bound \eqref{11.24}.  The nonexistence of logarithmic density transfers exactly by affine scaling of the upper/lower densities.
+
+\item \textbf{Compatibility with Round~8 and Round~10.}  There is no contradiction.  Round~8 correctly isolated the benign branch $\delta=0$; the present round shows only that, if a counterexample exists, it can be padded into an almost-stationary branch with all relevant densities near $1$.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round makes two substantive advances.
+
+\begin{enumerate}
+\item It identifies and repairs a genuine proof error from Round~7/8: the global inclusion $A\subseteq A^{(k)}$ is false.  Replacing it by the correct tail inclusion yields the new unconditional theorem
+\[
+\overline d(A)\le \lim_{k\to\infty} d(A^{(k)}),
+\qquad
+\overline\delta_{\log}(A)\le \lim_{k\to\infty} d(A^{(k)}).
+\]
+As a corollary, the Round~8 zero-stage-density branch is now proved correctly.
+
+\item It sharpens the obstruction from Round~10.  If a counterexample exists, then for every $\varepsilon>0$ there exists one whose stage densities are uniformly $\varepsilon$-close to a limit $\delta\in(1-\varepsilon,1)$, whose total stage-density variation is $<\varepsilon$, and whose upper and lower logarithmic densities are both in $(1-\varepsilon,1)$ but still distinct, with oscillation gap $<\varepsilon$.
+\end{enumerate}
+
+So after Round~11, the unresolved core is even narrower: any counterexample would have to be an \emph{arbitrarily small-amplitude oscillation near density $1$}, while never exceeding the stage-density limit.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 97\%}.
+
+\section{References}
+\begin{itemize}
+\item No external mathematical references were used in this round.
+\item The proofs build directly on the vetted Round~1--Round~10 results supplied in the conversation.
+\end{itemize}

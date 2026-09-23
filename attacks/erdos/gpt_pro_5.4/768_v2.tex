@@ -1,0 +1,252 @@
+
+\section*{Problem 768 (Round 2)}
+
+\subsection*{1. ROUND-2 OBJECTIVE}
+
+Path \textbf{(C)}: isolate a genuine quantitative obstruction and strengthen the Round-1 result from mere density $0$ to an explicit subexponential upper bound.
+Round 1 only proved that
+\[
+\frac{|A\cap[1,x]|}{x}\to 0.
+\]
+The exact Erd\H{o}s asymptotic
+\[
+\frac{|A\cap[1,x]|}{x}=\exp\!\bigl(-(c+o(1))\sqrt{\log x}\,\log\log x\bigr)
+\]
+remains out of reach, so the most promising Round-2 target is to close the first major gap: obtain a nontrivial upper bound on the natural scale
+\[
+\exp\!\bigl(-c\sqrt{\log x\,\log\log x}\bigr).
+\]
+
+\subsection*{2. Round-1 FOUNDATION USED}
+
+I use exactly two Round-1 ingredients.
+
+\begin{enumerate}
+\item The definition of
+\[
+A=\Bigl\{n\ge 1:\ \forall p\mid n \text{ prime},\ \exists d\mid n,\ d>1,\ d\equiv 1 \pmod p\Bigr\}.
+\]
+\item The Round-1 rough/smooth decomposition idea: if $p=P(n)$ is the largest prime factor of $n\in A$, then there is a divisor of the form $1+ap$ dividing $n$, and this can be counted by summing over $(p,a)$.
+\end{enumerate}
+
+I do \emph{not} reprove the Round-1 density-$0$ theorem; I strengthen it quantitatively.
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 2)}
+
+The new step is to let the smoothness threshold depend on $x$ and optimize it.
+
+Write $\Psi(x,y)$ for the number of $y$-smooth integers $\le x$.
+Then the Round-1 argument actually gives, for every $2\le y\le x$,
+\[
+|A\cap[1,x]|
+\le
+\Psi(x,y)
++
+x\sum_{\substack{p>y\\ p\ \mathrm{prime}}}\ \sum_{1\le a\le x/p}\frac{1}{p(1+ap)}.
+\]
+Using a standard smooth-number estimate in the Canfield--Erd\H{o}s--Pomerance range, and then optimizing $y$, yields a genuine subexponential decay.
+
+\subsection*{4. ATTACK PLAN (ROUND 2)}
+
+The exact Round-1 gap was this: density $0$ is much too weak compared to the problem's conjectural scale.
+So I now prove the following explicit theorem.
+
+\medskip
+\noindent
+\textbf{Theorem.}
+Let
+\[
+A(x)=|A\cap[1,x]|.
+\]
+Then, as $x\to\infty$,
+\[
+A(x)\le x\exp\!\Bigl(-\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{\log x\,\log\log x}\Bigr).
+\]
+
+\medskip
+This does \emph{not} settle Erd\H{o}s's conjectured $\sqrt{\log x}\,\log\log x$ scale, but it is a strict Round-2 advance beyond density $0$.
+
+\subsection*{5. WORK (ROUND 2)}
+
+Let
+\[
+L=\log x,\qquad L_2=\log\log x.
+\]
+
+\paragraph{Step 1: a uniform counting inequality.}
+Fix $y$ with $2\le y\le x$.
+Split
+\[
+A\cap[1,x] = A_{\le y}(x)\cup A_{>y}(x),
+\]
+where $A_{\le y}(x)$ consists of those $n\in A\cap[1,x]$ with largest prime factor at most $y$, and $A_{>y}(x)$ those with largest prime factor exceeding $y$.
+
+Clearly,
+\[
+|A_{\le y}(x)|\le \Psi(x,y).
+\]
+
+Now let $n\in A_{>y}(x)$, and let $p=P(n)>y$ be the largest prime factor of $n$.
+By the defining property of $A$, applied to this prime $p$, there exists a divisor $d\mid n$ with $d>1$ and $d\equiv 1\pmod p$.
+Write
+\[
+d=1+ap,\qquad a\ge 1.
+\]
+Because $d\equiv 1\pmod p$, we have $p\nmid d$, so $p\,d\mid n$.
+Hence $n$ is a multiple of
+\[
+p(1+ap).
+\]
+Therefore, for fixed $(p,a)$, the number of such $n\le x$ is at most
+\[
+\frac{x}{p(1+ap)}.
+\]
+Summing over all admissible $p$ and $a$ gives
+\[
+|A_{>y}(x)|
+\le
+x\sum_{\substack{p>y\\ p\ \mathrm{prime}}}\ \sum_{1\le a\le x/p}\frac{1}{p(1+ap)}.
+\]
+Since
+\[
+\frac{1}{p(1+ap)}\le \frac{1}{a p^2},
+\]
+we obtain
+\[
+|A_{>y}(x)|
+\le
+x\sum_{\substack{p>y\\ p\ \mathrm{prime}}}\frac{1}{p^2}\sum_{1\le a\le x/p}\frac{1}{a}
+\le
+x(1+\log x)\sum_{p>y}\frac{1}{p^2}.
+\]
+Finally,
+\[
+\sum_{p>y}\frac{1}{p^2}\le \sum_{m>y}\frac{1}{m^2}\le \frac{1}{y-1},
+\]
+so
+\[
+|A_{>y}(x)|\le \frac{x(1+\log x)}{y-1}.
+\]
+
+Combining the two pieces:
+\[
+A(x)\le \Psi(x,y)+\frac{x(1+\log x)}{y-1}.
+\tag{5.1}
+\]
+
+\paragraph{Step 2: choose the threshold.}
+Take
+\[
+y=\exp\!\Bigl(\frac{1}{\sqrt 2}\sqrt{L\,L_2}\Bigr).
+\]
+Then
+\[
+u:=\frac{\log x}{\log y}=\sqrt{\frac{2L}{L_2}}.
+\]
+
+A standard smooth-number theorem of Canfield--Erd\H{o}s--Pomerance (in the form quoted in Granville's survey) says that if $u\to\infty$ and $u\le y^{1-\varepsilon}$ for some fixed $\varepsilon>0$, then
+\[
+\Psi(x,y)=x\,u^{-u+o(u)}=x\exp\bigl(-(1+o(1))u\log u\bigr).
+\]
+For the present choice of $y$, we have $u\to\infty$ and, for example, $u\le y^{1/2}$ for all large $x$, because
+\[
+\log u=O(L_2)=o(\log y).
+\]
+Hence the theorem applies.
+
+Now
+\[
+u\log u
+=
+\sqrt{\frac{2L}{L_2}}\cdot \frac{1}{2}\log\!\Bigl(\frac{2L}{L_2}\Bigr)
+=
+\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{L\,L_2}.
+\]
+Therefore
+\[
+\Psi(x,y)
+\le
+x\exp\!\Bigl(-\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{L\,L_2}\Bigr).
+\tag{5.2}
+\]
+
+On the other hand,
+\[
+\frac{x(1+\log x)}{y-1}
+=
+x\exp\!\Bigl(-\frac{1}{\sqrt 2}\sqrt{L\,L_2}+O(L_2)\Bigr)
+=
+x\exp\!\Bigl(-\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{L\,L_2}\Bigr),
+\tag{5.3}
+\]
+since $L_2=o(\sqrt{L\,L_2})$.
+
+Insert (5.2) and (5.3) into (5.1):
+\[
+A(x)\le x\exp\!\Bigl(-\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{L\,L_2}\Bigr).
+\]
+This proves the theorem.
+
+\paragraph{A simple structural check.}
+The proof above is consistent with the elementary fact that every $n\in A$ satisfies
+\[
+P(n)\le \sqrt n.
+\]
+Indeed, if $p=P(n)>\sqrt n$, then $p^2>n$, so $p$ occurs only to the first power in $n$; any divisor $d\equiv 1\pmod p$ must be coprime to $p$, hence $d\mid n/p<p$, impossible because $d>1$ and $d\equiv 1\pmod p$ force $d\ge p+1$.
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+There are three places where the new argument could fail.
+
+\begin{enumerate}
+\item \textbf{Double counting of $n$.}  
+That is harmless: the bound for $A_{>y}(x)$ is an upper bound, so overcounting is allowed.
+
+\item \textbf{Range of the smooth-number theorem.}  
+For my choice
+\[
+y=\exp\!\Bigl(\frac{1}{\sqrt 2}\sqrt{L\,L_2}\Bigr),
+\]
+we have $u=\sqrt{2L/L_2}\to\infty$ and
+\[
+\log u=O(L_2)=o(\log y),
+\]
+hence $u\le y^{1/2}$ for large $x$.
+So the Canfield--Erd\H{o}s--Pomerance estimate applies.
+
+\item \textbf{Possible loss in the rough part.}  
+The rough bound is extremely crude, but all I need is the exponent scale.
+The factor $1+\log x$ only contributes $O(L_2)$ in the exponent, which is negligible compared with $\sqrt{L\,L_2}$.
+\end{enumerate}
+
+So the Round-2 theorem is gap-free.
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 strengthens the Round-1 conclusion from
+\[
+A(x)=o(x)
+\]
+to the explicit subexponential estimate
+\[
+A(x)\le x\exp\!\Bigl(-\Bigl(\frac{1}{\sqrt 2}+o(1)\Bigr)\sqrt{\log x\,\log\log x}\Bigr).
+\]
+This is still weaker than the upper bound quoted on the problem page, and very far from the conjectured
+\[
+\exp\!\bigl(-(c+o(1))\sqrt{\log x}\,\log\log x\bigr)
+\]
+law, but it is a real quantitative advance beyond Round 1.
+
+\subsection*{8. COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 38\%}
+
+\subsection*{9. REFERENCES}
+
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#768}, ErdosProblems.com, accessed 2026-03-07.
+\item A. Granville, \emph{Smooth numbers: computational number theory and beyond}; used for the quoted Canfield--Erd\H{o}s--Pomerance smooth-number estimate.
+\end{itemize}
+

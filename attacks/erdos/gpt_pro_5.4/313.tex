@@ -1,0 +1,174 @@
+\section{Erd\H{o}s Problem \#313}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path pursued: \textbf{(C) obstruction/fail-safe mode}.  In Round~1 the problem was reduced to the infinitude of primary pseudoperfect numbers.  The remaining gap is the absence of sharp structural restrictions on a hypothetical infinite family.  In this round I do not re-prove the Round~1 reduction; instead I prove new congruence constraints that every solution must satisfy.  These constraints are genuinely stronger than the Round~1 output and isolate a precise Euclid-type bottleneck that any recursive construction must pass through.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 facts without re-proving them.
+\begin{enumerate}
+\item Any solution of
+\[
+\frac1{p_1}+\cdots+\frac1{p_k}=1-\frac1m
+\]
+forces
+\[
+ m=\prod_{i=1}^k p_i,
+\]
+so the problem is equivalent to the infinitude of squarefree integers $m>1$ satisfying
+\[
+\frac1m+\sum_{p\mid m}\frac1p=1.
+\]
+\item The numbers $m$ satisfying this equation are the primary pseudoperfect numbers.
+\item If $m$ is primary pseudoperfect and $m+1$ is prime, then $m(m+1)$ is primary pseudoperfect.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a local congruence lemma extracted from the integer form of the equation.
+
+\paragraph{Local congruence lemma.}
+If $m$ is primary pseudoperfect, then for every prime divisor $p$ of $m$,
+\[
+\frac{m}{p}\equiv -1 \pmod p.
+\]
+This has two immediate consequences that were absent from Round~1.
+\begin{enumerate}
+\item If $P$ is the largest prime divisor of $m$, then
+\[
+P\mid \left(\frac{m}{P}+1\right)=\left(\prod_{\substack{q\mid m \\ q<P}} q\right)+1.
+\]
+So the largest prime factor of any solution must come from a divisor of a Euclid number.
+\item If $6\mid m$, then
+\[
+m\equiv 6 \pmod{36}.
+\]
+Thus every $6$-divisible solution lies in a single residue class modulo $36$.
+\end{enumerate}
+These are real structural obstructions: they sharply restrict any inductive construction, and they explain why the naive ``keep appending an arbitrary prime'' strategy cannot work.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round~1 gap was this: after reducing to primary pseudoperfect numbers, there was still no fine-grained arithmetic information on the prime factors of a solution.  The plan is therefore:
+\begin{enumerate}
+\item rewrite the defining equation as an integer identity,
+\item reduce it modulo each prime divisor,
+\item extract the strongest immediate corollaries, especially for the largest prime divisor and for the residue class modulo $36$.
+\end{enumerate}
+This overcomes one of the main obstacles listed in Round~1: it gives a rigorous obstruction to broad classes of naive recursive constructions.
+
+\subsection*{5) WORK (ROUND-2)}
+By the Round~1 reduction, any solution is a squarefree integer $m>1$ satisfying
+\[
+\frac1m+\sum_{p\mid m}\frac1p=1.
+\]
+Multiplying by $m$ gives the integer identity
+\[
+1+\sum_{p\mid m}\frac{m}{p}=m.
+\]
+
+\paragraph{Lemma 5.1.}
+For every prime divisor $p$ of $m$,
+\[
+\frac{m}{p}\equiv -1 \pmod p.
+\]
+
+\paragraph{Proof.}
+Reduce
+\[
+1+\sum_{q\mid m}\frac{m}{q}=m
+\]
+modulo $p$.  Because $m$ is squarefree, every term $m/q$ with $q\neq p$ is divisible by $p$, while $m/p$ is not.  Also $m\equiv 0\pmod p$.  Hence
+\[
+1+\frac{m}{p}\equiv 0 \pmod p,
+\]
+which is exactly the claim.  \hfill $\square$
+
+\paragraph{Corollary 5.2 (largest-prime Euclid divisor law).}
+Let $P$ be the largest prime divisor of $m$.  Then
+\[
+P\mid \left(\frac{m}{P}+1\right)=\left(\prod_{\substack{q\mid m \\ q<P}} q\right)+1.
+\]
+
+\paragraph{Proof.}
+Apply Lemma~5.1 with $p=P$.  Since $m$ is squarefree, $m/P$ is exactly the product of the smaller prime divisors of $m$.  \hfill $\square$
+
+\paragraph{Corollary 5.3 (mod $36$ law under $6\mid m$).}
+If $6\mid m$, then
+\[
+m\equiv 6 \pmod{36}.
+\]
+
+\paragraph{Proof.}
+Write $m=6N$.
+Applying Lemma~5.1 with $p=2$ gives
+\[
+\frac{m}{2}=3N\equiv -1 \pmod 2,
+\]
+so $N$ is odd.
+Applying Lemma~5.1 with $p=3$ gives
+\[
+\frac{m}{3}=2N\equiv -1 \pmod 3.
+\]
+Since $-1\equiv 2\pmod 3$, this becomes $2N\equiv 2\pmod 3$, hence $N\equiv 1\pmod 3$.
+Therefore $N$ is odd and congruent to $1$ modulo $3$, so
+\[
+N\equiv 1 \pmod 6.
+\]
+Multiplying by $6$ yields
+\[
+m=6N\equiv 6 \pmod{36}.
+\]
+\hfill $\square$
+
+\paragraph{Interpretation.}
+Corollary~5.2 shows that whenever one builds a solution by adjoining a new largest prime factor, that prime must divide a Euclid number associated to the already chosen smaller prime factors.  Thus the chain lemma from Round~1 is not merely a convenient construction: it reflects a genuine arithmetic bottleneck built into every solution.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I checked the new argument against the most likely failure modes.
+\begin{enumerate}
+\item \emph{Did I smuggle in the unproved claim $6\mid m$?}  No.  Corollary~5.3 is explicitly conditional: it says \emph{if} $6\mid m$, \emph{then} $m\equiv 6\pmod{36}$.  This avoids conflict with the still-open possibility of odd primary pseudoperfect numbers.
+\item \emph{Is the largest-prime corollary using squarefreeness correctly?}  Yes.  Squarefreeness is a Round~1 foundation result, so $m/P$ is exactly the product of the other prime divisors.
+\item \emph{Do the corollaries agree with the known examples?}  Yes:
+\[
+7\mid (2\cdot 3)+1,
+\qquad
+43\mid (2\cdot 3\cdot 7)+1,
+\qquad
+31\mid (2\cdot 3\cdot 11\cdot 23)+1=1519,
+\]
+and all known primary pseudoperfect numbers larger than $2$ are congruent to $6$ modulo $36$.
+\end{enumerate}
+No hidden quantifier issue remains: the lemma applies to \emph{every} prime divisor $p\mid m$.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 proves new necessary conditions that were not present in Round~1:
+\begin{enumerate}
+\item the local congruence
+\[
+\frac{m}{p}\equiv -1\pmod p \qquad (p\mid m),
+\]
+\item the largest-prime Euclid-divisor law
+\[
+P\mid \left(\prod_{q<P,\ q\mid m} q +1\right),
+\]
+\item the residue restriction
+\[
+6\mid m \Longrightarrow m\equiv 6\pmod{36}.
+\]
+\end{enumerate}
+These sharpen the structural picture of primary pseudoperfect numbers and rule out broad classes of naive constructions.  The infinitude question itself remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#313}, problem page, accessed 2026-03-07.
+\item OEIS A054377, \emph{Primary pseudoperfect numbers}, accessed 2026-03-07.
+\item J. Sondow and K. MacMillan, \emph{Primary Pseudoperfect Numbers, Arithmetic Progressions, and the Erd\H{o}s--Moser Equation}, American Mathematical Monthly 124 (2017).
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+

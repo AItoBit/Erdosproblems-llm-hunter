@@ -1,0 +1,263 @@
+\section{Erd\H{o}s Problem \#30 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue path \textbf{(A) proof} on the \emph{upper-bound side}. More precisely, I continue the Sidon-set argument from Round~1 and prove the strictly stronger estimate
+\[
+ h(N)\le \sqrt{N}+N^{1/4}+1.
+\]
+This is the most promising direction because Round~1 had already isolated the main gap as improving the crude bound
+\[
+ h(N)\le \frac{1+\sqrt{8N-7}}{2}<\sqrt{2N}+1
+\]
+toward the conjectured form $\sqrt{N}+O_{\varepsilon}(N^{\varepsilon})$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 results as fixed input:
+\begin{itemize}
+\item \textbf{Round-1 Lemma 30.1:} if $S=\{a_1<\dots<a_m\}\subseteq\{1,\dots,N\}$ is Sidon, then all positive differences $a_j-a_i$ ($i<j$) are distinct.
+\item \textbf{Round-1 exact computation for $1\le N\le 40$:} the values of $h(N)$ were determined exactly by backtracking; I reuse this as a consistency check and rerun a smaller verification below.
+\end{itemize}
+I do \emph{not} re-prove these items.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+Round~1 counted only how many positive differences a Sidon set has. The new ingredient is to count the \emph{sum} of a carefully chosen subfamily of differences,
+\[
+ a_{i+k}-a_i\qquad (1\le k\le u,\ 1\le i\le m-k).
+\]
+There are
+\[
+T=\sum_{k=1}^u (m-k)=um-\frac{u(u+1)}{2}
+\]
+such differences. Because they are distinct positive integers, their total sum is at least $1+2+\cdots+T$. On the other hand, for each fixed $k$, the sum telescopes and is at most $kN$. Balancing these two bounds and optimizing $u$ at scale $N^{1/4}$ gives the sharp classical upper bound.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round~1 left the following exact gap on Problem~\#30:
+\begin{quote}
+Improve the upper bound from $(\sqrt{2}+o(1))\sqrt{N}$ to something of the form $\sqrt{N}+o(\sqrt{N})$.
+\end{quote}
+To close a substantial part of that gap, it is enough to prove the following two claims.
+\begin{enumerate}
+\item For every integer $u$ with $1\le u\le m-1$, if
+\[
+T:=um-\frac{u(u+1)}{2},
+\]
+then
+\[
+T(T+1)\le Nu(u+1).
+\]
+\item Choosing $u=\lceil N^{1/4}\rceil$ converts this quadratic inequality into
+\[
+ m<\sqrt{N}+N^{1/4}+1.
+\]
+\end{enumerate}
+This overcomes the Round~1 obstruction by using not just \emph{existence} of many distinct differences, but also the fact that distinct positive integers must have large total sum.
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+S=\{a_1<a_2<\cdots<a_m\}\subseteq \{1,2,\dots,N\}
+\]
+be a Sidon set, so $m=|S|$.
+
+\medskip
+\noindent\textit{Fast reality check.}
+I reran an exact backtracking search for $h(N)$ on the range $1\le N\le 40$ and verified that the new bound below holds in every case. Representative exact values are
+\[
+\begin{array}{c|cccc}
+N&10&20&30&40\\\hline
+h(N)&4&6&7&8
+\end{array}
+\]
+while
+\[
+\begin{array}{c|cccc}
+N&10&20&30&40\\\hline
+\sqrt{N}+N^{1/4}+1&5.9405\ldots&7.5868\ldots&8.8175\ldots&9.8394\ldots
+\end{array}
+\]
+so there are no small-$N$ violations in this exact check.
+
+\medskip
+\noindent\textbf{Case split.}
+If
+\[
+ m\le \lceil N^{1/4}\rceil+1,
+\]
+then certainly
+\[
+ m\le \lceil N^{1/4}\rceil+1\le N^{1/4}+2\le \sqrt{N}+N^{1/4}+1
+\]
+for every $N\ge 1$, and we are done. Thus the only interesting case is
+\[
+ m>\lceil N^{1/4}\rceil+1.
+\]
+Set
+\[
+ u:=\lceil N^{1/4}\rceil.
+\]
+Then $1\le u\le m-1$.
+
+\medskip
+\noindent\textbf{Lemma 30.R2.1 (lower bound for the short-difference sum).}
+Define
+\[
+D_u:=\{a_{i+k}-a_i: 1\le k\le u,\ 1\le i\le m-k\}.
+\]
+Then
+\[
+|D_u|=T:=um-\frac{u(u+1)}{2},
+\]
+and
+\[
+\sum_{k=1}^{u}\sum_{i=1}^{m-k}(a_{i+k}-a_i)\ge \frac{T(T+1)}{2}.
+\]
+
+\noindent\emph{Proof.}
+By Round-1 Lemma 30.1, all positive differences in a Sidon set are distinct. Therefore all members of $D_u$ are distinct.
+For each fixed $k$ there are exactly $m-k$ terms of the form $a_{i+k}-a_i$, so
+\[
+|D_u|=\sum_{k=1}^{u}(m-k)=um-\frac{u(u+1)}{2}=T.
+\]
+Because $D_u$ consists of $T$ distinct positive integers, its sum is at least the sum of the first $T$ positive integers:
+\[
+\sum_{d\in D_u} d\ge 1+2+\cdots+T=\frac{T(T+1)}{2}.
+\]
+But
+\[
+\sum_{d\in D_u} d=\sum_{k=1}^{u}\sum_{i=1}^{m-k}(a_{i+k}-a_i),
+\]
+which gives the stated lower bound.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 30.R2.2 (telescoping upper bound for the short-difference sum).}
+For each integer $k$ with $1\le k\le u$,
+\[
+\sum_{i=1}^{m-k}(a_{i+k}-a_i)\le kN.
+\]
+Consequently,
+\[
+\sum_{k=1}^{u}\sum_{i=1}^{m-k}(a_{i+k}-a_i)\le \frac{Nu(u+1)}{2}.
+\]
+
+\noindent\emph{Proof.}
+Fix $k$. Then
+\[
+\sum_{i=1}^{m-k}(a_{i+k}-a_i)
+=\sum_{i=1}^{m-k} a_{i+k}-\sum_{i=1}^{m-k} a_i
+=\sum_{j=m-k+1}^{m} a_j-\sum_{j=1}^{k} a_j.
+\]
+The first sum has $k$ terms, each at most $N$, so it is at most $kN$. The second sum is nonnegative. Hence
+\[
+\sum_{i=1}^{m-k}(a_{i+k}-a_i)\le kN.
+\]
+Summing this inequality over $k=1,2,\dots,u$ gives
+\[
+\sum_{k=1}^{u}\sum_{i=1}^{m-k}(a_{i+k}-a_i)
+\le \sum_{k=1}^{u} kN
+=\frac{Nu(u+1)}{2}.
+\]
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 30.R2.3 (quadratic inequality).}
+With $T=um-u(u+1)/2$,
+\[
+T(T+1)\le Nu(u+1).
+\]
+
+\noindent\emph{Proof.}
+Combine Lemma 30.R2.1 and Lemma 30.R2.2.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 30.R2.4 (strict advance: Erd\H{o}s--Tur\'an upper bound).}
+Every Sidon subset of $\{1,2,\dots,N\}$ has size
+\[
+ m<\sqrt{N}+N^{1/4}+1.
+\]
+Hence
+\[
+ h(N)\le \sqrt{N}+N^{1/4}+1.
+\]
+
+\noindent\emph{Proof.}
+From Corollary 30.R2.3 we obtain
+\[
+T^2<T(T+1)\le Nu(u+1).
+\]
+Therefore
+\[
+T<\sqrt{Nu(u+1)}.
+\]
+Since
+\[
+\left(u+\frac12\right)^2=u(u+1)+\frac14>u(u+1),
+\]
+we have
+\[
+\sqrt{u(u+1)}<u+\frac12.
+\]
+Thus
+\[
+T<\sqrt{N}\left(u+\frac12\right).
+\]
+Substituting $T=um-u(u+1)/2$ yields
+\[
+um-\frac{u(u+1)}{2}<\sqrt{N}\left(u+\frac12\right).
+\]
+Divide by $u$:
+\[
+m<\sqrt{N}+\frac{\sqrt{N}}{2u}+\frac{u+1}{2}.
+\]
+Now use $u=\lceil N^{1/4}\rceil$. Since $u\ge N^{1/4}$,
+\[
+\frac{\sqrt{N}}{2u}\le \frac{N^{1/4}}{2}.
+\]
+Since $u\le N^{1/4}+1$,
+\[
+\frac{u+1}{2}\le \frac{N^{1/4}+2}{2}=\frac{N^{1/4}}{2}+1.
+\]
+Hence
+\[
+m<\sqrt{N}+\frac{N^{1/4}}{2}+\frac{N^{1/4}}{2}+1=\sqrt{N}+N^{1/4}+1.
+\]
+This proves the theorem.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I checked the new argument against the main failure modes.
+\begin{itemize}
+\item \textbf{Hidden use of an old proof.} The only Round~1 fact reused is the distinctness of positive differences in a Sidon set. I cite that result explicitly and do not re-prove it.
+\item \textbf{Range of $u$.} The family $a_{i+k}-a_i$ is only defined for $k\le m-1$. I handled this by a case split: if $m\le \lceil N^{1/4}\rceil+1$, the target inequality is immediate; otherwise $u=\lceil N^{1/4}\rceil$ satisfies $u\le m-1$.
+\item \textbf{Telescoping identity.} For fixed $k$,
+\[
+\sum_{i=1}^{m-k}(a_{i+k}-a_i)=\sum_{j=m-k+1}^{m} a_j-\sum_{j=1}^{k} a_j,
+\]
+so no term has been dropped incorrectly. The upper bound $\le kN$ is valid because the subtracted sum is nonnegative.
+\item \textbf{Small $N$.} The preliminary case split covers all small values automatically. The exact computation for $N\le 40$ gives an independent sanity check.
+\item \textbf{Quantifiers.} The theorem is proved for an arbitrary Sidon set $S\subseteq\{1,\dots,N\}$, so the conclusion for $h(N)$ follows immediately.
+\end{itemize}
+No contradiction with the Round~1 lower-bound constructions arises: Round~1 only gave lower bounds near $\sqrt{N}$ along special values of $N$, whereas the new theorem is a stronger universal upper bound.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+This round proves the classical bound
+\[
+ h(N)\le \sqrt{N}+N^{1/4}+1,
+\]
+which is a strict improvement over the Round~1 estimate
+\[
+ h(N)\le \frac{1+\sqrt{8N-7}}{2}<\sqrt{2N}+1.
+\]
+So the investigation has advanced substantially on the upper-bound side. However, the original open question---whether the error term can be sharpened all the way to $O_{\varepsilon}(N^{\varepsilon})$ for every $\varepsilon>0$---remains open.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 62\%}
+
+\subsection*{9) REFERENCES}
+No external references were used. I relied only on the carried-over Round~1 file already present in the workspace (specifically its Problem~\#30 section) and on a local exact Python backtracking computation for $1\le N\le 40$.
+
+\subsection*{10) OUTPUT FORMAT}
+The problem number identified for this continuation is $x=30$, so this export is the requested \texttt{30\_solutions.tex}.

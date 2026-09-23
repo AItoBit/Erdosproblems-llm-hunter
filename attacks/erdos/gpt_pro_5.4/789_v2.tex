@@ -1,0 +1,149 @@
+\section{Round 2 continuation for Erd\H{o}s Problem \#789}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}. The most promising Round-2 move is not a full solution of the asymptotic problem, but a correction and strengthening of the \emph{upper-bound side}: Round~1 proved only \(h(n)\le \sqrt{7n}\), while the finite interval companion problem \#874 is already solved sharply enough to force
+\[
+h(n)\le 2\sqrt n + O(1).
+\]
+This is a strict advance over Round~1 and isolates the real remaining obstruction: the exponent gap between \(1/3\) and \(1/2\).
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round~1 results without reproving them.
+
+\begin{enumerate}
+\item Round~1 corrected the intended meaning of the problem to the standard \emph{distinct-summand admissibility} condition.
+\item Round~1 proved the lower bound
+\[
+h(n)\gg n^{1/3}.
+\]
+\item Round~1 observed that to upper-bound the universal guarantee \(h(n)\), it is enough to exhibit one specific \(n\)-element set whose admissible subsets are small.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a transfer from the now-solved finite interval problem \#874. Deshouillers and Freiman proved that, for all sufficiently large \(N\), every admissible subset \(A\subset [1,N]\) satisfies
+\[
+|A|\le 2\sqrt{N+\tfrac14}-1.
+\]
+Applying this to the specific \(n\)-set \(\{1,2,\dots,n\}\) immediately sharpens the Round~1 upper bound for \(h(n)\).
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round~1 gap was this: the upper bound \(h(n)\le \sqrt{7n}\) had the correct exponent but a weak constant, and it did not use the full strength of the solved interval problem.
+
+The plan is:
+
+\begin{enumerate}
+\item import the Deshouillers--Freiman theorem for admissible subsets of \([1,N]\);
+\item apply it to the specific set \(A_0=\{1,2,\dots,n\}\);
+\item conclude that the universal Erd\H{o}s quantity \(h(n)\) satisfies
+\[
+h(n)\le 2\sqrt{n+\tfrac14}-1
+\]
+for all sufficiently large \(n\).
+\end{enumerate}
+
+This overcomes the Round~1 obstacle because the interval extremal problem has already been settled.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Recall the corrected formulation from Round~1: a finite set \(B\subset \mathbf{Z}\) is \emph{admissible} if, whenever
+\[
+a_1+\cdots+a_r=b_1+\cdots+b_s
+\]
+with all summands distinct on each side and drawn from \(B\), one must have \(r=s\).
+
+Let \(h(n)\) denote the largest integer such that every \(n\)-element set \(A\subset \mathbf{Z}\) contains an admissible subset of size at least \(h(n)\).
+
+\medskip
+\noindent\textbf{External theorem used.}
+Deshouillers and Freiman proved the following sharpened form of the finite interval problem: there exists \(N_0\) such that for every integer \(N\ge N_0\) and every admissible set \(C\subset [1,N]\),
+\[
+|C|\le 2\sqrt{N+\tfrac14}-1.
+\]
+
+\medskip
+\noindent\textbf{Claim 789.1.}
+For all sufficiently large \(n\),
+\[
+h(n)\le 2\sqrt{n+\tfrac14}-1.
+\]
+In particular,
+\[
+h(n)\le 2\sqrt n + O(1).
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Take the particular \(n\)-element set
+\[
+A_0:=\{1,2,\dots,n\}.
+\]
+If \(B\subseteq A_0\) is admissible, then \(B\) is an admissible subset of \([1,n]\). Hence, for all sufficiently large \(n\), the Deshouillers--Freiman theorem gives
+\[
+|B|\le 2\sqrt{n+\tfrac14}-1.
+\]
+Therefore no admissible subset of \(A_0\) can be larger than \(2\sqrt{n+\tfrac14}-1\). Since \(h(n)\) is the size guaranteed inside \emph{every} \(n\)-element set, it cannot exceed the maximum admissible subset size inside this specific \(A_0\). Thus
+\[
+h(n)\le 2\sqrt{n+\tfrac14}-1
+\]
+for all sufficiently large \(n\), proving the claim.
+\hfill\(\Box\)
+
+\medskip
+\noindent\textbf{Corollary 789.2.}
+Combining Claim~789.1 with the Round~1 lower bound yields
+\[
+n^{1/3}\ll h(n)\le 2\sqrt n + O(1).
+\]
+If one also imports the Choi improvement recorded on the problem page, the lower side becomes
+\[
+(n\log n)^{1/3}\ll h(n)\le 2\sqrt n + O(1).
+\]
+
+\medskip
+\noindent\textbf{What is still missing.}
+The exponent remains unknown. Round~2 improves the upper constant sharply, but the real open question is still whether the true order is closer to \(n^{1/3}\), \(n^{1/2}\), or something in between.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+There are only two possible weak points.
+
+\begin{enumerate}
+\item \emph{Compatibility of definitions.} Round~1 corrected the problem to the standard distinct-summand admissibility notion. This is exactly the notion used in the finite interval problem \#874, so the transfer is legitimate.
+\item \emph{Universal-versus-specific extremal parameter.} The proof uses only one specific \(n\)-element set \(A_0=\{1,\dots,n\}\). This is correct because \(h(n)\) is a universal guarantee across \emph{all} \(n\)-element sets; any one hard example bounds it from above.
+\end{enumerate}
+
+No hidden quantifier issue remains: the Deshouillers--Freiman theorem applies to all sufficiently large \(n\), which is exactly the regime relevant for estimating \(h(n)\).
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~2 strictly improves the Round~1 upper bound from \(h(n)\le \sqrt{7n}\) to
+\[
+h(n)\le 2\sqrt n + O(1),
+\]
+while retaining the Round~1 lower bound \(h(n)\gg n^{1/3}\). The corrected current bracket is therefore
+\[
+(n\log n)^{1/3}\ll h(n)\le 2\sqrt n + O(1),
+\]
+but the true asymptotic order of \(h(n)\) remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 46\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#789}, problem page.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#874}, problem page.
+\item J.-M. Deshouillers and G. A. Freiman, \emph{On an additive problem of Erd\H{o}s and Straus, 2}, Ast\'erisque 258 (1999), 141--148.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT NOTE}
+
+This file intentionally starts at \verb|\section| and contains no preamble and no \verb|\begin{document}|, so it can be pasted directly into an existing LaTeX document.

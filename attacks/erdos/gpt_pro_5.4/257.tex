@@ -1,0 +1,132 @@
+\section*{Erd\H{o}s Problems \#256--\#258: Round 2 continuation}
+
+\section*{Erd\H{o}s Problem \#257}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am using the fail-safe strict-progress option. The full problem remains open, so I cannot honestly claim path (A), (B), or (C) for the original statement. The round-2 goal is therefore:
+
+\medskip
+\centerline{\emph{prove a substantially stronger special case than Round 1.}}
+\medskip
+
+The new target is:
+
+\begin{quote}
+If $A\subseteq \mathbb{N}$ is infinite and \emph{eventually periodic}, then
+\[
+\sum_{n\in A}\frac{1}{2^n-1}
+\]
+is irrational.
+\end{quote}
+
+This is the most promising direction because Round 1 already identified the base-$2$ carry problem as the main obstruction for arbitrary $A$, whereas eventually periodic sets allow a direct Lambert-series theorem to be applied.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results.
+\begin{enumerate}
+\item The identity
+\[
+\sum_{n\in A}\frac{1}{2^n-1}=\sum_{m\ge 1}\frac{f_A(m)}{2^m},
+\qquad
+f_A(m)=\#\{d\in A:d\mid m\}.
+\]
+\item The observation that cofinite sets are already handled as a trivial special case.
+\item The explicit gap from Round 1: direct base-$2$ periodicity arguments become hard because of carrying in the divisor-counting expansion.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a theorem of Luca and Tachiya:
+
+\begin{quote}
+If $q$ is an integer with $|q|>1$ and $(u_n)_{n\ge 1}$ is an eventually periodic sequence of rational numbers which is not eventually zero, then
+\[
+\sum_{n=1}^{\infty}\frac{u_n}{q^n-1}
+\]
+is irrational.
+\end{quote}
+
+This bypasses the divisor-function expansion entirely. For an eventually periodic set $A$, the indicator sequence $u_n=\mathbf{1}_A(n)$ lies exactly in the range of this theorem.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round 1 got stuck because arbitrary $A$ leads to irregular coefficients $f_A(m)$ and difficult carrying. The new plan is to avoid that representation altogether:
+\begin{enumerate}
+\item encode $A$ by its indicator sequence $u_n=\mathbf{1}_A(n)$;
+\item observe that ``$A$ eventually periodic'' is equivalent to ``$(u_n)$ eventually periodic'';
+\item apply the Luca--Tachiya irrationality theorem with $q=2$.
+\end{enumerate}
+This removes the exact obstacle isolated in Round 1.
+
+\subsection*{5) WORK (ROUND-2)}
+Recall that a set $A\subseteq \mathbb{N}$ is eventually periodic if there exist integers $N\ge 1$ and $p\ge 1$ such that
+\[
+n\in A \iff n+p\in A\qquad \text{for all }n\ge N.
+\]
+Equivalently, its indicator sequence
+\[
+u_n:=\mathbf{1}_A(n)\in\{0,1\}
+\]
+is eventually periodic.
+
+Assume now that $A$ is infinite and eventually periodic. Then $(u_n)$ is an eventually periodic sequence of rational numbers. Because $A$ is infinite, the sequence $(u_n)$ is \emph{not} eventually zero: if $u_n=0$ for all sufficiently large $n$, then $A$ would be finite.
+
+Therefore the Luca--Tachiya theorem applies with $q=2$ and gives that
+\[
+\sum_{n=1}^{\infty}\frac{u_n}{2^n-1}
+\]
+is irrational. But this is exactly
+\[
+\sum_{n\in A}\frac{1}{2^n-1}.
+\]
+Hence we have proved the following.
+
+\medskip
+\noindent\textbf{Theorem.}
+If $A\subseteq \mathbb{N}$ is infinite and eventually periodic, then
+\[
+\sum_{n\in A}\frac{1}{2^n-1}\notin \mathbb{Q}.
+\]
+
+\medskip
+This immediately yields several concrete corollaries.
+
+\begin{enumerate}
+\item If $A$ is a full residue class modulo $m$ (for example, all even integers, all odd integers, or $A=\{n:n\equiv r\pmod m\}$), then the sum is irrational.
+\item If $A$ is a finite union of residue classes modulo $m$, then the sum is irrational.
+\item If $A$ differs by a finite set from a periodic set, then the sum is irrational.
+\end{enumerate}
+
+These all strictly extend the Round-1 cofinite case.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Does infinity really imply ``not eventually zero''?} Yes. If an eventually periodic indicator sequence were eventually zero, then only finitely many integers would belong to $A$.
+\item \textbf{Are the theorem's hypotheses matched exactly?} Yes: $q=2$ is an integer with $|q|>1$, and $u_n\in\{0,1\}\subset\mathbb{Q}$ is eventually periodic.
+\item \textbf{Could a finite initial segment break the argument?} No. The external theorem is stated for \emph{eventually} periodic sequences, so a preperiod is allowed.
+\item \textbf{What counterexamples remain possible?} Any counterexample to the full problem must now have \emph{aperiodic} indicator sequence. In particular, no eventually periodic infinite set can be a counterexample.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The full problem is still open, but Round 2 proves a genuinely new theorem beyond Round 1:
+
+\begin{quote}
+For every infinite eventually periodic set $A\subseteq\mathbb{N}$,
+\[
+\sum_{n\in A}\frac{1}{2^n-1}
+\]
+is irrational.
+\end{quote}
+
+This covers, in one shot, all arithmetic progressions, all finite unions of residue classes, and all finite perturbations of periodic sets. Consequently, any counterexample to the full problem would have to come from a genuinely aperiodic infinite set.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 50\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item Florian Luca and Yohei Tachiya, \emph{Irrationality of Lambert series associated with a periodic sequence}, International Journal of Number Theory \textbf{10} (2014), 623--636.
+\item Yohei Tachiya, \emph{Irrationality of Lambert series associated with periodic sequence} (conference abstract based on joint work with Florian Luca), 2013. The abstract states the theorem for eventually periodic rational sequences.
+\item T. F. Bloom (ed.), \emph{Erd\H{o}s Problem \#257}, \texttt{erdosproblems.com/257}, accessed 2026-03-07.
+\end{enumerate}
+

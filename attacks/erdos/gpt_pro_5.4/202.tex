@@ -1,0 +1,218 @@
+\section{Erd\H{o}s Problem \#202}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+\textbf{Path pursued: (C)-style obstruction sharpening / strict advance without a full resolution.}
+
+Round~1 already identified that the main gap is the true asymptotic order of
+\[
+f(N):=\max\{r:\text{ there exist pairwise disjoint congruence classes }a_i \pmod{n_i},\ 2\le n_1<\cdots<n_r\le N\}.
+\]
+The most promising Round~2 move is therefore not to restart the global asymptotic problem, but to prove a \emph{new unconditional theorem} that is substantially stronger than the Round~1 elementary lower bound, and then place it against the current best-known asymptotic bounds from the literature.
+
+The concrete target in this round is to improve the Round~1 elementary lower bound
+\[
+f(N)\ge \lfloor \log_2 N\rfloor
+\]
+to the polynomial lower bound
+\[
+f(N)\ge \lfloor \sqrt{N}\rfloor,
+\]
+with a completely self-contained proof.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use only the following Round~1 items.
+
+\begin{itemize}
+\item The formal definition of $f(N)$.
+\item The disjointness criterion: two classes $a \pmod m$ and $b \pmod n$ are disjoint if and only if
+\[
+a\not\equiv b \pmod{\gcd(m,n)}.
+\]
+\item The Round~1 status: the full asymptotic problem remained unresolved.
+\end{itemize}
+
+I do \emph{not} reuse the Round~1 proof of the logarithmic lower bound, except as a benchmark to improve upon.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new observation is that there is a very simple ``ladder'' construction with a \emph{common scale} $M$:
+\[
+1 \pmod M,\qquad 2 \pmod{2M},\qquad 3 \pmod{3M},\qquad \ldots,\qquad r \pmod{rM}.
+\]
+If $r\le M$, then any two residues differ by a number strictly between $0$ and $M$, while the gcd of the corresponding moduli is always a \emph{multiple} of $M$. This immediately forces disjointness.
+
+Optimizing the choice of $M$ gives $r\asymp \sqrt{N}$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact remaining gap after Round~1 was that the only fully proved lower bound in the write-up was logarithmic, while the actual problem asks for asymptotic growth much closer to linear.
+
+In this round I will prove the following two statements.
+
+\begin{enumerate}
+\item For integers $M\ge 2$ and $1\le r\le M$, the congruence classes
+\[
+x\equiv j \pmod{Mj}\qquad (1\le j\le r)
+\]
+are pairwise disjoint.
+
+\item As a corollary, for every $N\ge 2$,
+\[
+f(N)\ge \lfloor \sqrt N\rfloor.
+\]
+\end{enumerate}
+
+This overcomes the specific Round~1 weakness that the only fully proved lower bound was logarithmic.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem 5.1.}
+Let $M\ge 2$ and let $1\le r\le M$. Then the congruence classes
+\[
+\mathcal{C}_j:=\{x\in \mathbf{Z}: x\equiv j \pmod{Mj}\}\qquad (1\le j\le r)
+\]
+are pairwise disjoint.
+
+\paragraph{Proof.}
+Take $1\le i<j\le r$. By the Round~1 disjointness criterion, it is enough to show that
+\[
+i\not\equiv j \pmod{\gcd(Mi,Mj)}.
+\]
+Now
+\[
+\gcd(Mi,Mj)=M\gcd(i,j).
+\]
+So if the two classes intersected, we would have
+\[
+M\gcd(i,j)\mid (j-i).
+\]
+But since $1\le i<j\le r\le M$, we have
+\[
+0<j-i<M.
+\]
+On the other hand,
+\[
+M\gcd(i,j)\ge M.
+\]
+A positive integer strictly smaller than $M$ cannot be divisible by an integer at least $M$, so
+\[
+M\gcd(i,j)\nmid (j-i).
+\]
+Hence
+\[
+i\not\equiv j \pmod{\gcd(Mi,Mj)},
+\]
+and therefore $\mathcal{C}_i\cap \mathcal{C}_j=\emptyset$.
+
+Since this holds for every pair $i<j$, the family $\mathcal{C}_1,\dots,\mathcal{C}_r$ is pairwise disjoint.
+\hfill $\square$
+
+\paragraph{Corollary 5.2.}
+For every $N\ge 4$,
+\[
+f(N)\ge \lfloor \sqrt N\rfloor.
+\]
+
+\paragraph{Proof.}
+Let
+\[
+M:=\lfloor \sqrt N\rfloor.
+\]
+Then $M\ge 2$ and $M^2\le N$. Apply Theorem~5.1 with $r=M$. The resulting moduli are
+\[
+M,\,2M,\,3M,\,\dots,\,M^2,
+\]
+which are distinct and all at most $N$. Therefore there are at least $M$ pairwise disjoint congruence classes with distinct moduli not exceeding $N$, so
+\[
+f(N)\ge M=\lfloor \sqrt N\rfloor.
+\]
+\hfill $\square$
+
+\paragraph{Small-$N$ completion.}
+For $N=2,3$ one has $f(N)=1$, so the same inequality
+\[
+f(N)\ge \lfloor \sqrt N\rfloor
+\]
+also holds there. Thus the bound is valid for every $N\ge 2$.
+
+\paragraph{Concrete example.}
+For $N=100$, taking $M=10$ yields the ten pairwise disjoint classes
+\[
+1 \pmod{10},\ 2 \pmod{20},\ 3 \pmod{30},\ \dots,\ 10 \pmod{100}.
+\]
+Hence
+\[
+f(100)\ge 10.
+\]
+
+\paragraph{Placement against the best current asymptotic bounds.}
+The present theorem is \emph{not} competitive with the best known asymptotic lower bound. The currently recorded best bounds are
+\[
+\frac{N}{L(N)^{1+o(1)}}<f(N)<\frac{N}{L(N)^{\sqrt 3/2+o(1)}},
+\qquad
+L(N):=\exp\!\big(\sqrt{\log N\log\log N}\big),
+\]
+due to de la Bret\`eche, Ford, and Vandehey, refining earlier work of Croot and Chen.
+
+I am using this only as a checked external benchmark; the new theorem proved above is independent of those deep results.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I now try to break the new argument.
+
+\paragraph{(i) Are the moduli distinct?}
+Yes. They are $M,2M,\dots,rM$, and these are strictly increasing because $1,2,\dots,r$ are.
+
+\paragraph{(ii) Are the residues legitimate representatives?}
+Yes. For each $j\ge 1$,
+\[
+0<j<Mj,
+\]
+so $j$ is a valid residue modulo $Mj$.
+
+\paragraph{(iii) Is the use of the disjointness criterion correct?}
+Yes. The criterion is exactly the Round~1 lemma:
+\[
+a \pmod m \text{ and } b \pmod n \text{ intersect } \Longleftrightarrow a\equiv b \pmod{\gcd(m,n)}.
+\]
+I used it with $(a,m)=(i,Mi)$ and $(b,n)=(j,Mj)$.
+
+\paragraph{(iv) Is the inequality $0<j-i<M$ really guaranteed?}
+Yes, because the construction is only claimed for $r\le M$. This restriction is essential. If one tried to continue past $r=M$, the difference $j-i$ could become divisible by $M$, and the argument would fail.
+
+\paragraph{(v) Does the corollary really keep every modulus $\le N$?}
+Yes. The largest modulus is $M^2$, and $M=\lfloor \sqrt N\rfloor$ implies $M^2\le N$.
+
+\paragraph{(vi) Does this solve the original asymptotic problem?}
+No. It only gives a self-contained polynomial lower bound. The asymptotic order of $f(N)$ remains open.
+
+No hidden quantifier issue remains in the proof above.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance over Round~1 is the new unconditional theorem
+\[
+f(N)\ge \lfloor \sqrt N\rfloor \qquad (N\ge 2),
+\]
+proved here from scratch. This is much stronger than the Round~1 elementary bound $f(N)\ge \lfloor \log_2 N\rfloor$.
+
+The global asymptotic problem remains open. The currently recorded best asymptotic bounds are
+\[
+\frac{N}{L(N)^{1+o(1)}}<f(N)<\frac{N}{L(N)^{\sqrt 3/2+o(1)}}.
+\]
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#202}, \texttt{erdosproblems.com}, accessed 2026-03-07.
+\item R. de la Bret\`eche, K. Ford, and J. Vandehey, \emph{On non-intersecting arithmetic progressions}, Acta Arith. 157 (2013), 381--392.
+\end{enumerate}
+

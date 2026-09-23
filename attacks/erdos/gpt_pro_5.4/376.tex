@@ -1,0 +1,187 @@
+\section*{Problem 376. Infinitely many $n$ with $\gcd\!\bigl(\binom{2n}{n},105\bigr)=1$? --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path (C): isolate a fatal obstruction in the strongest currently available fractal-intersection strategy, and correct an overoptimistic reading of the literature.
+
+Round 1 already gave the exact Kummer digit reformulation and the unconditional two-prime theorem.
+What remained unclear was whether recent fractal technology gives an \emph{unconditional} power-saving upper bound for the specific triple $(3,5,7)$.
+In this round I show that the answer is \emph{no}: the existing method needs an extra linear-independence input which is not currently known for $(3,5,7)$.
+
+This is strict progress because it identifies the exact missing hypothesis needed to push current methods onto Problem~376.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts.
+\begin{itemize}
+\item By Kummer's theorem,
+\[
+\gcd\!\bigl(\binom{2n}{n},105\bigr)=1
+\]
+if and only if all base-$3$ digits of $n$ lie in $\{0,1\}$, all base-$5$ digits lie in $\{0,1,2\}$, and all base-$7$ digits lie in $\{0,1,2,3\}$.
+\item Erd\H{o}s--Graham--Ruzsa--Straus proved infinitude for any \emph{two} odd primes.
+\item Round 1 recorded that the three-prime problem for $105$ remains open.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is a careful reading of Burrell--Yu's three-base intersection theorem.
+
+Their method does give a power-saving upper bound for the counting function
+\[
+G_{3,5,7}(N):=\#\Bigl\{n\le N:\gcd\!\bigl(\binom{2n}{n},105\bigr)=1\Bigr\},
+\]
+but only under the extra hypothesis that
+\[
+1,\ \frac{\log 3}{\log 5},\ \frac{\log 3}{\log 7}
+\]
+are linearly independent over the rationals (equivalently, that $(3,5,7)$ is strongly multiplicatively independent in their terminology).
+
+Unconditionally, they prove only that \emph{at least one} of the triples
+\[
+(3,5,7),\qquad (3,5,11),\qquad (3,5,13)
+\]
+has the required independence property.
+That existential statement is not enough to say anything unconditional about $105$ itself.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 is this:
+
+\medskip
+
+\centerline{\emph{Can one apply current three-Cantor-set intersection theorems directly to the specific triple $(3,5,7)$?}}
+
+\medskip
+
+I will answer this in two steps.
+\begin{enumerate}
+\item State precisely the extra hypothesis Burrell--Yu need in order to get a power-saving upper bound for $(3,5,7)$.
+\item Show that their unconditional theorem is only existential in the third prime $q\in\{7,11,13\}$, so it cannot be specialized to $q=7$.
+\end{enumerate}
+This isolates the exact obstruction in the present proof strategy.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\subsubsection*{Proposition 5.1 (conditional power-saving for Problem~376)}
+Assume that
+\[
+1,\ \frac{\log 3}{\log 5},\ \frac{\log 3}{\log 7}
+\]
+are linearly independent over the rationals.
+Then
+\[
+G_{3,5,7}(N)\ll N^{\theta_{3,5,7}+o(1)},
+\qquad
+\theta_{3,5,7}:=\frac{\log 2}{\log 3}+\frac{\log 3}{\log 5}+\frac{\log 4}{\log 7}-2.
+\]
+In particular,
+\[
+G_{3,5,7}(N)\ll N^{0.026}
+\]
+for all sufficiently large $N$.
+
+\paragraph{Justification.}
+Burrell--Yu's three-base intersection theorem applies to digit-restricted sets in strongly multiplicatively independent bases.
+For Problem~376 the allowed digit counts are
+\[
+2 \text{ in base }3,\qquad 3 \text{ in base }5,\qquad 4 \text{ in base }7.
+\]
+Hence the relevant dimension sum is
+\[
+\frac{\log 2}{\log 3}+\frac{\log 3}{\log 5}+\frac{\log 4}{\log 7},
+\]
+and their theorem yields an upper bound of exponent equal to this quantity minus $2$.
+Numerically,
+\[
+\theta_{3,5,7}\approx 0.0259<0.026.
+\]
+So under the displayed linear-independence hypothesis one gets
+\[
+G_{3,5,7}(N)\ll N^{0.026}.
+\]
+Under Schanuel's conjecture this linear independence is available, so the same conditional upper bound follows.
+
+\subsubsection*{Proposition 5.2 (the exact unconditional obstruction)}
+Burrell--Yu's unconditional argument does \emph{not} imply any power-saving upper bound for the specific set $G_{3,5,7}(N)$.
+
+\paragraph{Proof.}
+Their notion of strong multiplicative independence for three bases $(p_1,p_2,p_3)$ is exactly the linear independence over the rationals of
+\[
+1,\ \frac{\log p_1}{\log p_2},\ \frac{\log p_1}{\log p_3}.
+\]
+For the triple $(3,5,7)$ this becomes
+\[
+1,\ \frac{\log 3}{\log 5},\ \frac{\log 3}{\log 7}.
+\]
+Burrell--Yu do \emph{not} prove this unconditionally.
+
+What they do prove unconditionally is weaker: by a six-exponentials argument they show that at least one of
+\[
+(3,5,7),\qquad (3,5,11),\qquad (3,5,13)
+\]
+is strongly multiplicatively independent.
+Consequently, one gets a power-saving upper bound for at least one of the three counting functions
+\[
+G_{3,5,7}(N),\qquad G_{3,5,11}(N),\qquad G_{3,5,13}(N),
+\]
+but not necessarily for the first one.
+
+In the worst case the independent triple is only $(3,5,13)$, whose exponent is
+\[
+\theta_{3,5,13}
+=
+\frac{\log 2}{\log 3}+\frac{\log 3}{\log 5}+\frac{\log 7}{\log 13}-2
+\approx 0.0722<0.073.
+\]
+Thus the unconditional output of that paper is merely:
+\[
+\text{for at least one } q\in\{7,11,13\},\quad G_{3,5,q}(N)\ll N^{0.073},
+\]
+and this gives no unconditional upper bound for Problem~376 itself.
+
+\subsubsection*{Corollary 5.3 (a sharply formulated obstruction)}
+The present three-fractal strategy would settle the \emph{upper-bound} side of Problem~376 if one could prove
+\[
+1,\ \frac{\log 3}{\log 5},\ \frac{\log 3}{\log 7}
+\]
+are linearly independent over the rationals.
+At present this is the exact missing hypothesis blocking that route.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Potential failure modes:
+\begin{itemize}
+\item \emph{Did I accidentally turn an existential theorem into a theorem for $q=7$?}  
+No.  This is precisely what I ruled out.  The unconditional theorem says ``for at least one $q\in\{7,11,13\}$'', not ``for each such $q$''.
+
+\item \emph{Is the exponent $0.026$ unconditional for $105$?}  
+No.  In the argument above it is explicitly conditional on the displayed linear independence (for example via Schanuel).
+
+\item \emph{Does this settle the original infinitude problem?}  
+No.  Even a power-saving upper bound still allows infinitely many solutions.  This round isolates an obstruction in one proof strategy; it does not prove finiteness or infinitude.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is a precise obstruction theorem:
+current three-base fractal methods do \emph{not} give an unconditional upper bound for the specific problem with $105$.
+They would yield
+\[
+G_{3,5,7}(N)\ll N^{0.026}
+\]
+under the extra hypothesis that
+\[
+1,\ \frac{\log 3}{\log 5},\ \frac{\log 3}{\log 7}
+\]
+are linearly independent over the rationals, but unconditionally they prove only that one of the triples $(3,5,7)$, $(3,5,11)$, $(3,5,13)$ enjoys a power-saving upper bound.
+So the exact missing ingredient for this route is now sharply identified.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 48\%
+
+\subsection*{9) REFERENCES}
+[EGRS75] P.~Erd\H{o}s, R.~L.~Graham, I.~Z.~Ruzsa, and E.~G.~Straus, \emph{On the prime factors of $\binom{2n}{n}$}, Math. Comp. \textbf{29} (1975), 83--92.
+
+[BY] S.~A.~Burrell and H.~Yu, \emph{Digit expansions of numbers}, arXiv:1905.00832.
+
+[BC25] T.~F.~Bloom and E.~Croot, \emph{Integers with small digits in multiple bases}, arXiv:2509.02835.
+
+\bigskip
+

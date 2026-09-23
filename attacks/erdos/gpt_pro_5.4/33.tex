@@ -1,0 +1,302 @@
+\section{Erd\H{o}s Problem 33 --- Round 3}
+
+\subsection*{1. ROUND-3 OBJECTIVE}
+
+\textbf{Path pursued: (A) proof-direction (gap-closure).}
+
+The exact gap left after Round~2 was that we had only proved a lower bound for
+\[
+\liminf_{N\to\infty}\frac{W(N)}{\sqrt N},
+\]
+namely the sharp classical barrier \(4/\pi\), whereas Erd\H{o}s Problem~33 asks for the smallest possible value of the \emph{limsup}
+\[
+L(W):=\limsup_{N\to\infty}\frac{W(N)}{\sqrt N}
+\]
+among additive complements \(W\) of the squares.
+
+The most promising Round~3 direction is therefore to attack the \emph{actual target quantity} \(L(W)\). The new goal is to show that the natural Round~2 barrier \(4/\pi\) cannot in fact be attained by the limsup, and to extract an explicit lower bound for \(L(W)\).
+
+\subsection*{2. Round-2 FOUNDATION USED}
+
+I use the following Round~2 facts without re-proving them.
+
+\begin{enumerate}
+\item The basic setup: \(W\subseteq \mathbb N\) is an additive complement of the squares, and
+\[
+W(N)=|W\cap\{1,\dots,N\}|.
+\]
+
+\item The Round~2 theorem:
+\[
+\liminf_{N\to\infty}\frac{W(N)}{\sqrt N}\ge \frac{4}{\pi}.
+\]
+This was obtained there by a weighted covering argument.
+\end{enumerate}
+
+I will explicitly use this Round~2 result as the established baseline barrier and then go beyond it.
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND-3)}
+
+The new ingredient is an \emph{external representation-excess theorem} due to Ding and Zhang. Define
+\[
+f_W(n):=\#\{(w,m):n=w+m^2,\; w\in W,\; m\ge 1\}.
+\]
+Then Ding--Zhang prove that every additive complement \(W\) of the squares satisfies
+\[
+\sum_{n\le N} f_W(n)-N\ge c_0 N
+\]
+for all sufficiently large \(N\), where
+\[
+c_0:=\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}\approx 5.4631697\cdot 10^{-5}.
+\]
+
+This has two consequences that were not available in Round~2:
+\begin{enumerate}
+\item it forces a \emph{strict} improvement over the barrier \(4/\pi\) for the actual limsup, and
+\item it rules out the entire asymptotic class
+\[
+W(N)=\frac{4}{\pi}\sqrt N+o(\sqrt N).
+\]
+\end{enumerate}
+
+So the Round~3 novelty is not just a better constant: it is a genuine obstruction to any construction trying to saturate the Round~2 barrier on the limsup side.
+
+\subsection*{4. ATTACK PLAN (ROUND-3)}
+
+The exact remaining gap after Round~2 was:
+\begin{quote}
+Round~2 controlled \(\liminf W(N)/\sqrt N\), but the Erd\H{o}s problem asks for the minimum possible \(\limsup W(N)/\sqrt N\).
+\end{quote}
+
+To close part of that gap, it is enough to prove the following two claims.
+
+\begin{enumerate}
+\item \textbf{Claim A.} Every additive complement \(W\) of the squares satisfies
+\[
+L(W)\ge \frac{4}{\pi}\left(1+\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}\right).
+\]
+
+\item \textbf{Claim B.} Consequently, no additive complement can satisfy
+\[
+W(N)=\frac{4}{\pi}\sqrt N+o(\sqrt N).
+\]
+\end{enumerate}
+
+The reason this plan works is that an eventual upper bound
+\[
+W(M)\le \alpha\sqrt M
+\]
+translates into an upper bound for the representation count
+\[
+\sum_{n\le N} f_W(n)=\sum_{1\le m<\sqrt N} W(N-m^2),
+\]
+and the quarter-circle integral turns this into
+\[
+\sum_{n\le N} f_W(n)\lesssim \alpha\frac{\pi}{4}N.
+\]
+The Ding--Zhang theorem says the left-hand side is actually at least \((1+c_0)N\), so necessarily
+\[
+\alpha\ge \frac{4}{\pi}(1+c_0).
+\]
+
+\subsection*{5. WORK (ROUND-3)}
+
+Let
+\[
+L(W):=\limsup_{N\to\infty}\frac{W(N)}{\sqrt N}
+\qquad\text{and}\qquad
+c_0:=\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}.
+\]
+
+\paragraph{External Theorem 5.1 (Ding--Zhang).}
+Let \(W\) be an additive complement of the squares and define
+\[
+f_W(n):=\#\{(w,m):n=w+m^2,\; w\in W,\; m\ge 1\}.
+\]
+Then for all sufficiently large \(N\),
+\[
+\sum_{n\le N} f_W(n)-N\ge c_0 N,
+\qquad c_0=\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}.
+\]
+
+\emph{Verification of hypotheses.}
+The theorem requires only that \(W\) be an additive complement of the squares. This is exactly our standing assumption. No further hypotheses are needed.
+
+\paragraph{Proposition 5.2.}
+Every additive complement \(W\) of the squares satisfies
+\[
+L(W)\ge \frac{4}{\pi}(1+c_0)
+=\frac{4}{\pi}\left(1+\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}\right).
+\]
+
+\paragraph{Proof.}
+Assume for contradiction that
+\[
+L(W)<\frac{4}{\pi}(1+c_0).
+\]
+Choose \(\eta>0\) such that
+\[
+L(W)+\eta<\frac{4}{\pi}(1+c_0).
+\]
+By the definition of limsup, there exists \(M_0\) such that for all \(M\ge M_0\),
+\[
+W(M)\le (L(W)+\eta)\sqrt M.
+\]
+
+Now fix \(N\) large. By definition of \(f_W\),
+\[
+\sum_{n\le N} f_W(n)=\sum_{1\le m<\sqrt N} W(N-m^2).
+\]
+Split this sum as
+\[
+\sum_{n\le N} f_W(n)=\Sigma_1+\Sigma_2,
+\]
+where
+\[
+\Sigma_1:=\sum_{\substack{1\le m<\sqrt N\\ N-m^2\ge M_0}} W(N-m^2),
+\qquad
+\Sigma_2:=\sum_{\substack{1\le m<\sqrt N\\ 0< N-m^2< M_0}} W(N-m^2).
+\]
+
+For \(\Sigma_1\), the eventual upper bound for \(W\) gives
+\[
+\Sigma_1\le (L(W)+\eta)
+\sum_{\substack{1\le m<\sqrt N\\ N-m^2\ge M_0}} \sqrt{N-m^2}
+\le (L(W)+\eta)\sum_{1\le m<\sqrt N}\sqrt{N-m^2}.
+\]
+The function \(x\mapsto \sqrt{N-x^2}\) is decreasing on \([0,\sqrt N]\), so
+\[
+\sum_{1\le m<\sqrt N}\sqrt{N-m^2}
+\le \int_0^{\sqrt N}\sqrt{N-x^2}\,dx
+=\frac{\pi}{4}N.
+\]
+Hence
+\[
+\Sigma_1\le (L(W)+\eta)\frac{\pi}{4}N.
+\]
+
+For \(\Sigma_2\), the integers \(N-m^2\) are distinct and lie in \(\{1,2,\dots,M_0-1\}\), so there are at most \(M_0-1\) such terms. Therefore
+\[
+\Sigma_2\le M_0\,W(M_0)=O(1)
+\]
+as \(N\to\infty\), with the implied constant depending only on \(M_0\) and \(W\).
+
+Combining the estimates for \(\Sigma_1\) and \(\Sigma_2\), we obtain
+\[
+\sum_{n\le N} f_W(n)
+\le (L(W)+\eta)\frac{\pi}{4}N+O(1).
+\]
+Since \(L(W)+\eta<\frac{4}{\pi}(1+c_0)\), the coefficient on the right is strictly less than \(1+c_0\). Hence for all sufficiently large \(N\),
+\[
+\sum_{n\le N} f_W(n)<(1+c_0)N,
+\]
+contradicting External Theorem~5.1.
+
+This contradiction proves Proposition~5.2. \qed
+
+\paragraph{Corollary 5.3.}
+If
+\[
+LS:=\inf_W L(W)
+\]
+denotes the Erd\H{o}s Problem~33 quantity, where the infimum is over additive complements \(W\) of the squares, then
+\[
+LS\ge \frac{4}{\pi}\left(1+\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}\right)
+\approx 1.273309104.
+\]
+
+\paragraph{Proof.}
+Take the infimum of Proposition~5.2 over all admissible \(W\). \qed
+
+\paragraph{Corollary 5.4 (obstruction to the Round-2 barrier).}
+There is no additive complement \(W\) of the squares such that
+\[
+W(N)=\frac{4}{\pi}\sqrt N+o(\sqrt N).
+\]
+More generally, one cannot have
+\[
+\limsup_{N\to\infty}\frac{W(N)}{\sqrt N}\le \frac{4}{\pi}.
+\]
+
+\paragraph{Proof.}
+Either condition would imply
+\[
+L(W)\le \frac{4}{\pi},
+\]
+which contradicts Proposition~5.2. \qed
+
+\paragraph{Status update.}
+Combining Corollary~5.3 with van Doorn's construction as recorded on the Erd\H{o}s Problems site, the currently verified interval for Problem~33 is
+\[
+1.273309104\ldots
+\le LS
+\le 2\varphi^{5/2}
+\approx 6.660381354,
+\qquad \varphi=\frac{1+\sqrt5}{2}.
+\]
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Was the external theorem applied with the correct hypotheses?}
+Yes. External Theorem~5.1 requires only that \(W\) be an additive complement of the squares, which is exactly our standing assumption.
+
+\item \textbf{Is the limsup-to-eventual-bound step valid?}
+Yes. From
+\[
+L(W)=\limsup_{N\to\infty} W(N)/\sqrt N
+\]
+and any \(\eta>0\), it follows that \(W(M)\le (L(W)+\eta)\sqrt M\) for all sufficiently large \(M\).
+
+\item \textbf{Is there a hidden uniformity gap for small values of \(N-m^2\)?}
+No. Those terms were separated into \(\Sigma_2\), and their total contribution is \(O(1)\), independent of \(N\).
+
+\item \textbf{Is the quarter-circle step correct?}
+Yes, but it needs an inequality rather than an equality:
+\[
+\sum_{1\le m<\sqrt N}\sqrt{N-m^2}
+\le \int_0^{\sqrt N}\sqrt{N-x^2}\,dx
+=\frac{\pi}{4}N.
+\]
+This fixes the compressed step that is often written informally in short proofs.
+
+\item \textbf{Does this really advance beyond Round~2?}
+Yes. Round~2 gave only
+\[
+\liminf W(N)/\sqrt N\ge 4/\pi.
+\]
+Round~3 proves a nontrivial lower bound for the actual Erd\H{o}s objective \(L(W)=\limsup W(N)/\sqrt N\), and it rules out the entire natural barrier class \(W(N)=\frac{4}{\pi}\sqrt N+o(\sqrt N)\).
+\end{enumerate}
+
+\subsection*{7. FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~3 gives a genuine new theorem about the actual target quantity in Erd\H{o}s Problem~33:
+\[
+\inf_W \limsup_{N\to\infty}\frac{W(N)}{\sqrt N}
+\ge \frac{4}{\pi}\left(1+\frac{1}{4\pi\bigl(e^{1+2\pi}+1\bigr)}\right)
+\approx 1.273309104.
+\]
+In particular, the natural Round~2 barrier \(4/\pi\) cannot be attained by the limsup, and any proof strategy or construction aiming for
+\[
+W(N)=\frac{4}{\pi}\sqrt N+o(\sqrt N)
+\]
+is now rigorously ruled out.
+
+\subsection*{8. COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 49\%}
+
+\subsection*{9. REFERENCES}
+
+\begin{enumerate}
+\item Y. Ding and Z. Zhang, \emph{No exact on average additive complements of squares}, arXiv:2512.15407, 2025. Used for External Theorem~5.1.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#33}, \texttt{https://www.erdosproblems.com/33}, accessed 2026-03-07. Used for the problem statement and the currently recorded van Doorn upper bound.
+\end{enumerate}
+
+\subsection*{10. OUTPUT FORMAT}
+
+Detected Erd\H{o}s problem number: \(33\).
+
+This file is a drop-in LaTeX section with no preamble and no \verb|\begin{document}| wrapper.

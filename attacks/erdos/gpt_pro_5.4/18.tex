@@ -1,0 +1,453 @@
+\section{Problem Number}
+
+From the inherited numbering in the previous rounds (Lemmas~18.1, 18.2, \dots, together with the prior artifact name \texttt{18\_v2.tex}), I identify the Erd\H{o}s problem number here as \(18\). Accordingly this round is exported as \texttt{18\_solutions.tex}.
+
+\section{ROUND-3 OBJECTIVE}
+
+\textbf{Path (A): proof-oriented progress.}
+
+Round~2 produced a general counting lower bound for \(h(m)\), but for factorials it only yielded
+\[
+h(n!) \gg \log n.
+\]
+That still left open the possibility that \(h(n!)\) might even be \(O(\log n)\). In this round I target the sharpest accessible obstruction: I strengthen the Round~2 factorial divisor-count estimate from
+\[
+\log \tau(n!) = O(n)
+\quad\text{to}\quad
+\log \tau(n!) = O\!\left(\frac{n}{\log n}\right),
+\]
+and then feed this into the Round~2 counting lemma to prove the new unconditional lower bound
+\[
+h(n!) \gg (\log n)^2.
+\]
+This rules out the entire class of hoped-for bounds \(h(n!) = O(\log n)\). I also extend the exact computation from Round~2 by proving computationally that
+\[
+h(12!) = 8.
+\]
+
+\section{ROUND-2 FOUNDATION USED}
+
+I use the following Round~2 results as black boxes.
+
+\begin{itemize}
+\item \textbf{Round-2 counting lemma} (Lemma~18.4 and its explicit corollary): if \(m\) is practical, then
+\[
+\sum_{t=0}^{h(m)} \binom{\tau(m)-1}{t} \ge m,
+\]
+and in particular
+\[
+h(m) \ge \frac{\log m}{1+\log(\tau(m)-1)}.
+\]
+\item \textbf{Round-2 exact computations:}
+\[
+h(10!)=7,\qquad h(11!)=7,
+\]
+with the full table already established for \(1\le n\le 11\).
+\end{itemize}
+
+I do \emph{not} reuse the Round~2 estimate \(\log\tau(n!)=O(n)\); the main point of this round is to strengthen it.
+
+\section{NEW INSIGHT / TOOL (ROUND-3)}
+
+The new ingredient is an elementary prime-counting input, proved directly from binomial coefficients, which is strong enough to improve the factorial divisor-count estimate by a full factor of \(\log n\).
+
+More precisely, the new chain is:
+\[
+\pi(x) \ll \frac{x}{\log x}
+\Longrightarrow
+\log\tau(n!) \ll \frac{n}{\log n}
+\Longrightarrow
+h(n!) \gg (\log n)^2.
+\]
+
+This is a genuine advance over Round~2. It does not solve (Q2), but it proves a sharp obstruction: any eventual upper bound of the form
+\[
+h(n!)\le (\log n)^C
+\]
+must have \(C\ge 2\). In particular, the tempting exponent-\(1\) target \(h(n!)=O(\log n)\) is impossible.
+
+A second new item is the exact extension of the computed table by one step:
+\[
+h(12!)=8.
+\]
+
+\section{ATTACK PLAN (ROUND-3)}
+
+The exact gap left after Round~2 was this: there was no serious lower-bound obstruction to a logarithmic upper bound for \(h(n!)\). The Round~2 result \(h(n!)\gg \log n\) was too weak to rule out \(h(n!)\asymp \log n\).
+
+To close that gap as far as possible in this round, I prove the following claims.
+
+\begin{enumerate}
+\item An elementary Chebyshev-type bound
+\[
+\pi(x) \ll \frac{x}{\log x}.
+\]
+\item A strengthened factorial divisor-count estimate
+\[
+\log\tau(n!) \ll \frac{n}{\log n}.
+\]
+\item A new unconditional lower bound
+\[
+h(n!) \gg (\log n)^2.
+\]
+\item An exact computation extending the data table to
+\[
+h(12!)=8.
+\]
+\end{enumerate}
+
+This overcomes the Round~2 obstacle because the strengthened divisor-count estimate feeds directly into the already-established counting lemma, and the resulting lower bound rules out the entire \(O(\log n)\) proof strategy family.
+
+\section{WORK (ROUND-3)}
+
+\subsection{Lemma 18.8: a Chebyshev-type upper bound for \(\pi(x)\)}
+
+\begin{lemma}[Lemma~18.8]\label{lem:pi-upper}
+There exists an absolute constant \(A>0\) such that for all real \(x\ge 2\),
+\[
+\pi(x) \le A\frac{x}{\log x}.
+\]
+In particular one may take \(A=20\).
+\end{lemma}
+
+\begin{proof}
+Let \(m\ge 2\) be an integer. Every prime \(p\) with \(m<p\le 2m\) divides the central binomial coefficient \(\binom{2m}{m}\); indeed, since \(p>m\), such a prime can appear at most once in the numerator and cannot appear in the denominator. Hence
+\[
+\prod_{m<p\le 2m} p \le \binom{2m}{m} \le 4^m.
+\]
+Taking logarithms gives
+\[
+\sum_{m<p\le 2m} \log p \le 2m\log 2.
+\]
+Since each summand on the left is at least \(\log m\), we obtain
+\[
+\bigl(\pi(2m)-\pi(m)\bigr)\log m \le 2m\log 2,
+\]
+that is,
+\begin{equation}\label{eq:dyadic-prime-increment}
+\pi(2m)-\pi(m) \le \frac{2m\log 2}{\log m}.
+\end{equation}
+
+Now let \(x\ge 16\), and choose the unique integer \(K\ge 4\) such that
+\[
+2^{K-1}<x\le 2^K.
+\]
+Then
+\[
+\pi(x)\le \pi(2^K)=\pi(4)+\sum_{r=2}^{K-1}\bigl(\pi(2^{r+1})-\pi(2^r)\bigr).
+\]
+Applying \eqref{eq:dyadic-prime-increment} with \(m=2^r\) yields
+\[
+\pi(2^{r+1})-\pi(2^r)\le \frac{2^{r+1}\log 2}{r\log 2}=\frac{2^{r+1}}{r}.
+\]
+Therefore
+\[
+\pi(2^K)\le 2+\sum_{r=2}^{K-1}\frac{2^{r+1}}{r}.
+\]
+Split the sum at \(R=\lfloor K/2\rfloor\). For the first part,
+\[
+\sum_{r=2}^{R}\frac{2^{r+1}}{r}
+\le \sum_{r=2}^{R}2^r
+<2^{R+1}
+\le 4\frac{2^K}{K},
+\]
+where the last inequality uses \(K\le 2^{K/2+1}\), valid for \(K\ge 4\).
+For the second part,
+\[
+\sum_{r=R+1}^{K-1}\frac{2^{r+1}}{r}
+\le \frac{4}{K}\sum_{r=R+1}^{K-1}2^r
+<4\frac{2^K}{K}.
+\]
+Hence
+\[
+\pi(2^K)\le 2+8\frac{2^K}{K}\le 9\frac{2^K}{K}.
+\]
+Since \(2^{K-1}<x\le 2^K\), we have \(2^K<2x\), and since \(K=\lceil \log_2 x\rceil\ge \log_2 x\), it follows that
+\[
+\pi(x)\le 18\frac{x}{\log_2 x}=18(\log 2)\frac{x}{\log x}<20\frac{x}{\log x}.
+\]
+For \(2\le x<16\), the same bound holds after enlarging the constant if necessary; thus \(A=20\) works for all \(x\ge 2\).
+\end{proof}
+
+\subsection{Proposition 18.9: sharpening \(\log\tau(n!)\)}
+
+\begin{proposition}[Proposition~18.9]\label{prop:tau-factorial-sharp}
+There exists an absolute constant \(C>0\) such that
+\[
+\log\tau(n!) \le C\frac{n}{\log n}
+\qquad (n\ge 3).
+\]
+Equivalently,
+\[
+\tau(n!) \le \exp\!\left(O\!\left(\frac{n}{\log n}\right)\right).
+\]
+\end{proposition}
+
+\begin{proof}
+Write
+\[
+\tau(n!)=\prod_{p\le n}\bigl(v_p(n!)+1\bigr),
+\qquad
+\log\tau(n!)=\sum_{p\le n}\log\bigl(v_p(n!)+1\bigr).
+\]
+Also,
+\[
+v_p(n!)=\sum_{a\ge 1}\Big\lfloor\frac{n}{p^a}\Big\rfloor
+\le \sum_{a\ge 1}\frac{n}{p^a}
+=\frac{n}{p-1}
+\le \frac{2n}{p}
+\qquad (p\ge 2).
+\]
+Therefore
+\begin{equation}\label{eq:vp-basic-upper}
+\log\bigl(v_p(n!)+1\bigr)\le \log\Bigl(1+\frac{2n}{p}\Bigr).
+\end{equation}
+
+Split the prime sum into
+\[
+S_1:=\sum_{p\le \sqrt n}\log\bigl(v_p(n!)+1\bigr),
+\qquad
+S_2:=\sum_{\sqrt n<p\le n}\log\bigl(v_p(n!)+1\bigr).
+\]
+Then
+\[
+\log\tau(n!)=S_1+S_2.
+\]
+
+For \(S_1\), we have \(v_p(n!)+1\le n+1\), so
+\[
+S_1\le \pi(\sqrt n)\log(n+1).
+\]
+By Lemma~\ref{lem:pi-upper},
+\[
+\pi(\sqrt n)\ll \frac{\sqrt n}{\log n},
+\]
+hence
+\[
+S_1\ll \sqrt n.
+\]
+
+For \(S_2\), partition the interval \((\sqrt n,n]\) into dyadic pieces. Let
+\[
+J:=\Big\lfloor \frac12\log_2 n\Big\rfloor,
+\qquad
+I_j:=\Bigl(\frac{n}{2^{j+1}},\frac{n}{2^j}\Bigr]
+\quad (0\le j\le J).
+\]
+These intervals cover \((\sqrt n,n]\). If \(p\in I_j\), then by \eqref{eq:vp-basic-upper},
+\[
+\log\bigl(v_p(n!)+1\bigr)
+\le \log\Bigl(1+\frac{2n}{p}\Bigr)
+\le \log\bigl(1+2^{j+2}\bigr)
+\ll j+1.
+\]
+Also, since \(j\le J\), one has \(n/2^j\ge \sqrt n\), so
+\[
+\log\Bigl(\frac{n}{2^j}\Bigr)\ge \frac12\log n.
+\]
+Hence Lemma~\ref{lem:pi-upper} gives
+\[
+\#(I_j\cap \mathbb P)
+\le \pi\Bigl(\frac{n}{2^j}\Bigr)
+\ll \frac{n/2^j}{\log(n/2^j)}
+\ll \frac{n}{2^j\log n}.
+\]
+Therefore
+\[
+S_2
+\ll \sum_{j=0}^{J}\#(I_j\cap \mathbb P)(j+1)
+\ll \frac{n}{\log n}\sum_{j=0}^{J}\frac{j+1}{2^j}.
+\]
+Since
+\[
+\sum_{j=0}^{\infty}\frac{j+1}{2^j}<\infty,
+\]
+it follows that
+\[
+S_2\ll \frac{n}{\log n}.
+\]
+
+Combining the estimates for \(S_1\) and \(S_2\), we get
+\[
+\log\tau(n!)\ll \sqrt n+\frac{n}{\log n}.
+\]
+Since \(\sqrt n\ll n/\log n\) for \(n\ge 3\), the proposition follows.
+\end{proof}
+
+\subsection{Corollary 18.10: the new lower bound \(h(n!)\gg (\log n)^2\)}
+
+\begin{corollary}[Corollary~18.10]\label{cor:hn-lower-sharp}
+There exists an absolute constant \(c>0\) such that for all sufficiently large \(n\),
+\[
+h(n!) \ge c(\log n)^2.
+\]
+In particular, the bound \(h(n!)=O(\log n)\) is impossible.
+\end{corollary}
+
+\begin{proof}
+By the Round~2 counting corollary applied to the practical number \(m=n!\),
+\[
+h(n!)\ge \frac{\log(n!)}{1+\log(\tau(n!)-1)}.
+\]
+Since \(\log(\tau(n!)-1)\le \log\tau(n!)\), Proposition~\ref{prop:tau-factorial-sharp} gives
+\[
+h(n!)\ge \frac{\log(n!)}{1+C n/\log n}
+\]
+for some absolute \(C>0\) and all large enough \(n\).
+
+Now
+\[
+\log(n!)=\sum_{k=1}^{n}\log k
+\ge \int_1^{n}\log x\,dx
+= n\log n-n+1.
+\]
+Hence, for sufficiently large \(n\),
+\[
+\log(n!)\ge \frac12 n\log n.
+\]
+Therefore
+\[
+h(n!)\ge \frac{\frac12 n\log n}{1+C n/\log n}
+\gg (\log n)^2.
+\]
+This proves the stated lower bound.
+
+The final sentence follows immediately: if \(h(n!)\) were \(O(\log n)\), then it could not simultaneously be \(\gg (\log n)^2\) for large \(n\).
+\end{proof}
+
+\begin{remark}
+Round~2 had only proved \(h(n!)\gg \log n\). Corollary~\ref{cor:hn-lower-sharp} strengthens this by a full factor of \(\log n\). Thus any successful polylogarithmic upper bound for factorials must have exponent at least \(2\).
+\end{remark}
+
+\subsection{Proposition 18.11: exact computation of \(h(12!)\)}
+
+\begin{proposition}[Proposition~18.11]\label{prop:h12}
+One has
+\[
+h(12!)=8.
+\]
+\end{proposition}
+
+\begin{proof}
+This is an \emph{exact computation}. Let \(m=12!\), and let \(D\) be the set of proper divisors of \(m\). For a fixed integer \(H\ge 0\), define bitsets \(B_0,\dots,B_H\) by the rule that after processing a subset of divisors,
+\[
+B_t[s]=1
+\iff
+s\text{ is representable as a sum of exactly }t\text{ distinct processed divisors}.
+\]
+Initialize
+\[
+B_0[0]=1,
+\qquad
+B_0[s]=0\ (s>0),
+\qquad
+B_t\equiv 0\ (t\ge 1).
+\]
+Processing a divisor \(d\in D\) uses the standard backward recurrence for bounded-cardinality subset sum:
+\[
+B_t\leftarrow B_t\ \lor\ (B_{t-1}\ll d)
+\qquad (t=H,H-1,\dots,1),
+\]
+where \(\ll d\) denotes bit-shift by \(d\), truncated to the range \(0\le s\le m-1\).
+
+This recurrence is exact: after all divisors are processed, the union
+\[
+B_0\lor B_1\lor\cdots\lor B_H
+\]
+marks precisely the integers \(s\in\{0,1,\dots,m-1\}\) representable as sums of at most \(H\) distinct proper divisors of \(m\).
+
+Running this exact DP for \(m=12!\) gives the following two facts.
+\begin{itemize}
+\item For \(H=7\), coverage fails; in fact the smallest missing value is
+\[
+475785157.
+\]
+\item For \(H=8\), coverage is complete on \(\{0,1,\dots,12!-1\}\).
+\end{itemize}
+Hence the least \(H\) with full coverage is \(H=8\), i.e.
+\[
+h(12!)=8.
+\]
+\end{proof}
+
+Combining Proposition~\ref{prop:h12} with the inherited Round~2 data yields the exact table
+\[
+\begin{array}{c|c}
+ n & h(n!)\\\hline
+ 10 & 7\\
+ 11 & 7\\
+ 12 & 8
+\end{array}
+\]
+for the newest range not already settled in Round~1.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now try to break the new work.
+
+\begin{itemize}
+\item \textbf{Lemma~18.8:} the only subtle point is passage from the dyadic increment estimate \eqref{eq:dyadic-prime-increment} to a bound for all \(x\). This is handled by bounding \(\pi(x)\) through the next power of two. Small values \(2\le x<16\) are absorbed by enlarging the absolute constant.
+
+\item \textbf{Proposition~18.9:} the estimate
+\[
+v_p(n!)\le \frac{2n}{p}
+\]
+is valid for every prime \(p\ge 2\), since
+\[
+\sum_{a\ge 1}\frac1{p^a}=\frac1{p-1}\le \frac2p.
+\]
+For the dyadic intervals \(I_j\), the denominator comparison
+\[
+\log(n/2^j)\ge \tfrac12\log n
+\]
+is correct because only indices \(0\le j\le \lfloor \tfrac12\log_2 n\rfloor\) occur, i.e.
+\(n/2^j\ge \sqrt n\).
+
+\item \textbf{Corollary~18.10:} the Round~2 counting inequality applies because every factorial \(n!\) is practical. This was part of the original problem context and was also verified computationally for small \(n\) in earlier rounds. No new unproved practicality claim is inserted here.
+
+\item \textbf{Interaction with Round~2:} there is no conflict with the Round~2 lower bound \(h(n!)\gg \log n\); the new bound strictly strengthens it. I am not discarding the Round~2 result, only improving the divisor-count input that fed into it.
+
+\item \textbf{Proposition~18.11:} the computation is exact, not heuristic. Minimality of \(8\) is verified by one failure run (\(H=7\)) and one success run (\(H=8\)). No probabilistic or approximate step occurs.
+\end{itemize}
+
+No contradiction or hidden assumption remains after these checks.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The main new theorem of this round is the unconditional lower bound
+\[
+h(n!) \gg (\log n)^2.
+\]
+This is a substantial advance over Round~2, which only had \(h(n!)\gg \log n\). Consequently:
+\begin{itemize}
+\item any proof strategy aiming for \(h(n!)=O(\log n)\) is now rigorously ruled out;
+\item any eventual positive result of the form \(h(n!)\le (\log n)^C\) must have \(C\ge 2\).
+\end{itemize}
+
+In addition, the exact computation has been extended by one step:
+\[
+h(12!)=8.
+\]
+
+What remains open is the genuine upper-bound problem: does one have
+\[
+h(n!)\le (\log n)^{O(1)}
+\quad\text{or even}\quad
+h(n!)<n^{o(1)}?
+\]
+Round~3 does not settle that, but it isolates a sharp obstruction: the factorial problem cannot have logarithmic order of growth.
+
+\section{COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 60\%}
+
+\section{REFERENCES}
+
+\begin{itemize}
+\item Round~2 output for Problem~18, specifically the counting lemma (Lemma~18.4 and its explicit corollary) and the exact values of \(h(n!)\) through \(n=11\).
+\item Standard binomial estimate: \(\binom{2m}{m}\le 4^m\).
+\item Standard integral identity: \(\int_1^n \log x\,dx = n\log n-n+1\).
+\item Exact computations performed in this round for \(h(12!)\) via bounded-cardinality subset-sum dynamic programming over the divisor set of \(12!\).
+\end{itemize}

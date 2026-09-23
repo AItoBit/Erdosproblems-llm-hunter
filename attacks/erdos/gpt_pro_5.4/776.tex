@@ -1,0 +1,110 @@
+\section{Erd\H{o}s Problem \#776}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.} The round-1 writeup gave a valid but very coarse explicit upper bound. Since February 2026 there is a dedicated paper on this exact Erd\H{o}s--Trotter problem, so the right Round-2 objective is to replace the crude bound by the current strongest theorem and extract the asymptotic consequence. The problem is still not fully solved, but its first-order growth is now known.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts.
+
+\begin{enumerate}
+\item For $r>1$, an $r$-multiplicity antichain cannot realize $n-2$ distinct sizes.
+\item Round-1 gave an explicit sufficient bound of the form
+\[
+ n_0(r)\le 8r+10,
+\]
+where $n_0(r)$ is the threshold beyond which $n-3$ distinct sizes are always achievable.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new input is the 2026 theorem of He and Tang. Write $g(n,r)$ for the maximum number of distinct set sizes appearing in an $r$-multiplicity antichain on $[n]$, and let $n_0(r)$ be the least integer such that
+\[
+ g(n,r)=n-3 \qquad \text{for every } n>n_0(r).
+\]
+
+\medskip
+\noindent\textbf{Theorem 3.1 (He--Tang, 2026).}
+\begin{enumerate}
+\item $n_0(2)=3$ and $n_0(3)=8$.
+\item For every integer $r\ge 4$,
+\[
+2r+2\le n_0(r)\le 2r+2\log_2 r+\log_2\log_2 r+15.
+\]
+In particular,
+\[
+ n_0(r)=2r+o(r).
+\]
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact remaining gap after Round-1 was quantitative: Round-1 only showed a coarse explicit upper bound, while the true threshold was unknown. The new plan is:
+
+\begin{enumerate}
+\item verify that the He--Tang theorem addresses the same threshold $n_0(r)$ as in the original problem;
+\item import their current best upper and lower bounds;
+\item derive the asymptotic corollary $n_0(r)=2r+o(r)$, which is a genuine first-order resolution of the threshold question.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+There is one minor convention issue to settle first. The original Erd\H{o}s--Trotter formulation uses \emph{exactly} $r$ sets on each occurring level, whereas the Round-1 formulation used \emph{at least} $r$ sets. These conventions are equivalent for the extremal quantity $g(n,r)$: given an antichain with at least $r$ sets on each occurring level, one may keep an arbitrary subfamily of exactly $r$ sets from each occurring level. The antichain property is preserved and the set of occurring levels is unchanged.
+
+Therefore Theorem 3.1 applies directly to the same threshold parameter in the original problem.
+
+It follows immediately that the current quantitative status is:
+\[
+2r+2\le n_0(r)\le 2r+2\log_2 r+\log_2\log_2 r+15 \qquad (r\ge 4),
+\]
+and also
+\[
+ n_0(2)=3,\qquad n_0(3)=8.
+\]
+
+The most useful derived consequence is the first-order asymptotic.
+
+\medskip
+\noindent\textbf{Corollary 5.1.} \emph{As $r\to\infty$,}
+\[
+\frac{n_0(r)}{r}\to 2.
+\]
+
+\medskip
+\noindent\emph{Proof.} Divide the bounds of Theorem 3.1 by $r$:
+\[
+2+\frac{2}{r}\le \frac{n_0(r)}{r}\le 2+\frac{2\log_2 r+\log_2\log_2 r+15}{r}.
+\]
+Since $(2\log_2 r+\log_2\log_2 r+15)/r\to 0$, the squeeze theorem gives $n_0(r)/r\to 2$. \hfill$\square$
+
+Thus the Round-1 bound $n_0(r)\le 8r+10$ has now been superseded by a near-optimal estimate with the correct leading constant.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I check the main points where a mismatch could occur.
+
+\begin{enumerate}
+\item \emph{Does Theorem 3.1 use the same notion of multiplicity?} Yes, because the exact-$r$ and at-least-$r$ versions are equivalent for $g(n,r)$.
+
+\item \emph{Is the asymptotic statement really justified?} Yes. The additive error in the upper bound is $2\log_2 r+O(\log_2\log_2 r)=o(r)$.
+
+\item \emph{Does this fully solve Problem \#776?} No. The exact threshold for $r\ge 4$ is still unknown; the remaining gap is logarithmic.
+
+\item \emph{Do the small cases fit the threshold definition with the strict inequality $n>n_0(r)$?} Yes. The theorem states the exact values of $n_0(2)$ and $n_0(3)$ under that convention.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Problem \#776 is not fully closed, but the current state is far stronger than in Round-1: the exact small values are known,
+\[
+ n_0(2)=3,\qquad n_0(3)=8,
+\]
+and for general $r$ one has
+\[
+ n_0(r)=2r+o(r).
+\]
+Only a logarithmic gap remains between the best lower and upper bounds.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 85\%}
+
+\subsection*{9) REFERENCES}
+[1] T. F. Bloom, \emph{Erd\H{o}s Problem \#776}, erdosproblems.com/776, accessed 2026-03-07.
+
+[2] Y. He and Q. Tang, \emph{An Erd\H{o}s--Trotter problem on antichains with multiplicity $r$ on each occurring level}, arXiv:2602.09803, 2026.

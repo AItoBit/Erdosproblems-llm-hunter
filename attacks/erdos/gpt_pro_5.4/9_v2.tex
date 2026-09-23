@@ -1,0 +1,467 @@
+\section{Erd\H{o}s Problem \#9 (Round 4): correcting the Round-3 certificate and extracting an explicit infinite family}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+
+\noindent\textbf{Path chosen: (C) obstruction/correction.}
+
+\medskip
+Round~3 claimed a gap-free certification of one explicit integer $N_0\in A$, but that certification contains a concrete numerical flaw: several listed primes do \emph{not} have the claimed multiplicative orders, and the displayed decimal value of $N_0$ is not compatible with the modulus condition $N_0\equiv 0\pmod{M_1}$.
+
+The most promising direction is therefore to \emph{repair} the numerical data, identify the \emph{minimal corrected statement}, and then strengthen it.  The corrected statement is stronger than Round~3: using the valid Round~2 order table, one obtains an \emph{explicit infinite family}
+\[
+\{N_\nu\}_{\nu\ge 11}\subseteq A,
+\]
+and this family satisfies the sharp size estimate
+\[
+\#\{\nu\ge 11: N_\nu\le X\}=\log_2\log_2 X+O(1).
+\]
+Hence the corrected CRT construction yields an explicit $\gg \log\log X$ lower bound inside $A$, but it is intrinsically too sparse to prove positive upper density.
+
+\subsection*{2) Round-3 FOUNDATION USED}
+
+I use the following parts of the previous rounds.
+
+\begin{enumerate}
+\item \textbf{Round~2 / Round~3 reduction lemma.} If an odd integer $n$ is neither of the form $p+2^a$ with $a\ge 1$ nor of the form $p+2^a+2^b$ with distinct $a,b\ge 1$, then $n\in A$.
+\item \textbf{Round~3 Fermat-divisor lemma.} If $a>b\ge 1$ and $r=v_2(a-b)$, then
+\[
+2^{2^r}+1\mid 2^a+2^b.
+\]
+\item \textbf{Round~3 Crocker-type lemma.} If
+\[
+N=w\prod_{j=0}^{n-1}B_j\le 2^{2^n}-1,\qquad w\equiv 1\pmod{16},
+\]
+and each $B_j>1$ divides $2^{2^j}+1$, then $N\neq p+2^a+2^b$ for all primes $p$ and all distinct $a,b\ge 1$.
+\item \textbf{Round~2 corrected numerical table.} The exact-order table from Round~2 is the valid one; the Round~3 replacement table is not.
+\end{enumerate}
+
+I \emph{do not} use the erroneous numerical assertions from Round~3.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+
+The new ingredients are:
+
+\begin{enumerate}
+\item \textbf{Error isolation.} I prove that the Round~3 numerical certificate is invalid as written.
+\item \textbf{Corrected exact-order data.} I revert to the Round~2 prime choices, which do satisfy the required order conditions.
+\item \textbf{Family construction.} Instead of a single $N_0$, I define for every $\nu\ge 11$ a least positive CRT solution $N_\nu$.
+\item \textbf{Sparse-family theorem.} I prove
+\[
+\#\{\nu\ge 11:N_\nu\le X\}=\log_2\log_2 X+O(1),
+\]
+which both gives an explicit infinite family in $A$ and rigorously shows that this fixed CRT method cannot by itself establish $\overline d(A)>0$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+
+The exact gaps left after Round~3 are now:
+
+\begin{enumerate}
+\item The Round~3 order table must be checked entry-by-entry.
+\item The Round~3 displayed decimal $N_0$ must be checked against the defining congruences.
+\item After repairing the data, the construction should be upgraded from a \emph{single} exceptional integer to a \emph{uniform family}.
+\item Finally, one should quantify how many integers this repaired construction actually produces up to $X$.
+\end{enumerate}
+
+The plan is:
+
+\begin{enumerate}
+\item Prove that the Round~3 numerical table is wrong.
+\item Replace it by the valid Round~2 table.
+\item For each $\nu\ge 11$, define $M_\nu=(2^{2^\nu}-1)/G$ with fixed $G=(2^{1024}+1)/45592577$, and define $N_\nu$ by the same corrected congruence conditions.
+\item Prove $N_\nu\in A$ for every $\nu\ge 11$.
+\item Prove the counting law $\#\{\nu\ge 11:N_\nu\le X\}=\log_2\log_2 X+O(1)$.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-4)}
+
+\subsubsection*{5.1. The Round-3 numerical certificate is incorrect}
+
+Let $M_1=(2^{2048}-1)/G$ with $G=(2^{1024}+1)/45592577$ as in Round~3.
+
+\medskip
+\noindent\textbf{Proposition 5.1.}
+The numerical table displayed in Round~3 is incorrect, and the displayed Round~3 decimal value of $N_0$ is not the CRT integer defined there.
+
+\medskip
+\noindent\emph{Proof.}
+A deterministic exact computation gives the following counterchecks:
+
+\begin{itemize}
+\item $48691=23\cdot 29\cdot 73$, so it is not prime; in particular it cannot serve as a prime with $\operatorname{ord}_{48691}(2)=45$.
+\item $\operatorname{ord}_{811}(2)=270\neq 48$.
+\item $\operatorname{ord}_{87211}(2)=54\neq 72$.
+\item $\operatorname{ord}_{233}(2)=29\neq 72$.
+\item $\operatorname{ord}_{5419}(2)=42\neq 90$.
+\item $\operatorname{ord}_{2521}(2)=1260\neq 120$.
+\item $\operatorname{ord}_{1153}(2)=288\neq 144$.
+\item $\operatorname{ord}_{6700417}(2)=64\neq 144$.
+\item $\operatorname{ord}_{1303}(2)=651\neq 180$.
+\item $\operatorname{ord}_{118831}(2)=11883\neq 180$.
+\item $\operatorname{ord}_{19231}(2)=9615\neq 360$.
+\end{itemize}
+
+Thus at least $11$ of the $28$ claimed order constraints fail.
+
+Moreover, the decimal integer printed in Round~3 has only $202$ decimal digits, while $M_1$ has $316$ decimal digits. Hence that printed integer is strictly between $0$ and $M_1$ and therefore cannot satisfy
+\[
+N_0\equiv 0\pmod{M_1}.
+\]
+So the Round~3 numerical certificate must be discarded. \hfill$\square$
+
+\subsubsection*{5.2. Corrected exact-order data}
+
+We retain the same overlapping congruence system $(a_i,m_i)$ as in Rounds~2--3:
+\[
+\begin{aligned}
+&(0,3),(0,5),(1,9),(1,10),(8,12),(8,15),(4,18),(7,20),(5,24),(29,30),\\
+&(2,36),(14,36),(17,40),(34,45),(43,45),(13,48),(37,48),(16,60),(19,60),\\
+&(26,72),(62,72),(52,90),(37,120),(49,144),(121,144),(103,180),(106,180),(229,360).
+\end{aligned}
+\]
+Its least common multiple is $720$, and every positive integer exponent lies in at least one of these residue classes modulo its corresponding modulus.
+
+The corrected prime choices are exactly the Round~2 ones:
+\[
+\begin{array}{rcl@{\qquad}rcl}
+(0,3)&\mapsto&7,&(34,45)&\mapsto&631,\\
+(0,5)&\mapsto&31,&(43,45)&\mapsto&23311,\\
+(1,9)&\mapsto&73,&(13,48)&\mapsto&97,\\
+(1,10)&\mapsto&11,&(37,48)&\mapsto&673,\\
+(8,12)&\mapsto&13,&(16,60)&\mapsto&61,\\
+(8,15)&\mapsto&151,&(19,60)&\mapsto&1321,\\
+(4,18)&\mapsto&19,&(26,72)&\mapsto&433,\\
+(7,20)&\mapsto&41,&(62,72)&\mapsto&38737,\\
+(5,24)&\mapsto&241,&(52,90)&\mapsto&18837001,\\
+(29,30)&\mapsto&331,&(37,120)&\mapsto&4562284561,\\
+(2,36)&\mapsto&37,&(49,144)&\mapsto&577,\\
+(14,36)&\mapsto&109,&(121,144)&\mapsto&487824887233,\\
+(17,40)&\mapsto&61681,&(103,180)&\mapsto&181,\\
+&&&(106,180)&\mapsto&54001,\\
+&&&(229,360)&\mapsto&168692292721.
+\end{array}
+\]
+Let these primes be denoted $p_1,\dots,p_{28}$ in the displayed order.  Also let
+\[
+p_{29}=8191=2^{13}-1,\qquad q=45592577,\qquad G=\frac{2^{1024}+1}{q}.
+\]
+We fix
+\[
+c\equiv 1\pmod{8191}.
+\]
+
+\medskip
+\noindent\textbf{Finite certificate used below.}
+A deterministic computation verifies:
+
+\begin{enumerate}
+\item each listed $p_i$ is prime and $\operatorname{ord}_{p_i}(2)=m_i$;
+\item every residue class modulo $720$ is covered by at least one $(a_i,m_i)$;
+\item $1\not\equiv p_i+2^e\pmod{8191}$ for all $1\le i\le 28$ and $0\le e\le 12$;
+\item with
+\[
+L:=16\cdot 8191\cdot\prod_{i=1}^{28}p_i,
+\]
+one has
+\[
+L<G.
+\]
+\end{enumerate}
+
+\subsubsection*{5.3. The corrected family $N_\nu$}
+
+For every integer $\nu\ge 11$, define
+\[
+M_\nu:=\frac{2^{2^\nu}-1}{G}.
+\]
+This is an integer because $G\mid (2^{1024}+1)=F_{10}$ and
+\[
+2^{2^\nu}-1=\prod_{j=0}^{\nu-1}F_j\qquad (\nu\ge 11).
+\]
+Equivalently,
+\[
+M_\nu=q\prod_{\substack{0\le j\le \nu-1\\ j\neq 10}}F_j.
+\]
+
+Now define $N_\nu$ to be the least positive integer satisfying the simultaneous congruences
+\begin{align}
+N_\nu&\equiv 0\pmod{M_\nu},\label{eq:nu-M}\\
+N_\nu&\equiv -1\pmod{16},\label{eq:nu-16}\\
+N_\nu&\equiv 1\pmod{8191},\label{eq:nu-8191}\\
+N_\nu&\equiv 2^{a_i}\pmod{p_i}\qquad (1\le i\le 28).\label{eq:nu-pi}
+\end{align}
+
+\medskip
+\noindent\textbf{Lemma 5.2.}
+For every $\nu\ge 11$, the congruence system \eqref{eq:nu-M}--\eqref{eq:nu-pi} has a unique solution modulo $LM_\nu$, and the least positive solution satisfies
+\[
+M_\nu\le N_\nu<LM_\nu.
+\]
+In particular,
+\[
+N_\nu<2^{2^\nu}-1.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+We first show $\gcd(L,M_\nu)=1$.
+
+The factors $16$ and $8191$ are coprime to $M_\nu$: clearly $M_\nu$ is odd, and if $8191\mid M_\nu$, then $8191\mid (2^{2^\nu}-1)$, which would force $\operatorname{ord}_{8191}(2)\mid 2^\nu$, i.e. $13\mid 2^\nu$, impossible.
+
+Next fix one of the primes $p_i$.  If $p_i\mid M_\nu$, then again $p_i\mid (2^{2^\nu}-1)$, so $\operatorname{ord}_{p_i}(2)\mid 2^\nu$. But $\operatorname{ord}_{p_i}(2)=m_i$, and every $m_i$ in the list has an odd factor greater than $1$. Therefore $m_i\nmid 2^\nu$, contradiction. Hence $\gcd(p_i,M_\nu)=1$ for all $i$.
+
+So all moduli in \eqref{eq:nu-M}--\eqref{eq:nu-pi} are pairwise coprime, and the Chinese remainder theorem gives a unique residue class modulo $LM_\nu$.
+
+The least positive solution is divisible by $M_\nu$, so $N_\nu\ge M_\nu$. Since it is the least positive element of its CRT class, we also have $N_\nu<LM_\nu\cdot L$. Because $L<G$ by the finite certificate,
+\[
+N_\nu<LM_\nu L < M_\nu G = 2^{2^\nu}-1.
+\]
+This proves the claim. \hfill$\square$
+
+\subsubsection*{5.4. Excluding representations $p+2^d$}
+
+\medskip
+\noindent\textbf{Lemma 5.3.}
+For every $\nu\ge 11$, there are no prime $p$ and integer $d\ge 1$ such that
+\[
+N_\nu=p+2^d.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+Fix $\nu\ge 11$ and $d\ge 1$.
+Because the residue system $(a_i,m_i)$ is overlapping, there exists an index $i$ such that
+\[
+d\equiv a_i\pmod{m_i}.
+\]
+Since $\operatorname{ord}_{p_i}(2)=m_i$, this implies
+\[
+2^d\equiv 2^{a_i}\pmod{p_i}.
+\]
+Together with \eqref{eq:nu-pi}, we obtain
+\[
+N_\nu-2^d\equiv 0\pmod{p_i}.
+\]
+So if $N_\nu-2^d$ were prime, then necessarily
+\[
+N_\nu-2^d=p_i.
+\]
+Reducing modulo $8191$ and using \eqref{eq:nu-8191}, we would get
+\[
+1\equiv p_i+2^d\pmod{8191}.
+\]
+Since $\operatorname{ord}_{8191}(2)=13$, the residue $2^d\pmod{8191}$ depends only on $d\bmod 13$, so
+\[
+1\equiv p_i+2^e\pmod{8191}
+\]
+for some $0\le e\le 12$, contradicting the finite certificate from \S 5.2.
+Thus $N_\nu-2^d$ is never prime. \hfill$\square$
+
+\subsubsection*{5.5. Excluding representations $p+2^a+2^b$ with $a\neq b$}
+
+\medskip
+\noindent\textbf{Lemma 5.4.}
+For every $\nu\ge 11$, there do not exist a prime $p$ and distinct integers $a,b\ge 1$ such that
+\[
+N_\nu=p+2^a+2^b.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+By \eqref{eq:nu-M}, the quotient
+\[
+w_\nu:=\frac{N_\nu}{M_\nu}
+\]
+is an integer.  Now
+\[
+M_\nu=q\prod_{\substack{0\le j\le \nu-1\\ j\neq 10}}F_j.
+\]
+Since $q\equiv 1\pmod{16}$, $F_0=3$, $F_1=5$, and $F_j\equiv 1\pmod{16}$ for all $j\ge 2$, we have
+\[
+M_\nu\equiv 3\cdot 5\equiv -1\pmod{16}.
+\]
+Together with \eqref{eq:nu-16}, this gives
+\[
+w_\nu\equiv 1\pmod{16}.
+\]
+
+Write
+\[
+B_j=
+\begin{cases}
+F_j,&0\le j\le \nu-1,\ j\neq 10,\\
+q,&j=10.
+\end{cases}
+\]
+Then each $B_j>1$ divides $F_j=2^{2^j}+1$, and
+\[
+N_\nu=w_\nu\prod_{j=0}^{\nu-1}B_j.
+\]
+By Lemma~5.2 we have $N_\nu<2^{2^\nu}-1$. Therefore all hypotheses of the Round~3 Crocker-type lemma are satisfied (with $n=\nu$), and it follows that
+\[
+N_\nu\neq p+2^a+2^b
+\]
+for all primes $p$ and all distinct $a,b\ge 1$. \hfill$\square$
+
+\subsubsection*{5.6. The corrected explicit infinite family in $A$}
+
+\medskip
+\noindent\textbf{Theorem 5.5.}
+For every integer $\nu\ge 11$, one has
+\[
+N_\nu\in A.
+\]
+Hence $A$ contains an explicit infinite family.
+
+\medskip
+\noindent\emph{Proof.}
+By Lemma~5.3, $N_\nu$ is not of the form $p+2^d$ with $d\ge 1$.
+Therefore it is not of the diagonal form $p+2^a+2^a$, since $2^a+2^a=2^{a+1}$.
+
+By Lemma~5.4, $N_\nu$ is also not of the form $p+2^a+2^b$ with distinct $a,b\ge 1$.
+
+Applying the Round~2 / Round~3 reduction lemma, we conclude $N_\nu\in A$. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.6.}
+The family $\{N_\nu\}_{\nu\ge 11}$ is infinite and consists of distinct elements of $A$.
+
+\medskip
+\noindent\emph{Proof.}
+By Lemma~5.2, $N_\nu\ge M_\nu$ for each $\nu$, and $M_\nu$ is strictly increasing in $\nu$. Hence the $N_\nu$ are distinct. \hfill$\square$
+
+\subsubsection*{5.7. Quantitative size of the corrected family}
+
+\medskip
+\noindent\textbf{Theorem 5.7.}
+Define
+\[
+\mathcal{N}(X):=\#\{\nu\ge 11: N_\nu\le X\}.
+\]
+Then
+\[
+\mathcal{N}(X)=\log_2\log_2 X+O(1)\qquad (X\to\infty).
+\]
+More explicitly, for all sufficiently large $X$,
+\[
+\left\lfloor \log_2\log_2\!\left(\frac{G}{L}X+1\right)\right\rfloor-10
+\le
+\mathcal{N}(X)
+\le
+\left\lfloor \log_2\log_2(GX+1)\right\rfloor-10.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+From Lemma~5.2 we have
+\[
+M_\nu\le N_\nu<LM_\nu=\frac{L}{G}\left(2^{2^\nu}-1\right).
+\]
+
+For the upper bound, if $N_\nu\le X$, then $M_\nu\le X$, so
+\[
+\frac{2^{2^\nu}-1}{G}\le X,
+\]
+hence
+\[
+2^{2^\nu}\le GX+1.
+\]
+Therefore
+\[
+\nu\le \log_2\log_2(GX+1),
+\]
+which gives the displayed upper bound.
+
+For the lower bound, if
+\[
+\frac{L}{G}\left(2^{2^\nu}-1\right)\le X,
+\]
+then $N_\nu<X$ by Lemma~5.2. This is implied by
+\[
+2^{2^\nu}\le \frac{G}{L}X+1.
+\]
+So every integer $\nu\ge 11$ satisfying
+\[
+\nu\le \log_2\log_2\!\left(\frac{G}{L}X+1\right)
+\]
+contributes one element $N_\nu\le X$, giving the displayed lower bound.
+
+The two bounds differ by at most an additive constant, since $G/L$ and $G$ are fixed positive constants. Hence
+\[
+\mathcal{N}(X)=\log_2\log_2 X+O(1).
+\]
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.8 (explicit lower bound inside $A$).}
+For all sufficiently large $X$,
+\[
+|A\cap[1,X]|\ge \mathcal{N}(X)\gg \log\log X.
+\]
+
+\medskip
+\noindent\emph{Proof.}
+This is immediate from Theorem~5.5 and Theorem~5.7. \hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 5.9 (construction-level obstruction).}
+The corrected fixed-data CRT construction from Rounds~2--4 cannot by itself prove
+\[
+\overline d(A)>0.
+\]
+Indeed, the family it produces has counting function only $\log_2\log_2 X+O(1)$, and therefore has density $0$.
+
+\medskip
+\noindent\emph{Proof.}
+This is immediate from Theorem~5.7. \hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I now try to break the new argument.
+
+\begin{enumerate}
+\item \textbf{Did the correction really fix the Round~3 flaw?} Yes.  Proposition~5.1 explicitly shows that the Round~3 numerical table is invalid.  The new family uses the valid Round~2 table instead.
+\item \textbf{Could some $p_i$ divide $M_\nu$ for large $\nu$?} No.  If $p_i\mid M_\nu$, then $\operatorname{ord}_{p_i}(2)\mid 2^\nu$.  But each $\operatorname{ord}_{p_i}(2)=m_i$ has an odd factor greater than $1$, impossible.
+\item \textbf{Could the congruence argument for $p+2^d$ fail when $d$ is huge?} No.  The overlap property is periodic modulo $720$, and the reduction modulo $8191$ is periodic modulo $13$; both are uniform in $d$.
+\item \textbf{Could the family collapse to finitely many repeated numbers?} No.  Lemma~5.2 gives $N_\nu\ge M_\nu$, and $M_\nu$ strictly increases with $\nu$.
+\item \textbf{Is Corollary~5.9 overstated?} The corollary rules out only the \emph{fixed corrected CRT family constructed here}.  It does \emph{not} rule out all conceivable covering-system or sieve arguments for positive density.
+\item \textbf{Did we re-use a broken Round~3 step?} Only the \emph{abstract} Round~3 lemmas were re-used.  The concrete Round~3 number-theoretic data were discarded and replaced.
+\end{enumerate}
+
+No further gap remains in the corrected family construction.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+\medskip
+The upper-density problem remains unresolved here, but Round~4 makes genuine progress in two ways:
+
+\begin{enumerate}
+\item it identifies and repairs a concrete mathematical error in Round~3; and
+\item it upgrades the corrected construction to an explicit infinite family $\{N_\nu\}_{\nu\ge 11}\subseteq A$ with
+\[
+\#\{\nu\ge 11:N_\nu\le X\}=\log_2\log_2 X+O(1).
+\]
+\end{enumerate}
+
+So the minimal corrected statement extracted from the Round~2 / Round~3 CRT method is:
+
+\medskip
+\noindent\emph{There is an explicit infinite family in $A$, generated by a fixed corrected CRT recipe, but this family is necessarily sparse (size $\asymp \log\log X$ up to $X$), so this route cannot by itself prove positive upper density.}
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 50\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item R. Crocker, \emph{On the sum of a prime and of two powers of two}, Pacific J. Math. \textbf{36} (1971), 103--107.
+\item H. Pan, \emph{On the integers not of the form $p+2^a+2^b$}, Acta Arith. \textbf{148} (2011), no.~1, 55--61.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#9}, \texttt{erdosproblems.com/9}.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This file is the requested export for problem number $x=9$, namely \texttt{9\_solutions.tex}.

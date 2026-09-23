@@ -1,0 +1,333 @@
+\section{Problem \#653}
+
+\subsection*{1. ROUND-3 OBJECTIVE}
+
+\textbf{Path (C): obstruction / correction at the level of strategy.}
+
+I build strictly on the Round-2 progress, whose main new theorem was the exact collinear formula
+\[
+ g_{\mathrm{line}}(n)=\left\lceil\frac{n}{2}\right\rceil.
+\]
+The most promising next step is to show that this is not merely a one-line phenomenon: the same \(\lceil n/2\rceil\) barrier persists for points on a single circle, and more generally for any configuration with all but \(t\) points on one line or one circle.  This would rule out an entire family of ``one-dimensional'' or ``almost one-dimensional'' constructions.
+
+Throughout, for a finite set \(X\subset \mathbf{R}^2\), I write
+\[
+R_X(x):=\bigl|\{ |x-y|:y\in X\setminus\{x\}\}\bigr|,
+\qquad
+V(X):=\bigl|\{R_X(x):x\in X\}\bigr|.
+\]
+Thus \(g(n)=\max_{|X|=n}V(X)\).
+
+\subsection*{2. Round-2 FOUNDATION USED}
+
+I use the following Round-2 results as fixed input.
+
+\begin{itemize}
+\item The exact collinear theorem: if \(X\) is any \(n\)-point set contained in a line, then
+\[
+V(X)\le \left\lceil\frac{n}{2}\right\rceil,
+\]
+and equality is attained by an arithmetic progression.
+\item The explicit line construction \(X=\{0,1,\dots,n-1\}\), for which the attained values are exactly
+\[
+\left\lceil\frac{n-1}{2}\right\rceil,\left\lceil\frac{n-1}{2}\right\rceil+1,\dots,n-1.
+\]
+\item The global status and bounds recorded on the Erd\H{o}s Problems page: the problem remains open, with known bounds \(g(n)>\tfrac38 n\), \(g(n)>\tfrac{7}{10}n\), and \(g(n)<n-cn^{2/3}\) for some absolute \(c>0\) [EP653].
+\end{itemize}
+
+\subsection*{3. NEW INSIGHT / TOOL (ROUND 3)}
+
+There are two genuinely new ingredients in this round.
+
+\medskip
+\noindent
+\textbf{(i) Exact circular analogue.}
+If all \(n\) points lie on a common circle, then again
+\[
+V(X)\le \left\lceil\frac{n}{2}\right\rceil,
+\]
+and this is sharp.
+
+\medskip
+\noindent
+\textbf{(ii) Stability with outliers.}
+If \(X\) has \(m\) points on one line or one circle and \(t=n-m\) arbitrary outliers, then
+\[
+V(X)\le 2t+\left\lceil\frac{m}{2}\right\rceil.
+\]
+Equivalently, if at least \(n-t\) points lie on a common line or circle, then
+\[
+V(X)\le 2t+\left\lceil\frac{n-t}{2}\right\rceil.
+\]
+In particular, if \(t=o(n)\), then
+\[
+V(X)\le \frac{n}{2}+o(n),
+\]
+so any eventual construction with \(V(X)=(1-o(1))n\) must be genuinely non-concentrated: it cannot place \(n-o(n)\) points on a single line or circle.
+
+\medskip
+\noindent
+A sharper corollary is that if \(V(X)=(1-o(1))n\), then \emph{no} line or circle can contain more than \((\tfrac23+o(1))n\) points.
+
+\subsection*{4. ATTACK PLAN (ROUND 3)}
+
+The exact gap left after Round 2 was this: the collinear theorem ruled out only a single line.  It did not say anything about other natural one-dimensional supports (especially circles), nor about ``almost collinear'' or ``almost cyclic'' constructions with a small number of outliers.
+
+The plan is therefore:
+
+\begin{enumerate}
+\item prove that for points on a common circle, every fixed point sees each distance with multiplicity at most \(2\), giving the same \(\lceil n/2\rceil\) upper bound as in the line case;
+\item show that a short-arc circular arithmetic progression attains \(\lceil n/2\rceil\), making the circular bound sharp;
+\item add \(t\) arbitrary outliers and observe that each outlier can create at most one new distance from any prescribed point on the line/circle support, yielding the stability inequality
+\[
+V(X)\le 2t+\left\lceil\frac{m}{2}\right\rceil.
+\]
+\end{enumerate}
+
+This overcomes the Round-2 obstacle by ruling out an entire class of strategies, not just a single exact model.
+
+\subsection*{5. WORK (ROUND 3)}
+
+\paragraph{Lemma 1 (distance multiplicity on a circle).}
+Let \(Y\subset \mathbf{R}^2\) be a finite set of \(m\) points on a common circle \(C\), and fix \(x\in Y\).  Then every distance from \(x\) to points of \(Y\setminus\{x\}\) is realised by at most two points of \(Y\setminus\{x\}\).
+Consequently,
+\[
+\left\lceil\frac{m-1}{2}\right\rceil \le R_Y(x)\le m-1.
+\]
+
+\medskip
+\noindent
+\textit{Proof.}
+Let the circle have centre \(O\) and radius \(r\).  Apply a rigid motion so that \(O=(0,0)\) and \(x=(r,0)\).  Any point \(y\in C\) has the form
+\[
+y=(r\cos\theta,r\sin\theta)
+\]
+for some \(\theta\in [0,2\pi)\).  Then
+\[
+|x-y|^2=(r-r\cos\theta)^2+(r\sin\theta)^2=2r^2(1-\cos\theta).
+\]
+Thus the distance \(|x-y|\) depends only on \(\cos\theta\).  If two points \(y,z\in C\) satisfy \(|x-y|=|x-z|\), then their angles \(\theta,\phi\) satisfy \(\cos\theta=\cos\phi\), hence \(\phi\equiv \pm \theta\pmod{2\pi}\).  Therefore either \(y=z\) or \(z\) is the reflection of \(y\) across the diameter \(Ox\).
+
+So for each fixed distance from \(x\), there are at most two points of \(C\) at that distance from \(x\).  Since there are \(m-1\) points in \(Y\setminus\{x\}\), the number of distinct distances from \(x\) to \(Y\setminus\{x\}\) is at least \(\lceil (m-1)/2\rceil\), and trivially at most \(m-1\).  \hfill\(\square\)
+
+\paragraph{Theorem 2 (exact line/circle bound).}
+Let \(g_{\mathrm{lc}}(n)\) denote the maximum possible value of \(V(X)\) over all \(n\)-point sets \(X\subset \mathbf{R}^2\) contained in a single line or a single circle.  Then
+\[
+ g_{\mathrm{lc}}(n)=\left\lceil\frac{n}{2}\right\rceil.
+\]
+In particular, the exact same extremal value holds in the circular class:
+\[
+ g_{\mathrm{circle}}(n)=\left\lceil\frac{n}{2}\right\rceil.
+\]
+
+\medskip
+\noindent
+\textit{Proof.}
+The line case was proved in Round 2, so only the circle case is new.
+
+Let \(Y\) be any \(n\)-point set on a common circle.  By Lemma 1, for every \(y\in Y\),
+\[
+\left\lceil\frac{n-1}{2}\right\rceil \le R_Y(y)\le n-1.
+\]
+Hence every value \(R_Y(y)\) lies in the integer interval
+\[
+\left\lceil\frac{n-1}{2}\right\rceil,\left\lceil\frac{n-1}{2}\right\rceil+1,\dots,n-1,
+\]
+which contains exactly
+\[
+(n-1)-\left\lceil\frac{n-1}{2}\right\rceil+1=\left\lceil\frac{n}{2}\right\rceil
+\]
+integers.  Therefore
+\[
+V(Y)\le \left\lceil\frac{n}{2}\right\rceil.
+\]
+
+To see that this is sharp, choose a circle of radius \(1\) and pick points
+\[
+y_i=(\cos(i\delta),\sin(i\delta)),\qquad i=0,1,\dots,n-1,
+\]
+where \(\delta>0\) is so small that
+\[
+(n-1)\delta<\pi.
+\]
+Then for each fixed \(i\), the distance between \(y_i\) and \(y_j\) is
+\[
+|y_i-y_j|=2\sin\!\left(\frac{|i-j|\delta}{2}\right).
+\]
+Because \(0\le |i-j|\delta<\pi\), the function \(u\mapsto 2\sin(u/2)\) is strictly increasing on the relevant interval, so equal distances from \(y_i\) correspond exactly to equal values of \(|i-j|\).  Hence
+\[
+R_Y(y_i)=\max\{i,n-1-i\}.
+\]
+As \(i\) runs from \(0\) to \(n-1\), these values are precisely
+\[
+\left\lceil\frac{n-1}{2}\right\rceil,\left\lceil\frac{n-1}{2}\right\rceil+1,\dots,n-1,
+\]
+so
+\[
+V(Y)=\left\lceil\frac{n}{2}\right\rceil.
+\]
+This proves the circle case, and therefore the combined line/circle statement. \hfill\(\square\)
+
+\paragraph{Theorem 3 (stability with outliers).}
+Let \(X\subset \mathbf{R}^2\) be a finite set with \(|X|=n\).  Suppose that \(Y\subset X\) has \(|Y|=m\) and is contained in a single line or a single circle.  Write \(Z:=X\setminus Y\), so \(|Z|=t=n-m\).  Then
+\[
+V(X)\le 2t+\left\lceil\frac{m}{2}\right\rceil.
+\]
+Equivalently, if at least \(n-t\) points of \(X\) lie on one line or circle, then
+\[
+V(X)\le 2t+\left\lceil\frac{n-t}{2}\right\rceil.
+\]
+
+\medskip
+\noindent
+\textit{Proof.}
+Fix \(y\in Y\).  Let
+\[
+S_Y(y):=\{ |y-y'|:y'\in Y\setminus\{y\}\}
+\]
+and
+\[
+S_Z(y):=\{ |y-z|:z\in Z\}.
+\]
+Then
+\[
+R_X(y)=|S_Y(y)\cup S_Z(y)|.
+\]
+By Theorem 2, the line/circle support gives
+\[
+\left\lceil\frac{m-1}{2}\right\rceil \le |S_Y(y)|\le m-1.
+\]
+Since \(|S_Z(y)|\le t\), adding the outliers can create at most \(t\) new distances.  Therefore
+\[
+\left\lceil\frac{m-1}{2}\right\rceil \le R_X(y)\le m-1+t=n-1.
+\]
+So every value \(R_X(y)\) with \(y\in Y\) lies in the integer interval
+\[
+\left\lceil\frac{m-1}{2}\right\rceil,\left\lceil\frac{m-1}{2}\right\rceil+1,\dots,n-1,
+\]
+which contains exactly
+\[
+(n-1)-\left\lceil\frac{m-1}{2}\right\rceil+1
+= n-\left\lceil\frac{m-1}{2}\right\rceil
+= t+\left\lceil\frac{m}{2}\right\rceil
+\]
+integers.  Hence the points of \(Y\) contribute at most
+\[
+t+\left\lceil\frac{m}{2}\right\rceil
+\]
+distinct values to \(V(X)\).
+
+The remaining points are the \(t\) points of \(Z\), which contribute at most \(t\) additional values.  Therefore
+\[
+V(X)\le \left(t+\left\lceil\frac{m}{2}\right\rceil\right)+t
+=2t+\left\lceil\frac{m}{2}\right\rceil.
+\]
+This proves the claim. \hfill\(\square\)
+
+\paragraph{Corollary 4 (obstruction to asymptotic extremality).}
+If \(X\subset \mathbf{R}^2\) has \(|X|=n\) and some line or circle contains \(m\) points of \(X\), then
+\[
+V(X)\le 2n-\frac{3m}{2}+\frac12.
+\]
+In particular, if \(V(X)\ge (1-\eta)n\), then
+\[
+m\le \frac{2+2\eta}{3}n+\frac13.
+\]
+Hence any family with
+\[
+V(X_n)=(1-o(1))n
+\]
+must satisfy the structural condition that \emph{no} line or circle contains more than \((\tfrac23+o(1))n\) points.
+
+\medskip
+\noindent
+\textit{Proof.}
+Apply Theorem 3 with \(t=n-m\):
+\[
+V(X)\le 2(n-m)+\left\lceil\frac{m}{2}\right\rceil
+\le 2n-2m+\frac{m}{2}+\frac12
+=2n-\frac{3m}{2}+\frac12.
+\]
+Now if also \(V(X)\ge (1-\eta)n\), then
+\[
+(1-\eta)n\le 2n-\frac{3m}{2}+\frac12,
+\]
+so
+\[
+\frac{3m}{2}\le (1+\eta)n+\frac12,
+\qquad\text{hence}\qquad
+m\le \frac{2+2\eta}{3}n+\frac13.
+\]
+The asymptotic statement follows immediately. \hfill\(\square\)
+
+\subsection*{6. ADVERSARIAL VERIFICATION}
+
+I now try to break the new arguments.
+
+\begin{itemize}
+\item \textbf{Circle multiplicity lemma.}
+Could one distance from a fixed point on a circle be realised by three or more points?  No: the squared distance is \(2r^2(1-\cos\theta)\), and a fixed value of \(\cos\theta\) gives only the two possibilities \(\theta\) and \(-\theta\) modulo \(2\pi\), except for the antipodal case where there is only one point.
+
+\item \textbf{Sharpness construction on a circle.}
+The choice \((n-1)\delta<\pi\) is essential.  It ensures that the chord-length function is strictly increasing in \(|i-j|\delta\), so no accidental equalities occur beyond the obvious symmetry \(|i-j|=|i-k|\).
+
+\item \textbf{Stability theorem.}
+I only used the interval containment
+\[
+\left\lceil\frac{m-1}{2}\right\rceil\le R_X(y)\le n-1
+\quad (y\in Y),
+\]
+not any exact formula.  So accidental coincidences between distances to \(Y\) and distances to outliers in \(Z\) can only decrease \(R_X(y)\), never increase it beyond the interval bound.
+
+\item \textbf{Quantifiers.}
+The obstruction is uniform in \(n,m,t\): it does not assume that \(t\) is fixed or small.  The asymptotic corollary is obtained only afterwards by substituting \(t=n-m\).
+
+\item \textbf{Interaction with Round 2.}
+Theorem 2 does not reprove the line case from scratch; it imports the Round-2 collinear theorem and adds only the genuinely new circle case.
+\end{itemize}
+
+No inconsistency with the Round-2 writeup was found.
+
+\subsection*{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The full planar problem remains open.  However, Round 3 makes a substantive advance beyond Round 2:
+
+\begin{itemize}
+\item it proves the exact same extremal value \(\lceil n/2\rceil\) for point sets on a single circle as for point sets on a single line;
+\item it proves the stability bound
+\[
+V(X)\le 2t+\left\lceil\frac{n-t}{2}\right\rceil
+\]
+whenever all but \(t\) points lie on one line or one circle;
+\item consequently, any putative family with \(V(X)=(1-o(1))n\) must avoid placing more than \((\tfrac23+o(1))n\) points on any single line or circle.
+\end{itemize}
+
+This rules out the entire ``near-line / near-circle'' strategy class.
+
+\subsection*{8. COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 55\%}
+
+\subsection*{9. REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{EP653}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#653},
+Erd\H{o}s Problems website, accessed 2026-03-07.
+
+\bibitem{EF97}
+P. Erd\H{o}s and P. Fishburn,
+\emph{Distinct distances in finite planar sets},
+Discrete Mathematics \textbf{175} (1997), 97--132.
+
+\bibitem{CsI97}
+Gy. Csizmadia and D. Ismailescu,
+\emph{Maximum number of different distance counts},
+in \emph{Intuitive Geometry} (Budapest, 1995),
+Bolyai Society Mathematical Studies \textbf{6} (1997), 301--309.
+
+\end{thebibliography}

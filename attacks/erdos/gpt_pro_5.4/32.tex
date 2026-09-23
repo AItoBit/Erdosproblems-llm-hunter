@@ -1,0 +1,224 @@
+\section{Erd\H{o}s Problem 32 --- Round 3 continuation and gap-closure}
+
+\subsection{1. ROUND-3 OBJECTIVE}
+
+I pursue path \textbf{(C)}: \emph{obstruction/correction}.  Round~2 established a real obstruction: any proof of an exact one-shift theorem
+\[
+\mathcal P + A \supseteq [N_0,\infty)
+\quad\text{with}\quad A(x)=o((\log x)^2)\ \text{or}\ A(x)=O(\log x)
+\]
+that uses only coarse size information of the primes is impossible, because prime-like random sets of density $1/\log x$ already force a $(\log x)^2$ barrier.
+
+The most promising strict advance is therefore to identify the \emph{nearest exact $O(\log x)$ theorem that is actually true} after a minimal correction of the representation problem.  The new goal in this round is to prove the following corrected statement:
+
+\medskip
+\noindent
+\textbf{Corrected exact theorem.}
+There exists a set $T\subseteq \mathbb N$ with
+\[
+T(x)=O(\log x)
+\]
+such that every sufficiently large integer $n$ can be written in the form
+\[
+ n=p+t_1+t_2
+ \qquad (p\in\mathcal P,\ t_1,t_2\in T).
+\]
+\medskip
+
+This is an exact, cofinite-coverage theorem at the $O(\log x)$ scale, one extra thin summand away from the original open problem.
+
+\subsection{2. Round-2 FOUNDATION USED}
+
+I use the following Round~2 result as fixed input.
+
+\begin{itemize}
+\item \textbf{Round-2 obstruction.} There exist prime-like sets $P'\subseteq \mathbb N$ with
+\[
+P'(x)\sim \frac{x}{\log x}
+\]
+for which every additive complement $B$ satisfies
+\[
+\liminf_{x\to\infty}\frac{B(x)}{(\log x)^2}\ge 1.
+\]
+Hence any successful proof for the actual primes with $A(x)=o((\log x)^2)$ or $A(x)=O(\log x)$ must use arithmetic structure specific to the primes, not just counting-function information.
+\end{itemize}
+
+I also use the trivial monotonicity fact that if $S(x)=O(\log x)$ then $(S+1)(x)=O(\log x)$, and therefore
+\[
+(S\cup(S+1))(x)=O(\log x).
+\]
+
+\subsection{3. NEW INSIGHT / TOOL (ROUND-3)}
+
+The new ingredient is a prime-specific theorem of Dai and Pan:
+
+\medskip
+\noindent
+\textbf{External Theorem (Dai--Pan).}
+There exists a set $A\subseteq \mathcal P$ with
+\[
+A(x)=O(\log x)
+\]
+such that every sufficiently large odd integer $n$ can be represented as
+\[
+ n=a_1+a_2+p
+ \qquad (a_1,a_2\in A,\ p\in\mathcal P).
+\]
+\medskip
+
+Round~3 adds a parity-shift observation to convert this odd-integer theorem into a cofinite theorem for \emph{all} sufficiently large integers, still with only $O(\log x)$ many thin summands available.
+
+\subsection{4. ATTACK PLAN (ROUND-3)}
+
+After Round~2, the exact gap was this:
+
+\begin{quote}
+there was a rigorous barrier against density-only proofs of the original one-shift problem, but no positive theorem showing how close one can nevertheless get to an exact $O(\log x)$ statement.
+\end{quote}
+
+The precise claim to prove now is:
+
+\medskip
+\noindent
+\textbf{Claim.}
+There exists $T\subseteq\mathbb N$ with $T(x)=O(\log x)$ and an integer $N_1$ such that every $n\ge N_1$ satisfies
+\[
+ n\in \mathcal P+T+T.
+\]
+\medskip
+
+The plan is to start from the Dai--Pan set $A\subseteq\mathcal P$, define
+\[
+T:=A\cup (A+1),
+\]
+and then check separately the odd and even cases.  Odd integers are covered directly by the external theorem; even integers are reduced to odd integers by subtracting $1$ and absorbing the shift into one of the two thin summands.
+
+\subsection{5. WORK (ROUND-3)}
+
+\paragraph{Step 1: Invoke the prime-specific theorem.}
+By the Dai--Pan theorem, there is a set $A\subseteq \mathcal P$ and an integer $N_0$ such that
+\[
+A(x)=O(\log x)
+\]
+and every odd integer $m\ge N_0$ can be written as
+\[
+ m=a_1+a_2+p
+ \qquad (a_1,a_2\in A,\ p\in\mathcal P).
+\]
+No extra hypotheses are needed; this is exactly the stated theorem.
+
+\paragraph{Step 2: Define the corrected thin set.}
+Set
+\[
+T:=A\cup (A+1).
+\]
+Then
+\[
+T(x)\le A(x)+A(x-1)=O(\log x),
+\]
+so $T$ still has logarithmic counting function.
+
+\paragraph{Step 3: Cover all sufficiently large odd integers.}
+Let $n\ge N_0$ be odd.  By the theorem,
+\[
+ n=a_1+a_2+p
+ \qquad (a_1,a_2\in A,\ p\in\mathcal P).
+\]
+Since $A\subseteq T$, this is already a representation
+\[
+ n=p+t_1+t_2
+ \qquad (t_1,t_2\in T).
+\]
+Thus every sufficiently large odd integer lies in $\mathcal P+T+T$.
+
+\paragraph{Step 4: Cover all sufficiently large even integers.}
+Let $n\ge N_0+1$ be even.  Then $n-1\ge N_0$ is odd, so again by the theorem,
+\[
+ n-1=a_1+a_2+p
+ \qquad (a_1,a_2\in A,\ p\in\mathcal P).
+\]
+Hence
+\[
+ n=(a_1+1)+a_2+p.
+\]
+Now $a_1+1\in A+1\subseteq T$ and $a_2\in A\subseteq T$, so
+\[
+ n=p+t_1+t_2
+ \qquad (t_1,t_2\in T).
+\]
+Therefore every sufficiently large even integer also lies in $\mathcal P+T+T$.
+
+\paragraph{Conclusion.}
+If we choose $N_1:=N_0+1$, then every integer $n\ge N_1$ belongs to $\mathcal P+T+T$, with
+\[
+T(x)=O(\log x).
+\]
+This proves the corrected exact theorem.
+
+\medskip
+\noindent
+\textbf{Corollary (exact $O((\log x)^2)$ complement recovered from an $O(\log x)$ set).}
+Let
+\[
+C:=T+T.
+\]
+Then every sufficiently large integer belongs to $\mathcal P+C$, and
+\[
+C(x)\le T(x)^2=O((\log x)^2)
+\]
+in the crude counting-function sense.  So the classical Erd\H{o}s-scale exact complement bound is recovered from a logarithmic set $T$ by one extra additive layer.
+
+\subsection{6. ADVERSARIAL VERIFICATION}
+
+\paragraph{Parity check.}
+Odd $n$ are covered directly.  Even $n$ are handled by writing $n-1$ as an odd integer covered by the external theorem and shifting one thin summand by $+1$.  No parity case is omitted.
+
+\paragraph{Growth check.}
+Passing from $A$ to $A+1$ does not change the order of magnitude of the counting function, and taking the union preserves the estimate $O(\log x)$.  Thus the corrected theorem genuinely remains at logarithmic scale.
+
+\paragraph{Quantifier check.}
+The external theorem gives a single set $A$ and a single threshold $N_0$ working for \emph{all} sufficiently large odd integers.  From this we constructed a single set $T$ and a single threshold $N_1=N_0+1$ working for \emph{all} sufficiently large integers.  There is no hidden dependence on $n$.
+
+\paragraph{Compatibility with Round~2.}
+There is no contradiction with the Round~2 barrier.  Round~2 ruled out density-only approaches to the one-shift problem $\mathcal P+A$ with $A(x)=o((\log x)^2)$ or $O(\log x)$.  The present result uses genuine prime-specific input and proves a different statement, namely coverage by
+\[
+\mathcal P+T+T,
+\]
+not by $\mathcal P+T$.
+
+\paragraph{Minimality claim.}
+I do \emph{not} claim to have proved that adding one extra thin summand is logically minimal among all possible corrections.  What has been proved is that this is the closest exact $O(\log x)$ correction supplied by the checked literature used here.
+
+\subsection{7. FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~3 adds a rigorous positive theorem beyond the Round~2 obstruction:
+
+\begin{quote}
+There exists a set $T\subseteq\mathbb N$ with $T(x)=O(\log x)$ such that every sufficiently large integer is representable as
+\[
+ n=p+t_1+t_2
+ \qquad (p\in\mathcal P,\ t_1,t_2\in T).
+\]
+\end{quote}
+
+Thus the nearest checked exact $O(\log x)$ variant currently available is true after adding \emph{one} further thin summand.  Combined with Round~2, this sharply isolates the frontier:
+
+\begin{itemize}
+\item exact one-shift coverage $\mathcal P+A$ at size $O(\log x)$ remains open,
+\item density-only methods cannot settle it,
+\item but exact two-thin-shift coverage $\mathcal P+T+T$ at size $T(x)=O(\log x)$ is already provable.
+\end{itemize}
+
+\subsection{8. COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 58\%}
+
+\subsection{9. REFERENCES}
+
+\begin{itemize}
+\item[{[DP14]}] Li-Xia Dai and Hao Pan, \emph{The additive complements of primes and Goldbach's problem}, Acta Arithmetica \textbf{162} (2014), 209--221.
+\item[{[Ko96]}] Mihail N. Kolountzakis, \emph{On the additive complements of the primes and sets of similar growth}, Acta Arithmetica \textbf{77} (1996), 1--8.
+\item[{[EP32]}] Erd\H{o}s Problem \#32, \emph{erdosproblems.com}.
+\end{itemize}

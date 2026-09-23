@@ -1,0 +1,389 @@
+\section*{Problem 390. Factorizing $n!$ into distinct integers larger than $n$}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (A) is not currently realistic: the limit question
+\[
+f(n)-2n\sim c\,\frac{n}{\log n}
+\]
+is still open.
+
+So the correct Round-2 goal is the fail-safe route: extract a rigorous theorem that is strictly stronger than the Round-1 black-box summary.
+
+I will prove an explicit lower bound
+\[
+f(n)-2n\ge \left(\frac{1}{9}+o(1)\right)\frac{n}{\log n}.
+\]
+This does not settle the constant $c$, but it gives a concrete asymptotic obstruction, not just the qualitative statement ``of order $n/\log n$.''
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 reformulation.
+
+Let $f(n)$ be the least $m$ for which there exist distinct integers
+\[
+n<a_1<\cdots<a_t=m
+\]
+with
+\[
+n!=a_1a_2\cdots a_t.
+\]
+
+Round~1 rewrote the problem using
+\[
+(n+1)(n+2)\cdots(2n)=n!\,{2n\choose n}.
+\]
+If $H=f(n)-2n$, and if we compare an optimal factorization with the full interval $(n,2n]$, then there exist sets
+\[
+B\subseteq \{n+1,\dots,2n\},\qquad
+C\subseteq \{2n+1,\dots,2n+H\}
+\]
+such that
+\[
+\prod_{b\in B} b={2n\choose n}\prod_{c\in C} c.
+\]
+Here $B$ is the set of numbers omitted from $(n,2n]$, and $C$ is the set of numbers inserted beyond $2n$.
+
+Round~1 also recorded the known theorem of Erd\H{o}s, Guy and Selfridge that
+\[
+f(n)-2n
+\]
+is of order $n/\log n$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a prime-counting argument on the interval
+\[
+\left(\frac{n}{2},\frac{2n}{3}\right].
+\]
+
+For each prime $p$ in this interval, the central binomial coefficient ${2n\choose n}$ contributes one factor of $p$, but inside $(n,2n]$ the only multiples of $p$ are $2p$ and $3p$.
+Therefore every such prime forces at least one omitted number carrying an extra factor $2$ or $3$.
+This converts a \emph{count of medium primes} into a lower bound on the total $2$-adic and $3$-adic mass that must be supplied by the overhang interval $(2n,2n+H]$.
+
+That mechanism yields the explicit constant $1/9$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was that the known lower bound was only quoted abstractly.
+I now prove a concrete lower bound by the following chain.
+
+\begin{enumerate}
+\item Show that every prime $p\in(n/2,2n/3]$ satisfies
+\[
+v_p\!\left({2n\choose n}\right)=1.
+\]
+
+\item Deduce that for each such prime, at least one of $2p$ or $3p$ must lie in $B$.
+
+\item Count how much $2$-adic and $3$-adic valuation the set $C\subseteq(2n,2n+H]$ can contribute in total.
+
+\item Compare both sides and apply the prime number theorem to the interval $(n/2,2n/3]$.
+\end{enumerate}
+
+This gives a fully rigorous explicit asymptotic lower bound for $H=f(n)-2n$.
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let
+\[
+H=f(n)-2n.
+\]
+Choose an optimal representation of $n!$ and the corresponding sets $B$ and $C$ from the Round-1 reformulation:
+\[
+\prod_{b\in B} b={2n\choose n}\prod_{c\in C} c,
+\]
+with
+\[
+B\subseteq \{n+1,\dots,2n\},\qquad
+C\subseteq \{2n+1,\dots,2n+H\}.
+\]
+
+\medskip
+\noindent\textbf{Claim 1.}
+\emph{For every sufficiently large $n$ and every prime $p$ with}
+\[
+\frac{n}{2}<p\le \frac{2n}{3},
+\]
+\emph{one has}
+\[
+v_p\!\left({2n\choose n}\right)=1.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+For $n\ge 9$ and $p>n/2$, we have $p^2>2n$.
+Hence, by Legendre's formula,
+\[
+v_p\!\left({2n\choose n}\right)
+=
+\left\lfloor\frac{2n}{p}\right\rfloor-2\left\lfloor\frac{n}{p}\right\rfloor.
+\]
+Now
+\[
+\left\lfloor\frac{n}{p}\right\rfloor=1
+\qquad\text{because}\qquad
+\frac{n}{2}<p\le n,
+\]
+and
+\[
+\left\lfloor\frac{2n}{p}\right\rfloor=3
+\qquad\text{because}\qquad
+3\le \frac{2n}{p}<4
+\]
+when $n/2<p\le 2n/3$.
+Therefore
+\[
+v_p\!\left({2n\choose n}\right)=3-2=1.
+\]
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 2.}
+\emph{For every sufficiently large $n$ and every prime $p$ with $n/2<p\le 2n/3$, at least one of $2p$ or $3p$ belongs to $B$.}
+
+\medskip
+\noindent\textbf{Proof.}
+By Claim~1, the right-hand side
+\[
+{2n\choose n}\prod_{c\in C} c
+\]
+is divisible by $p$.
+
+Hence the left-hand side $\prod_{b\in B}b$ is divisible by $p$, so some element of $B$ is divisible by $p$.
+But any multiple of $p$ lying in $(n,2n]$ must equal $2p$ or $3p$, because a multiplier $r$ with $rp\in(n,2n]$ satisfies
+\[
+1<r<4
+\]
+when $p>n/2$.
+Thus at least one of $2p$ or $3p$ lies in $B$.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 3.}
+\emph{Let}
+\[
+P_n:=\left\{p\ \text{prime}:\ \frac{n}{2}<p\le \frac{2n}{3}\right\}.
+\]
+\emph{Then}
+\[
+|P_n|\le v_2\!\left(\prod_{b\in B}b\right)+v_3\!\left(\prod_{b\in B}b\right).
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+For each $p\in P_n$, Claim~2 lets us choose a number
+\[
+b_p\in B\cap\{2p,3p\}.
+\]
+Each such $b_p$ contributes exactly $1$ to
+\[
+v_2(b_p)+v_3(b_p),
+\]
+because $2p$ has $(v_2,v_3)=(1,0)$ and $3p$ has $(v_2,v_3)=(0,1)$.
+
+Also the numbers $b_p$ are distinct.
+Indeed, if $b_p=b_q$ for distinct $p,q\in P_n$, then that common number in $(n,2n]$ would be divisible by two distinct primes $>n/2$, impossible because their product would exceed $2n$.
+
+Therefore
+\[
+|P_n|
+=
+\sum_{p\in P_n} 1
+=
+\sum_{p\in P_n}\bigl(v_2(b_p)+v_3(b_p)\bigr)
+\le
+v_2\!\left(\prod_{b\in B}b\right)+v_3\!\left(\prod_{b\in B}b\right).
+\]
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 4.}
+\emph{One has}
+\[
+v_2\!\left(\prod_{b\in B}b\right)+v_3\!\left(\prod_{b\in B}b\right)
+\le
+\frac{3}{2}H+O(\log n).
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+From
+\[
+\prod_{b\in B} b={2n\choose n}\prod_{c\in C} c
+\]
+we get
+\[
+v_2\!\left(\prod_{b\in B}b\right)+v_3\!\left(\prod_{b\in B}b\right)
+=
+v_2\!\left({2n\choose n}\right)+v_3\!\left({2n\choose n}\right)
++
+v_2\!\left(\prod_{c\in C}c\right)+v_3\!\left(\prod_{c\in C}c\right).
+\]
+
+First, the central binomial coefficient contributes only $O(\log n)$ to the $2$- and $3$-adic valuations.
+Indeed, by Legendre's formula,
+\[
+v_p\!\left({2n\choose n}\right)
+=
+\sum_{j\ge 1}\left(\left\lfloor\frac{2n}{p^j}\right\rfloor-2\left\lfloor\frac{n}{p^j}\right\rfloor\right),
+\]
+and each summand is at most $1$, while all summands vanish once $p^j>2n$.
+Hence
+\[
+v_2\!\left({2n\choose n}\right)\le \lfloor \log_2(2n)\rfloor+1,
+\qquad
+v_3\!\left({2n\choose n}\right)\le \lfloor \log_3(2n)\rfloor+1,
+\]
+so
+\[
+v_2\!\left({2n\choose n}\right)+v_3\!\left({2n\choose n}\right)=O(\log n).
+\]
+
+Second, because $C\subseteq \{2n+1,\dots,2n+H\}$,
+\[
+v_2\!\left(\prod_{c\in C}c\right)
+\le
+\sum_{m=2n+1}^{2n+H} v_2(m)
+=
+\sum_{j\ge 1} \#\{m\in[2n+1,2n+H]:2^j\mid m\}.
+\]
+For each $j$, this count is at most $H/2^j+1$, and only $O(\log n)$ values of $j$ can occur because $2^j\le 2n+H$ is necessary for the count to be nonzero.
+Hence
+\[
+v_2\!\left(\prod_{c\in C}c\right)
+\le
+\sum_{j\ge 1}\left(\frac{H}{2^j}+1\right)
+=
+H+O(\log n).
+\]
+Similarly,
+\[
+v_3\!\left(\prod_{c\in C}c\right)
+\le
+\sum_{j\ge 1}\left(\frac{H}{3^j}+1\right)
+=
+\frac{H}{2}+O(\log n),
+\]
+again because only $O(\log n)$ values of $j$ contribute.
+
+Adding these bounds gives
+\[
+v_2\!\left(\prod_{b\in B}b\right)+v_3\!\left(\prod_{b\in B}b\right)
+\le
+\frac{3}{2}H+O(\log n).
+\]
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 5.}
+\emph{For sufficiently large $n$,}
+\[
+H\ge \left(\frac{1}{9}+o(1)\right)\frac{n}{\log n}.
+\]
+
+\medskip
+\noindent\textbf{Proof.}
+By Claim~3 and Claim~4,
+\[
+|P_n|\le \frac{3}{2}H+O(\log n).
+\]
+By the prime number theorem,
+\[
+|P_n|
+=
+\pi\!\left(\frac{2n}{3}\right)-\pi\!\left(\frac{n}{2}\right)
+=
+\left(\frac{2}{3}-\frac{1}{2}+o(1)\right)\frac{n}{\log n}
+=
+\left(\frac{1}{6}+o(1)\right)\frac{n}{\log n}.
+\]
+Hence
+\[
+\left(\frac{1}{6}+o(1)\right)\frac{n}{\log n}
+\le
+\frac{3}{2}H+O(\log n).
+\]
+Since $O(\log n)=o(n/\log n)$, division by $3/2$ gives
+\[
+H\ge \left(\frac{1}{9}+o(1)\right)\frac{n}{\log n}.
+\]
+Because $H=f(n)-2n$, this is exactly
+\[
+f(n)-2n\ge \left(\frac{1}{9}+o(1)\right)\frac{n}{\log n}.
+\]
+\hfill\textit{QED.}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I check the vulnerable points.
+
+\begin{itemize}
+\item \textbf{Did I use the Round-1 set identity correctly?}
+Yes.  The identity
+\[
+\prod_{b\in B} b={2n\choose n}\prod_{c\in C} c
+\]
+is exactly the Round-1 reformulation, and every valuation argument starts from it.
+
+\item \textbf{Could a prime $p\in(n/2,2n/3]$ be absorbed by some number in $(n,2n]$ other than $2p$ or $3p$?}
+No.  Multipliers $1$ and $4$ are impossible because $p\le n$ and $4p>2n$ in this interval.  So only $2p$ and $3p$ occur.
+
+\item \textbf{Could two different primes share the same omitted number?}
+No.  Any number in $(n,2n]$ has at most one prime factor greater than $n/2$, because two such primes would have product $>2n$.
+
+\item \textbf{Does $C$ perhaps contribute more $2$- and $3$-adic mass than estimated?}
+No.  I bounded the valuation of \emph{the entire interval} $[2n+1,2n+H]$, so the bound automatically applies to its subset $C$.
+
+\item \textbf{Small $n$.}
+Claim~1 was stated only for sufficiently large $n$ because I used $p^2>2n$.
+That is harmless: the final statement is asymptotic, and finitely many small values do not affect the $o(1)$ term.
+
+\item \textbf{Interaction with the known upper bound.}
+Round~1 already cited the Erd\H{o}s--Guy--Selfridge upper bound
+\[
+f(n)-2n=O\!\left(\frac{n}{\log n}\right).
+\]
+The new theorem is compatible with that and strengthens only the lower-bound side.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict Round-2 advance is the explicit theorem
+\[
+f(n)-2n\ge \left(\frac{1}{9}+o(1)\right)\frac{n}{\log n}.
+\]
+
+Thus the previously quoted qualitative lower bound has been replaced by a concrete asymptotic constant.
+Combined with the known upper bound of Erd\H{o}s--Guy--Selfridge,
+\[
+f(n)-2n=O\!\left(\frac{n}{\log n}\right),
+\]
+we now have a sharper quantitative bracket.
+
+What remains open is the actual question of the problem:
+does the normalized quantity
+\[
+\frac{(f(n)-2n)\log n}{n}
+\]
+converge, and if so to what constant $c$?
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 60\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item P. Erd\H{o}s, R. K. Guy, and J. L. Selfridge, \emph{The product of the divisors of an integer}, for the classical upper and lower bounds showing that $f(n)-2n$ is of order $n/\log n$.
+
+\item The Erd\H{o}s Problems site, Problem~390, for the statement of the problem and the citation to the Erd\H{o}s--Guy--Selfridge result.
+
+\item The prime number theorem, used in the standard form
+\[
+\pi(an)-\pi(bn)=\left((a-b)+o(1)\right)\frac{n}{\log n}
+\]
+for fixed $0<b<a$.
+\end{enumerate}

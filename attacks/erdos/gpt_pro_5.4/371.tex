@@ -1,0 +1,170 @@
+\section{Erd\H{o}s Problem 371}
+
+\paragraph{Problem statement.}
+Let $P^{+}(n)$ denote the largest prime factor of $n$. Show that the set of $n$ with $P^{+}(n)<P^{+}(n+1)$ has density $1/2$.
+
+\paragraph{Tools in this round.}
+Web browsing: YES. Computation: YES.
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am not pursuing path (A), because the full natural-density statement is still open. The Round-2 goal is therefore strict advancement: replace Round 1's mere infinitude results by bona fide density theorems, and isolate the exact remaining obstruction between what is known and the desired limit $1/2$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I rely on two Round-1 facts.
+\begin{itemize}
+\item For every $n\geq 1$, one has $P^{+}(n)\neq P^{+}(n+1)$, since consecutive integers are coprime.
+\item Round 1 gave infinite families in both directions: $P^{+}(2^{m})<P^{+}(2^{m}+1)$ and $P^{+}(2^{m}-1)>P^{+}(2^{m})$.
+\end{itemize}
+These facts will now be strengthened to genuine density statements.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredients are three published theorems.
+\begin{itemize}
+\item Ter"av"ainen's window theorem: for any exponents $0<a<b<1$ and $0<c<d<1$, the set of $n$ for which $P^{+}(n)$ and $P^{+}(n+1)$ lie simultaneously in the windows $[n^{a},n^{b}]$ and $[n^{c},n^{d}]$ has positive asymptotic lower density.
+\item Ter"av"ainen's logarithmic-density theorem: the set $\{n:P^{+}(n)<P^{+}(n+1)\}$ has logarithmic density $1/2$.
+\item Tao--Ter"av"ainen's almost-all-scales theorem, together with the explicit lower-density bound $0.2017$ of L"u--Wang.
+\end{itemize}
+The first item lets me prove positive lower density for both inequalities directly, which is already a substantial advance over Round 1.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap left after Round 1 was the absence of any mean-cancellation theorem for the sign sequence
+\[
+f(n)=\begin{cases}
++1,& P^{+}(n)<P^{+}(n+1),\\
+-1,& P^{+}(n)>P^{+}(n+1).
+\end{cases}
+\]
+To prove density $1/2$ one would need
+\[
+\sum_{n\leq X} f(n)=o(X).
+\]
+I do not have that. Instead I will do the next best rigorous thing.
+\begin{enumerate}
+\item Use Ter"av"ainen's window theorem to obtain positive \emph{lower} density for both sides.
+\item Record the stronger known theorems: logarithmic density $1/2$, density $1/2$ at almost all scales, and explicit lower density at least $0.2017$.
+\item Explain precisely why these do not yet imply the full natural density statement.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+S=\{n\geq 1: P^{+}(n)<P^{+}(n+1)\}.
+\]
+Write
+\[
+\underline d(A)=\liminf_{X\to\infty} \frac{1}{X}\#(A\cap [1,X])
+\]
+for asymptotic lower density.
+
+\paragraph{Step 1: a fully proved new theorem -- both sides have positive lower density.}
+Ter"av"ainen proved the following.
+
+If $a,b,c,d\in (0,1)$ with $a<b$ and $c<d$, then the set
+\[
+E_{a,b;c,d}=\{n\geq 1: n^{a}\leq P^{+}(n)\leq n^{b},\; n^{c}\leq P^{+}(n+1)\leq n^{d}\}
+\]
+has positive asymptotic lower density.
+
+Choose, for example,
+\[
+a=\frac{1}{10},\qquad b=\frac{1}{5},\qquad c=\frac{4}{5},\qquad d=\frac{9}{10}.
+\]
+Then $a<b$ and $c<d$, so $E_{a,b;c,d}$ has positive lower density. For every $n\in E_{a,b;c,d}$ we have
+\[
+P^{+}(n)\leq n^{1/5}<n^{4/5}\leq P^{+}(n+1),
+\]
+whence $n\in S$. Therefore
+\[
+\underline d(S)>0.
+\]
+
+Now reverse the windows. Let
+\[
+F=E_{4/5,9/10;1/10,1/5}.
+\]
+Again Ter"av"ainen's theorem gives $\underline d(F)>0$, and for every $n\in F$ one has
+\[
+P^{+}(n)\geq n^{4/5}>n^{1/5}\geq P^{+}(n+1),
+\]
+so $n\notin S$. Hence
+\[
+\underline d(\mathbf N\setminus S)>0.
+\]
+This strictly strengthens the Round-1 infinitude result.
+
+\paragraph{Step 2: logarithmic density is exactly $1/2$.}
+Ter"av"ainen also proved that the logarithmic density
+\[
+\delta_{\log}(A)=\lim_{X\to\infty}\frac{1}{\log X}\sum_{\substack{n\leq X\\ n\in A}}\frac{1}{n}
+\]
+exists for $A=S$ and satisfies
+\[
+\delta_{\log}(S)=\frac{1}{2}.
+\]
+So the conjectured symmetry is already known on logarithmic average.
+
+\paragraph{Step 3: at almost all scales, the ordinary density is also $1/2$.}
+Tao and Ter"av"ainen proved that there exists an exceptional set $\mathcal X_{0}$ of logarithmic density $0$ such that
+\[
+\lim_{\substack{X\to\infty\\ X\notin \mathcal X_{0}}}
+\frac{1}{X}\#\{n\leq X: n\in S\}=\frac{1}{2}.
+\]
+Thus the natural-density statement is true for all scales outside a logarithmically negligible exceptional set.
+
+\paragraph{Step 4: the best currently published explicit lower bound.}
+L"u and Wang proved
+\[
+\#\{n<x:P^{+}(n)<P^{+}(n+1)\}>(0.2017-o(1))x,
+\]
+and the same lower bound for the complementary inequality. Therefore
+\[
+\underline d(S)\geq 0.2017,
+\qquad
+\underline d(\mathbf N\setminus S)\geq 0.2017.
+\]
+Since $S$ and its complement partition the positive integers by the Round-1 no-ties observation, one also gets the corresponding upper bounds
+\[
+\overline d(S)\leq 0.7983,
+\qquad
+\overline d(\mathbf N\setminus S)\leq 0.7983.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The points most likely to conceal a mistake are the following.
+\begin{itemize}
+\item \emph{Window inclusion.} In Step 1 the inequalities are strict for $n>1$ because $1/5<4/5$. So every $n$ in the first window set really belongs to $S$, and every $n$ in the reversed window set really belongs to the complement.
+\item \emph{Density notions.} Positive lower density, logarithmic density, and ``density at almost all scales'' are three different notions. None of Steps 1--4 silently identifies them.
+\item \emph{Why don't Steps 2 and 3 already prove the conjecture?} Because a set of scales of logarithmic density $0$ can still contain subsequences along which the ordinary Ces\`aro averages oscillate. So the Tao--Ter"av"ainen theorem is stronger than anything in Round 1, but weaker than the existence of an ordinary limit along \emph{all} $X$.
+\item \emph{Compatibility with Round 1.} The new results strengthen, rather than contradict, Round 1. Infinitude follows immediately from positive lower density.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round 2 upgrades the Round-1 output substantially:
+\begin{itemize}
+\item both inequalities now have rigorously proved positive lower density;
+\item the set $S$ is known to have logarithmic density $1/2$;
+\item the ordinary density equals $1/2$ at almost all scales;
+\item the best explicit published lower bound is $0.2017$ for both $S$ and its complement.
+\end{itemize}
+The exact missing step is now sharply isolated: one must upgrade these partial density results to an ordinary asymptotic density along \emph{all} scales.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 70\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item J. Ter"av"ainen, \emph{On binary correlations of multiplicative functions}, Forum Math. Sigma 6 (2018), e10.
+\item T. Tao and J. Ter"av"ainen, \emph{The structure of correlations of multiplicative functions at almost all scales, with applications to the Chowla and Elliott conjectures}, Algebra \& Number Theory 13 (2019), no. 9.
+\item X. L"u and Z. Wang, \emph{On the largest prime factors of consecutive integers}, Monatsh. Math. 206 (2025), 403--418.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#371}, accessed 2026-03-07.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+Erd\H{o}s problem number: $x=371$. This section is written as a drop-in \LaTeX{} fragment and is included in the combined file \texttt{369\_371\_373\_round2\_solutions.tex}.
+
+\bigskip
+\hrule
+\bigskip
+

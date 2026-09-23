@@ -1,0 +1,406 @@
+\section{Problem 50: derivatives of the totient distribution function (Round 7)}
+
+\subsection{1) ROUND-7 OBJECTIVE}
+
+\textbf{Path (C) (obstruction / correction).}
+Round~6 proved a strong \emph{symmetric} residual oscillation theorem: on a dense $G_\delta$ set,
+\[
+\liminf_{h\to0^+}\frac{G(x+h)-G(x-h)}{2h}=0,
+\qquad
+\limsup_{h\to0^+}\frac{G(x+h)-G(x-h)}{2h}=+\infty.
+\]
+However, this still leaves open a genuine structural gap: the symmetric quotient does not distinguish the
+left and right sides. In principle, a point could be flat on one side and wild on the other.
+
+The new objective is therefore to strengthen Round~6 from \emph{symmetric} to \emph{one-sided} Dini derivatives.
+We prove that there is a dense $G_\delta$ set of points (indeed a dense $G_\delta$ set disjoint from the special value set
+$\mathcal E:=\{\varphi(n)/n:n\ge1\}$) at which \emph{both} one-sided lower Dini derivatives are $0$ and \emph{both}
+one-sided upper Dini derivatives are $+\infty$.
+
+Thus any hypothetical point where $G'(x)$ exists and is a finite positive number must avoid not only the dense countable set
+$\mathcal E$ and the residual symmetric oscillation set from Round~6, but also a \emph{residual set of maximal one-sided oscillation}.
+
+\subsection{2) Round-6 FOUNDATION USED}
+
+We use the following previous-round results as black boxes.
+
+\begin{itemize}
+\item \textbf{Round~1.} The limiting distribution function
+\[
+G(u):=\lim_{X\to\infty}\frac1X\#\Bigl\{n\le X:\frac{\varphi(n)}n\le u\Bigr\}
+\qquad(0\le u\le1)
+\]
+exists, is continuous and strictly increasing on $[0,1]$, and the associated measure $\mu=dG$ is purely singular with respect to Lebesgue measure.
+In particular,
+\[
+G'(x)=0\qquad\text{for Lebesgue-a.e. }x\in(0,1).
+\]
+
+\item \textbf{Round~3.} The value set
+\[
+\mathcal E:=\Bigl\{\frac{\varphi(n)}{n}:n\ge1\Bigr\}
+\]
+is countable and dense in $[0,1]$, and for every $t\in\mathcal E$ one has
+\[
+\lim_{h\to0^+}\frac{G(t)-G(t-h)}{h}=+\infty.
+\]
+Equivalently, every $t\in\mathcal E$ has infinite \emph{left} upper Dini derivative.
+
+\item \textbf{Round~6.} The symmetric flatness set
+\[
+A_{\rm sym}:=\Bigl\{x\in(0,1):\liminf_{h\to0^+}\frac{G(x+h)-G(x-h)}{2h}=0\Bigr\}
+\]
+is a dense $G_\delta$ subset of $(0,1)$ and has full Lebesgue measure.
+
+\item \textbf{Round~6.} The symmetric blow-up set
+\[
+B_{\rm sym}:=\Bigl\{x\in(0,1):\limsup_{h\to0^+}\frac{G(x+h)-G(x-h)}{2h}=+\infty\Bigr\}
+\]
+is a dense $G_\delta$ subset of $(0,1)$.
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-7)}
+
+The new tool is a systematic passage from the symmetric quotient to the four one-sided Dini derivatives.
+For $x\in(0,1)$ define
+\[
+\underline D_-G(x):=\liminf_{h\to0^+}\frac{G(x)-G(x-h)}{h},
+\qquad
+\overline D_-G(x):=\limsup_{h\to0^+}\frac{G(x)-G(x-h)}{h},
+\]
+\[
+\underline D_+G(x):=\liminf_{h\to0^+}\frac{G(x+h)-G(x)}{h},
+\qquad
+\overline D_+G(x):=\limsup_{h\to0^+}\frac{G(x+h)-G(x)}{h}.
+\]
+
+The genuinely new theorem of this round is:
+\begin{quote}
+\emph{There exists a dense $G_\delta$ set $\Omega\subset(0,1)\setminus\mathcal E$ such that for every $x\in\Omega$,}
+\[
+\underline D_-G(x)=\underline D_+G(x)=0,
+\qquad
+\overline D_-G(x)=\overline D_+G(x)=+\infty.
+\]
+\end{quote}
+
+This is strictly stronger than Round~6, which only gave the corresponding statement for the \emph{symmetric} quotient.
+
+\subsection{4) ATTACK PLAN (ROUND-7)}
+
+After Round~6, the exact gap was: generic symmetric oscillation does not force one-sided oscillation on \emph{each} side separately.
+To close that gap we prove four statements.
+
+\begin{enumerate}
+\item The sets
+\[
+A_-:=\{x:\underline D_-G(x)=0\},
+\qquad
+A_+:=\{x:\underline D_+G(x)=0\}
+\]
+are both dense $G_\delta$ subsets of $(0,1)$, and in fact have full Lebesgue measure.
+
+\item The sets
+\[
+B_-:=\{x:\overline D_-G(x)=+\infty\},
+\qquad
+B_+:=\{x:\overline D_+G(x)=+\infty\}
+\]
+are both dense $G_\delta$ subsets of $(0,1)$.
+
+\item Therefore
+\[
+\Omega_0:=A_-\cap A_+\cap B_-\cap B_+
+\]
+is a dense $G_\delta$ subset of $(0,1)$.
+
+\item Since $\mathcal E$ is countable, the refined set
+\[
+\Omega:=\Omega_0\setminus\mathcal E
+\]
+is still dense $G_\delta$.
+\end{enumerate}
+
+This overcomes the main Round~6 limitation: it shows that maximal oscillation occurs \emph{on both sides separately}, not merely after symmetrization.
+
+\subsection{5) WORK (ROUND-7)}
+
+\subsubsection*{5.1. One-sided quotients and a $G_\delta$ description}
+
+For $0<h<1$ define the one-sided secant quotients
+\[
+Q_h^-(x):=\frac{G(x)-G(x-h)}{h}\qquad(h<x<1),
+\]
+\[
+Q_h^+(x):=\frac{G(x+h)-G(x)}{h}\qquad(0<x<1-h).
+\]
+For fixed $h$, the functions $x\mapsto Q_h^-(x)$ and $x\mapsto Q_h^+(x)$ are continuous on their natural domains, since $G$ is continuous.
+For fixed $x$, the maps $h\mapsto Q_h^-(x)$ and $h\mapsto Q_h^+(x)$ are also continuous for $0<h<\min\{x,1-x\}$.
+
+For integers $N,m\ge1$ define
+\[
+V^-_{N,m}:=\bigcup_{q\in\mathbb Q\cap(0,1/m)}\Bigl\{x\in(q,1):Q_q^-(x)<1/N\Bigr\},
+\]
+\[
+V^+_{N,m}:=\bigcup_{q\in\mathbb Q\cap(0,1/m)}\Bigl\{x\in(0,1-q):Q_q^+(x)<1/N\Bigr\},
+\]
+\[
+U^-_{N,m}:=\bigcup_{q\in\mathbb Q\cap(0,1/m)}\Bigl\{x\in(q,1):Q_q^-(x)>N\Bigr\},
+\]
+\[
+U^+_{N,m}:=\bigcup_{q\in\mathbb Q\cap(0,1/m)}\Bigl\{x\in(0,1-q):Q_q^+(x)>N\Bigr\}.
+\]
+Each of these sets is open in $(0,1)$.
+
+\begin{lemma}\label{lem:Gdelta-onesided}
+With the notation above,
+\[
+A_-:=\{x\in(0,1):\underline D_-G(x)=0\}=\bigcap_{N=1}^\infty\bigcap_{m=1}^\infty V^-_{N,m},
+\]
+\[
+A_+:=\{x\in(0,1):\underline D_+G(x)=0\}=\bigcap_{N=1}^\infty\bigcap_{m=1}^\infty V^+_{N,m},
+\]
+\[
+B_-:=\{x\in(0,1):\overline D_-G(x)=+\infty\}=\bigcap_{N=1}^\infty\bigcap_{m=1}^\infty U^-_{N,m},
+\]
+\[
+B_+:=\{x\in(0,1):\overline D_+G(x)=+\infty\}=\bigcap_{N=1}^\infty\bigcap_{m=1}^\infty U^+_{N,m}.
+\]
+In particular, all four sets $A_-,A_+,B_-,B_+$ are $G_\delta$ subsets of $(0,1)$.
+\end{lemma}
+
+\begin{proof}
+We prove the identity for $A_-$; the other three are identical.
+
+Suppose first that $x\in A_-$. Then for every $N,m$ there exists $h\in(0,1/m)$ such that $Q_h^-(x)<1/N$.
+By continuity of $h\mapsto Q_h^-(x)$, this strict inequality persists for all $h'$ in a neighborhood of $h$.
+Choose a rational $q$ in that neighborhood with $0<q<1/m$. Then $Q_q^-(x)<1/N$, so $x\in V^-_{N,m}$.
+Since $N,m$ were arbitrary, $x\in\bigcap_{N,m}V^-_{N,m}$.
+
+Conversely, if $x\in\bigcap_{N,m}V^-_{N,m}$, then for every $N,m$ there exists a rational $q\in(0,1/m)$ with
+$Q_q^-(x)<1/N$. Hence for every $N$ and every neighborhood of $0$ there exists $h$ in that neighborhood such that
+$Q_h^-(x)<1/N$. This is exactly the statement that $\liminf_{h\to0^+}Q_h^-(x)=0$, i.e. $x\in A_-$.
+\end{proof}
+
+\subsubsection*{5.2. Residual and full-measure flatness on both sides}
+
+\begin{theorem}[One-sided lower Dini derivatives vanish generically]\label{thm:lowers-zero}
+The sets $A_-$ and $A_+$ are dense $G_\delta$ subsets of $(0,1)$.
+Moreover, both have full Lebesgue measure.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:Gdelta-onesided}, both sets are $G_\delta$.
+We next prove density.
+
+Let $x\in A_{\rm sym}$, where $A_{\rm sym}$ is the dense $G_\delta$ set from Round~6.
+Then there exists a sequence $h_n\to0^+$ such that
+\[
+\frac{G(x+h_n)-G(x-h_n)}{2h_n}\to0.
+\]
+But
+\[
+\frac{G(x+h_n)-G(x-h_n)}{2h_n}=\frac{Q_{h_n}^-(x)+Q_{h_n}^+(x)}{2},
+\]
+and both $Q_{h_n}^-(x)$ and $Q_{h_n}^+(x)$ are nonnegative because $G$ is increasing.
+Therefore
+\[
+Q_{h_n}^-(x)\to0,
+\qquad
+Q_{h_n}^+(x)\to0.
+\]
+So $x\in A_-\cap A_+$. Hence
+\[
+A_{\rm sym}\subseteq A_-\cap A_+.
+\]
+Since $A_{\rm sym}$ is dense, both $A_-$ and $A_+$ are dense.
+
+For the full-measure statement, Round~1 gives $G'(x)=0$ for Lebesgue-a.e. $x\in(0,1)$.
+At every such point, both one-sided difference quotients converge to the same derivative $0$.
+Hence $\underline D_-G(x)=\underline D_+G(x)=0$ for Lebesgue-a.e. $x$, so both $A_-$ and $A_+$ have full Lebesgue measure.
+\end{proof}
+
+\subsubsection*{5.3. Residual blow-up on both sides}
+
+\begin{theorem}[One-sided upper Dini derivatives blow up on a residual set]\label{thm:uppers-infty}
+The sets $B_-$ and $B_+$ are dense $G_\delta$ subsets of $(0,1)$.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:Gdelta-onesided}, both sets are $G_\delta$.
+
+We first prove that $B_-$ is dense.
+By Round~3, every $t\in\mathcal E$ satisfies
+\[
+\lim_{h\to0^+}\frac{G(t)-G(t-h)}{h}=+\infty,
+\]
+so $\mathcal E\subseteq B_-$. Since $\mathcal E$ is dense in $(0,1)$, the set $B_-$ is dense.
+
+We now prove that $B_+$ is dense.
+Fix a nonempty open interval $I=(a,b)\subset(0,1)$ and integers $N,m\ge1$.
+Set
+\[
+\delta:=\frac{b-a}{3}>0.
+\]
+Because $\mathcal E$ is dense, choose
+\[
+t\in\mathcal E\cap(a+\delta,b-\delta).
+\]
+Again using Round~3, the left derivative at $t$ is $+\infty$, so there exists
+\[
+0<h<\min\{1/m,\delta/2\}
+\]
+with
+\[
+Q_h^-(t)=\frac{G(t)-G(t-h)}{h}>N.
+\]
+By continuity of $q\mapsto Q_q^-(t)$, the inequality $Q_q^-(t)>N$ also holds for all $q$ in some neighborhood of $h$.
+Choose a rational
+\[
+q\in\mathbb Q\cap(0,1/m)
+\]
+in that neighborhood; in particular $q<\delta$. Set
+\[
+x:=t-q.
+\]
+Then
+\[
+a<t-\delta<x<t<b,
+\]
+so $x\in I$, and
+\[
+Q_q^+(x)=\frac{G(x+q)-G(x)}{q}=\frac{G(t)-G(t-q)}{q}=Q_q^-(t)>N.
+\]
+Hence $x\in I\cap U^+_{N,m}$.
+Since $I,N,m$ were arbitrary, every $U^+_{N,m}$ is dense; therefore
+\[
+B_+=\bigcap_{N,m}U^+_{N,m}
+\]
+is dense.
+\end{proof}
+
+\subsubsection*{5.4. Main Round-7 theorem: residual maximal one-sided oscillation}
+
+\begin{theorem}[Residual one-sided oscillation outside $\mathcal E$]\label{thm:main-round7}
+The set
+\[
+\Omega_0:=A_-\cap A_+\cap B_-\cap B_+
+\]
+is a dense $G_\delta$ subset of $(0,1)$.
+Consequently, the set
+\[
+\Omega:=\Omega_0\setminus\mathcal E
+\]
+is also a dense $G_\delta$ subset of $(0,1)$.
+For every $x\in\Omega$ one has
+\[
+\underline D_-G(x)=\underline D_+G(x)=0,
+\qquad
+\overline D_-G(x)=\overline D_+G(x)=+\infty.
+\]
+In particular, no one-sided derivative of $G$ exists finitely at any point of $\Omega$, and therefore $G$ is not differentiable at any point of $\Omega$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:lowers-zero}, the sets $A_-$ and $A_+$ are dense $G_\delta$.
+By Theorem~\ref{thm:uppers-infty}, the sets $B_-$ and $B_+$ are dense $G_\delta$.
+Therefore their intersection $\Omega_0$ is dense $G_\delta$.
+
+Since $\mathcal E$ is countable, its complement $(0,1)\setminus\mathcal E$ is also a dense $G_\delta$ subset of $(0,1)$.
+Thus
+\[
+\Omega=\Omega_0\cap\bigl((0,1)\setminus\mathcal E\bigr)
+\]
+is dense $G_\delta$ as well.
+The displayed identities for the four Dini derivatives are exactly the defining properties of $A_-,A_+,B_-,B_+$.
+If $G'(x)$ existed as a finite real number at some $x\in\Omega$, then all four one-sided Dini derivatives would equal that finite value, contradiction.
+\end{proof}
+
+\begin{corollary}[Sharper obstruction to a finite positive derivative]\label{cor:sharper-obstruction}
+Let
+\[
+D_+:=\{x\in(0,1): G'(x)\text{ exists and }0<G'(x)<\infty\}.
+\]
+Then
+\[
+D_+\subseteq (0,1)\setminus\Omega.
+\]
+In particular, $D_+$ is meager, disjoint from $\mathcal E$, contained in a Lebesgue-null set, and disjoint from a dense $G_\delta$ set on which all four one-sided Dini derivatives are maximally oscillatory.
+\end{corollary}
+
+\begin{proof}
+The inclusion $D_+\subseteq(0,1)\setminus\Omega$ follows immediately from Theorem~\ref{thm:main-round7}.
+The meagerness follows because $\Omega$ is dense $G_\delta$.
+Disjointness from $\mathcal E$ was already proved in Round~3.
+Finally, by Round~1 we have $G'(x)=0$ for Lebesgue-a.e. $x$, so $D_+$ is contained in a Lebesgue-null set.
+\end{proof}
+
+\subsubsection*{5.5. What proof strategies are ruled out?}
+
+Round~6 ruled out interval-wise regularity arguments based on the symmetric quotient.
+Theorem~\ref{thm:main-round7} is stronger: on a residual set outside $\mathcal E$, \emph{each side separately} exhibits arbitrarily small and arbitrarily large secant slopes.
+Thus any approach that first tries to obtain meaningful one-sided slope control on a nontrivial topological set cannot succeed.
+In particular, no strategy that seeks differentiability by proving either
+\[
+\frac{G(x)-G(x-h)}{h}\asymp 1
+\qquad\text{or}\qquad
+\frac{G(x+h)-G(x)}{h}\asymp 1
+\]
+on a dense or residual set can be viable.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Could symmetric flatness fail to imply one-sided flatness?}
+No. If
+\[
+\frac{Q_h^-(x)+Q_h^+(x)}{2}\to0
+\]
+along a sequence and both terms are nonnegative, then each term must itself tend to $0$ along that sequence.
+This is exactly why $A_{\rm sym}\subseteq A_-\cap A_+$.
+
+\item \textbf{Is the $G_\delta$ description correct?}
+Yes. The only subtle point is replacing an arbitrary scale $h$ by a rational scale $q$.
+For fixed $x$, the maps $h\mapsto Q_h^\pm(x)$ are continuous on their natural domains, so strict inequalities survive under small perturbations of $h$.
+
+\item \textbf{Does the proof of density of $B_+$ really use only established results?}
+Yes. The proof uses only Round~3's fact that every $t\in\mathcal E$ has infinite \emph{left} derivative, together with density of $\mathcal E$ and continuity in the step-size parameter.
+No new external theorem is invoked.
+
+\item \textbf{Could $\Omega$ accidentally intersect $\mathcal E$?}
+By construction it does not: we explicitly remove $\mathcal E$ at the final step.
+This is important, because points of $\mathcal E$ already have a different certified pathology from Round~3.
+
+\item \textbf{Endpoints.}
+All one-sided quotients are considered only for $x\in(0,1)$ and sufficiently small $h$, so there is no boundary ambiguity.
+\end{itemize}
+
+\subsection{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~7 gives a genuine strengthening of Round~6: the residual oscillation phenomenon is now shown to occur \emph{on each side separately}.
+There exists a dense $G_\delta$ set $\Omega\subset(0,1)\setminus\mathcal E$ such that for every $x\in\Omega$,
+\[
+\underline D_-G(x)=\underline D_+G(x)=0,
+\qquad
+\overline D_-G(x)=\overline D_+G(x)=+\infty.
+\]
+So, outside the special value set $\mathcal E$, there is still a residual set of points with maximal one-sided irregularity.
+
+This strictly narrows the landscape for any hypothetical point where $G'(x)$ exists and is a finite positive number:
+such a point must lie outside $\mathcal E$, outside a dense $G_\delta$ set of one-sided oscillation, and inside a Lebesgue-null exceptional set.
+The original Erd\H{o}s question remains open, but another entire class of one-sided regularity strategies has now been ruled out.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 89\%}
+
+\subsection{9) REFERENCES}
+
+\begin{enumerate}
+\item I. J. Schoenberg, \emph{On asymptotic distributions of arithmetical functions}, Trans. Amer. Math. Soc. \textbf{39} (1936), 315--330.
+\item P. Erd\H{o}s, \emph{On the distribution function of additive functions}, Ann. of Math. (2) \textbf{47} (1946), 1--20.
+\item G. Tenenbaum and V. Toulmonde, \emph{Sur le comportement local de la r\'epartition de l'indicatrice d'Euler}, Funct. Approx. Comment. Math. \textbf{35} (2006), 321--338.
+\item V. Toulmonde, \emph{Module de continuit\'e de la fonction de r\'epartition de $\varphi(n)/n$}, Acta Arith. \textbf{121} (2006), no.~4, 367--402.
+\end{enumerate}

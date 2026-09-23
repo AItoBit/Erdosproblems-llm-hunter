@@ -1,0 +1,427 @@
+\section{Erd\H{o}s--Hajnal reciprocal cycle-length sum (Problem 65) --- Round 7}
+
+\subsection*{1) ROUND-7 OBJECTIVE}
+
+\textbf{Path chosen: (A) proof-oriented gap closure.}
+Round~6 proved that on the line
+\[
+|E(G)|=2|V(G)|-4
+\]
+one has
+\[
+\min S(G)=\frac14
+\qquad\text{for all }7\le n\le 39,
+\]
+with minimiser $K_{2,n-2}$.
+The natural next gap was to continue this line beyond $n=39$.
+
+In this round I pursue two concrete goals:
+\begin{enumerate}
+\item extend the \emph{full all-graphs theorem} from $n\le 39$ to $n\le 42$;
+\item extend the \emph{bipartite minimiser theorem} much further, namely to $n\le 55$, and prove that within the bipartite class the minimiser is \emph{uniquely} $K_{2,n-2}$.
+\end{enumerate}
+
+This is the most promising direction because Round~6 already isolated the $a=2$ complete-bipartite line as the main tractable frontier, and exact extremal tables are available for the relevant forbidden-cycle families.
+
+\subsection*{2) Round-6 FOUNDATION USED}
+
+I use the following vetted Round~6 results as black boxes.
+
+\begin{itemize}
+\item[(F1)] For $2\le a\le b$, the complete bipartite graph $K_{a,b}$ has
+\[
+\mathcal C(K_{a,b})=\{4,6,\dots,2a\},
+\qquad
+S(K_{a,b})=\sum_{j=2}^{a}\frac1{2j}=\frac12(H_a-1).
+\]
+In particular,
+\[
+S(K_{2,n-2})=\frac14.
+\]
+
+\item[(F2)] For every $7\le n\le 39$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-7)}
+
+There are two genuinely new ingredients.
+
+\begin{itemize}
+\item[(N1)] \textbf{A bipartite/non-bipartite split.}
+For $n\ge 40$, one can treat bipartite graphs using the exact \emph{bipartite} extremal tables
+\[
+\operatorname{ex}_{\rm bip}(n;\{C_4,C_6\}),\qquad
+\operatorname{ex}_{\rm bip}(n;\{C_4,C_8\}),
+\]
+which are much smaller than $2n-4$ in the range $40\le n\le 55$.
+This forces both a $6$-cycle and an $8$-cycle in every bipartite graph with $2n-4$ edges and no $4$-cycle.
+
+\item[(N2)] \textbf{Exact equality-case closure at $n=42$.}
+The first all-graphs obstruction appears at
+\[
+\operatorname{ex}(42;\{C_3,C_4,C_6\})=80=2\cdot 42-4.
+\]
+Here the published extremal file contains \emph{exactly ten} graphs.
+I performed an exact finite verification on those ten labeled graphs and checked that each contains both a $5$-cycle and a $7$-cycle.
+This closes the equality case and yields the full theorem for $n=42$.
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-7)}
+
+The precise Round~6 gap was:
+\[
+n=40,41,42,\dots
+\]
+on the line $m=2n-4$.
+
+The plan is:
+\begin{enumerate}
+\item settle $n=40,41$ by combining the exact all-graphs table for $\{C_3,C_4,C_6\}$ with the exact bipartite tables for $\{C_4,C_6\}$ and $\{C_4,C_8\}$;
+\item settle $n=42$ by isolating the exact equality case
+\[
+\operatorname{ex}(42;\{C_3,C_4,C_6\})=80
+\]
+and checking all ten extremal graphs explicitly;
+\item use the exact bipartite tables together with the published uniqueness statement for extremal bipartite graphs with no $6$- or $8$-cycle to extend the \emph{bipartite} minimiser theorem to $n\le 55$ and prove uniqueness of $K_{2,n-2}$.
+\end{enumerate}
+
+This overcomes the main Round~6 obstacle: the old all-graphs forcing inequality for $C_6$ stops being strict at $n=42$, but the exact extremal family at equality is small enough to be checked exhaustively.
+
+\subsection*{5) WORK (ROUND-7)}
+
+As before, for a graph $G$ let
+\[
+\mathcal C(G):=\{\ell\ge 3 : \text{$G$ contains a cycle of length $\ell$}\},
+\qquad
+S(G):=\sum_{\ell\in\mathcal C(G)}\frac1\ell.
+\]
+
+For a forbidden family $\mathcal F$, write $\operatorname{ex}(n;\mathcal F)$ for the usual Tur\'an number and
+$\operatorname{ex}_{\rm bip}(n;\mathcal F)$ for the maximum number of edges in a \emph{bipartite} $n$-vertex graph avoiding $\mathcal F$.
+
+\subsubsection*{5.1. The cases $n=40,41$}
+
+\begin{proposition}[The line $m=2n-4$ at $n=40,41$]\label{prop:40-41}
+Let $G$ be a graph with $|V(G)|=n$ and $|E(G)|=2n-4$, where $n\in\{40,41\}$.
+Then
+\[
+S(G)\ge \frac14.
+\]
+Moreover, equality is attained by $K_{2,n-2}$.
+\end{proposition}
+
+\begin{proof}
+By (F1), $S(K_{2,n-2})=1/4$, so it suffices to prove the lower bound.
+
+If $G$ contains a triangle, then $S(G)\ge 1/3>1/4$.
+If $G$ contains a $4$-cycle, then $S(G)\ge 1/4$.
+Hence we may assume that $G$ contains neither $C_3$ nor $C_4$.
+
+We split into two cases.
+
+\medskip
+\noindent\textbf{Case 1: $G$ is non-bipartite.}
+Then $G$ contains an odd cycle, and since $C_3$ is excluded, some odd cycle has length at least $5$.
+The exact table for $\{C_3,C_4,C_6\}$ gives
+\[
+\operatorname{ex}(40;\{C_3,C_4,C_6\})=75,\qquad
+\operatorname{ex}(41;\{C_3,C_4,C_6\})=77.
+\]
+Since $|E(G)|=76$ or $78$, respectively, this forces a $6$-cycle.
+Therefore
+\[
+S(G)\ge \frac15+\frac16=\frac{11}{30}>\frac14.
+\]
+
+\medskip
+\noindent\textbf{Case 2: $G$ is bipartite.}
+Because $C_4$ is excluded, the exact bipartite tables give
+\[
+\operatorname{ex}_{\rm bip}(40;\{C_4,C_6\})=63,\quad
+\operatorname{ex}_{\rm bip}(41;\{C_4,C_6\})=64,
+\]
+and
+\[
+\operatorname{ex}_{\rm bip}(40;\{C_4,C_8\})=60,\quad
+\operatorname{ex}_{\rm bip}(41;\{C_4,C_8\})=61.
+\]
+Since $|E(G)|=76$ or $78$, $G$ must contain both a $6$-cycle and an $8$-cycle.
+Hence
+\[
+S(G)\ge \frac16+\frac18=\frac7{24}>\frac14.
+\]
+
+Thus in every case $S(G)\ge 1/4$, with equality achieved by $K_{2,n-2}$.
+\end{proof}
+
+\subsubsection*{5.2. Exact equality-case closure at $n=42$}
+
+Let
+\[
+\mathcal F:=\{C_3,C_4,C_6\}.
+\]
+
+\begin{lemma}[Exact finite check for the $(42,80)$ extremal family]\label{lem:42-exact-check}
+The exact family of $42$-vertex, $80$-edge $\mathcal F$-free graphs consists of exactly ten labeled graphs.
+Each of these ten graphs contains both a $5$-cycle and a $7$-cycle.
+
+More concretely, in the published sparse6 file
+\[
+\texttt{c346\_n42e80.s6}
+\]
+the ten graphs $H_1,\dots,H_{10}$ all contain the $5$-cycle
+\[
+0-1-3-4-2-0,
+\]
+and they contain the following $7$-cycles:
+\[
+\begin{array}{ll}
+H_1,\dots,H_5:& 0-1-3-18-21-39-13-0,\\
+H_6:& 0-1-3-18-21-35-13-0,\\
+H_7,H_8,H_9:& 0-1-3-10-12-9-5-0,\\
+H_{10}:& 0-1-3-18-21-29-13-0.
+\end{array}
+\]
+\end{lemma}
+
+\begin{proof}
+The exact table for $\mathcal F=\{C_3,C_4,C_6\}$ gives
+\[
+\operatorname{ex}(42;\mathcal F)=80
+\]
+and records exactly ten extremal graphs.
+By the exactness convention of the table, the linked sparse6 file lists \emph{all} extremal graphs on $42$ vertices with $80$ edges and no $C_3,C_4,C_6$.
+
+I decoded the sparse6 file and performed an exact depth-first search for simple cycles of lengths $5$ and $7$ in each of the ten graphs.
+The listed vertex sequences are actual cycles found by that exhaustive search, so each graph contains both a $5$-cycle and a $7$-cycle.
+\end{proof}
+
+\begin{theorem}[The case $(n,m)=(42,80)$]\label{thm:42}
+Every graph $G$ with $42$ vertices and $80$ edges satisfies
+\[
+S(G)\ge \frac14.
+\]
+Moreover, equality is attained by $K_{2,40}$.
+\end{theorem}
+
+\begin{proof}
+Again $S(K_{2,40})=1/4$ by (F1), so it remains to prove the lower bound.
+
+If $G$ contains a triangle, then $S(G)\ge 1/3>1/4$.
+If $G$ contains a $4$-cycle, then $S(G)\ge 1/4$.
+Hence assume that $G$ contains neither $C_3$ nor $C_4$.
+
+We split into two cases.
+
+\medskip
+\noindent\textbf{Case 1: $G$ is bipartite.}
+Since $C_4$ is excluded, the exact bipartite tables give
+\[
+\operatorname{ex}_{\rm bip}(42;\{C_4,C_6\})=66,\qquad
+\operatorname{ex}_{\rm bip}(42;\{C_4,C_8\})=63.
+\]
+Because $|E(G)|=80$, this forces both a $6$-cycle and an $8$-cycle.
+Therefore
+\[
+S(G)\ge \frac16+\frac18=\frac7{24}>\frac14.
+\]
+
+\medskip
+\noindent\textbf{Case 2: $G$ is non-bipartite.}
+Then $G$ contains an odd cycle; because $C_3$ is excluded, some odd cycle has length at least $5$.
+
+If $G$ contains a $6$-cycle, then
+\[
+S(G)\ge \frac15+\frac16=\frac{11}{30}>\frac14,
+\]
+and we are done.
+
+So suppose that $G$ contains no $6$-cycle.
+Then $G$ is $\mathcal F$-free with $42$ vertices and $80$ edges.
+By the exact equality
+\[
+\operatorname{ex}(42;\mathcal F)=80,
+\]
+$G$ must be one of the ten extremal graphs from Lemma~\ref{lem:42-exact-check}.
+Hence $G$ contains both a $5$-cycle and a $7$-cycle, so
+\[
+S(G)\ge \frac15+\frac17=\frac{12}{35}>\frac14.
+\]
+
+Thus every $42$-vertex, $80$-edge graph satisfies $S(G)\ge 1/4$, with equality achieved by $K_{2,40}$.
+\end{proof}
+
+\subsubsection*{5.3. Main all-graphs extension}
+
+\begin{theorem}[The $K_{2,n-2}$ line through $n=42$]\label{thm:all-through-42}
+For every integer $7\le n\le 42$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14.
+\]
+The minimum is attained by the complete bipartite graph $K_{2,n-2}$.
+\end{theorem}
+
+\begin{proof}
+For $7\le n\le 39$ this is exactly Round~6 result (F2).
+For $n=40,41$ it is Proposition~\ref{prop:40-41}.
+For $n=42$ it is Theorem~\ref{thm:42}.
+\end{proof}
+
+\subsubsection*{5.4. The bipartite problem through $n=55$}
+
+\begin{proposition}[Bipartite minimiser theorem through $n=55$]\label{prop:bip-55}
+Let $G$ be a bipartite graph with $|V(G)|=n$ and $|E(G)|=2n-4$, where $7\le n\le 55$.
+Then
+\[
+S(G)\ge \frac14.
+\]
+Moreover, within the bipartite class equality holds \emph{if and only if}
+\[
+G\cong K_{2,n-2}.
+\]
+\end{proposition}
+
+\begin{proof}
+For $7\le n\le 42$, the lower bound already follows from Theorem~\ref{thm:all-through-42}.
+So it remains only to consider $43\le n\le 55$.
+
+Fix such a bipartite graph $G$.
+
+If $G$ contains a $4$-cycle, then $S(G)\ge 1/4$ immediately.
+So suppose $G$ has no $4$-cycle.
+
+For $40\le n\le 55$, the exact bipartite tables give
+\[
+\bigl(\operatorname{ex}_{\rm bip}(n;\{C_4,C_6\})\bigr)_{n=40}^{55}
+=
+(63,64,66,68,70,72,75,77,80,81,83,85,87,90,92,94),
+\]
+and
+\[
+\bigl(\operatorname{ex}_{\rm bip}(n;\{C_4,C_8\})\bigr)_{n=40}^{55}
+=
+(60,61,63,64,66,68,69,71,73,74,76,78,80,82,84,86).
+\]
+Meanwhile
+\[
+(2n-4)_{n=40}^{55}=(76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106).
+\]
+Hence for every $40\le n\le 55$ one has
+\[
+2n-4>\operatorname{ex}_{\rm bip}(n;\{C_4,C_6\}),
+\qquad
+2n-4>\operatorname{ex}_{\rm bip}(n;\{C_4,C_8\}).
+\]
+Since $G$ is bipartite and has no $C_4$, it must therefore contain both a $6$-cycle and an $8$-cycle.
+Consequently
+\[
+S(G)\ge \frac16+\frac18=\frac7{24}>\frac14.
+\]
+
+This proves the lower bound.
+
+Now assume $S(G)=1/4$.
+Because $G$ is bipartite, all cycle lengths are even, so any cycle length other than $4$ is at least $6$ and would contribute at least $1/6$.
+Therefore $S(G)=1/4$ implies
+\[
+\mathcal C(G)=\{4\}.
+\]
+In particular, $G$ has no $6$-cycle and no $8$-cycle.
+
+The exact bipartite extremal statement checked in Round~7 says that for $n\le 55$ the \emph{unique} extremal bipartite graph with no cycle of length $6$ or $8$ is $K_{2,n-2}$.
+Since $G$ has exactly $2n-4$ edges, it is extremal in that family, so
+\[
+G\cong K_{2,n-2}.
+\]
+Conversely, $K_{2,n-2}$ has cycle-length set $\{4\}$, hence $S(K_{2,n-2})=1/4$ by (F1).
+\end{proof}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I checked the new work for the main possible failure modes.
+
+\begin{itemize}
+\item \textbf{Round dependence.}
+I used Round~6 only as a black box for the already proved range $7\le n\le 39$ and for the formula $S(K_{2,n-2})=1/4$.
+
+\item \textbf{Exactness of the external data.}
+All uses of table values are in places where the ANU page marks the edge number as exact (no preceding ``$\ge$'').
+For the $n=42$ equality case, the page also gives the full extremal file of ten graphs, which is exactly what Lemma~\ref{lem:42-exact-check} uses.
+
+\item \textbf{The $n=42$ finite verification is exhaustive, not heuristic.}
+The proof does \emph{not} sample graphs.
+It checks every graph in the exact published sparse6 file and explicitly exhibits a $5$-cycle and a $7$-cycle in each one.
+
+\item \textbf{Case coverage.}
+In Proposition~\ref{prop:40-41} and Theorem~\ref{thm:42}, the trichotomy
+\[
+C_3\text{ present},\qquad C_4\text{ present},\qquad \text{no }C_3,C_4
+\]
+is exhaustive.
+Within the last case, the bipartite/non-bipartite split is exhaustive.
+
+\item \textbf{Uniqueness in the bipartite class.}
+The implication
+\[
+S(G)=\frac14\Longrightarrow \mathcal C(G)=\{4\}
+\]
+is correct for bipartite graphs, since all cycle lengths are even and any additional cycle length would be at least $6$, increasing the reciprocal sum strictly above $1/4$.
+\end{itemize}
+
+No contradiction with any Round~6 statement was found.
+The new results strictly extend the solved all-graphs range from $n\le 39$ to $n\le 42$, and the solved bipartite range from the previously checked values to $n\le 55$.
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~7 adds two rigorous theorems beyond Round~6:
+
+\begin{enumerate}
+\item For every $7\le n\le 42$,
+\[
+\min\{S(G): |V(G)|=n,\ |E(G)|=2n-4\}=\frac14,
+\]
+attained by $K_{2,n-2}$.
+
+\item For every bipartite graph $G$ with $7\le |V(G)|\le 55$ and $|E(G)|=2|V(G)|-4$,
+\[
+S(G)\ge \frac14,
+\]
+and equality holds in the bipartite class \emph{if and only if}
+\[
+G\cong K_{2,n-2}.
+\]
+\end{enumerate}
+
+Thus the first unresolved value on the full all-graphs line $m=2n-4$ is now $n=43$, while the first unresolved value on the bipartite line by the present method is $n=56$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 96\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{thebibliography}{9}
+
+\bibitem{AfzalyMcKayData}
+N.~Afzaly and B.~D.~McKay,
+\emph{Extremal Graphs and Turan numbers},
+Australian National University combinatorial data page.
+Used here for the exact tables for
+$\operatorname{ex}(n;\{C_3,C_4,C_6\})$,
+$\operatorname{ex}_{\rm bip}(n;\{C_4,C_6\})$,
+$\operatorname{ex}_{\rm bip}(n;\{C_4,C_8\})$,
+and for the exactness convention of the tabulated extremal data.
+
+\bibitem{McKayFile42}
+B.~D.~McKay,
+\emph{Sparse6 file \texttt{c346\_n42e80.s6}},
+listed on the ANU extremal-graph data page.
+Used here for the exact finite verification of the ten extremal $42$-vertex graphs avoiding $C_3,C_4,C_6$.
+
+\end{thebibliography}

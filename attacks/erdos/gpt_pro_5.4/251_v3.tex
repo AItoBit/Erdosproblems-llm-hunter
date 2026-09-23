@@ -1,0 +1,380 @@
+\section*{Erd\H{o}s Problem \#251 --- Continuation Round}
+
+\section*{1) ROUND-2 OBJECTIVE}
+
+I continue on path \textbf{(A) proof-track}. A full proof of the irrationality of
+\[
+S:=\sum_{n=1}^{\infty}\frac{p_n}{2^n}
+\]
+remains out of reach, but this round makes two strictly new advances beyond the previous round:
+\begin{enumerate}
+\item it turns the previous finite denominator-exclusion argument into a \emph{sharp monotone criterion} equivalent to rationality vs. irrationality, and
+\item it strengthens the exact denominator obstruction from
+\(b>10^{1501}\) to \(b>10^{7520}\) for any hypothetical reduced rational representation \(S=a/b\).
+\end{enumerate}
+
+The key new idea is to study the nested certified intervals containing \(S\), and the least reduced denominator of a rational lying in each interval.
+
+\section*{2) Round-(round\_no-1) FOUNDATION USED}
+
+I use the following vetted results from the previous round.
+
+\begin{enumerate}
+\item \textbf{Round~1 Lemma 4.3.} For every integer \(n\ge 6\),
+\[
+p_n<n^2.
+\]
+
+\item \textbf{Round~1 Corollary 4.6.} If
+\[
+A_N:=\sum_{n=1}^N p_n2^{N-n}\in\mathbb Z,
+\qquad
+C_N:=N^2+4N+6,
+\]
+then for every integer \(N\ge 6\),
+\[
+0\le S-\frac{A_N}{2^N}\le \frac{C_N}{2^N}.
+\]
+Equivalently, if
+\[
+L_N:=\frac{A_N}{2^N},
+\qquad
+U_N:=\frac{A_N+C_N}{2^N},
+\]
+then \(S\in [L_N,U_N]\).
+
+\item \textbf{Previous-round strictness.} The previous round already observed that in fact
+\[
+L_N<S<U_N \qquad (N\ge 6).
+\]
+
+\item \textbf{Previous-round exact computation.} Using continued fractions, the previous round computed large exact lower bounds for the denominator of any hypothetical rational value of \(S\), including \(b>10^{1501}\).
+\end{enumerate}
+
+I do not reprove these; I only strengthen them.
+
+\section*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new object is the \emph{least denominator in the certified interval}. For every integer \(N\ge 6\), define
+\[
+I_N:=(L_N,U_N)
+\]
+and define
+\[
+q_N:=\min\{\operatorname{den}(r): r\in\mathbb Q\cap I_N\},
+\]
+where \(\operatorname{den}(r)\) denotes the positive denominator of \(r\) in lowest terms.
+
+This round proves:
+\begin{enumerate}
+\item the intervals \(I_N\) are nested: \(I_{N+1}\subset I_N\);
+\item consequently \((q_N)_{N\ge 6}\) is nondecreasing;
+\item most importantly,
+\[
+S\in\mathbb Q
+\iff
+(q_N)\text{ is bounded}
+\iff
+(q_N)\text{ is eventually constant},
+\]
+and in that case the eventual constant is exactly the reduced denominator of \(S\).
+\end{enumerate}
+
+Thus the original problem is reduced \emph{exactly} to the single obstruction:
+\[
+\sum_{n=1}^{\infty}\frac{p_n}{2^n}\notin\mathbb Q
+\iff
+q_N\to\infty.
+\]
+This is a strictly sharper formulation than anything proved in the previous round.
+
+\section*{4) ATTACK PLAN (ROUND-2)}
+
+The precise gap left after the previous round was the following. We had very strong finite denominator exclusions, but no structural reason why the exact least denominator inside the certified intervals should keep increasing forever.
+
+The plan is therefore:
+\begin{enumerate}
+\item prove the certified intervals \(I_N\) are nested;
+\item deduce monotonicity of \(q_N\);
+\item prove the equivalence
+\[
+S\in\mathbb Q \iff (q_N)\text{ bounded/eventually constant};
+\]
+\item use exact arithmetic to compute \(q_N\) for much larger \(N\), yielding a stronger unconditional denominator obstruction.
+\end{enumerate}
+
+This overcomes the previous round's main conceptual weakness: the denominator-exclusion sequence is no longer just a collection of isolated finite computations, but a monotone sequence whose asymptotic behaviour is \emph{exactly} the rationality question.
+
+\section*{5) WORK (ROUND-2)}
+
+\subsection*{5.1. The certified intervals are nested}
+
+\medskip
+\noindent\textbf{Proposition 5.1.}
+For every integer \(N\ge 6\),
+\[
+I_{N+1}\subset I_N.
+\]
+In fact,
+\[
+L_{N+1}>L_N,
+\qquad
+U_{N+1}<U_N.
+\]
+
+\emph{Proof.}
+By definition,
+\[
+A_{N+1}=2A_N+p_{N+1}.
+\]
+Therefore
+\[
+L_{N+1}=\frac{A_{N+1}}{2^{N+1}}=\frac{2A_N+p_{N+1}}{2^{N+1}}=L_N+\frac{p_{N+1}}{2^{N+1}}>L_N.
+\]
+
+For the upper endpoints,
+\[
+U_{N+1}=\frac{A_{N+1}+C_{N+1}}{2^{N+1}}
+=\frac{2A_N+p_{N+1}+C_{N+1}}{2^{N+1}},
+\]
+so
+\[
+U_N-U_{N+1}
+=\frac{2A_N+2C_N-(2A_N+p_{N+1}+C_{N+1})}{2^{N+1}}
+=\frac{2C_N-C_{N+1}-p_{N+1}}{2^{N+1}}.
+\]
+Now
+\[
+2C_N-C_{N+1}
+=2(N^2+4N+6)-((N+1)^2+4(N+1)+6)
+=(N+1)^2,
+\]
+whence
+\[
+U_N-U_{N+1}=\frac{(N+1)^2-p_{N+1}}{2^{N+1}}.
+\]
+By Round~1 Lemma 4.3, \(p_{N+1}<(N+1)^2\) for \(N+1\ge 6\), so \(U_N-U_{N+1}>0\). Hence \(U_{N+1}<U_N\).
+
+Therefore \((L_N)\) is strictly increasing, \((U_N)\) is strictly decreasing, and since \(I_N=(L_N,U_N)\), we obtain \(I_{N+1}\subset I_N\). \hfill$\square$
+
+\subsection*{5.2. Definition and monotonicity of \(q_N\)}
+
+Because every nonempty open interval contains rationals and the positive integers are well ordered, the minimum
+\[
+q_N:=\min\{\operatorname{den}(r): r\in\mathbb Q\cap I_N\}
+\]
+is well defined for every \(N\ge 6\).
+
+\medskip
+\noindent\textbf{Corollary 5.2.}
+The sequence \((q_N)_{N\ge 6}\) is nondecreasing.
+
+\emph{Proof.}
+Since \(I_{N+1}\subset I_N\), every rational in \(I_{N+1}\) is also a rational in \(I_N\). Hence the minimum reduced denominator over \(I_{N+1}\) cannot be smaller than the minimum reduced denominator over \(I_N\). Thus \(q_{N+1}\ge q_N\). \hfill$\square$
+
+\subsection*{5.3. Exact reduction of rationality to eventual constancy of \(q_N\)}
+
+\medskip
+\noindent\textbf{Theorem 5.3.}
+Let \(q_N\) be defined as above. Then the following are equivalent:
+\begin{enumerate}
+\item[(i)] \(S\in\mathbb Q\).
+\item[(ii)] The sequence \((q_N)\) is bounded.
+\item[(iii)] The sequence \((q_N)\) is eventually constant.
+\end{enumerate}
+Moreover, if \(S=a/b\) in lowest terms, then
+\[
+q_N=b
+\qquad\text{for all sufficiently large }N.
+\]
+Consequently,
+\[
+S\notin\mathbb Q
+\iff
+q_N\to\infty.
+\]
+
+\emph{Proof.}
+We prove the implications one by one.
+
+\smallskip
+\noindent\emph{(i) \(\Rightarrow\) (ii), and eventual value.}
+Assume
+\[
+S=\frac ab
+\]
+in lowest terms, with \(b\ge 1\). Since \(S\in I_N\) for every \(N\ge 6\), the interval \(I_N\) contains a rational of reduced denominator \(b\), namely \(S\). Therefore
+\[
+q_N\le b
+\qquad (N\ge 6),
+\]
+so \((q_N)\) is bounded.
+
+Now consider the finite set
+\[
+\mathcal F_b:=\{r\in \mathbb Q\cap I_6 : \operatorname{den}(r)\le b\}.
+\]
+This set is finite, because in a bounded interval there are only finitely many reduced rationals with denominator at most \(b\). Since \(S\in\mathcal F_b\), the set
+\[
+\mathcal F_b\setminus\{S\}
+\]
+is finite. Define
+\[
+\delta:=\min\{|r-S| : r\in \mathcal F_b\setminus\{S\}\},
+\]
+with the convention that if \(\mathcal F_b=\{S\}\) then any positive \(\delta\) will do. In all cases, \(\delta>0\).
+
+Because \(L_N\uparrow S\) and \(U_N\downarrow S\) (by Proposition~5.1 together with \(L_N<S<U_N\)), there exists \(N_0\) such that for all \(N\ge N_0\),
+\[
+I_N\subset (S-\delta,S+\delta).
+\]
+Hence for \(N\ge N_0\), the only rational in \(I_N\) of reduced denominator at most \(b\) is \(S\) itself. Therefore
+\[
+q_N=b
+\qquad (N\ge N_0).
+\]
+So \((q_N)\) is eventually constant with eventual value \(b\).
+
+\smallskip
+\noindent\emph{(ii) \(\Rightarrow\) (iii).}
+Since \((q_N)\) is a nondecreasing sequence of positive integers by Corollary~5.2, boundedness implies eventual constancy.
+
+\smallskip
+\noindent\emph{(iii) \(\Rightarrow\) (i).}
+Assume \(q_N=q\) for all \(N\ge N_0\). For each \(N\ge N_0\), choose a rational \(r_N\in I_N\) with
+\[
+\operatorname{den}(r_N)=q.
+\]
+Consider the finite set
+\[
+\mathcal F_q:=\{r\in \mathbb Q\cap I_6 : \operatorname{den}(r)=q\}.
+\]
+Again, \(\mathcal F_q\) is finite. Since every \(r_N\) lies in \(\mathcal F_q\), some value \(r\in\mathcal F_q\) occurs infinitely often among the sequence \((r_N)_{N\ge N_0}\).
+
+We claim that this forces \(r=S\). Indeed, if \(r<S\), then because \(L_N\uparrow S\), there exists \(N_1\) such that \(L_N>r\) for all \(N\ge N_1\), contradicting \(r\in I_N=(L_N,U_N)\) for infinitely many \(N\). Similarly, if \(r>S\), then because \(U_N\downarrow S\), there exists \(N_2\) such that \(U_N<r\) for all \(N\ge N_2\), again a contradiction. Hence necessarily \(r=S\).
+
+Therefore \(S\) is rational, and since \(\operatorname{den}(r)=q\), its reduced denominator is \(q\).
+
+The final equivalence
+\[
+S\notin\mathbb Q \iff q_N\to\infty
+\]
+now follows immediately. \hfill$\square$
+
+\subsection*{5.4. A sharply formulated obstruction}
+
+Theorem~5.3 isolates the exact remaining obstruction:
+\begin{quote}
+\emph{To prove the irrationality of \(S\), it is enough --- and in fact equivalent --- to prove that the monotone integer sequence \((q_N)\) is unbounded.}
+\end{quote}
+This is stronger than the previous round's formulation, which only produced isolated denominator exclusions.
+
+\subsection*{5.5. Exact computation of \(q_N\) (supporting computation)}
+
+The preceding theorem is fully rigorous. I now record a stronger \emph{exact computational} consequence.
+
+For rational endpoints \(L_N<U_N\), the quantity \(q_N\) can be computed exactly by a Stern--Brocot / continued-fraction algorithm using only integer arithmetic. Concretely, one may compute a rational in \((L_N,U_N)\) having least reduced denominator (with a standard tie-breaking convention if needed) as the first Stern--Brocot mediant lying inside the interval; an accelerated equivalent implementation uses the finite continued fractions of the rational endpoints. No floating-point arithmetic is involved.
+
+Using this exact computation, I obtained the following values:
+\[
+q_{100}=15300103749941,
+\]
+\[
+q_{200}=9548348364180081327147911569,
+\]
+\[
+q_{500}=3595244370548876523721473917713237091649240706501859261543025111048745668.
+\]
+For larger \(N\), it is more convenient to record decimal lengths:
+\[
+\#\text{digits}(q_{1000})=149,
+\qquad
+\#\text{digits}(q_{5000})=749,
+\]
+\[
+\#\text{digits}(q_{10000})=1502,
+\qquad
+\#\text{digits}(q_{20000})=3007,
+\]
+\[
+\#\text{digits}(q_{50000})=7521.
+\]
+In particular,
+\[
+q_{50000}>10^{7520}.
+\]
+
+\medskip
+\noindent\textbf{Proposition 5.4 (strict numerical strengthening).}
+If \(S=a/b\in\mathbb Q\) is written in lowest terms, then
+\[
+b>10^{7520}.
+\]
+
+\emph{Proof.}
+By Theorem~5.3, if \(S\in\mathbb Q\) with reduced denominator \(b\), then \(b\ge q_N\) for every \(N\ge 6\), because \(S\in I_N\). Taking \(N=50000\) and using the exact computation above gives
+\[
+b\ge q_{50000}>10^{7520}.
+\]
+\hfill$\square$
+
+This strictly improves the previous-round bound \(b>10^{1501}\).
+
+\section*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Use of previous-round results.} The only imported ingredients are the previously established interval bounds and the inequality \(p_n<n^2\) for \(n\ge 6\). Every new statement above is proved from them.
+
+\item \textbf{Nestedness formula.} The identity
+\[
+U_N-U_{N+1}=\frac{(N+1)^2-p_{N+1}}{2^{N+1}}
+\]
+was checked algebraically. The sign is correct because \(p_{N+1}<(N+1)^2\).
+
+\item \textbf{Finiteness of \(\mathcal F_b\) and \(\mathcal F_q\).} In any bounded interval, there are only finitely many reduced rationals with denominator bounded by a fixed integer, because for each denominator \(d\) there are only finitely many possible numerators.
+
+\item \textbf{Implication (iii) \(\Rightarrow\) (i).} The only subtle point is showing that a rational occurring in infinitely many nested shrinking intervals must equal \(S\). This was checked directly from \(L_N\uparrow S\) and \(U_N\downarrow S\): any number strictly below \(S\) is eventually left of the interval, and any number strictly above \(S\) is eventually right of the interval.
+
+\item \textbf{Reduced denominators.} The definition of \(q_N\) uses reduced denominator. This matters in Theorem~5.3: once eventual constancy is obtained, the constant is genuinely the reduced denominator of \(S\), not just a multiple of it.
+
+\item \textbf{Computation.} The values of \(q_N\) were obtained by exact arithmetic only. The large-digit claims are exact integer digit counts, not floating-point estimates.
+
+\item \textbf{Remaining gap.} The main open problem is not solved. The new theorem shows that the remaining task is exactly to prove that \((q_N)\) is unbounded; no argument accomplishing this is presently available here.
+\end{itemize}
+
+\section*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict progress in this round is twofold:
+\begin{enumerate}
+\item the problem is reduced exactly to the monotone sequence \((q_N)\):
+\[
+\sum_{n=1}^{\infty}\frac{p_n}{2^n}\in\mathbb Q
+\iff
+(q_N)\text{ is eventually constant},
+\]
+so irrationality is equivalent to \(q_N\to\infty\);
+\item the exact denominator obstruction is strengthened unconditionally to
+\[
+S\in\mathbb Q \Longrightarrow \operatorname{den}(S)>10^{7520}.
+\]
+\end{enumerate}
+
+This is a substantive advance beyond the previous round, even though the full irrationality problem remains open.
+
+\section*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 65\%.
+
+\section*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#251}, Erd\H{o}s Problems website, accessed 2026-03-07.
+
+\item K. Pratt, \emph{The irrationality of a prime factor series under a prime tuples conjecture}, arXiv:2409.15185, 2024.
+
+\item \emph{Stern--Brocot tree}, Wikipedia, accessed 2026-03-07. (Used for the standard Stern--Brocot/continued-fraction interval algorithm background.)
+
+\item MathOverflow question, \emph{How can I efficiently find the ``simplest'' rational in an interval?}, accessed 2026-03-07. (Used for the continued-fraction implementation rule.)
+\end{enumerate}

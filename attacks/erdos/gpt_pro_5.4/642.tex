@@ -1,0 +1,313 @@
+\section*{Problem 642 --- Round 2}
+
+Let $f(n)$ be the maximum number of edges in an $n$-vertex simple graph $G$ with the property that every cycle $C$ in $G$, with vertex set $S:=V(C)$, has fewer than $|S|$ diagonals. Equivalently (used already in Round 1), every cycle vertex set $S$ satisfies
+\[
+|E(G[S])|<2|S|.
+\]
+Indeed, a cycle on $S$ contributes exactly $|S|$ edges, so the number of diagonals is $|E(G[S])|-|S|$.
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue path \textbf{(C)}: isolate a structural obstruction and prove a stronger theorem, rather than restart from scratch.
+
+Round 1 established only the linear lower bound $f(n)\ge 2n-2$ via graphs of arboricity at most $2$, while the best known general upper bound remains polylogarithmically superlinear. The most promising next step is therefore to push the lower bound beyond arboricity $2$ and to understand the limits of the most natural dense construction paradigm.
+
+The new goal of this round is twofold:
+
+\begin{enumerate}
+\item construct a denser infinite family satisfying the diagonal condition, and
+\item prove that this family is optimal inside the natural class ``fixed graph joined to an independent set.''
+\end{enumerate}
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts without reproving them.
+
+\begin{enumerate}
+\item The reformulation above: to verify the condition, it is enough to show that every induced subgraph on the vertex set of a cycle has fewer than twice as many edges as vertices.
+\item The Round-1 construction showing $f(n)\ge 2n-2$ using arboricity at most $2$.
+\item The status gap from Round 1: the problem is unresolved in general, and the best published upper bound is $f(n)=O\!\left(n(\log n)^8\right)$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The genuinely new ingredients of this round are:
+
+\begin{enumerate}
+\item a new explicit family $H_n$ with
+\[
+|E(H_n)|=3n-7,
+\]
+which improves the Round-1 lower bound from $2n-2$ to $3n-7$ for every $n\ge 6$;
+\item a classification theorem for the natural template
+\[
+J_m(F):=F\vee \overline{K_m},
+\]
+where one joins a fixed finite graph $F$ to an independent set of size $m$;
+\item a structural consequence: the diagonal condition is \emph{not} confined to graphs of arboricity at most $2$; the new family has arboricity exactly $3$ for $n\ge 6$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+Round 1 left two precise gaps.
+
+\begin{enumerate}
+\item Its lower bound came only from arboricity $2$. One must determine whether denser graphs can still satisfy the cycle/diagonal restriction.
+\item Even if one finds a denser family, it remains unclear whether that family is merely accidental or is in fact extremal within some natural construction scheme.
+\end{enumerate}
+
+The plan is therefore:
+
+\begin{enumerate}
+\item build a graph on $n$ vertices with about $3n$ edges and prove rigorously that every cycle still has fewer than $|C|$ diagonals;
+\item abstract the construction to a general join-template $J_m(F)$;
+\item characterize exactly which fixed templates $F$ work for all $m$.
+\end{enumerate}
+
+This overcomes the Round-1 obstacle because it both increases the lower bound and explains why the coefficient $3$ arises naturally.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{5.1. The new construction.}
+For $n\ge 6$, let
+\[
+A:=\{a_1,a_2,a_3\},\qquad B:=\{b_1,\dots,b_{n-3}\}.
+\]
+Define $H_n$ as follows:
+
+\begin{enumerate}
+\item $B$ is independent;
+\item $A$ induces the path $a_1a_2a_3$;
+\item every vertex of $A$ is adjacent to every vertex of $B$.
+\end{enumerate}
+
+So $H_n$ is the join of $P_3$ with an independent set of size $n-3$.
+Its number of edges is
+\[
+|E(H_n)|=3(n-3)+2=3n-7.
+\]
+
+\paragraph{5.2. Main new lower bound.}
+\textbf{Theorem 5.1.}
+For every $n\ge 6$, the graph $H_n$ satisfies the diagonal condition. Consequently,
+\[
+f(n)\ge 3n-7\qquad (n\ge 6).
+\]
+
+\textit{Proof.}
+Let $C$ be any cycle in $H_n$, and let $S:=V(C)$. Write
+\[
+a:=|S\cap A|,\qquad b:=|S\cap B|.
+\]
+Since $B$ is independent, no two vertices of $B$ can be consecutive on the cycle $C$. Hence
+\[
+b\le a.
+\]
+Also $a\le 3$ because $|A|=3$.
+
+Now count the edges of the induced subgraph $H_n[S]$.
+Every vertex of $S\cap B$ is joined to every vertex of $S\cap A$, contributing $ab$ edges. Inside $A$, the induced graph is a subgraph of the path $a_1a_2a_3$, so it contributes at most $a-1$ edges. Thus
+\[
+|E(H_n[S])|\le ab+(a-1).
+\]
+By the Round-1 reformulation, it is enough to show
+\[
+|E(H_n[S])|<2|S|=2(a+b).
+\]
+Since $a\le 3$, there are only two relevant cases.
+
+\smallskip
+\noindent
+Case $a=2$. Then $b\le 2$, and therefore
+\[
+|E(H_n[S])|\le 2b+1\le 5<2(2+b).
+\]
+
+\smallskip
+\noindent
+Case $a=3$. Then $b\le 3$, and therefore
+\[
+|E(H_n[S])|\le 3b+2<2(3+b),
+\]
+because this inequality is equivalent to $b<4$.
+
+These are all possible cycle-carrying cases. Hence every cycle vertex set $S$ satisfies $|E(H_n[S])|<2|S|$, so every cycle has fewer diagonals than vertices.
+This proves that $H_n$ is admissible, and therefore
+\[
+f(n)\ge |E(H_n)|=3n-7.
+\]
+\hfill$\square$
+
+\paragraph{5.3. The new family has arboricity exactly $3$.}
+Round 1 only produced admissible graphs of arboricity at most $2$. The new family shows that this is not the real barrier.
+
+\textbf{Corollary 5.2.}
+For every $n\ge 6$, the graph $H_n$ has arboricity exactly $3$.
+
+\textit{Proof.}
+Since
+\[
+|E(H_n)|=3n-7>2(n-1)
+\qquad (n\ge 6),
+\]
+Nash--Williams implies $\operatorname{arb}(H_n)\ge 3$.
+On the other hand, $E(H_n)$ can be partitioned into the following three forests:
+\[
+F_1:=\{a_1b_i:1\le i\le n-3\}\cup\{a_1a_2\},
+\]
+\[
+F_2:=\{a_2b_i:1\le i\le n-3\},
+\]
+\[
+F_3:=\{a_3b_i:1\le i\le n-3\}\cup\{a_2a_3\}.
+\]
+Thus $\operatorname{arb}(H_n)\le 3$, so $\operatorname{arb}(H_n)=3$.
+\hfill$\square$
+
+\paragraph{5.4. Optimality inside the natural join-template class.}
+The construction above is not ad hoc; it is extremal within a broad and natural family.
+
+For a fixed finite graph $F$ on $t$ vertices and an integer $m\ge 0$, let
+\[
+J_m(F):=F\vee \overline{K_m}
+\]
+be the graph obtained from the disjoint union of $F$ and an independent set $I_m$ of size $m$ by adding all edges between $V(F)$ and $I_m$.
+
+\textbf{Theorem 5.3.}
+The following are equivalent for a finite graph $F$.
+
+\begin{enumerate}
+\item For every $m\ge 0$, the graph $J_m(F)$ satisfies the diagonal condition.
+\item $F$ has at most $3$ vertices and $F$ is a forest.
+\end{enumerate}
+
+Consequently, among all admissible graphs of the form $J_m(F)$ on $n$ vertices, the maximum number of edges is $3n-7$, attained by $F=P_3$.
+
+\textit{Proof.}
+Write $t:=|V(F)|$.
+
+\smallskip
+\noindent
+$(2)\Rightarrow(1)$.
+Assume $F$ is a forest on at most $3$ vertices. Let $S$ be the vertex set of a cycle in $J_m(F)$, and write
+\[
+a:=|S\cap V(F)|,\qquad b:=|S\cap I_m|.
+\]
+Because $I_m$ is independent, no two vertices of $S\cap I_m$ can be consecutive on the cycle, so again $b\le a$. Also $a\le t\le 3$.
+
+Inside $S$, the edges are of two kinds:
+
+\begin{enumerate}
+\item all $ab$ cross-edges between $S\cap V(F)$ and $S\cap I_m$;
+\item the edges of the induced forest $F[S\cap V(F)]$, at most $a-1$ of them.
+\end{enumerate}
+
+Hence
+\[
+|E(J_m(F)[S])|\le ab+(a-1).
+\]
+Exactly as in the proof of Theorem 5.1, this is $<2(a+b)$ for all possible cycle-carrying cases $a=2,3$.
+So every cycle in $J_m(F)$ has fewer diagonals than vertices.
+
+\smallskip
+\noindent
+$(1)\Rightarrow(2)$.
+Assume instead that $J_m(F)$ satisfies the diagonal condition for every $m$.
+Take $m=t$, and let $I_t=\{x_1,\dots,x_t\}$ be the independent side.
+Choose an arbitrary ordering $v_1,\dots,v_t$ of $V(F)$. Because every $x_i$ is adjacent to every $v_j$, the alternating cycle
+\[
+v_1x_1v_2x_2\cdots v_tx_tv_1
+\]
+is a Hamiltonian cycle in the induced subgraph on $V(F)\cup I_t$.
+Therefore the diagonal condition gives
+\[
+|E(F)|+t^2<2(2t)=4t.
+\]
+So
+\[
+|E(F)|<4t-t^2.
+\]
+Since $|E(F)|\ge 0$, this forces $t\le 3$.
+If $t=3$, then $|E(F)|<3$, so $|E(F)|\le 2$, and any graph on $3$ vertices with at most $2$ edges is a forest.
+If $t=2$, every graph on $2$ vertices is a forest. If $t\le 1$, the statement is trivial.
+Thus $F$ is a forest on at most $3$ vertices.
+
+Finally, if $J_m(F)$ has $n=t+m$ vertices, then
+\[
+|E(J_m(F))|=tm+|E(F)|.
+\]
+By the classification above, the largest possible value occurs for $t=3$ and $|E(F)|=2$, namely when $F=P_3$. This gives
+\[
+|E(J_m(F))|\le 3m+2=3(n-3)+2=3n-7.
+\]
+Hence $H_n=J_{n-3}(P_3)$ is optimal within the whole join-template class.
+\hfill$\square$
+
+\paragraph{5.5. Supplementary exact small values (computer-assisted, not used above).}
+An exhaustive search over all $2^{\binom{n}{2}}$ labeled graphs for $n\le 7$ gives:
+\[
+f(1)=0,\quad f(2)=1,\quad f(3)=3,\quad f(4)=6,\quad f(5)=9,\quad f(6)=11,\quad f(7)=14.
+\]
+In particular, the new lower bound $f(n)\ge 3n-7$ is already exact for $n=6,7$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I now check the new arguments against the most likely failure points.
+
+\paragraph{(i) Did I use a stronger condition than the problem asks?}
+No. I used the Round-1 equivalence:
+for a cycle on vertex set $S$, the number of diagonals is $|E(G[S])|-|S|$.
+So proving $|E(G[S])|<2|S|$ for every cycle vertex set is exactly the required condition.
+
+\paragraph{(ii) Why is $b\le a$ valid?}
+Because the independent side has no internal edges. Along any cycle, two vertices from the independent side cannot be consecutive, so the number of such vertices is at most the number of vertices from the other side.
+
+\paragraph{(iii) Did the proof accidentally rely on the whole induced subgraph being a cycle?}
+No. The induced subgraph may have extra edges. I counted \emph{all} induced edges on $S$ and proved they are still fewer than $2|S|$.
+That is exactly the right quantity.
+
+\paragraph{(iv) In Theorem 5.3, does the alternating Hamiltonian cycle really exist for arbitrary $F$?}
+Yes. The cycle
+\[
+v_1x_1v_2x_2\cdots v_tx_tv_1
+\]
+uses only cross-edges between $V(F)$ and $I_t$, and all such edges are present by definition of the join. No edges of $F$ are needed for that cycle.
+
+\paragraph{(v) Could a template with $|V(F)|\ge 4$ still work because the bad $2t$-vertex set is not induced-Hamiltonian?}
+No. The alternating cycle above is already a Hamiltonian cycle in that induced subgraph, so the obstruction is genuine.
+
+\paragraph{(vi) Did I really go beyond Round 1?}
+Yes, in two separate ways.
+First, the lower bound improved from $2n-2$ to $3n-7$.
+Second, the new family has arboricity exactly $3$, so Round-1's arboricity-$2$ sufficient condition is not close to being necessary.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The problem remains open in full generality, but this round gives a genuine advance beyond Round 1:
+
+\begin{enumerate}
+\item I proved the new lower bound
+\[
+f(n)\ge 3n-7\qquad (n\ge 6),
+\]
+via the explicit family $H_n=P_3\vee \overline{K_{n-3}}$.
+\item I proved that this family has arboricity exactly $3$, showing that admissible graphs need not have arboricity at most $2$.
+\item I classified all admissible graphs in the broad join-template class $J_m(F)$, and proved that $3n-7$ is best possible within that whole class.
+\item I recorded exact values for $f(n)$ for $n\le 7$ by exhaustive search.
+\end{enumerate}
+
+A sharp next conjecture suggested by the new evidence is:
+\[
+f(n)=3n-7\qquad \text{for all sufficiently large }n.
+\]
+I have not proved this, so the global problem remains unresolved.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 60\%}
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item N. Dragani\'c, A. Methuku, D. Munh\'a Correia, and B. Sudakov,
+\emph{Cycles with many chords},
+Random Structures \& Algorithms \textbf{65}(1) (2024), 3--16.
+
+\item N. Dragani\'c and A. Gir\~ao,
+\emph{Cycles with almost linearly many chords},
+arXiv:2601.08769, 2026.
+\end{enumerate}

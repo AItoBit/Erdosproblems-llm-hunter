@@ -1,0 +1,358 @@
+\section{Erd\H{o}s Problem \#50 --- Round 3}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+A preliminary correction is necessary: Round~2 carried the wrong problem number. The totient-minimal-preimage question under discussion is Erd\H{o}s Problem~\#50, not \#51; the mathematical content of Round~2 is unchanged, but the numbering is corrected here.
+Round~2 left one precise gap: it controlled the size of $n_a/a$ but did \emph{not} control when a candidate $n$ is actually the \emph{minimal} preimage of $a=\varphi(n)$. The most promising Round~3 direction is therefore to attack \emph{minimality} directly.
+
+The new goal is to prove a rigorous obstruction theorem showing that a large class of natural constructions can never yield minimal inverse totients. Concretely, if some subproduct of the prime-power totient blocks of $n$ is one less than a suitable prime, then those blocks can be compressed to a smaller integer with the same totient, so $n$ was not minimal.
+
+\subsection*{2) ROUND-2 FOUNDATION USED}
+We use the following previously established items.
+\begin{itemize}
+\item (R2--Foundation~1, imported from Round~1) If
+\[
+ n=\prod_{i=1}^r p_i^{\alpha_i},
+\]
+then
+\[
+ \varphi(n)=\prod_{i=1}^r p_i^{\alpha_i-1}(p_i-1).
+\]
+In particular,
+\[
+ \frac{n}{\varphi(n)}=\prod_{p\mid n}\frac{p}{p-1}.
+\]
+\item (R2--Foundation~2) The main unresolved issue after Round~2 was the \emph{minimality gap}: even if $n/\varphi(n)$ is large, Round~2 did not provide a mechanism to exclude the possibility that some smaller $m<n$ has $\varphi(m)=\varphi(n)$.
+\item (R2--Computation) Up to $n_a\le 10^8$, the record ratio came from
+\[
+ n_a=3\cdot 5\cdot 17\cdot 47\cdot 347,
+\qquad
+ a=\varphi(n_a)=2037248,
+\qquad
+ \frac{n_a}{a}\approx 2.0413788601.
+\]
+This will be used only as an illustration of the new obstruction.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+The new ingredient is a \textbf{local prime-compression principle}.
+
+Write a candidate preimage in prime-power blocks
+\[
+ n=\prod_{i=1}^r p_i^{\alpha_i},
+ \qquad
+ t_i:=\varphi\!\bigl(p_i^{\alpha_i}\bigr)=p_i^{\alpha_i-1}(p_i-1).
+\]
+Then $\varphi(n)=\prod_i t_i$. If, for some subset of blocks, the product of the corresponding $t_i$'s is of the form $q-1$ with $q$ prime and with $q$ not already forced into the complementary part, then those blocks can be replaced by the single prime $q$.
+
+This produces a smaller integer with the same totient. Hence \emph{minimal} inverse totients must avoid an entire family of such ``Euclid compressions.''
+
+The strongest clean consequence is an \textbf{anti-Euclid condition at the largest prime block}: every subset containing the largest prime-power block gives a product $\prod t_i$ whose successor is composite, except for the tautological singleton corresponding to a largest prime to the first power.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+The exact Round~2 gap was: \emph{how can one certify that a high-ratio solution is not minimal?}
+
+The Round~3 plan is:
+\begin{enumerate}
+\item prove a general compression lemma for prime-power block decompositions;
+\item derive from it a clean corollary for every subset containing the largest prime-power block;
+\item formulate the resulting obstruction as a necessary condition for any future construction toward Erd\H{o}s~\#50;
+\item verify that the Round~2 record-holder satisfies the obstruction.
+\end{enumerate}
+
+This overcomes the earlier obstacle because it gives a \emph{direct contradiction to minimality}, not merely a bound on $n/\varphi(n)$.
+
+\subsection*{5) WORK (ROUND-3)}
+
+\subsubsection*{5.1. General compression lemma}
+\begin{proposition}[Local prime compression]
+Let
+\[
+ n=\prod_{i=1}^r p_i^{\alpha_i}
+\]
+with distinct primes $p_i$ and exponents $\alpha_i\ge 1$, and define
+\[
+ t_i:=\varphi\!\bigl(p_i^{\alpha_i}\bigr)=p_i^{\alpha_i-1}(p_i-1).
+\]
+Fix a nonempty subset $I\subseteq\{1,\dots,r\}$ and put
+\[
+ T_I:=\prod_{i\in I} t_i,
+ \qquad
+ M_I:=\prod_{i\in I} p_i^{\alpha_i}.
+\]
+Assume that
+\begin{enumerate}
+\item $q:=T_I+1$ is prime,
+\item $q\nmid \prod_{j\notin I} p_j^{\alpha_j}$,
+\item either $|I|\ge 2$, or $I=\{i\}$ with $\alpha_i\ge 2$.
+\end{enumerate}
+Then $n$ is \emph{not} the smallest positive integer $m$ satisfying $\varphi(m)=\varphi(n)$.
+\end{proposition}
+
+\begin{proof}
+Define
+\[
+ n':=q\prod_{j\notin I} p_j^{\alpha_j}.
+\]
+By assumption (2), $q$ is coprime to $\prod_{j\notin I} p_j^{\alpha_j}$, so the multiplicativity of $\varphi$ gives
+\[
+ \varphi(n')=\varphi(q)\prod_{j\notin I} \varphi\!\bigl(p_j^{\alpha_j}\bigr)
+ =(q-1)\prod_{j\notin I} t_j
+ =T_I\prod_{j\notin I} t_j
+ =\prod_{i=1}^r t_i
+ =\varphi(n).
+\]
+So $n'$ is another preimage of the same totient value.
+
+It remains to show that $n'<n$, equivalently $q<M_I$.
+
+\smallskip
+\noindent\emph{Case 1: $I=\{i\}$ and $\alpha_i\ge 2$.}
+Then
+\[
+ q=t_i+1=p_i^{\alpha_i-1}(p_i-1)+1
+ =p_i^{\alpha_i}-p_i^{\alpha_i-1}+1
+ <p_i^{\alpha_i}=M_I.
+\]
+Thus $n'<n$.
+
+\smallskip
+\noindent\emph{Case 2: $|I|\ge 2$.}
+For each $i\in I$,
+\[
+ t_i=\varphi\!\bigl(p_i^{\alpha_i}\bigr)\le p_i^{\alpha_i}-1,
+\]
+with equality only when $\alpha_i=1$. Hence
+\[
+ T_I\le \prod_{i\in I}\bigl(p_i^{\alpha_i}-1\bigr).
+\]
+Therefore
+\[
+ q=T_I+1\le \prod_{i\in I}\bigl(p_i^{\alpha_i}-1\bigr)+1.
+\]
+Since $|I|\ge 2$ and every $p_i^{\alpha_i}\ge 2$, we have the elementary strict inequality
+\[
+ \prod_{i\in I}(x_i-1)+1<\prod_{i\in I}x_i
+ \qquad (x_i\ge 2,\ |I|\ge 2),
+\]
+obtained by expanding the right-hand side and observing that the omitted positive terms make the difference strictly positive.
+Applying this with $x_i=p_i^{\alpha_i}$ yields
+\[
+ q<\prod_{i\in I} p_i^{\alpha_i}=M_I.
+\]
+So again $n'<n$.
+
+Thus in all cases $n'$ is a smaller integer with the same totient as $n$, so $n$ cannot be minimal.
+\end{proof}
+
+\subsubsection*{5.2. Clean corollary for subsets containing the largest prime block}
+The previous proposition has a technical coprimality hypothesis $q\nmid \prod_{j\notin I}p_j^{\alpha_j}$. The next corollary removes that issue by forcing $I$ to contain the largest prime-power block.
+
+\begin{theorem}[Largest-block anti-Euclid obstruction]
+Let
+\[
+ n_a=\prod_{i=1}^r p_i^{\alpha_i}
+\qquad (p_1<\cdots <p_r)
+\]
+be the minimal preimage of a totient value $a$, and put
+\[
+ t_i:=p_i^{\alpha_i-1}(p_i-1).
+\]
+Let $I\subseteq\{1,\dots,r\}$ be any subset with $r\in I$.
+If $I\neq \{r\}$ or $\alpha_r\ge 2$, then
+\[
+ 1+\prod_{i\in I} t_i
+\]
+is composite.
+Equivalently: the only subset containing the largest prime-power block whose $t$-product can have prime successor is the tautological singleton $I=\{r\}$ when $\alpha_r=1$, where the successor is just $p_r$ itself.
+\end{theorem}
+
+\begin{proof}
+Suppose, toward a contradiction, that for some such subset $I$ the number
+\[
+ q:=1+\prod_{i\in I}t_i
+\]
+is prime.
+We verify the hypotheses of the local compression proposition.
+
+First, $q$ does not divide the complementary factor $\prod_{j\notin I}p_j^{\alpha_j}$. Indeed, all prime divisors in the complement are among $p_1,\dots,p_{r-1}$, hence are $<p_r$. On the other hand,
+\[
+ q=1+\prod_{i\in I} t_i \ge 1+t_r.
+\]
+If $\alpha_r\ge 2$, then
+\[
+ 1+t_r=1+p_r^{\alpha_r-1}(p_r-1)>p_r.
+\]
+If $\alpha_r=1$, then $t_r=p_r-1$, so $q\ge p_r$, with equality only if every additional factor in the product equals $1$; this still causes no problem because $p_r\notin\{p_j:j\notin I\}$ when $r\in I$.
+Thus in every case $q$ is not a prime factor of the complement.
+
+Second, the hypothesis ``either $|I|\ge 2$ or the relevant exponent is at least $2$'' is exactly the present assumption that $I\neq \{r\}$ or $\alpha_r\ge 2$.
+
+Therefore Proposition~5.1 applies and shows that $n_a$ is not minimal, a contradiction.
+Hence $q$ must be composite.
+\end{proof}
+
+\subsubsection*{5.3. Immediate consequences}
+\begin{corollary}[Largest prime power cannot compress]
+If $p_r^{\alpha_r}\parallel n_a$ with $\alpha_r\ge 2$, then
+\[
+ \varphi\!\bigl(p_r^{\alpha_r}\bigr)+1
+ =p_r^{\alpha_r-1}(p_r-1)+1
+\]
+is composite.
+\end{corollary}
+
+\begin{proof}
+Take $I=\{r\}$ in Theorem~5.2.
+\end{proof}
+
+\begin{corollary}[Largest prime with one additional block]
+Assume $n_a$ is squarefree and write
+\[
+ n_a=p_1\cdots p_r
+\qquad (p_1<\cdots <p_r).
+\]
+Then for every $j<r$,
+\[
+ (p_j-1)(p_r-1)+1
+\]
+is composite.
+More generally, for every nonempty subset $J\subseteq\{1,\dots,r-1\}$,
+\[
+ 1+(p_r-1)\prod_{j\in J}(p_j-1)
+\]
+is composite.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~5.2 with $I=J\cup\{r\}$ and note that $t_i=p_i-1$ in the squarefree case.
+\end{proof}
+
+\begin{corollary}[Fixed-base obstruction]
+Fix an odd integer
+\[
+ m=\prod_{j=1}^s r_j^{\beta_j}
+\]
+with distinct prime bases $r_j$, and let
+\[
+ u_J:=\prod_{j\in J}\varphi\!\bigl(r_j^{\beta_j}\bigr)
+\qquad (\emptyset\neq J\subseteq\{1,\dots,s\}).
+\]
+Let $q$ be a prime exceeding every prime divisor of $m$.
+If $n=mq$ is the minimal preimage of $\varphi(n)$, then for every nonempty $J$,
+\[
+ u_J(q-1)+1
+\]
+is composite.
+\end{corollary}
+
+\begin{proof}
+Write the prime-power blocks of $m$ together with the final block $q$.
+Since the $q$-block is the largest prime block and appears to the first power, apply Theorem~5.2 to subsets consisting of that block together with the blocks indexed by $J$.
+The corresponding product of $t$-values is exactly $u_J(q-1)$.
+\end{proof}
+
+\subsubsection*{5.4. How this sharpens the Round-2 record-holder}
+Round~2 found the record-holder up to $10^8$:
+\[
+ n_a=3\cdot 5\cdot 17\cdot 47\cdot 347,
+\qquad
+ a=\varphi(n_a)=2037248.
+\]
+Here the largest prime block is $347$, and the smaller $t$-values are
+\[
+ 2,\ 4,\ 16,\ 46.
+\]
+Thus Theorem~5.2 forces the compositeness of
+\[
+ 1+346u
+\]
+for every nonempty subset-product
+\[
+ u\in\{2,4,8,16,32,46,64,92,128,184,368,736,1472,2944,5888\}.
+\]
+A direct factorization check gives, for example,
+\[
+ 693=3^2\cdot 7\cdot 11,
+\qquad
+ 15917=11\cdot 1447,
+\qquad
+ 2037249=3^2\cdot 41\cdot 5521,
+\]
+and similarly for the remaining $12$ values.
+
+So the Round~2 record-holder already exhibits the new Round~3 obstruction in a strong form: all $15$ nontrivial largest-block Euclid successors are composite.
+
+\subsubsection*{5.5. The corrected obstruction problem}
+Theorem~5.2 isolates a precise barrier that any future proof of Erd\H{o}s~\#50 must overcome.
+
+\begin{quote}
+\emph{Corrected obstruction statement.}
+Any infinite family of minimal inverse totients
+\[
+ n_\nu=\prod_{i=1}^{r_\nu} p_{\nu,i}^{\alpha_{\nu,i}}
+\]
+can witness $n_{a_\nu}/a_\nu\to\infty$ only if, for every $\nu$ and every subset containing the largest prime-power block, the successor
+\[
+ 1+\prod_{i\in I} \varphi\!\bigl(p_{\nu,i}^{\alpha_{\nu,i}}\bigr)
+\]
+is composite, except for the tautological singleton largest-prime block.
+\end{quote}
+
+This is a genuine obstruction: it rules out any construction strategy in which these Euclid-type successors are allowed to be prime infinitely often.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Why the unrestricted statement is false.}
+A too-optimistic claim would say that for \emph{every} nontrivial subset $I$, the successor $1+\prod_{i\in I}t_i$ must be composite. This is false because the new prime can coincide with a prime already present in the complementary part.
+For example,
+\[
+ n=3\cdot 7\cdot 13
+\]
+has
+\[
+ (3-1)(7-1)+1=13,
+\]
+which is prime, yet this does not by itself yield a coprime replacement because $13$ already occurs outside the chosen subset. This is exactly why Proposition~5.1 includes the coprimality hypothesis, and why Theorem~5.2 is stated only for subsets containing the largest prime block.
+
+\item \textbf{Boundary case $I=\{r\}$ with $\alpha_r=1$.}
+Then
+\[
+ 1+t_r=1+(p_r-1)=p_r
+\]
+is prime, but replacing the largest prime block by itself changes nothing. This tautological case is explicitly excluded from Theorem~5.2.
+
+\item \textbf{Strict inequality $q<M_I$.}
+This was checked separately in the proof of Proposition~5.1.
+For singleton subsets this requires $\alpha_i\ge 2$; otherwise $q=p_i$ and no decrease occurs.
+For subsets of size at least $2$, the inequality
+\[
+ \prod (x_i-1)+1<\prod x_i
+\]
+for $x_i\ge 2$ is strict and leaves no hidden equality case.
+
+\item \textbf{Interaction with Round~2 computation.}
+The theorem does not assert that the Round~2 record-holder is minimal; that was already known computationally from Round~2. What Round~3 adds is a structural explanation of why certain obvious compressions are impossible: all $15$ relevant largest-block Euclid successors are indeed composite.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~3 resolves the main logical weakness left after Round~2 by proving a new \emph{minimality obstruction}:
+\begin{itemize}
+\item the general local prime-compression lemma (Proposition~5.1), and
+\item the largest-block anti-Euclid obstruction (Theorem~5.2).
+\end{itemize}
+These results rule out an entire class of natural construction strategies. In particular, any attempt to prove Erd\H{o}s~\#50 by exhibiting explicit high-ratio families must now solve a sharply formulated compositeness problem for all Euclid-type successors attached to the largest prime-power block.
+
+This is strictly stronger than Round~2: it does not merely bound or search for $n_a/a$, but gives a concrete criterion showing when a candidate preimage cannot be minimal.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 48\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#50}, \texttt{https://www.erdosproblems.com/50}, accessed 2026-03-07.
+\item J. B. Rosser and L. Schoenfeld, ``Approximate formulas for some functions of prime numbers'', \emph{Illinois J. Math.} \textbf{6} (1962), Theorem~15.
+\item E. W. Weisstein, ``Totient Function'', MathWorld.
+\end{itemize}

@@ -1,0 +1,149 @@
+\section*{Problem 233 --- Round 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C): obstruction/correction}.  The conjectured bound
+\[
+\sum_{n\le N} d_n^2 \ll N(\log N)^2
+\]
+remains open.  Round~1 had only the lower bound and a trivial upper bound through the maximal gap.  In this round I do two strictly new things:
+\begin{itemize}
+\item I prove the exact equivalence between the $N$-formulation and the standard $x$-formulation
+\[
+\sum_{p_n\le x} d_n^2 \ll x\log x;
+\]
+\item I import the current unconditional mean-square theorem of Stadlmann and translate it carefully into an explicit bound in the original $N$-variable.
+\end{itemize}
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the Round~1 notation $d_n=p_{n+1}-p_n$ and the Round~1 lower bound
+\[
+\sum_{n\le N} d_n^2\ge \frac{(p_{N+1}-2)^2}{N}\gg N(\log N)^2,
+\]
+which I do not reprove here.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredients are:
+\begin{itemize}
+\item the exact identity
+\[
+M(x):=\sum_{p_n\le x} d_n^2 = \sum_{n\le \pi(x)} d_n^2;
+\]
+\item Stadlmann's theorem that
+\[
+\frac{1}{\pi(x)}\sum_{p_n\le x} d_n^2 = O_{\varepsilon}(x^{23/100+\varepsilon})
+\qquad (\varepsilon>0),
+\]
+which implies
+\[
+M(x)\ll_{\varepsilon} \frac{x^{123/100+\varepsilon}}{\log x}.
+\]
+\end{itemize}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round~1 gap was the absence of any nontrivial upper bound in the original variable $N$.  So I first prove that the conjecture is equivalent to the $x$-formulation.  Then I plug the current best unconditional $x$-bound into this equivalence to obtain a genuine unconditional theorem about
+\[
+S(N):=\sum_{n\le N} d_n^2.
+\]
+
+\subsection*{5) WORK (ROUND-2)}
+Define
+\[
+M(x):=\sum_{p_n\le x} d_n^2.
+\]
+If $\pi(x)=N$, then the condition $p_n\le x$ is equivalent to $n\le N$, so
+\[
+M(x)=\sum_{n\le N} d_n^2.
+\]
+In particular,
+\[
+M(p_N)=\sum_{n\le N} d_n^2 = S(N).
+\]
+This makes the two formulations equivalent.
+
+\medskip
+\noindent\textbf{Equivalence lemma.}
+The following are equivalent:
+\begin{itemize}
+\item[(i)] $S(N)\ll N(\log N)^2$;
+\item[(ii)] $M(x)\ll x\log x$.
+\end{itemize}
+
+\noindent\emph{Proof.}
+Assume (i).  Let $N=\pi(x)$.  Then $M(x)=S(N)\ll N(\log N)^2$.  By the prime number theorem,
+\[
+N\asymp \frac{x}{\log x}
+\qquad\mbox{and}\qquad
+\log N\asymp \log x,
+\]
+so $M(x)\ll x\log x$.  Thus (ii) follows.
+
+Conversely, assume (ii).  Then
+\[
+S(N)=M(p_N)\ll p_N\log p_N.
+\]
+Again by the prime number theorem, $p_N\asymp N\log N$, hence
+\[
+S(N)\ll N(\log N)^2.
+\]
+So (i) follows.  This proves the equivalence.
+
+\medskip
+Now apply Stadlmann's theorem:
+\[
+\frac{M(x)}{\pi(x)}=O_{\varepsilon}(x^{23/100+\varepsilon}).
+\]
+Multiplying by $\pi(x)$ and using $\pi(x)\ll x/\log x$, we get
+\[
+M(x)\ll_{\varepsilon} \frac{x^{123/100+\varepsilon}}{\log x}.
+\]
+Set $x=p_N$.  Then
+\[
+S(N)=M(p_N)\ll_{\varepsilon} \frac{p_N^{123/100+\varepsilon}}{\log p_N}.
+\]
+Using $p_N\ll N\log N$ and $\log p_N\asymp \log N$, we conclude that
+\[
+S(N)\ll_{\varepsilon} N^{123/100+\varepsilon}(\log N)^{23/100+\varepsilon}.
+\]
+Therefore Round~2 proves the following corrected theorem.
+
+\medskip
+\noindent\textbf{Corrected theorem proved in Round~2.}
+For every $\varepsilon>0$,
+\[
+\sum_{n\le N} d_n^2 \ll_{\varepsilon} N^{123/100+\varepsilon}(\log N)^{23/100+\varepsilon}.
+\]
+Combining this with the Round~1 lower bound gives the rigorous sandwich
+\[
+N(\log N)^2 \ll \sum_{n\le N} d_n^2 \ll_{\varepsilon} N^{123/100+\varepsilon}(\log N)^{23/100+\varepsilon}.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Any indexing error in $M(p_N)$?} No.  Since $p_n\le p_N$ iff $n\le N$, we have exactly
+\[
+M(p_N)=\sum_{n\le N} d_n^2.
+\]
+\item \emph{Did the argument use only valid asymptotic input?} Yes: only the prime number theorem bounds $\pi(x)\asymp x/\log x$ and $p_N\asymp N\log N$.
+\item \emph{Could the Stadlmann theorem have used a different normalization?} The cited source states explicitly that the average considered is
+\[
+\frac{1}{\pi(x)}\sum_{p_n\le x}(p_{n+1}-p_n)^2,
+\]
+which is exactly the normalization used here.
+\item \emph{Does this settle the conjecture?} No.  The exponent of $N$ is still $1.23+\varepsilon$ rather than $1$, so the main barrier remains substantial.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}  The conjectured bound $\sum_{n\le N} d_n^2\ll N(\log N)^2$ is still open, but Round~2 replaces the Round~1 trivial upper bound by the current best unconditional type of estimate in the original variable:
+\[
+\sum_{n\le N} d_n^2 \ll_{\varepsilon} N^{123/100+\varepsilon}(\log N)^{23/100+\varepsilon}.
+\]
+It also proves the exact equivalence between the $N$-formulation and the standard $x$-formulation.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 35\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item J. Stadlmann, \emph{On the mean square gap between primes}, arXiv:2212.10867.
+\item J. Stadlmann, \emph{Topics in sieve theory}, D.Phil. thesis, University of Oxford, 2024.
+\end{itemize}

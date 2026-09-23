@@ -1,0 +1,122 @@
+\section{Erd\H{o}s Problem \#241}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am pursuing \textbf{(C) obstruction/correction}. The Round-1 file contained a genuine gap: it produced the Bose--Chowla lower bound only on the subsequence $N=q^3-1$ and then informally suggested a passage to all $N$ without proving it. The most promising Round-2 task is therefore to repair that gap and globalize the lower bound to \emph{all} large $N$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without re-proving them.
+\begin{enumerate}
+\item The counting upper bound: if $A\subseteq\{1,\dots,N\}$ is $B_3$-distinct and $|A|=m$, then
+\[
+\frac{(m+2)(m+1)m}{6}\le 3N.
+\]
+In particular $f(N)\le (18N)^{1/3}+O(1)$.
+\item The Bose--Chowla construction for $h=3$: for every prime power $q$ there exists a $B_3$-distinct set of size $q$ inside $\{1,\dots,q^3-1\}$. Equivalently,
+\[
+ f(q^3-1)\ge q.
+\]
+\item Monotonicity of $f$: if $M\le N$, then $f(M)\le f(N)$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is a rigorous globalization step: combine the prime-power construction with the prime number theorem to find, for every large $N$, a prime $p\le (N+1)^{1/3}$ with $p=(1-o(1))(N+1)^{1/3}$. Monotonicity then lifts the Bose--Chowla construction from $p^3-1$ up to $N$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was this: the lower bound $f(q^3-1)\ge q$ was proved only on a sparse subsequence, whereas the target asymptotic concerns every $N$. To close that gap, I will:
+\begin{enumerate}
+\item make monotonicity explicit;
+\item choose a prime $p$ just below $(N+1)^{1/3}$;
+\item embed the Bose--Chowla set at scale $p$ into $\{1,\dots,N\}$;
+\item conclude the sharp lower-bound half
+\[
+ f(N)\ge (1-o(1))N^{1/3}
+\]
+for all large $N$.
+\end{enumerate}
+This repairs the Round-1 overclaim and isolates the only remaining gap: the sharp \emph{upper} constant.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Proposition 5.1 (monotonicity).}
+If $M\le N$, then $f(M)\le f(N)$.
+
+\emph{Proof.}
+Any $B_3$-distinct set $A\subseteq\{1,\dots,M\}$ is also a subset of $\{1,\dots,N\}$, so the maximal size over $\{1,\dots,N\}$ is at least the maximal size over $\{1,\dots,M\}$.
+
+\paragraph{Theorem 5.2 (global Bose--Chowla lower bound).}
+For every $\varepsilon>0$ there exists $N_0(\varepsilon)$ such that for all $N\ge N_0(\varepsilon)$,
+\[
+ f(N)\ge (1-\varepsilon)N^{1/3}.
+\]
+Equivalently,
+\[
+ f(N)\ge (1-o(1))N^{1/3}
+ \qquad (N\to\infty).
+\]
+
+\emph{Proof.}
+Fix $\varepsilon>0$, and let
+\[
+ x:=(N+1)^{1/3}.
+\]
+By the prime number theorem, for all sufficiently large $x$ there exists a prime $p$ with
+\[
+ (1-\varepsilon)x\le p\le x.
+\]
+For such a prime $p$, Round-1 gives a $B_3$-distinct set of size $p$ inside $\{1,\dots,p^3-1\}$, so
+\[
+ f(p^3-1)\ge p.
+\]
+Since $p\le x=(N+1)^{1/3}$, we have $p^3-1\le N$. Hence, by monotonicity,
+\[
+ f(N)\ge f(p^3-1)\ge p\ge (1-\varepsilon)x>(1-\varepsilon)N^{1/3}.
+\]
+This proves the claim.
+
+\paragraph{Corollary 5.3 (the corrected Round-1 theorem).}
+The lower-bound half of the conjectured asymptotic is true:
+\[
+ \liminf_{N\to\infty}\frac{f(N)}{N^{1/3}}\ge 1.
+\]
+Together with the literature upper bound recorded in Round-1,
+\[
+ f(N)\le \left(\left(\frac{7}{2}\right)^{1/3}+o(1)\right)N^{1/3},
+\]
+we obtain the rigorous bracket
+\[
+ 1\le \liminf_{N\to\infty}\frac{f(N)}{N^{1/3}}
+ \le \limsup_{N\to\infty}\frac{f(N)}{N^{1/3}}
+ \le \left(\frac{7}{2}\right)^{1/3}.
+\]
+Thus the only unresolved issue is the sharp upper constant.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Was the Round-1 gap real?} Yes. A lower bound on the subsequence $N=q^3-1$ does \emph{not} by itself imply a lower bound for every $N$. The new proof fixes exactly that point.
+\item \textbf{Does the Bose--Chowla set really live in $\{1,\dots,p^3-1\}$?} Round-1 produced it in $\{0,\dots,p^3-2\}$; translating by $+1$ preserves triple-sum uniqueness because every triple sum increases by exactly $3$.
+\item \textbf{Is the prime-selection step strong enough?} Yes. Any asymptotic prime existence statement of the form ``there is a prime in $[(1-\varepsilon)x,x]$ for all large $x$'' is sufficient, and this is a standard consequence of the prime number theorem.
+\item \textbf{Any hidden use of the conjecture?} No. The argument uses only Round-1's finite-field construction, monotonicity, and primes near $x$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The Round-1 lower-bound gap has now been closed rigorously: one really does have
+\[
+ f(N)\ge (1-o(1))N^{1/3}
+\]
+for \emph{all} large $N$, not merely along a subsequence. So the unresolved content of Problem \#241 is now completely concentrated in the \emph{upper} bound, namely whether
+\[
+ f(N)\le (1+o(1))N^{1/3}.
+\]
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 55\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#241}, current version page on erdosproblems.com, accessed 2026-03-07.
+\item Prime number theorem (standard).
+\end{enumerate}
+
+\newpage

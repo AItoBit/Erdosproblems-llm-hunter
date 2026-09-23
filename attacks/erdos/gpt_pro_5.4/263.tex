@@ -1,0 +1,235 @@
+
+\section{Erd\H{o}s Problem \#263}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}: identify a fatal statement-level obstruction in the modern online formulation, give the minimal corrected statement, and then push the corrected problem substantially further at the critical growth scale.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+Round~1 used two facts about the corrected increasing formulation:
+
+\begin{enumerate}
+\item if
+\[
+a_{n+1}\geq c\,a_n^{2+\varepsilon}
+\]
+eventually, then $(a_n)$ is Type-2;
+\item if $(a_n)$ is strictly increasing, $\sum 1/a_n$ converges, and
+\[
+\frac{a_{n+1}}{a_n^2}\to 0,
+\]
+then $(a_n)$ is not Type-2.
+\end{enumerate}
+
+These left the critical regime
+\[
+a_{n+1}\asymp a_n^2
+\]
+completely open in Round~1.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+There are two genuinely new ingredients.
+
+\begin{enumerate}
+\item The current problem-page wording omits the original hypothesis that the defining sequence is \emph{strictly increasing}.  Erd\H{o}s' 1988 source explicitly writes
+\[
+a_1<a_2<\cdots
+\]
+when introducing this modified notion.
+\item Koizumi's 2025 Theorem~4 proves that for all but countably many $\alpha>1$,
+\[
+\lfloor \alpha^{2^n}\rfloor
+\]
+is a Type-2 irrationality sequence.  This is exactly the critical scale
+\[
+a_{n+1}\sim a_n^2,
+\]
+and is far stronger than the Round~1 super-quadratic sufficient condition.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+There are two exact gaps to close.
+
+\begin{enumerate}
+\item \textbf{Statement correction.}  Compare the modern online formulation with Erd\H{o}s' original wording and isolate the missing hypothesis.
+\item \textbf{Critical-scale advance.}  Use Koizumi's theorem to show that the critical regime $a_{n+1}\asymp a_n^2$ is generically positive, even though the special point $a_n=2^{2^n}$ remains open.
+\end{enumerate}
+
+This overcomes the Round~1 obstacle because Round~1 only had results \emph{below} and \emph{above} the quadratic boundary; Round~2 adds a theorem \emph{on} that boundary.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent
+\textbf{Step 1: the modern problem-page statement is missing a hypothesis.}
+
+The current problem page states, in effect:
+
+\medskip
+\noindent
+``Let $a_n$ be a sequence of positive integers such that for every positive-integer sequence $b_n$ with $b_n/a_n\to 1$, the sum $\sum 1/b_n$ is irrational.  Is $a_n=2^{2^n}$ such a sequence?  Must such a sequence satisfy $a_n^{1/n}\to\infty$?''
+
+\medskip
+\noindent
+But Erd\H{o}s' original 1988 source, when introducing this modified notion, explicitly says (on p.~105) that one should call
+\[
+a_1<a_2<\cdots
+\]
+an irrationality sequence of this kind if for every $b_n/a_n\to 1$ the reciprocal sum is irrational.
+
+So the minimal corrected statement is:
+
+\medskip
+\noindent
+\textbf{Corrected formulation.}
+Assume
+\[
+a_1<a_2<\cdots
+\]
+are positive integers and for every positive-integer sequence $b_n$ with $b_n/a_n\to 1$ the sum $\sum 1/b_n$ is irrational.  Is $a_n=2^{2^n}$ such a sequence?  Must such a sequence satisfy $a_n^{1/n}\to\infty$?
+
+\medskip
+\noindent
+\textbf{Why this correction matters.}
+A Feb.~2026 forum post reports a formally verified Lean counterexample to the \emph{non-increasing} formulation of the second question.  I am not reproducing the full Lean construction here; I use it as an externally verified disproof of the non-increasing version.  So the modern online wording is not merely stylistically different; it changes the mathematical content of part~(ii).
+
+\medskip
+\noindent
+\textbf{Step 2: a new theorem at the critical scale.}
+
+I now use Koizumi's Theorem~4.
+
+\medskip
+\noindent
+\textbf{Theorem (Koizumi, 2025).}
+Let
+\[
+I:=\{\alpha>1:\ \lfloor \alpha^{2^n}\rfloor\ \text{is a Type-2 irrationality sequence}\}.
+\]
+Then
+\[
+(1,\infty)\setminus I
+\]
+is countable.
+
+\medskip
+\noindent
+This immediately yields the following Round~2 corollary.
+
+\medskip
+\noindent
+\textbf{Corollary.}
+For all but countably many $\alpha>1$, every integer sequence $(b_n)$ satisfying
+\[
+b_n\sim \alpha^{2^n}
+\]
+has irrational reciprocal sum.  In particular, for all but countably many $\alpha>1$, the sequence
+\[
+a_n:=\lfloor \alpha^{2^n}\rfloor
+\]
+is Type-2.
+
+\medskip
+\noindent
+\textbf{Proof.}
+By definition of $I$, this is exactly Koizumi's theorem.  More concretely, if
+\[
+a_n=\lfloor \alpha^{2^n}\rfloor
+\]
+and
+\[
+\frac{b_n}{a_n}\to 1,
+\]
+then also
+\[
+b_n\sim \alpha^{2^n}
+\]
+because $a_n\sim \alpha^{2^n}$.  Koizumi's theorem says that for all but countably many $\alpha>1$, every such asymptotic sequence has irrational reciprocal sum.  Hence $a_n$ is Type-2.
+
+\medskip
+\noindent
+\textbf{Step 3: relevance to the corrected Erd\H{o}s problem.}
+
+Since
+\[
+\lfloor \alpha^{2^n}\rfloor \sim \alpha^{2^n},
+\]
+we have
+\[
+\frac{a_{n+1}}{a_n^2}\to 1.
+\]
+Thus Koizumi's theorem gives Type-2 irrationality sequences exactly on the critical boundary
+\[
+a_{n+1}\asymp a_n^2,
+\]
+which Round~1 could not touch.
+
+If one insists on strict increase from the very beginning, note that for every fixed $\alpha>1$ the sequence $\lfloor \alpha^{2^n}\rfloor$ is eventually strictly increasing, because the ratio of consecutive underlying real terms is
+\[
+\frac{\alpha^{2^{n+1}}}{\alpha^{2^n}}=\alpha^{2^n}\to\infty.
+\]
+Changing finitely many initial terms does not affect the Type-2 property, since adding finitely many rational initial reciprocals cannot turn an irrational tail sum into a rational total sum.
+
+So Round~2 proves:
+
+\medskip
+\noindent
+\textbf{New corrected-formulation theorem.}
+For all but countably many $\alpha>1$, there exists a strictly increasing Type-2 irrationality sequence $(a_n)$ with
+\[
+a_n\sim \alpha^{2^n}.
+\]
+
+\medskip
+\noindent
+In particular, the critical regime is \emph{generically positive}.  What remains open is the specific arithmetic point
+\[
+\alpha=2,
+\]
+i.e. the original question about $a_n=2^{2^n}$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Does the correction affect part~(i)?}  No.  The specific sequence $2^{2^n}$ is already strictly increasing, so the missing hypothesis only matters for the general second question.
+\item \textbf{Does Koizumi's theorem really match the Type-2 definition?}  Yes.  The theorem is stated precisely for the set of $\alpha$ such that $\lfloor \alpha^{2^n}\rfloor$ is Type-2.
+\item \textbf{Strict increase versus eventual strict increase.}  Eventual strict increase is enough after a finite initial modification, and finite changes preserve the property under discussion.
+\item \textbf{What is and is not solved?}  The statement-level defect in the modern wording is exposed, and the critical-scale regime is generically settled in the positive direction.  The special case $\alpha=2$ and the corrected version of the root-growth question remain open.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~2 achieves two real advances:
+
+\begin{enumerate}
+\item it identifies and corrects a fatal missing hypothesis in the modern statement of part~(ii);
+\item it proves, via Koizumi's theorem, that the critical boundary
+\[
+a_{n+1}\asymp a_n^2
+\]
+is generically positive: for all but countably many $\alpha>1$, one has a Type-2 sequence with
+\[
+a_n\sim \alpha^{2^n}.
+\]
+\end{enumerate}
+
+The corrected Erd\H{o}s question remains open for the special sequence $a_n=2^{2^n}$ and for the corrected root-growth question.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 72\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item [EP263] T. F. Bloom, \emph{Erd\H{o}s Problem \#263}, problem page, accessed 2026-03-07.
+\item [Er88c] P. Erd\H{o}s, \emph{On the irrationality of certain series: problems and results}, 1988; see p.~105 for the modified definition with $a_1<a_2<\cdots$.
+\item [KoTa24] V. Kova\v{c} and T. Tao, \emph{On several irrationality problems for Ahmes series}, Acta Math. Hungar. 175 (2025), 572--608; arXiv:2406.17593.
+\item [Koi25] J. Koizumi, \emph{Irrationality of the reciprocal sum of doubly exponential sequences}, arXiv:2504.05933, especially Theorem~4.
+\item [Forum263] S. Chaudhuri, forum comment on Erd\H{o}s Problem \#263 (27 Feb 2026), reporting a formally verified Lean counterexample to the non-increasing version of part~(ii).
+\end{itemize}

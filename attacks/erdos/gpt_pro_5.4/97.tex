@@ -1,0 +1,234 @@
+\section{Erd\H{o}s Problem \#97}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path (A): continue the proof attempt by attacking the first unresolved cardinality after Round-1. Round-1 proved that no $6$-point counterexample exists, so the next natural gap is the $7$-point case. The goal in this round is to determine the exact combinatorial structure forced on any hypothetical $7$-point counterexample.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without re-proving them.
+
+\begin{itemize}
+\item Round-1 theorem: no $6$-point set in the plane can have the property that every point has four other points equidistant from it. Hence any counterexample to Problem \#97 must have at least $7$ points.
+\item Round-1 incidence reformulation: if $A=\{p_1,\dots,p_n\}\subset \mathbf{R}^2$ is such a configuration and $C_i$ is a circle centered at $p_i$ containing at least four other points of $A$, then
+\[
+S_i:=\{j\in\{1,\dots,n\}\setminus\{i\}: p_j\in C_i\}
+\]
+satisfies $|S_i|\ge 4$.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new ingredient is a double-counting argument on point--circle incidences and circle--circle intersections in the first open case $n=7$. It forces exact equalities everywhere, and these equalities imply that the complements
+\[
+B_i:=\{1,\dots,7\}\setminus S_i
+\]
+form a Steiner triple system on $7$ points.
+
+So Round-2 does not merely say ``$n=7$ is hard''; it proves that any $7$-point counterexample must carry the rigid incidence pattern of a $2$-$(7,3,1)$ design.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left by Round-1 is this: a counterexample, if one exists, has at least $7$ points, but nothing structural was known at $n=7$.
+
+To advance strictly beyond Round-1, I prove the following sharp reduction:
+
+\medskip
+
+\textbf{Claim to prove.} If $A=\{p_1,\dots,p_7\}\subset \mathbf{R}^2$ has the property that for every $i$ there is a circle $C_i$ centered at $p_i$ containing at least four other points of $A$, then:
+\begin{itemize}
+\item each $C_i$ contains exactly four points of $A$;
+\item each point of $A$ lies on exactly four of the seven circles;
+\item every two circles $C_i,C_j$ meet in exactly two points of $A$;
+\item the $7$ complements $B_i=\{1,\dots,7\}\setminus S_i$ are $3$-subsets with every pair of labels contained in exactly one $B_i$.
+\end{itemize}
+
+This overcomes the main Round-1 obstacle: instead of having many uncontrolled incidence patterns for $n\ge 7$, the case $n=7$ collapses to one highly constrained combinatorial model.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{7-point structure theorem.}
+Let $A=\{p_1,\dots,p_7\}\subset \mathbf{R}^2$. Assume that for each $i\in\{1,\dots,7\}$ there exists a circle
+\[
+C_i=\{x\in \mathbf{R}^2:\|x-p_i\|=r_i\}
+\]
+centered at $p_i$ such that $C_i$ contains at least four points of $A\setminus\{p_i\}$.
+Define
+\[
+S_i:=\{j\in\{1,\dots,7\}\setminus\{i\}:p_j\in C_i\}.
+\]
+Then the following hold.
+
+\begin{enumerate}
+\item $|S_i|=4$ for every $i$.
+\item If
+\[
+t_j:=|\{\,i\in\{1,\dots,7\}: j\in S_i\,\}|
+\]
+is the number of circles through $p_j$, then $t_j=4$ for every $j$.
+\item For every $i\neq k$,
+\[
+|S_i\cap S_k|=2.
+\]
+\item If $B_i:=\{1,\dots,7\}\setminus S_i$, then $|B_i|=3$, $i\in B_i$, and every pair of labels from $\{1,\dots,7\}$ belongs to exactly one block $B_i$.
+\end{enumerate}
+
+\paragraph{Proof.}
+\emph{Step 1: no circle can contain all six other points.}
+Suppose, for contradiction, that $|S_i|=6$ for some $i$. Then $C_i$ contains every point of $A\setminus\{p_i\}$.
+Fix $j\neq i$. Since $|S_j|\ge 4$, the circle $C_j$ contains at least four points of $A\setminus\{p_j\}$.
+Among those at most one point is $p_i$, and every other point lies on $C_i$.
+Hence $C_i$ and $C_j$ have at least three common points of $A$.
+But two distinct circles in the plane intersect in at most two points, and $C_i\neq C_j$ because their centers are different.
+This contradiction shows that
+\[
+|S_i|\in\{4,5\}\qquad\text{for all }i.
+\]
+
+\medskip
+
+\emph{Step 2: double count pairwise circle intersections through the points of $A$.}
+Let
+\[
+m:=\sum_{i=1}^7 |S_i|=\sum_{j=1}^7 t_j.
+\]
+Because every $|S_i|\ge 4$, we have $m\ge 28$.
+
+Now count triples $(j,\{i,k\})$ with $i<k$ and $j\in S_i\cap S_k$ in two ways:
+\[
+\sum_{1\le i<k\le 7} |S_i\cap S_k|
+=
+\sum_{j=1}^7 \binom{t_j}{2}.
+\]
+Since any two distinct circles intersect in at most two points,
+\[
+|S_i\cap S_k|\le 2
+\quad\text{for all }i\neq k,
+\]
+hence
+\[
+\sum_{j=1}^7 \binom{t_j}{2}
+=
+\sum_{1\le i<k\le 7} |S_i\cap S_k|
+\le 2\binom{7}{2}=42.
+\]
+
+On the other hand,
+\[
+\sum_{j=1}^7 \binom{t_j}{2}
+=
+\frac12\left(\sum_{j=1}^7 t_j^2-\sum_{j=1}^7 t_j\right)
+\ge
+\frac12\left(\frac{(\sum_{j=1}^7 t_j)^2}{7}-\sum_{j=1}^7 t_j\right)
+=
+\frac12\left(\frac{m^2}{7}-m\right),
+\]
+by Cauchy--Schwarz.
+Since $m\ge 28$ and the function $\frac12(\frac{m^2}{7}-m)$ is increasing for $m\ge 4$,
+\[
+\sum_{j=1}^7 \binom{t_j}{2}
+\ge
+\frac12\left(\frac{28^2}{7}-28\right)=42.
+\]
+Therefore all inequalities above are equalities.
+
+Equality in
+\[
+\sum_{j=1}^7 \binom{t_j}{2}\le 42
+\]
+forces
+\[
+|S_i\cap S_k|=2\qquad\text{for all }i\neq k.
+\]
+Equality in Cauchy--Schwarz forces all $t_j$ to be equal, and since their sum is $m=28$, we obtain
+\[
+t_1=t_2=\cdots=t_7=4.
+\]
+Finally,
+\[
+\sum_{i=1}^7 |S_i|=\sum_{j=1}^7 t_j=28,
+\]
+and because each $|S_i|\ge 4$, necessarily
+\[
+|S_i|=4\qquad\text{for all }i.
+\]
+
+\medskip
+
+\emph{Step 3: pass to the complements.}
+Define
+\[
+B_i:=\{1,\dots,7\}\setminus S_i.
+\]
+Since $|S_i|=4$, we get $|B_i|=3$. Also $i\notin S_i$, so $i\in B_i$.
+
+For $i\neq k$,
+\[
+|B_i\cap B_k|
+=
+7-|S_i\cup S_k|
+=
+7-(|S_i|+|S_k|-|S_i\cap S_k|)
+=
+7-(4+4-2)=1.
+\]
+Thus any two distinct blocks $B_i,B_k$ meet in exactly one label.
+
+Now count unordered pairs of labels contained in the blocks $B_i$.
+Each block contributes
+\[
+\binom{3}{2}=3
+\]
+pairs, so altogether the $7$ blocks contribute
+\[
+7\binom{3}{2}=21
+\]
+pairs, counted with multiplicity.
+But the whole label set $\{1,\dots,7\}$ has exactly
+\[
+\binom{7}{2}=21
+\]
+unordered pairs.
+Since two distinct blocks intersect in only one label, no pair of labels can occur in two different blocks.
+Hence every pair of labels occurs in exactly one block.
+
+This is exactly the defining property of a Steiner triple system on $7$ points. \hfill\emph{End of proof.}
+
+\medskip
+
+\paragraph{Corollary.}
+Any $7$-point counterexample to Problem \#97 would induce a $2$-$(7,3,1)$ design on the label set $\{1,\dots,7\}$ via the complements $B_i=\{1,\dots,7\}\setminus S_i$.
+
+Equivalently: the first open case $n=7$ is not a free geometric search problem anymore; it is reduced to realizing a very specific incidence structure with circles centered at the points themselves.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\begin{itemize}
+\item \textbf{Did I accidentally use convexity?} No. The entire theorem is valid for arbitrary $7$-point sets in the plane. So it is genuinely stronger than the convex-polygon statement.
+\item \textbf{Could two circles coincide, invalidating the intersection bound?} No. The centers are $p_i$ and $p_j$ with $i\neq j$, so $C_i\neq C_j$.
+\item \textbf{Did Step 1 really rule out $|S_i|=6$?} Yes. If $C_i$ contains all six other points, then any other $C_j$ contains at least four points, at most one of which can be $p_i$; therefore at least three lie on both circles, impossible.
+\item \textbf{Did the convexity inequality hide a gap?} No. I wrote it explicitly as a Cauchy--Schwarz bound on $\sum t_j^2$, and the equality case is standard: all $t_j$ are equal.
+\item \textbf{Does the pair count for the blocks really imply ``exactly one''?} Yes. Pairwise block intersections have size $1$, so no unordered pair of labels can lie in two different blocks. Since the total number of pair-occurrences is exactly $\binom72$, every pair occurs once.
+\item \textbf{Interaction with Round-1.} Round-1 only excluded $n\le 6$. The new theorem settles the entire combinatorial shape of the first remaining case $n=7$, so this is a strict advance.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 proves a new theorem: every hypothetical $7$-point counterexample must realize a Steiner triple system on $7$ labels through the complements $B_i=\{1,\dots,7\}\setminus S_i$. This is substantially stronger than the Round-1 statement ``$n\ge 7$'' and isolates a sharply formulated obstruction for the first open case.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+
+No new external reference is used in the Round-2 theorem; the argument above is self-contained.
+
+\bigskip
+\hrule
+\bigskip
+

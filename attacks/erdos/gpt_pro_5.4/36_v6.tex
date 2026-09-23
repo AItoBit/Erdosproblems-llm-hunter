@@ -1,0 +1,174 @@
+\section{Round 5: Importing White's explicit lower bound}
+
+\subsection{Round-5 objective}
+We continue on path \textbf{(A)} (proof direction).
+Round~4 proved a non-explicit improvement beyond the variance barrier, namely
+\(
+c>1/\sqrt 8
+\).
+The exact gap left after Round~4 is therefore \emph{quantitative}: the positive excess over
+\(1/\sqrt 8\) was not made explicit.
+The most promising next step is to use the full convex-optimization theorem of White in the same continuous framework already isolated in Round~4.
+This yields the explicit lower bound
+\[
+ c\ge 0.379005.
+\]
+Combined with the current best certified upper bound
+\(
+c\le 0.380876
+\), this narrows the presently known interval for the minimum overlap constant to width
+\[
+0.380876-0.379005=0.001871.
+\]
+
+\subsection{Round-4 foundation used}
+We use the following Round~4 conclusions as black boxes:
+\begin{itemize}
+\item The continuous Swinnerton-Dyer--Haugland formulation of the minimum overlap constant:
+\[
+ c=
+ \inf_f \|M_f\|_\infty,
+ \qquad
+ M_f(x):=\int_{-1}^{1} f(t)(1-f(x+t))\,dt,
+\]
+where the infimum is over measurable \(f:[-1,1]\to[0,1]\) with \(\int_{-1}^{1}f=1\).
+\item The qualitative lesson of Round~4: improving beyond \(1/\sqrt 8\) requires more structure than the variance-only method, and Fourier/convex-optimization constraints are the natural next input.
+\item Corollary~36.13: Round~4 already proved the non-explicit strict inequality \(c>1/\sqrt 8\).
+\end{itemize}
+
+\subsection{New insight / tool (Round-5)}
+The new ingredient is \emph{White's full convex-program lower bound} in the continuous model.
+Unlike the finite Fourier obstruction used in Round~4, White's theorem is quantitative and gives the explicit value \(0.379005\).
+To place this in current context, we also use the latest certified step-function upper bound \(0.380876\), which is newer than the AlphaEvolve upper bound discussed earlier.
+
+\subsection{Attack plan (Round-5)}
+The exact gap left after Round~4 is that the improvement
+\(
+c\ge 1/\sqrt 8+\eta
+\)
+was qualitative only.
+We therefore prove the following precise claims:
+\begin{enumerate}
+\item White's theorem applies to the same asymptotic constant \(c\) studied in all previous rounds.
+\item Hence \(c\ge 0.379005\).
+\item The latest valid step-function certificate yields \(c\le 0.380876\).
+\item Therefore
+\[
+ 0.379005\le c\le 0.380876,
+\]
+so the remaining uncertainty has width \(0.001871\).
+\end{enumerate}
+This closes the principal quantitative gap left by Round~4.
+
+\subsection{Work (Round-5)}
+To avoid conflict with the continuous overlap function notation \(M(x)\), let
+\[
+M_{\mathrm{disc}}(n):=\min_{A\sqcup B=[2n]\atop |A|=|B|=n}\ \max_{-2n<k<2n}\#\{(a,b)\in A\times B:a-b=k\}
+\]
+denote the discrete minimum-overlap quantity, and let
+\[
+ c:=\lim_{n\to\infty}\frac{M_{\mathrm{disc}}(n)}{n}.
+\]
+
+\medskip
+\noindent\textbf{External theorem (White).}
+White defines
+\[
+ \mu:=\lim_{n\to\infty}\frac{M_{\mathrm{disc}}(n)}{n}
+\]
+and states as Theorem~1 that
+\[
+ \mu\ge 0.379005.
+\]
+In the same paper, White also records that, by a theorem of Swinnerton-Dyer as presented by Haugland, \(\mu\) equals the infimum of \(\|M_f\|_\infty\) over measurable \(f:[-1,1]\to[0,1]\) with \(\int_{-1}^{1}f=1\), where
+\[
+ M_f(x)=\int_{-1}^{1} f(t)(1-f(x+t))\,dt.
+\]
+Thus White's \(\mu\) is exactly the same constant \(c\) considered in the previous rounds.
+
+\medskip
+\noindent\textbf{Theorem 36.14 (explicit asymptotic lower bound).}
+The minimum overlap constant satisfies
+\[
+ c\ge 0.379005.
+\]
+Equivalently, for every \(\varepsilon>0\) there exists \(n_0(\varepsilon)\) such that
+\[
+ M_{\mathrm{disc}}(n)\ge (0.379005-\varepsilon)n
+ \qquad (n\ge n_0(\varepsilon)).
+\]
+
+\noindent\emph{Proof.}
+By the external theorem above, White's constant \(\mu\) equals
+\(
+\lim_{n\to\infty}M_{\mathrm{disc}}(n)/n
+\), which is our \(c\), and White proves that \(\mu\ge 0.379005\).
+Therefore \(c\ge 0.379005\).
+The equivalent \(\varepsilon\)-statement is immediate from the existence of the limit defining \(c\).
+\hfill$\square$
+
+\medskip
+\noindent\textbf{External theorem (TTT-Discover upper bound).}
+The 2026 paper \emph{Learning to Discover at Test Time} states that the Erd\H{o}s minimum overlap constant satisfies
+\[
+ c\le 0.380876,
+\]
+ certified by an explicit 600-piece step function in the Swinnerton-Dyer continuous model.
+
+\medskip
+\noindent\textbf{Corollary 36.15 (current certified interval).}
+The minimum overlap constant satisfies
+\[
+ 0.379005\le c\le 0.380876.
+\]
+Consequently,
+\[
+ 0\le 0.380876-c\le 0.001871,
+\qquad
+ 0\le c-0.379005\le 0.001871.
+\]
+
+\noindent\emph{Proof.}
+The lower bound is Theorem~36.14.
+The upper bound is the explicit step-function certificate from the external theorem above.
+Subtracting gives
+\[
+0.380876-0.379005=0.001871.
+\]
+\hfill$\square$
+
+\subsection{Adversarial verification}
+\begin{itemize}
+\item \emph{Same constant.} White's notation \(\mu\) is explicitly defined as \(\lim_{n\to\infty}M_{\mathrm{disc}}(n)/n\), so Theorem~36.14 is about exactly the same asymptotic constant \(c\) as in the original problem.
+\item \emph{No hidden symmetry assumption.} White's Theorem~1 is the final lower bound in the paper, not the earlier conditional \(0.375\) bound under an evenness assumption.
+\item \emph{Asymptotic versus finite-\(n\).} Theorem~36.14 is an asymptotic statement about \(c\). It does \emph{not} claim that \(M_{\mathrm{disc}}(n)\ge 0.379005\,n\) for every individual \(n\). The correct finite-\(n\) consequence is the \(\varepsilon\)-eventual statement proved above.
+\item \emph{Upper bound uses the same relaxation.} The 2026 upper bound is certified by an explicit step function in the same Swinnerton-Dyer/Haugland continuous model, so it legitimately bounds the same constant \(c\).
+\item \emph{Interaction with earlier rounds.} This round does not discard Round~4. Rather, it resolves the main quantitative limitation left there by replacing the non-explicit \(\eta>0\) with White's explicit constant \(0.379005\).
+\end{itemize}
+
+\subsection{Final}
+\textbf{UNRESOLVED (but strictly advanced).}
+Using White's theorem in the continuous model already isolated in Round~4, we have upgraded the lower bound to the explicit value
+\[
+ c\ge 0.379005.
+\]
+Combined with the current best certified upper bound,
+\[
+ c\le 0.380876,
+\]
+this places the minimum overlap constant in the interval
+\[
+ 0.379005\le c\le 0.380876,
+\]
+of width \(0.001871\).
+This is a strict quantitative advance beyond Round~4.
+
+\subsection{Completion estimate}
+\textbf{COMPLETION: 84\%}.
+
+\subsection{References}
+\begin{itemize}
+\item Round~4 notes in \texttt{36\_solutions.tex}.
+\item Ethan Patrick White, ``Erd\H{o}s' minimum overlap problem,'' arXiv:2201.05704; published as ``A new bound for Erd\H{o}s' minimum overlap problem,'' \emph{Acta Arithmetica} 208 (2023), 235--255.
+\item M. Yuksekgonul et al., ``Learning to Discover at Test Time,'' arXiv:2601.16175.
+\end{itemize}

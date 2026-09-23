@@ -1,0 +1,551 @@
+\section{Erd\H{o}s Problem \#12 --- Round 3 (Continuation \& Gap-Closure Mode)}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+
+\textbf{Path (C): obstruction/correction inside the Round-2 square-based program.}
+
+Round~2 proved that whenever
+\[
+S\subseteq \mathbb N_{\ge 2}
+\]
+is primitive and every prime factor of every $s\in S$ is congruent to $3\pmod 4$, the square set
+\[
+A(S):=\{s^2:s\in S\}
+\]
+satisfies~(\*). That opened a natural constructive program: make $S$ as large as possible.
+
+Round~2, however, only supplied fixed-$k$ squarefree $k$-prime examples (Corollary~12.4b and Proposition~12.5), giving
+\[
+|A_k\cap[1,N]|\asymp \frac{\sqrt N}{\log N}(\log\log N)^{k-1},
+\]
+and it only ruled out one special ``private prime'' strategy.
+
+The most promising Round-3 task is therefore to settle the \emph{internal size question} for the whole Round-2 square-based class:
+\begin{quote}
+How large can a primitive set $S$ supported on primes $3\bmod 4$ actually be?
+\end{quote}
+I will prove a sharp answer (for infinitely many scales): inside this entire class, one can reach
+\[
+\gg \frac{\sqrt N}{\sqrt{\log N}}
+\]
+along an infinite sequence of $N$, but one can never do better than
+\[
+\ll \frac{\sqrt N}{\sqrt{\log N}}
+\]
+in general. Thus the Round-2 square-based strategy has an intrinsic $\sqrt{\log N}$ barrier and cannot by itself settle (Q1).
+
+\subsection*{2) ROUND-2 FOUNDATION USED}
+
+I rely on the following specific Round~2 results.
+
+\begin{itemize}
+\item \textbf{Round-2 Lemma 12.3 / Corollary 12.3a:} for $p\equiv 3\pmod 4$,
+\[
+v_p(x^2+y^2)=2\min(v_p(x),v_p(y)),
+\]
+hence $p^{2e}\mid (x^2+y^2)$ forces $p^e\mid x,y$.
+
+\item \textbf{Round-2 Theorem 12.4:} if $S$ is primitive and every prime divisor of every element of $S$ is congruent to $3\pmod 4$, then
+\[
+A(S)=\{s^2:s\in S\}
+\]
+satisfies property~(\*).
+
+\item \textbf{Round-2 Proposition 12.6:} a certain ``private prime'' subclass cannot achieve $\gg \sqrt N$.
+Round~3 replaces that by an obstruction for the \emph{entire} square-based class coming from Theorem~12.4.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+
+The genuinely new ingredient is a \textbf{block-antichain construction} inside the multiplicative semigroup
+\[
+\mathcal M:=\{n\in\mathbb N:\ p\mid n\Rightarrow p\equiv 3\pmod 4\}.
+\]
+
+There are two parts.
+
+\begin{enumerate}
+\item \textbf{Analytic size of $\mathcal M$.}
+By a standard Selberg--Delange theorem (specialised below),
+\[
+M(x):=|\mathcal M\cap[1,x]|\asymp \frac{x}{\sqrt{\log x}}.
+\]
+
+\item \textbf{Primitive extraction by thick blocks.}
+Although $\mathcal M$ itself is not primitive, a subset of one interval $(x/3,x]$ \emph{is} primitive, because the least nontrivial element of $\mathcal M$ is $3$.
+By choosing a very sparse sequence of scales $x_j$ and taking many elements of $\mathcal M\cap(x_j/3,x_j]$ that avoid divisibility by earlier chosen elements, one can inductively build an infinite primitive
+\[
+S\subseteq \mathcal M
+\]
+with
+\[
+|S\cap[1,x_j]|\gg \frac{x_j}{\sqrt{\log x_j}}
+\]
+for infinitely many $j$.
+\end{enumerate}
+
+This is a strict strengthening of Round~2's fixed-$k$ families, and it also shows that the entire Round-2 square-based method has a built-in $\sqrt{\log N}$ loss.
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+
+\textbf{Exact Round-2 gap.}
+Round~2 showed that \emph{some} primitive sets $S\subseteq \mathcal M$ work, but did not determine the true order of magnitude obtainable from this paradigm.
+
+\textbf{Claims to prove now.}
+
+\begin{enumerate}
+\item Prove an analytic counting estimate for $\mathcal M$:
+\[
+M(x)\asymp \frac{x}{\sqrt{\log x}}.
+\]
+
+\item Deduce an \emph{upper bound} for the whole Round-2 square-based class:
+for every primitive $S\subseteq \mathcal M$,
+\[
+|A(S)\cap[1,N]|\ll \frac{\sqrt N}{\sqrt{\log N}}.
+\]
+Hence no set produced via Round-2 Theorem~12.4 can answer (Q1).
+
+\item Construct an infinite primitive $S\subseteq \mathcal M$ with
+\[
+|S\cap[1,x_j]|\gg \frac{x_j}{\sqrt{\log x_j}}
+\]
+for infinitely many $x_j$, and then invoke Round-2 Theorem~12.4 to obtain
+\[
+|A(S)\cap[1,N_j]|\gg \frac{\sqrt{N_j}}{\sqrt{\log N_j}}
+\qquad\text{for infinitely many }N_j=x_j^2.
+\]
+\end{enumerate}
+
+\textbf{Why this overcomes the previous obstacle.}
+Round~2 used only thin fixed-$k$ layers of $\mathcal M$. The new construction instead uses \emph{full local density} of $\mathcal M$ on carefully separated scales, while preserving primitivity by:
+\begin{itemize}
+\item taking each block inside an interval of ratio $<3$, and
+\item excluding multiples of earlier chosen elements.
+\end{itemize}
+
+\subsection*{5) WORK (ROUND-3)}
+
+\paragraph{\textbf{Notation.}}
+Let
+\[
+\mathcal M:=\{n\in\mathbb N:\ p\mid n\Longrightarrow p\equiv 3\pmod 4\},
+\qquad
+M(x):=|\mathcal M\cap[1,x]|.
+\]
+Note that $1\in \mathcal M$, and the least element of $\mathcal M\setminus\{1\}$ is $3$.
+
+\bigskip
+
+\paragraph{\textbf{Proposition 12.7 (analytic counting input for $\mathcal M$).}}
+There exists a constant $C_{\mathcal M}>0$ such that
+\[
+M(x)=C_{\mathcal M}\frac{x}{(\log x)^{1/2}}+O\!\left(\frac{x}{(\log x)^{3/4}}\right)
+\qquad (x\to\infty).
+\]
+Consequently there exist positive constants $c_1,c_2,x_0$ such that for all $x\ge x_0$,
+\begin{equation}
+\label{eq:M-upper}
+M(x)\le c_2\frac{x}{\sqrt{\log x}},
+\end{equation}
+and
+\begin{equation}
+\label{eq:M-interval}
+M(x)-M(x/3)\ge c_1\frac{x}{\sqrt{\log x}}.
+\end{equation}
+
+\emph{Proof.}
+Apply the Selberg--Delange asymptotic of Chang--Martin, Theorem~3.4, with modulus $q=4$ and residue class set $B=\{3\}$.
+Then $N_B$ in their notation is exactly the set $\mathcal M$ above, and their exponent is
+\[
+\beta=\frac{|B|}{\varphi(4)}=\frac12.
+\]
+Hence
+\[
+M(x)=\#\{n\le x:\ n\in\mathcal M\}
+=
+\frac{G_B(1)}{\Gamma(1/2)}\frac{x}{(\log x)^{1/2}}
++O\!\left(\frac{x}{(\log x)^{3/4}}\right),
+\]
+which is the asserted formula with
+\[
+C_{\mathcal M}=\frac{G_B(1)}{\Gamma(1/2)}>0.
+\]
+The upper bound \eqref{eq:M-upper} is immediate.
+
+For \eqref{eq:M-interval}, subtract the same asymptotic at $x$ and at $x/3$:
+\[
+M(x)-M(x/3)
+=
+C_{\mathcal M}\frac{x}{\sqrt{\log x}}
+-
+C_{\mathcal M}\frac{x/3}{\sqrt{\log(x/3)}}
++
+O\!\left(\frac{x}{(\log x)^{3/4}}\right).
+\]
+Since
+\[
+\frac{\sqrt{\log x}}{\sqrt{\log(x/3)}}\to 1
+\qquad (x\to\infty),
+\]
+the main term equals
+\[
+\left(\frac23+o(1)\right)C_{\mathcal M}\frac{x}{\sqrt{\log x}},
+\]
+which is positive for all sufficiently large $x$.
+After reducing $c_1$ if necessary and enlarging $x_0$, \eqref{eq:M-interval} follows.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Proposition 12.8 (upper bound for the entire Round-2 square-based class).}}
+Let $S\subseteq \mathcal M\setminus\{1\}$ be primitive, and set
+\[
+A(S):=\{s^2:\ s\in S\}.
+\]
+Then for all large $N$,
+\[
+|A(S)\cap[1,N]|
+=
+|S\cap[1,\sqrt N]|
+\ll
+\frac{\sqrt N}{\sqrt{\log N}}.
+\]
+In particular,
+\[
+\liminf_{N\to\infty}\frac{|A(S)\cap[1,N]|}{\sqrt N}=0.
+\]
+So no set obtained from Round-2 Theorem~12.4 can solve \textnormal{(Q1)}.
+
+\emph{Proof.}
+Because $S\subseteq \mathcal M$,
+\[
+|A(S)\cap[1,N]|=|S\cap[1,\sqrt N]|\le M(\sqrt N).
+\]
+Applying \eqref{eq:M-upper},
+\[
+M(\sqrt N)\le c_2\frac{\sqrt N}{\sqrt{\log(\sqrt N)}}
+=
+\sqrt 2\,c_2\frac{\sqrt N}{\sqrt{\log N}},
+\]
+which proves the claim.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Theorem 12.9 (block-antichain construction inside $\mathcal M$).}}
+There exists an infinite primitive set
+\[
+S\subseteq \mathcal M\setminus\{1\}
+\]
+such that for infinitely many $x$,
+\[
+|S\cap[1,x]|\gg \frac{x}{\sqrt{\log x}}.
+\]
+
+\emph{Proof.}
+Fix constants $c_1,c_2,x_0$ as in Proposition~12.7, and set
+\[
+\eta:=\frac{c_1}{32c_2}.
+\]
+We will inductively construct:
+
+\begin{itemize}
+\item a strictly increasing sequence $x_1<x_2<\cdots$ tending to infinity,
+\item finite sets $T_j\subseteq \mathcal M\cap (x_j/3,x_j]$,
+\end{itemize}
+such that if
+\[
+S_j:=T_1\cup\cdots\cup T_j,
+\]
+then
+\begin{enumerate}
+\item[(a)] $S_j$ is primitive;
+\item[(b)] $\displaystyle \sum_{s\in S_j}\frac1s\le \eta\sum_{i=1}^j 2^{-i}<\eta$;
+\item[(c)] $\displaystyle |T_j|\ge \frac{c_1}{5}\frac{x_j}{\sqrt{\log x_j}}$.
+\end{enumerate}
+
+Once this is done, the infinite union
+\[
+S:=\bigcup_{j\ge 1}T_j
+\]
+is primitive, and for each $j$ we have
+\[
+|S\cap[1,x_j]|\ge |T_j|\ge \frac{c_1}{5}\frac{x_j}{\sqrt{\log x_j}},
+\]
+which proves the theorem.
+
+\medskip
+
+\emph{Induction step.}
+Suppose $S_{j-1}$ has already been constructed (for $j=1$, take $S_0=\varnothing$).
+Choose $x_j$ so large that all of the following hold:
+\begin{enumerate}
+\item[(i)] $x_j\ge x_0$;
+\item[(ii)] $x_j>3x_{j-1}$ (for $j=1$ there is no restriction);
+\item[(iii)] $x_j>(\max S_{j-1})^2$ (vacuous if $S_{j-1}=\varnothing$);
+\item[(iv)] $\displaystyle \frac{3c_1}{4\sqrt{\log x_j}}\le \frac{\eta}{2^j}$;
+\item[(v)] $\displaystyle \frac{c_1}{4}\frac{x_j}{\sqrt{\log x_j}}\ge 1$.
+\end{enumerate}
+This is possible because $x_j$ may be taken arbitrarily large.
+
+Now consider the interval
+\[
+I_j:=(x_j/3,x_j].
+\]
+By \eqref{eq:M-interval},
+\[
+|\mathcal M\cap I_j|
+=
+M(x_j)-M(x_j/3)
+\ge c_1\frac{x_j}{\sqrt{\log x_j}}.
+\]
+Let $E_j$ be the set of elements of $\mathcal M\cap I_j$ divisible by at least one element of $S_{j-1}$.
+Then by the union bound,
+\[
+|E_j|
+\le \sum_{s\in S_{j-1}}\#\{n\in\mathcal M\cap I_j:\ s\mid n\}.
+\]
+If $s\mid n$ and $n\in \mathcal M$, then $n=sm$ with $m\in\mathcal M$.
+Hence
+\[
+\#\{n\in\mathcal M\cap I_j:\ s\mid n\}\le M(x_j/s).
+\]
+Therefore
+\[
+|E_j|
+\le \sum_{s\in S_{j-1}} M(x_j/s).
+\]
+Because $s\le \max S_{j-1}<\sqrt{x_j}$ by (iii), we have $x_j/s>\sqrt{x_j}$ and so
+\[
+\log(x_j/s)\ge \frac12\log x_j.
+\]
+Using \eqref{eq:M-upper},
+\[
+M(x_j/s)\le c_2\frac{x_j/s}{\sqrt{\log(x_j/s)}}
+\le \sqrt 2\,c_2\frac{x_j}{s\sqrt{\log x_j}}
+\le 2c_2\frac{x_j}{s\sqrt{\log x_j}}.
+\]
+Summing over $s\in S_{j-1}$ and using the induction hypothesis~(b),
+\[
+|E_j|
+\le 2c_2\frac{x_j}{\sqrt{\log x_j}}\sum_{s\in S_{j-1}}\frac1s
+< 2c_2\eta\frac{x_j}{\sqrt{\log x_j}}
+=
+\frac{c_1}{16}\frac{x_j}{\sqrt{\log x_j}}.
+\]
+Thus the set
+\[
+U_j:=(\mathcal M\cap I_j)\setminus E_j
+\]
+of admissible new elements satisfies
+\[
+|U_j|
+\ge \left(c_1-\frac{c_1}{16}\right)\frac{x_j}{\sqrt{\log x_j}}
+=
+\frac{15c_1}{16}\frac{x_j}{\sqrt{\log x_j}}.
+\]
+Choose any subset
+\[
+T_j\subseteq U_j
+\]
+of cardinality
+\[
+m_j:=\left\lfloor \frac{c_1}{4}\frac{x_j}{\sqrt{\log x_j}}\right\rfloor.
+\]
+This is possible because $|U_j|>m_j$ for large $x_j$, and by (v) we have $m_j\ge 1$.
+Moreover
+\[
+m_j\ge \frac{c_1}{5}\frac{x_j}{\sqrt{\log x_j}}
+\]
+for all sufficiently large $x_j$, yielding~(c).
+
+Next, because every element of $T_j$ is $>x_j/3$, its reciprocal is at most $3/x_j$, so
+\[
+\sum_{t\in T_j}\frac1t
+\le \frac{3m_j}{x_j}
+\le \frac{3c_1}{4\sqrt{\log x_j}}
+\le \frac{\eta}{2^j}
+\]
+by (iv). Hence
+\[
+\sum_{s\in S_j}\frac1s
+=
+\sum_{s\in S_{j-1}}\frac1s+\sum_{t\in T_j}\frac1t
+\le \eta\sum_{i=1}^{j-1}2^{-i}+\frac{\eta}{2^j}
+=
+\eta\sum_{i=1}^{j}2^{-i},
+\]
+so the induction hypothesis~(b) is preserved.
+
+Finally we verify primitivity.
+\begin{itemize}
+\item No old element divides a new element: this is exactly how $U_j$ was defined.
+\item No new element divides an old element: by (ii), every new element exceeds $x_j/3>x_{j-1}$, while every old element is at most $x_{j-1}$.
+\item No two distinct new elements divide one another: if $u,v\in T_j$ with $u<v$ and $u\mid v$, then
+\[
+v/u\in \mathcal M\setminus\{1\},
+\]
+so $v/u\ge 3$. But since $u>x_j/3$ and $v\le x_j$,
+\[
+v/u<3,
+\]
+a contradiction.
+\end{itemize}
+Thus $S_j$ is primitive, completing the induction and the proof.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Corollary 12.9a (new valid construction for the original divisibility problem).}}
+There exists an infinite set $A\subseteq \mathbb N$ satisfying~(\*) such that for infinitely many $N$,
+\[
+|A\cap[1,N]|\gg \frac{\sqrt N}{\sqrt{\log N}}.
+\]
+
+\emph{Proof.}
+Let $S$ be as in Theorem~12.9, and define
+\[
+A:=A(S)=\{s^2:\ s\in S\}.
+\]
+Since $S$ is primitive and every prime factor of every $s\in S$ is congruent to $3\pmod 4$, Round-2 Theorem~12.4 implies that $A$ satisfies~(\*).
+
+Now take $N_j:=x_j^2$. Then
+\[
+|A\cap[1,N_j]|
+=
+|S\cap[1,x_j]|
+\gg
+\frac{x_j}{\sqrt{\log x_j}}
+=
+\sqrt 2\,\frac{\sqrt{N_j}}{\sqrt{\log N_j}}.
+\]
+Hence the claimed lower bound holds for infinitely many $N=N_j$.
+\qed
+
+\bigskip
+
+\paragraph{\textbf{Theorem 12.10 (sharp size scale inside the Round-2 square-based class).}}
+Among all sets of the form
+\[
+A(S)=\{s^2:\ s\in S\},
+\]
+where $S\subseteq \mathcal M\setminus\{1\}$ is primitive, the correct order of magnitude along infinitely many scales is
+\[
+\frac{\sqrt N}{\sqrt{\log N}}.
+\]
+More precisely:
+\begin{enumerate}
+\item every such $A(S)$ satisfies
+\[
+|A(S)\cap[1,N]|\ll \frac{\sqrt N}{\sqrt{\log N}}
+\qquad (N\to\infty),
+\]
+by Proposition~12.8;
+\item there exists such an $A(S)$ with
+\[
+|A(S)\cap[1,N_j]|\gg \frac{\sqrt{N_j}}{\sqrt{\log N_j}}
+\]
+for infinitely many $N_j$, by Corollary~12.9a.
+\end{enumerate}
+
+Thus the full Round-2 square-based construction method has now been pushed to its natural asymptotic limit (up to constants) on an infinite subsequence.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\textbf{(i) Does the block construction really preserve primitivity?}
+Yes. Inside one block $(x_j/3,x_j]$, divisibility would force a quotient in $\mathcal M\setminus\{1\}$, hence at least $3$, but every quotient of two numbers in that interval is $<3$.
+Across different blocks, earlier elements are explicitly forbidden from dividing later ones, and later elements are too large to divide earlier ones.
+
+\textbf{(ii) Is the estimate for excluded multiples legitimate?}
+Yes. If $s\in S_{j-1}$ divides $n\in\mathcal M$, then $n=sm$ with $m\in\mathcal M$.
+Thus the number of multiples of $s$ up to $x_j$ is at most $M(x_j/s)$.
+No independence assumption is used; only the union bound.
+
+\textbf{(iii) Did the proof accidentally use more than finite reciprocal mass of old elements?}
+No. The key inequality is
+\[
+|E_j|\ll \frac{x_j}{\sqrt{\log x_j}}\sum_{s\in S_{j-1}}\frac1s.
+\]
+Only the \emph{finite} reciprocal sum of the previously chosen blocks enters.
+The construction deliberately makes the blockwise reciprocal contributions summable.
+
+\textbf{(iv) Is the analytic input applied correctly?}
+Yes. Chang--Martin Theorem~3.4 counts integers all of whose prime factors lie in a fixed set of reduced residue classes.
+With $q=4$ and the single class $3\bmod 4$, this is exactly the semigroup $\mathcal M$.
+The exponent is $\beta=1/\varphi(4)=1/2$, giving the $\sqrt{\log x}$ denominator.
+
+\textbf{(v) Does Corollary~12.9a settle (Q1)?}
+No. It only yields the lower bound
+\[
+|A\cap[1,N_j]|\gg \frac{\sqrt{N_j}}{\sqrt{\log N_j}}
+\]
+for infinitely many $N_j$.
+This is \emph{far} from the required
+\[
+\liminf_{N\to\infty}\frac{|A\cap[1,N]|}{\sqrt N}>0.
+\]
+So Q1 remains open.
+
+\textbf{(vi) Does this contradict the density-zero theorem of Erd\H{o}s--S\'ark\"ozy?}
+No. Both
+\[
+\frac{x}{\sqrt{\log x}}=o(x)
+\qquad\text{and}\qquad
+\frac{\sqrt N}{\sqrt{\log N}}=o(\sqrt N).
+\]
+So the new construction is sparse enough to be consistent with all known upper bounds.
+
+\textbf{(vii) Is the Round-2 theorem being used in exactly the permitted way?}
+Yes. I do not re-prove Round-2 Theorem~12.4; I invoke it exactly once, at the end, after constructing a larger primitive $S$.
+The new mathematical work is entirely the analytic counting of $\mathcal M$ plus the primitive extraction argument.
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~3 does \emph{not} solve the original Erd\H{o}s problem in full generality.
+However, it gives a sharp obstruction/correction for the whole constructive framework introduced in Round~2:
+
+\begin{quote}
+\emph{Within the entire square-based class supplied by Round-2 Theorem~12.4, the best possible size scale is}
+\[
+|A\cap[1,N]|\asymp \frac{\sqrt N}{\sqrt{\log N}}
+\]
+\emph{along infinitely many scales, and in particular this class can never realise the target in (Q1).}
+\end{quote}
+
+This is a substantive advance beyond Round~2 for two reasons:
+\begin{enumerate}
+\item it replaces the fixed-$k$ families by a much denser valid construction, namely
+\[
+|A\cap[1,N_j]|\gg \frac{\sqrt{N_j}}{\sqrt{\log N_j}}
+\]
+for infinitely many $N_j$;
+\item it proves that \emph{no} construction obtainable from Round-2 Theorem~12.4 can exceed this order by more than constants.
+\end{enumerate}
+
+So the next unresolved gap is now sharply isolated:
+
+\begin{quote}
+Any eventual positive solution to \textnormal{(Q1)} must leave the Round-2 square-based paradigm entirely (or augment it with new structure not covered by primitive subsets of $\mathcal M$).
+\end{quote}
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\noindent\textbf{COMPLETION: 55\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item B.~Chang and G.~Martin, \emph{The smallest invariant factor of the multiplicative group}, especially Theorem~3.4, used here with $q=4$ and residue class set $B=\{3\}$ to count integers all of whose prime factors are congruent to $3\pmod 4$.
+\item T.~F.~Bloom, \emph{Erd\H{o}s Problem \#12}, problem statement and current status page, accessed 2026-03-07.
+\item Round-2 results from the present investigation: Lemma~12.3, Corollary~12.3a, and Theorem~12.4.
+\end{itemize}
+
+\subsection*{10) OUTPUT FORMAT}
+
+Here $x=12$, so the requested export filename is
+\[
+\texttt{12\_solutions.tex}.
+\]

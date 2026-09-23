@@ -1,0 +1,107 @@
+\section{Erd\H{o}s Problem \#774}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.} A full solution is still out of reach, so the most substantive strict advance is to isolate a rigorous obstruction. I show that every fixed-depth truncation of the problem is false: for each fixed $h$, the ``$h$-free'' analogue has a counterexample. Thus any eventual positive solution of Problem \#774 must use \emph{unbounded} additive relations in an essential way.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 items.
+
+\begin{enumerate}
+\item If $A$ is a union of $m$ dissociated sets, then $A$ is proportionately dissociated with constant at least $1/m$.
+\item The greedy extraction argument only yields an $O_\delta(\log |B|)$ decomposition for a finite $B\subseteq A$.
+\item In the model case $(\mathbb Z/2\mathbb Z)^n$, the analogous statement holds by the matroid-cover criterion.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is the 2024 theorem of Ne\v{s}et\v{r}il, R\"odl, and Sales.
+
+\medskip
+\noindent\textbf{Definition.} For $h\ge 1$, a set $X=\{x_i\}_{i\in I}\subset\mathbb N$ is called \emph{$h$-free} if for all distinct finite index sets $J,J'\subseteq I$ with $|J|\le h$ one has
+\[
+\sum_{j\in J}x_j\ne \sum_{j'\in J'}x_{j'}.
+\]
+A dissociated set is therefore a set that is $h$-free for every $h$.
+
+\medskip
+\noindent\textbf{Theorem 3.1 (Ne\v{s}et\v{r}il--R\"odl--Sales, 2024).} \emph{For every integer $h\ge 1$ there exist $\varepsilon_h>0$ and a set $X_h\subseteq\mathbb N$ such that}
+\begin{enumerate}
+\item \emph{every finite $Y\subseteq X_h$ contains an $h$-free subset $Z\subseteq Y$ with $|Z|\ge \varepsilon_h |Y|$, but}
+\item \emph{$X_h$ is not a union of finitely many $h$-free sets.}
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The Round-1 obstacle was that no uniform finite-cover theorem was known. The new plan is different: instead of trying to prove the full statement, I prove that an entire family of natural proof strategies cannot work.
+
+\begin{enumerate}
+\item Formalize the bounded-depth truncation of dissociativity via the notion of $h$-free.
+\item Apply Theorem 3.1 to show that the ``proportionately $h$-free $\Rightarrow$ finite union of $h$-free sets'' statement is false for every fixed $h$.
+\item Deduce that any eventual positive proof of Problem \#774 must exploit relations of arbitrarily large length; no bounded-$h$ surrogate can suffice.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+I first relate the problem language to the theorem language.
+
+For subsets of $\mathbb N$, the following two notions are equivalent.
+
+\begin{enumerate}
+\item Distinct subset sums: if $X,Y\subseteq A$ are finite and distinct, then
+\[
+\sum_{x\in X}x\ne \sum_{y\in Y}y.
+\]
+\item Dissociation: there is no nontrivial relation
+\[
+\sum_{a\in A_1} a - \sum_{b\in A_2} b =0
+\]
+with $A_1,A_2\subseteq A$ finite and distinct.
+\end{enumerate}
+
+Indeed, cancelling the common terms in two subset sums leaves a nontrivial signed relation with coefficients in $\{ -1,0,1\}$, and conversely any such signed relation separates into two unequal subset sums.
+
+Thus the ``free'' sets of Pisier-type theorems coincide here with dissociated sets.
+
+\medskip
+Now fix $h\ge 1$. Theorem 3.1 gives a set $X_h\subseteq\mathbb N$ such that every finite $Y\subseteq X_h$ contains an $h$-free subset of size at least $\varepsilon_h|Y|$, but $X_h$ is not a union of finitely many $h$-free sets.
+
+This immediately yields the promised negative result.
+
+\medskip
+\noindent\textbf{Corollary 5.1.} \emph{For every fixed $h\ge 1$, the $h$-truncated analogue of Problem \#774 is false.}
+
+\medskip
+\noindent\emph{Proof.} Replace ``dissociated'' throughout Problem \#774 by ``$h$-free''. Then $X_h$ from Theorem 3.1 is proportionately $h$-free but is not a union of finitely many $h$-free sets. \hfill$\square$
+
+\medskip
+This gives a genuine obstruction to proving the original problem by bounded-depth methods.
+
+\medskip
+\noindent\textbf{Corollary 5.2 (bounded-depth obstruction).} \emph{Any positive solution of Problem \#774 must use the full hierarchy of subset-sum relations of unbounded length. In particular, no argument that factors the problem through a fixed $h$-free surrogate can succeed.}
+
+\medskip
+\noindent\emph{Justification.} If a proof only needed relations of size at most some fixed $h$, then the same proof would apply to the $h$-free truncation, contradicting Corollary 5.1. \hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+There are several possible ways this obstruction could have been overstated, so I check them explicitly.
+
+\begin{enumerate}
+\item \emph{Does Corollary 5.1 disprove Problem \#774 itself?} No. The property ``$h$-free'' is strictly weaker than ``dissociated'', so the counterexamples for fixed $h$ do not directly produce a counterexample to the full problem.
+
+\item \emph{Is the obstruction merely heuristic?} No. It is a formal theorem: the bounded-depth analogue is false for every fixed $h$.
+
+\item \emph{Could the Round-1 model-case positive result in $(\mathbb Z/2\mathbb Z)^n$ conflict with this?} No. The model-case uses linear independence in a matroid; Theorem 3.1 concerns subsets of $\mathbb N$ and a different combinatorial structure.
+
+\item \emph{What exactly has been ruled out?} Not all possible proofs, but every strategy that reduces the problem to a fixed finite level of additive relations.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The original problem remains open, but this round isolates a sharp obstruction: every fixed-depth truncation of the problem is false. Therefore any eventual positive proof must use genuinely unbounded subset-sum structure, not merely a bounded-$h$ approximation.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 45\%}
+
+\subsection*{9) REFERENCES}
+[1] T. F. Bloom, \emph{Erd\H{o}s Problem \#774}, erdosproblems.com/774, accessed 2026-03-07.
+
+[2] J. Ne\v{s}et\v{r}il, V. R\"odl, and M. Sales, \emph{On Pisier Type Theorems}, Combinatorica \textbf{44} (2024), 1211--1232.
+

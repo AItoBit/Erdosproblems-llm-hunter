@@ -1,0 +1,243 @@
+
+\section{Problem 620 (\#620)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (C): the global problem remains open, but the Round-1 lower bound
+\[
+f(n)\ge \lfloor \sqrt n\rfloor
+\]
+can be upgraded to the best currently known lower bound
+\[
+f(n)\ge c\sqrt{\frac{n\log n}{\log\log n}}
+\]
+for some absolute constant $c>0$. This closes the exact Round-1 gap on the lower-bound side and reduces the remaining uncertainty to the polylogarithmic factor between this and the upper bound
+\[
+f(n)\ll \sqrt n\,\log n.
+\]
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the two Round-1 ingredients:
+
+\begin{enumerate}
+\item if $v$ is a vertex of a $K_4$-free graph, then the neighborhood $N(v)$ induces a triangle-free graph;
+\item the proof strategy should split according to the maximum degree $\Delta$.
+\end{enumerate}
+
+Round~1 used a greedy independent-set bound in the low-degree case. I will strengthen only that low-degree step.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is Shearer's theorem on the independence number of sparse $K_r$-free graphs. Specialised to $r=4$, it says that for sufficiently large maximum degree $d$, every $K_4$-free graph on $n$ vertices with maximum degree at most $d$ has an independent set of size
+\[
+\Omega\!\left(\frac{n\log d}{d\log\log d}\right).
+\]
+
+Replacing the Round-1 greedy bound
+\[
+\alpha(G)\ge \frac{n}{d+1}
+\]
+by Shearer's bound upgrades the low-degree case from order $\sqrt n$ to order
+\[
+\sqrt{\frac{n\log n}{\log\log n}}.
+\]
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+Let $G$ be $K_4$-free on $n$ vertices, and let $\Delta$ be its maximum degree.
+
+\begin{enumerate}
+\item If $\Delta$ is large, then a high-degree neighborhood $N(v)$ is already a large induced triangle-free subgraph.
+\item If $\Delta$ is not large, then Shearer's theorem gives a large independent set, which is itself an induced triangle-free subgraph.
+\item Optimise the tradeoff at
+\[
+d_\ast=\sqrt{\frac{n\log n}{\log\log n}}.
+\]
+\end{enumerate}
+
+This is exactly the Round-1 degree-splitting strategy, but with a much stronger low-degree theorem.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{External theorem used.}
+I use the following result of Shearer.
+
+\medskip
+\noindent
+\textbf{Shearer (1995).}
+There exists an absolute constant $c_0>0$ and an absolute threshold $D$ such that every $K_4$-free graph on $n$ vertices with maximum degree $d\ge D$ has an independent set of size at least
+\[
+c_0\,\frac{n\log d}{d\log\log d}.
+\]
+
+\paragraph{Theorem 5.1.}
+There exists an absolute constant $c>0$ such that every $K_4$-free graph $G$ on $n$ vertices contains an induced triangle-free subgraph on at least
+\[
+c\sqrt{\frac{n\log n}{\log\log n}}
+\]
+vertices. Equivalently,
+\[
+f(n)=\Omega\!\left(\sqrt{\frac{n\log n}{\log\log n}}\right).
+\]
+
+\paragraph{Proof.}
+Let $G$ be a $K_4$-free graph on $n$ vertices, and let $\Delta$ be its maximum degree.
+
+Set
+\[
+d_\ast=\sqrt{\frac{n\log n}{\log\log n}}.
+\]
+
+We consider three cases.
+
+\medskip
+\noindent
+\textbf{Case 1: $\Delta\ge d_\ast$.}
+Choose a vertex $v$ of degree $\Delta$. Then $G[N(v)]$ is triangle-free by the Round-1 neighborhood observation, and
+\[
+|N(v)|=\Delta\ge d_\ast.
+\]
+So $G$ contains an induced triangle-free subgraph on at least $d_\ast$ vertices.
+
+\medskip
+\noindent
+\textbf{Case 2: $D\le \Delta<d_\ast$.}
+Apply Shearer's theorem with $d=\Delta$. Then $G$ has an independent set of size at least
+\[
+c_0\,\frac{n\log \Delta}{\Delta\log\log \Delta}.
+\]
+An independent set is an induced triangle-free subgraph.
+
+Now the function
+\[
+\phi(x)=\frac{\log x}{x\log\log x}
+\]
+is decreasing for all sufficiently large $x$, in particular for $x\ge D$ after enlarging $D$ if necessary. Since $\Delta<d_\ast$, we get
+\[
+\frac{\log \Delta}{\Delta\log\log \Delta}
+\ge
+\frac{\log d_\ast}{d_\ast\log\log d_\ast}.
+\]
+Hence
+\[
+\alpha(G)\ge c_0\,\frac{n\log d_\ast}{d_\ast\log\log d_\ast}.
+\]
+
+For all sufficiently large $n$,
+\[
+\log d_\ast
+=
+\frac12\log n+\frac12\log\log n-\frac12\log\log\log n
+\ge \frac13\log n,
+\]
+and also
+\[
+\log\log d_\ast\le 2\log\log n.
+\]
+Therefore
+\[
+\alpha(G)\ge
+\frac{c_0}{6}\,
+\frac{n\log n}{d_\ast\log\log n}.
+\]
+Using the definition of $d_\ast$,
+\[
+\frac{n\log n}{d_\ast\log\log n}
+=
+\sqrt{\frac{n\log n}{\log\log n}}
+=
+d_\ast.
+\]
+So in Case~2 we again obtain an induced triangle-free subgraph of size at least
+\[
+\frac{c_0}{6}\sqrt{\frac{n\log n}{\log\log n}}.
+\]
+
+\medskip
+\noindent
+\textbf{Case 3: $\Delta<D$.}
+Then the trivial greedy bound gives
+\[
+\alpha(G)\ge \frac{n}{D+1}.
+\]
+For sufficiently large $n$ this is much larger than $\sqrt{n\log n/\log\log n}$, since
+\[
+\frac{n}{D+1}\bigg/\sqrt{\frac{n\log n}{\log\log n}}
+=
+\frac{\sqrt n}{D+1}\sqrt{\frac{\log\log n}{\log n}}
+\to \infty.
+\]
+So Case~3 is also stronger than the target lower bound for all large $n$.
+
+Combining the three cases, every sufficiently large $n$-vertex $K_4$-free graph contains an induced triangle-free subgraph of size at least
+\[
+c\sqrt{\frac{n\log n}{\log\log n}}
+\]
+for some absolute constant $c>0$.
+
+By decreasing $c$ if necessary, the same asymptotic lower bound may be stated for all $n\ge 2$.
+\hfill $\square$
+
+\paragraph{Corollary 5.2.}
+Combining Theorem~5.1 with the current upper bound
+\[
+f(n)\ll \sqrt n\,\log n,
+\]
+we recover the currently best asymptotic window
+\[
+\sqrt{\frac{n\log n}{\log\log n}}
+\ll f(n)\ll \sqrt n\,\log n,
+\]
+and in particular
+\[
+f(n)=n^{1/2+o(1)}.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item The neighborhood argument is exactly the Round-1 observation: if $N(v)$ contained a triangle, adding $v$ would create a $K_4$.
+\item Shearer's theorem is only applied in the range $\Delta\ge D$, where its hypotheses hold.
+\item The monotonicity of
+\[
+\phi(x)=\frac{\log x}{x\log\log x}
+\]
+is needed only for large $x$, so enlarging $D$ is harmless.
+\item The low-degree case $\Delta<D$ was treated separately, so there is no hidden gap when $\log\log \Delta$ is small.
+\item The conclusion is asymptotic; finite-$n$ issues are absorbed by shrinking the constant $c$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~1 established only the elementary bound
+\[
+f(n)\ge \lfloor \sqrt n\rfloor.
+\]
+This round upgrades that to the best currently known lower bound
+\[
+f(n)\gg \sqrt{\frac{n\log n}{\log\log n}},
+\]
+using Shearer's theorem together with the same maximum-degree split.
+
+So the remaining gap is now exactly the current polylogarithmic gap between
+\[
+\sqrt{\frac{n\log n}{\log\log n}}
+\quad\text{and}\quad
+\sqrt n\,\log n.
+\]
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 68\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item J. B. Shearer, \emph{On the Independence Number of Sparse Graphs}, Random Structures \& Algorithms 7 (1995), 269--271.
+\item D. Mubayi and J. Verstra\"ete, \emph{On the order of the classical Erd\H{o}s--Rogers functions}, 2024 preprint / 2025 publication version checked.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#620}, accessed 2026-03-08.
+\item Round-1 notes from the previous iteration of this investigation (used only for the neighborhood observation and the maximum-degree splitting strategy listed in Section~2).
+\end{itemize}

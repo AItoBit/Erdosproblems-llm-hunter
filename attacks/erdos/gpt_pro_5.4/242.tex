@@ -1,0 +1,204 @@
+\section{Erd\H{o}s Problem \#242 (Erd\H{o}s--Straus)}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I am pursuing \textbf{(C) obstruction/correction}. Round-1 reduced the problem only to the classes $n\equiv 1,5 \ (\mathrm{mod}\ 6)$. The most promising Round-2 direction is to squeeze the hard set much further by proving explicit new decomposition formulas and then converting them into strong necessary conditions for any counterexample.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 facts.
+\begin{enumerate}
+\item \textbf{Scaling lemma.} If
+\[
+\frac{4}{n}=\frac1x+\frac1y+\frac1z,
+\]
+then for every positive integer $m$,
+\[
+\frac{4}{mn}=\frac1{mx}+\frac1{my}+\frac1{mz}.
+\]
+\item \textbf{Prime reduction.} If a counterexample exists, then some prime counterexample exists.
+\item \textbf{Round-1 explicit decompositions.} All $n$ divisible by $2$ are solvable; all $n$ divisible by $3$ are solvable.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are three genuinely new formulas in this round.
+\begin{enumerate}
+\item An Obl\'ath-type divisor criterion: if $n+1$ has a divisor congruent to $3 \ (\mathrm{mod}\ 4)$, then $4/n$ has a three-term unit-fraction decomposition.
+\item A direct formula for every $n\equiv 3 \ (\mathrm{mod}\ 4)$.
+\item A direct formula for every $n\equiv 5 \ (\mathrm{mod}\ 8)$.
+\end{enumerate}
+Together these shrink the only possible counterexamples all the way down to
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 24),
+\]
+and in fact force every prime divisor of a counterexample to lie in the same residue class.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the large remaining set of odd integers coprime to $6$. I will now prove three new infinite families of explicit solutions and then intersect their complements. The target claims are:
+\begin{enumerate}
+\item if $n+1$ has a divisor $\equiv 3 \ (\mathrm{mod}\ 4)$, then $n$ is not a counterexample;
+\item if $n\equiv 3 \ (\mathrm{mod}\ 4)$, then $n$ is not a counterexample;
+\item if $n\equiv 5 \ (\mathrm{mod}\ 8)$, then $n$ is not a counterexample;
+\item therefore any counterexample must satisfy $n\equiv 1 \ (\mathrm{mod}\ 24)$;
+\item by prime reduction, every prime divisor of any counterexample must also be congruent to $1 \ (\mathrm{mod}\ 24)$.
+\end{enumerate}
+This is a genuine strengthening of Round-1 because it cuts the hard set from two residue classes modulo $6$ down to one residue class modulo $24$, plus extra multiplicative restrictions.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Proposition 5.1 (Obl\'ath-type divisor criterion).}
+Assume $n>2$ is odd and
+\[
+ n+1=m(4k-1)
+\]
+with integers $k\ge 1$ and $m\ge 2$. Then
+\[
+ \frac{4}{n}=\frac{1}{km}+\frac{1}{kn}+\frac{1}{kmn},
+\]
+with three distinct positive denominators.
+
+\emph{Proof.}
+Compute:
+\[
+\frac{1}{km}+\frac{1}{kn}+\frac{1}{kmn}
+ =\frac{n+m+1}{kmn}.
+\]
+Since $n=(4k-1)m-1$, we have
+\[
+ n+m+1=((4k-1)m-1)+m+1=4km,
+\]
+so the right-hand side equals $4/n$.
+
+It remains to check distinctness. Because $n>2$ is odd and $n+1=m(4k-1)$ with $4k-1$ odd, the factor $m$ is even, hence $m\ge 2$. Also
+\[
+ n=(4k-1)m-1>m,
+\]
+so $km<kn$, and since $m\ge 2$ we also have $kn<kmn$. Thus the three denominators are distinct.
+
+\paragraph{Corollary 5.2.}
+If $n>2$ and $n+1$ has a divisor congruent to $3 \ (\mathrm{mod}\ 4)$, then $n$ satisfies the Erd\H{o}s--Straus conclusion.
+
+\emph{Proof.}
+If $n$ is even, Round-1 already settles it. If $n$ is odd, write the divisor as $4k-1$ and put $m=(n+1)/(4k-1)$. Then $m\ge 2$ as above, and Proposition 5.1 applies.
+
+\paragraph{Proposition 5.3 (all $n\equiv 3 \ (\mathrm{mod}\ 4)$).}
+If $n=4k+3$ with $k\ge 0$, then
+\[
+ \frac{4}{n}=\frac{1}{k+1}+\frac{1}{M+1}+\frac{1}{M(M+1)},
+\qquad M:=(k+1)n.
+\]
+Hence every $n\equiv 3 \ (\mathrm{mod}\ 4)$ is solvable.
+
+\emph{Proof.}
+First,
+\[
+\frac{1}{k+1}+\frac{1}{M}
+ =\frac{n+1}{(k+1)n}
+ =\frac{4(k+1)}{(k+1)n}
+ =\frac{4}{n}.
+\]
+Now split $1/M$ using the identity
+\[
+ \frac{1}{M}=\frac{1}{M+1}+\frac{1}{M(M+1)}.
+\]
+This gives the claimed decomposition.
+
+Distinctness is immediate: $k+1<M+1<M(M+1)$ because $M=(k+1)n\ge 3(k+1)$.
+
+\paragraph{Proposition 5.4 (all $n\equiv 5 \ (\mathrm{mod}\ 8)$).}
+If $n=8k+5$ with $k\ge 0$, then
+\[
+ \frac{4}{n}
+ =\frac{1}{2(k+1)}+\frac{1}{(k+1)n}+\frac{1}{2(k+1)n}.
+\]
+Hence every $n\equiv 5 \ (\mathrm{mod}\ 8)$ is solvable.
+
+\emph{Proof.}
+Let $A=(k+1)n$. Then
+\[
+\frac{1}{A}+\frac{1}{2A}=\frac{3}{2A},
+\]
+so
+\[
+\frac{1}{2(k+1)}+\frac{1}{A}+\frac{1}{2A}
+ =\frac{n+3}{2(k+1)n}.
+\]
+Because $n=8k+5$, we have $n+3=8(k+1)$, hence the last expression is $4/n$.
+Distinctness is clear because
+\[
+2(k+1)<(k+1)n<2(k+1)n
+\]
+for every $n>2$.
+
+\paragraph{Theorem 5.5 (sharp residue-class reduction obtained in Round-2).}
+If $n>2$ is a counterexample to the Erd\H{o}s--Straus conjecture, then
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 24).
+\]
+Moreover:
+\begin{enumerate}
+\item every prime divisor of $n$ is congruent to $1 \ (\mathrm{mod}\ 24)$;
+\item every odd prime divisor of $n+1$ is congruent to $1 \ (\mathrm{mod}\ 4)$.
+\end{enumerate}
+
+\emph{Proof.}
+By Round-1, a counterexample cannot be even and cannot be divisible by $3$. So $n$ is odd.
+
+By Proposition 5.3, a counterexample cannot satisfy $n\equiv 3 \ (\mathrm{mod}\ 4)$. Hence
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 4).
+\]
+By Proposition 5.4, a counterexample cannot satisfy $n\equiv 5 \ (\mathrm{mod}\ 8)$. Since an odd number congruent to $1 \ (\mathrm{mod}\ 4)$ is either $1$ or $5 \ (\mathrm{mod}\ 8)$, we deduce
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 8).
+\]
+By Corollary 5.2, a counterexample cannot satisfy $n\equiv 2 \ (\mathrm{mod}\ 3)$, because then $3\mid (n+1)$ and $3\equiv 3 \ (\mathrm{mod}\ 4)$. Since $3$ does not divide $n$ already, this forces
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 3).
+\]
+Combining $n\equiv 1 \ (\mathrm{mod}\ 8)$ and $n\equiv 1 \ (\mathrm{mod}\ 3)$ yields
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 24),
+\]
+as claimed.
+
+For the prime-factor statement, let $p$ be any prime divisor of a counterexample $n$. By the Round-1 scaling lemma, if $p$ were solvable then $n$ would also be solvable. So $p$ is itself a counterexample. Applying the residue-class conclusion to $p$ gives
+\[
+ p\equiv 1 \ (\mathrm{mod}\ 24).
+\]
+Finally, if an odd prime divisor $r$ of $n+1$ satisfied $r\equiv 3 \ (\mathrm{mod}\ 4)$, then Corollary 5.2 would solve $n$, contradiction. Therefore every odd prime divisor of $n+1$ is $1 \ (\mathrm{mod}\ 4)$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Distinctness in Proposition 5.1.} The only delicate case is $m=1$, which would give repeated denominators. But when $n$ is odd this cannot happen: $n+1$ is even while $4k-1$ is odd, so $m$ must be even.
+\item \textbf{Does Proposition 5.4 really add something new?} Yes. The residue class $13 \ (\mathrm{mod}\ 24)$ is not covered by the Round-1 even/$3\mid n$ cases and is not covered by Proposition 5.3, but it is covered by Proposition 5.4.
+\item \textbf{Did I use prime reduction correctly?} Yes. If a prime divisor $p$ of $n$ were solvable, scaling by $n/p$ would solve $n$.
+\item \textbf{Any missed residue class?} The surviving classes modulo $24$ after Round-1 plus Propositions 5.3 and 5.4 are $1$ and $17$. Corollary 5.2 eliminates $17$ because then $3\mid (n+1)$. So only $1 \ (\mathrm{mod}\ 24)$ remains.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round-2 strengthens the necessary conditions on any counterexample from
+\[
+ n\equiv 1,5 \ (\mathrm{mod}\ 6)
+\]
+all the way down to
+\[
+ n\equiv 1 \ (\mathrm{mod}\ 24),
+\]
+with two further multiplicative obstructions:
+\begin{enumerate}
+\item every prime factor of $n$ must itself be $1 \ (\mathrm{mod}\ 24)$;
+\item every odd prime factor of $n+1$ must be $1 \ (\mathrm{mod}\ 4)$.
+\end{enumerate}
+This is a genuine gap-closure step, but it does not yet resolve the conjecture.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 58\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#242}, current version page on erdosproblems.com, accessed 2026-03-07.
+\item S. Mihnea and D. C. Bogdan, \emph{Further verification and empirical evidence for the Erd\H{o}s--Straus conjecture}, arXiv:2509.00128 (checked for current computational status, though not used in the proofs above).
+\end{enumerate}
+
+\newpage

@@ -1,0 +1,392 @@
+\section{Erd\H{o}s Problem \#43 (Round 9)}
+
+\subsection{1) ROUND-9 OBJECTIVE}
+
+\textbf{Path chosen: (C) --- obstruction/correction for the remaining open part.}
+
+Round~8 proved that the whole \emph{coefficientwise-nonnegative positive-definite-kernel} method is optimised by the discrete Fej\'er kernels, but it still left two loopholes:
+\begin{itemize}
+\item it did not treat \emph{sign-changing} positive-definite weights, and
+\item it used the slightly non-sharp pointwise majorant
+\[
+\Delta_A(n)+\Delta_B(n)\le T\,\mathbf 1_{\{0\}}(n)+1,
+\qquad T:=|A|+|B|,
+\]
+whereas the exact envelope is \((T-1)\mathbf 1_{\{0\}}+1\).
+\end{itemize}
+
+The most promising Round~9 direction is therefore to close both loopholes completely.  I prove an exact optimisation theorem for the \emph{full translation-invariant positive-semidefinite quadratic-form framework}: even allowing arbitrary finitely supported real \emph{sign-changing} positive-definite weights, the unique optimiser is still the discrete Fej\'er kernel, and the exact best bound improves to
+\[
+|A|^2+|B|^2
+\le
+\min_{L\ge 1}(N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr).
+\]
+Thus Round~8's method-class barrier becomes both sharper and strictly broader.
+
+\subsection{2) Round-8 FOUNDATION USED}
+
+I explicitly use the following Round~8 ingredients.
+\begin{itemize}
+\item \textbf{Round~8 Fej\'er--Riesz factorisation input.}  If a finitely supported sequence \(w\) has nonnegative Fourier transform, then \(w=\psi*\widetilde\psi\) for some finitely supported complex sequence \(\psi\).
+\item \textbf{Round~8 lower-bound mechanism.}  If \(w=\psi*\widetilde\psi\) and \(\operatorname{supp}(\psi)\subseteq\{0,\dots,L-1\}\), then
+\[
+\sum_n w(n)\Delta_A(n)=\|\mathbf 1_A*\psi\|_2^2,
+\qquad
+\sum_n w(n)\Delta_B(n)=\|\mathbf 1_B*\psi\|_2^2,
+\]
+and Cauchy--Schwarz on the support interval of length at most \(N+L-1\) gives the lower bound
+\[
+\|\mathbf 1_A*\psi\|_2^2+\|\mathbf 1_B*\psi\|_2^2
+\ge \frac{(|A|^2+|B|^2)\,\widehat w(0)}{N+L-1}.
+\]
+\item \textbf{Round~1/2 uniqueness of nonzero differences.}  For Sidon \(A,B\) with \((A-A)\cap(B-B)=\{0\}\), each nonzero integer belongs to at most one of \(A-A\) or \(B-B\), and with multiplicity one there.  Hence if
+\[
+\Delta_A:=\mathbf 1_A*\mathbf 1_{-A},\qquad \Delta_B:=\mathbf 1_B*\mathbf 1_{-B},
+\]
+then
+\[
+\Delta_A(0)+\Delta_B(0)=|A|+|B|=T,
+\qquad
+0\le \Delta_A(n)+\Delta_B(n)\le 1\quad (n\ne 0).
+\]
+\end{itemize}
+
+I do \emph{not} reprove these; I strengthen and sharpen their combined consequence.
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-9)}
+
+There are three genuinely new ingredients in this round.
+\begin{itemize}
+\item \textbf{Exact pointwise envelope.}  The correct universal majorant is
+\[
+\Delta_A(n)+\Delta_B(n)
+\le (T-1)\mathbf 1_{\{0\}}(n)+1,
+\]
+not \(T\mathbf 1_{\{0\}}+1\).  This gains one full unit at the diagonal.
+
+\item \textbf{Sign-changing positive-definite weights are now allowed.}  I treat arbitrary finitely supported real sequences \(w\) with \(\widehat w\ge 0\), without assuming coefficientwise nonnegativity of \(w\).  The upper bound uses the positive part \(w_+\) off the diagonal, while the lower bound still comes from Fej\'er--Riesz factorisation.
+
+\item \textbf{Exact optimiser for the full framework.}  After this extension, the unique optimiser (up to positive scalar multiple) is still the discrete Fej\'er kernel
+\[
+F_L(n):=\max\{L-|n|,0\},
+\]
+and the exact best bound obtainable by this whole method is
+\[
+\mathcal B_{\mathrm{full}}(N,T)
+=
+\min_{L\ge 1}(N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr).
+\]
+This strictly sharpens Round~8.
+\end{itemize}
+
+\subsection{4) ATTACK PLAN (ROUND-9)}
+
+\textbf{Exact gap left after Round~8.}
+Round~8 exhausted coefficientwise-nonnegative positive-definite weights, but not general sign-changing positive-definite weights.  Since sign changes are the natural way one might hope to exploit cancellation, this was the last obvious loophole in the translation-invariant quadratic-form approach.
+
+\textbf{Claims proved in this round.}
+\begin{enumerate}
+\item For every finitely supported real positive-definite sequence \(w\) with support in \([-(L-1),L-1]\) and \(W:=\widehat w(0)=\sum_n w(n)>0\), one has
+\[
+\frac{(|A|^2+|B|^2)W}{N+L-1}
+\le T w(0)+\sum_{n\ne 0} w_+(n).
+\]
+\item Every such \(w\) satisfies
+\[
+T w(0)+\sum_{n\ne 0} w_+(n)
+\ge W\Bigl(1+\frac{T-1}{L}\Bigr),
+\]
+with equality if and only if \(w\) is a positive multiple of the discrete Fej\'er kernel \(F_L\).
+\item Consequently, the full sign-changing positive-definite framework has exact optimum
+\[
+\mathcal B_{\mathrm{full}}(N,T)
+=
+\min_{L\ge 1}(N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr),
+\]
+so even this broadened method still cannot reach a uniform \(O(1)\) error term.
+\end{enumerate}
+
+This overcomes the remaining Round~8 obstacle by closing the only evident kernel-theoretic loophole.
+
+\subsection{5) WORK (ROUND-9)}
+
+Write
+\[
+a:=|A|,\qquad b:=|B|,\qquad S:=a^2+b^2,\qquad T:=a+b.
+\]
+Also write
+\[
+\Delta_A:=\mathbf 1_A*\mathbf 1_{-A},\qquad \Delta_B:=\mathbf 1_B*\mathbf 1_{-B},\qquad X:=\Delta_A+\Delta_B.
+\]
+
+\subsubsection{5.1 Exact pointwise envelope}
+
+By the Round~1/2 uniqueness-of-differences input,
+\[
+X(0)=T,
+\qquad
+X(n)\in\{0,1\}\quad (n\ne 0).
+\]
+Therefore the exact universal majorant is
+\begin{equation}
+\label{eq:r9-pointwise}
+X(n)\le (T-1)\mathbf 1_{\{0\}}(n)+1
+\qquad (n\in\mathbb Z).
+\end{equation}
+This is strictly sharper than the Round~8 majorant \(T\mathbf 1_{\{0\}}+1\).
+
+\subsubsection{5.2 The full positive-definite-weight inequality}
+
+Call a real sequence \(w:\mathbb Z\to\mathbb R\) \emph{admissible of span \(L\)} if:
+\begin{itemize}
+\item \(w\) is supported in \(\{-(L-1),\dots,L-1\}\),
+\item \(\widehat w(\theta):=\sum_n w(n)e^{2\pi i n\theta}\ge 0\) for all \(\theta\in\mathbb R/\mathbb Z\),
+\item \(W:=\widehat w(0)=\sum_n w(n)>0\).
+\end{itemize}
+The last condition excludes weights whose zero Fourier coefficient vanishes, since those give no lower bound at all.
+
+By the Fej\'er--Riesz theorem (Round~8 foundation), there exists a finitely supported complex sequence \(\psi\) with support in \(\{0,\dots,L-1\}\) such that
+\[
+w=\psi*\widetilde\psi,
+\qquad
+\widetilde\psi(n):=\overline{\psi(-n)}.
+\]
+Hence
+\[
+\sum_n w(n)\Delta_A(n)=\|\mathbf 1_A*\psi\|_2^2,
+\qquad
+\sum_n w(n)\Delta_B(n)=\|\mathbf 1_B*\psi\|_2^2.
+\]
+Since \(\mathbf 1_A*\psi\) and \(\mathbf 1_B*\psi\) are supported in intervals of length at most \(N+L-1\), Cauchy--Schwarz gives
+\[
+\|\mathbf 1_A*\psi\|_2^2
+\ge \frac{\bigl|\sum_x (\mathbf 1_A*\psi)(x)\bigr|^2}{N+L-1}
+=\frac{a^2\bigl|\sum_j \psi(j)\bigr|^2}{N+L-1}
+=\frac{a^2 W}{N+L-1},
+\]
+and similarly
+\[
+\|\mathbf 1_B*\psi\|_2^2\ge \frac{b^2 W}{N+L-1}.
+\]
+Adding,
+\begin{equation}
+\label{eq:r9-lower}
+\sum_n w(n)X(n)
+\ge \frac{SW}{N+L-1}.
+\end{equation}
+
+For the upper bound, use \eqref{eq:r9-pointwise}.  Since \(X(0)=T\) and \(0\le X(n)\le 1\) for \(n\ne 0\),
+\[
+\sum_n w(n)X(n)
+=Tw(0)+\sum_{n\ne 0} w(n)X(n)
+\le T w(0)+\sum_{n\ne 0} w_+(n),
+\]
+where
+\[
+w_+(n):=\max\{w(n),0\}.
+\]
+Combining with \eqref{eq:r9-lower} yields the master inequality
+\begin{equation}
+\label{eq:r9-master}
+\frac{SW}{N+L-1}
+\le T w(0)+\sum_{n\ne 0} w_+(n).
+\end{equation}
+
+\subsubsection{5.3 Optimising over all sign-changing positive-definite weights}
+
+We now estimate the right-hand side of \eqref{eq:r9-master} from below.
+
+First,
+\[
+\sum_{n\ne 0} w_+(n)
+\ge \sum_{n\ne 0} w(n)
+= W-w(0).
+\]
+Therefore
+\begin{equation}
+\label{eq:r9-firstlb}
+T w(0)+\sum_{n\ne 0} w_+(n)
+\ge W+(T-1)w(0).
+\end{equation}
+
+Second, apply Cauchy--Schwarz to the vector \((\psi(0),\dots,\psi(L-1))\):
+\[
+\left|\sum_{j=0}^{L-1}\psi(j)\right|^2
+\le L \sum_{j=0}^{L-1}|\psi(j)|^2.
+\]
+Now
+\[
+W=\left|\sum_{j=0}^{L-1}\psi(j)\right|^2,
+\qquad
+w(0)=\sum_{j=0}^{L-1}|\psi(j)|^2,
+\]
+so
+\begin{equation}
+\label{eq:r9-fejer-ineq}
+W\le L w(0).
+\end{equation}
+Substituting \eqref{eq:r9-fejer-ineq} into \eqref{eq:r9-firstlb} gives
+\[
+T w(0)+\sum_{n\ne 0} w_+(n)
+\ge W\Bigl(1+\frac{T-1}{L}\Bigr).
+\]
+Using this in \eqref{eq:r9-master} yields
+\begin{equation}
+\label{eq:r9-bound-fixedL}
+S
+\le (N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr)
+\end{equation}
+for every admissible weight of span \(L\).
+
+Now define
+\[
+F_L(n):=\max\{L-|n|,0\}
+=\bigl(\mathbf 1_{[0,L-1]}*\mathbf 1_{-[0,L-1]}\bigr)(n).
+\]
+Then \(F_L\) is admissible of span \(L\), with
+\[
+F_L(0)=L,
+\qquad
+\sum_n F_L(n)=L^2,
+\qquad
+\sum_{n\ne 0}(F_L)_+(n)=L^2-L.
+\]
+Hence in \eqref{eq:r9-master} one has equality at every optimisation step:
+\[
+T F_L(0)+\sum_{n\ne 0}(F_L)_+(n)=TL+(L^2-L)=L^2\Bigl(1+\frac{T-1}{L}\Bigr),
+\]
+so \eqref{eq:r9-bound-fixedL} is sharp for each fixed \(L\).
+
+Therefore the exact optimum over the full framework is
+\begin{equation}
+\label{eq:r9-full-optimum}
+\mathcal B_{\mathrm{full}}(N,T)
+=
+\min_{L\ge 1}(N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr).
+\end{equation}
+This is the precise analogue of the Round~8 formula, but sharper by one unit at the diagonal and valid for \emph{all} real positive-definite weights.
+
+\subsubsection{5.4 Equality and uniqueness of the optimiser}
+
+The preceding proof also identifies the unique optimiser for each fixed \(L\).
+
+Equality in
+\[
+\sum_{n\ne 0} w_+(n)\ge \sum_{n\ne 0} w(n)
+\]
+holds if and only if
+\[
+w(n)\ge 0\qquad (n\ne 0).
+\]
+Equality in \eqref{eq:r9-fejer-ineq} holds if and only if the length-\(L\) vector
+\[
+(\psi(0),\dots,\psi(L-1))
+\]
+has all entries with the same phase and the same modulus.  After multiplication by a unimodular constant, this means
+\[
+\psi(0)=\cdots=\psi(L-1)=c^{1/2}
+\]
+for some \(c>0\).  Then
+\[
+w=\psi*\widetilde\psi = c F_L.
+\]
+Thus the unique optimiser for span \(L\), up to positive scalar multiple, is the discrete Fej\'er kernel \(F_L\).
+
+\subsubsection{5.5 Consequences for the remaining open problem}
+
+Expanding \eqref{eq:r9-full-optimum},
+\[
+\mathcal B_{\mathrm{full}}(N,T)
+=
+N+T+L-2+\frac{(T-1)(N-1)}{L}
+\]
+for the optimal integer \(L\).  Hence by AM--GM,
+\begin{equation}
+\label{eq:r9-amgm}
+\mathcal B_{\mathrm{full}}(N,T)
+\ge N+T-2+2\sqrt{(T-1)(N-1)}.
+\end{equation}
+Taking \(L=\lceil \sqrt{(T-1)(N-1)}\rceil\) gives the matching upper estimate
+\begin{equation}
+\label{eq:r9-nearopt}
+\mathcal B_{\mathrm{full}}(N,T)
+\le N+T-1+2\sqrt{(T-1)(N-1)}.
+\end{equation}
+
+Round~4 produced actual feasible families with
+\[
+T=|A|+|B|=(\sqrt2+o(1))\sqrt N.
+\]
+For these families, \eqref{eq:r9-amgm} yields
+\[
+\mathcal B_{\mathrm{full}}(N,T)
+\ge N + 2^{5/4}N^{3/4}+o(N^{3/4}).
+\]
+So even the whole sign-changing positive-definite-weight method cannot yield a uniform \(N+O(1)\) bound for \(S=|A|^2+|B|^2\), and therefore cannot settle the original \(O(1)\)-gap conjecture.
+
+A further conceptual obstruction also emerges: if one tries to use a mean-zero sign-changing kernel (that is, \(W=\widehat w(0)=0\)), then the lower bound \eqref{eq:r9-lower} collapses to the trivial inequality \(0\le \cdots\).  Thus any successful sign-changing-kernel attack would need a \emph{different lower-bound mechanism} than the support-size Cauchy--Schwarz step used in Rounds~3--8.
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+
+\paragraph{(i) Did Round~9 really go beyond Round~8?}
+Yes.  Round~8 required coefficientwise nonnegativity of \(w\).  Round~9 allows arbitrary real sign-changing positive-definite weights and proves the exact optimum for this larger class.  It also corrects the non-sharp diagonal majorant used previously.
+
+\paragraph{(ii) Is the sign-changing upper bound valid?}
+Yes.  For \(n\ne 0\) we only use \(0\le X(n)\le 1\), so
+\[
+w(n)X(n)\le w_+(n)
+\]
+termwise.  No positivity of \(w\) is required.
+
+\paragraph{(iii) What about weights with \(W=0\)?}
+These are precisely the weights for which the Round~8/9 lower-bound mechanism gives no information, since the quantity \(\bigl|\sum_j \psi(j)\bigr|^2\) vanishes.  Excluding them from optimisation is therefore necessary and mathematically honest.
+
+\paragraph{(iv) Equality cases.}
+Both equality conditions were checked explicitly:
+\begin{itemize}
+\item equality in \(\sum_{n\ne 0} w_+(n)\ge \sum_{n\ne 0} w(n)\) forces all off-diagonal coefficients nonnegative;
+\item equality in \(W\le L w(0)\) forces \(\psi\) to be constant-phase and constant-modulus on \(\{0,\dots,L-1\}\), hence \(w\) is a positive multiple of \(F_L\).
+\end{itemize}
+So the optimiser is uniquely identified.
+
+\paragraph{(v) Interaction with Round~4 lower families.}
+There is no contradiction: Round~4 gives feasible pairs with \(T\asymp \sqrt N\), and Round~9 shows that on exactly this scale the full positive-definite-kernel framework is intrinsically stuck at an \(N^{3/4}\)-type barrier.
+
+\paragraph{(vi) What remains open?}
+The original first question
+\[
+\binom{|A|}{2}+\binom{|B|}{2}
+\le \binom{f(N)}{2}+O(1)
+\]
+remains open.  Round~9 does \emph{not} solve it.  What it does prove is that the entire translation-invariant positive-semidefinite quadratic-form strategy of Rounds~3--8 is now exhausted exactly.
+
+\subsection{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round~9 makes a mathematically substantive advance beyond Round~8:
+\begin{itemize}
+\item it corrects the diagonal majorant from \(T\mathbf 1_{\{0\}}+1\) to the exact envelope \((T-1)\mathbf 1_{\{0\}}+1\),
+\item it extends the barrier theorem from coefficientwise-nonnegative weights to \emph{all} finitely supported real sign-changing positive-definite weights, and
+\item it determines the exact optimum of this whole broader framework:
+\[
+\mathcal B_{\mathrm{full}}(N,T)
+=
+\min_{L\ge 1}(N+L-1)\Bigl(1+\frac{T-1}{L}\Bigr),
+\]
+with unique optimiser the discrete Fej\'er kernel.
+\end{itemize}
+
+So the first question remains open, but another major proof strategy is now ruled out in its strongest translation-invariant quadratic-form form.
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 94\%}
+
+\subsection{9) REFERENCES}
+
+\begin{itemize}
+\item Round~8 write-up supplied in this task.
+\item The classical Fej\'er--Riesz factorisation theorem for nonnegative trigonometric polynomials.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#43}, problem page and discussion thread.
+\end{itemize}

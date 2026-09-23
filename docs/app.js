@@ -311,6 +311,46 @@ function formatCompletion(value) {
 }
 
 /**
+ * Keep the database's mathematical status separate from claims by LLMs.
+ */
+function getProblemStatus(problem) {
+    return problem.status || 'not available';
+}
+
+function getProblemStatusClass(problem) {
+    return problem.is_solved ? 'problem-status-solved' : 'problem-status-open';
+}
+
+function getCompletionSourceLabel(problem) {
+    if (!formatCompletion(problem.completion)) return '';
+    return problem.completion_source === 'database'
+        ? 'Resolved in Tao\'s database'
+        : 'LLM estimate';
+}
+
+function formatStatusSync(sync) {
+    if (!sync || !sync.checked_at) return '';
+    const checkedDate = escapeHtml(String(sync.checked_at).slice(0, 10));
+    const commit = /^[a-f0-9]{40}$/i.test(sync.source_commit || '') ? sync.source_commit : '';
+    const sourceUrl = commit
+        ? `https://github.com/teorth/erdosproblems/commit/${commit}`
+        : 'https://github.com/teorth/erdosproblems';
+    return `Problem status and formalization data checked ${checkedDate} against ` +
+        `<a href="${sourceUrl}" target="_blank" rel="noopener">Tao's database${commit ? ` (${commit.slice(0, 7)})` : ''}</a>.`;
+}
+
+function formatFormalization(formalization, label) {
+    if (!formalization || !formalization.state) return '';
+    const stateLabel = { yes: 'formalized', no: 'not formalized', unformalized: 'not formalized' };
+    let state = escapeHtml(stateLabel[formalization.state] || formalization.state);
+    if (formalization.url && /^https?:\/\//i.test(formalization.url)) {
+        const url = escapeHtml(formalization.url).replace(/"/g, '&quot;');
+        state = `<a href="${url}" target="_blank" rel="noopener">${state}</a>`;
+    }
+    return `<li><strong>${escapeHtml(label)} formalization:</strong> ${state}</li>`;
+}
+
+/**
  * Initialize collapsible sections
  */
 function initCollapsibles() {
@@ -393,6 +433,11 @@ window.ProblemHunting = {
     formatReviewHandles,
     formatReviewHandleLinks,
     formatCompletion,
+    getProblemStatus,
+    getProblemStatusClass,
+    getCompletionSourceLabel,
+    formatStatusSync,
+    formatFormalization,
     initThemeToggle,
     initCollapsibles,
     scrollToElement,

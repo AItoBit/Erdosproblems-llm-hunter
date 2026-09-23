@@ -1,0 +1,355 @@
+\section{Round 4: A strict asymptotic improvement beyond $1/\sqrt 8$}
+
+\subsection{Round-4 objective}
+We continue on path \textbf{(A)} (proof direction).
+Round~3 showed that the entire \emph{variance-only} strategy is blocked at the constant
+\(1/\sqrt 8\).
+The most promising next step is therefore to add one genuinely new structural ingredient.
+In this round we use a finite subset of the Fourier-sign constraints from the continuous
+Swinnerton-Dyer--Haugland model, and show that these constraints already force a
+\emph{strict} asymptotic improvement over the Round~2 bound.
+The new conclusion is:
+\[
+ c\;>\;\frac{1}{\sqrt 8},
+\]
+where \(c=\lim_{N\to\infty} M(N)/N\) is the minimum overlap constant.
+The gain is non-explicit, but rigorous.
+
+\subsection{Round-3 foundation used}
+We use the following Round~3 outputs as black boxes:
+\begin{itemize}
+\item Theorem~36.5: the universal lower bound \(M(N)\ge N/\sqrt{8-1/N^2}>N/\sqrt 8\).
+\item Theorem~36.8: the constant \(1/\sqrt 8\) is a genuine barrier for any argument using only bounded variance of the difference law.
+\item The qualitative lesson extracted in Round~3: any improvement beyond \(1/\sqrt 8\) must come from additional structure of the overlap function, not from variance alone.
+\end{itemize}
+
+\subsection{New insight / tool (Round-4)}
+The new ingredient is a \emph{finite Fourier obstruction}.
+Working in the continuous model for the minimum overlap constant, White records two key necessary properties of every overlap function \(M\):
+\begin{enumerate}
+\item \(\operatorname{Var}(M)\le 2/3\),
+\item \(\int_{-2}^{2}\cos(\pi kx)M(x)\,dx\le 0\) for every integer \(k\ge 1\).
+\end{enumerate}
+Round~2 used only the first item.
+We show here that adding only the four frequencies
+\[
+ k\in\{3,4,7,12\}
+\]
+already rules out every variance-extremizing density.
+This yields a compactness proof that the optimal constant is not merely \(\ge 1/\sqrt 8\), but in fact \emph{strictly larger}.
+
+\subsection{Attack plan (Round-4)}
+The exact gap left after Round~3 is that the bound \(1/\sqrt 8\) might conceivably still be the true infimum of the continuous relaxation, even though the variance-only method cannot prove anything larger.
+To close that gap we proceed as follows:
+\begin{enumerate}
+\item Pass to the continuous overlap model, which equals the asymptotic constant \(c\).
+\item Relax to a larger compact class \(\mathcal C_4\) of densities satisfying only the necessary conditions:
+nonnegativity, total mass \(1\), height at most \(1\), variance at most \(2/3\), and the four cosine-sign inequalities for \(k=3,4,7,12\).
+\item Show that a minimizer of \(\|M\|_\infty\) over \(\mathcal C_4\) exists.
+\item Show that if this minimum were \(1/\sqrt 8\), then the minimizer would have to be the uniform density on an interval of length \(2\sqrt 2\).
+\item Prove that no such interval density can satisfy the four cosine-sign constraints.
+\end{enumerate}
+This overcomes the Round~3 obstruction: the variance extremizers are now excluded by an additional finite piece of structure.
+
+\subsection{Work (Round-4)}
+Let \(M(N)\) denote the discrete minimum-overlap quantity and let
+\[
+ c:=\lim_{N\to\infty} \frac{M(N)}{N}.
+\]
+We use the following external theorem.
+
+\medskip
+\noindent\textbf{External theorem (Swinnerton-Dyer--Haugland, as quoted by White).}
+The constant \(c\) equals the infimum of \(\|M_f\|_\infty\) over all measurable
+\(f:[-1,1]\to[0,1]\) with \(\int_{-1}^{1}f=1\), where
+\[
+ M_f(x):=\int_{-1}^{1} f(t)(1-f(x+t))\,dt,\qquad x\in[-2,2].
+\]
+Moreover every such \(M_f\) satisfies
+\[
+ 0\le M_f(x)\le 1,\qquad \int_{-2}^{2} M_f(x)\,dx=1,
+\]
+\[
+ \int_{-2}^{2}(x-E(M_f))^2M_f(x)\,dx\le \frac23,
+\]
+and
+\[
+ \int_{-2}^{2}\cos(\pi kx)M_f(x)\,dx\le 0\qquad (k\ge 1).
+\]
+
+Motivated by this, define \(\mathcal C_4\) to be the class of all measurable functions
+\(M:[-2,2]\to[0,1]\) such that
+\[
+ \int_{-2}^{2} M(x)\,dx=1,
+\qquad
+ \int_{-2}^{2}(x-E(M))^2M(x)\,dx\le \frac23,
+\]
+and
+\[
+ \int_{-2}^{2}\cos(\pi kx)M(x)\,dx\le 0
+ \qquad \text{for each }k\in\{3,4,7,12\},
+\]
+where
+\[
+ E(M):=\int_{-2}^{2} xM(x)\,dx.
+\]
+Since every genuine overlap function \(M_f\) lies in \(\mathcal C_4\), we have
+\[
+ c\ge \lambda_4,
+ \qquad
+ \lambda_4:=\inf_{M\in\mathcal C_4}\|M\|_\infty.
+\]
+We therefore seek a lower bound for \(\lambda_4\).
+
+\medskip
+\noindent\textbf{Lemma 36.10 (continuous variance bound with equality case).}
+Let \(M\) be a probability density on \(\mathbb R\), i.e.
+\(M\ge 0\), \(\int_{\mathbb R}M=1\), and assume \(\|M\|_\infty\le \Omega\).
+Then
+\[
+ \operatorname{Var}(M)\ge \frac{1}{12\Omega^2}.
+\]
+Equality holds if and only if
+\[
+ M(x)=\Omega\,\mathbf 1_I(x)
+\]
+for some interval \(I\subset \mathbb R\) of length \(|I|=1/\Omega\).
+
+\noindent\emph{Proof.}
+Write \(\mu:=E(M)\) and let \(X\) be a random variable with density \(M\).
+For every \(r\ge 0\),
+\[
+ \mathbb P(|X-\mu|\le r)=\int_{\mu-r}^{\mu+r}M(x)\,dx\le 2\Omega r.
+\]
+Hence
+\[
+ \mathbb P(|X-\mu|>r)\ge \max(0,1-2\Omega r).
+\]
+Using the tail-integral identity,
+\[
+ \operatorname{Var}(M)=\mathbb E[(X-\mu)^2]
+ =\int_0^{\infty}2r\,\mathbb P(|X-\mu|>r)\,dr
+ \ge \int_0^{1/(2\Omega)}2r(1-2\Omega r)\,dr
+ =\frac{1}{12\Omega^2}.
+\]
+Now suppose equality holds.
+Then equality must hold at every step above, so for every \(0\le r\le 1/(2\Omega)\),
+\[
+ \int_{\mu-r}^{\mu+r}M(x)\,dx=2\Omega r,
+\]
+and for every \(r\ge 1/(2\Omega)\),
+\(
+ \mathbb P(|X-\mu|>r)=0
+\).
+The second condition shows that \(M\) is supported on
+\([\mu-1/(2\Omega),\mu+1/(2\Omega)]\).
+The first condition implies that on each symmetric interval about \(\mu\), the average value of \(M\) is exactly \(\Omega\); since \(M\le \Omega\) a.e., this forces
+\(M(x)=\Omega\) almost everywhere on
+\([\mu-1/(2\Omega),\mu+1/(2\Omega)]\).
+Because the total mass is \(1\), the interval length is exactly \(1/\Omega\).
+Conversely, the uniform density on any interval of length \(1/\Omega\) has variance \(1/(12\Omega^2)\).
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 36.11 (interval extremizers violate a finite Fourier-sign set).}
+For each real \(c\), define
+\[
+ J_c(x):=\frac{1}{2\sqrt 2}\,\mathbf 1_{[c-\sqrt 2,\,c+\sqrt 2]}(x).
+\]
+Assume that \([c-\sqrt 2,c+\sqrt 2]\subset[-2,2]\), equivalently
+\(
+ |c|\le 2-\sqrt 2
+\).
+Then there exists \(k\in\{3,4,7,12\}\) such that
+\[
+ \int_{-2}^{2}\cos(\pi kx)J_c(x)\,dx>0.
+\]
+In particular, no density of the form \(J_c\) belongs to \(\mathcal C_4\).
+
+\noindent\emph{Proof.}
+A direct computation gives, for every integer \(k\ge 1\),
+\[
+ \int_{-2}^{2}\cos(\pi kx)J_c(x)\,dx
+ =\frac{1}{2\sqrt 2}\int_{c-\sqrt 2}^{c+\sqrt 2}\cos(\pi kx)\,dx
+ =\frac{\sin(\pi k\sqrt 2)}{\pi k\sqrt 2}\cos(\pi kc).
+\]
+We now analyze signs.
+Since
+\[
+ 3\sqrt 2\in(4,9/2),\qquad 4\sqrt 2\in(11/2,6),\qquad 7\sqrt 2\in(19/2,10),\qquad 12\sqrt 2\in(16,17),
+\]
+we have
+\[
+ \sin(3\pi\sqrt 2)>0,
+ \qquad
+ \sin(4\pi\sqrt 2)<0,
+ \qquad
+ \sin(7\pi\sqrt 2)<0,
+ \qquad
+ \sin(12\pi\sqrt 2)>0.
+\]
+We partition the admissible range \(|c|\le 2-\sqrt 2\) into cases.
+
+\smallskip
+\emph{Case 1:} \(|c|\le 1/8\).
+Then \(3\pi|c|\le 3\pi/8<\pi/2\), so \(\cos(3\pi c)>0\).
+Since \(\sin(3\pi\sqrt 2)>0\), the \(k=3\) coefficient is positive.
+
+\smallskip
+\emph{Case 2:} \(1/8<|c|<3/8\).
+Then \(4\pi|c|\in(\pi/2,3\pi/2)\), so \(\cos(4\pi c)<0\).
+Since \(\sin(4\pi\sqrt 2)<0\), the \(k=4\) coefficient is positive.
+
+\smallskip
+\emph{Case 3:} \(3/8\le |c|<1/2\).
+Then
+\[
+ 7\pi|c|\in[21\pi/8,7\pi/2).
+\]
+Reducing modulo \(2\pi\), this lies in
+\([5\pi/8,3\pi/2)\), where cosine is negative.
+Hence \(\cos(7\pi c)<0\).
+Since \(\sin(7\pi\sqrt 2)<0\), the \(k=7\) coefficient is positive.
+
+\smallskip
+\emph{Case 4:} \(|c|=1/2\).
+Then
+\[
+ \cos(12\pi c)=\cos(6\pi)=1,
+\]
+and since \(\sin(12\pi\sqrt 2)>0\), the \(k=12\) coefficient is positive.
+
+\smallskip
+\emph{Case 5:} \(1/2<|c|\le 2-\sqrt 2\).
+Because \(2-\sqrt 2<2/3\), we have
+\[
+ 3\pi|c|\in(3\pi/2,2\pi),
+\]
+so \(\cos(3\pi c)>0\).
+Again the \(k=3\) coefficient is positive.
+
+All cases yield a positive cosine coefficient for some \(k\in\{3,4,7,12\}\).
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Theorem 36.12 (four Fourier inequalities already beat the variance barrier).}
+The infimum \(\lambda_4=\inf_{M\in\mathcal C_4}\|M\|_\infty\) is attained, and satisfies
+\[
+ \lambda_4>\frac{1}{\sqrt 8}.
+\]
+
+\noindent\emph{Proof.}
+Let
+\[
+ B:=\{M\in L^\infty([-2,2]): \|M\|_\infty\le 1\}.
+\]
+By Banach--Alaoglu, \(B\) is weak-* compact in \(L^\infty([-2,2])=(L^1([-2,2]))^*\).
+Now set
+\[
+ K:=\{M\in B: 0\le M\le 1\ \text{a.e.}\}.
+\]
+We claim that \(K\) is weak-* closed in \(B\).
+Indeed, if \(M_n\in K\) and \(M_n\rightharpoonup^* M\), then for every nonnegative \(\varphi\in L^1([-2,2])\),
+\[
+ \int_{-2}^{2}\varphi(x)M(x)\,dx=\lim_{n\to\infty}\int_{-2}^{2}\varphi(x)M_n(x)\,dx\ge 0,
+\]
+so \(M\ge 0\) a.e.; applying the same argument to \(1-M_n\) gives \(1-M\ge 0\) a.e.
+Hence \(K\) is weak-* compact.
+The class \(\mathcal C_4\) is weak-* closed inside \(K\), because the maps
+\[
+ M\mapsto \int_{-2}^{2}M(x)\,dx,
+ \qquad
+ M\mapsto \int_{-2}^{2}xM(x)\,dx,
+ \qquad
+ M\mapsto \int_{-2}^{2}x^2M(x)\,dx,
+\]
+and
+\[
+ M\mapsto \int_{-2}^{2}\cos(\pi kx)M(x)\,dx
+ \qquad (k\in\{3,4,7,12\})
+\]
+are all weak-* continuous.
+Hence \(\mathcal C_4\) is weak-* compact.
+Since the \(L^\infty\)-norm is weak-* lower semicontinuous, there exists
+\(M_*\in\mathcal C_4\) such that
+\(
+ \|M_*\|_\infty=\lambda_4
+\).
+
+Now Lemma~36.10 applied to \(M_*\) gives
+\[
+ \operatorname{Var}(M_*)\ge \frac{1}{12\lambda_4^2}.
+\]
+But \(M_*\in\mathcal C_4\), so \(\operatorname{Var}(M_*)\le 2/3\).
+Therefore
+\[
+ \frac{1}{12\lambda_4^2}\le \frac23,
+\qquad\text{hence}\qquad
+ \lambda_4\ge \frac{1}{\sqrt 8}.
+\]
+Suppose for contradiction that \(\lambda_4=1/\sqrt 8\).
+Then
+\[
+ \operatorname{Var}(M_*)\le \frac23 = \frac{1}{12\lambda_4^2},
+\]
+so equality holds in Lemma~36.10.
+Hence
+\[
+ M_*(x)=\frac{1}{2\sqrt 2}\,\mathbf 1_{[c-\sqrt 2,\,c+\sqrt 2]}(x)
+\]
+for some real \(c\).
+Because \(M_*\) is supported in \([-2,2]\), necessarily \(|c|\le 2-\sqrt 2\).
+But Lemma~36.11 shows that such a density violates at least one of the four cosine-sign constraints defining \(\mathcal C_4\), contradiction.
+Therefore \(\lambda_4>1/\sqrt 8\).
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 36.13 (strict asymptotic improvement).}
+Let \(c\) be the minimum overlap constant.
+Then there exists \(\eta>0\) such that
+\[
+ c\ge \frac{1}{\sqrt 8}+\eta.
+\]
+In particular,
+\[
+ c>\frac{1}{\sqrt 8}.
+\]
+
+\noindent\emph{Proof.}
+Every genuine overlap function \(M_f\) belongs to \(\mathcal C_4\), so
+\[
+ c=\inf_f \|M_f\|_\infty\ge \inf_{M\in\mathcal C_4}\|M\|_\infty=\lambda_4.
+\]
+By Theorem~36.12, \(\lambda_4>1/\sqrt 8\).
+Setting \(\eta:=\lambda_4-1/\sqrt 8\) gives the claim.
+\hfill$\square$
+
+\subsection{Adversarial verification}
+\begin{itemize}
+\item \emph{Use of Round~3.} The proof genuinely builds on Round~3's diagnosis that variance alone is insufficient. The new input is precisely the finite Fourier-sign set \(k\in\{3,4,7,12\}\).
+\item \emph{Compactness step.} We minimize over the larger relaxed class \(\mathcal C_4\), not over the genuine overlap class. This is deliberate: a lower bound for the larger class is automatically a lower bound for the actual problem since every overlap function lies in \(\mathcal C_4\).
+\item \emph{Lower semicontinuity.} The weak-* lower semicontinuity of the \(L^\infty\)-norm is standard. This is enough to ensure the infimum over the weak-* compact class \(\mathcal C_4\) is attained.
+\item \emph{Equality case in Lemma~36.10.} The proof forces equality simultaneously in the tail bound and in the support truncation, which leaves only the uniform interval density. No other shape can attain the variance minimum under a height cap.
+\item \emph{Coverage of all centers \(c\).} The case split in Lemma~36.11 covers the full admissible interval \(|c|\le 2-\sqrt 2\). Endpoints \(|c|=1/2\) are handled separately because the \(k=7\) coefficient vanishes there.
+\item \emph{Scope of the conclusion.} The theorem proves a \emph{strict} asymptotic improvement, but it does not produce an explicit numerical value of \(\eta\). So it does not compete with the best known explicit lower bounds; it isolates the obstruction more sharply and proves that the Round~2/3 barrier is not the true asymptotic threshold.
+\end{itemize}
+
+\subsection{Final}
+\textbf{UNRESOLVED (but strictly advanced).}
+We have now proved a new theorem beyond Round~3:
+there exists \(\eta>0\) such that the minimum overlap constant satisfies
+\[
+ c\ge \frac{1}{\sqrt 8}+\eta.
+\]
+Thus the Round~2 constant \(1/\sqrt 8\) is not merely a barrier of the variance-only method; it is \emph{not} the true asymptotic value even in the relaxed class obtained by adding only four Fourier-sign constraints.
+The remaining gap is quantitative: we do not yet have an explicit lower bound for \(\eta\).
+
+\subsection{Completion estimate}
+\textbf{COMPLETION: 68\%}.
+
+\subsection{References}
+\begin{itemize}
+\item Round~3 notes in \texttt{36\_solutions.tex}.
+\item Ethan Patrick White, ``Erd\H{o}s' minimum overlap problem,'' arXiv:2201.05704.
+\item J. K. Haugland, ``The minimum overlap problem revisited,'' arXiv:1609.08000 (for the Swinnerton-Dyer/Haugland continuous reformulation context).
+\end{itemize}

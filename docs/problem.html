@@ -51,6 +51,8 @@
                     'set': ['{\\{#1\\}}', 1],
                     'qed': '{\\square}',
                     'eps': '{\\varepsilon}',
+                    'overd': '{\\overline{d}}',
+                    'underd': '{\\underline{d}}',
                     'ol': ['{\\overline{#1}}', 1],
                     'ul': ['{\\underline{#1}}', 1],
                     'wh': ['{\\widehat{#1}}', 1],
@@ -217,12 +219,23 @@
             }
             
             if (type === 'erdos') {
-                const overallStatus = determineOverallStatus(problem.attacks);
+                const overallStatus = problem.llm_status || determineOverallStatus(problem.attacks);
+                const problemStatus = window.ProblemHunting.escapeHtml(window.ProblemHunting.getProblemStatus(problem));
+                const problemStatusClass = window.ProblemHunting.getProblemStatusClass(problem);
+                const statusUpdated = problem.status_updated
+                    ? ` (updated ${window.ProblemHunting.escapeHtml(problem.status_updated)})`
+                    : '';
+                const completionSource = window.ProblemHunting.getCompletionSourceLabel(problem);
+                const statusSync = window.ProblemHunting.formatStatusSync(
+                    typeof erdosStatusSync === 'undefined' ? null : erdosStatusSync
+                );
                 metaDiv.innerHTML = `
                     <p><strong>Problem Number:</strong> ${problem.number}</p>
+                    <p><strong>Problem Status:</strong> <span class="${problemStatusClass}">${problemStatus}</span>${statusUpdated}</p>
                     <p><strong>LLM Claims:</strong> ${overallStatus}</p>
-                    <p><strong>Completion:</strong> ${completionLabel}</p>
+                    <p><strong>Completion:</strong> ${completionLabel}${completionSource ? ` (${completionSource})` : ''}</p>
                     <p><strong>Community Review:</strong> ${reviewDisplay}</p>
+                    ${statusSync ? `<p class="status-note">${statusSync}</p>` : ''}
                 `;
             } else {
                 const overallStatus = determineOverallStatus(problem.attacks);
@@ -238,11 +251,14 @@
             // External links (problem statements are on external sites only)
             const linksDiv = document.getElementById('problem-links');
             if (type === 'erdos') {
+                const formalizations = window.ProblemHunting.formatFormalization(problem.statement_formalization, 'Statement') +
+                    window.ProblemHunting.formatFormalization(problem.solution_formalization, 'Solution');
                 linksDiv.innerHTML = `
                     <p>For the full problem statement and comments, see:</p>
                     <ul>
                         <li><a href="${problem.problem_url}" target="_blank"><strong>View on erdosproblems.com</strong></a></li>
-                        <li><a href="${problem.database_url}" target="_blank">Erdos Problems Database (Terry Tao)</a></li>
+                        <li><a href="${problem.database_url}" target="_blank" rel="noopener">Latest status and formalization links in Terry Tao's Erdos Problems Database</a></li>
+                        ${formalizations}
                     </ul>
                 `;
             } else {
@@ -331,6 +347,20 @@
 
         function formatTeX(text) {
             if (!text) return '';
+
+            // Complete articles include a preamble that is not browser content.
+            // Require document markers on their own lines so examples in fragments survive.
+            const documentStart = /^[ \t]*\\begin\{document\}[ \t]*\r?$/m.exec(text);
+            if (documentStart) {
+                text = text.slice(documentStart.index + documentStart[0].length);
+                text = text.replace(/^[ \t]*\\end\{document\}[ \t]*\r?$/m, '');
+                text = text.replace(/^[ \t]*\{\\(LARGE|large)\s+(.+)\}(?:\\\\(?:\[[^\]]*\])?)?[ \t]*\r?$/gm, function(match, size, title) {
+                    const tag = size === 'LARGE' ? 'h2' : 'h3';
+                    return `<${tag}>${title}</${tag}>`;
+                });
+                text = text.replace(/^[ \t]*\\small[ \t]*(?:\r?\n|$)/gm, '');
+                text = text.replace(/\\#/g, '#');
+            }
 
             function normalizeBlockquotes(input) {
                 const lines = input.split('\n');
@@ -616,7 +646,19 @@
             text = text.replace(/\\begin\{corollary\}(\[.*?\])?([\s\S]*?)\\end\{corollary\}/g, '<div class="corollary"><strong>Corollary$1:</strong> $2</div>');
             text = text.replace(/\\begin\{remark\}(\[.*?\])?([\s\S]*?)\\end\{remark\}/g, '<div class="remark"><strong>Remark$1:</strong> $2</div>');
             text = text.replace(/\\begin\{definition\}(\[.*?\])?([\s\S]*?)\\end\{definition\}/g, '<div class="definition"><strong>Definition$1:</strong> $2</div>');
-            text = text.replace(/\\begin\{proof\}(\[.*?\])?([\s\S]*?)\\end\{proof\}/g, '<div class="proof"><em>Proof$1:</em> $2 ∎</div>');
+            text = text.replace(/\\begin\{inputthm\}(\[.*?\])?([\s\S]*?)\\end\{inputthm\}/g, '<div class="theorem"><strong>Input$1:</strong> $2</div>');
+            // Separate markers also support a lemma proof nested inside a longer proof.
+            text = text.replace(/\\begin\{proof\}(\[.*?\])?/g, '<div class="proof"><em>Proof$1:</em> ');
+            text = text.replace(/\\end\{proof\}/g, ' ∎</div>');
+            text = text.replace(/\\begin\{thebibliography\}\{[^}]*\}([\s\S]*?)\\end\{thebibliography\}/g, function(match, content) {
+                let hasItem = false;
+                const items = content.replace(/\\bibitem(?:\[([^\]]*)\])?\{([^}]*)\}/g, function(item, label, key) {
+                    const prefix = hasItem ? '</li>' : '';
+                    hasItem = true;
+                    return `${prefix}<li><strong>[${label || key}]</strong> `;
+                });
+                return `<h3>References</h3><ul>${items.trim().replace(/\n{2,}/g, ' ')}${hasItem ? '</li>' : ''}</ul>`;
+            });
             
             // Convert psmallmatrix to regular pmatrix (MathJax will handle it)
             text = text.replace(/\\begin\{psmallmatrix\}/g, '\\begin{pmatrix}');

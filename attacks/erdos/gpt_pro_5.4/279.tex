@@ -1,0 +1,189 @@
+
+\section*{Round 2 continuation for Erd\H{o}s Problems \#278, \#279, \#281}
+
+We write $d(S)$ for natural density when it exists, $\overline d(S)$ for upper density, and $\underline d(S)$ for lower density.
+
+\section*{Problem 279}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+We pursue \textbf{(C) obstruction/correction}. Round 1 only gave heuristic density considerations. The strongest promising direction is to determine whether the unresolved issue is really one of \emph{density} or one of \emph{finiteness}. The new theorem below shows that density is not the obstruction at all.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+We use two Round-1 ideas.
+
+\begin{enumerate}
+\item The reformulation: an integer $m$ is covered once there is a modulus $n$ with
+\[
+m\equiv a_n\pmod n
+\]
+and with $n$ small enough relative to $m$ so that the quotient $t=(m-a_n)/n$ automatically satisfies $t\ge k$.
+\item For pairwise coprime moduli, finite-prefix avoidance densities factor exactly.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new insight is that for pairwise coprime moduli, the exceptional set has upper density $0$ \emph{for every choice of residues}, not merely for some probabilistically chosen one.
+
+In particular, for the primes and any fixed $k\ge 1$, the set of integers not representable as
+\[
+a_p+t p \qquad (t\ge k)
+\]
+has upper density $0$ for \emph{every} residue choice $(a_p \bmod p)_p$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was this: the heuristic suggested an uncovered proportion about $1/\log x$, but there was no rigorous theorem.
+
+We now prove a sharp partial result:
+
+\begin{quote}
+For any pairwise coprime sequence $(n_i)$ with $\sum_i 1/n_i=\infty$, and for any fixed $k\ge 1$, \emph{every} choice of residues gives an exceptional set of upper density $0$.
+\end{quote}
+
+This cleanly isolates the remaining difficulty in Erd\H{o}s Problem \#279: the open problem is not about achieving density $0$, but about upgrading density $0$ to \emph{finiteness}.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\paragraph{Theorem.}
+Let
+\[
+1<n_1<n_2<\cdots
+\]
+be pairwise coprime positive integers with
+\[
+\sum_{i=1}^\infty \frac{1}{n_i}=\infty.
+\]
+Fix $k\ge 1$, and choose arbitrary residues $a_i \pmod{n_i}$. Define
+\[
+E_k(\mathbf a)
+:=
+\left\{
+m\in\mathbf N :
+\text{there do not exist } i\ge 1 \text{ and } t\ge k \text{ with } m=a_i+t n_i
+\right\}.
+\]
+Then
+\[
+\overline d\big(E_k(\mathbf a)\big)=0.
+\]
+
+\paragraph{Proof.}
+Fix $r\ge 1$, and let
+\[
+N_r:=n_1n_2\cdots n_r.
+\]
+Define the finite-prefix avoidance set
+\[
+B_r(\mathbf a)
+:=
+\{\,m\in\mathbf Z : m\not\equiv a_i \pmod{n_i}\ \text{for all } 1\le i\le r\,\}.
+\]
+Because the moduli $n_1,\dots,n_r$ are pairwise coprime, the Chinese remainder theorem gives a bijection
+\[
+\mathbf Z/N_r\mathbf Z \longrightarrow
+\mathbf Z/n_1\mathbf Z \times \cdots \times \mathbf Z/n_r\mathbf Z.
+\]
+Hence the proportion of residue classes modulo $N_r$ that avoid all $a_i \pmod{n_i}$ is exactly
+\[
+\prod_{i=1}^r \left(1-\frac{1}{n_i}\right).
+\]
+Therefore
+\[
+d\big(B_r(\mathbf a)\big)=\prod_{i=1}^r \left(1-\frac{1}{n_i}\right),
+\]
+and this value is independent of the chosen residues.
+
+Now let $m\ge (k+1)n_r$. If $m\notin B_r(\mathbf a)$, then for some $1\le i\le r$ we have
+\[
+m\equiv a_i\pmod{n_i}.
+\]
+Write
+\[
+m=a_i+t n_i.
+\]
+Since $0\le a_i\le n_i-1$ and $n_i\le n_r$, we get
+\[
+m-a_i\ge (k+1)n_r-(n_i-1)\ge (k+1)n_i-(n_i-1) > k n_i.
+\]
+Because $m-a_i$ is divisible by $n_i$, it follows that $t\ge k$.
+
+So every integer $m\ge (k+1)n_r$ outside $B_r(\mathbf a)$ is already covered by one of the first $r$ progressions with quotient at least $k$. Equivalently,
+\[
+E_k(\mathbf a)\cap[(k+1)n_r,\infty)\subseteq B_r(\mathbf a).
+\]
+Taking upper densities,
+\[
+\overline d\big(E_k(\mathbf a)\big)\le d\big(B_r(\mathbf a)\big)
+=
+\prod_{i=1}^r \left(1-\frac{1}{n_i}\right).
+\]
+This holds for every $r$. Since $\sum_i 1/n_i=\infty$, the infinite product on the right tends to $0$. Therefore
+\[
+\overline d\big(E_k(\mathbf a)\big)=0.
+\]
+This proves the theorem.
+\hfill $\square$
+
+\paragraph{Corollary (primes).}
+Take $n_i=p_i$ to be the primes. Then for every fixed $k\ge 1$ and \emph{every} choice of residues $a_p \pmod p$,
+\[
+\overline d\!\left(
+\left\{
+m :
+m\neq a_p+t p \text{ for all primes } p \text{ and all } t\ge k
+\right\}
+\right)
+=0.
+\]
+
+Thus, in Problem \#279, the unresolved issue is not density zero but finite exceptionality.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Threshold check.} The proof only uses the implication
+\[
+m\ge (k+1)n_r \ \text{ and }\ m\equiv a_i\pmod{n_i}
+\Longrightarrow m=a_i+t n_i \text{ with } t\ge k.
+\]
+This is valid because $a_i\le n_i-1$.
+
+\item \textbf{Why only upper density?} From
+\[
+E_k(\mathbf a)\cap[(k+1)n_r,\infty)\subseteq B_r(\mathbf a)
+\]
+we get an upper-density bound. That is exactly what is needed to conclude $\overline d(E_k(\mathbf a))=0$.
+
+\item \textbf{Does this prove the original problem?} No. A set can have upper density $0$ and still be infinite. So the argument does \emph{not} settle finiteness.
+
+\item \textbf{Is pairwise coprimality essential?} Yes. The exact factorisation
+\[
+d(B_r(\mathbf a))=\prod_{i\le r}(1-1/n_i)
+\]
+comes from the Chinese remainder theorem and can fail without pairwise coprimality.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 2 proves a substantial weakening of the target statement:
+
+\begin{quote}
+For the primes (indeed, for any pairwise coprime sequence with divergent reciprocal sum), the exceptional set has upper density $0$ for \emph{every} choice of residues and every fixed $k\ge 1$.
+\end{quote}
+
+So Erd\H{o}s Problem \#279 is now sharply reduced to the problem of upgrading ``upper density $0$'' to ``finite''.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 45\%.
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item P. Erd\H{o}s and R. L. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique 28, Geneva, 1980.
+\end{enumerate}
+

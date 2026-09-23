@@ -1,0 +1,717 @@
+\section{Problem 15 --- Round 3}
+
+\subsection*{1) ROUND-3 OBJECTIVE}
+
+\textbf{(C) Obstruction / correction.}
+I continue the \emph{obstruction/correction} track from Round~2.
+Using the Round~2 equivalence between
+\[
+\sum_{n=1}^\infty (-1)^n \frac{n}{p_n}
+\quad\text{and}\quad
+\sum_{m=3}^\infty \frac{(-1)^{\pi(m)}}{m\log m},
+\]
+the natural next gap is no longer the prime-indexed series itself, but rather the
+\emph{exact amount of discrepancy cancellation} needed for the parity sequence
+\[
+\varepsilon_m := (-1)^{\pi(m)}.
+\]
+
+The most promising Round~3 direction is therefore:
+
+\begin{itemize}
+\item derive an \emph{exact necessary-and-sufficient criterion} for convergence in terms of the discrepancy
+\[
+A(x):=\sum_{3\le m\le x}\varepsilon_m,
+\]
+and
+\item show that the Round~2 sufficient condition is essentially sharp in the model setting by constructing an explicit equidistributed sign sequence with discrepancy as small as
+\[
+O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+\]
+for which the weighted series
+\[
+\sum \frac{\varepsilon_m}{m\log m}
+\]
+still diverges.
+\end{itemize}
+
+This strictly advances Round~2 in two ways:
+it replaces a merely sufficient discrepancy condition by an exact one, and it rules out an entire stronger class of discrepancy-only proof strategies.
+
+\subsection*{2) Round-2 FOUNDATION USED}
+
+I use the following Round~2 results as fixed input.
+
+\begin{enumerate}
+\item \textbf{Round~2 Theorem~5.7 (Said--Tao equivalence).}
+There exists a constant \(C\in\mathbb R\) such that
+\[
+\sum_{n\le x} (-1)^n \frac{n}{p_n}
+=
+\frac12 \sum_{3\le m\le x\log x} \frac{(-1)^{\pi(m)}}{m\log m}
++ C + o(1).
+\]
+Hence the original Erd\H{o}s series converges if and only if
+\[
+\sum_{m=3}^\infty \frac{(-1)^{\pi(m)}}{m\log m}
+\]
+converges.
+
+\item \textbf{Round~2 Proposition~5.8 (one sufficient discrepancy criterion).}
+If
+\[
+A(x)=O\!\left(\frac{x}{(\log\log x)^{1+\varepsilon}}\right)
+\]
+for some \(\varepsilon>0\), then the parity series, and hence the original Erd\H{o}s series, converges.
+
+\item \textbf{Round~2 Proposition~5.9 (equidistribution alone is insufficient).}
+There exists an equidistributed sign sequence for which
+\[
+\sum \frac{\varepsilon_m}{m\log m}
+\]
+diverges.
+\end{enumerate}
+
+I will \emph{not} re-prove these results; Round~3 begins from them.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-3)}
+
+The new ingredients are the following.
+
+\begin{enumerate}
+\item \textbf{Exact Abel criterion.}
+The parity series is convergent if and only if a certain discrepancy-weighted series
+\[
+\sum_{m\ge 3} A(m)\left(\frac1{m\log m}-\frac1{(m+1)\log(m+1)}\right)
+\]
+converges. Equivalently, it is convergent if and only if the improper integral
+\[
+\int_3^\infty A(t)\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)\,dt
+\]
+converges.
+
+\item \textbf{A strictly stronger general sufficient criterion.}
+If \(L(x)\to\infty\) and
+\[
+\int_3^\infty \frac{dt}{t\log t\,L(t)}<\infty,
+\]
+then
+\[
+A(x)=O\!\left(\frac{x}{L(x)}\right)
+\]
+already implies convergence.
+This sharpens Round~2 Proposition~5.8.
+
+\item \textbf{Near-sharp model obstruction.}
+I construct an explicit equidistributed sign sequence with discrepancy
+\[
+O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+\]
+whose \(1/(m\log m)\)-weighted series diverges.
+Thus one cannot hope to prove convergence from any discrepancy estimate of that scale alone.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-3)}
+
+After Round~2, the remaining gap is:
+
+\begin{quote}
+\emph{What quantitative control on}
+\[
+A(x)=\sum_{3\le m\le x} (-1)^{\pi(m)}
+\]
+\emph{is actually equivalent to convergence of}
+\[
+\sum_{m=3}^\infty \frac{(-1)^{\pi(m)}}{m\log m}\,?
+\]
+\end{quote}
+
+The Round~2 result only gave a sufficient condition.
+To advance beyond that, I will do two things.
+
+\begin{enumerate}
+\item Starting from Round~2 Theorem~5.7, I will derive an \emph{exact summation-by-parts identity} for the parity series, yielding a necessary-and-sufficient convergence criterion in terms of \(A(x)\).
+
+\item I will then build an explicit model sign sequence showing that even the much stronger discrepancy bound
+\[
+A(x)=O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+\]
+does \emph{not} force convergence in general.
+This strengthens the Round~2 obstruction, which only ruled out plain equidistribution.
+\end{enumerate}
+
+This attacks the exact Round~2 gap: it identifies the correct kernel against which the discrepancy must cancel, and it proves that a whole class of weaker discrepancy-only strategies cannot possibly settle the original problem.
+
+\subsection*{5) WORK (ROUND-3)}
+
+\subsubsection*{5.1. Exact Abel criterion for the parity series}
+
+Set
+\[
+\varepsilon_m := (-1)^{\pi(m)},\qquad
+T(N):=\sum_{m=3}^N \frac{\varepsilon_m}{m\log m},\qquad
+A(N):=\sum_{m=3}^N \varepsilon_m
+\]
+for integers \(N\ge 3\).
+
+By Round~2 Theorem~5.7, the original Erd\H{o}s series converges if and only if \(T(N)\) converges as \(N\to\infty\).
+
+\medskip
+
+\textbf{Lemma 6.1 (discrete Abel identity).}
+For every integer \(N\ge 3\),
+\[
+T(N)
+=
+\frac{A(N)}{N\log N}
++
+\sum_{m=3}^{N-1}
+A(m)\left(
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+\right).
+\]
+
+\textbf{Proof.}
+Apply the standard summation-by-parts identity
+\[
+\sum_{m=3}^N a_m b_m
+=
+A(N)b_N + \sum_{m=3}^{N-1} A(m)(b_m-b_{m+1}),
+\]
+where \(A(m):=\sum_{j=3}^m a_j\), with
+\[
+a_m=\varepsilon_m,\qquad b_m=\frac{1}{m\log m}.
+\]
+This gives the claimed identity immediately. \qed
+
+\medskip
+
+\textbf{Theorem 6.2 (exact discrepancy criterion).}
+Let
+\[
+A(N)=\sum_{m=3}^N (-1)^{\pi(m)}.
+\]
+Then the following are equivalent:
+
+\begin{enumerate}
+\item[(i)] the series
+\[
+\sum_{n=1}^\infty (-1)^n \frac{n}{p_n}
+\]
+converges;
+
+\item[(ii)] the series
+\[
+\sum_{m=3}^\infty \frac{(-1)^{\pi(m)}}{m\log m}
+\]
+converges;
+
+\item[(iii)] the discrepancy-weighted series
+\[
+\sum_{m=3}^\infty
+A(m)\left(
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+\right)
+\]
+converges.
+\end{enumerate}
+
+Moreover, if \(A(t):=A(\lfloor t\rfloor)\) for real \(t\ge 3\), then these are also equivalent to convergence of the improper integral
+\[
+\int_3^\infty
+A(t)\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)\,dt.
+\]
+
+\textbf{Proof.}
+The equivalence of (i) and (ii) is exactly Round~2 Theorem~5.7.
+
+By Lemma~6.1,
+\[
+T(N)
+=
+\frac{A(N)}{N\log N}
++
+\sum_{m=3}^{N-1}
+A(m)\left(
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+\right).
+\]
+Since \(|A(N)|\le N-2\), we have
+\[
+\left|\frac{A(N)}{N\log N}\right|
+\le \frac{N-2}{N\log N}
+\le \frac{1}{\log N}
+\to 0.
+\]
+Hence \(T(N)\) converges if and only if the partial sums of
+\[
+\sum_{m=3}^\infty
+A(m)\left(
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+\right)
+\]
+converge. This proves the equivalence of (ii) and (iii), hence also of (i)--(iii).
+
+For the integral form, note that
+\[
+\frac{d}{dt}\!\left(\frac{1}{t\log t}\right)
+=
+-\frac{1}{t^2\log t}-\frac{1}{t^2\log^2 t}.
+\]
+Therefore, for every integer \(m\ge 3\),
+\[
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+=
+\int_m^{m+1}
+\left(
+\frac{1}{t^2\log t}
++
+\frac{1}{t^2\log^2 t}
+\right)\,dt.
+\]
+Because \(A(t)=A(m)\) on \(t\in[m,m+1)\), we obtain for every integer \(N\ge 4\),
+\[
+\sum_{m=3}^{N-1}
+A(m)\left(
+\frac{1}{m\log m}
+-
+\frac{1}{(m+1)\log(m+1)}
+\right)
+=
+\int_3^N
+A(t)\left(
+\frac{1}{t^2\log t}
++
+\frac{1}{t^2\log^2 t}
+\right)\,dt.
+\]
+Also,
+\[
+\int_N^{N+1}
+\left|
+A(t)\left(
+\frac{1}{t^2\log t}
++
+\frac{1}{t^2\log^2 t}
+\right)
+\right|\,dt
+\ll
+N\int_N^{N+1}\frac{dt}{t^2\log t}
+\ll \frac{1}{N\log N}\to 0,
+\]
+so convergence of the integrals along integer endpoints \(N\) is equivalent to convergence of the full improper integral. Thus the discrepancy series converges if and only if the improper integral converges. \qed
+
+\medskip
+
+This is an \emph{exact} criterion; unlike the Round~2 Proposition~5.8, it is not merely sufficient.
+
+\subsubsection*{5.2. A stronger general sufficient criterion}
+
+Theorem~6.2 immediately yields the following strengthening of Round~2 Proposition~5.8.
+
+\medskip
+
+\textbf{Corollary 6.3 (general discrepancy criterion).}
+Let \(L:[3,\infty)\to (0,\infty)\) be eventually increasing with \(L(x)\to\infty\).
+Assume
+\[
+A(x)=O\!\left(\frac{x}{L(x)}\right)
+\]
+and
+\[
+\int_3^\infty \frac{dt}{t\log t\,L(t)}<\infty.
+\]
+Then
+\[
+\sum_{n=1}^\infty (-1)^n\frac{n}{p_n}
+\]
+converges.
+
+\textbf{Proof.}
+By Theorem~6.2, it suffices to show that
+\[
+\int_3^\infty
+A(t)\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)\,dt
+\]
+converges.
+From the hypothesis,
+\[
+|A(t)|
+\ll \frac{t}{L(t)}.
+\]
+Hence
+\[
+\left|
+A(t)\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)
+\right|
+\ll
+\frac{1}{t\log t\,L(t)}.
+\]
+The right-hand side is integrable by assumption, so the integral converges absolutely.
+Therefore the original Erd\H{o}s series converges. \qed
+
+\medskip
+
+\textbf{Remark.}
+Round~2 Proposition~5.8 corresponds to the special choice
+\[
+L(t)=(\log\log t)^{1+\varepsilon}.
+\]
+But Corollary~6.3 is strictly stronger.
+For instance, it already gives convergence from the much weaker-looking bound
+\[
+A(x)=O\!\left(
+\frac{x}{\log\log x\,(\log\log\log x)^{1+\varepsilon}}
+\right),
+\]
+because
+\[
+\int_3^\infty
+\frac{dt}{t\log t\,\log\log t\,(\log\log\log t)^{1+\varepsilon}}
+<\infty.
+\]
+
+\subsubsection*{5.3. Near-sharp model obstruction}
+
+I now strengthen the Round~2 obstruction.
+
+\medskip
+
+\textbf{Proposition 6.4 (near-sharp model counterexample).}
+There exists an equidistributed sign sequence \(\sigma(m)\in\{\pm 1\}\) such that, with
+\[
+B(x):=\sum_{3\le m\le x}\sigma(m),
+\]
+one has
+\[
+B(x)=O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right),
+\]
+but nevertheless
+\[
+\sum_{m=3}^\infty \frac{\sigma(m)}{m\log m}
+\]
+diverges (in fact, diverges to \(+\infty\)).
+
+\textbf{Proof.}
+Let
+\[
+L_k:=\log\log k\,\log\log\log k
+\]
+for \(k\) sufficiently large, and define
+\[
+n_k:=2\lfloor kL_k\rfloor+1.
+\]
+For \(k\) large enough, \(L_k>1\), so \(n_k\) is odd and strictly increasing.
+Let
+\[
+Y:=\{n_k: k\ge k_0\}
+\]
+for some sufficiently large initial index \(k_0\), and define
+\[
+\sigma(m):=
+\begin{cases}
+1, & m\in Y,\\
+(-1)^m, & m\notin Y.
+\end{cases}
+\]
+
+Thus \(\sigma\) agrees with the alternating sequence \((-1)^m\), except that at the selected odd integers \(m\in Y\) we flip the value from \(-1\) to \(+1\).
+
+\medskip
+
+\emph{Step 1: discrepancy bound.}
+Let
+\[
+Y(x):=\#\{m\in Y: m\le x\}.
+\]
+I claim that
+\[
+Y(x)=O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right).
+\]
+
+Indeed, fix \(x\) large and suppose \(n_k\le x\).
+Write
+\[
+M(x):=\log\log x\,\log\log\log x.
+\]
+If
+\[
+k>\frac{8x}{M(x)},
+\]
+then for \(x\) large enough one also has \(k>x^{1/2}\).
+Hence
+\[
+\log\log k \ge \frac12 \log\log x,
+\qquad
+\log\log\log k \ge \frac12 \log\log\log x,
+\]
+so
+\[
+L_k=\log\log k\,\log\log\log k
+\ge \frac14 M(x).
+\]
+Therefore
+\[
+n_k \ge kL_k
+>
+\frac{8x}{M(x)}\cdot \frac14 M(x)
+=
+2x,
+\]
+contradicting \(n_k\le x\).
+Thus necessarily
+\[
+k\le \frac{8x}{M(x)},
+\]
+and so
+\[
+Y(x)\le \frac{8x}{\log\log x\,\log\log\log x}
+\]
+for all sufficiently large \(x\), proving the claim.
+
+Now let
+\[
+B_0(x):=\sum_{3\le m\le x} (-1)^m.
+\]
+Then \(B_0(x)=O(1)\).
+Every \(m\in Y\) is odd, so replacing \((-1)^m=-1\) by \(+1\) changes the partial sum by \(+2\).
+Hence
+\[
+B(x)=B_0(x)+2Y(x),
+\]
+and therefore
+\[
+B(x)=O(1)+O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+=
+O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right).
+\]
+In particular \(B(x)=o(x)\), so \(\sigma\) is equidistributed.
+
+\medskip
+
+\emph{Step 2: divergence of the weighted series.}
+We have the exact decomposition
+\[
+\sum_{m=3}^\infty \frac{\sigma(m)}{m\log m}
+=
+\sum_{m=3}^\infty \frac{(-1)^m}{m\log m}
++
+\sum_{m\in Y} \frac{\sigma(m)-(-1)^m}{m\log m}.
+\]
+Since every \(m\in Y\) is odd, \((-1)^m=-1\) and \(\sigma(m)=1\), so
+\[
+\sigma(m)-(-1)^m=2.
+\]
+Therefore
+\[
+\sum_{m=3}^\infty \frac{\sigma(m)}{m\log m}
+=
+\sum_{m=3}^\infty \frac{(-1)^m}{m\log m}
++
+2\sum_{m\in Y}\frac{1}{m\log m}.
+\]
+The first series converges by the alternating series test.
+Thus it remains to prove
+\[
+\sum_{m\in Y}\frac{1}{m\log m}=\infty.
+\]
+
+Since \(m=n_k\) for \(m\in Y\), it is enough to prove
+\[
+\sum_{k\ge k_0} \frac{1}{n_k\log n_k}=\infty.
+\]
+For \(k\) sufficiently large,
+\[
+n_k = 2\lfloor kL_k\rfloor + 1 \le 3kL_k.
+\]
+Also \(L_k=o(k)\), so \(n_k\le k^2\) for large \(k\), and hence
+\[
+\log n_k \le 2\log k.
+\]
+Thus
+\[
+\frac{1}{n_k\log n_k}
+\ge
+\frac{c}{k\log k\,\log\log k\,\log\log\log k}
+\]
+for some absolute constant \(c>0\) and all large \(k\).
+
+Now
+\[
+\sum_{k\ge k_0}
+\frac{1}{k\log k\,\log\log k\,\log\log\log k}
+\]
+diverges by the integral test:
+with \(u=\log\log k\), one has \(du = dk/(k\log k)\), and the corresponding integral becomes
+\[
+\int^\infty \frac{du}{u\log u},
+\]
+which diverges.
+Therefore
+\[
+\sum_{k\ge k_0} \frac{1}{n_k\log n_k}=\infty,
+\]
+so
+\[
+\sum_{m\in Y}\frac{1}{m\log m}=\infty.
+\]
+It follows that
+\[
+\sum_{m=3}^\infty \frac{\sigma(m)}{m\log m}=+\infty.
+\]
+This proves the proposition. \qed
+
+\medskip
+
+\textbf{Corollary 6.5 (strategy barrier).}
+No theorem of the form
+\[
+B(x)=O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+\quad\Longrightarrow\quad
+\sum_{m=3}^\infty \frac{\sigma(m)}{m\log m}\ \text{converges}
+\]
+can hold for arbitrary sign sequences \(\sigma(m)\in\{\pm1\}\).
+
+Thus any unconditional proof of convergence for the prime-parity sequence \(\sigma(m)=(-1)^{\pi(m)}\) must use either:
+
+\begin{itemize}
+\item genuinely stronger cancellation than that scale, or
+\item some additional prime-specific structure beyond a bare discrepancy estimate of that order.
+\end{itemize}
+
+This is a mathematically sharper obstruction than the Round~2 statement that ``equidistribution alone is insufficient.''
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I now try to break the new arguments.
+
+\begin{enumerate}
+\item \textbf{Did Theorem~6.2 secretly assume convergence of the discrepancy series?}
+No.
+The proof is a direct finite summation-by-parts identity, valid for each \(N\), followed by the trivial bound
+\[
+\left|\frac{A(N)}{N\log N}\right|\le \frac1{\log N}\to 0.
+\]
+No prior convergence assumption is used.
+
+\item \textbf{Is the integral criterion exact or merely asymptotic?}
+It is exact.
+The identity
+\[
+\frac{1}{m\log m}-\frac{1}{(m+1)\log(m+1)}
+=
+\int_m^{m+1}\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)\,dt
+\]
+holds exactly, and \(A(t)=A(m)\) on \([m,m+1)\).
+So the discrepancy series and the integral are term-by-term identical after grouping by unit intervals.
+
+\item \textbf{Could Proposition~6.4 fail because the set \(Y\) is not sparse enough?}
+No.
+The counting argument shows
+\[
+Y(x)\ll \frac{x}{\log\log x\,\log\log\log x},
+\]
+which is \(o(x)\).
+Hence the modified sequence is genuinely equidistributed.
+
+\item \textbf{Could the lower bound on \(1/(n_k\log n_k)\) fail?}
+No.
+For large \(k\),
+\[
+n_k\le 3k\log\log k\,\log\log\log k
+\]
+and also \(n_k\le k^2\), so \(\log n_k\le 2\log k\).
+This gives the required lower bound
+\[
+\frac{1}{n_k\log n_k}
+\gg
+\frac{1}{k\log k\,\log\log k\,\log\log\log k}.
+\]
+
+\item \textbf{Does Proposition~6.4 contradict Round~2 Proposition~5.8?}
+No.
+Round~2 Proposition~5.8 required the much stronger bound
+\[
+A(x)=O\!\left(\frac{x}{(\log\log x)^{1+\varepsilon}}\right),
+\]
+while Proposition~6.4 only produces
+\[
+B(x)=O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right).
+\]
+Since
+\[
+\frac{x}{\log\log x\,\log\log\log x}
+\gg
+\frac{x}{(\log\log x)^{1+\varepsilon}}
+\]
+for every fixed \(\varepsilon>0\), there is no inconsistency.
+
+\item \textbf{Interaction with Round~2.}
+Round~2 isolated the prime-parity discrepancy \(A(x)\) as the key quantity.
+Round~3 now identifies the \emph{exact kernel} against which \(A(x)\) must cancel, and shows that the discrepancy scale needed for a general convergence theorem is very close to the natural integrability threshold.
+This is a genuine strengthening, not a reformulation.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~3 makes two substantive advances beyond Round~2:
+
+\begin{enumerate}
+\item It upgrades the Round~2 sufficient criterion to an \emph{exact necessary-and-sufficient criterion}:
+the original Erd\H{o}s series converges if and only if
+\[
+\int_3^\infty
+A(t)\left(\frac{1}{t^2\log t}+\frac{1}{t^2\log^2 t}\right)\,dt
+\]
+converges, where
+\[
+A(t)=\sum_{3\le m\le t} (-1)^{\pi(m)}.
+\]
+
+\item It proves a \emph{near-sharp model obstruction}:
+there exists an equidistributed sign sequence with discrepancy
+\[
+O\!\left(\frac{x}{\log\log x\,\log\log\log x}\right)
+\]
+whose \(1/(m\log m)\)-weighted series diverges.
+Therefore, discrepancy-only arguments at that scale cannot settle the prime problem.
+\end{enumerate}
+
+What remains open is still the prime-specific question:
+can one prove, unconditionally, that the actual discrepancy
+\[
+A(x)=\sum_{3\le m\le x} (-1)^{\pi(m)}
+\]
+has enough cancellation against the kernel from Theorem~6.2 to make the integral converge?
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+\textbf{COMPLETION: 80\%}
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item T. Tao,
+\emph{The convergence of an alternating series of Erd\H{o}s, assuming the Hardy--Littlewood prime tuples conjecture},
+arXiv:2308.07205.
+
+\item T. Tao,
+\emph{The convergence of an alternating series of Erd\H{o}s, assuming the Hardy--Littlewood prime tuples conjecture},
+blog post, 14 Aug.\ 2023.
+\end{enumerate}
+
+\subsection*{10) OUTPUT FORMAT}
+
+This text is written as a drop-in \LaTeX{} fragment with no preamble and no \verb|\begin{document}|.

@@ -1,0 +1,227 @@
+\section{Erd\H{o}s Problem 42 --- Round 4 (Continuation \& Gap-Closure)}
+
+\subsection{1) ROUND-4 OBJECTIVE}
+\textbf{Path (C) (obstruction/correction).}
+Round~3 left two precise issues that can be closed rigorously without restarting:
+
+\begin{itemize}
+  \item the Round~3 interval consequence from the explicit \(M=3\) obstruction was off by one, and
+  \item the obstruction mechanism itself can be upgraded from isolated values of \(N\) to a general \emph{interval-obstruction lemma}.
+\end{itemize}
+
+Using that lemma, we both \emph{correct} the Round~3 interval and produce a genuinely stronger explicit obstruction for \(M=3\), showing failure for every
+\[
+86\le N\le 96.
+\]
+Consequently, if an eventual threshold \(N_0(3)\) exists, then necessarily
+\[
+N_0(3)\ge 97.
+\]
+
+\subsection{2) Round-3 FOUNDATION USED}
+We use the following earlier results as black boxes.
+
+\begin{itemize}
+  \item \textbf{Round~1 Lemma~42.2 (small-gap lemma).} Any \(M\)-element set \(B\subseteq[1,N]\) has a positive difference at most \(\lfloor (N-1)/(M-1)\rfloor\).
+  \item \textbf{Round~2 theorem (case \(M=2\)).} The case \(M=2\) is completely solved with sharp threshold \(N_0(2)=8\).
+  \item \textbf{Round~3 Proposition~\(M=3, N=71\).} The set
+  \[
+  A_{10}:=\{1,2,7,11,24,27,35,42,54,56\}
+  \]
+  is Sidon and satisfies \([1,35]\subseteq D^+(A_{10})\), where \(D^+(A):=\{a-a':a,a'\in A,\ a>a'\}\).
+\end{itemize}
+
+\subsection{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new ingredient is a general \textbf{interval-obstruction lemma}: once one has a Sidon set \(A\) whose positive differences contain an initial interval \([1,L]\), the \emph{same} set \(A\) obstructs not just one value of \(N\), but an entire interval of values of \(N\).
+
+A second genuinely new ingredient is an explicit 12-element Sidon set
+\[
+A_{12}=\{1,3,7,25,30,41,44,56,69,76,77,86\}
+\]
+whose positive differences contain \([1,47]\).  This yields a new obstruction interval
+\[
+86\le N\le 96,
+\]
+strictly beyond Round~3.
+
+\subsection{4) ATTACK PLAN (ROUND-4)}
+The exact unresolved gap after Round~3 was this: the proof produced a single certified obstruction at \(N=71\), together with a stated interval consequence, but that interval consequence was not optimized and in fact missed one endpoint.
+
+We therefore proceed as follows.
+\begin{enumerate}
+  \item Prove a general lemma converting one initial-segment difference obstruction into an interval of forbidden \(N\)-values.
+  \item Apply it to the Round~3 set \(A_{10}\), thereby correcting the Round~3 interval.
+  \item Exhibit a new explicit Sidon set \(A_{12}\) with a longer initial segment of covered differences, and apply the lemma again.
+\end{enumerate}
+
+This overcomes the Round~3 limitation by turning a sporadic obstruction into a theorem about entire intervals.
+
+\subsection{5) WORK (ROUND-4)}
+
+\subsubsection*{5.1. A general obstruction-interval lemma}
+\begin{lemma}[Interval-obstruction lemma]\label{lem:interval-obstruction}
+Let \(M\ge 2\).  Let \(A\subseteq[1,N_{\min}]\) be Sidon, and suppose that for some integer \(L\ge 1\),
+\[
+[1,L]\subseteq D^+(A).
+\]
+Then for every integer \(N\) satisfying
+\[
+N_{\min}\le N\le (M-1)L+M-1,
+\]
+there is no Sidon set \(B\subseteq[1,N]\) of size \(M\) such that
+\[
+(A-A)\cap(B-B)=\{0\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix such an \(N\), and let \(B\subseteq[1,N]\) with \(|B|=M\).  By Round~1 Lemma~42.2, the set \(B\) has a positive difference
+\[
+d\in(B-B)\cap\Bigl[1,\Bigl\lfloor\frac{N-1}{M-1}\Bigr\rfloor\Bigr].
+\]
+Since \(N\le (M-1)L+M-1\), we have
+\[
+\Bigl\lfloor\frac{N-1}{M-1}\Bigr\rfloor\le L.
+\]
+Therefore \(d\in[1,L]\subseteq D^+(A)\subseteq A-A\).  Hence \(d\in (A-A)\cap(B-B)\) with \(d\ne 0\), so
+\[
+(A-A)\cap(B-B)\neq \{0\}.
+\]
+Thus no such \(B\) exists.
+\end{proof}
+
+\subsubsection*{5.2. Correction of the Round~3 interval}
+Round~3 proved that
+\[
+A_{10}=\{1,2,7,11,24,27,35,42,54,56\}
+\]
+is Sidon and satisfies \([1,35]\subseteq D^+(A_{10})\).
+Since \(\max A_{10}=56\), Lemma~\ref{lem:interval-obstruction} with \(M=3\), \(N_{\min}=56\), and \(L=35\) gives:
+\[
+56\le N\le 2\cdot 35+2=72
+\quad\Longrightarrow\quad
+\text{the }M=3\text{ statement fails at }N.
+\]
+So the same Round~3 construction obstructs \emph{every}
+\[
+56\le N\le 72.
+\]
+This corrects the Round~3 endpoint omission: \(N=72\) also fails.
+
+\subsubsection*{5.3. A new explicit obstruction interval for \(M=3\)}
+We now prove a stronger obstruction.
+
+\begin{proposition}[New explicit obstruction interval for \(M=3\)]\label{prop:new-interval-86-96}
+Let
+\[
+A_{12}:=\{1,3,7,25,30,41,44,56,69,76,77,86\}\subseteq[1,86].
+\]
+Then \(A_{12}\) is Sidon and
+\[
+[1,47]\subseteq D^+(A_{12}).
+\]
+Consequently, for every integer \(N\) with
+\[
+86\le N\le 96,
+\]
+there is no Sidon triple \(B\subseteq[1,N]\) such that
+\[
+(A_{12}-A_{12})\cap(B-B)=\{0\}.
+\]
+In particular, the Erd\H{o}s statement fails for \(M=3\) at every \(N\in[86,96]\).
+\end{proposition}
+
+\begin{proof}
+Translate by \(-1\), and set
+\[
+R:=A_{12}-1=\{0,2,6,24,29,40,43,55,68,75,76,85\}.
+\]
+Translation preserves all differences, so it suffices to compute \(D^+(R)=D^+(A_{12})\).  A direct enumeration gives
+\[
+\begin{aligned}
+D^+(R)=\{&1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,\\
+&49,51,52,53,55,56,61,62,66,68,69,70,73,74,75,76,79,83,85\}.
+\end{aligned}
+\]
+This displayed set contains \(47+19=66\) integers, which equals
+\[
+\binom{12}{2}=66.
+\]
+Hence all positive differences determined by the 12 marks of \(R\) are distinct.
+For completeness, here is the short implication: if
+\(a_i+a_j=a_k+a_\ell\) with the two pairs written in nondecreasing order and, say, \(a_j\ge a_\ell\), then
+\[
+a_j-a_\ell=a_k-a_i.
+\]
+Uniqueness of positive differences forces the unordered pairs \((a_i,a_j)\) and \((a_k,a_\ell)\) to coincide, so the sum representation is trivial.  Thus \(A_{12}\) is Sidon.
+Moreover, the displayed list visibly contains every integer from \(1\) to \(47\), i.e.
+\[
+[1,47]\subseteq D^+(A_{12}).
+\]
+Finally, \(\max A_{12}=86\).  Applying Lemma~\ref{lem:interval-obstruction} with \(M=3\), \(N_{\min}=86\), and \(L=47\), we conclude that every
+\[
+N\in[86,2\cdot 47+2]=[86,96]
+\]
+is obstructed by the same set \(A_{12}\).
+\end{proof}
+
+\begin{corollary}[New lower bound on any eventual threshold for \(M=3\)]\label{cor:N0-lower-bound}
+If there exists a threshold \(N_0(3)\) such that for every \(N\ge N_0(3)\) and every Sidon set \(A\subseteq[1,N]\) there exists a Sidon triple \(B\subseteq[1,N]\) with
+\((A-A)\cap(B-B)=\{0\}\), then necessarily
+\[
+N_0(3)\ge 97.
+\]
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:new-interval-86-96}, the statement fails for every \(N\in[86,96]\).  Hence no valid threshold can be less than or equal to \(96\).
+\end{proof}
+
+\subsection{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+  \item \textbf{Endpoint check in Lemma~\ref{lem:interval-obstruction}.}
+  For \(M=3\) the upper bound becomes \(N\le 2L+2\).  At the endpoint \(N=2L+2\), one has
+  \(\lfloor (N-1)/2\rfloor=\lfloor (2L+1)/2\rfloor=L\), so the lemma still applies.
+
+  \item \textbf{Round~3 correction.}
+  With \(L=35\), the correct upper endpoint is \(2L+2=72\), not \(71\).  There is no hidden obstruction at \(N=72\): the same argument works verbatim because \(\lfloor 71/2\rfloor=35\).
+
+  \item \textbf{Sidon verification for \(A_{12}\).}
+  The displayed difference set has exactly \(66\) elements, matching \(\binom{12}{2}\), so no positive difference repeats.  This is enough for the Sidon property.
+
+  \item \textbf{Sharpness of the new interval.}
+  The new obstruction stops at \(N=96\) because \(48\notin D^+(A_{12})\).  Thus the present argument does \emph{not} extend to \(N=97\).
+
+  \item \textbf{Interaction with earlier rounds.}
+  Nothing in this round affects the complete \(M=2\) solution from Round~2.  For \(M=3\), the new results strictly strengthen Round~3 by replacing one certified value \(N=71\) by two certified obstruction intervals, namely \([56,72]\) and \([86,96]\).
+\end{itemize}
+
+\subsection{7) FINAL (EXACTLY ONE)}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+We proved a new general interval-obstruction lemma, corrected the Round~3 endpoint error by upgrading the old obstruction to all
+\[
+56\le N\le 72,
+\]
+and produced a new explicit 12-element Sidon obstruction showing failure for every
+\[
+86\le N\le 96
+\]
+when \(M=3\).  In particular, any eventual threshold for the \(M=3\) case must satisfy \(N_0(3)\ge 97\).
+
+\subsection{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 55\%}
+
+\subsection{9) REFERENCES}
+\begin{thebibliography}{9}
+\bibitem{Bloom42}
+T.~F.~Bloom,
+\emph{Erd\H{o}s Problem \#42}, \texttt{https://www.erdosproblems.com/42}, accessed 2026-03-07.
+(Checked here to confirm the problem numbering and the current public status note for the cases \(M=2\) and \(M=3\).)
+
+\bibitem{Gusarich42}
+D.~Sedov (Gusarich),
+\emph{Erd\H{o}s Problem \#42 --- The \(M=3\) Case}, public Lean repository README,
+\texttt{https://github.com/Gusarich/erdos42}, checked 2026-03-07.
+(Used only as contextual background on the current state of the \(M=3\) case; the new theorem of this round does not rely on its proof.)
+\end{thebibliography}

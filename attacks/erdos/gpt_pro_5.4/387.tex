@@ -1,0 +1,207 @@
+\section*{Erd\H{o}s Problem \#387}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+I pursue \textbf{(C) obstruction/partial reduction}. Round-1 produced only the weak divisor $n/\gcd(n,k)$ in $[n/k,n]$. The most promising direction now is to show that any genuine obstruction to a uniform linear divisor cannot come from the interior of Pascal's triangle. In this round I prove exactly that: on every fixed interior strip
+\[
+\alpha n\leq k\leq (1-\alpha)n,
+\]
+the conjectured conclusion already holds with $c=\alpha$. Consequently, any counterexample sequence must live in the boundary regime
+\[
+\min(k,n-k)=o(n),
+\]
+and, when combined with the Round-1 divisor $n/\gcd(n,k)$, must also satisfy
+\[
+\gcd(n,k)\to\infty.
+\]
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 result.
+
+\begin{enumerate}
+\item Round-1 Lemma 1: $n/\gcd(n,k)$ divides $\binom{n}{k}$, hence $\binom{n}{k}$ has a divisor in $[n/k,n]$.
+\end{enumerate}
+
+I also use the symmetry $\binom{n}{k}=\binom{n}{n-k}$.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is the classical Sylvester--Schur theorem on prime divisors of products of consecutive integers. Applied to the numerator block
+\[
+n(n-1)\cdots(n-r+1),\qquad r:=\min(k,n-k),
+\]
+it yields a prime divisor strictly larger than $r$, and this prime cannot be cancelled by the denominator $r!$. This produces a divisor of $\binom{n}{k}$ that is already linear in $n$ throughout every fixed interior strip.
+
+The real gain over Round-1 is conceptual: it proves that the open difficulty is not spread across all $k$, but is confined to a thin boundary layer.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact Round-1 gap was the lack of any divisor of size $cn$ when $k$ is large.
+
+The new plan is:
+
+\begin{enumerate}
+\item use Sylvester--Schur to show that $\binom{n}{k}$ always has a prime divisor exceeding $r=\min(k,n-k)$;
+\item deduce that every fixed interior strip $\alpha n\leq k\leq (1-\alpha)n$ already satisfies the conjectured conclusion with $c=\alpha$;
+\item combine this with the Round-1 divisor $n/\gcd(n,k)$ to isolate the only possible obstruction class.
+\end{enumerate}
+
+This directly answers the question ``where could a counterexample sequence hide?''
+
+\subsection*{5) WORK (ROUND-2)}
+Define
+\[
+M(n,k):=\max\{d\leq n: d\mid \binom{n}{k}\}.
+\]
+The Erd\H{o}s problem asks whether there is a constant $c>0$ such that
+\[
+M(n,k)>cn
+\]
+for all $1\leq k\leq n-1$.
+
+By symmetry we may assume $1\leq k\leq n/2$.
+Set $r:=k$ in this range; more invariantly, $r=\min(k,n-k)$.
+
+\medskip
+
+\textbf{Lemma 387.1.} For every $n\geq 2$ and every $1\leq k\leq n-1$, the binomial coefficient $\binom{n}{k}$ has a prime divisor $p$ with
+\[
+p>\min(k,n-k).
+\]
+In particular,
+\[
+M(n,k)>\min(k,n-k).
+\]
+
+\emph{Proof.} Let $r:=\min(k,n-k)$ and write
+\[
+\binom{n}{k}=\binom{n}{r}=\frac{n(n-1)\cdots(n-r+1)}{r!}.
+\]
+The numerator is a product of $r$ consecutive integers, all strictly larger than $r$.
+By the Sylvester--Schur theorem, such a product has a prime divisor $p>r$.
+Since every prime divisor of $r!$ is at most $r$, this prime $p$ cannot be cancelled by the denominator. Hence $p\mid \binom{n}{r}=\binom{n}{k}$ and $p>r=\min(k,n-k)$.
+Because $p\leq n$, it contributes to $M(n,k)$, proving
+\[
+M(n,k)\geq p>\min(k,n-k).
+\]
+This proves the lemma. \hfill $\square$
+
+\medskip
+
+\textbf{Theorem 387.2.} Fix any real $\alpha$ with $0<\alpha\leq 1/2$. Then for every $n\geq 2$ and every integer $k$ with
+\[
+\alpha n\leq k\leq (1-\alpha)n,
+\]
+one has
+\[
+M(n,k)>\alpha n.
+\]
+Equivalently, the Erd\H{o}s--387 conclusion is already true on every fixed interior strip, with the explicit constant $c=\alpha$.
+
+\emph{Proof.} Let $r=\min(k,n-k)$. The strip condition implies $r\geq \alpha n$. By Lemma 387.1,
+\[
+M(n,k)>r\geq \alpha n.
+\]
+This is exactly the required conclusion. \hfill $\square$
+
+\medskip
+
+\textbf{Corollary 387.3.} If the original Erd\H{o}s problem has a negative answer, then any counterexample sequence $(n_j,k_j)$ must satisfy
+\[
+\min(k_j,n_j-k_j)=o(n_j).
+\]
+
+\emph{Proof.} If not, then some $\alpha>0$ and an infinite subsequence would satisfy
+\[
+\alpha n_j\leq k_j\leq (1-\alpha)n_j
+\]
+after symmetry. Theorem 387.2 would then give
+\[
+M(n_j,k_j)>\alpha n_j
+\]
+on that subsequence, contradicting the assumption that no fixed linear bound works. \hfill $\square$
+
+\medskip
+
+\textbf{Corollary 387.4.} If there exists a sequence $(n_j,k_j)$ with
+\[
+\frac{M(n_j,k_j)}{n_j}\to 0,
+\]
+then necessarily
+\[
+\min(k_j,n_j-k_j)=o(n_j)
+\qquad\text{and}\qquad
+\gcd(n_j,k_j)\to\infty.
+\]
+
+\emph{Proof.} The first assertion is exactly Corollary 387.3.
+For the second, Round-1 Lemma 1 gives the divisor
+\[
+\frac{n_j}{\gcd(n_j,k_j)}\mid \binom{n_j}{k_j}.
+\]
+Since this divisor is at most $M(n_j,k_j)$, we get
+\[
+\frac{1}{\gcd(n_j,k_j)}
+\leq
+\frac{M(n_j,k_j)}{n_j}
+\to 0.
+\]
+Hence $\gcd(n_j,k_j)\to\infty$. \hfill $\square$
+
+\medskip
+
+\textbf{Corollary 387.5.} For each fixed integer $K\geq 1$, the Erd\H{o}s--387 conclusion is true uniformly on the boundary strip
+\[
+1\leq k\leq K
+\qquad\text{or}\qquad
+n-K\leq k\leq n-1,
+\]
+with any constant $c<1/K$ (for instance $c=1/(K+1)$).
+
+\emph{Proof.} If $1\leq k\leq K$, then Round-1 gives a divisor at least $n/k\geq n/K$, and therefore strictly larger than $cn$ for every fixed $c<1/K$. By symmetry the same holds for $n-k\leq K$. \hfill $\square$
+
+Thus the only unresolved regime is a moving boundary layer in which
+\[
+\min(k,n-k)\to\infty,
+\qquad
+\min(k,n-k)=o(n),
+\qquad
+\gcd(n,k)\to\infty.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+The potentially delicate steps are these.
+
+\begin{enumerate}
+\item \emph{Does the Sylvester--Schur input apply at the endpoint $n=2r$?} Yes. The numerator block is then $r+1,r+2,\dots,2r$, a product of $r$ consecutive integers all greater than $r$.
+\item \emph{Could the prime $p>r$ from Sylvester--Schur be cancelled by the denominator?} No. Every prime divisor of $r!$ is at most $r$, so cancellation is impossible.
+\item \emph{Did I accidentally prove the full conjecture?} No. The divisor $p>r$ is linear in $n$ only when $r$ itself is a positive proportion of $n$. When $r=o(n)$ this gives only $o(n)$, so the main open problem survives exactly in that edge regime.
+\item \emph{Is Corollary 387.4 logically stronger than what was proved?} No. It is just the conjunction of the new interior-strip theorem and the Round-1 divisor $n/\gcd(n,k)$.
+\end{enumerate}
+
+The reduction is therefore logically sound.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance beyond Round-1 is the structural reduction:
+
+\begin{enumerate}
+\item every fixed interior strip $\alpha n\leq k\leq (1-\alpha)n$ already satisfies the conjectured conclusion with $c=\alpha$;
+\item hence any hypothetical counterexample sequence must satisfy
+\[
+\min(k,n-k)=o(n);
+\]
+\item combining with the Round-1 divisor $n/\gcd(n,k)$, any such sequence must also satisfy
+\[
+\gcd(n,k)\to\infty.
+\]
+\end{enumerate}
+
+So the unresolved part of Erd\H{o}s \#387 is now sharply localized to a thin moving boundary layer with large common divisors.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 54\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#387}, erdosproblems.com/387, accessed 2026-03-07.
+\item P. Erd\H{o}s, \emph{A theorem of Sylvester and Schur}, J. London Math. Soc. 9 (1934), 282--288.
+\end{enumerate}

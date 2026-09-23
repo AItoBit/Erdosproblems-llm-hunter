@@ -1,0 +1,201 @@
+\section{Erd\H{o}s Problem \#138: two-colour van der Waerden numbers}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}  Round-1 already produced the standard exponential lower bound
+\[
+W(k) \gg \frac{2^k}{k},
+\]
+but it did not approach the sample target $W(k)^{1/k}\to\infty$.  The most promising strict advance is therefore:
+\begin{enumerate}
+\item extract a genuinely stronger rigorous consequence from known algebraic constructions, and
+\item prove that the specific \emph{Round-1 symmetric Lov\'asz Local Lemma route} is intrinsically capped at exponential scale.
+\end{enumerate}
+That gives a corrected theorem we can fully prove now, while also identifying a real barrier to the Round-1 method.
+
+\subsection*{2) Round-1 foundation used}
+I use the following Round-1 results without reproving them.
+\begin{enumerate}
+\item The Round-1 Lov\'asz Local Lemma lower bound $W(k)\gg 2^k/k$.
+\item The Round-1 observation that proving $W(k)^{1/k}\to\infty$ would require a \emph{super-exponential} lower bound on $W(k)$.
+\item The Round-1 sanity check $W(3)=9$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new ingredients in this round.
+\begin{enumerate}
+\item \textbf{Berlekamp's prime-index theorem:} if $p$ is prime, then
+\[
+W(p+1) > p\,2^p.
+\]
+This is much stronger than the Round-1 bound on the infinite subsequence $k=p+1$.
+
+\item \textbf{A barrier theorem for the Round-1 method:} in the standard random-colouring model with bad events ``a fixed $k$-AP is monochromatic'' and the forced dependency graph coming from overlaps of progressions, the symmetric Lov\'asz Local Lemma can only certify colourings up to $N=O(2^k)$.  Hence that exact proof framework can never reach the target $W(k)^{1/k}\to\infty$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+After Round-1, the exact gap was this: we had only $W(k)\gg 2^k/k$, while the target needs super-exponential growth.  I therefore prove two claims.
+\begin{enumerate}
+\item A \emph{strictly stronger theorem} than anything established in Round-1:
+\[
+\limsup_{k\to\infty} \frac{W(k)}{2^k}=\infty.
+\]
+\item A \emph{methodological obstruction}: the Round-1 symmetric LLL strategy cannot prove lower bounds beyond constant multiples of $2^k$.
+\end{enumerate}
+Together these show that genuine progress is possible, but not by pushing the exact same Round-1 mechanism.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent\textbf{External theorem used.}  A theorem of Berlekamp states that if $p$ is prime, then
+\[
+W(p+1) > p\,2^p.
+\]
+This is the only external theorem used in the new argument below.
+
+\medskip
+\noindent\textbf{Claim 138.1.}  One has
+\[
+\limsup_{k\to\infty} \frac{W(k)}{2^k}=\infty.
+\]
+
+\smallskip
+\noindent\emph{Proof.}
+Take $k=p+1$ with $p$ prime.  By Berlekamp,
+\[
+W(k)=W(p+1) > p\,2^p.
+\]
+Therefore
+\[
+\frac{W(k)}{2^k} > \frac{p2^p}{2^{p+1}}=\frac{p}{2}=\frac{k-1}{2}.
+\]
+As $p\to\infty$, the right-hand side tends to $\infty$.  Hence
+\[
+\limsup_{k\to\infty}\frac{W(k)}{2^k}=\infty.
+\]
+\hfill$\square$
+
+\medskip
+\noindent This is a \emph{strict advance} over Round-1.  In particular, it proves that the weaker Erd\H{o}s-type statement
+\[
+W(k)/2^k \text{ is unbounded}
+\]
+is true along an infinite subsequence.  However, it still does \emph{not} imply either $W(k)/2^k\to\infty$ or $W(k)^{1/k}\to\infty$.
+
+\medskip
+\noindent\textbf{Claim 138.2 (barrier for the Round-1 symmetric LLL framework).}  Consider the standard proof setup from Round-1:
+\begin{itemize}
+\item each $x\in [N]$ is coloured red/blue independently with probability $1/2$;
+\item for each $k$-term arithmetic progression $P\subseteq [N]$, the bad event $E_P$ is that $P$ is monochromatic;
+\item the dependency graph is the forced one in which $E_P$ is adjacent to $E_Q$ whenever $P\cap Q\neq\varnothing$.
+\end{itemize}
+If the \emph{symmetric} Lov\'asz Local Lemma certifies a colouring with no monochromatic $k$-term progression in this setup, then necessarily
+\[
+N \le \frac{2^{k+1}}{e}+2.
+\]
+In particular, this exact framework can only ever yield lower bounds of size $O(2^k)$.
+
+\smallskip
+\noindent\emph{Proof.}
+Let $G_{k,N}$ be the dependency graph on bad events.  We first prove that $G_{k,N}$ has a vertex of degree at least a positive constant multiple of $N$.
+
+Assume $N\ge 2k$; otherwise $N=O(k)$ and there is nothing to prove.
+Set
+\[
+x:=\left\lfloor \frac{N}{2}\right\rfloor,
+\qquad
+m:=\left\lfloor \frac{N-2}{2(k-1)}\right\rfloor.
+\]
+Because $N\ge 2k$, we have $m\ge 1$.
+Choose any $k$-term progression $P$ containing $x$; for example,
+\[
+P=\{x-k+1,x-k+2,\dots,x\},
+\]
+which lies in $[N]$ since $x\ge k$.
+
+For each integer $d$ with $1\le d\le m$ and each $j\in\{0,1,\dots,k-1\}$, define
+\[
+Q_{d,j}:=\{x-jd,\ x-(j-1)d,\ \dots,\ x+(k-1-j)d\}.
+\]
+This is a $k$-term arithmetic progression of common difference $d$ whose $(j+1)$st term is $x$.
+We claim that $Q_{d,j}\subseteq [N]$.
+Indeed,
+\[
+x-jd \ge x-(k-1)m \ge \left\lfloor\frac N2\right\rfloor - \frac{N-2}{2} \ge 1,
+\]
+and similarly
+\[
+x+(k-1-j)d \le x+(k-1)m \le \left\lfloor\frac N2\right\rfloor + \frac{N-2}{2} \le N.
+\]
+Hence every $Q_{d,j}$ is a valid $k$-AP in $[N]$.
+
+Different pairs $(d,j)$ give different progressions: the common difference is $d$, and within a fixed progression the point $x$ occurs in a unique position.  Therefore there are exactly $km$ distinct $k$-APs containing $x$ among this family.  Every one of them intersects $P$ (at least at $x$), so the vertex corresponding to $P$ in $G_{k,N}$ has degree at least
+\[
+km-1.
+\]
+Thus the maximum degree $\Delta(G_{k,N})$ satisfies
+\[
+\Delta(G_{k,N})+1\ge km.
+\]
+Now $m=\lfloor t\rfloor$ with
+\[
+t=\frac{N-2}{2(k-1)}\ge 1,
+\]
+so $m\ge t/2$.  Hence
+\[
+\Delta(G_{k,N})+1 \ge km \ge \frac{k}{2}\cdot \frac{N-2}{2(k-1)} \ge \frac{N-2}{4}.
+\]
+
+For each bad event,
+\[
+\mathbb P(E_P)=2^{1-k}.
+\]
+The symmetric Lov\'asz Local Lemma can only be invoked when
+\[
+e\,2^{1-k}\bigl(\Delta(G_{k,N})+1\bigr)\le 1.
+\]
+Using the lower bound above, this forces
+\[
+e\,2^{1-k}\cdot \frac{N-2}{4}\le 1,
+\]
+which rearranges to
+\[
+N\le \frac{2^{k+1}}{e}+2.
+\]
+So the Round-1 symmetric LLL framework is inherently limited to $N=O(2^k)$ and cannot prove $W(k)^{1/k}\to\infty$.
+\hfill$\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item \textbf{Did I accidentally prove a barrier for all local-lemma methods?}  No.  The claim only concerns the \emph{specific Round-1 framework}: unbiased independent colouring, bad events indexed by monochromatic $k$-APs, and the symmetric LLL criterion applied to the forced overlap dependency graph.  More sophisticated methods (for example recolouring variants) are not ruled out.
+
+\item \textbf{Is the dependency graph really forced?}  Yes.  Two bad events depending on overlapping progressions are not independent, so any valid dependency graph for the symmetric LLL must contain those overlap edges.
+
+\item \textbf{Are the $Q_{d,j}$ all distinct?}  Yes: the common difference determines $d$, and once $d$ is fixed the location of $x$ inside the progression determines $j$.
+
+\item \textbf{Boundary case $N<2k$.}  Then the barrier statement is vacuous, and in any case $N=O(k)\subset O(2^k)$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round-2 strictly improves Round-1 in two ways.
+\begin{enumerate}
+\item I proved the new theorem
+\[
+\limsup_{k\to\infty} \frac{W(k)}{2^k}=\infty,
+\]
+using Berlekamp's construction.
+\item I proved that the exact Round-1 symmetric-Lov\'asz-Local-Lemma method cannot go beyond $N=O(2^k)$, so it cannot possibly deliver $W(k)^{1/k}\to\infty$.
+\end{enumerate}
+The original target remains open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 42\%}
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item E. R. Berlekamp, \emph{A construction for partitions which avoid long arithmetic progressions}, Canadian Mathematical Bulletin \textbf{11} (1968), 409--414.
+\item T. Blankenship, \emph{A New Lower Bound for van der Waerden Numbers}, 2017, for a modern statement of Berlekamp's bound.
+\item Erd\H{o}s Problems database, Problem \#138 (status page checked March 7, 2026).
+\end{itemize}
+

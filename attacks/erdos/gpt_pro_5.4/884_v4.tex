@@ -1,0 +1,516 @@
+\section{Erd\H{o}s Problem \#884 --- continuation}
+
+\section{ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)}: isolate and prove a \emph{fatal obstruction} to the main proof strategy from the previous round.
+
+Round-(round\_no-1) proved a positive theorem for integers of the form
+\[
+n=r^a m,\qquad (r,m)=1,
+\]
+with constants depending on
+\[
+M:=\tau(m),
+\]
+by using only the fact that the divisor exponents lie in a union of \(M\) translates of \(\mathbb Z\). The exact remaining gap was whether one could hope to remove this \(M\)-dependence by pushing that same translate-decomposition method harder.
+
+The new result of this round shows that this is impossible in a very strong sense: even in a highly rigid repeated-block model, any inequality of the form
+\[
+S_{\mathrm{all}}\le C_M\,S_{\mathrm{gap}}+B_M
+\]
+must satisfy
+\[
+C_M\gg \log M.
+\]
+In particular, the \(H_{M-1}\)-type loss appearing in the previous-round theorem is \emph{qualitatively sharp} in the ambient ``union of \(M\) geometric progressions'' model, even if one allows an arbitrary additive error \(B_M\).
+
+This rules out an entire class of possible gap-closing strategies.
+
+\section{Round-(round\_no-1) FOUNDATION USED}
+
+I use the following Round-(round\_no-1) results as fixed input.
+
+\begin{enumerate}
+\item The notation
+\[
+S_{\mathrm{all}}(n):=\sum_{1\le i<j\le t}\frac{1}{d_j-d_i},
+\qquad
+S_{\mathrm{gap}}(n):=\sum_{1\le i<t}\frac{1}{d_{i+1}-d_i}.
+\]
+\item The previous-round theorem for numbers \(n=r^a m\) with \((r,m)=1\), which gives an upper bound with constants depending on \(M=\tau(m)\), obtained solely from the fact that the divisor exponents lie in a union of \(M\) translates of \(\mathbb Z\).
+\item The previously checked contextual status that the original Erd\H{o}s problem remains unresolved unconditionally, while Tao's 2025 note provides a conditional disproof under a qualitative prime-tuples conjecture.
+\end{enumerate}
+
+I do \emph{not} re-prove any of those results here.
+
+\section{NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a repeated-block obstruction theorem.
+
+The previous round already showed that arbitrary unions of \(M\) geometric progressions can force a logarithmic loss. What is new here is that one can prove the same logarithmic obstruction in a much more rigid model that mirrors the exact structure exploited by the previous proof: one takes \(M\) translates, truncates each to the same length \(L\), and arranges them in disjoint ``blocks''.
+
+More precisely, for integers \(M\ge 2\) and \(L\ge 1\), define
+\[
+r_L:=e^{1/L},
+\qquad
+\lambda_{L,M}:=e^{1/(2ML)},
+\]
+and consider the increasing sequence
+\[
+X_{L,M}:=\{x_{k,j}: 0\le k<L,\ 0\le j<M\},
+\qquad
+x_{k,j}:=r_L^k\lambda_{L,M}^j=e^{(k+j/(2M))/L}.
+\]
+This sequence lies in a union of exactly \(M\) geometric progressions with common ratio \(r_L\), and each block
+\[
+\{x_{k,0},\dots,x_{k,M-1}\}
+\]
+is itself a short geometric progression with ratio \(\lambda_{L,M}\).
+
+The main new theorem proves that for this model
+\[
+\sum_{i<j}\frac{1}{x_j-x_i}
+\gg L^2M^2\log M,
+\qquad
+\sum_i\frac{1}{x_{i+1}-x_i}
+\ll L^2M^2,
+\]
+so the ratio is \(\gg \log M\). Since this holds for every \(L\), any additive term \(B_M\) is asymptotically irrelevant.
+
+This is strictly stronger than the previous-round obstruction: it shows not just that no absolute constant can work in the ambient model, but that the \emph{coefficient of \(S_{\mathrm{gap}}\)} itself must be at least of order \(\log M\).
+
+\section{ATTACK PLAN (ROUND-2)}
+
+The exact gap left after Round-(round\_no-1) was this:
+
+\begin{quote}
+Can one hope to remove the \(M\)-dependence from the translate-decomposition method, perhaps by refining the bookkeeping, while still using only the geometry of a union of \(M\) translates of \(\mathbb Z\)?
+\end{quote}
+
+I prove the answer is \emph{no}.
+
+The precise claims to prove are:
+
+\begin{enumerate}
+\item For the explicit repeated-block model \(X_{L,M}\), the full reciprocal-gap energy is bounded below by \(cL^2M^2H_{\lfloor M/2\rfloor}\).
+\item For the same model, the consecutive-gap reciprocal sum is bounded above by \(CL^2M^2\).
+\item Consequently,
+\[
+\frac{\sum_{i<j}1/(x_j-x_i)}{\sum_i 1/(x_{i+1}-x_i)}\gg H_{\lfloor M/2\rfloor}\asymp \log M.
+\]
+\item Therefore any theorem in the ambient model of the form
+\[
+S_{\mathrm{all}}\le C_M S_{\mathrm{gap}}+B_M
+\]
+valid for all such sequences must satisfy \(C_M\gg \log M\). In particular, the previous-round \(H_{M-1}\)-type loss is qualitatively sharp.
+\end{enumerate}
+
+This overcomes the previous ambiguity: it does not merely point to a heuristic obstruction, but proves a rigorous lower bound that rules out an entire family of improvement attempts.
+
+\section{WORK (ROUND-2)}
+
+\subsection*{1. The repeated-block model}
+
+Fix integers \(M\ge 2\) and \(L\ge 1\). Define
+\[
+r:=r_L=e^{1/L},
+\qquad
+\lambda:=\lambda_{L,M}=e^{1/(2ML)}.
+\]
+Consider the finite set
+\[
+X_{L,M}:=\{x_{k,j}: 0\le k<L,\ 0\le j<M\},
+\qquad
+x_{k,j}:=r^k\lambda^j=e^{(k+j/(2M))/L}.
+\]
+
+For each fixed \(j\), the set
+\[
+\{x_{k,j}:0\le k<L\}
+\]
+is a geometric progression with common ratio \(r\). Hence \(X_{L,M}\) is contained in a union of exactly \(M\) geometric progressions with common ratio \(r\).
+
+Also, for each fixed \(k\), the block
+\[
+B_k:=\{x_{k,0},x_{k,1},\dots,x_{k,M-1}\}
+\]
+is a geometric progression with common ratio \(\lambda\).
+
+Because
+\[
+x_{k,M-1}=e^{(k+(M-1)/(2M))/L}<e^{(k+1)/L}=x_{k+1,0},
+\]
+the increasing order on \(X_{L,M}\) is exactly the lexicographic order on \((k,j)\): first all points of \(B_0\), then all points of \(B_1\), and so on.
+
+Define
+\[
+A_{L,M}:=\sum_{x<y\in X_{L,M}}\frac{1}{y-x},
+\qquad
+G_{L,M}:=\sum_{\text{consecutive }x<y\text{ in }X_{L,M}}\frac{1}{y-x}.
+\]
+
+\subsection*{2. Upper bound for the consecutive-gap sum}
+
+\paragraph{Lemma 1.}
+For all integers \(M\ge 2\) and \(L\ge 1\),
+\[
+G_{L,M}\le 5L^2M^2.
+\]
+
+\emph{Proof.}
+There are two kinds of consecutive gaps.
+
+\medskip
+\noindent\textbf{Within-block gaps.}
+For \(0\le k<L\) and \(0\le j<M-1\),
+\[
+x_{k,j+1}-x_{k,j}=x_{k,j}(\lambda-1)=e^{(k+j/(2M))/L}(\lambda-1).
+\]
+Therefore the total within-block contribution is
+\[
+G^{\mathrm{in}}_{L,M}
+=
+\sum_{k=0}^{L-1}\sum_{j=0}^{M-2}
+\frac{1}{e^{(k+j/(2M))/L}(\lambda-1)}.
+\]
+Since
+\[
+\lambda-1=e^{1/(2ML)}-1\ge \frac{1}{2ML}
+\]
+by the elementary inequality \(e^x-1\ge x\), we obtain
+\[
+G^{\mathrm{in}}_{L,M}
+\le 2ML\sum_{k=0}^{L-1}e^{-k/L}\sum_{j=0}^{M-2}e^{-j/(2ML)}.
+\]
+Now
+\[
+\sum_{j=0}^{M-2}e^{-j/(2ML)}\le M,
+\]
+and because \(e^{-1/L}\in (0,1)\),
+\[
+\sum_{k=0}^{L-1}e^{-k/L}
+\le \frac{1}{1-e^{-1/L}}.
+\]
+For \(0<x\le 1\), one has \(1-e^{-x}\ge x/2\), so with \(x=1/L\),
+\[
+1-e^{-1/L}\ge \frac{1}{2L},
+\qquad\text{hence}
+\qquad
+\sum_{k=0}^{L-1}e^{-k/L}\le 2L.
+\]
+Thus
+\[
+G^{\mathrm{in}}_{L,M}\le 2ML\cdot 2L\cdot M=4L^2M^2.
+\]
+
+\medskip
+\noindent\textbf{Between-block gaps.}
+For \(0\le k<L-1\), the gap between the last point of \(B_k\) and the first point of \(B_{k+1}\) is
+\[
+x_{k+1,0}-x_{k,M-1}
+=e^{k/L}\left(e^{1/L}-e^{(M-1)/(2ML)}\right).
+\]
+Now
+\[
+\frac{1}{L}-\frac{M-1}{2ML}=\frac{M+1}{2ML}\ge \frac{1}{2L},
+\]
+so
+\[
+e^{1/L}-e^{(M-1)/(2ML)}
+=e^{(M-1)/(2ML)}\left(e^{(M+1)/(2ML)}-1\right)
+\ge \frac{M+1}{2ML}
+\ge \frac{1}{2L},
+\]
+again using \(e^x-1\ge x\). Therefore
+\[
+\frac{1}{x_{k+1,0}-x_{k,M-1}}
+\le 2L\,e^{-k/L}.
+\]
+Summing over \(k=0,\dots,L-2\),
+\[
+G^{\mathrm{btw}}_{L,M}
+\le 2L\sum_{k=0}^{L-2}e^{-k/L}
+\le 2L\cdot 2L=4L^2.
+\]
+
+Combining the two estimates,
+\[
+G_{L,M}=G^{\mathrm{in}}_{L,M}+G^{\mathrm{btw}}_{L,M}
+\le 4L^2M^2+4L^2
+\le 5L^2M^2,
+\]
+because \(M\ge 2\). This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{3. Lower bound for the full reciprocal-gap energy}
+
+\paragraph{Lemma 2.}
+For all integers \(M\ge 2\) and \(L\ge 1\),
+\[
+A_{L,M}
+\ge
+\frac{e^{-3/2}}{2}
+L^2M^2H_{\lfloor M/2\rfloor},
+\]
+where
+\[
+H_n:=\sum_{u=1}^{n}\frac1u.
+\]
+
+\emph{Proof.}
+It suffices to keep only the contributions from pairs lying in the same block. For fixed \(k\), define
+\[
+A_k:=\sum_{0\le i<j<M}\frac{1}{x_{k,j}-x_{k,i}}.
+\]
+Then
+\[
+A_{L,M}\ge \sum_{k=0}^{L-1}A_k.
+\]
+Now
+\[
+x_{k,j}-x_{k,i}=e^{(k+i/(2M))/L}\bigl(e^{(j-i)/(2ML)}-1\bigr),
+\]
+so if we write \(u=j-i\), then
+\[
+A_k
+=
+\sum_{u=1}^{M-1}\sum_{i=0}^{M-1-u}
+\frac{1}{e^{(k+i/(2M))/L}\bigl(e^{u/(2ML)}-1\bigr)}.
+\]
+Hence
+\[
+A_k
+=e^{-k/L}
+\sum_{u=1}^{M-1}\sum_{i=0}^{M-1-u}
+\frac{e^{-i/(2ML)}}{e^{u/(2ML)}-1}.
+\]
+Restrict to \(1\le u\le \lfloor M/2\rfloor\). For such \(u\), we have \(M-u\ge M/2\), and for all admissible \(i\),
+\[
+0\le \frac{i}{2ML}\le \frac{M-1}{2ML}\le \frac12,
+\qquad\text{so}\qquad
+e^{-i/(2ML)}\ge e^{-1/2}.
+\]
+Also,
+\[
+0<\frac{u}{2ML}\le \frac14,
+\]
+so the elementary bound \(e^x-1\le 2x\) for \(0\le x\le 1\) gives
+\[
+e^{u/(2ML)}-1\le \frac{u}{ML}.
+\]
+Therefore
+\[
+\frac{e^{-i/(2ML)}}{e^{u/(2ML)}-1}
+\ge e^{-1/2}\frac{ML}{u}.
+\]
+Summing over \(i=0,\dots,M-1-u\) gives
+\[
+A_k
+\ge e^{-k/L}e^{-1/2}
+\sum_{u=1}^{\lfloor M/2\rfloor}(M-u)\frac{ML}{u}.
+\]
+Since \(M-u\ge M/2\) on this range,
+\[
+A_k
+\ge e^{-k/L}e^{-1/2}\frac{M^2L}{2}
+\sum_{u=1}^{\lfloor M/2\rfloor}\frac1u
+=
+ e^{-k/L}e^{-1/2}\frac{M^2L}{2}H_{\lfloor M/2\rfloor}.
+\]
+Now \(0\le k\le L-1\) implies \(e^{-k/L}\ge e^{-1}\), hence
+\[
+\sum_{k=0}^{L-1}e^{-k/L}\ge Le^{-1}.
+\]
+Therefore
+\[
+A_{L,M}
+\ge
+\sum_{k=0}^{L-1}A_k
+\ge
+Le^{-1}\cdot e^{-1/2}\frac{M^2L}{2}H_{\lfloor M/2\rfloor}
+=
+\frac{e^{-3/2}}{2}L^2M^2H_{\lfloor M/2\rfloor}.
+\]
+This proves the lemma.
+\hfill\(\Box\)
+
+\subsection*{4. Sharpness theorem for the \(M\)-progressions method}
+
+\paragraph{Theorem 3.}
+For every pair of integers \(M\ge 2\) and \(L\ge 1\), the sequence \(X_{L,M}\) defined above satisfies
+\[
+A_{L,M}
+\ge
+\frac{e^{-3/2}}{10}
+H_{\lfloor M/2\rfloor}
+G_{L,M}.
+\]
+In particular,
+\[
+A_{L,M}\gg (\log M)\,G_{L,M}
+\qquad (M\to\infty),
+\]
+uniformly in \(L\).
+
+\emph{Proof.}
+This follows immediately by combining Lemma 1 and Lemma 2:
+\[
+A_{L,M}
+\ge
+\frac{e^{-3/2}}{2}L^2M^2H_{\lfloor M/2\rfloor},
+\qquad
+G_{L,M}\le 5L^2M^2.
+\]
+Hence
+\[
+A_{L,M}
+\ge
+\frac{e^{-3/2}}{10}H_{\lfloor M/2\rfloor}G_{L,M}.
+\]
+Since \(H_{\lfloor M/2\rfloor}\asymp \log M\), the final statement follows.
+\hfill\(\Box\)
+
+\subsection*{5. Consequence for the previous-round theorem}
+
+\paragraph{Corollary 4.}
+Suppose that for each integer \(M\ge 2\) there exist real numbers \(C_M\ge 0\) and \(B_M\ge 0\) such that every finite increasing sequence contained in a union of \(M\) geometric progressions with a common ratio satisfies
+\[
+\sum_{i<j}\frac{1}{x_j-x_i}
+\le C_M\sum_i\frac{1}{x_{i+1}-x_i}+B_M.
+\]
+Then necessarily
+\[
+C_M\ge \frac{e^{-3/2}}{10}H_{\lfloor M/2\rfloor}
+\gg \log M.
+\]
+In particular, no bound with \(C_M=o(\log M)\) is possible in this ambient model, regardless of the size of the additive term \(B_M\).
+
+\emph{Proof.}
+Apply the assumed inequality to the explicit sequence \(X_{L,M}\). Then
+\[
+A_{L,M}\le C_M G_{L,M}+B_M.
+\]
+By Theorem 3,
+\[
+\frac{e^{-3/2}}{10}H_{\lfloor M/2\rfloor}G_{L,M}
+\le A_{L,M}
+\le C_M G_{L,M}+B_M.
+\]
+Rearranging,
+\[
+\left(\frac{e^{-3/2}}{10}H_{\lfloor M/2\rfloor}-C_M\right)G_{L,M}
+\le B_M.
+\]
+Now the within-block gaps alone give a matching lower growth for \(G_{L,M}\). Indeed,
+\[
+G_{L,M}\ge \sum_{k=0}^{L-1}\sum_{j=0}^{M-2}\frac{1}{x_{k,j+1}-x_{k,j}}
+=\sum_{k=0}^{L-1}\sum_{j=0}^{M-2}\frac{1}{e^{(k+j/(2M))/L}(\lambda-1)}.
+\]
+Since \((k+j/(2M))/L\le 3/2\), one has \(e^{-(k+j/(2M))/L}\ge e^{-3/2}\), and since
+\[
+\lambda-1=e^{1/(2ML)}-1\le \frac{1}{ML}
+\]
+by the inequality \(e^x-1\le 2x\) for \(0\le x\le 1\), we conclude that
+\[
+G_{L,M}\ge e^{-3/2}L(M-1)ML.
+\]
+In particular \(G_{L,M}\to\infty\) as \(L\to\infty\) for fixed \(M\). Therefore the coefficient of \(G_{L,M}\) on the left must be non-positive, which gives
+\[
+C_M\ge \frac{e^{-3/2}}{10}H_{\lfloor M/2\rfloor}.
+\]
+This is exactly the claim.
+\hfill\(\Box\)
+
+\subsection*{6. Interpretation for Erd\H{o}s \#884}
+
+The previous round proved a theorem for divisor sets of the form \(n=r^a m\) with constants depending on \(M=\tau(m)\), using only the fact that the divisor exponents lie in a union of \(M\) translates of \(\mathbb Z\). Corollary 4 shows that this type of argument is already qualitatively optimal in its ambient model:
+
+\begin{quote}
+Even allowing an arbitrary additive error term, any theorem obtained solely from the ``union of \(M\) geometric progressions'' structure must pay a coefficient at least of order \(\log M\) in front of the consecutive-gap sum.
+\end{quote}
+
+Thus the remaining difficulty in Erd\H{o}s \#884 is not a minor bookkeeping issue in the previous proof. Any eventual unconditional proof with an \emph{absolute} constant would have to use genuinely new arithmetic input about actual divisor sets, beyond the translate-decomposition geometry.
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now check the new work against the main failure modes.
+
+\paragraph{1. Is the ordering of \(X_{L,M}\) really lexicographic?}
+Yes. The largest element of block \(B_k\) is
+\[
+e^{(k+(M-1)/(2M))/L},
+\]
+which is strictly smaller than the smallest element of the next block,
+\[
+e^{(k+1)/L},
+\]
+because \((M-1)/(2M)<1\).
+
+\paragraph{2. Are the upper and lower bounds uniform in \(L\) and \(M\)?}
+Yes. Every estimate used only the elementary inequalities
+\[
+e^x-1\ge x \quad (x\ge 0),
+\qquad
+e^x-1\le 2x \quad (0\le x\le 1),
+\]
+and the trivial bounds
+\[
+\sum_{j=0}^{M-2}e^{-j/(2ML)}\le M,
+\qquad
+\sum_{k=0}^{L-1}e^{-k/L}\le 2L,
+\qquad
+\sum_{k=0}^{L-1}e^{-k/L}\ge Le^{-1}.
+\]
+No hidden asymptotic assumptions were used.
+
+\paragraph{3. Does the additive term really become irrelevant?}
+Yes. For fixed \(M\), Lemma 1 gives
+\[
+G_{L,M}\ll L^2M^2,
+\]
+while the within-block gaps alone yield the lower bound
+\[
+G_{L,M}\gg L^2M^2.
+\]
+Also Lemma 2 gives
+\[
+A_{L,M}\gg L^2M^2H_{\lfloor M/2\rfloor}.
+\]
+Thus, for fixed \(M\), both \(A_{L,M}\) and \(G_{L,M}\) grow quadratically in \(L\), while an additive term \(B_M\) is independent of \(L\). Sending \(L\to\infty\) forces the claimed lower bound on \(C_M\).
+
+\paragraph{4. Does this disprove the original Erd\H{o}s problem?}
+No. The sequences \(X_{L,M}\) are model sequences in a union of \(M\) geometric progressions; they are not, in general, divisor sequences of integers. The theorem does \emph{not} settle Erd\H{o}s \#884 itself. It proves instead that the entire proof strategy based only on the translate-decomposition geometry cannot yield an absolute constant.
+
+\paragraph{5. Is this genuinely stronger than the previous round?}
+Yes. The previous round showed only that no \emph{absolute} constant can hold uniformly in the ambient model. The new theorem shows more: even after allowing an arbitrary additive error, the coefficient of \(S_{\mathrm{gap}}\) itself must be at least of order \(\log M\). This proves that the previous-round \(H_{M-1}\)-type loss is qualitatively sharp.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The original Erd\H{o}s problem remains unresolved unconditionally. However, this round proves a sharper obstruction theorem than before:
+
+\begin{quote}
+In the ambient class of finite increasing sequences contained in a union of \(M\) geometric progressions, even bounds of the form
+\[
+S_{\mathrm{all}}\le C_M S_{\mathrm{gap}}+B_M
+\]
+require
+\[
+C_M\gg \log M.
+\]
+Thus the \(H_{M-1}\)-type coefficient from the previous round is qualitatively optimal for that entire method, and no refinement based only on the translate-decomposition geometry can produce an absolute constant.
+\end{quote}
+
+This is strict progress: it rules out a substantially narrower class of proof strategies than the previous round did, and it isolates the next barrier sharply. Any eventual unconditional proof of Erd\H{o}s \#884 must use arithmetic information about actual divisor sets that is invisible in the ambient geometric-progressions model.
+
+\section{COMPLETION ESTIMATE}
+
+\noindent \textbf{COMPLETION: 92\%.}
+
+\section{REFERENCES}
+
+\begin{enumerate}
+\item T. Tao, \emph{On the sum of reciprocals of gaps between divisors}, September 9, 2025.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#884}.
+\end{enumerate}

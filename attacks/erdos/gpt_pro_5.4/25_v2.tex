@@ -1,0 +1,329 @@
+\section{Round-7 Objective}
+We pursue \textbf{(A) a proof strategy}.  Round~6 produced a sharp local-clique criterion for existence of
+\(\delta_{\log}(A)\), but that argument still depended on the compatibility graph and on counting compatible
+subfamilies.
+
+The new goal of this round is to remove \emph{all} compatibility bookkeeping in a substantial regime.
+The key observation is that for each fixed stage \(k\), the true set \(A\) is squeezed below the periodic stage-set
+\(A^{(k)}\), and the only possible loss comes from \emph{individual later congruence classes}.
+A crude union bound therefore yields a new theorem depending only on the tail of
+\(\sum 1/n_i\), with no reference to clique counts or lcm-growth.
+
+The main consequence is:
+\begin{equation}
+\sum_{i=1}^{\infty}\frac{1}{n_i}<\infty
+\qquad\Longrightarrow\qquad
+\delta_{\log}(A)\ \text{exists}.
+\tag{7.1}
+\end{equation}
+This is a genuine advance beyond Round~6, because it applies even when the compatibility graph is complete and the
+Round~6 clique counts are exponential.
+
+\section{Round-6 Foundation Used}
+We rely on the following earlier results.
+\begin{itemize}
+\item \textbf{Activation identity} (Round~1): for
+\[
+A^{(k)}:=\{n\in\mathbb N:\ n\not\equiv a_i\pmod{n_i}\ \forall\,1\le i\le k\},
+\]
+one has
+\[
+\mathbf 1_A(n)=\mathbf 1_{A^{(k)}}(n)\qquad (n_k\le n<n_{k+1}).
+\]
+\item \textbf{Periodic stage densities} (Round~1 and Round~2): each \(A^{(k)}\) is periodic, hence has a natural density
+\[
+\delta_k:=d(A^{(k)}),
+\]
+and the sequence \((\delta_k)\) is decreasing with a limit
+\[
+\delta:=\lim_{k\to\infty}\delta_k\in[0,1].
+\]
+\item \textbf{Logarithmic asymptotic for a periodic stage-set} (already used repeatedly in earlier rounds):
+for fixed \(k\),
+\[
+S_k(x):=\sum_{\substack{1\le n\le x\\ n\in A^{(k)}}}\frac1n
+=\delta_k\log x+O_k(1),
+\]
+so
+\[
+\frac{S_k(x)}{\log x}\to \delta_k.
+\]
+\item \textbf{Single progression harmonic estimate} (Round~5): for every modulus \(m\ge 1\), every residue class
+\(b\pmod m\), and integers \(2\le X<Y\),
+\[
+\sum_{\substack{X\le n<Y\\ n\equiv b\ (\mathrm{mod}\ m)}}\frac1n
+=
+\frac1m\log\frac{Y}{X}+O\!\left(\frac1X\right),
+\]
+with an absolute implied constant, uniform in \(m,b,X,Y\).
+\end{itemize}
+
+\section{New Insight / Tool (Round-7)}
+The new tool is a \emph{fixed-stage sandwich}.
+Instead of expanding \(A\) globally by inclusion--exclusion (Round~6), we compare \(A\) directly to a fixed finite stage
+\(A^{(k)}\).
+Since
+\[
+A\subseteq A^{(k)},
+\]
+any integer counted by \(A^{(k)}\) but not by \(A\) must violate \emph{some later individual constraint}
+\(n\equiv a_i\pmod{n_i}\) with \(i>k\).
+Thus the entire error is bounded by a union of single arithmetic progressions.
+
+This has two major consequences.
+\begin{itemize}
+\item The bound is completely independent of the compatibility graph and of all inclusion--exclusion clique counts.
+\item Any counterexample must satisfy
+\begin{equation}
+\sum_{i=1}^{\infty}\frac1{n_i}=\infty,
+\tag{7.2}
+\end{equation}
+since the convergent-reciprocal regime is now ruled out unconditionally.
+\end{itemize}
+
+\section{Attack Plan (Round-7)}
+The exact gap left after Round~6 was this: even after charging each compatible subfamily only once, the error term still
+involved local clique counts \(C_r\), which can be enormous when many congruences are mutually compatible.
+
+The Round~7 plan is:
+\begin{enumerate}
+\item Fix \(k\) and compare \(A\) with the periodic set \(A^{(k)}\).
+\item Prove a one-sided pointwise inequality showing that every integer in \(A^{(k)}\setminus A\) is caught by at least
+one later single progression.
+\item Sum with weight \(1/n\), use the Round~5 single-progression estimate, and derive a general tail criterion.
+\item Deduce the clean corollary (7.1) when \(\sum 1/n_i\) converges.
+\item Give an explicit family showing that this new theorem applies far beyond the Round~6 clique criterion.
+\end{enumerate}
+
+\section{Work (Round-7)}
+Throughout this round, if \(n_1=1\) then \(A=\varnothing\), so \(\delta_{\log}(A)=0\) trivially.  Hence we may assume
+\begin{equation}
+n_1\ge 2.
+\tag{7.3}
+\end{equation}
+
+For \(x\ge 1\), write
+\begin{equation}
+S(x):=\sum_{\substack{1\le n\le x\\ n\in A}}\frac1n,
+\qquad
+S_k(x):=\sum_{\substack{1\le n\le x\\ n\in A^{(k)}}}\frac1n.
+\tag{7.4}
+\end{equation}
+
+\paragraph{Lemma 7.1 (fixed-stage domination by later single constraints).}
+For every fixed \(k\ge 0\) and every integer \(n\ge 1\),
+\begin{equation}
+0\le \mathbf 1_{A^{(k)}}(n)-\mathbf 1_A(n)
+\le
+\sum_{i>k}\mathbf 1_{\,n\ge n_i\,}\,\mathbf 1_{\,n\equiv a_i\ (\mathrm{mod}\ n_i)}.
+\tag{7.5}
+\end{equation}
+Consequently, for every \(x\ge 1\),
+\begin{equation}
+0\le S_k(x)-S(x)
+\le
+\sum_{\substack{i>k\\ n_i\le x}}
+\sum_{\substack{n_i\le n\le x\\ n\equiv a_i\ (\mathrm{mod}\ n_i)}}\frac1n.
+\tag{7.6}
+\end{equation}
+
+\emph{Proof.}
+The left inequality is immediate from \(A\subseteq A^{(k)}\).
+If \(n\in A^{(k)}\setminus A\), then \(n\) avoids all congruences with indices \(\le k\), but fails at least one later active
+constraint.  That is, there exists some index \(i>k\) such that \(n_i\le n\) and \(n\equiv a_i\pmod{n_i}\).
+This proves (7.5).  Summing (7.5) for \(1\le n\le x\) with weight \(1/n\) gives (7.6).  \hfill
+\(\square\)
+
+\paragraph{Proposition 7.2 (general tail criterion).}
+For each \(k\ge 0\), define
+\begin{equation}
+\Theta_k
+:=
+\limsup_{x\to\infty}
+\frac1{\log x}
+\sum_{\substack{i>k\\ n_i\le x}}
+\frac{\log(x/n_i)+1}{n_i}.
+\tag{7.7}
+\end{equation}
+If
+\begin{equation}
+\Theta_k\longrightarrow 0\qquad(k\to\infty),
+\tag{7.8}
+\end{equation}
+then \(\delta_{\log}(A)\) exists and equals
+\begin{equation}
+\delta:=\lim_{k\to\infty}\delta_k.
+\tag{7.9}
+\end{equation}
+
+\emph{Proof.}
+Fix \(k\ge 0\).  By Lemma~7.1 and the Round~5 single-progression estimate,
+\begin{align}
+0\le S_k(x)-S(x)
+&\le
+\sum_{\substack{i>k\\ n_i\le x}}
+\left(
+\frac1{n_i}\log\frac{x}{n_i}+O\!\left(\frac1{n_i}\right)
+\right) \notag\\
+&\le
+\sum_{\substack{i>k\\ n_i\le x}}
+\frac{\log(x/n_i)+C}{n_i}
+\tag{7.10}
+\end{align}
+for an absolute constant \(C\).  Replacing \(+1\) in (7.7) by \(+C\) clearly changes \(\Theta_k\) by at most an absolute
+multiplicative constant, so (7.8) is equivalent with \(+C\) in place of \(+1\).
+Therefore
+\begin{equation}
+\limsup_{x\to\infty}\frac{S_k(x)-S(x)}{\log x}\le \Theta_k.
+\tag{7.11}
+\end{equation}
+Since \(S_k(x)=\delta_k\log x+O_k(1)\), we obtain
+\begin{equation}
+\delta_k-\Theta_k
+\le
+\liminf_{x\to\infty}\frac{S(x)}{\log x}
+\le
+\limsup_{x\to\infty}\frac{S(x)}{\log x}
+\le
+\delta_k.
+\tag{7.12}
+\end{equation}
+Now let \(k\to\infty\).  Round~2 gives \(\delta_k\downarrow\delta\), and by hypothesis \(\Theta_k\to 0\).  Hence
+both the liminf and limsup of \(S(x)/\log x\) are squeezed to \(\delta\).  Thus
+\[
+\frac{S(x)}{\log x}\to \delta,
+\]
+which is exactly \(\delta_{\log}(A)=\delta\).  \hfill \(\square\)
+
+\paragraph{Theorem 7.3 (summable reciprocal moduli imply existence).}
+If
+\begin{equation}
+\sum_{i=1}^{\infty}\frac1{n_i}<\infty,
+\tag{7.13}
+\end{equation}
+then \(\delta_{\log}(A)\) exists and equals \(\delta=\lim_k\delta_k\).
+More precisely, for every fixed \(k\ge 0\),
+\begin{equation}
+\delta_k-\sum_{i>k}\frac1{n_i}
+\le
+\liminf_{x\to\infty}\frac{S(x)}{\log x}
+\le
+\limsup_{x\to\infty}\frac{S(x)}{\log x}
+\le
+\delta_k.
+\tag{7.14}
+\end{equation}
+
+\emph{Proof.}
+Under (7.13), the tail \(\sum_{i>k}1/n_i\) is finite.  For every \(x\),
+\begin{align}
+\frac1{\log x}
+\sum_{\substack{i>k\\ n_i\le x}}
+\frac{\log(x/n_i)+1}{n_i}
+&\le
+\sum_{i>k}\frac1{n_i}
++
+\frac1{\log x}\sum_{i>k}\frac1{n_i}.
+\tag{7.15}
+\end{align}
+Taking \(x\to\infty\) yields
+\begin{equation}
+\Theta_k\le \sum_{i>k}\frac1{n_i}.
+\tag{7.16}
+\end{equation}
+Hence \(\Theta_k\to 0\) as \(k\to\infty\), so Proposition~7.2 applies and gives existence.
+Combining (7.12) with (7.16) gives the sharper bound (7.14).  \hfill \(\square\)
+
+\paragraph{Corollary 7.4 (a large new class).}
+If
+\begin{equation}
+n_i\gg i^{1+\eta}\qquad\text{for some }\eta>0,
+\tag{7.17}
+\end{equation}
+then \(\delta_{\log}(A)\) exists for \emph{every} choice of residues \(a_i\pmod{n_i}\).
+In particular, every sequence with at least polynomial growth of exponent strictly greater than \(1\) is excluded as a
+possible counterexample.
+
+\emph{Proof.}
+Condition (7.17) implies \(\sum_i 1/n_i<\infty\), so Theorem~7.3 applies.  \hfill \(\square\)
+
+\paragraph{Example 7.5 (a family far beyond the Round~6 clique criterion).}
+Let \(p_i\) be the \(i\)-th prime, and set
+\begin{equation}
+n_i:=p_i^2\qquad(i\ge 1),
+\tag{7.18}
+\end{equation}
+with arbitrary residues \(a_i\pmod{p_i^2}\).
+Then \(\delta_{\log}(A)\) exists by Theorem~7.3, because
+\[
+\sum_{i=1}^{\infty}\frac{1}{p_i^2}<\infty.
+\]
+However, this family is \emph{not} covered by the earlier structural criteria.
+
+Indeed, the moduli \(p_i^2\) are pairwise coprime, so every finite subfamily of congruences is compatible.  Thus the
+compatibility graph is complete, and the local clique counts from Round~6 satisfy
+\begin{equation}
+C_r=2^{r-1}.
+\tag{7.19}
+\end{equation}
+Hence the Round~6 local-count condition fails badly:
+\[
+\sum_{r\le K}\frac{C_r}{n_r}
+\ge
+\sum_{r\le K}\frac{2^{r-1}}{p_r^2},
+\]
+and the summands themselves grow exponentially relative to \(p_r^2\sim r^2(\log r)^2\).
+Also the Round~4 bounded-lcm hypothesis fails, since
+\[
+\frac{\mathrm{lcm}(n_1,\dots,n_k)}{n_k}
+=
+\prod_{i<k}p_i^2
+\to\infty.
+\]
+Thus Theorem~7.3 genuinely covers a new regime beyond all previous rounds.
+
+\section{Adversarial Verification}
+We stress-test the new argument.
+\begin{itemize}
+\item \textbf{One-sided union bound only.}  The proof does not claim equality in (7.5); multiple later violations may
+occur simultaneously.  This is harmless because only an upper bound for \(S_k(x)-S(x)\) is needed.
+\item \textbf{No compatibility assumptions whatsoever.}  Lemma~7.1 uses only the implication
+\(n\in A^{(k)}\setminus A\Rightarrow\exists i>k\) with \(n\equiv a_i\pmod{n_i}\).  No lcm control, no clique counts, and no
+Chinese remainder arguments are required.
+\item \textbf{Use of the single-progression estimate.}  The Round~5 estimate is uniform in the modulus and residue class, so it
+is legitimate to sum it over all late indices \(i>k\).
+\item \textbf{Stage asymptotic.}  The passage \(S_k(x)=\delta_k\log x+O_k(1)\) is valid because \(A^{(k)}\) is periodic; this was
+already established in earlier rounds.
+\item \textbf{Edge case \(n_1=1\).}  Treated separately at the start: then \(A=\varnothing\), so the theorem is trivially true.
+\item \textbf{Strict advance beyond Round~6.}  Example~7.5 shows that Theorem~7.3 applies in a family where the Round~6 local
+counts are exponential and the bounded-lcm framework from Round~4 also fails.
+\item \textbf{What remains open.}  The new theorem leaves untouched the genuinely difficult regime
+\(\sum 1/n_i=\infty\).  This is consistent with the proof, since the union bound only gives useful control when the tail of
+later single progressions is harmonically small.
+\end{itemize}
+
+\section{Final}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The key new result is Theorem~7.3:
+\begin{quote}
+If \(\sum_i 1/n_i<\infty\), then the logarithmic density \(\delta_{\log}(A)\) exists for every choice of residues.
+\end{quote}
+This is a substantial improvement over Round~6 because it eliminates all compatibility-graph and clique-count hypotheses.
+In particular, it rules out an entire class of counterexample strategies:
+\begin{equation}
+\text{any counterexample must satisfy }\sum_{i=1}^{\infty}\frac1{n_i}=\infty.
+\tag{7.20}
+\end{equation}
+So after Round~7, the unresolved core has narrowed further:
+counterexamples, if they exist at all, must occur in the divergent-reciprocal regime, where neither the Round~4 lcm
+control, nor the Round~6 local-clique control, nor the new Round~7 tail-union argument applies.
+
+\section{Completion Estimate}
+\textbf{COMPLETION: 91\%}.
+
+\section{References}
+\begin{itemize}
+\item No external references were used in this round.
+\item The argument builds directly on the vetted Round~1--Round~6 results supplied in the conversation.
+\end{itemize}

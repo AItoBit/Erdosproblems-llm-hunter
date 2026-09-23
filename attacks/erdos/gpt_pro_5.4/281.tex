@@ -1,0 +1,127 @@
+
+\section*{Round 2 continuation for Erd\H{o}s Problems \#278, \#279, \#281}
+
+We write $d(S)$ for natural density when it exists, $\overline d(S)$ for upper density, and $\underline d(S)$ for lower density.
+
+\section*{Problem 281}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+We pursue \textbf{(A) proof}. Round 1 already gave a full proof using profinite/Haar/Dini machinery. The most promising Round-2 task is therefore not to restart from scratch, but to close the argument more cleanly by replacing that longer proof with a short classical proof built directly on the finite-prefix extremal statement already used in Round 1.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+We use two specific Round-1 facts.
+
+\begin{enumerate}
+\item For a fixed finite set of moduli $n_1,\dots,n_k$, the density of integers \emph{avoiding} chosen congruence classes is maximised when the residues are aligned (equivalently, all equal modulo their moduli). This is the finite-prefix extremal theorem from Simpson already used in Round 1.
+\item For aligned residues $a_i\equiv 0$, the avoided set for the first $k$ moduli is exactly the set of integers divisible by none of $n_1,\dots,n_k$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is a short combination of:
+
+\begin{enumerate}
+\item the Davenport--Erd\H{o}s theorem on sets of multiples, and
+\item the Round-1 finite-prefix extremal inequality.
+\end{enumerate}
+
+This removes the need for the more elaborate profinite/Dini argument and yields a very short proof.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The only real gap left after Round 1 was conceptual economy: can the conclusion be proved directly from classical density theorems?
+
+Yes. The plan is:
+
+\begin{enumerate}
+\item specialise the hypothesis to the zero residues;
+\item apply Davenport--Erd\H{o}s to the set of multiples of $\{n_i\}$;
+\item use the finite-prefix extremal inequality from Round 1 to transfer the estimate from the zero residues to arbitrary residues.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+
+Let
+\[
+M:=\{\,m\in\mathbf N : n_i\mid m \text{ for at least one } i\ge 1\,\}
+\]
+be the set of multiples of the sequence $(n_i)$, and let
+\[
+M_k:=\{\,m\in\mathbf N : n_i\mid m \text{ for at least one } 1\le i\le k\,\}.
+\]
+Also let
+\[
+F_k(\mathbf a):=\{\,m\in\mathbf Z : m\not\equiv a_i\pmod{n_i}\ \text{for all } 1\le i\le k\,\}.
+\]
+
+By hypothesis, for every residue choice $(a_i)$ the full avoidance set has density $0$. In particular, for the special choice $a_i\equiv 0\pmod{n_i}$ for all $i$, the set of integers avoiding all these zero congruences has density $0$. But that set is exactly the complement of $M$. Hence
+\[
+d(M)=1.
+\]
+
+Now invoke the Davenport--Erd\H{o}s theorem for sets of multiples: for an increasing sequence $(n_i)$,
+\[
+\lim_{k\to\infty} d(M_k)=\underline d(M).
+\]
+Since $d(M)=1$, we have $\underline d(M)=1$, and therefore
+\[
+\lim_{k\to\infty} d(M_k)=1.
+\]
+Equivalently,
+\[
+\lim_{k\to\infty} d(F_k(\mathbf 0))=0,
+\]
+because $F_k(\mathbf 0)$ is the complement of $M_k$.
+
+Now fix $k$. By the finite-prefix extremal theorem from Round 1 (Simpson's theorem), for every choice of residues $(a_i)$,
+\[
+d(F_k(\mathbf a))\le d(F_k(\mathbf 0)).
+\]
+Since the right-hand side tends to $0$ as $k\to\infty$, given any $\epsilon>0$ we may choose $k$ so large that
+\[
+d(F_k(\mathbf 0))<\epsilon.
+\]
+Then automatically, for every residue choice $(a_i)$,
+\[
+d(F_k(\mathbf a))\le d(F_k(\mathbf 0))<\epsilon.
+\]
+
+This is exactly the required conclusion.
+
+\hfill $\square$
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{enumerate}
+\item \textbf{Did we use the hypothesis for all residue choices?} Yes, but only once: we specialised it to the zero choice $a_i\equiv 0$ to deduce $d(M)=1$.
+
+\item \textbf{Are the hypotheses of Davenport--Erd\H{o}s satisfied?} Yes. The theorem applies to an increasing sequence of positive integers and the associated set of multiples.
+
+\item \textbf{Where is the finite-prefix extremal theorem used?} Exactly in the inequality
+\[
+d(F_k(\mathbf a))\le d(F_k(\mathbf 0)).
+\]
+Without that step, information about zero residues would not automatically transfer to arbitrary residues.
+
+\item \textbf{Edge case $n_1=1$.} Then $M=\mathbf N$ from the start, $d(M_k)=1$ for all $k\ge 1$, and the conclusion is immediate.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+
+\textbf{FULL SOLUTION --- FULL PROOF.}
+
+Round 2 upgrades the Round-1 solution by giving a short classical proof: the statement follows directly from the Davenport--Erd\H{o}s theorem on sets of multiples together with the finite-prefix extremal inequality from Simpson.
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 100\%.
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item P. Erd\H{o}s and R. L. Graham, \emph{Old and New Problems and Results in Combinatorial Number Theory}, Monographies de L'Enseignement Math\'ematique 28, Geneva, 1980.
+\item H. Davenport and P. Erd\H{o}s, \emph{On sequences of positive integers}, Acta Arithmetica 2 (1936), 147--151.
+\item R. J. Simpson, \emph{Exact coverings of the integers by arithmetic progressions}, Discrete Mathematics 59 (1986), 181--190.
+\end{enumerate}

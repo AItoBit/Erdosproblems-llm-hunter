@@ -1,0 +1,252 @@
+
+\section{Problem 64: The Erd\H{o}s--Gy\'arf\'as conjecture (power-of-two cycle lengths)}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (A) --- proof, via a sharper minimal-counterexample reduction.} Round~3 reduced any putative counterexample to a connected edge-minimal graph $H$ with $\delta(H)=3$ and $V_{\ge 4}(H)$ independent, and obtained the quantitative bound that at least $4/7$ of the vertices have degree exactly $3$. The most promising next step is to strengthen that reduction itself: show that edge-minimality forces \emph{interaction among the degree-$3$ vertices}, not just a weak counting inequality. This succeeds. I prove that every degree-$3$ vertex of $H$ has a degree-$3$ neighbor, which upgrades the $4/7$ bound to a sharp $2/3$ bound and isolates the equality case.
+
+\subsection*{2) Round-3 FOUNDATION USED}
+I use the following Round~3 results without reproving them:
+\begin{itemize}
+  \item \textbf{Round-3 Lemma~5.1 and Corollary~5.2.} If a counterexample exists, then there is a connected edge-minimal counterexample $H$ such that $\delta(H)=3$, and the set
+  \[
+    B:=V_{\ge 4}(H)=\{v\in V(H): d_H(v)\ge 4\}
+  \]
+  is independent.
+  \item \textbf{Round-3 Lemma~5.3.} With
+  \[
+    A:=V_3(H)=\{v\in V(H): d_H(v)=3\},
+  \]
+  one has $|A|\ge 4|V(H)|/7$.
+  \item \textbf{Round-2/3 validated literature inputs.} Any counterexample has diameter at least $3$; every $P_{13}$-free graph with minimum degree at least $3$ satisfies the conjecture; hence every counterexample contains an induced $P_{13}$; any counterexample has at least $17$ vertices; and any bipartite counterexample has at least $32$ vertices.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+The new tool is a \textbf{subgraph-minimality upgrade} of Round~3's edge-minimality. For the chosen edge-minimal counterexample $H$, \emph{no proper subgraph} of $H$ can still have minimum degree at least $3$, because every proper subgraph has fewer edges and cannot create new cycles.
+
+This stronger minimality has three consequences.
+\begin{enumerate}
+  \item Every degree-$3$ vertex has a degree-$3$ neighbor.
+  \item The induced subgraph $H[A]$ has minimum degree at least $1$.
+  \item Consequently,
+  \[
+    |A|\ge 2|B|,
+  \]
+  so at least $2/3$ of all vertices have degree exactly $3$.
+\end{enumerate}
+Moreover, equality is rigid: if $|A|=2|B|$, then $H[A]$ is a perfect matching and every vertex of $B$ has degree exactly $4$.
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+After Round~3, the exact unresolved gap was that the edge-minimal core still allowed a substantial population of vertices of degree at least $4$; the bound $|A|\ge 4|V(H)|/7$ was too weak to make the counterexample class genuinely narrow.
+
+The Round~4 plan is therefore:
+\begin{itemize}
+  \item strengthen Round~3 Lemma~5.1 from \emph{single-edge deletions} to \emph{arbitrary proper subgraphs};
+  \item use that stronger minimality to prove that vertices of degree $3$ cannot be supported entirely by higher-degree neighbors;
+  \item convert this local structural fact into a global counting theorem $|A|\ge 2|B|$;
+  \item isolate the equality case as a sharply formulated obstruction.
+\end{itemize}
+This overcomes the main Round~3 obstacle by forcing the degree-$3$ vertices to form a nontrivial internal backbone.
+
+\subsection*{5) WORK (ROUND-4)}
+
+\paragraph{Lemma 5.9 (new: subgraph-minimality of the edge-minimal counterexample).}
+Let $H$ be the connected edge-minimal counterexample provided by Round~3 Lemma~5.1. Then no proper subgraph $F\subsetneq H$ satisfies $\delta(F)\ge 3$.
+
+\emph{Proof.}
+Suppose that some proper subgraph $F\subsetneq H$ has $\delta(F)\ge 3$. Since $F$ is a proper subgraph, it has strictly fewer edges than $H$. Also, every cycle of $F$ is a cycle of $H$, because subgraphs do not create new cycles. Since $H$ has no cycle whose length is a power of $2$, neither does $F$. Therefore $F$ is also a counterexample, contradicting the choice of $H$ as a counterexample with the minimum possible number of edges. \qed
+
+\paragraph{Corollary 5.10 (new: every degree-$3$ vertex meets $A$).}
+Every vertex of $A$ has at least one neighbor in $A$. Equivalently, the induced subgraph $H[A]$ has minimum degree at least $1$.
+
+\emph{Proof.}
+Let $a\in A$. Suppose, for contradiction, that every neighbor of $a$ lies in $B$. Since $d_H(a)=3$, the graph $H-a$ is a proper subgraph of $H$. Every neighbor of $a$ had degree at least $4$ in $H$, so after deleting $a$ each of those neighbors still has degree at least $3$. All other vertex degrees are unchanged. Hence
+\[
+  \delta(H-a)\ge 3.
+\]
+This contradicts Lemma~5.9. Therefore $a$ has a neighbor in $A$. Since $a\in A$ was arbitrary, $\delta(H[A])\ge 1$. \qed
+
+\paragraph{Theorem 5.11 (new: the $2/3$ theorem for the edge-minimal core).}
+With $A=V_3(H)$ and $B=V_{\ge 4}(H)$ as above,
+\[
+  |A|\ge 2|B|.
+\]
+Equivalently,
+\[
+  |A|\ge \frac{2}{3}|V(H)|,
+  \qquad
+  |B|\le \frac{1}{3}|V(H)|.
+\]
+In particular, at least two-thirds of the vertices of $H$ have degree exactly $3$.
+
+\emph{Proof.}
+By Corollary~5.10, every vertex of $H[A]$ has degree at least $1$ inside $H[A]$. Hence
+\[
+  2e_H(A)\ge |A|.
+\]
+Every vertex of $A$ has total degree $3$, so
+\[
+  3|A| = 2e_H(A)+e_H(A,B).
+\]
+Using $2e_H(A)\ge |A|$, we obtain
+\[
+  e_H(A,B) = 3|A|-2e_H(A) \le 2|A|.
+\]
+On the other hand, Round~3 Corollary~5.2 says that $B$ is independent. Therefore every edge incident with a vertex of $B$ lies in $E_H(A,B)$, and since each vertex of $B$ has degree at least $4$,
+\[
+  e_H(A,B)=\sum_{b\in B} d_H(b)\ge 4|B|.
+\]
+Combining the two inequalities yields
+\[
+  4|B|\le e_H(A,B)\le 2|A|,
+\]
+so $|A|\ge 2|B|$. Since $|V(H)|=|A|+|B|$, this is equivalent to
+\[
+  |A|\ge \frac{2}{3}|V(H)|,
+  \qquad
+  |B|\le \frac{1}{3}|V(H)|.
+\]
+\qed
+
+\paragraph{Corollary 5.12 (new: rigidity of the equality case).}
+Equality $|A|=2|B|$ in Theorem~5.11 holds if and only if both of the following are true:
+\begin{enumerate}
+  \item every vertex of $B$ has degree exactly $4$;
+  \item the graph $H[A]$ is $1$-regular, i.e.
+  $H[A]$ is a disjoint union of edges (a perfect matching on $A$).
+\end{enumerate}
+
+\emph{Proof.}
+If $|A|=2|B|$, then the proof of Theorem~5.11 gives
+\[
+  4|B|\le e_H(A,B)\le 2|A|=4|B|,
+\]
+so equality holds throughout. Hence
+\[
+  e_H(A,B)=4|B|,
+\]
+which forces $d_H(b)=4$ for every $b\in B$, because each $b\in B$ has degree at least $4$ and
+\[
+  e_H(A,B)=\sum_{b\in B} d_H(b).
+\]
+Also,
+\[
+  e_H(A,B)=2|A|.
+\]
+Substituting into
+\[
+  3|A|=2e_H(A)+e_H(A,B)
+\]
+shows that
+\[
+  2e_H(A)=|A|.
+\]
+Since Corollary~5.10 says that every vertex of $H[A]$ has degree at least $1$, the equality $2e_H(A)=|A|$ implies that every vertex of $H[A]$ has degree exactly $1$. Thus $H[A]$ is $1$-regular, hence a perfect matching.
+
+Conversely, if every vertex of $B$ has degree $4$ and $H[A]$ is a perfect matching, then
+\[
+  2e_H(A)=|A|,
+  \qquad
+  e_H(A,B)=3|A|-2e_H(A)=2|A|,
+\]
+while also
+\[
+  e_H(A,B)=\sum_{b\in B} d_H(b)=4|B|.
+\]
+Therefore $2|A|=4|B|$, i.e.
+\[
+  |A|=2|B|.
+\]
+\qed
+
+\paragraph{Lemma 5.13 (new: no component of $H[A]$ is closed under $B$-neighbors).}
+Assume $H[A]$ has at least two connected components. Then for every connected component $C$ of $H[A]$, there exists a vertex $b\in B$ that has a neighbor in $C$ and a neighbor in $A\setminus V(C)$.
+
+\emph{Proof.}
+Fix a connected component $C$ of $H[A]$, and let
+\[
+  S:=V(C)\cup \bigl(N_H(V(C))\cap B\bigr).
+\]
+Because $C$ is a connected component of $H[A]$, every neighbor in $A$ of a vertex of $C$ also lies in $C$. Thus every vertex of $C$ has all three of its neighbors inside $S$, so it has degree $3$ in $H[S]$.
+
+Suppose, toward a contradiction, that every $b\in B\cap S$ has all its neighbors in $C$. Then each such $b$ keeps all of its neighbors in $H[S]$, and therefore has degree at least $4$ in $H[S]$. Hence
+\[
+  \delta(H[S])\ge 3.
+\]
+Since $H[A]$ has at least two connected components, there is a vertex of $A\setminus V(C)$, so $S\neq V(H)$. Therefore $H[S]$ is a proper induced subgraph of $H$, contradicting Lemma~5.9.
+
+Thus some $b\in B\cap S$ must have a neighbor outside $C$. Since $B$ is independent, that outside neighbor must lie in $A\setminus V(C)$. \qed
+
+\paragraph{Updated obstruction profile after Round~4.}
+Combining the new Round~4 results with the validated inputs from Rounds~2 and~3, we obtain the following.
+
+If a counterexample exists, then there is a connected edge-minimal counterexample $H$ such that:
+\begin{enumerate}
+  \item $\delta(H)=3$;
+  \item $B=V_{\ge 4}(H)$ is independent;
+  \item every vertex of $A=V_3(H)$ has a neighbor in $A$;
+  \item at least $2/3$ of the vertices of $H$ lie in $A$;
+  \item if equality $|A|=2|B|$ holds, then $H[A]$ is a perfect matching and every vertex of $B$ has degree exactly $4$;
+  \item if $H[A]$ is disconnected, then every component of $H[A]$ is linked to another component through some vertex of $B$;
+  \item $\operatorname{diam}(H)\ge 3$;
+  \item $H$ contains an induced $P_{13}$;
+  \item $|V(H)|\ge 17$;
+  \item if $H$ is bipartite, then $|V(H)|\ge 32$.
+\end{enumerate}
+Thus the unresolved core is now narrower than in Round~3: a putative counterexample must be \emph{degree-$3$-dominated by a full two-thirds margin}, with the degree-$3$ vertices themselves forming a nontrivial internal scaffold.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+  \item \textbf{Does Lemma~5.9 really strengthen Round~3 Lemma~5.1?} Yes. Round~3 handled deletion of a single edge whose endpoints both had degree at least $4$. Lemma~5.9 applies to \emph{every} proper subgraph. The key monotonicity fact is valid: passing to a subgraph never creates a new cycle.
+
+  \item \textbf{Could $H-a$ in Corollary~5.10 be disconnected, invalidating the contradiction?} No. Connectivity is irrelevant for the contradiction. A disconnected graph with minimum degree at least $3$ and no power-of-two cycle is still a counterexample, since each component has minimum degree at least $3$ and every cycle of every component is also a cycle of the whole graph.
+
+  \item \textbf{Is the $2/3$ inequality sharp?} The proof shows exactly where equality can occur: simultaneously $e_H(A,B)=2|A|=4|B|$ and $2e_H(A)=|A|$. Corollary~5.12 verifies that this is equivalent to the rigid configuration ``all vertices of $B$ have degree $4$ and $H[A]$ is a perfect matching.'' No hidden assumptions are used.
+
+  \item \textbf{Is Lemma~5.13 stronger than mere connectivity of $H$?} Yes. Connectivity only guarantees that each component of $H[A]$ has some neighbor in $B$. Lemma~5.13 proves that no component of $H[A]$ can be sealed off by $B$-vertices that connect only to that component; otherwise one gets a proper induced subgraph with minimum degree at least $3$.
+
+  \item \textbf{Interaction with Round~3.} Theorem~5.11 strictly strengthens Round~3 Lemma~5.3: the lower bound on degree-$3$ vertices improves from $4|V(H)|/7$ to $2|V(H)|/3$. The earlier bound remains true but is now superseded.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).} The full Erd\H{o}s--Gy\'arf\'as conjecture remains open in general, but Round~4 makes a genuine structural advance beyond Round~3:
+\begin{itemize}
+  \item it upgrades edge-minimality to full subgraph-minimality (Lemma~5.9);
+  \item it proves that every degree-$3$ vertex has a degree-$3$ neighbor (Corollary~5.10);
+  \item it strengthens the Round~3 bound from $4/7$ to $2/3$ on the proportion of degree-$3$ vertices (Theorem~5.11);
+  \item it characterizes the equality case $|A|=2|B|$ (Corollary~5.12);
+  \item it proves that no connected component of $H[A]$ can be closed under all incident $B$-neighbors unless $H[A]$ itself is connected (Lemma~5.13).
+\end{itemize}
+The sharpest obstruction now isolated is this: any minimal counterexample must be a connected graph of diameter at least $3$, containing an induced $P_{13}$, in which at least two-thirds of all vertices have degree exactly $3$, every such vertex has another degree-$3$ neighbor, and the extremal equality case forces the degree-$3$ vertices to form a perfect matching while all remaining vertices have degree exactly $4$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+COMPLETION: 68\%.
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{99}
+
+\bibitem{Erdos1997}
+P.~Erd\H{o}s,
+\newblock Some old and new problems in various branches of combinatorics,
+\newblock \emph{Discrete Mathematics} \textbf{165--166} (1997), 227--231.
+
+\bibitem{Carr2025}
+A.~Carr,
+\newblock Cycles of length 4 or 8 in graphs with diameter 2 and minimum degree at least 3,
+\newblock arXiv:2508.19302, 2025.
+
+\bibitem{HegdeSandeepShashank2025}
+A.~S. Hegde, R.~B. Sandeep, and P.~Shashank,
+\newblock Erd\H{o}s--Gy\'arf\'as conjecture on graphs without long induced paths,
+\newblock arXiv:2410.22842v2, 2025.
+
+\bibitem{HuShen2024}
+Z.~Hu and C.~Shen,
+\newblock The Erd\H{o}s--Gy\'arf\'as conjecture holds for $P_{10}$-free graphs,
+\newblock \emph{Discrete Mathematics} \textbf{347} (2024), 114175.
+
+\bibitem{NowEtAl2014}
+P.~Salehi Nowbandegani, H.~Esfandiari, M.~H. Shirdareh Haghighi, and K.~Bibak,
+\newblock On the Erd\H{o}s--Gy\'arf\'as conjecture in claw-free graphs,
+\newblock \emph{Discussiones Mathematicae Graph Theory} \textbf{34} (2014), 635--640.
+
+\end{thebibliography}

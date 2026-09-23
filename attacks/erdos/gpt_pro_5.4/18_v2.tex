@@ -1,0 +1,407 @@
+\section{Problem Number}
+
+From the inherited numbering in the previous rounds (Lemmas~18.1--18.11 and the earlier artifacts \texttt{18\_v2.tex}, \texttt{18\_solutions.tex}), the Erd\H{o}s problem number here is \(18\). This round is therefore exported as \texttt{18\_solutions.tex}.
+
+\section{ROUND-4 OBJECTIVE}
+
+\textbf{Path (C): obstruction/correction.}
+
+Round~3 produced a sharp factorial obstruction,
+\[
+h(n!) \gg (\log n)^2,
+\]
+but it still left the general question (Q1) without any comparably sharp universal lower bound. In this round I pursue the obstruction route for the general practical-number problem:
+
+\begin{itemize}
+\item prove a new lower bound valid for \emph{every} sufficiently large practical \(m\),
+\[
+h(m)\ge \left(\frac1{\log 2}-o(1)\right)\log\log m;
+\]
+\item deduce that every version of (Q1) with exponent \(C<1\) is false;
+\item combine this with the Round~3 factorial lower bound to isolate the minimal exponent ranges currently compatible with the problem:
+\[
+C\ge 1 \text{ for (Q1)},\qquad C\ge 2 \text{ for (Q2)};
+\]
+\item add a new structural lemma for factorials:
+\[
+h((n+1)!)\le h(n!)+1,
+\]
+which gives a clean recursive upper envelope for the factorial sequence.
+\end{itemize}
+
+This is the most promising direction after Round~3 because it closes the remaining low-exponent loophole on the general side and isolates precisely what any future positive solution would still have to prove.
+
+\section{Round-3 FOUNDATION USED}
+
+I use the following earlier-round results as black boxes.
+
+\begin{itemize}
+\item \textbf{Round-2 counting lemma and explicit corollary:} for every practical \(m\),
+\[
+\sum_{t=0}^{h(m)} \binom{\tau(m)-1}{t}\ge m,
+\]
+hence
+\[
+h(m)\ge \frac{\log m}{1+\log(\tau(m)-1)}.
+\]
+\item \textbf{Round-3 factorial obstruction:} there exists an absolute constant \(c>0\) such that
+\[
+h(n!)\ge c(\log n)^2
+\]
+for all sufficiently large \(n\).
+\item \textbf{Round-3 exact value:}
+\[
+h(12!)=8,
+\]
+and also the inherited exact table through \(n=12\), in particular \(h(11!)=7\).
+\end{itemize}
+
+I do \emph{not} re-prove these facts here.
+
+\section{NEW INSIGHT / TOOL (ROUND-4)}
+
+There are two genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item \textbf{A global practical-number obstruction from the maximal order of the divisor function.}
+Combining the Round-2 counting lower bound with the classical Wigert maximal-order theorem
+\[
+\log \tau(N)\le (\log 2+o(1))\frac{\log N}{\log\log N},
+\]
+I obtain the new universal lower bound
+\[
+h(m)\ge \left(\frac1{\log 2}-o(1)\right)\log\log m
+\]
+for all practical \(m\).
+
+\item \textbf{An interval-divisibility extension lemma.}
+If \(m\) is practical and every integer \(1\le r<A\) divides \(m\), then
+\[
+h(Am)\le h(m)+1.
+\]
+Applied with \(m=n!\) and \(A=n+1\), this gives the new factorial recursion
+\[
+h((n+1)!)\le h(n!)+1.
+\]
+\end{enumerate}
+
+The first item gives a new obstruction relevant to (Q1); the second gives a new construction principle relevant to (Q2).
+
+\section{ATTACK PLAN (ROUND-4)}
+
+After Round~3, the exact unresolved gap was this:
+
+\begin{center}
+\emph{Could (Q1) conceivably hold with an exponent \(C<1\)?}
+\end{center}
+
+Nothing in the previous rounds excluded that possibility. The plan here is therefore:
+
+\begin{itemize}
+\item use the Round-2 counting lemma as the bridge from divisor counts to lower bounds for \(h(m)\);
+\item import a sharp upper bound for \(\tau(m)\) (Wigert) to force a lower bound of order \(\log\log m\) for every practical \(m\);
+\item deduce a rigorous obstruction: every \(o(\log\log m)\) bound is impossible on the practical-number side;
+\item then return to factorials and prove a new exact recursion \(h((n+1)!)\le h(n!)+1\), which complements the Round-3 lower bound by giving a clean structural upper-step inequality.
+\end{itemize}
+
+This overcomes the earlier obstacle because it no longer relies on factorial-specific input: it treats all practical numbers at once.
+
+\section{WORK (ROUND-4)}
+
+\textbf{External theorem used.} I use the following classical theorem on the divisor function.
+
+\medskip
+
+\noindent\textbf{Wigert maximal-order theorem.}
+One has
+\[
+\limsup_{N\to\infty}\frac{\log \tau(N)\,\log\log N}{\log N}=\log 2.
+\]
+Equivalently, for every \(\varepsilon>0\), there exists \(N_0(\varepsilon)\) such that
+\[
+\log \tau(N)\le (\log 2+\varepsilon)\frac{\log N}{\log\log N}
+\qquad (N\ge N_0(\varepsilon)).
+\]
+
+\medskip
+
+This theorem applies to arbitrary integers \(N\), hence in particular to practical integers.
+
+\subsection*{Theorem 18.12 (general lower bound for practical numbers)}
+
+For every \(\varepsilon>0\), there exists \(M_0(\varepsilon)\) such that every practical integer \(m\ge M_0(\varepsilon)\) satisfies
+\[
+h(m)\ge
+\frac{\log m}{1+(\log 2+\varepsilon)\frac{\log m}{\log\log m}}
+=
+\frac{\log\log m}{(\log 2+\varepsilon)+\frac{\log\log m}{\log m}}.
+\]
+Consequently,
+\[
+h(m)\ge \left(\frac1{\log 2+\varepsilon}+o(1)\right)\log\log m
+\qquad (m\to\infty,\ m\ \text{practical}),
+\]
+and therefore
+\[
+\liminf_{\substack{m\to\infty\\ m\ \mathrm{practical}}}
+\frac{h(m)}{\log\log m}\ge \frac1{\log 2}.
+\]
+
+\medskip
+
+\noindent\textbf{Proof.}
+Fix \(\varepsilon>0\). By Wigert's theorem, for all sufficiently large integers \(m\),
+\[
+\log \tau(m)\le (\log 2+\varepsilon)\frac{\log m}{\log\log m}.
+\]
+Let \(m\) now be practical and large enough that the above bound holds. The Round-2 counting corollary gives
+\[
+h(m)\ge \frac{\log m}{1+\log(\tau(m)-1)}.
+\]
+Since \(\tau(m)-1<\tau(m)\), we have
+\[
+\log(\tau(m)-1)\le \log\tau(m)\le (\log 2+\varepsilon)\frac{\log m}{\log\log m},
+\]
+hence
+\[
+h(m)\ge
+\frac{\log m}{1+(\log 2+\varepsilon)\frac{\log m}{\log\log m}}.
+\]
+Multiplying numerator and denominator by \(\frac{\log\log m}{\log m}\) yields
+\[
+h(m)\ge
+\frac{\log\log m}{(\log 2+\varepsilon)+\frac{\log\log m}{\log m}}.
+\]
+Since \(\frac{\log\log m}{\log m}\to 0\), this gives
+\[
+h(m)\ge \left(\frac1{\log 2+\varepsilon}+o(1)\right)\log\log m.
+\]
+Because \(\varepsilon>0\) was arbitrary, the stated \(\liminf\) bound follows.
+\hfill\(\square\)
+
+\subsection*{Corollary 18.13 (fatal obstruction for sublinear powers of \(\log\log m\))}
+
+For every fixed \(\delta>0\), there are only finitely many practical integers \(m\) such that
+\[
+h(m)\le (\log\log m)^{1-\delta}.
+\]
+Equivalently, every bound of the form
+\[
+h(m)=o(\log\log m)
+\]
+is false on the practical numbers.
+
+\medskip
+
+\noindent\textbf{Proof.}
+By Theorem~18.12, there exists \(c>0\) such that \(h(m)\ge c\log\log m\) for all sufficiently large practical \(m\). But
+\[
+c\log\log m > (\log\log m)^{1-\delta}
+\]
+for all sufficiently large \(m\), since \((\log\log m)^\delta\to\infty\). Thus the displayed inequality can hold only finitely often.
+\hfill\(\square\)
+
+\subsection*{Corollary 18.14 (minimal corrected form of Q1)}
+
+Any positive answer to (Q1) must have exponent at least \(1\). More precisely:
+
+\begin{quote}
+If there exists \(C>0\) and infinitely many practical \(m\) such that
+\[
+h(m)\le (\log\log m)^C,
+\]
+then necessarily \(C\ge 1\).
+\end{quote}
+
+Thus the minimal exponent range still compatible with the current evidence is
+\[
+C\ge 1.
+\]
+
+\medskip
+
+\noindent\textbf{Proof.}
+If \(C<1\), write \(C=1-\delta\) with \(\delta>0\). Then Corollary~18.13 gives a contradiction.
+\hfill\(\square\)
+
+\subsection*{Corollary 18.15 (minimal corrected exponent range for Q2)}
+
+Using the Round-3 bound \(h(n!)\gg (\log n)^2\), one immediately gets:
+
+\begin{quote}
+If there exists \(C>0\) such that
+\[
+h(n!)\le (\log n)^C
+\]
+for all sufficiently large \(n\), then necessarily \(C\ge 2\).
+\end{quote}
+
+Equivalently, for every fixed \(\delta>0\), the bound
+\[
+h(n!)\le (\log n)^{2-\delta}
+\]
+fails for all sufficiently large \(n\).
+
+\medskip
+
+\noindent\textbf{Proof.}
+Round~3 showed that \(h(n!)\ge c(\log n)^2\) for some \(c>0\) and all large \(n\). Since
+\[
+c(\log n)^2>(\log n)^{2-\delta}
+\]
+for large \(n\), any exponent \(C<2\) is impossible.
+\hfill\(\square\)
+
+\subsection*{Lemma 18.16 (interval-divisibility extension)}
+
+Let \(m\) be practical and let \(A\ge 2\) be an integer. Assume that every integer
+\[
+1\le r<A
+\]
+divides \(m\). Then \(Am\) is practical and
+\[
+h(Am)\le h(m)+1.
+\]
+
+\medskip
+
+\noindent\textbf{Proof.}
+Fix \(x\) with \(1\le x<Am\). Write
+\[
+x=Aq+r,\qquad 0\le q<m,\quad 0\le r<A.
+\]
+Because \(m\) is practical and \(q<m\), there exist distinct divisors \(d_1,\dots,d_t\mid m\) such that
+\[
+q=d_1+\cdots+d_t,\qquad t\le h(m).
+\]
+Multiplying by \(A\), we get
+\[
+Aq=Ad_1+\cdots+Ad_t,
+\]
+where \(Ad_1,\dots,Ad_t\) are distinct divisors of \(Am\).
+
+If \(r=0\), this already represents \(x\) using at most \(h(m)\) divisors of \(Am\).
+
+If \(r>0\), then by hypothesis \(r\mid m\), hence \(r\mid Am\). Also
+\[
+r<A\le Ad_i
+\]
+for every \(i\), so \(r\) is distinct from all of the divisors \(Ad_i\). Therefore
+\[
+x=(Ad_1+\cdots+Ad_t)+r
+\]
+is a representation of \(x\) as a sum of at most \(h(m)+1\) distinct divisors of \(Am\).
+
+Since this holds for every \(1\le x<Am\), the number \(Am\) is practical and \(h(Am)\le h(m)+1\).
+\hfill\(\square\)
+
+\subsection*{Corollary 18.17 (one-step factorial recursion)}
+
+For every \(n\ge 1\),
+\[
+h((n+1)!)\le h(n!)+1.
+\]
+
+\medskip
+
+\noindent\textbf{Proof.}
+Apply Lemma~18.16 with \(m=n!\) and \(A=n+1\). Indeed every integer \(1\le r<n+1\) divides \(n!\).
+\hfill\(\square\)
+
+\subsection*{Corollary 18.18 (a new recursive upper envelope for factorials)}
+
+For all \(n\ge 11\),
+\[
+h(n!)\le n-4.
+\]
+
+\medskip
+
+\noindent\textbf{Proof.}
+Round~3 established the exact value \(h(11!)=7\). Now iterate Corollary~18.17:
+\[
+h(n!)\le h(11!)+(n-11)=7+(n-11)=n-4
+\]
+for every \(n\ge 11\).
+\hfill\(\square\)
+
+\section{ADVERSARIAL VERIFICATION}
+
+I now test the new work for hidden gaps.
+
+\begin{itemize}
+\item \textbf{Use of external input.}
+The only outside theorem is Wigert's maximal-order bound for \(\tau(N)\). I stated it in a form exactly sufficient for the argument. Its hypothesis is simply that \(N\) is a large positive integer, which is satisfied when \(N=m\) is a large practical integer.
+
+\item \textbf{Dependence on earlier rounds.}
+Theorem~18.12 uses only the Round-2 counting corollary and no other unproved structural claim. Corollary~18.15 uses only the Round-3 lower bound \(h(n!)\gg(\log n)^2\). Corollary~18.18 uses only the exact Round-3 value \(h(11!)=7\).
+
+\item \textbf{Lemma 18.16 distinctness issue.}
+This is the only delicate point. If \(r>0\), then \(r<A\), whereas every divisor \(Ad_i\) is at least \(A\). Hence \(r\) cannot coincide with any \(Ad_i\). Distinctness among the \(Ad_i\) follows from distinctness among the \(d_i\).
+
+\item \textbf{Boundary cases in Lemma 18.16.}
+If \(q=0\), the representation reduces to \(x=r\), and since \(r<A\) divides \(m\), it is a divisor of \(Am\). If \(r=0\), no extra divisor is added. The case \(x=0\) is irrelevant because \(h(Am)\) only concerns \(1\le x<Am\).
+
+\item \textbf{Could Corollary 18.13 fail because the constant from Theorem 18.12 is ineffective?}
+No. Effectivity is unnecessary. The theorem gives an eventual linear lower bound \(h(m)\ge c\log\log m\) for some positive \(c\), and that already dominates every power \((\log\log m)^{1-\delta}\).
+
+\item \textbf{Interaction with the original questions.}
+The new results do \emph{not} disprove the original forms of (Q1) or (Q2). They only prove that any positive answer must lie above the exponent thresholds \(1\) and \(2\), respectively. So there is no logical conflict with the inherited unresolved status.
+\end{itemize}
+
+No contradiction or gap was found in the new argument.
+
+\section{FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+This round makes two substantive advances beyond Round~3.
+
+\begin{itemize}
+\item \textbf{General obstruction for practical numbers.}
+For all sufficiently large practical \(m\),
+\[
+h(m)\ge \left(\frac1{\log 2}-o(1)\right)\log\log m.
+\]
+Therefore every sublinear power of \(\log\log m\) is impossible, and any positive answer to (Q1) must have exponent \(C\ge 1\).
+
+\item \textbf{New structural factorial lemma.}
+For every \(n\ge 1\),
+\[
+h((n+1)!)\le h(n!)+1.
+\]
+Combining this with the inherited exact value \(h(11!)=7\) yields the new unconditional upper envelope
+\[
+h(n!)\le n-4\qquad (n\ge 11).
+\]
+Together with the Round-3 lower bound \(h(n!)\gg (\log n)^2\), this shows that any positive answer to the stronger factorial question must have exponent \(C\ge 2\).
+\end{itemize}
+
+So the current rigorous picture is:
+
+\[
+\boxed{\text{Q1 can only possibly hold with } C\ge 1,}
+\qquad
+\boxed{\text{Q2 can only possibly hold with } C\ge 2.}
+\]
+
+The original existence questions remain open.
+
+\section{COMPLETION ESTIMATE}
+
+\textbf{COMPLETION: 72\%}
+
+\section{REFERENCES}
+
+\begin{itemize}
+\item Round-2 output for Problem~18, specifically the counting lemma and its explicit corollary \(h(m)\ge \frac{\log m}{1+\log(\tau(m)-1)}\).
+\item Round-3 output for Problem~18, specifically the lower bound \(h(n!)\gg (\log n)^2\) and the exact values \(h(11!)=7\), \(h(12!)=8\).
+\item Paul Pollack, \emph{The maximal size of the \(k\)-fold divisor function for very large \(k\)}, Introduction, for the quoted Wigert bound
+\[
+\log d(N)\le (1+o(1))\,\log 2\,\frac{\log N}{\log\log N}.
+\]
+\item Christian Elsholtz, Marc Technau, Niclas Technau, \emph{The maximal order of iterated multiplicative functions}, \emph{Mathematika} 65 (2019), abstract, which records the sharp maximal-order formula
+\[
+\max_{n\le x}\log d(n)=\frac{\log x}{\log\log x}(\log 2+o(1)).
+\]
+\end{itemize}

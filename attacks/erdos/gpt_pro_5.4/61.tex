@@ -1,0 +1,382 @@
+\section{Round 4: reduction to prime graphs and a quantitative substitution barrier}
+
+\subsection*{1) ROUND-4 OBJECTIVE}
+\textbf{Path (A): proof-direction.}  Round 3 already closed the next induced-path case $H=P_5$ and exhibited one explicit substitution obstruction using $C_5$.
+The most promising next step is therefore not to chase another isolated forbidden graph, but to isolate the \emph{true unresolved core} of Problem~61 and to prove a general obstruction theorem that explains why the Round-3 construction is not accidental.
+
+The new goal of this round is thus twofold:
+\begin{enumerate}
+\item prove that the full Erd\H{o}s--Hajnal conjecture reduces to the case of \emph{prime} graphs, using the substitution theorem of Alon--Pach--Solymosi; and
+\item generalize the Round-3 $C_5$ blow-up obstruction from $H=P_5$ to \emph{every prime forbidden graph}, obtaining a universal upper bound on any admissible Erd\H{o}s--Hajnal exponent.
+\end{enumerate}
+
+This is the most promising direction after Round 3 because it identifies exactly where the remaining difficulty lies, and it rules out an entire class of overly optimistic quantitative approaches.
+
+\subsection*{2) ROUND-3 FOUNDATION USED}
+I rely explicitly on the following vetted Round-3 items.
+\begin{itemize}
+\item \textbf{Round-3 Lemma~2 / Corollary~3:} if $H$ is prime, then the class of $H$-free graphs is closed under vertex-substitution.
+\item \textbf{Round-3 Lemma~4:} for $G=B[F,\dots,F]$ with identical substituted blocks,
+\[
+\alpha(G)=\alpha(B)\alpha(F),\qquad \omega(G)=\omega(B)\omega(F).
+\]
+In particular, repeated self-substitution multiplies both $\alpha$ and $\omega$.
+\item \textbf{Round-3 Corollary~6:} for $H=P_5$, the recursive family built from $C_5$ shows that the exponent $1/2$ from the cograph case cannot extend to all $P_5$-free graphs.
+\end{itemize}
+I do not reprove these results; I only generalize and reorganize them.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-4)}
+There are two genuinely new ingredients in this round.
+
+\begin{enumerate}
+\item \textbf{Prime-reduction theorem for Problem~61.}
+Using the Alon--Pach--Solymosi substitution theorem together with a self-contained modular-decomposition lemma, I show that the full Erd\H{o}s--Hajnal conjecture is equivalent to its restriction to \emph{prime} graphs.
+
+\item \textbf{Universal substitution barrier.}
+For a prime forbidden graph $H$, every smaller $H$-free graph $B$ generates by repeated self-substitution an infinite $H$-free family whose homogeneous-set exponent is exactly
+\[
+\log_{|B|}\max\{\alpha(B),\omega(B)\}.
+\]
+Consequently, every admissible Erd\H{o}s--Hajnal exponent for prime $H$ is bounded above by this quantity.
+Choosing $B=C_5$ recovers and vastly generalizes the Round-3 obstruction, while choosing a random-Ramsey base graph yields an asymptotic upper barrier
+\[
+\delta_*(H)=O\!\left(\frac{\log\log |H|}{\log |H|}\right)
+\]
+for prime $H$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-4)}
+\textbf{Exact gap left after Round 3.}
+Round 3 settled $H=P_5$ and exposed substitution as the mechanism behind the known upper-bound obstruction, but it did \emph{not} determine whether that phenomenon was specific to $P_5$ or fundamental for the full conjecture.
+
+\textbf{Claims to prove now.}
+\begin{enumerate}
+\item Every non-prime graph is a substitution of two strictly smaller graphs.
+\item Therefore, by the Alon--Pach--Solymosi substitution theorem, proving Erd\H{o}s--Hajnal for all prime graphs would settle Problem~61 completely.
+\item For every prime graph $H$ and every $H$-free base graph $B$, the self-substitution tower $B^{(t)}$ stays $H$-free and has
+\[
+|B^{(t)}|=|B|^t,\qquad \hom(B^{(t)})=\hom(B)^t,
+\]
+where $\hom(G):=\max\{\alpha(G),\omega(G)\}$.
+\item Hence every admissible exponent for prime $H$ is at most $\log_{|B|}\hom(B)$.
+\item Choosing $B=C_5$ gives a uniform barrier $\log_5 2$ for all prime $H$ with at least six vertices; choosing a random-Ramsey graph on $|H|-1$ vertices gives a stronger asymptotic barrier tending to $0$.
+\end{enumerate}
+
+This plan overcomes the Round-3 obstacle because it turns one example into a general theorem and simultaneously isolates the exact core class (prime graphs) where new positive ideas are still required.
+
+\subsection*{5) WORK (ROUND-4)}
+\paragraph{Notation.}
+For a graph $G$, let
+\[
+\hom(G):=\max\{\alpha(G),\omega(G)\}.
+\]
+For a fixed graph $H$, define the best possible homogeneous-set exponent by
+\[
+\delta_*(H):=\sup\Bigl\{\delta>0: \text{every sufficiently large $H$-free graph $G$ satisfies }\hom(G)\ge |G|^{\delta}\Bigr\}.
+\]
+Thus the Erd\H{o}s--Hajnal conjecture for $H$ is exactly the assertion that $\delta_*(H)>0$.
+
+A nonempty proper subset $M\subsetneq V(H)$ is a \emph{module} of $H$ if every vertex of $V(H)\setminus M$ is either complete or anticomplete to $M$.
+A graph is \emph{prime} if it has no module of size between $2$ and $|H|-1$.
+
+If $B$ has vertices $1,\dots,m$ and $G_1,\dots,G_m$ are graphs, then
+\[
+B[G_1,\dots,G_m]
+\]
+is the graph obtained by replacing vertex $i$ by the graph $G_i$, keeping all edges inside each $G_i$, and making every vertex of $G_i$ adjacent to every vertex of $G_j$ iff $ij\in E(B)$.
+
+\medskip
+\paragraph{External theorem used (Alon--Pach--Solymosi).}
+If $H_1$ and $H_2$ have the Erd\H{o}s--Hajnal property, and $H$ is obtained from $H_1$ by substituting $H_2$ for a vertex of $H_1$, then $H$ also has the Erd\H{o}s--Hajnal property.
+
+I use this theorem only in the qualitative reduction below; every quantitative upper bound proved afterwards is self-contained.
+
+\medskip
+\paragraph{Lemma 1 (every non-prime graph is a substitution of smaller graphs).}
+Let $H$ be a non-prime graph.
+Then there exist graphs $H_1,H_2$ with
+\[
+2\le |H_2|<|H|,\qquad 2\le |H_1|<|H|,
+\]
+such that $H$ is obtained from $H_1$ by substituting $H_2$ for one vertex of $H_1$.
+
+\emph{Proof.}
+Since $H$ is non-prime, it has a nontrivial module $M\subsetneq V(H)$ with $2\le |M|\le |H|-1$.
+Let
+\[
+H_2:=H[M].
+\]
+Construct $H_1$ from $H$ by contracting $M$ to a single new vertex $m$:
+\begin{itemize}
+\item the vertex set of $H_1$ is $(V(H)\setminus M)\cup\{m\}$;
+\item two vertices outside $M$ are adjacent in $H_1$ exactly when they were adjacent in $H$;
+\item a vertex $x\in V(H)\setminus M$ is adjacent to $m$ in $H_1$ iff $x$ is adjacent to one (equivalently every) vertex of $M$ in $H$.
+\end{itemize}
+The definition is well-posed because $M$ is a module, so every outside vertex is either complete or anticomplete to $M$.
+
+Now substitute $H_2$ for $m$ in $H_1$.
+Inside the substituted block we recover $H[M]$.
+Outside the block we keep exactly the adjacencies of $H\setminus M$.
+Between the block and the outside, a vertex $x\notin M$ is adjacent to every vertex of the block precisely when $x$ was complete to $M$ in $H$, and anticomplete otherwise.
+Therefore the resulting graph is exactly $H$.
+
+Since $2\le |M|\le |H|-1$, we have $2\le |H_2|<|H|$.
+Also
+\[
+|H_1|=|H|-|M|+1<|H|,
+\]
+and $|H_1|\ge 2$ because $M\neq V(H)$.
+Thus both factors are strictly smaller.
+\hfill$\square$
+
+\medskip
+\paragraph{Corollary 2 (Problem~61 reduces to prime graphs).}
+Assume every prime graph has the Erd\H{o}s--Hajnal property.
+Then every graph has the Erd\H{o}s--Hajnal property.
+Equivalently, Problem~61 is solved once it is solved for prime graphs.
+
+\emph{Proof.}
+Proceed by induction on $|H|$.
+If $H$ is prime, there is nothing to prove.
+If $H$ is non-prime, Lemma~1 writes $H$ as a substitution of two strictly smaller graphs $H_1,H_2$.
+By induction, both $H_1$ and $H_2$ have the Erd\H{o}s--Hajnal property.
+Applying the Alon--Pach--Solymosi theorem, $H$ also has the Erd\H{o}s--Hajnal property.
+\hfill$\square$
+
+\medskip
+\paragraph{Lemma 3 (universal substitution tower for prime forbidden graphs).}
+Let $H$ be prime, and let $B$ be an $H$-free graph with
+\[
+b:=|B|\ge 2,\qquad r:=\hom(B).
+\]
+Define recursively
+\[
+B^{(1)}:=B,\qquad B^{(t+1)}:=B[B^{(t)},\dots,B^{(t)}]
+\quad (t\ge 1),
+\]
+where there are $b$ copies of $B^{(t)}$ in the second display.
+Then for every $t\ge 1$:
+\begin{enumerate}
+\item $B^{(t)}$ is $H$-free;
+\item $|B^{(t)}|=b^t$;
+\item $\alpha(B^{(t)})=\alpha(B)^t$ and $\omega(B^{(t)})=\omega(B)^t$;
+\item $\hom(B^{(t)})=r^t$.
+\end{enumerate}
+
+\emph{Proof.}
+We induct on $t$.
+The case $t=1$ is immediate.
+Assume the four statements hold for $t$.
+
+Since $H$ is prime, Round-3 Lemma~2 (equivalently Round-3 Corollary~3) says that the class of $H$-free graphs is closed under substitution.
+The base graph $B$ is $H$-free, and by induction each block $B^{(t)}$ is $H$-free, so
+\[
+B^{(t+1)}=B[B^{(t)},\dots,B^{(t)}]
+\]
+is also $H$-free.
+This proves (1).
+
+For the number of vertices,
+\[
+|B^{(t+1)}|=|B|\cdot |B^{(t)}|=b\cdot b^t=b^{t+1},
+\]
+proving (2).
+
+Now apply Round-3 Lemma~4 to the substitution with identical blocks:
+\[
+\alpha(B^{(t+1)})=\alpha(B)\alpha(B^{(t)})=\alpha(B)^{t+1},
+\]
+and similarly
+\[
+\omega(B^{(t+1)})=\omega(B)\omega(B^{(t)})=\omega(B)^{t+1}.
+\]
+So (3) holds.
+Finally,
+\[
+\hom(B^{(t+1)})=\max\{\alpha(B)^{t+1},\omega(B)^{t+1}\}=\hom(B)^{t+1}=r^{t+1},
+\]
+proving (4).
+\hfill$\square$
+
+\medskip
+\paragraph{Theorem 4 (general upper bound on admissible exponents for prime $H$).}
+Let $H$ be prime, and let $B$ be any $H$-free graph with $b:=|B|\ge 2$ and $r:=\hom(B)$.
+Then
+\[
+\delta_*(H)\le \log_b r.
+\]
+
+\emph{Proof.}
+Fix any $\delta<\delta_*(H)$.
+By definition of $\delta_*(H)$, every sufficiently large $H$-free graph $G$ satisfies
+\[
+\hom(G)\ge |G|^{\delta}.
+\]
+Apply this to the substitution tower $B^{(t)}$ from Lemma~3.
+For all sufficiently large $t$,
+\[
+r^t=\hom(B^{(t)})\ge |B^{(t)}|^{\delta}=(b^t)^{\delta}=b^{t\delta}.
+\]
+Hence $r\ge b^{\delta}$, that is,
+\[
+\delta\le \log_b r.
+\]
+Since this holds for every $\delta<\delta_*(H)$, we conclude
+\[
+\delta_*(H)\le \log_b r.
+\]
+\hfill$\square$
+
+\medskip
+\paragraph{Corollary 5 (Round-3 $C_5$ obstruction generalized to all larger prime graphs).}
+Let $H$ be prime with $|H|\ge 6$.
+Then
+\[
+\delta_*(H)\le \log_5 2.
+\]
+
+\emph{Proof.}
+Take $B=C_5$.
+Then $|B|=5$ and $\hom(B)=2$.
+Because $|H|\ge 6$, the five-vertex graph $C_5$ is automatically $H$-free.
+Applying Theorem~4 gives
+\[
+\delta_*(H)\le \log_5 2.
+\]
+\hfill$\square$
+
+\medskip
+\paragraph{Lemma 6 (probabilistic base graph with logarithmic homogeneous number).}
+For every integer $n\ge 2$, there exists an $n$-vertex graph $R_n$ such that
+\[
+\hom(R_n)\le 4\log_2 n +1.
+\]
+
+\emph{Proof.}
+Choose a random graph $G\sim G(n,1/2)$, and let
+\[
+t:=\lceil 4\log_2 n\rceil.
+\]
+Let $X$ be the number of $t$-vertex subsets of $V(G)$ that induce either a clique or a stable set.
+For any fixed $t$-subset, the probability of being a clique is $2^{-\binom{t}{2}}$, and the same is true for being a stable set.
+Therefore
+\[
+\mathbb E[X]=2\binom{n}{t}2^{-\binom{t}{2}}.
+\]
+Using $\binom{n}{t}\le n^t$ and writing $L:=\log_2 n$, we get
+\[
+\mathbb E[X]\le 2^{1+tL-t(t-1)/2}.
+\]
+Now $t\ge 4L$ and $L\ge 1$.
+The function
+\[
+f(x):=1+xL-\frac{x(x-1)}{2}
+\]
+is decreasing for $x\ge L+\tfrac12$, so in particular for $x\ge 4L$.
+Hence
+\[
+1+tL-\frac{t(t-1)}{2}\le 1+4L^2-\frac{(4L)(4L-1)}{2}=1-4L^2+2L\le -1.
+\]
+Thus $\mathbb E[X]<1$.
+So there exists a realization of $G$ with $X=0$, i.e. with no clique and no stable set of size $t$.
+For that graph,
+\[
+\hom(G)\le t-1<4\log_2 n+1.
+\]
+Taking $R_n:=G$ proves the lemma.
+\hfill$\square$
+
+\medskip
+\paragraph{Corollary 7 (asymptotic upper barrier for prime graphs).}
+Let $H$ be prime on $h\ge 3$ vertices.
+Then
+\[
+\delta_*(H)\le \frac{\log\bigl(4\log_2(h-1)+1\bigr)}{\log(h-1)}.
+\]
+In particular,
+\[
+\delta_*(H)=O\!\left(\frac{\log\log h}{\log h}\right)
+\qquad (h\to\infty)
+\]
+for prime graphs $H$.
+
+\emph{Proof.}
+Set $n:=h-1$.
+By Lemma~6 there exists an $n$-vertex graph $R_n$ with
+\[
+\hom(R_n)\le 4\log_2 n+1.
+\]
+Since $|R_n|=h-1<|H|$, the graph $R_n$ is automatically $H$-free.
+Applying Theorem~4 with $B=R_n$ gives
+\[
+\delta_*(H)\le \log_n\bigl(4\log_2 n+1\bigr)=\frac{\log\bigl(4\log_2(h-1)+1\bigr)}{\log(h-1)}.
+\]
+The asymptotic estimate follows immediately.
+\hfill$\square$
+
+\medskip
+\paragraph{What this adds beyond Round 3.}
+Round 3 produced one explicit obstruction family for the special graph $H=P_5$.
+Round 4 shows that the same phenomenon is in fact universal for \emph{every prime forbidden graph}:
+there is always a substitution tower witnessing an upper bound on the best possible exponent.
+Moreover, Corollary~2 isolates prime graphs as the exact unresolved core of Problem~61.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \textbf{Does Lemma~1 really recover $H$ exactly?}
+Yes. The only delicate point is the adjacency between the contracted module and the outside world. Because $M$ is a module, every outside vertex is either complete or anticomplete to $M$, so contracting $M$ to one vertex preserves precisely the data needed for substitution.
+
+\item \textbf{Could Theorem~4 fail if the Erd\H{o}s--Hajnal inequality only holds for sufficiently large graphs?}
+No. The substitution tower $B^{(t)}$ has order $b^t\to\infty$, so eventually all members of the tower lie beyond the threshold in the definition of $\delta_*(H)$.
+
+\item \textbf{Is primeness of $H$ really necessary in Lemma~3?}
+Yes. The proof that $H$-free graphs are closed under substitution is exactly the Round-3 prime-forbidden lemma. Without primeness, substitution may create an induced copy of $H$ spread across several blocks.
+
+\item \textbf{Could $\hom(B^{(t)})$ be smaller than $\hom(B)^t$ because cliques and stable sets interact asymmetrically?}
+No. Round-3 Lemma~4 gives separate multiplicative formulas for $\alpha$ and $\omega$ under identical-block substitution. Taking the maximum afterwards yields
+\(
+\hom(B^{(t)})=\max\{\alpha(B)^t,\omega(B)^t\}=\hom(B)^t
+\)
+exactly.
+
+\item \textbf{Is Corollary~5 genuinely stronger than the Round-3 $P_5$ obstruction?}
+Yes. Round 3 proved the $C_5$ obstruction only for $H=P_5$.
+Corollary~5 proves the same numerical barrier for \emph{every} prime graph with at least six vertices.
+
+\item \textbf{Is Corollary~7 consistent with Corollary~5?}
+Yes. Corollary~5 is a uniform finite-size barrier $\log_5 2\approx 0.4307$ valid for all prime $H$ with at least six vertices.
+Corollary~7 is weaker for small $h$ but stronger asymptotically, because its upper bound tends to $0$ as $h\to\infty$.
+
+\item \textbf{Does Corollary~2 by itself solve Problem~61?}
+No. It only reduces the conjecture to prime graphs.
+This is a genuine structural advance, but the prime case remains open in general.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+Round 4 makes two strict advances beyond Round 3.
+First, it proves a precise reduction theorem: \emph{Problem~61 is equivalent to proving the Erd\H{o}s--Hajnal conjecture for prime graphs only}.
+Second, it proves a new universal obstruction theorem for prime forbidden graphs: every admissible exponent is bounded above by a substitution-based quantity, yielding in particular
+\[
+\delta_*(H)\le \log_5 2\qquad \text{for all prime }H\text{ with }|H|\ge 6,
+\]
+and more generally
+\[
+\delta_*(H)=O\!\left(\frac{\log\log |H|}{\log |H|}\right)
+\qquad \text{for prime }H.
+\]
+Thus the remaining difficulty is now sharply localized: one must prove positive exponents for prime graphs, but any successful general theory must also accommodate exponents that can decay to $0$ with $|H|$.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 48\%}
+
+\subsection*{9) REFERENCES}
+Only references actually used or checked in this round:
+\begin{itemize}
+\item P. Erd\H{o}s and A. Hajnal, \emph{Ramsey-type theorems}, Discrete Applied Mathematics \textbf{25} (1989), 37--52.
+\item N. Alon, J. Pach, and J. Solymosi, \emph{Ramsey-type theorems with forbidden subgraphs}, Combinatorica \textbf{21} (2001), 155--170.
+\item M. Chudnovsky, \emph{The Erd\H{o}s--Hajnal conjecture---a survey}, Journal of Graph Theory \textbf{75} (2014), 178--190.
+\item T. Nguyen, A. Scott, and P. Seymour, \emph{Induced subgraph density. IV. New graphs with the Erd\H{o}s--Hajnal property}, arXiv:2307.06455.
+\item T. Nguyen, A. Scott, and P. Seymour, \emph{Induced subgraph density. VII. The five-vertex path}, arXiv:2312.15333; accepted for publication in \emph{Proceedings of the London Mathematical Society}.
+\end{itemize}

@@ -1,0 +1,173 @@
+\section*{Round-2 continuation for Erd\H{o}s Problems 633, 634, 635}
+
+\noindent\textbf{Correction to the Round-1 draft.} The previous draft interchanged the problem numbers. The correct numbering is:
+\begin{itemize}
+\item Problem 633: classify triangles that admit only square-cardinality congruent-triangle dissections.
+\item Problem 634: determine all $N$ for which some triangle can be dissected into $N$ congruent triangles.
+\item Problem 635: the divisibility-avoidance problem for subsets of $\{1,\dots,N\}$.
+\end{itemize}
+This Round-2 file keeps the valid mathematical progress from Round 1, corrects the numbering error, and then strictly advances each problem.
+
+\section*{Erd\H{o}s Problem 635. Let $t\ge 1$ and $A\subseteq\{1,\dots,N\}$ satisfy: if $a,b\in A$ with $b-a\ge t$, then $(b-a)\nmid b$. How large can $|A|$ be? Is $|A|\le (\tfrac12+o_t(1))N$?}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.} The original problem has two parts:
+\begin{enumerate}
+\item determine the exact maximum of $|A|$;
+\item prove or disprove the asymptotic upper bound $|A|\le (\frac12+o_t(1))N$.
+\end{enumerate}
+Round 1 solved only the easy case $t=1$ and gave lower bounds. The most promising Round-2 move is to fully prove the \emph{second} statement using Elliott's sampling inequality, while keeping the first statement open for $t\ge 2$.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results.
+\begin{enumerate}
+\item \textbf{Equivalent formulation.} A set $A\subseteq [N]$ is admissible iff for every integer $d\ge t$, the set of multiples $\{k\ge 1: kd\in A\}$ contains no two consecutive integers.
+\item \textbf{Exact case $t=1$.} One has $M_1(N)=\lceil N/2\rceil$.
+\item \textbf{Lower bounds.} The odd numbers give $M_t(N)\ge \lceil N/2\rceil$ for every fixed $t$, and for $t=2$ one may improve this by $\Omega(\log N)$ using suitable powers of $2$.
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new tool is Elliott's sampling inequality, in the form recorded in Tao's notes. It says that an average of an arithmetic function over $[1,N]$ can be approximated, for most small primes $p$, by the corresponding average over the multiples of $p$. Applied to $f=1_A$, this allows us to compare the global density of $A$ with the density of
+\[
+B_p:=\{m\le N/p: pm\in A\}.
+\]
+But by the Round-1 reformulation, $B_p$ has no consecutive integers whenever $p\ge t$, and hence has density at most $1/2+O(p/N)$. This immediately forces the global density of $A$ to be at most $1/2+o_t(1)$.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap after Round 1 was the missing upper bound for fixed $t\ge 2$. The plan is:
+\begin{enumerate}
+\item apply Elliott's inequality to $f=1_A$ on $[1,N]$;
+\item choose a non-exceptional prime $p\ge t$;
+\item transfer the density of $A$ to the density of the compressed set $B_p$ of indices of multiples of $p$ lying in $A$;
+\item invoke the no-consecutive-integers bound on $B_p$.
+\end{enumerate}
+This overcomes the obstruction from Round 1 because the local structure on multiples of a single prime is exactly the kind of one-dimensional condition that the problem forbids.
+
+\subsection*{5) WORK (ROUND-2)}
+\paragraph{5.1. Setup.}
+Let
+\[
+\alpha:=\frac{|A|}{N},\qquad f:=1_A,\qquad I=[1,N].
+\]
+Then
+\[
+\frac1N\sum_{n\le N} |f(n)|^2 = \frac{|A|}{N}=\alpha\le 1.
+\]
+
+\paragraph{5.2. Elliott's inequality.}
+In the form stated by Tao, there is an absolute constant $C$ such that
+\[
+\sum_{p\le N^{0.1}} \frac1p
+\left|
+\frac1N\sum_{n\le N} f(n)
+-
+\frac1N\sum_{n\le N} f(n)\,p1_{p\mid n}
+\right|^2
+\le C\,\frac1N\sum_{n\le N}|f(n)|^2
+\le C.
+\]
+Fix $\varepsilon>0$. Define the exceptional set
+\[
+\mathcal E_\varepsilon:=\left\{p\le N^{0.1}:
+\left|
+\frac1N\sum_{n\le N} f(n)
+-
+\frac1N\sum_{n\le N} f(n)\,p1_{p\mid n}
+\right|>\varepsilon\right\}.
+\]
+Then the above inequality implies
+\[
+\sum_{p\in \mathcal E_\varepsilon}\frac1p \le \frac{C}{\varepsilon^2}.
+\]
+
+\paragraph{5.3. Choosing a useful prime.}
+For fixed $t$ and fixed $\varepsilon$, the harmonic sum of reciprocals of primes in $(t,N^{0.1}]$ tends to infinity with $N$. Hence for all sufficiently large $N$ there exists a prime
+\[
+p\in (t,N^{0.1}]\setminus \mathcal E_\varepsilon.
+\]
+For this choice of $p$ we have
+\[
+\left|
+\alpha-
+\frac1N\sum_{n\le N}1_A(n)\,p1_{p\mid n}
+\right|
+\le \varepsilon.
+\]
+Since the multiples of $p$ are exactly $p,2p,\dots,\lfloor N/p\rfloor p$, this becomes
+\[
+\alpha = \frac{p}{N}\,|B_p| + O(\varepsilon),
+\]
+where
+\[
+B_p:=\{m\le \lfloor N/p\rfloor: pm\in A\}.
+\]
+
+\paragraph{5.4. The compressed set $B_p$ has no consecutive integers.}
+Suppose $m,m+1\in B_p$. Then $pm,p(m+1)\in A$, their difference is $p\ge t$, and
+\[
+p\mid p(m+1).
+\]
+This contradicts the defining property of $A$. Therefore $B_p$ contains no two consecutive integers.
+
+If $M:=\lfloor N/p\rfloor$, then any subset of $\{1,\dots,M\}$ with no consecutive integers has size at most $\lceil M/2\rceil\le M/2+1$. Hence
+\[
+|B_p|\le \frac{M}{2}+1 \le \frac{N}{2p}+1.
+\]
+Substituting into the previous display gives
+\[
+\alpha
+\le \frac{p}{N}\left(\frac{N}{2p}+1\right)+O(\varepsilon)
+= \frac12 + \frac{p}{N}+O(\varepsilon).
+\]
+Since $p\le N^{0.1}$, we have $p/N\to 0$. Therefore for every fixed $\varepsilon>0$,
+\[
+\alpha\le \frac12 + O(\varepsilon)
+\]
+for all sufficiently large $N$ (with the implied constant absolute).
+
+Because $\varepsilon>0$ was arbitrary, we conclude
+\[
+\frac{|A|}{N}\le \frac12 + o_t(1).
+\]
+This proves the second question.
+
+\paragraph{5.5. What remains open.}
+The exact extremal function
+\[
+M_t(N):=\max\{|A|: A\subseteq [N]\text{ admissible}\}
+\]
+is still not determined for fixed $t\ge 2$. The odd numbers still give the lower bound $M_t(N)\ge \lceil N/2\rceil$, and for $t=2$ one can do slightly better by $\Omega(\log N)$. Thus the asymptotic upper bound is now proved, but the exact optimization problem remains open.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Possible issues checked:
+\begin{enumerate}
+\item \emph{Quantifiers.} The proof is asymptotic in $N$ for fixed $t$, exactly as required. The prime $p>t$ is chosen only for sufficiently large $N$, which is enough for an $o_t(1)$ statement.
+\item \emph{Use of Elliott's inequality.} The function $f=1_A$ is bounded and square-summable on $[1,N]$, so the inequality applies directly.
+\item \emph{Compression step.} The identity
+\[
+\frac1N\sum_{n\le N}1_A(n)\,p1_{p\mid n} = \frac{p}{N}|B_p|
+\]
+is exact, not approximate.
+\item \emph{No-consecutive bound.} This is exactly the Round-1 reformulation specialized to $d=p$.
+\end{enumerate}
+No hidden assumption was introduced. The proof gives a complete argument for the second question.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The exact extremal problem for $M_t(N)$ remains open for fixed $t\ge 2$, but the second question is now fully proved:
+\[
+|A|\le \left(\frac12+o_t(1)\right)N.
+\]
+So the Round-2 status is a genuine correction of the Round-1 draft: the asymptotic upper bound is no longer conjectural.
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+\textbf{COMPLETION: 80\%}
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item Erd\H{o}s Problems, Problem 635.
+\item P. D. T. A. Elliott, sampling inequality as quoted in Tao's notes.
+\item Terence Tao, \emph{254A, Notes 9 -- second moment and entropy methods}, Exercise 8.
+\item I. Z. Ruzsa, \emph{Erd\H{o}s and the integers} (for historical background on the problem statement).
+\end{enumerate}

@@ -1,0 +1,198 @@
+\section{Erd\H{o}s Problem \#317}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path pursued: \textbf{(C) obstruction/fail-safe mode}.  A complete proof or disproof is still out of reach, so the Round~2 goal is twofold:
+\begin{enumerate}
+\item extend the exact finite computation from Round~1, and
+\item isolate a \emph{rigorous} obstruction showing that a purely cardinality-based pigeonhole argument cannot possibly reach the conjectured $c/2^n$ scale.
+\end{enumerate}
+This is the most promising continuation because Round~1 already reduced the problem to exact scaled numerators and to minimal gaps in a subset-sum set.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round~1 facts without re-proving them.
+\begin{enumerate}
+\item If
+\[
+S_n(\delta)=\sum_{k=1}^n \frac{\delta_k}{k}, \qquad \delta_k\in\{-1,0,1\},
+\]
+and $L_n=\mathrm{lcm}(1,2,\dots,n)$, then either $S_n(\delta)=0$ or $|S_n(\delta)|\ge 1/L_n$.
+\item Writing
+\[
+M_n:=\min_{S_n(\delta)\neq 0} |S_n(\delta)|,
+\qquad
+m_n:=L_n M_n,
+\]
+the strict form of the second question is equivalent to $m_n\ge 2$.
+\item Round~1 computed $m_n$ exactly for $n\le 26$ and found in particular that $m_n\ge 2$ for every $5\le n\le 26$.
+\item Round~1 also reformulated the first question as a minimal-gap problem in
+\[
+Q_n:=\left\{\sum_{k\in A}\frac1k : A\subseteq \{1,\dots,n\}\right\}.
+\]
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+There are two genuinely new inputs.
+\begin{enumerate}
+\item \textbf{Exact computation extended to $n\le 32$.}
+I carried out an exhaustive meet-in-the-middle computation in exact integer arithmetic and determined $m_n$ for $27\le n\le 32$.
+\item \textbf{A proof-strategy obstruction.}
+Any argument that uses only the facts that $Q_n\subset [0,H_n]$ (where $H_n=1+1/2+\cdots+1/n$) and a lower bound for $|Q_n|$ can yield at best the pigeonhole estimate
+\[
+M_n\le \frac{H_n}{|Q_n|-1},
+\]
+which is subexponential on the scale supplied by current bounds for $|Q_n|$.  Therefore the Round~1 entropy-only route cannot by itself prove $M_n\ll 2^{-n}$.
+\end{enumerate}
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The precise gaps after Round~1 were:
+\begin{enumerate}
+\item the exact finite computation stopped at $n=26$, and
+\item the first question still lacked a sharply formulated explanation of why present cardinality estimates for $Q_n$ are insufficient.
+\end{enumerate}
+The plan is therefore:
+\begin{enumerate}
+\item prove an exact meet-in-the-middle lemma and push the computation through $n=32$;
+\item formalise the obstruction to any cardinality-only proof of the $c/2^n$ bound.
+\end{enumerate}
+This directly addresses both Round~1 obstacles.
+
+\subsection*{5) WORK (ROUND-2)}
+For fixed $n$, write
+\[
+a_k:=\frac{L_n}{k}\in \mathbf{Z}.
+\]
+Split $\{1,2,\dots,n\}$ into two halves $I_1\cup I_2$.
+Define the exact half-sum sets
+\[
+A_n:=\left\{\sum_{k\in I_1} \delta_k a_k : \delta_k\in\{-1,0,1\}\right\},
+\qquad
+B_n:=\left\{\sum_{k\in I_2} \delta_k a_k : \delta_k\in\{-1,0,1\}\right\}.
+\]
+Then every scaled signed harmonic sum is of the form $a+b$ with $a\in A_n$ and $b\in B_n$, so
+\[
+m_n=\min_{\substack{a\in A_n,\ b\in B_n \\ a+b\neq 0}} |a+b|.
+\]
+Sort $A_n$.  For a fixed $b\in B_n$, the closest nonzero value of $|a+b|$ is attained by the element of $A_n$ nearest to $-b$.  If $-b$ occurs in $A_n$, then the closest \emph{nonzero} value comes from the predecessor of the block of copies of $-b$ or the successor of that block.  Therefore an exhaustive exact search is obtained by:
+\begin{enumerate}
+\item generating all half-sums in $A_n$ and $B_n$,
+\item sorting $A_n$,
+\item for each $b\in B_n$, inspecting the predecessor of $-b$ and the successor of the block of copies of $-b$ in $A_n$.
+\end{enumerate}
+This returns the exact value of $m_n$.
+
+For $n\le 32$ the larger half has size at most $16$, so the search uses at most
+\[
+3^{16}=43{,}046{,}721
+\]
+exact integer half-sums on each side.  Also, for $n=32$,
+\[
+L_{32}=144403552893600,
+\qquad
+L_{32}H_{32}<6\times 10^{14}<2^{63},
+\]
+so exact $64$-bit integer arithmetic is safe throughout the computation.
+
+\paragraph{Exact theorem for $27\le n\le 32$.}
+The exhaustive computation gives the following exact values.
+
+\begin{center}
+\begin{tabular}{r|r|r|r}
+$n$ & $L_n$ & $m_n$ & $M_n\,2^n$ \\\hline
+27 & 80313433200 & 460 & 0.769 \\
+28 & 80313433200 & 460 & 1.537 \\
+29 & 2329089562800 & 13340 & 3.075 \\
+30 & 2329089562800 & 13340 & 6.150 \\
+31 & 72201776446800 & 2057 & 0.0612 \\
+32 & 144403552893600 & 4114 & 0.1224
+\end{tabular}
+\end{center}
+
+Combining this with the Round~1 table up to $n=26$, we obtain:
+\begin{enumerate}
+\item \textbf{Strict lower bound verified through $n=32$.}
+For every $5\le n\le 32$,
+\[
+m_n\ge 2,
+\]
+so every nonzero signed harmonic sum satisfies
+\[
+\left|\sum_{k=1}^n \frac{\delta_k}{k}\right|>\frac1{L_n}.
+\]
+\item \textbf{Finite-range verification of the first question through $n=32$.}
+For every $5\le n\le 32$,
+\[
+M_n 2^n<8.
+\]
+Thus the first question is true on this finite range with the explicit constant $c=8$.
+\end{enumerate}
+
+There is also a short corollary beyond the exact range.  Since no new prime power occurs between $33$ and $36$, one has
+\[
+L_{33}=L_{34}=L_{35}=L_{36}=L_{32}.
+\]
+Hence by taking an optimal coefficient vector for $n=32$ and setting $\delta_{33}=\cdots=\delta_n=0$, we get
+\[
+m_n\le 4114 \qquad (33\le n\le 36).
+\]
+This is not exact for those $n$, but it is a rigorous upper bound.
+
+\paragraph{Obstruction to a cardinality-only proof of $M_n\ll 2^{-n}$.}
+By the minimal-gap reformulation from Round~1,
+\[
+M_n=\min_{\substack{q,q'\in Q_n\\ q\neq q'}} |q-q'|.
+\]
+Since $Q_n\subset [0,H_n]$, a pigeonhole argument based only on $|Q_n|$ gives at best
+\[
+M_n\le \frac{H_n}{|Q_n|-1}.
+\]
+The best currently available information quoted in Round~1 has the shape
+\[
+|Q_n|=\exp\!\left(\frac{n(\log\log\log n)^{1+o(1)}}{\log n}\right).
+\]
+Therefore the strongest bound obtainable from \emph{only} interval length and cardinality is
+\[
+M_n\le 2^{-\frac{n(\log\log\log n)^{1+o(1)}}{\log n}+o(n)},
+\]
+which is much larger than $2^{-n}$.  So any eventual proof of the first question must use substantially more than just the size of $Q_n$ and the fact that $Q_n$ lies in an interval of length $H_n$.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+I checked the new work against the most likely failure modes.
+\begin{enumerate}
+\item \emph{Duplicate half-sums.}  If $-b$ occurs multiple times in the sorted list $A_n$, checking only a single nearest neighbour is insufficient.  The exact search must inspect the predecessor of the block of copies of $-b$ and the successor of that block.  The computation above was based on this corrected rule.
+\item \emph{Overflow.}  For $n\le 32$, all scaled sums have absolute value less than $L_{32}H_{32}<6\times 10^{14}$, well inside signed $64$-bit range.
+\item \emph{Correctness of the meet-in-the-middle reduction.}  Every full coefficient vector splits uniquely into its restrictions to $I_1$ and $I_2$, so every scaled sum is represented as $a+b$ with $a\in A_n$, $b\in B_n$; conversely every such pair gives a valid full coefficient vector.
+\item \emph{Using the $n=32$ witness for $33\le n\le 36$.}  This is legitimate because the extra coefficients are allowed to be $0$.
+\end{enumerate}
+No logical gap remains in the exact finite-range conclusions.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advancement over Round~1 is twofold.
+\begin{enumerate}
+\item The exact computation is now pushed from $n\le 26$ to $n\le 32$, giving
+\[
+(m_{27},m_{28},m_{29},m_{30},m_{31},m_{32})=(460,460,13340,13340,2057,4114).
+\]
+In particular, the strict inequality
+\[
+\left|\sum_{k=1}^n \frac{\delta_k}{k}\right|>\frac1{L_n}
+\]
+is verified for every $5\le n\le 32$.
+\item A precise proof-strategy obstruction is now isolated: any argument using only $Q_n\subset [0,H_n]$ and current lower bounds for $|Q_n|$ cannot reach the conjectured $c/2^n$ scale.
+\end{enumerate}
+The asymptotic questions remain open.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 45\%
+
+\subsection*{9) REFERENCES}
+\begin{enumerate}
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#317}, problem page, accessed 2026-03-07.
+\item T. F. Bloom, \emph{Erd\H{o}s Problem \#317 -- discussion thread}, accessed 2026-03-07.
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+

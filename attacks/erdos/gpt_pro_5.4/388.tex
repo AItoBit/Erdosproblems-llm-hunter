@@ -1,0 +1,243 @@
+\section*{Problem 388. Equal products of two disjoint blocks of consecutive integers}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+Path (C): obstruction/correction.  Round~1 identified a real ambiguity in the problem statement: one can ask either
+
+\begin{itemize}
+\item for each fixed pair of lengths $(k_1,k_2)$, are there only finitely many solutions?, or
+\item over all varying lengths and shifts, are there only finitely many solutions?
+\end{itemize}
+
+The most promising Round-2 direction is therefore to separate these two meanings rigorously.  The key new fact is that the fixed-length problem is already a theorem, whereas the all-parameters problem remains open.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+I use the following Round-1 results without reproving them.
+
+\begin{itemize}
+\item \textbf{Round-1 Lemma 1.}  Under the disjointness condition $m_1+k_1\le m_2$, any solution of
+\[
+\prod_{i=1}^{k_1}(m_1+i)=\prod_{j=1}^{k_2}(m_2+j)
+\]
+must satisfy $k_1>k_2$.
+
+\item \textbf{Round-1 Lemma 2.}  If $A=m_1+k_1$, then every prime factor of every integer in the later block $\{m_2+1,\dots,m_2+k_2\}$ is at most $A$.
+\end{itemize}
+
+Only Lemma~1 is logically needed for the main correction below; Lemma~2 remains a useful structural obstruction for the still-open global version.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The genuinely new ingredient is that the fixed-length interpretation is not open.
+
+\begin{itemize}
+\item For each fixed pair of lengths, finiteness follows from a theorem of Beukers, Shorey and Tijdeman on equations of the shape
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+k+l-1)
+\]
+with fixed $k,l$.
+
+\item More generally, for each fixed rational ratio of the two lengths, finiteness follows from a theorem of Saradha, Shorey and Tijdeman on
+\[
+d_1\,x(x+1)\cdots(x+lk-1)=d_2\,y(y+1)\cdots(y+mk-1).
+\]
+
+\item In the low-ratio range $k_1/k_2\in\{2,3,4,5,6\}$ there are in fact no solutions satisfying the present constraint $k_1,k_2>3$.
+\end{itemize}
+
+So the Round-1 ambiguity can now be resolved sharply:
+the fixed-length reading is settled; the all-parameters reading is still open.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact Round-1 gap was this: no theorem had been supplied converting the present equation into a known finiteness result for fixed lengths.
+
+I now do three things.
+
+\begin{enumerate}
+\item Convert the present notation to the standard ``shorter block versus longer block'' form used in the literature, and apply the fixed-$(k,l)$ theorem.
+
+\item Strengthen this to fixed \emph{length ratio} using the Saradha--Shorey--Tijdeman theorem.
+
+\item Record one further sharp consequence: if the longer length is $m$ times the shorter one with $2\le m\le 6$, then there are no solutions with both lengths $>3$.
+\end{enumerate}
+
+This closes the fixed-length gap completely and isolates the true open remainder.
+
+\subsection*{5) WORK (ROUND-2)}
+
+We study
+\[
+\prod_{i=1}^{k_1}(m_1+i)=\prod_{j=1}^{k_2}(m_2+j),
+\qquad
+k_1,k_2>3,\qquad m_1+k_1\le m_2.
+\]
+
+By Round-1 Lemma~1, any such solution satisfies $k_1>k_2$.
+
+\medskip
+\noindent\textbf{Claim 1.}
+\emph{For each fixed pair $(k_1,k_2)$ with $k_1>k_2\ge 4$, there are only finitely many integer solutions $(m_1,m_2)$ satisfying the equation and the disjointness condition.}
+
+\medskip
+\noindent\textbf{Proof.}
+Fix $k_1>k_2\ge 4$ and put
+\[
+k:=k_2,\qquad l:=k_1-k_2,\qquad x:=m_2+1,\qquad y:=m_1+1.
+\]
+Then the equation becomes
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+k+l-1).
+\]
+Since $m_1+k_1\le m_2$, we have
+\[
+x=m_2+1\ge m_1+k_1+1=y+k+l.
+\]
+In particular $x$ and $y$ are positive integers, and we are exactly in the fixed-$(k,l)$ situation treated by Beukers--Shorey--Tijdeman.
+
+Their theorem says that for fixed positive integers $k,l$, the equation
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+k+l-1)
+\]
+has only finitely many positive integer solutions $(x,y)$.
+
+Therefore, for each fixed pair $(k_1,k_2)$, the original problem has only finitely many solutions $(m_1,m_2)$.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Thus the fixed-length interpretation is fully settled.}
+
+\medskip
+\noindent\textbf{Claim 2.}
+\emph{Fix coprime positive integers $l<m$.  Then there are only finitely many solutions whose two lengths are in the ratio $l:m$, i.e. whose lengths are $(lk,mk)$ for some positive integer $k$.}
+
+\medskip
+\noindent\textbf{Proof.}
+Write the shorter length as $lk$ and the longer one as $mk$, with $(l,m)=1$ and $l<m$.
+After the same change of variables as above, the equation becomes
+\[
+x(x+1)\cdots(x+lk-1)=y(y+1)\cdots(y+mk-1).
+\]
+This is the special case $d_1=d_2=1$ of the Saradha--Shorey--Tijdeman theorem on
+\[
+d_1\,x(x+1)\cdots(x+lk-1)=d_2\,y(y+1)\cdots(y+mk-1).
+\]
+That theorem states that either $\max(x,y,k)$ is bounded by a constant depending only on $m,d_1,d_2$, or one falls into an exceptional case
+\[
+m=2,\qquad k=2,\qquad d_1=2d_2^2,
+\]
+together with an auxiliary square condition.  In our specialization $d_1=d_2=1$, the exceptional condition $d_1=2d_2^2$ becomes $1=2$, impossible.
+
+Hence $\max(x,y,k)$ is bounded, and therefore only finitely many solutions exist for each fixed ratio $l:m$.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 3.}
+\emph{If the longer block has length $m$ times the shorter one with $2\le m\le 6$, then there is no solution satisfying the present hypothesis $k_1,k_2>3$.}
+
+\medskip
+\noindent\textbf{Proof.}
+Saradha--Shorey and Mignotte--Shorey proved that for $2\le m\le 6$ the only solution to
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+mk-1)
+\]
+in positive integers is
+\[
+x=8,\qquad y=1,\qquad k=3,\qquad m=2.
+\]
+Here the two block lengths are $3$ and $6$.
+
+Under our problem's standing condition $k_1,k_2>3$, the shorter length is at least $4$, so this exceptional solution is excluded.  Therefore no solutions exist in the ratio range $k_1/k_2\in\{2,3,4,5,6\}$.
+\hfill\textit{QED.}
+
+\medskip
+\noindent\textbf{Claim 4.}
+\emph{For every fixed $N$, there are only finitely many solutions with $\max(k_1,k_2)\le N$ and $k_2\nmid 2k_1$.}
+
+\medskip
+\noindent\textbf{Proof.}
+By Round-1 Lemma~1, the shorter length is $k_2$ and the longer length is $k_1$.
+A theorem of Hajdu and Tijdeman implies that for every fixed $N$, there are only finitely many pairs of disjoint blocks of positive integers of sizes at most $N$ with equal products whenever the smaller size does not divide twice the larger size.
+
+Our problem is a special case of that theorem, because our two blocks are themselves disjoint consecutive blocks.
+Thus, for fixed $N$, there are only finitely many solutions with $\max(k_1,k_2)\le N$ and $k_2\nmid 2k_1$.
+\hfill\textit{QED.}
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+I check the possible failure points.
+
+\begin{itemize}
+\item \textbf{Variable conversion.}
+The fixed-length theorem is stated for a shorter block of length $k$ and a longer block of length $k+l$.
+Round-1 Lemma~1 guarantees exactly that ordering here, so the conversion is legitimate.
+
+\item \textbf{Disjointness.}
+The literature theorems do not require the extra condition $x\ge y+k+l$; they only need positive integer variables.
+Hence adding disjointness can only restrict the solution set, not invalidate the theorem.
+
+\item \textbf{Exceptional case in the ratio theorem.}
+The only exceptional branch of the Saradha--Shorey--Tijdeman theorem requires $d_1=2d_2^2$.
+In our application $d_1=d_2=1$, so the exceptional branch is impossible.
+
+\item \textbf{Low-ratio theorem versus the present hypotheses.}
+The unique solution for ratios $2\le m\le 6$ has smaller length $3$, which violates the standing assumption $k_1,k_2>3$.
+So the conclusion ``no solutions'' is correct for the present problem.
+
+\item \textbf{Did Round-1 overstate openness?}
+Yes, for the fixed-length reading.
+Round~1 treated that case as unresolved, but the above theorems show that interpretation is already settled.
+The all-parameters reading is the truly open one.
+\end{itemize}
+
+\subsection*{7) FINAL}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED).}
+
+The strict advance is the following precise correction.
+
+\begin{enumerate}
+\item The \emph{fixed-length} interpretation of Problem~388 is already true and can be proved rigorously from Beukers--Shorey--Tijdeman: for each fixed pair $(k_1,k_2)$ with $k_1>k_2\ge 4$, only finitely many disjoint-block solutions exist.
+
+\item More generally, for each fixed rational ratio of the two lengths, only finitely many solutions exist.
+
+\item If the ratio of lengths is an integer $m$ with $2\le m\le 6$, then under the standing hypothesis $k_1,k_2>3$ there are no solutions at all.
+
+\item What remains open is the \emph{all-parameters} problem: are there only finitely many quadruples $(m_1,k_1,m_2,k_2)$ with
+\[
+k_1,k_2>3,\qquad m_1+k_1\le m_2,\qquad
+\prod_{i=1}^{k_1}(m_1+i)=\prod_{j=1}^{k_2}(m_2+j)?
+\]
+Round-1 Lemma~2 still gives the main structural obstruction here: the later block must be exceptionally smooth.
+\end{enumerate}
+
+\subsection*{8) COMPLETION ESTIMATE (MANDATORY)}
+
+COMPLETION: 80\%
+
+\subsection*{9) REFERENCES}
+
+\begin{enumerate}
+\item F. Beukers, T. N. Shorey, and R. Tijdeman, results on the equation
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+k+l-1)
+\]
+for fixed $k,l$; summarized in the survey ``Highlights in the Research Work of T. N. Shorey.''
+
+\item S. Saradha and T. N. Shorey, and A. Mignotte and T. N. Shorey, results on
+\[
+x(x+1)\cdots(x+k-1)=y(y+1)\cdots(y+mk-1)
+\]
+for $2\le m\le 6$; summarized in the same survey.
+
+\item S. Saradha, T. N. Shorey, and R. Tijdeman, results on
+\[
+d_1\,x(x+1)\cdots(x+lk-1)=d_2\,y(y+1)\cdots(y+mk-1).
+\]
+
+\item L. Hajdu and R. Tijdeman, \emph{The Diophantine equation $f(x)=g(y)$ for polynomials with simple rational roots}, especially Theorem~10.1.
+\end{enumerate}
+
+
+

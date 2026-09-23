@@ -1,0 +1,310 @@
+
+\section{Erd\H{o}s Problem \#261}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+
+I pursue path \textbf{(C)} in the fail-safe sense: isolate the exact finite-combinatorial structure left open by Round~1, and exploit it to produce new infinite families beyond the Cusick--Borwein--Loring family already proved in Round~1.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+
+From Round~1 I use only the already-proved contiguous-block identity:
+\[
+\frac{n}{2^n}=\sum_{k=n+1}^{n+m}\frac{k}{2^k}
+\qquad\text{for}\qquad
+n=2^{m+1}-m-2.
+\]
+This is the Borwein--Loring realization of Erd\H{o}s' remark about Cusick's argument.
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+
+The new tool is an exact \emph{offset parametrization} of every solution.
+
+If
+\[
+\frac{n}{2^n}=\sum_{i=1}^{t}\frac{a_i}{2^{a_i}}
+\qquad (t\geq 2,\ a_1<\cdots<a_t),
+\]
+then necessarily every $a_i>n$, so after writing
+\[
+a_i=n+d_i
+\qquad (1\leq d_1<\cdots<d_t),
+\]
+the equation becomes
+\[
+n=\sum_{i=1}^{t}\frac{n+d_i}{2^{d_i}}.
+\]
+Equivalently, if $D=\{d_1,\dots,d_t\}$ then
+\[
+n\Bigl(1-\sum_{d\in D}2^{-d}\Bigr)=\sum_{d\in D} d\,2^{-d}.
+\]
+Thus
+\[
+n=\frac{\sum_{d\in D} d\,2^{-d}}{1-\sum_{d\in D}2^{-d}}.
+\tag{261.1}
+\]
+This is a necessary and sufficient condition for solvability.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+
+The exact gap left by Round~1 was this: we had one explicit infinite family, but no structural reduction of the full problem.  The plan is now:
+
+\begin{enumerate}
+\item prove the offset parametrization (261.1);
+\item use it to reinterpret the problem as a finite-subset existence problem;
+\item build new infinite families by choosing $D$ of the special form
+\[
+D=\{1,2,\dots,M\}\setminus\{M-r,M\}.
+\]
+\end{enumerate}
+
+This overcomes the earlier gap because it turns a problem about arbitrary exponents $a_i$ into a problem about finite binary-offset sets.
+
+\subsection*{5) WORK (ROUND-2)}
+
+\medskip
+\noindent
+\textbf{Step 1: every exponent lies strictly above $n$.}
+
+Let
+\[
+f(m):=\frac{m}{2^m}\qquad (m\geq 1).
+\]
+On positive integers, $f$ is nonincreasing, with the only tie $f(1)=f(2)=1/2$, and it is strictly decreasing for $m\geq 2$.
+
+Suppose
+\[
+\frac{n}{2^n}=\sum_{i=1}^{t}\frac{a_i}{2^{a_i}}
+\]
+with $t\geq 2$ and distinct $a_i$.
+If some $a_i\leq n$, then
+\[
+\frac{a_i}{2^{a_i}}\geq \frac{n}{2^n},
+\]
+and the inequality is strict unless we are in one of the obvious one-term equality cases.  Since all summands are positive and $t\geq 2$, this is impossible.  Therefore
+\[
+a_i>n\qquad\text{for all }i.
+\tag{261.2}
+\]
+
+\medskip
+\noindent
+\textbf{Step 2: exact offset parametrization.}
+
+Define $d_i:=a_i-n$, so by (261.2) each $d_i$ is a positive integer.  Then
+\[
+\frac{n}{2^n}
+=
+\sum_{i=1}^{t}\frac{n+d_i}{2^{n+d_i}}.
+\]
+Multiplying by $2^n$ gives
+\[
+n=\sum_{i=1}^{t}\frac{n+d_i}{2^{d_i}}
+=
+n\sum_{i=1}^{t}2^{-d_i}+\sum_{i=1}^{t} d_i\,2^{-d_i}.
+\]
+Hence
+\[
+n\Bigl(1-\sum_{i=1}^{t}2^{-d_i}\Bigr)=\sum_{i=1}^{t} d_i\,2^{-d_i},
+\]
+and therefore
+\[
+n=\frac{\sum_{i=1}^{t} d_i\,2^{-d_i}}{1-\sum_{i=1}^{t}2^{-d_i}}.
+\]
+Conversely, if $D=\{d_1<\cdots<d_t\}$ is any finite set of positive integers such that the right-hand side of (261.1) is a positive integer $n$, then setting
+\[
+a_i:=n+d_i
+\]
+gives
+\[
+n\Bigl(1-\sum_{i=1}^{t}2^{-d_i}\Bigr)=\sum_{i=1}^{t} d_i\,2^{-d_i},
+\]
+which rearranges back to
+\[
+\frac{n}{2^n}=\sum_{i=1}^{t}\frac{a_i}{2^{a_i}}.
+\]
+So (261.1) is an exact necessary-and-sufficient parametrization.
+
+\medskip
+\noindent
+\textbf{Step 3: reinterpretation of the open all-$n$ problem.}
+
+The question ``is there a solution for every $n$?'' is now exactly equivalent to:
+
+\medskip
+\noindent
+\textbf{Equivalent formulation.}
+For every positive integer $n$, does there exist a finite set
+\[
+D\subset \{1,2,3,\dots\}
+\]
+such that
+\[
+\sum_{d\in D}2^{-d}<1
+\qquad\text{and}\qquad
+n=\frac{\sum_{d\in D} d\,2^{-d}}{1-\sum_{d\in D}2^{-d}}\, ?
+\]
+
+\medskip
+\noindent
+\textbf{Step 4: a new two-omission family.}
+
+Fix integers $M>r\geq 1$ and take
+\[
+D=\{1,2,\dots,M\}\setminus\{M-r,M\}.
+\]
+Then
+\[
+\sum_{d=1}^{M}\frac{n+d}{2^{n+d}}
+=
+\frac{n+2}{2^n}-\frac{n+M+2}{2^{n+M}}
+\]
+by the same dyadic-tail identity used in Round~1.
+
+Subtracting the omitted terms gives
+\[
+\sum_{d\in D}\frac{n+d}{2^{n+d}}
+=
+\frac{n+2}{2^n}
+-\frac{n+M-r}{2^{n+M-r}}
+-\frac{n+M+2}{2^{n+M}}
+-\frac{n+M}{2^{n+M}}.
+\]
+Requiring this to equal $n/2^n$ and multiplying by $2^{n+M}$ yields
+\[
+2^{M+1}
+=
+(2^r+2)n+(2^r+2)M-r\,2^r+2.
+\]
+Hence
+\[
+n=
+\frac{2^{M+1}-(2^r+2)M+r\,2^r-2}{2^r+2}.
+\tag{261.3}
+\]
+Whenever the right-hand side is a positive integer, we get a valid solution
+\[
+\frac{n}{2^n}
+=
+\sum_{\substack{1\leq d\leq M\\ d\neq M-r,\ d\neq M}}
+\frac{n+d}{2^{n+d}}.
+\]
+
+\medskip
+\noindent
+\textbf{Step 5: two explicit infinite families.}
+
+\smallskip
+\noindent
+\textbf{Family A (new in this round).}
+Take $r=3$.  Then (261.3) becomes
+\[
+n=\frac{2^{M+1}-10M+22}{10}
+=\frac{2^M-5M+11}{5}.
+\]
+This is an integer exactly when
+\[
+2^M\equiv -11\equiv 4 \pmod{5},
+\]
+i.e. when
+\[
+M\equiv 2\pmod{4}.
+\]
+Therefore, for every $M\equiv 2\pmod{4}$,
+\[
+n=\frac{2^M-5M+11}{5}
+\]
+has a solution with
+\[
+D=\{1,2,\dots,M\}\setminus\{M-3,M\}.
+\]
+The first values are
+\[
+n=9,\ 197,\ 3265,\dots
+\]
+For instance, when $M=6$,
+\[
+\frac{9}{2^9}
+=
+\frac{10}{2^{10}}+\frac{11}{2^{11}}+\frac{13}{2^{13}}+\frac{14}{2^{14}}.
+\]
+
+\smallskip
+\noindent
+\textbf{Family B (new in this round).}
+Take $r=4$.  Then (261.3) becomes
+\[
+n=\frac{2^{M+1}-18M+62}{18}
+=\frac{2^M-9M+31}{9}.
+\]
+This is an integer exactly when
+\[
+2^M\equiv -31\equiv 5 \pmod{9}.
+\]
+Since the powers of $2$ modulo $9$ have period $6$, this happens exactly when
+\[
+M\equiv 5\pmod{6}.
+\]
+Therefore, for every $M\equiv 5\pmod{6}$,
+\[
+n=\frac{2^M-9M+31}{9}
+\]
+has a solution with
+\[
+D=\{1,2,\dots,M\}\setminus\{M-4,M\}.
+\]
+The first values are
+\[
+n=2,\ 220,\ 14550,\dots
+\]
+For instance, when $M=5$,
+\[
+\frac{2}{2^2}
+=
+\frac{4}{2^4}+\frac{5}{2^5}+\frac{6}{2^6}.
+\]
+
+\medskip
+\noindent
+\textbf{Remark.}
+The Round~1 Borwein--Loring family is the case $r=1$ in (261.3), because then
+\[
+D=\{1,2,\dots,M-2\}
+\]
+and
+\[
+n=2^{M-1}-M=2^{(M-2)+1}-(M-2)-2.
+\]
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+
+\begin{itemize}
+\item \textbf{Monotonicity issue at $1,2$.}  The only tie for $m/2^m$ is $1/2=2/4$.  This does not invalidate Step~1, because the right-hand side has at least two positive summands.
+\item \textbf{Necessity versus sufficiency.}  Formula (261.1) was proved both ways.  No hidden assumption remains.
+\item \textbf{Distinctness of exponents.}  Distinct $d_i$ give distinct $a_i=n+d_i$ automatically.
+\item \textbf{Size of $t$.}  In Family~A we have $t=M-2\geq 4$ for $M\geq 6$; in Family~B we have $t=M-2\geq 3$ for $M\geq 5$.
+\item \textbf{Arithmetic checks.}  For $r=3$ the congruence condition is exactly $M\equiv 2\pmod 4$; for $r=4$ it is exactly $M\equiv 5\pmod 6$.
+\end{itemize}
+
+\subsection*{7) FINAL (EXACTLY ONE)}
+
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+Round~2 gives a full parametrization of all finite solutions and two new explicit infinite families beyond the Round~1 contiguous-block family.  The open ``for every $n$?'' question is now reduced exactly to the finite-subset existence problem encoded by (261.1).
+
+\subsection*{8) COMPLETION ESTIMATE}
+
+COMPLETION: 68\%
+
+\subsection*{9) REFERENCES}
+
+\begin{itemize}
+\item [EP261] T. F. Bloom, \emph{Erd\H{o}s Problem \#261}, problem page, accessed 2026-03-07.
+\item [Er88c] P. Erd\H{o}s, \emph{On the irrationality of certain series: problems and results}, 1988; see p.~104.
+\item [BoLo90] P. Borwein and L. Loring, \emph{Some questions of Erd\H{o}s and Graham on numbers of the form $\sum g_n/2^{g_n}$}, Amer. Math. Monthly 97 (1990), 22--26.
+\item [TUZ20] S. Tengely, M. Ulas, and J. Zygad\l{}o, \emph{On a Diophantine equation of Erd\H{o}s and Graham}, Revista Colombiana de Matem\'aticas 54 (2020), 445--459.
+\end{itemize}
+
+\bigskip
+\hrule
+\bigskip
+
