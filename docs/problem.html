@@ -226,16 +226,12 @@
                     ? ` (updated ${window.ProblemHunting.escapeHtml(problem.status_updated)})`
                     : '';
                 const completionSource = window.ProblemHunting.getCompletionSourceLabel(problem);
-                const statusSync = window.ProblemHunting.formatStatusSync(
-                    typeof erdosStatusSync === 'undefined' ? null : erdosStatusSync
-                );
                 metaDiv.innerHTML = `
                     <p><strong>Problem Number:</strong> ${problem.number}</p>
                     <p><strong>Problem Status:</strong> <span class="${problemStatusClass}">${problemStatus}</span>${statusUpdated}</p>
                     <p><strong>LLM Claims:</strong> ${overallStatus}</p>
                     <p><strong>Completion:</strong> ${completionLabel}${completionSource ? ` (${completionSource})` : ''}</p>
                     <p><strong>Community Review:</strong> ${reviewDisplay}</p>
-                    ${statusSync ? `<p class="status-note">${statusSync}</p>` : ''}
                 `;
             } else {
                 const overallStatus = determineOverallStatus(problem.attacks);
