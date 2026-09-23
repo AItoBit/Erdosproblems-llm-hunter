@@ -1,0 +1,34 @@
+\section{Problem 768: exact membership on every two-prime support}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read \texttt{768.tex} and \texttt{768\_v2.tex} fully; their arguments coincide. They concern integers $n$ such that for every prime $p\mid n$ some divisor $d>1$ satisfies $d\equiv1\pmod p$, and seek the counting asymptotic on the proposed $\sqrt{\log x}\log\log x$ exponent scale. Their rough/smooth bound ignores the simultaneous conditions from different prime factors. I analyze those conditions exactly when there are two prime factors and preserve more information in the rough-counting reduction.
+\subsection*{2) WORK}
+For distinct primes $p,q$, write $r=\operatorname{ord}_q(p)$ and $s=\operatorname{ord}_p(q)$, taking the order modulo two as one. Then, for $a,b\ge1$,
+\[
+p^a q^b\in A\quad\Longleftrightarrow\quad a\ge r\ \text{ and }\ b\ge s.
+\]
+Indeed a divisor congruent to one modulo $p$ cannot contain $p$, so it must be $q^j$ for some $1\le j\le b$. Such a divisor exists exactly when $b\ge\operatorname{ord}_p(q)$. Interchanging the primes gives the other condition. Pure prime powers never belong to $A$, since every nontrivial divisor is zero modulo that prime.
+
+For fixed $p,q$, this completely counts the eventual exponent region. If $N_{p,q}(x)$ counts these two-prime members up to $x$, set $T=\log x-r\log p-s\log q$. Lattice-point counting in a right triangle yields
+\[
+N_{p,q}(x)=\frac{T^2}{2\log p\log q}+O_{p,q}(T+1)
+\qquad(T\to\infty).
+\]
+To verify this directly, sum $1+\lfloor(T-i\log p)/\log q\rfloor$ for $0\le i\le T/\log p$. Replacing floors by their arguments costs $O_{p,q}(T+1)$, and the arithmetic sum has the stated leading area. In particular, on support $\{2,3\}$ the exact condition is $a\ge2,b\ge1$.
+
+The largest-prime decomposition can also retain both smoothness restrictions. If $p=P(n)>y$ and $d=1+ap\mid n$, then $p(1+ap)\mid n$, every prime factor of $d$ is at most $p$, and the quotient is $p$-smooth. Thus
+\[
+A(x)\le\Psi(x,y)+
+\sum_{\substack{y<p\le\sqrt x\\p\text{ prime}}}
+\sum_{\substack{1\le a\le (x-p)/p^2\\P(1+ap)\le p}}
+\Psi\left(\frac{x}{p(1+ap)},p\right).
+\]
+This exact upper bound is stronger than replacing each smooth count by its argument, but no improved asymptotic estimate for this double sum is established here.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The two-prime asymptotic is only for a fixed pair; its constants and thresholds are not uniform when the primes grow with $x$. Summing it over all pairs without controlling their multiplicative orders would be invalid. Overcounting numbers with several qualifying divisors is harmless in the displayed upper bound. The source's smooth-number bound remains much weaker than the requested final scale.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} Fixed two-prime supports are classified exactly, and a refined counting inequality is available. Controlling growing supports and interacting multiplicative orders strongly enough for the full asymptotic is the remaining gap.
+\subsection*{5) SOURCES CHECKED}
+Both complete supplied versions, read 2026-09-23. The membership criterion, elementary lattice estimate, and refined inequality are proved here; no new smooth-number theorem or numerical asymptotic is asserted.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the complete counting asymptotic.
+\textbf{COMPLETION: 15\%}

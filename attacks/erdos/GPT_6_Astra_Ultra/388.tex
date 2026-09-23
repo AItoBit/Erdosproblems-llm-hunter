@@ -1,0 +1,38 @@
+\section{Erd\H{o}s Problem \#388: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Classify the equal products of two disjoint consecutive integer blocks with lengths $k_1,k_2>3$; are there finitely many solutions when all parameters vary?
+
+All supplied versions considered: \texttt{388.tex}.
+The source correctly separates fixed lengths from the global question, although its cited theorems need hypotheses beyond the overbroad phrase ``fixed positive integers. I avoid relying on that phrasing and give an exact reduction and exhaustive check of the four-term later block.
+\subsection{2) WORK}
+For $k_2=4$ put
+\[
+P=\prod_{i=1}^{k_1}(m_1+i).
+\]
+The identity
+\[
+(m_2+1)(m_2+2)(m_2+3)(m_2+4)=(m_2^2+5m_2+5)^2-1
+\]
+shows that a nonnegative integer $m_2$ exists exactly when $P+1=z^2$ for an integer $z\ge5$, and $4z+5=w^2$ with an odd integer $w\ge5$. Then $m_2=(w-5)/2$. The disjointness test $m_2\ge m_1+k_1$ is imposed afterward. Both square tests use exact integer square roots, so there is no numerical tolerance.
+
+The saved script checks every $0\le m_1\le10000$ and $5\le k_1\le12$. It finds exactly
+\[
+(m_1,k_1,m_2,k_2)=(7,7,62,4),
+\]
+corresponding to
+\[
+8\cdot9\cdot10\cdot11\cdot12\cdot13\cdot14
+=63\cdot64\cdot65\cdot66=17297280.
+\]
+The reduction is complete for this bounded parameter box because every four-term later product satisfies the displayed identity and every admissible pair of squares reconstructs its unique $m_2$.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The later shift was not capped artificially; the two square tests recover it even if it exceeds 10000. The earlier shift and both length restrictions are explicit. A finite search cannot establish global uniqueness or finiteness, and the nonexistence of other short examples is not used as a theorem beyond the box.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+All unbounded-length regimes and unbounded earlier shifts remain. The computational reduction gives a checkable search certificate, not the all-parameters classification.
+\subsection{5) SOURCES CHECKED}
+Read all of \texttt{388.tex}; official indexed statement \texttt{https://www.erdosproblems.com/388} checked on 2026-09-23. Exact search executed in \texttt{verification/batch\_2\_checks.py}. Forum proof claims were not adopted as premises.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 8\%}

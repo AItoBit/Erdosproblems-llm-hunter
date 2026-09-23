@@ -9,6 +9,8 @@ A collection of attempts by advanced Large Language Models (LLMs), mostly by GPT
 
 This project documents and tracks LLM attempts to solve challenging open mathematical problems. The website automatically updates when new TeX files are added to the repository.
 
+The Erdos index includes all **1,221 problems** in the saved collaborative database. The [expanded GPT_6_Astra_Ultra collection](attacks/erdos/GPT_6_Astra_Ultra/) covers all **642 unresolved database entries**, including 433 attributed imports and 50 statement-only records awaiting an attempt. Reused work retains its original model attribution and unverified completion claims. The directly checked official tags page reports 635 unresolved; the collection preserves the broader database scope. Only `.tex` writeups are published from this collection; working notes, manifests, and verification reports are kept outside the repository.
+
 ### Problem Sources
 
 - **Erdos Problems**: Open problems posed by Paul Erdos, one of the most prolific mathematicians in history
@@ -57,7 +59,7 @@ Erdosproblems-llm-hunter/
 
 ## How It Works
 
-1. **Problem Statements**: Not hosted locally - users are directed to external sources:
+1. **Problem Statements**: Canonical statements remain at the external sources below. The expanded Erdos collection also includes 50 sourced statement-only records where no local attempt was available:
    - Erdos problems: [erdosproblems.com/X](https://www.erdosproblems.com/) for problem X
    - MO problems: Original MathOverflow question links
 2. **LLM Attempts**: Stored as TeX files in `Attacks/` directory
@@ -89,12 +91,19 @@ a matching status; the build fails if any are missing. GitHub Actions refreshes
 this snapshot before building the published site, using the upstream GitHub data
 without scraping individual pages on erdosproblems.com.
 
-The **Problem Status** column reports Tao's database status. Problems marked
+The Erdos **LLM Claim** column follows an automatic database rule: `open`,
+`falsifiable`, and `decidable` map to `unresolved`; every other informal status
+maps to `solved`, including rows without attempts. Individual attempt claims are
+unchanged, and their original aggregate is stored in `attempt_status`.
+The generated `llm_status_source` field identifies the rule as `database_rule`.
+The original database status remains visible on problem detail pages.
+Problems marked
 proved, disproved, solved, or independent receive **100% Completion**, following
 the database's definition of resolved problems. For other problems, completion
 remains the existing LLM estimate. Statement formalization and solution formalization
-are reported separately; an `open (Lean)` problem remains open. LLM claims,
-attempt contents, and community reviews retain their separate meanings.
+are reported separately; an `open (Lean)` problem remains open. Attempt contents
+and community reviews retain their separate meanings. MathOverflow claim labels
+continue to reflect the hosted attempts.
 
 Run the synchronization and build checks with `python3 -m unittest discover -s tests`.
 
@@ -112,10 +121,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting new LLM atte
 
 **Important:** LLM output is not fully reliable. The attempts documented on this website represent exploratory work by frontier AI models and should not be considered verified mathematical proofs.
 
-An LLM "solved" claim does not mean its solution has been verified or accepted
-by the mathematical community. The separate Erdos **Problem Status** comes from
-[Tao's collaborative database](https://teorth.github.io/erdosproblems/) and does not
-validate the LLM attempts hosted here.
+The Erdos **LLM Claim** label is assigned by the database rule above and does not
+mean that an LLM has supplied a verified solution. The original **Problem Status**
+comes from [Tao's collaborative database](https://teorth.github.io/erdosproblems/)
+and does not validate the LLM attempts hosted here. Claims within individual
+attempts still require mathematical verification.
 
 ## License
 

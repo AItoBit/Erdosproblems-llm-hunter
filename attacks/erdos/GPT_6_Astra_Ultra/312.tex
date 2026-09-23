@@ -1,0 +1,57 @@
+\section{Erd\H{o}s Problem \#312: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{312.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The target is exponential closeness to one from below when a multiset has
+reciprocal mass greater than $K$. The source's maximal-subset argument gives
+only inverse-linear closeness. I improve its elementary counting constant
+using dyadic chains; this still does not match even the known inverse-square
+bound, let alone the conjectured exponential rate.
+
+\subsection*{2) WORK: A CHAIN HAS TOTAL MASS LESS THAN ONE}
+If a multiset contains denominators only of the form $m2^j$ for a fixed odd
+$m$, and has total reciprocal mass at least one, it has a submultiset of
+mass exactly one. To see this, choose the largest exponent $J$ present
+and scale by $m2^J$. The weights are powers of two at most $2^J$, and
+the target is the multiple $m2^J$. Repeatedly combine pairs of equal
+smaller weights until every smaller denomination has at most one copy.
+Those residual weights total less than $2^J$. If total mass is at least
+$m2^J$, at least $m$ bundles of weight $2^J$ must have been formed.
+Taking $m$ of those disjoint bundles proves the claim.
+
+Now choose a submultiset $S$ with maximal mass $1-\delta\le1$. If
+$\delta>0$, there is no exact-one submultiset anywhere. Every omitted
+denominator is less than $1/\delta$, by maximality. Put
+$M=\lceil1/\delta\rceil-1$. Partition the omitted denominators according
+to their odd parts. There are at most $\lceil M/2\rceil$ chains, and
+each has mass strictly less than one by the preceding lemma. Therefore
+\[
+ K-1+\delta<R(A\setminus S)<\lceil M/2\rceil
+ \le(M+1)/2<(1/\delta+1)/2.
+\]
+After rearrangement this gives
+\[
+ 2\delta^2+(2K-3)\delta<1,
+\qquad
+ \delta<\frac{\sqrt{(2K-3)^2+8}-(2K-3)}4.
+\]
+For large $K$ the right side is $(1+o(1))/(2K)$, improving the source's
+elementary leading constant by a factor of two.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Binary carrying retains disjoint groups of original occurrences, so it
+does not create unauthorized multiplicities. Different odd-part chains
+need not be independent; only the necessary bound on each chain is used.
+The result is deliberately compared with the source's elementary bound,
+not claimed to improve the literature. A comment on the official discussion
+announces still stronger progress; it is not an input to this proof.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} The exponential target remains out of reach. The proof
+gives a modest self-contained refinement and identifies where the linear
+loss survives: summing over all odd parts separately.
+Exact target checked at \url{https://www.erdosproblems.com/312}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 8\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

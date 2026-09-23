@@ -1,0 +1,56 @@
+\section{Erd\H{o}s Problem \#293: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{293.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+Let $v(k)$ be the first integer greater than one absent from every strictly
+increasing $k$-term unit-fraction representation of one. The source's
+$v(k)\le kF(k)+2$ argument is correct, but that argument and the quoted
+asymptotic improvement already appear in the official discussion. I do
+not present them as new. Here is a small finite refinement and a complete
+exact enumeration procedure, rather than a new asymptotic solution.
+
+\subsection*{2) WORK: SEPARATING SMALL AND LARGE DENOMINATORS}
+Every representation has a denominator at most $k$: otherwise its sum
+would be at most $k/(k+1)<1$. Thus each representation contributes at
+most $k-1$ denominators greater than $k$. Since only $k-1$ possible
+denominators lie in $[2,k]$, the union $D_k$ satisfies, for $k\ge2$,
+\[
+ |D_k|\le(k-1)F(k)+(k-1),\qquad
+ v(k)\le(k-1)F(k)+k+1. \tag{1}
+\]
+This improves the simple union count when $F(k)>k-1$, but changes no
+double-exponential exponent and is not a major asymptotic advance.
+
+For reproducible finite checks, suppose a partial decomposition has
+remaining rational mass $r>0$, needs $j\ge2$ terms, and its last chosen
+denominator is $b$. The next denominator $x$ must satisfy
+\[
+ \max\{b+1,\lfloor1/r\rfloor+1\}\le x\le\lfloor j/r\rfloor.
+\]
+The lower bound follows from $1/x<r$; the upper bound follows because
+all remaining denominators are at least $x$. Replace $(r,b,j)$ by
+$(r-1/x,x,j-1)$ recursively. When $j=1$, accept precisely when $r=1/x$
+for an integer $x>b$. Each branch is finite and the inequalities retain
+every possible representation; induction on $j$ proves completeness.
+
+Executed with exact fractions, this yields
+\[
+\begin{array}{c|rrr}
+k&F(k)&|D_k|&v(k)\\\hline
+2&0&0&2\\3&1&3&4\\4&6&15&11\\5&72&77&17
+\end{array}
+\]
+The companion \texttt{verification/root\_checks.py} reproduces these counts.
+No numerical denominator cutoff is assumed.
+
+\subsection*{3) VERIFICATION AND FINAL}
+Distinctness is enforced by $x>b$, so repeated-unit-fraction counts are
+not inadvertently included. For $k=1$ the sole representation is $1=1/1$,
+and $v(1)=2$ separately. \textbf{UNRESOLVED.} The finite refinement and
+enumeration do not determine the growth of $v(k)$.
+Source attribution and the greater-than-one convention were checked at
+\url{https://www.erdosproblems.com/forum/thread/293}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

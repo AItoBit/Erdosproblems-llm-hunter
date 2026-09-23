@@ -1,0 +1,26 @@
+\section{Problem 383: auditing smooth intervals and their immediate endpoints}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target described in \texttt{383.tex}, read completely, asks for arbitrarily long, and ultimately infinitely many for each fixed length, intervals beginning at a prime square with largest prime factor equal to that prime. The source supplies certificates through length nine. I recheck all of them and try the immediate extension of each certificate. This produces verified boundaries, not a new length-ten example.
+\subsection*{2) WORK}
+For each source pair $(p,k)=(510569,7),(2869123,8),(3092701,9)$, the verification program multiplies every displayed factor list, tests $p$ and every listed factor for primality by exhaustive trial division up to its integer square root, and checks that all factors of $p^2+i$, $1\le i\le k$, are less than $p$. All 24 displayed factorizations pass. Thus all three source certificates are valid.
+
+Factoring the next integer shows that none of these particular primes gives a longer interval:
+\[
+\begin{split}
+510569^2+8&=3^2\cdot419\cdot69127739,\\
+2869123^2+9&=2\cdot4115933394569,\\
+3092701^2+10&=23\cdot211\cdot1970904487.
+\end{split}
+\]
+All displayed factors in these three new factorizations were tested prime by the same deterministic method, and in each row the largest factor exceeds $p$.
+
+A simple necessary filter for future searches is worth making explicit. If $p^2+i$ is $p$-smooth for any $i>0$, then its number $\Omega(p^2+i)$ of prime factors counted with multiplicity is at least three. Otherwise it is the product of at most two primes at most $p$ and hence is at most $p^2$, a contradiction. Moreover, for odd $p$, every odd prime divisor $q$ of $p^2+1$ satisfies $q\equiv1\pmod4$: the nonzero residue $p\bmod q$ squares to $-1$, so its multiplicative order is four and divides $q-1$. These are necessary filters, not sufficient smoothness criteria.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Checking factor products alone would not certify the claimed prime factors; explicit primality checks were also executed. Conversely, the primality of the large next-step factors is needed to exclude smoothness, and was not assumed from their size. The interval from $p^2$ through $p^2+k$ contains $k+1$ integers, so the convention here counts the $k$ increments after the square. A single example for a fixed $k$ does not establish infinitude for that $k$.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The supplied frontier $k=9$ is independently certified, and each supplied example's first failure is explicit. No verified improvement of that frontier or infinitude theorem was obtained.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{383.tex}; all factor lists and tests are in \texttt{verification/batch\_1\_checks.py} and its JSON output, executed 2026-09-23. The two search filters are proved directly above.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the full arbitrary-length and infinitude target.
+\textbf{COMPLETION: 10\%}

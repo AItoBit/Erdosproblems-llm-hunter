@@ -197,12 +197,15 @@
             // Problem meta
             const metaDiv = document.getElementById('problem-meta');
             
-            const hasUnresolved = (attack) => /unresolved/i.test(attack.raw || '');
+            const hasUnresolved = (attack) => attack.status
+                ? attack.status === 'unresolved'
+                : /unresolved/i.test(attack.raw || '');
 
             // Determine overall status from the source content.
             const determineOverallStatus = (attacks) => {
-                if (!attacks || attacks.length === 0) return 'none';
-                return attacks.some(hasUnresolved) ? 'unresolved' : 'solved';
+                const actualAttempts = (attacks || []).filter(attack => attack.entry_kind !== 'statement_only');
+                if (actualAttempts.length === 0) return 'none';
+                return actualAttempts.some(hasUnresolved) ? 'unresolved' : 'solved';
             };
             const reviewLabel = window.ProblemHunting && window.ProblemHunting.getReviewLabel
                 ? window.ProblemHunting.getReviewLabel(problem.review)
@@ -229,7 +232,8 @@
                 metaDiv.innerHTML = `
                     <p><strong>Problem Number:</strong> ${problem.number}</p>
                     <p><strong>Problem Status:</strong> <span class="${problemStatusClass}">${problemStatus}</span>${statusUpdated}</p>
-                    <p><strong>LLM Claims:</strong> ${overallStatus}</p>
+                    <p><strong>LLM Claim:</strong> ${overallStatus} (database rule)</p>
+                    <p class="status-note">Open, falsifiable, or decidable maps to unresolved; every other database status maps to solved. Individual attempt claims appear below.</p>
                     <p><strong>Completion:</strong> ${completionLabel}${completionSource ? ` (${completionSource})` : ''}</p>
                     <p><strong>Community Review:</strong> ${reviewDisplay}</p>
                 `;
@@ -281,9 +285,34 @@
             }
             if (problem.attacks && problem.attacks.length > 0) {
                 const repoBaseUrl = 'https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/';
+                const escapeHtml = window.ProblemHunting.escapeHtml;
+                if (problem.attacks.some(attack => attack.entry_kind)) {
+                    attemptsSection.querySelector('h2').textContent = 'LLM claims and collection records';
+                }
                 attemptsDiv.innerHTML = problem.attacks.map((attack, idx) => {
                     const attackStatus = hasUnresolved(attack) ? 'unresolved' : 'solved';
-                    const statusLabel = attackStatus;
+                    const provenance = attack.provenance || {};
+                    const isReused = attack.entry_kind === 'reused_writeup';
+                    const isStatement = attack.entry_kind === 'statement_only';
+                    const statusLabel = isStatement ? 'awaiting an attempt'
+                        : isReused ? `source claim: ${attackStatus} (unverified)` : attackStatus;
+                    const sourceModel = escapeHtml((provenance.source_model || '').replace(/_/g, ' '));
+                    const title = isStatement ? 'Problem statement: awaiting an attempt'
+                        : isReused ? `Reused writeup: ${sourceModel}`
+                        : `Attempt ${idx + 1}: ${escapeHtml(attack.model)}`;
+                    let provenanceNote = '';
+                    if (isReused) {
+                        const originalUrl = repoBaseUrl + provenance.primary_source.split('/').map(encodeURIComponent).join('/');
+                        const sourceCompletion = typeof attack.completion === 'number'
+                            ? `Source-reported completion: ${attack.completion}%.`
+                            : 'The source provides no usable completion estimate.';
+                        provenanceNote = `<p class="status-note">Included in the ${escapeHtml(attack.model)} collection with attribution to ${sourceModel}. ` +
+                            `<a href="${escapeHtml(originalUrl)}" target="_blank" rel="noopener">Original writeup</a>. ` +
+                            `${sourceCompletion} The claims and estimate have not been independently reviewed.</p>`;
+                    } else if (isStatement) {
+                        provenanceNote = `<p class="status-note">Included in the ${escapeHtml(attack.model)} collection as a statement-only record. ` +
+                            'No mathematical attempt is provided. Completion: 0%. No independent review has been performed.</p>';
+                    }
                     const sourceUrl = attack.file_path ? encodeURI(`${repoBaseUrl}${attack.file_path}`) : '';
                     const sourceLink = sourceUrl ? ` <a href="${sourceUrl}" target="_blank">source</a>` : '';
                     const commentsLink = ` <a href="#comments">comments</a>`;
@@ -296,12 +325,13 @@
                     return `
                         <div class="attempt">
                             <div class="attempt-header">
-                                <h3>Attempt ${idx + 1}: ${attack.model}</h3>
+                                <h3>${title}</h3>
                                 <span class="status-text">${statusLabel}</span>${sourceLink}${commentsLink}${reviewLink}
                             </div>
                             ${datePosted}
+                            ${provenanceNote}
                             <div class="attempt-content tex-content">
-                                ${formatTeX(attack.raw)}
+                                ${formatTeX(attack.raw, isReused)}
                             </div>
                         </div>
                     `;
@@ -341,13 +371,16 @@
             }
         });
 
-        function formatTeX(text) {
+        function formatTeX(text, preserveCollection = false) {
             if (!text) return '';
 
             // Complete articles include a preamble that is not browser content.
             // Require document markers on their own lines so examples in fragments survive.
             const documentStart = /^[ \t]*\\begin\{document\}[ \t]*\r?$/m.exec(text);
-            if (documentStart) {
+            // A collection may contain several complete TeX documents and
+            // fragments. Do not discard earlier versions or attribution when
+            // a later reused source starts its own document environment.
+            if (documentStart && !preserveCollection) {
                 text = text.slice(documentStart.index + documentStart[0].length);
                 text = text.replace(/^[ \t]*\\end\{document\}[ \t]*\r?$/m, '');
                 text = text.replace(/^[ \t]*\{\\(LARGE|large)\s+(.+)\}(?:\\\\(?:\[[^\]]*\])?)?[ \t]*\r?$/gm, function(match, size, title) {

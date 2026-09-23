@@ -1,0 +1,30 @@
+\section{Problem 145: a boundary lemma from the moment asymptotic itself}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. If $s_k$ are consecutive squarefree integers and $g_k=s_{k+1}-s_k$, the target is existence of finite limits $x^{-1}\sum_{s_k\le x}g_k^\alpha$ for every $\alpha\ge0$. I read \texttt{gpt\_pro\_5.4/145.tex} fully. Its fixed-pattern and uniform-integrability reduction is useful. I remove the extra short-interval theorem from its transfer between endpoint conventions.
+\subsection*{2) WORK}
+The following elementary jump lemma applies to any positive increasing integer sequence $s_k$ with $s_{k+1}/s_k\to1$. Suppose, for a fixed $\gamma\ge0$,
+\[
+F_\gamma(y):=\sum_{s_{k+1}\le y}g_k^\gamma=B_\gamma y+o(y).
+\]
+At $y=s_{k+1}$ the jump of $F_\gamma$ is exactly $g_k^\gamma$. Apply the asymptotic both at $s_{k+1}$ and at $s_{k+1}-1/2$. Subtracting gives
+\[
+g_k^\gamma=B_\gamma/2+o(s_{k+1})=o(s_{k+1}).
+\]
+If $s_k\le x<s_{k+1}$, the left-endpoint and right-endpoint sums differ by precisely this one jump. As $s_{k+1}/x\to1$, their normalized difference is $o(1)$. Therefore the same asymptotic, with the same constant, holds with cutoff $s_k\le x$.
+
+For squarefree integers, their positive asymptotic density $6/\pi^2$ gives $s_{k+1}/s_k\to1$: a gap from $s_k$ to at least $(1+\delta)s_k$ would contradict the difference between the counting asymptotics at these two arguments. Thus any established right-endpoint moment asymptotic transfers automatically. In particular Chan's checked theorem for $0\le\gamma<3.75$ transfers throughout that same interval, without importing a particular pointwise squarefree-gap exponent.
+
+For higher moments the original obstruction persists: existence of all fixed-gap frequencies $p_m$ does not bound
+\[
+\limsup_{x\to\infty}\frac1x\sum_{s_k\le x,\ g_k>Y}g_k^\alpha.
+\]
+The jump lemma controls only the final gap, not this whole tail.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Subtracting two $o(y)$ errors at nearby endpoints remains $o(y)$; it is not asserted to be $o(1)$ before normalization. The half-integer endpoint ensures exactly one integer endpoint has entered. The ratio condition is stated explicitly and follows from squarefree density. No moment outside Chan's verified interval is inferred.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The boundary transfer now has a self-contained proof from existing asymptotics. It simplifies the supplied argument but does not enlarge the known moment interval or prove uniform integrability for arbitrary $\alpha$.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied file. T. H. Chan, \emph{On moments of gaps between consecutive squarefree numbers}, \texttt{https://arxiv.org/abs/2310.08448}, checked 2026-09-23, for the exact exponent range and right-endpoint cutoff. The jump argument above is independent of any claimed latest short-gap estimate.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward all moments, not a percentage of exponent values.
+\textbf{COMPLETION: 20\%}

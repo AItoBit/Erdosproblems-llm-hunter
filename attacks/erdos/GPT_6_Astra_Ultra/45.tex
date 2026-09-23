@@ -1,0 +1,136 @@
+\section{Erd\H{o}s Problem 45: a divisor construction and its growth scale}
+
+\subsection{1) Problem and known input}
+For every $k\geq2$, does there exist an integer $n_k$ such that every
+$k$-colouring of
+\[
+ D(n_k)=\{d:1<d<n_k,\ d\mid n_k\}
+\]
+contains a monochromatic subset $S$ with $\sum_{d\in S}1/d=1$?
+The current problem page, checked on 23 September 2026, records an
+affirmative answer from Croot's unit-fraction colouring theorem.
+
+The precise external input is the following finite statement from
+Croot's 2003 paper: there is an absolute constant $b>1$ such that
+every $k$-colouring of the integers in $[2,b^k]$ has a monochromatic
+set of distinct denominators whose reciprocals sum to $1$.
+The analytic proof of that theorem is not reproduced here. We give
+the full transfer to proper divisors and a matching growth scale,
+with each further input identified. This is a reconstruction of known
+results, not a claim of a new solution.
+
+\subsection{2) Explicit transfer from an interval to proper divisors}
+Choose an integer $L\geq\max(3,b^k)$ and put
+\[
+ n_k=\operatorname{lcm}(1,2,\ldots,L).
+\]
+Every integer from $2$ through $L$ divides $n_k$. These divisors really
+are proper: since $L$ and $L-1$ are coprime,
+\[
+ n_k\geq L(L-1)>L.
+\]
+Restrict any given colouring of $D(n_k)$ to $\{2,\ldots,L\}$.
+Croot's theorem supplies a monochromatic $S\subseteq\{2,\ldots,L\}$
+with reciprocal sum $1$. Because this entire interval lies in
+$D(n_k)$, this is exactly the subset required in the problem.
+No repeated denominator or the excluded divisor $1$ has been used.
+
+Even the elementary estimate $n_k\leq L!\leq L^L$ gives a doubly
+exponential bound. With $L=\lceil\max(3,b^k)\rceil$,
+\[
+ \log n_k\leq L\log L\leq C^k
+\]
+for a suitable absolute $C>1$ and all $k\geq2$, enlarging $C$ to
+cover the finitely many initial cases. Thus $n_k\leq\exp(C^k)$.
+One can sharpen the estimate on this particular least common multiple,
+but that is unnecessary for the stated growth scale.
+
+\subsection{3) A rigorous greedy obstruction for small reciprocal mass}
+Here is a useful sufficient condition for a colouring with no solution.
+If a finite set of denominators all at least $2$ has total reciprocal
+mass less than $k/2$, assign its elements successively to $k$ colour
+classes, keeping the sum in each class strictly below $1$.
+
+To justify that the assignment never gets stuck, let the next weight
+be $w=1/d\leq1/2$. If every class rejected it, each existing class
+would have mass at least $1-w\geq1/2$. The already assigned mass
+would then be at least $k/2$, contradicting the assumed total mass.
+Every class consequently has mass less than $1$, and no subset of
+one class can have mass exactly $1$.
+
+Applying this to $D(n)$ shows that any integer having the required
+Ramsey property must satisfy
+\[
+ \sum_{d\in D(n)}\frac1d\geq\frac k2.
+\]
+This deliberately coarse necessary bound is enough below. We do not
+need a sharper packing assertion with threshold $k$.
+
+\subsection{4) A doubly exponential necessary size}
+We use the classical Mertens product estimate
+\[
+ \prod_{p\leq y}(1-1/p)^{-1}\ll\log y\qquad(y\geq3)
+\]
+as a second external theorem. For $n$ sufficiently large, put
+$y=\log n$. Factorization of the divisor sum gives
+\[
+ \sum_{d\mid n}\frac1d
+ =\prod_{p^a\parallel n}(1+p^{-1}+\cdots+p^{-a})
+ \leq\prod_{p\mid n}(1-1/p)^{-1}.
+\]
+The contribution of $p\leq y$ is $O(\log y)$ by Mertens.
+If there are $r$ distinct prime factors exceeding $y$, then
+$y^r<n$, so $r\leq\log n/\log y$. Since
+$-\log(1-1/p)\leq2/p$,
+\[
+ \log\prod_{\substack{p\mid n\\p>y}}(1-1/p)^{-1}
+ \leq\frac{2r}{y}
+ \leq\frac{2}{\log\log n}.
+\]
+The large-prime contribution is bounded by an absolute constant.
+Consequently
+\[
+ \sum_{d\mid n}\frac1d\leq C_0\log\log n
+\]
+for all sufficiently large $n$, with an absolute $C_0$.
+Combining this with the necessary reciprocal mass gives
+\[
+ \log\log n_k\geq\frac{k}{2C_0},\qquad
+ n_k\geq\exp\bigl(\exp(c k)\bigr)
+\]
+for an absolute $c>0$ and sufficiently large $k$.
+Together with the construction, this identifies the doubly exponential
+scale. It does not identify the least possible integer $n_k$ or the
+optimal constants in the exponent.
+
+\subsection{5) Verification and outcome}
+The proper-divisor check $n_k>L$ prevents an endpoint error in the
+interval transfer. The lower bound uses only positive weights, so a
+class of mass less than $1$ cannot contain a hidden exact solution.
+Both uses of asymptotic constants are uniform in $k$; Croot's $b$ and
+Mertens' constant are absolute.
+
+\textbf{Outcome: SOLVED using Croot's finite colouring theorem.}
+The Ramsey transfer is complete. The additional lower bound uses the
+explicitly stated Mertens estimate. Neither analytic theorem is
+asserted to have been independently reproved or formally checked here.
+
+\subsection{6) Sources}
+\begin{itemize}
+\item E. S. Croot III, \emph{On a coloring conjecture about unit
+fractions}, Annals of Mathematics 157 (2003), 545--556, introductory
+corollary, \texttt{https://annals.math.princeton.edu/wp-content/uploads/annals-v157-n2-p04.pdf}.
+\item T. F. Bloom, Problem 45,
+\texttt{https://www.erdosproblems.com/45}, checked 23 September 2026.
+The page credits the lower-bound observation to Mehtaab Sawhney;
+the argument above uses a weaker elementary packing threshold which
+already gives the same scale.
+\item Mertens' product estimate is also stated as equation (2) in
+T. F. Bloom, \emph{On a density conjecture about unit fractions},
+\texttt{https://arxiv.org/html/2112.03726v2}.
+\end{itemize}
+
+The estimate records full coverage with the named external theorems
+accepted; it is not a novelty claim.
+\subsection{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

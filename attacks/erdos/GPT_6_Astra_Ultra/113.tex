@@ -1,0 +1,70 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#113; explicit deduction from Janzer's theorem, 2026-09-23.}
+For a fixed bipartite graph $H$, is $\operatorname{ex}(n,H)=O(n^{3/2})$ equivalent to $H$ being $2$-degenerate? Here $2$-degenerate means that every nonempty subgraph has a vertex of degree at most two. We disprove the implication from the extremal estimate to degeneracy, by explicitly specifying a bipartite $3$-regular graph to which Janzer's stronger estimate applies.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The source labels the proposed characterization disproved. Janzer constructs graphs $H_{k,\ell}$ with extremal exponent arbitrarily close to $4/3$. His Theorem 1.6 is the deep external input below. We verify the graph, its bipartition, the failure of degeneracy, and the numerical parameter conditions in detail. We do not reproduce the difficult extremal embedding theorem or claim a new counterexample.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+An explicit graph makes clear which direction of the proposed equivalence fails. The known extremal theorem then supplies an exponent strictly smaller than $3/2$, while regularity immediately violates $2$-degeneracy.
+
+\section{WORK}
+\subsection{The graph}
+For positive integers $k,\ell$ with $\ell\geq2$, let the vertices be $x_{i,j}$ with $1\leq i\leq4k$ and $j\in\mathbb Z/(2\ell)\mathbb Z$. Add the following undirected edges:
+\[
+\begin{array}{ll}
+x_{2i-1,j}x_{2i,j},&1\leq i\leq2k,\ \text{all }j;\\
+x_{1,j}x_{1,j+1},\quad x_{4k,j}x_{4k,j+1},&\text{all }j;\\
+x_{2i,j}x_{2i+1,j+1},\quad x_{2i+1,j}x_{2i,j+1},
+&1\leq i\leq2k-1,\ \text{all }j.
+\end{array}
+\tag{1}
+\]
+At a vertex on row $1$ or $4k$ there is one edge to the paired row and two edges to the neighboring positions in its own row. At every other vertex there is one paired-row edge and two edges to positions $j-1,j+1$ in the neighboring row pair. As $2\ell\geq4$, these two neighbors are distinct. Thus every vertex has degree three, and the graph has $v=8k\ell$ vertices and $e=12k\ell$ edges.
+
+The color
+\[
+\gamma(x_{i,j})=\lfloor i/2\rfloor+j\pmod2
+\tag{2}
+\]
+is well defined because the column modulus is even. The paired-row edge changes $\lfloor i/2\rfloor$ by one; a boundary horizontal edge changes $j$ by one; and the remaining edges keep $\lfloor i/2\rfloor$ unchanged while changing $j$ by one. Every edge therefore joins opposite colors. This proves bipartiteness directly.
+
+The graph itself is a nonempty subgraph of minimum degree three, so it is not $2$-degenerate. This checks the actual definition, rather than confusing maximum degree three with a sufficient condition for non-degeneracy.
+
+\subsection{The external theorem and parameter check}
+Janzer's Theorem 1.6 states that, whenever
+\[
+0<\varepsilon<1/6,\qquad k\geq1/\varepsilon,\qquad
+\ell\geq16k/\varepsilon,
+\]
+the graph (1) satisfies
+\[
+\operatorname{ex}(n,H_{k,\ell})=O_{k,\ell,\varepsilon}(n^{4/3+\varepsilon}).
+\tag{3}
+\]
+Choose $\varepsilon=1/8$, $k=8$, $\ell=1024$. All inequalities hold, including $1024=16\cdot8\cdot8$. The resulting fixed graph has $65536$ vertices and $98304$ edges. Since
+\[
+4/3+1/8=35/24<36/24=3/2,
+\]
+equation (3) implies $\operatorname{ex}(n,H_{8,1024})=O(n^{3/2})$. It is nevertheless bipartite and not $2$-degenerate, as already proved. This supplies the required counterexample to the equivalence.
+
+\subsection{A check on what the theorem does not imply}
+The exponent cannot simply be replaced by $4/3$ for this fixed graph. A standard random-deletion calculation, included here, gives a stronger lower bound. For any fixed graph with $v$ vertices and $e>1$ edges, take the random graph on $n$ vertices with edge probability $p=c n^{-(v-2)/(e-1)}$. Its expected number of edges is at least $c n^{2-(v-2)/(e-1)}/3$ for large $n$, while the expected number of labeled copies of $H$ is at most $c^e n^{2-(v-2)/(e-1)}$. Fix $c>0$ small enough that $c^e\leq c/6$. Some outcome has edges minus copies at least $c n^{2-(v-2)/(e-1)}/6$. Deleting one edge from each surviving copy removes at most the original number of copies and leaves an $H$-free graph. For our $3$-regular graph, $e=3v/2$, so this proves
+\[
+\operatorname{ex}(n,H)\gg_H n^{4v/(3v-2)}
+=n^{4/3+8/(3(3v-2))}.
+\]
+This is compatible with (3) and makes explicit why the arbitrary $\varepsilon$ in the family theorem does not mean one fixed graph has exponent exactly $4/3$.
+
+\section{VERIFICATION AND SCOPE}
+The accompanying exact checker constructs the graph in (1) at the chosen parameters, verifies $65536$ vertices and $98304$ distinct edges, checks every degree and every bipartition edge. The mathematical proof above supplies these facts for all the stated parameters. The only unproved-in-this-file substantive input is the explicitly cited extremal theorem (3); the reduction from it is complete.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current question: \url{https://www.erdosproblems.com/113}.
+\item O. Janzer, \emph{Disproof of a conjecture of Erd\H{o}s and Simonovits on the Tur\'an number of graphs with minimum degree 3}, Definition 1.5 and Theorem 1.6: \url{https://arxiv.org/html/2109.06110v2}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved using Janzer's explicit external theorem.} The graph $H_{8,1024}$ disproves the proposed characterization. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

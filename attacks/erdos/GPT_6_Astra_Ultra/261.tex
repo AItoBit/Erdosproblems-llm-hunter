@@ -1,0 +1,35 @@
+\section{Problem 261: an exact residual search for distinct dyadic representations}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is to represent every $n/2^n$ as $\sum_{a\in E}a/2^a$ with distinct positive integers $a$ and $|E|\ge2$. I read \texttt{261.tex} and \texttt{261\_v2.tex} fully; they repeat the offset identity and two infinite families. I add an exact bounded search with a proved pruning rule, rather than treating those families as coverage of every $n$.
+\subsection*{2) WORK}
+In a representation with at least two positive terms, all exponents exceed $n$: the function $a/2^a$ decreases after its initial tie at $a=1,2$, and an exponent at most $n$ already contributes at least the target. Write the selected offsets as $d=a-n>0$. The equation becomes
+\[
+n=\sum_{d\in D}(n+d)2^{-d}.
+\]
+Define $r_0=n$ and, scanning $d=1,2,\ldots$,
+\[
+r_d=2r_{d-1}-\epsilon_d(n+d),\qquad\epsilon_d\in\{0,1\}.
+\]
+A finite representation ends at $r_d=0$. Every viable intermediate state satisfies
+\[
+0\le r_d<n+d+2,
+\]
+because the total available future contribution, after multiplying by $2^d$, is $\sum_{h\ge1}(n+d+h)2^{-h}=n+d+2$. Equality would require selecting the entire infinite tail and cannot lead to a finite representation. Negative residuals cannot be repaired by positive terms.
+
+Consequently a complete search to offset $M$ needs only the integer states $r$ in this interval, together with the number of selected terms capped at two. For states with the same residual and capped count, retaining one witness loses no possible continuation. This gives $O(M(n+M))$ transition work, apart from storing witnesses, instead of enumerating all $2^M$ subsets.
+
+The accompanying exact-rational program searched $1\le n\le100$ through offset $200$. It found witnesses for 49 values and none within that bound for 51 values. For example,
+\[
+\frac1{2}=\frac4{2^4}+\frac5{2^5}+\frac6{2^6},\qquad
+\frac3{2^3}=\frac4{2^4}+\frac6{2^6}+\frac8{2^8}.
+\]
+Every found witness was independently summed using rational arithmetic. The largest first successful offset in this run was $104$.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+In particular, $n=10$ had no witness through offset $200$; this is a finite exclusion, not a counterexample. The state count must distinguish zero, one, and at least two selected terms to exclude the one-term equality for $n=1$. A further necessary check is that the largest exponent in any valid representation is even: clearing the largest power of two leaves all other terms, including the target, even.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The search is exhaustive within its stated bound and yields reproducible certificates. There is no uniform termination proof and no finite certificate of impossibility for any $n$.
+\subsection*{5) SOURCES CHECKED}
+Both complete supplied versions. Reproducible code and all witnesses or bounded failures are in \texttt{verification/batch\_1\_checks.py} and \texttt{verification/batch\_1\_checks.json}, executed 2026-09-23. No external theorem is needed for the search.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward a representation for every positive integer.
+\textbf{COMPLETION: 15\%}

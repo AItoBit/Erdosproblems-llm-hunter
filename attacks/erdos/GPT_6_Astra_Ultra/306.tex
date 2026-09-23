@@ -1,0 +1,55 @@
+\section{Erd\H{o}s Problem \#306: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{306.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The question concerns every positive rational with squarefree reduced
+denominator, using distinct products of two distinct primes. The supplied
+graph sum identity is correct but selects the numerator rather than
+representing an arbitrary prescribed one. I use the same graph to obtain
+necessary cancellation constraints on any putative representation.
+
+\subsection*{2) WORK: WHERE LEAVES ARE ALLOWED}
+Suppose
+\[
+ a/b=\sum_{\{p,q\}\in E(G)}\frac1{pq},\qquad (a,b)=1,
+\]
+where $G$ is a finite simple graph on its nonisolated prime vertices.
+Put $P=\prod_{p\in V(G)}p$. Necessarily $b\mid P$. Multiplying the equation
+by $P$ and reducing modulo a vertex prime $p\nmid b$ gives
+\[
+ \sum_{q\in N_G(p)}q^{-1}\equiv0\pmod p. \tag{1}
+\]
+Indeed, the left side $aP/b$ is divisible by $p$, as are all edge
+contributions not incident with $p$. Dividing the remaining congruence
+by $P/p$, which is invertible modulo $p$, proves (1).
+
+In particular every leaf prime must divide $b$: a single inverse cannot
+vanish. Hence a representation of an integer has minimum graph degree
+at least two. A representation with prime reduced denominator also
+cannot have a forest as its support graph. Every nonempty finite forest
+has at least two leaves, whereas at most one vertex prime can divide
+such a denominator. Thus these representations must use at least one
+cycle, not merely a tree of independently introduced primes.
+
+More generally every nonempty tree component requires at least two
+distinct prime factors of $b$ among its leaves. If the graph has $t$
+tree components, then $2t\le\omega(b)$. This is useful before any
+large-integer factorization in a proposed construction.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The constraints are necessary only. A cycle does not automatically
+represent the required rational. The source's triangle identity passes
+this test, but provides no decomposition for arbitrary $a/b$.
+Also, repeating the same identity to represent multiples is invalid if
+it repeats denominators; simplicity of $G$ records that restriction.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} This attempt supplies structural obstructions, not a
+general construction. The indexed official discussion reports a claimed
+formalized solution; I have not checked its axiom boundary or proof and
+do not adopt that claim. The saved repository status is still open.
+Target checked at \url{https://www.erdosproblems.com/306}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 8\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

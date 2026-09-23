@@ -1,0 +1,73 @@
+\section{Problem 736: shift graphs and the exact-cardinal obstruction}
+\subsection*{1) FORMAL RESTATEMENT AND CURRENT STATUS}
+Attempt dated 2026-09-23. For a simple graph $G$ with $\chi(G)=\aleph_1$, must every cardinal $\mu$ be the chromatic number of some graph $H_\mu$ such that each finite subgraph of $H_\mu$ is isomorphic to a subgraph of $G$? Subgraphs here need not be induced.
+
+The live problem page [1] labels the question NOT PROVABLE. The original paper of Komj\'ath and Shelah [2] gives a consistency result with a graph $G$ of chromatic number $\aleph_1$ for which all graphs with the required finite-subgraph property have chromatic number at most $\aleph_2$. Consequently this attempt does not seek a ZFC proof of the universal assertion. Its objective is a positive sufficient condition and a precise accounting of the distinction between arbitrarily large chromatic numbers and every exact chromatic number.
+
+\subsection*{2) WORK: A FINITE PATTERN CONDITION}
+For an infinite cardinal $\kappa$, regard $\kappa$ as its initial ordinal. The shift graph $S(\kappa)$ has vertices $(\alpha,\beta)$ with $\alpha<\beta<\kappa$; its edges are exactly
+\[
+\{(\alpha,\beta),(\beta,\gamma)\},\qquad \alpha<\beta<\gamma.
+\]
+Consider the additional hypothesis
+\[
+\text{every finite subgraph of }S(\omega)\text{ occurs as a subgraph of }G.\tag{A}
+\]
+It is not proved here that an arbitrary $\aleph_1$-chromatic $G$ satisfies (A).
+
+\textbf{Lemma 1.} Under (A), every finite subgraph of $S(\kappa)$ occurs in $G$, for every infinite $\kappa$.
+
+\emph{Proof.} A finite family of pair-vertices uses only finitely many ordinals as coordinates. Replace those ordinals by their ranks in this finite linearly ordered support. This preserves every equality and strict inequality among coordinates and hence all shift edges. It embeds the selected finite subgraph into $S(\omega)$, after which (A) applies.\hfill$\square$
+
+\subsection*{3) THE CHROMATIC NUMBER, WITH BOTH INEQUALITIES}
+The following standard shift-graph calculation is reproduced in full; it is not claimed as a new theorem.
+
+\textbf{Lemma 2.} For infinite cardinals $\kappa,\lambda$,
+\[
+\chi(S(\kappa))\le\lambda\quad\Longleftrightarrow\quad \kappa\le2^\lambda.
+\]
+\emph{Proof of necessity.} Given a proper colouring $q$ into $\lambda$, define
+\[
+B_\alpha=\{q(\alpha,\beta):\alpha<\beta<\kappa\}\subseteq\lambda.
+\]
+For $\alpha<\beta$, the colour $q(\alpha,\beta)$ belongs to $B_\alpha$ but not $B_\beta$, since $(\alpha,\beta)$ is adjacent to every $(\beta,\gamma)$. Thus all $B_\alpha$ are distinct, yielding an injection $\kappa\to\mathcal P(\lambda)$.
+
+\emph{Proof of sufficiency.} Inject $\kappa$ into $2^\lambda$, writing $f_\alpha$ for the binary function associated with $\alpha$. Well-order the coordinates by $\lambda$ and put
+\[
+d(\alpha,\beta)=\min\{\xi<\lambda:f_\alpha(\xi)\ne f_\beta(\xi)\}.
+\]
+Colour $(\alpha,\beta)$ by $(d(\alpha,\beta),f_\alpha(d(\alpha,\beta)))$. Adjacent vertices with different first coordinates of their colours already differ. If $(\alpha,\beta)$ and $(\beta,\gamma)$ have the same first coordinate $\xi$, their second coordinates are $f_\alpha(\xi)$ and $f_\beta(\xi)$ and are different. This is a proper colouring using at most $2\cdot\lambda=\lambda$ colours.\hfill$\square$
+
+The necessity argument also works for finite palettes, and excludes them whenever $\kappa$ is infinite. Thus $\chi(S(\kappa))$ is exactly the least infinite $\lambda$ with $\kappa\le2^\lambda$.
+
+\subsection*{4) A PRECISE PARTIAL THEOREM}
+For an infinite cardinal $\mu$, define $2^{<\mu}=\sup_{\lambda<\mu}2^\lambda$, including finite cardinals in the supremum.
+
+\textbf{Proposition.} Assume (A). If
+\[
+2^{<\mu}<2^\mu,\tag{B}
+\]
+there is a graph of chromatic number exactly $\mu$ all of whose finite subgraphs occur in $G$.
+
+\emph{Proof.} Set $\kappa=(2^{<\mu})^+$. Condition (B) gives $\kappa\le2^\mu$, so Lemma 2 gives the upper bound $\chi(S(\kappa))\le\mu$. For every cardinal $\lambda<\mu$, $2^\lambda\le2^{<\mu}<\kappa$, so the necessity argument excludes a $\lambda$-colouring. Hence $\chi(S(\kappa))=\mu$, and Lemma 1 supplies the finite-subgraph assertion.\hfill$\square$
+
+Under GCH, (B) holds for every infinite $\mu$: $2^{<\mu}=\mu$ and $2^\mu=\mu^+$. Therefore (A) gives every infinite target under GCH. Finite targets are also available under (A). Otherwise, if all finite subgraphs of $S(\omega)$ were $r$-colourable for some finite $r$, finite-colour compactness would make $S(\omega)$ $r$-colourable, contradicting Lemma 2's necessity proof. A finite graph with chromatic number at least $n$ has a subgraph with chromatic number exactly $n$, by deleting vertices one at a time: deletion changes the finite chromatic number by at most one. The case $n=0$ is the empty graph.
+
+For clarity, the finite-colour compactness used here follows by considering the compact product $\{1,\ldots,r\}^{V}$: each edge gives a closed constraint requiring distinct endpoint colours; any finite collection is satisfiable, so all constraints have a common point. This supplies the stated compactness argument within ZFC.
+
+Even without (B), condition (A) gives \emph{arbitrarily large} chromatic numbers: for any infinite $\lambda$, take $\kappa=(2^\lambda)^+$ and use Lemmas 1--2. This is weaker than realizing every exact target.
+
+\subsection*{5) ADVERSARIAL VERIFICATION}
+The upper-colouring proof retains the bit $f_\alpha(d)$; using only the first differing coordinate would not guarantee a proper colouring. A finite subgraph need not be induced, but the coordinate embedding even preserves induced edges between the chosen pair-vertices. When $2^\lambda=2^\mu$ for some infinite $\lambda<\mu$, no shift graph can have chromatic number exactly $\mu$: any $\mu$-colourable shift graph is already $\lambda$-colourable by Lemma 2. Thus silently replacing ``exactly'' by ``at least'' would invalidate the proposed solution. Nothing here proves (A) from the problem's assumption on $G$.
+
+\subsection*{6) FINAL}
+\textbf{UNRESOLVED.} The attempt establishes a sufficient finite-pattern condition for unbounded amplification, and exact amplification at every cardinal satisfying (B). It also identifies precisely why this shift construction can miss exact targets. The general problem and its remaining set-theoretic classification are not resolved; the necessary additional hypothesis (A) is a substantial gap. These are elementary reductions and standard constructions, with no claim of publication novelty.
+
+\subsection*{7) SOURCES CHECKED}
+[1] T. F. Bloom, Erd\H{o}s problem 736, \url{https://www.erdosproblems.com/736}, live page fetched 2026-09-23.
+
+[2] P. Komj\'ath and S. Shelah, \emph{Finite subgraphs of uncountably chromatic graphs}, Journal of Graph Theory 49 (2005), 28--38, \url{https://arxiv.org/abs/math/0212064}; publisher abstract \url{https://doi.org/10.1002/jgt.20060}. The consistency obstruction above is recorded in the authors' abstract. Its forcing argument is not used to prove the partial theorem.
+
+\subsection*{8) COMPLETION ESTIMATE}
+Subjective coverage of the original question: the shift-pattern subclass is handled under an explicit cardinal-arithmetic condition, but arbitrary $G$ and exact targets without that condition remain beyond this argument. This is not a probability of a full proof.
+\textbf{COMPLETION: 10\%}

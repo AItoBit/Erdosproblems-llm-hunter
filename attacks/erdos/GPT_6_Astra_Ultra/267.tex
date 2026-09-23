@@ -1,0 +1,58 @@
+\section{Erd\H{o}s Problem \#267: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{267.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The question asks whether $\sum_k1/F_{n_k}$ is irrational whenever
+$n_{k+1}/n_k\ge c>1$. The supplied product-denominator proof covers $c\ge2$
+and the condition $n_{N+1}-\sum_{j\le N}n_j+N\to\infty$.
+I retain the exact Binet prefactor and weaken the required limiting
+condition to one along a subsequence.
+
+\subsection*{2) WORK: A SHARPER PRODUCT CRITERION}
+Set $\varphi=(1+\sqrt5)/2$ and
+$\kappa=\log(\sqrt5)/\log\varphi$. For every strictly increasing sequence
+of positive indices, irrationality follows if
+\[
+ \limsup_{N\to\infty}
+ \left(n_{N+1}-\sum_{j\le N}n_j+\kappa N\right)=+\infty. \tag{1}
+\]
+Binet's identity gives
+\[
+ Q_N:=\prod_{j\le N}F_{n_j}
+ =5^{-N/2}\varphi^{\sum_{j\le N}n_j}
+   \prod_{j\le N}(1-(-1)^{n_j}\varphi^{-2n_j}).
+\]
+The final product is positive and bounded above independently of $N$:
+its factors are positive, and the sum of the absolute deviations from one
+is at most $\sum_{m\ge1}\varphi^{-2m}<\infty$. Also
+\[
+ R_N:=\sum_{j>N}1/F_{n_j}\le C\varphi^{-n_{N+1}},
+\]
+using $F_m\ge\varphi^{m-2}$ and $n_{N+j}\ge n_{N+1}+j-1$.
+Thus $Q_NR_N\le C'\varphi^{-E_N}$ with $E_N$ the expression in (1).
+If the full sum were $p/q$, then $qQ_NR_N$ would be a positive integer.
+Along a subsequence with $E_N\to\infty$ it instead tends to zero, a
+contradiction.
+
+The exact constant satisfies $\kappa>1$, so this is a modest strengthening
+of the supplied sufficient criterion. It is meaningful for index sequences
+whose first omitted index is only linearly below the previous-index sum.
+For indices asymptotic to $c^N$ with fixed $1<c<2$, however,
+\[
+ n_{N+1}-\sum_{j\le N}n_j
+ \sim n_{N+1}\frac{c-2}{c-1},
+\]
+which is negative on an exponential scale; no linear correction in $N$
+can repair the product-denominator method in that regime.
+
+\subsection*{3) VERIFICATION AND FINAL}
+All product factors, including $n_1=1$, are positive. An infinite subsequence
+is enough because the alleged rational denominator $q$ is fixed. The exact
+Binet identity, rather than a new Fibonacci divisibility claim, supplies
+the improvement. \textbf{UNRESOLVED.} No proof for every $1<c<2$ is obtained.
+The known $c\ge2$ range was verified in the indexed official record:
+\url{https://www.erdosproblems.com/267}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

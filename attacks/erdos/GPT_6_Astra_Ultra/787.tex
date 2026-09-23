@@ -1,0 +1,34 @@
+\section{Erd\H{o}s Problem \#787: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{787.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE}
+For a finite real set $A$, seek a large subset $B$ for which $x+y\notin A$ whenever $x,y\in B$ are distinct. The supplied file updates general bounds but does not exploit extra information about the particular input set. Here is a quantitative result for sets of small additive energy.
+\subsection*{2) ENERGY CERTIFICATE}
+Let $n=|A|$ and
+\[
+r(s)=|\{(x,y)\in A^2:x+y=s\}|,\qquad E(A)=\sum_s r(s)^2.
+\]
+Form a simple graph on $A$, joining distinct $x,y$ when $x+y\in A$. Its independent sets are precisely the required subsets. If it has $M$ edges, then
+\[
+2M\le\sum_{s\in A}r(s)\le\sqrt{nE(A)}. \tag{1}
+\]
+The first inequality allows the diagonal pairs, and the second is Cauchy--Schwarz.
+Choose a uniformly random ordering of the vertices and keep each vertex appearing before all its neighbours. The retained vertices form an independent set, and a vertex of degree $d$ is kept with probability $1/(d+1)$. Therefore some independent set has size at least
+\[
+\sum_{x\in A}\frac1{d(x)+1}\ge\frac{n^2}{n+2M}
+\ge\boxed{\frac{n^2}{n+\sqrt{nE(A)}}}. \tag{2}
+\]
+The middle inequality is again Cauchy--Schwarz. In particular, if $E(A)\le K n^2$, then
+\[
+|B|\ge\frac{\sqrt n}{\sqrt K+n^{-1/2}}.
+\]
+All these bounds allow rounding up, since $|B|$ is integral.
+\subsection*{3) SCOPE AND FAILURE IN THE WORST CASE}
+The proof applies to negative numbers and zero as well as positive numbers. It correctly excludes loops: the definition only forbids sums of distinct elements. It supplies a polynomial-size subset when the energy is quadratic. For energy of order $n^3$, however, (2) may give only a constant; it therefore does not improve the universal bounds discussed in the source. A missing ingredient is a way to treat high-energy sets without sacrificing their additive structure.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} This is a self-contained sufficient estimate for a restricted regime, not a new general asymptotic bound or a novelty claim about the standard graph argument.
+\noindent Problem statement checked against \url{https://www.erdosproblems.com/787}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

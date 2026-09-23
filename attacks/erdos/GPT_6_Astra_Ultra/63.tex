@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#63: infinitely many power-of-two cycle lengths}
+\noindent Reconstruction with an explicit external theorem, 23 September 2026.
+
+\subsection*{1) Statement and external input}
+Prove that an infinite-chromatic graph contains cycles of length $2^j$ for infinitely many integers $j$. We use Liu--Montgomery's even-interval theorem: a finite graph with average degree $d$ sufficiently large has a parameter
+\[
+ \ell\ge\frac{d}{10(\log d)^{12}}
+\]
+such that every even integer in $[(\log\ell)^8,\ell]$ is a cycle length. This is Theorem 1.1 of \emph{A solution to Erd\H{o}s and Hajnal's odd cycle problem}, \url{https://arxiv.org/html/2010.15802v2}. The deep interval theorem is a cited input, not reproved here.
+
+\subsection*{2) Obtaining finite graphs with large average degree}
+Finite-colour compactness says that a graph whose finite subgraphs are all $k$-colourable is itself $k$-colourable. To see this in the standard set-theoretic setting, take the compact product of $k$-element colour spaces, one per vertex. The closed constraints imposed by edges have the finite intersection property, and hence a common point, which is a proper colouring.
+
+Thus an infinite-chromatic $G$ has finite subgraphs of arbitrarily large chromatic number. In a finite subgraph of chromatic number $k$, delete vertices while preserving that number. The resulting graph $H$ has minimum degree at least $k-1$: otherwise an $(k-1)$-colouring of $H-v$ extends to a vertex with at most $k-2$ neighbours. Its average degree $d$ is therefore at least $k-1$. Letting $k$ grow supplies finite subgraphs to which the external theorem applies with $d\to\infty$.
+
+The lower bound $d/(10(\log d)^{12})$ tends to infinity. Consequently the parameters $\ell$ supplied by the theorem tend to infinity as well, regardless of which permissible parameters it selects.
+
+\subsection*{3) Hitting arbitrarily large powers}
+Fix any exponent $J$. Choose one of these subgraphs with $\ell$ sufficiently large that
+\[
+ \frac{\ell}{2}>(\log\ell)^8,\qquad \frac{\ell}{2}>2^J,
+ \qquad \ell>4.
+\]
+Such a choice is possible because $\ell/(\log\ell)^8\to\infty$. Put $j=\lfloor\log_2\ell\rfloor$. Then
+\[
+ (\log\ell)^8<\frac\ell2<2^j\le\ell,
+ \qquad j>J.
+\]
+The integer $2^j$ is even, so the interval theorem supplies a cycle of that length in $H$ and hence in $G$. Because $J$ was arbitrary, the set of exponents realized by cycles is unbounded and therefore infinite. This proves the requested quantifier, not just the existence of one power-of-two cycle.
+
+\subsection*{4) A further consequence of the same argument}
+The proof also works for any fixed increasing sequence of even positive integers $s_1,s_2,\ldots$ with $s_{i+1}/s_i\le C$ for a constant $C>1$. For a large parameter $\ell$, let $s_i$ be the first term at least $(\log\ell)^8$. Eventually $i>1$, so
+\[
+ (\log\ell)^8\le s_i\le C s_{i-1}<C(\log\ell)^8\le\ell.
+\]
+This supplies a cycle of length $s_i$. Its length tends to infinity as $\ell$ grows, giving infinitely many terms of the sequence. For example, the even squares $s_i=4i^2$ have successive ratios at most four and satisfy this conclusion.
+
+\subsection*{5) Scope and sources}
+\textbf{SOLVED, by deduction from the stated published theorem.} The finite-to-infinite argument and the interval arithmetic are complete. No independent expander construction, numerical value of the theorem's degree threshold, or formal proof verification is claimed.
+
+Problem and current status: \url{https://www.erdosproblems.com/63}, checked 23 September 2026. Primary dependency: Liu--Montgomery, linked above, Theorem 1.1. This is a reconstruction of a known resolution, with no claim of novelty.
+
+The estimate measures coverage with the external theorem accepted, not how much of that theorem has been reproved, and is not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

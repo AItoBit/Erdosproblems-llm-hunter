@@ -1,0 +1,41 @@
+\section{Erd\H{o}s Problem \#301: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For the largest $f(N)$ of a subset of $[1,N]$ with no relation $1/a=\sum_i1/b_i$ among distinct selected integers, determine its asymptotic size; the target is the half-density bound.
+
+All supplied versions considered: \texttt{301.tex}.
+The supplied disjoint-block proof yields $f(N)\le(53/60+o(1))N$. I enlarge the block and obtain the rigorously reproducible local improvement $349/403$. This is an improvement over the supplied argument, not a claim of a new literature record.
+\subsection{2) WORK}
+Take
+\[
+T=\{2^i3^j:0\le i<5,\ 0\le j<3\}
+=\{1,2,3,4,6,8,9,12,16,18,24,36,48,72,144\}.
+\]
+For its increasing prefixes the minimum numbers of omissions needed to avoid all reciprocal relations are
+\[
+0,0,0,0,1,1,1,2,2,3,3,4,5,6,7. \tag{1}
+\]
+I verified (1) by exact exhaustive enumeration of the at most $2^{15}$ subsets. The saved script enumerates every potential smallest denominator $a$, sums every subset of larger reciprocals using \texttt{Fraction}, records each equality as a forbidden bit mask, then maximizes cardinality among masks containing no forbidden mask. Positivity guarantees that the right-hand denominators must all exceed $a$, so this enumerates every relation. This finite computation is part of the proof and is fully reproducible.
+
+Choose block origins $d$ with $v_2(d)\equiv0\pmod5$ and $v_3(d)\equiv0\pmod3$. Their density is
+\[
+\delta={1/3\over(1-2^{-5})(1-3^{-3})}={144\over403}.
+\]
+This follows by writing $d=32^u27^v w$ with $(w,6)=1$ and summing the convergent geometric densities; truncation leaves $o(X)$ error in the counting function. The sets $dT$ are disjoint: the valuations modulo $(5,3)$ determine the multiplier in $T$, and then determine $d$.
+
+By (1), an additional omission is forced at each cutoff multiplier $6,12,18,36,48,72,144$. Summing distinct omissions gives
+\[
+N-f(N)\ge\left({144\over403}\left({1\over6}+{1\over12}+{1\over18}+{1\over36}+{1\over48}+{1\over72}+{1\over144}\right)+o(1)\right)N
+=\left({54\over403}+o(1)\right)N.
+\]
+Hence $f(N)\le(349/403+o(1))N$, strictly below $53/60$.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The proof relies on all exact local relations, including those with more than two right-hand terms. It is not based on floating point equality or random search. Blocks may be truncated at $N$; this is exactly why every prefix omission number is computed. Relations between different blocks can only further restrict admissibility, so ignoring them is safe for an upper bound.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The bound remains well above $N/2$. No matching upper asymptotic or full solution is obtained. Larger local blocks can improve constants without necessarily reaching the conjectured density.
+\subsection{5) SOURCES CHECKED}
+Full \texttt{301.tex} read. Exact computation executed on 2026-09-23 using \texttt{verification/batch\_2\_checks.py}; only Python standard-library integer and rational arithmetic. The attempted formal-conjectures \texttt{301.lean} statement URL was unavailable (404); no fact is attributed to it.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 20\%}

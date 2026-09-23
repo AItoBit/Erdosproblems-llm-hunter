@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#50: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Let $G(c)$ be the limiting distribution of $\varphi(n)/n$. Must there be no point of $[0,1]$ with an existing finite positive derivative (one-sided at endpoints)?
+
+All supplied versions considered: \texttt{50.tex}, \texttt{50\_v2.tex}, \texttt{50\_v3.tex}, \texttt{50\_v4.tex}, \texttt{50\_v5.tex}, \texttt{50\_v6.tex}, \texttt{50\_v7.tex}.
+There is a numbering collision: \texttt{50.tex} treats minimal inverse totients, a different question. Its compression proof cannot advance this derivative problem. Versions 2--4 concern residual flatness, one-sided oscillation, and intermediate secant slopes; the intermediate-value step is elementary, not evidence that resolution is close. Version 5 and the consolidation in version 7 use a one-sided covering assertion requiring correction below. Version 6 concerns a logarithmic modulus, whose scale is much larger than the linear derivative scale. All seven files were read in full.
+\subsection{2) WORK}
+\paragraph{Repair of the measure-theoretic step.}
+Let $\mu$ be a finite singular Borel measure on $\mathbb R$, supported on a Lebesgue-null Borel set $S$. For positive integers $M,j$ define
+\[
+E_{M,j}=\{x\in S:\mu((x-h,x])\le Mh\text{ for every }0<h<1/j\}.
+\]
+I prove $\mu(E_{M,j})=0$. Choose an open set $O\supset S$ with $|O|<\eta<1/j$. Each component $(a,b)$ of $O$ has length below $1/j$. For $x\in E_{M,j}\cap(a,b)$,
+\[
+\mu((a,x])\le M(x-a)\le M(b-a).
+\]
+Take a sequence of such $x$ increasing to the supremum of the set in this component; if a maximum exists use it. Continuity from below shows
+$\mu(E_{M,j}\cap(a,b))\le M(b-a)$. Summing over the countably many components gives $\mu(E_{M,j})\le M\eta$. Let $\eta\downarrow0$.
+Every point with finite left upper density belongs to some $E_{M,j}$, apart from the $\mu$-null complement of $S$. Consequently the left upper density is infinite $\mu$-almost everywhere. Reflection gives the right-hand result. This proves the intended conclusion without the claimed one-sided Besicovitch selection.
+
+\paragraph{Why the stated selection rule is unsafe.}
+The family $I_x=(x-1,x]$, $0<x<1$, cannot have a bounded-overlap subfamily covering all $x\in(0,1)$. Such a subfamily needs right endpoints approaching $1$ and hence infinitely many intervals containing $1/2$. This refutes the general endpoint-based selection assertion as it was stated. It does not refute the density theorem, repaired above.
+
+For continuous $G$ with singular $dG$, finite positive differentiability points are therefore $dG$-null. This conclusion still permits an exceptional point.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The sets can be defined using rational $h$ by continuity from below of interval masses, ensuring measurability. Finite-density points cannot be atoms. The component proof handles its supremum without assuming it belongs to $E_{M,j}$. Singularity and residual irregularity do not turn a null exceptional set into the empty set; endpoints also require separate analysis.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No pointwise exclusion of every nonspecial point, nor a point with a positive derivative, has been found. The inverse-totient branch was considered but is unrelated to the target. The corrected proof repairs a local gap rather than increasing an asserted 95\% completion.
+\subsection{5) SOURCES CHECKED}
+Checked the actual statement in \texttt{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/50.lean} on 2026-09-23 (statement reference, not a proof; the file contains \texttt{sorry}). Also checked the publisher record for Toulmonde, Acta Arith. 121 (2006), 367--402, DOI \texttt{10.4064/aa121-4-6}; its detailed modulus theorem is not needed in the repair.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

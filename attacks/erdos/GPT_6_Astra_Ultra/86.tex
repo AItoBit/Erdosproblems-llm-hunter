@@ -1,0 +1,207 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.2/86.tex", "source_paths": ["attacks/erdos/gpt_5.2/86.tex", "attacks/erdos/gpt_pro_5.2/86.tex"], "source_model": "gpt_pro_5.2", "source_completion": null, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 86 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/86
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.2/86.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{gpt\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_5.2/86.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_5.2/86.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+Definitions/Conventions.
+- The $n$-dimensional hypercube graph $Q_n$ has vertex set $\{0,1\}^n$ and an edge between two vertices iff they differ in exactly one coordinate.
+- Let $f(n)$ be the maximum number of edges in a $C_4$-free subgraph of $Q_n$.
+
+Conjecture.
+Prove that
+\[f(n)\le \left(\frac12+o(1)\right)\,|E(Q_n)|=\left(\frac12+o(1)\right)n2^{n-1}.\]
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Web browsing is not available in this session.
+The statement lists several known bounds; I do not re-prove them.
+I will prove only a simple general upper bound ($3/4$ of edges) from first principles.
+
+3) ATTACK PLAN
+Proof track ideas:
+1. Use the fact that every $C_4$ in $Q_n$ is exactly a 2-dimensional face; translate $C_4$-freeness into a per-face constraint and double count.
+2. Seek sharper inequalities by coupling constraints across overlapping faces, beyond the naive ``at most 3 edges per face''.
+
+Disproof track ideas:
+1. Attempt to construct $C_4$-free subgraphs with edge density strictly larger than $1/2$ asymptotically.
+The problem text suggests such constructions exist up to $1/2+c/\sqrt n$ but not more.
+
+Chosen path in this attempt: prove two exact combinatorial identities for squares in $Q_n$ and derive a clean $3/4$ upper bound for $f(n)$; include a small-$n$ check where this bound is tight.
+
+4) WORK
+Lemma 1 (Every $C_4$ in $Q_n$ is a 2-face, and counts of faces/containment).
+In $Q_n$:
+1. Every 4-cycle is contained in a unique 2-dimensional face (specified by choosing two coordinates to vary and fixing the other $n-2$ coordinates).
+2. The number of 2-faces (and hence the number of $C_4$ subgraphs) is
+\[\binom{n}{2}\,2^{n-2}.\]
+3. Every edge of $Q_n$ lies in exactly $n-1$ distinct 2-faces.
+
+Proof.
+(1) A length-4 cycle in the hypercube flips coordinates along its edges. Returning to the start after 4 steps means each coordinate is flipped an even number of times.
+In a simple 4-cycle, exactly two coordinates are flipped twice (and all others zero times), so the cycle lies in the subcube where only those two coordinates vary, i.e. a 2-face.
+Uniqueness follows because the set of coordinates flipped along the cycle is determined by the cycle.
+
+(2) Choose an unordered pair of coordinates $\{i,j\}$ to vary ($\binom{n}{2}$ choices), and choose values of the remaining $n-2$ coordinates ($2^{n-2}$ choices). This determines a unique 2-face with 4 vertices and 4 edges, i.e. one $C_4$.
+
+(3) Fix an edge corresponding to flipping coordinate $i$. To specify a 2-face containing it, choose a second coordinate $j\ne i$ to vary; there are $n-1$ choices, and each yields a distinct face. \qed
+
+Lemma 2 (A $3/4$ upper bound by double counting faces).
+Let $H$ be a $C_4$-free subgraph of $Q_n$ with $e(H)$ edges. Then
+\[e(H)\le \frac34\, n2^{n-1}.\]
+
+Proof.
+By Lemma 1(1), a $C_4$ in $Q_n$ is exactly the event that all 4 edges of some 2-face are present.
+So if $H$ is $C_4$-free, then in every 2-face, $H$ contains at most $3$ of the $4$ edges.
+
+Count incidences between edges of $H$ and 2-faces of $Q_n$ that contain them.
+By Lemma 1(3), each edge lies in exactly $n-1$ faces, so the number of incidences equals $(n-1)e(H)$.
+On the other hand, by the per-face bound, each face contributes at most $3$ incidences.
+There are $\binom{n}{2}2^{n-2}$ faces by Lemma 1(2), so total incidences are at most $3\binom{n}{2}2^{n-2}$.
+Hence
+\[(n-1)e(H)\le 3\binom{n}{2}2^{n-2} = 3\cdot \frac{n(n-1)}{2}\cdot 2^{n-2}.\]
+Cancel $n-1$ to obtain $e(H)\le \frac{3n}{2}2^{n-2}=\frac34 n2^{n-1}$. \qed
+
+FAST REALITY CHECK (exact for $n=2,3$).
+By exhaustive search:
+- For $Q_2$ (4 edges, one square), the maximum $C_4$-free subgraph has 3 edges, i.e. fraction $3/4$.
+- For $Q_3$ (12 edges, 6 squares), the maximum $C_4$-free subgraph has 9 edges, again fraction $3/4$.
+So Lemma 2 is tight for small $n$, but it is far from the conjectured asymptotic $1/2$.
+
+5) VERIFICATION
+- Lemma 1(1) relies on the ``coordinate-flip parity'' characterization of walks in the hypercube.
+- Lemma 2 is a clean incidence double count: each selected edge meets $n-1$ faces; each face can contribute at most 3 selected edges.
+- The small-$n$ computation confirms correctness and shows the bound can be attained for $n=2,3$.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+I proved a universal upper bound
+\[f(n)\le \frac34\,n2^{n-1}\]
+for all $n$ (Lemma 2), via face double counting.
+
+(ii) First gap:
+Improve the constant from $3/4$ down toward the conjectured $1/2$.
+This requires exploiting dependencies between overlapping 2-faces, not just the per-face constraint.
+
+(iii) Top 3 next moves (concrete):
+1. Strengthen the face-counting argument by showing that if many faces have 3 edges present, then some $C_4$ must appear due to overlap constraints.
+2. Search for a linear-algebraic formulation (treating edges as variables and squares as constraints) to prove a global density bound for $C_4$-free subgraphs.
+3. Compute exact $f(n)$ for $n=4,5$ via ILP/SAT to see whether the maximum density begins to drift toward $1/2$ beyond the small-$n$ tightness at $3/4$.
+
+(iv) What a minimal counterexample would likely look like (structure/parameters):
+A family of $C_4$-free subgraphs of $Q_n$ with edge density bounded away from $1/2$ (say $>0.55$) for infinitely many $n$,
+forcing $f(n)$ to exceed $(1/2+o(1))n2^{n-1}$.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_5.2/86.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/86.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/86.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+Let $Q_n$ be the $n$-dimensional hypercube graph with vertex set $\{0,1\}^n$ and edges between
+vertices at Hamming distance $1$. Let
+\[f(n)=\max\{|E(G)|: G\subseteq Q_n\text{ and }G\text{ contains no (not-necessarily-induced) }C_4\}.\]
+The conjecture is that
+\[f(n)\le \left(\tfrac12+o(1)\right)n2^{n-1} \quad (n\to\infty).\]
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Browsing is not available. I only record what the problem statement itself claims about known
+bounds; these are not re-proved here.
+
+3) ATTACK PLAN
+Proof strategies:
+1. Characterize $C_4$ in $Q_n$ as a 2-dimensional face, then use counting or averaging to
+   bound the number of edges if all faces are missing an edge.
+2. Construct explicit $C_4$-free subgraphs with many edges to obtain lower bounds.
+
+Disproof strategies:
+1. Build a $C_4$-free subgraph with density strictly above $1/2$ for all large $n$.
+
+Chosen path: provide a clean lower bound construction ($\ge \tfrac12 e(Q_n)$) and the basic
+structural lemma about 2-faces.
+
+4) WORK
+Lemma 1 (C4 = 2-face in the hypercube).
+Every 4-cycle in $Q_n$ lies in a unique 2-dimensional subcube (square face), and every 2-face is a
+4-cycle.
+
+Proof.
+A length-4 cycle flips exactly two coordinates, each twice, so its vertices are
+$x, x\oplus e_i, x\oplus e_j, x\oplus e_i\oplus e_j$ for some distinct $i,j$. These form a 2-face.
+Conversely, fixing all coordinates except $i,j$ yields exactly this 4-cycle. ∎
+
+Lemma 2 (Half-layer construction).
+Let $H\subseteq Q_n$ be the subgraph containing exactly those edges whose higher-weight endpoint
+has odd Hamming weight. Then $H$ is $C_4$-free and
+\[|E(H)|=\tfrac12\,|E(Q_n)|=n2^{n-2}.\]
+
+Proof.
+Any 2-face has vertices of weights $r,r+1,r+1,r+2$. Its four edges are split between the layers
+$L_{r+1}$ and $L_{r+2}$, which have opposite parity. Thus $H$ contains at most two edges from any
+face, so no $C_4$ appears (Lemma 1). For the edge count, the number of edges between levels
+$k-1$ and $k$ is $k\binom{n}{k}$. Summing over odd $k$ gives
+\[\sum_{k\text{ odd}} k\binom{n}{k} = \tfrac12\sum_{k} k\binom{n}{k} = \tfrac12 n2^{n-1}=n2^{n-2},\]
+using the standard binomial identity. ∎
+
+Corollary 3 (Elementary lower bound).
+For all $n\ge 2$, $f(n)\ge n2^{n-2}=\tfrac12 e(Q_n)$.
+
+Proof.
+Immediate from Lemma 2. ∎
+
+5) VERIFICATION
+Edge cases:
+- $n=1$: $Q_1$ has one edge and no $C_4$.
+- $n=2$: $Q_2$ is a 4-cycle; the construction keeps exactly two edges.
+
+Quantifier checks:
+Lemma 2 yields a $C_4$-free subgraph for every $n$, so the lower bound holds uniformly.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+$f(n)\ge \tfrac12 e(Q_n)$ via the half-layer construction (Lemma 2).
+
+(ii) First gap:
+An upper bound forcing any $C_4$-free subgraph to have at most $(\tfrac12+o(1))e(Q_n)$ edges.
+
+(iii) Top 3 next moves:
+1. Count 2-faces and apply extremal inequalities to relate missing edges to face counts.
+2. Develop a stability result: if $|E(G)|>(1/2+\delta)e(Q_n)$ then some face must be complete.
+3. Explore algebraic constructions to test whether density $>1/2$ is achievable without $C_4$.
+
+(iv) Minimal counterexample structure (if the conjecture is false):
+A sequence of $C_4$-free subgraphs with density bounded away from $1/2$ and with a structured
+pattern that avoids full 2-faces.
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/86.tex
+
+\subsection*{COMPLETION ESTIMATE}
+The primary source supplies no extractable numerical completion estimate. Its mathematical progress is not numerically assessed here.
+
+Newly verified progress in this collection pass: $0\%$. This measures new verification work, not the amount of mathematics achieved in the reused text.

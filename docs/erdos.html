@@ -60,13 +60,17 @@
             </p>
             <p class="status-note">
                 Completion is 100% for problems resolved in that database.
-                For other problems, completion remains the LLM estimate. Community Review and LLM Claim describe the attempts.
+                For other problems, completion remains the LLM estimate.
+                LLM Claim is assigned from the database: open, falsifiable, or decidable means unresolved;
+                every other status means solved. Individual attempt claims and Community Review remain separate.
+                Reused writeups retain their original model attribution. Statement-only records are
+                marked as awaiting an attempt and do not count as LLM attempts.
             </p>
         </section>
 
         <section class="filters">
             <label for="filter-attacks">
-                <input type="checkbox" id="filter-attacks" checked>
+                <input type="checkbox" id="filter-attacks">
                 Only show problems with LLM attempts
             </label>
             <label for="search">
@@ -169,7 +173,7 @@
 
                 // Filter
                 if (filterAttacks) {
-                    problems = problems.filter(p => p.attacks && p.attacks.length > 0);
+                    problems = problems.filter(p => window.ProblemHunting.getMathematicalAttempts(p.attacks).length > 0);
                 }
                 if (searchTerm) {
                     problems = problems.filter(p => p.number.includes(searchTerm));
@@ -190,15 +194,16 @@
                         if (name.toLowerCase().includes('gemini')) return 'Gemini';
                         return name.split(' ').slice(0, 2).join(' ');
                     };
-                    let uniqueModels = [...new Set(p.attacks.map(a => shortenModel(a.model)))];
+                    let uniqueModels = [...new Set(window.ProblemHunting.getUniqueModels(p.attacks).map(shortenModel))];
                     // Prioritize GPT Pro - if present, put it first
                     if (uniqueModels.includes('GPT Pro')) {
                         uniqueModels = ['GPT Pro', ...uniqueModels.filter(m => m !== 'GPT Pro')];
                     }
-                    const models = uniqueModels.slice(0, 2).join(', ') || '-';
+                    const models = uniqueModels.slice(0, 2).join(', ') ||
+                        (p.attacks.some(a => a.entry_kind === 'statement_only') ? 'Awaiting attempt' : '-');
                     const modelsLabel = models === '-' ? models : models.toLowerCase();
 
-                    // Determine overall status based on the source content.
+                    // Legacy fallback; current builds supply the database-derived display label.
                     const determineStatus = (attacks) => {
                         if (!attacks || attacks.length === 0) return 'none';
                         return attacks.some(hasUnresolved) ? 'unresolved' : 'solved';

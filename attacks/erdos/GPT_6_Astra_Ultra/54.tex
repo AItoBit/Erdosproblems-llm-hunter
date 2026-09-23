@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#54: finite-prefix constraints on Ramsey completeness}
+\noindent Independent attempt, 23 September 2026.
+
+\subsection*{1) Statement and current resolution}
+A set $A\subseteq\mathbb N$ is Ramsey $2$-complete if every two-colouring of $A$ represents every sufficiently large integer as a monochromatic sum of distinct elements of $A$. The threshold may depend on the colouring. The problem asks to improve the classical bounds between logarithmic-square and logarithmic-cube counting functions. The current editorial attributes a construction with $|A\cap[1,N]|\ll(\log N)^2$ to Conlon, Fox, and Pham, resolving the requested improvement.
+
+The distinct-summand convention is essential: arbitrary repetition of the element one would trivialize the density question. This note investigates elementary obstacles to constructing such a sparse set. It does not reprove the known logarithmic-square construction or improve its bound.
+
+\subsection*{2) A global colouring supplies a rigorous prefix inequality}
+List $A$ increasingly and colour its elements alternately red and blue. This is one fixed colouring, rather than a different adversarial colouring for each $N$. If $A$ is Ramsey $2$-complete, there is an $N_0$ such that every integer in $[N_0,N]$ is a monochromatic sum for all $N\ge N_0$.
+
+Write $m=|A\cap[1,N]|$. A sum at most $N$ can use only elements at most $N$, because all elements are positive. The two colours have $\lceil m/2\rceil$ and $\lfloor m/2\rfloor$ elements in this prefix. Their nonempty subsets supply at most
+\[
+ (2^{\lceil m/2\rceil}-1)+(2^{\lfloor m/2\rfloor}-1)
+ \le2^{m/2+3/2}
+\]
+distinct monochromatic sums; collisions only reduce the count. Therefore
+\[
+ N-N_0+1\le2^{m/2+3/2},\qquad
+ m\ge2\log_2(N-N_0+1)-3.\tag{1}
+\]
+This counts all possible subsets, including those summing above $N$, so its use as an upper bound is safe. The dependence of $N_0$ on the fixed colouring is also consistent with the definition.
+
+Inequality (1) is much weaker than the already known logarithmic-square lower bound. Its role here is to provide an elementary and fully justified test of proposed examples; it is not presented as an improvement of the published result.
+
+\subsection*{3) Unique representations are incompatible with the requirement}
+Suppose an infinite positive set $A$ is dissociated: any equality between sums of two finite subsets forces the subsets to be equal. Colour it with two nonempty colours. One colour has infinitely many elements; fix an element $a$ of the other colour and choose an unbounded sequence $b_j$ in the infinite colour.
+
+The integers $a+b_j$ tend to infinity. Their unique representations as subset sums of $A$ are the two-element mixed-colour subsets $\{a,b_j\}$. Consequently none has a monochromatic representation, and this colouring disproves Ramsey $2$-completeness of $A$.
+
+The binary powers provide a concrete example:
+\[
+ A=\{1,2,4,8,\ldots\}.
+\]
+Every nonnegative integer is a sum of distinct powers of two, so ordinary completeness is perfect. But uniqueness of binary expansion makes every two-colouring with both colours nonempty fail Ramsey $2$-completeness by the preceding argument. Thus an ordinary sparse basis cannot be converted into a Ramsey basis merely by observing that it has many subset sums.
+
+\subsection*{4) A necessary mixed-sum redundancy condition}
+The same proof isolates a more local obstruction. Suppose there is a fixed $a\in A$ and infinitely many $b\in A\setminus\{a\}$ such that $a+b$ has no subset-sum representation avoiding $a$. Colour $a$ red and every other element blue. The only red nonempty sum is $a$ itself. By the assumed absence of a representation avoiding $a$, none of those unbounded integers $a+b$ is a blue sum. Hence $A$ is not Ramsey $2$-complete.
+
+Therefore any Ramsey $2$-complete set must satisfy: for each fixed $a\in A$, all but finitely many $b\in A$ allow a subset of $A\setminus\{a\}$ summing to $a+b$. This is a necessary condition only. It does not guarantee monochromatic representations under arbitrary colourings, since representations avoiding $a$ may still mix colours in another colouring.
+
+\subsection*{5) Outcome and source}
+\textbf{ATTEMPT UNRESOLVED.} We have established a finite-prefix counting inequality and two exact representation obstructions. A construction with the required redundancy and logarithmic-square density has not been reconstructed here. The current problem is solved in the literature, and these observations are not claimed as new results or stronger bounds.
+
+\url{https://www.erdosproblems.com/54}, current statement, bounds, and attribution to Conlon--Fox--Pham, checked 23 September 2026. All claims made about the elementary obstructions are proved in this note.
+
+The subjective estimate gives limited credit for necessary conditions because the central sparse construction remains absent.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

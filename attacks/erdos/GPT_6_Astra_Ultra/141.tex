@@ -1,0 +1,27 @@
+\section{Erd\H{o}s Problem \#141: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Do arbitrarily long arithmetic progressions occur as consecutive primes?
+
+All supplied versions considered: \texttt{141.tex}.
+The source verifies admissibility of the designated prime positions with primorial step. I add the missing local treatment of every undesired intervening position; the final primality step remains explicitly conditional.
+\subsection{2) WORK}
+Fix $k\ge2$, put $D=\prod_{p\le k}p$ and $L=(k-1)D$. For every integer $r\in[0,L]$ not equal to $iD$, choose a different prime $q_r>L+k$. By CRT choose $a$ satisfying
+\[
+a\equiv1\pmod D,\qquad a\equiv-r\pmod{q_r},
+\]
+and let $Q=D\prod_rq_r$. For sufficiently large $t$, every undesired number $Qt+a+r$ is a proper multiple of $q_r$ and hence composite.
+
+The desired linear forms $Qt+a+iD$, $0\le i<k$, are admissible. If a prime $p\mid D$, every form is $1\pmod p$. If $p=q_r$, the $i$th form is $(iD-r)\pmod p$, which is nonzero because $0<|iD-r|\le L<p$. For all other primes $p$, $Q$ is invertible modulo $p$, and $p>k$; each form excludes one residue of $t$, so at most $k<p$ residues are excluded.
+
+Consequently the prime-tuples conjecture for these $k$ admissible linear forms would imply infinitely many consecutive-prime progressions of length $k$, even with common difference $D$. This is a conditional implication, not an application of a proved prime-tuples theorem.
+\subsection{3) ADVERSARIAL VERIFICATION}
+CRT enforces compositeness only after the values exceed their forced divisors. The primes $q_r$ must exceed the entire span, not just $k$, to protect every selected position. Admissibility alone does not produce simultaneous prime values, including in the case $k=3$.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The local obstruction has been handled on both selected and intervening positions. Proving infinitely many simultaneous prime values for this family is the unproved step, so no unconditional existence theorem follows.
+\subsection{5) SOURCES CHECKED}
+Full \texttt{141.tex} read; formal-conjectures \texttt{ErdosProblems/141.lean} checked on 2026-09-23. Only CRT and elementary congruences are used unconditionally; the prime-tuples assertion is stated as a hypothesis.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

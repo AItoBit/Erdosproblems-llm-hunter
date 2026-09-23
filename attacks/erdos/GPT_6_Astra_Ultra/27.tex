@@ -1,0 +1,123 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#27; independent reconstruction attempt, 2026-09-23.}
+For distinct moduli $N\leq n_1<\cdots<n_t\leq CN$, choose one residue
+class modulo each modulus. Let $\delta$ be the natural density of integers
+in none of these classes. The question asks whether some fixed $C>1$
+permits $\delta\leq\epsilon$ for every $\epsilon>0$ and every $N$.
+All sets here are periodic modulo the least common multiple of the
+moduli, so their natural densities exist.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page marks the assertion disproved. The primary paper of
+Filaseta, Ford, Konyagin, Pomerance and Yu, \emph{Sieving by large
+integers and covering systems of congruences}, proves the needed
+uniform estimate in Theorem B. Below I prove elementary bounds and the
+paper's useful dependency-error lemma, then make the exact deduction
+from Theorem B explicit. The full sieve argument behind that theorem
+is an external input, not a proof supplied by this attempt.
+
+\section{WORK}
+\subsection{1. What direct counting proves}
+The union bound gives
+\[
+ \delta\geq1-\sum_i\frac1{n_i}
+ \geq1-\sum_{m=N}^{\lfloor CN\rfloor}\frac1m
+ =1-\log C-o(1).
+\]
+Thus no $1<C<e$ works. This does not address arbitrary fixed $C$:
+once the reciprocal sum exceeds one the bound can become negative.
+
+Conversely, choose each residue independently and uniformly modulo its
+modulus. For a fixed integer $x$, its probability of surviving all
+classes is $\prod_i(1-1/n_i)$. Averaging over one common period and then
+over choices of residues shows that some choice has
+\[
+ \delta\leq\alpha:=\prod_i(1-1/n_i).
+\]
+If every integer modulus from $N$ to $M$ is used, this product telescopes
+to $(N-1)/M$. In a bounded-ratio interval the random benchmark is
+therefore about $1/C$, rather than zero.
+
+\subsection{2. An elementary lower bound including dependence}
+Define
+\[
+ \beta=\sum_{\substack{i<j\\\gcd(n_i,n_j)>1}}\frac1{n_i n_j}.
+\]
+We prove $\delta\geq\alpha-\beta$, the elementary lemma used in the
+primary paper. Suppose the first $t-1$ classes leave a set $R$ of
+density $\delta'$. Discard from these classes those whose moduli are
+not coprime to $n_t$, leaving a larger surviving set $R_0$. A union
+bound gives
+\[
+ d(R_0)\leq\delta'+
+       \sum_{\substack{i<t\\\gcd(n_i,n_t)>1}}\frac1{n_i}.
+\]
+The set $R_0$ has a period coprime to $n_t$. The Chinese remainder
+theorem therefore shows that exactly the fraction $1/n_t$ of $R_0$
+lies in the newly selected residue class. The part removed from $R$
+is contained in that intersection. Hence
+\[
+ \delta\geq(1-1/n_t)\delta'
+       -\sum_{\substack{i<t\\\gcd(n_i,n_t)>1}}\frac1{n_i n_t}.
+\]
+Induction, starting with one class, proves the claimed inequality:
+multiplying the preceding error by $1-1/n_t$ can only reduce its size.
+In particular, pairwise coprime moduli have the exact density $\alpha$,
+independent of the selected residues.
+
+\subsection{3. The verified external theorem and the original quantifiers}
+Theorem B of the cited paper states, in particular, that for every fixed
+$K>1$ and every set of distinct integer moduli $S\subset(X,KX]$, the
+minimum possible uncovered density satisfies
+\[
+ \delta^-(S)=(1+o_{X\to\infty}(1))
+       \prod_{m\in S}(1-1/m),                         \tag{1}
+\]
+uniformly over $S$. Its published range actually allows growing $K$;
+only the fixed-$K$ case is needed here.
+
+Fix any proposed $C>1$. For sufficiently large integer $N$, apply (1)
+with $X=N-1$ and $K=2C$. Every allowed modulus is then in $(X,KX]$.
+As every factor belongs to $(0,1)$, deleting moduli can only increase
+the product, so
+\[
+ \prod_i(1-1/n_i)
+ \geq\prod_{m=N}^{\lfloor CN\rfloor}(1-1/m)
+ =\frac{N-1}{\lfloor CN\rfloor}
+ \geq\frac1{2C}.
+\]
+By the uniformity in (1), for all sufficiently large $N$ every residue
+system has $\delta\geq1/(4C)$. Choosing $\epsilon=1/(8C)$ contradicts
+the required assertion. Thus the published theorem gives the negative
+answer for every fixed $C$, with the endpoint $n_i=N$ handled explicitly.
+
+\section{VERIFICATION AND REMAINING GAP}
+The averaging estimate is an existence upper bound and cannot be
+reversed merely by declaring the congruences independent. The proof of
+the lower bound only invokes independence when the Chinese remainder
+theorem justifies it. The error $\beta$ need not vanish for all moduli
+in a fixed-ratio interval; consequently the elementary lemma alone
+does not prove (1). Establishing the uniform sieve estimate in (1)
+is the main part of the known proof still not reconstructed here.
+
+\section{FINAL STATUS}
+\textbf{UNRESOLVED (independent proof reconstruction incomplete).}
+The problem itself is known to be disproved. This attempt fully proves
+the range $1<C<e$, the averaging upper bound and the dependency-error
+lemma, and verifies the deduction of the full answer from an explicitly
+cited external theorem. It does not claim an independent complete proof
+of that theorem or a new result.
+
+\section{SOURCES}
+Problem and status: \url{https://www.erdosproblems.com/27}.
+M.~Filaseta, K.~Ford, S.~Konyagin, C.~Pomerance and G.~Yu,
+\emph{Sieving by large integers and covering systems of congruences},
+J.~Amer.~Math.~Soc.~20 (2007), 495--517, Lemma~2.1 and Theorem~B:
+\url{https://www.math.kent.edu/~yu/research/covering.pdf}.
+Both checked 2026-09-23.
+
+This is a subjective estimate of the independent reconstruction,
+not a probability that the already published result is true.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

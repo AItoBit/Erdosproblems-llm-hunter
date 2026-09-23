@@ -1,0 +1,27 @@
+\section{OBJECTIVE AND REVIEW OF ALL VERSIONS}
+\textbf{Erd\H{o}s \#9; independent attempt, 2026-09-23.}
+Let $A$ be the odd integers not expressible as a prime plus two nonnegative powers of two. The target is $\overline d(A)>0$. I read \texttt{9.tex}, \texttt{9\_v2.tex}, and \texttt{9\_v3.tex} completely. The first gives density results for the representable side and an unsupported large finite computation; the second repairs CRT data; the third counts a fixed family. I independently checked their concrete CRT data and found a missing boundary hypothesis in the imported Crocker-type lemma.
+\section{WORK: REPAIRING THE EXCLUSION LEMMA}
+As stated in versions two and three, that lemma is false: with $n=2$, $w=1$, $B_0=3$, $B_1=5$, one gets
+\[
+N=15=3+2^2+2^3\le2^{2^2}-1.
+\]
+This satisfies all its displayed hypotheses. The actual construction uses much larger $N$, and admits the following direct repair.
+Suppose $N>15$, $N\equiv15\pmod{16}$, $N<2^{2^\nu}$, and $N$ is divisible by $B_0=3$, $B_1=5$, and $B_j>1$ dividing $F_j=2^{2^j}+1$ for $2\le j<\nu$, with every such $B_j\equiv1\pmod{16}$. Then $N$ is not $p+2^a+2^b$ with $a>b\ge1$.
+Indeed let $r=v_2(a-b)$. The size bound implies $a<2^\nu$, hence $r<\nu$. Since $(a-b)/2^r$ is odd, $F_r\mid2^{a-b}+1$. Thus $B_r\mid p$, forcing $B_r=p$ prime. If $r\ge2$, then $p\equiv1\pmod{16}$, so $2^a+2^b\equiv14\pmod{16}$, impossible for distinct positive powers of two. If $r=0$, $p=3$ and the required residue is $12$, forcing $(a,b)=(3,2)$, hence $N=15$. If $r=1$, $p=5$ and the residue $10$ forces $(a,b)=(3,1)$, again $N=15$. This proves the repaired lemma.
+\section{APPLICATION AND INDEPENDENT CERTIFICATE CHECK}
+For the supplied construction, $B_j=F_j$ except $B_{10}=45592577$. All $B_j$ with $j\ge2$ are $1$ modulo $16$. The saved verifier \texttt{verification/batch\_3\_problem9.py} checks all 28 primes by trial division, their exact orders of two, coverage of all 720 exponent residues, the 8191 exclusions, and $L<G$. It recomputes a 420-digit first CRT representative, saved in the adjacent JSON file. Thus the arithmetic data, rather than merely its asserted existence, is reproducible.
+The CRT conditions imply $N_\nu\equiv15\pmod{16}$ and $M_\nu\le N_\nu<LM_\nu<2^{2^\nu}$, where $M_\nu=(2^{2^\nu}-1)/G$, $\nu\ge11$. The repaired lemma excludes unequal positive exponents. The covered residues modulo the 28 prime orders force $N_\nu-2^d$ to be divisible by one of those primes; the checked 8191 conditions exclude equality with that prime. This handles equal exponents, including $(0,0)$. If exactly one exponent is zero, parity forces the prime to be two, giving $N_\nu=3+2^d$, already excluded. Therefore the actual large CRT family survives the correction.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The supplied inference that increasing lower bounds imply distinct $N_\nu$ is insufficient. Here it is repaired by
+\[
+M_{\nu+1}/M_\nu=2^{2^\nu}+1>L,
+\]
+so the containing intervals $[M_\nu,LM_\nu)$ are disjoint. Furthermore, a fixed bound $n<QM_\nu$ and divisibility $M_\nu\mid n$ allow at most $Q-1$ choices per level automatically. Polynomial-branch counts under that same fixed $Q$ cannot escape the sharper $O(\log\log X)$ bound. These corrections certify only a sparse family. They provide no positive density, and the claimed computation through $5\cdot10^8$ was not rerun here.
+\section{SOURCES CHECKED}
+All three local versions listed above; indexed official entry \url{https://www.erdosproblems.com/9} (via its bibliography listing). The new proof uses no unproved imported Crocker lemma. Computation: \texttt{python3 verification/batch\_3\_problem9.py}.
+\section{FINAL}
+\textbf{UNRESOLVED.} A false small-case lemma is corrected and the actual large certificate verified; the positive-density problem remains.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the density target.
+\textbf{COMPLETION: 12\%}

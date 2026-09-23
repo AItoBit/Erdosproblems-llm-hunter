@@ -1,0 +1,31 @@
+\section{Erd\H{o}s Problem \#269: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For a finite prime set $P$ with at least two members, enumerate its smooth positive integers $a_1<a_2<\cdots$ and ask whether $\sum_{n\ge1}1/\operatorname{lcm}(a_1,\ldots,a_n)$ is rational or irrational.
+
+All supplied versions considered: \texttt{269.tex}.
+The supplied attempt mainly treats infinite prime sets and a small-tail criterion. The checked formal statement records the infinite-prime case as a separate solved variant. The finite-prime question must therefore remain the focus.
+\subsection{2) WORK}
+Use the source\textquotesingle s ordered prime-power frontiers $q_i$ and denominator levels $x_i$, with $x_{i+1}=p_i x_i$ for $p_i\in P$. Let $m_i\ge1$ count smooth integers at each level and let
+\[
+T_N=\sum_{i>N}{m_i\over x_i}.
+\]
+If $p_{\max}=\max P$, then for every $N$,
+\[
+x_NT_N\ge {m_{N+1}x_N\over x_{N+1}}={m_{N+1}\over p_N}\ge{1\over p_{\max}}.
+\]
+Thus the normalized tail can never tend to zero in the finite-prime case. This pinpoints why the supplied infinite-prime proof does not extend: it chooses levels at which an unbounded new prime enters, and that choice is unavailable here.
+
+If the full sum were $a/b$, then $b x_N T_N$ would be a positive integer, because all earlier denominators divide $x_N$. But the preceding lower bound is $b/p_{\max}$, not a quantity tending to zero. The standard contradiction ``positive integer tending to zero'' therefore cannot be obtained from these truncations.
+
+The singleton case illustrates the danger of ignoring multiplicities: with $P=\{p\}$, one has $a_n=p^{n-1}$ and the sum is $\sum_{j\ge0}p^{-j}=p/(p-1)$, rational. This excluded case already realizes a nonzero normalized tail exactly.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The lower bound on the tail does not establish rationality; irrational sums can have such tails as well. It only eliminates a specific truncation argument. The source also uses an interval sieve assertion for arbitrary excluded prime sets; no such uniform sieve assertion is required here.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+Neither rationality nor irrationality is established for any new finite set with at least two primes. A successful arithmetic argument must control carries or a different approximation scheme, rather than require these normalized tails to vanish.
+\subsection{5) SOURCES CHECKED}
+Full \texttt{269.tex} read; checked \texttt{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/269.lean} on 2026-09-23 for finite/infinite variant separation. This is a statement reference with placeholders, not a proof certificate.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 5\%}

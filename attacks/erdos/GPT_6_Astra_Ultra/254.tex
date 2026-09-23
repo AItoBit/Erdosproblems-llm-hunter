@@ -1,0 +1,31 @@
+\section{Problem 254: correcting the interval bootstrap and isolating its input}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{254.tex}. Its target is completeness of distinct-element subset sums under growing dyadic block counts and the problem's fractional-part divergence assumption. The supplied attempt obtains a conditional interval bootstrap but does not produce its starting interval. I audit that bootstrap and make its exact sufficient input explicit.
+\subsection*{2) WORK}
+Let $F$ be finite, with $[L,U]\cap\mathbb Z\subseteq\Sigma(F)$, and put $W=U-L+1$. List the unused elements increasingly as $b_1,b_2,\ldots$. If
+\[
+b_i\le W+\sum_{h<i}b_h\qquad(i\ge1),
+\]
+then induction gives
+\[
+\left[L,U+\sum_{h\le i}b_h\right]\cap\mathbb Z
+\subseteq\Sigma(F\cup\{b_1,\ldots,b_i\}).
+\]
+Indeed, adjoining $b_i$ adds a translate of the preceding interval, and the displayed inequality says the two integer intervals overlap or are adjacent. This proves completeness if the $b_i$ are infinite. For this particular union-of-translates construction the first failed inequality leaves an actual gap between the intervals arising from subsets of the preceding elements and those using $b_i$; additional subset sums of $F$ outside $[L,U]$ may still fill it, so failure is not a converse for completeness.
+
+Here is a corrected dyadic corollary. If $F=A\cap[1,2^J]$ contains an interval of subset sums of length at least $2^{J+1}$, and
+\[
+|A\cap(2^j,2^{j+1}]|\ge2\qquad\text{for every }j\ge J,
+\]
+then $A$ is complete. At the beginning of block $j$, maintain width at least $2^{j+1}$. Every member of that block is at most that width, so it can be absorbed. Two members increase the width by more than $2^{j+1}$, giving the invariant for block $j+1$.
+
+The supplied statement began its count hypothesis at $j\ge J+1$, but its induction tried to absorb the block $(2^J,2^{J+1}]$. That block has no guaranteed two elements under the stated hypothesis. Starting the count hypothesis at $J$ repairs the proof; equivalently, supply the wider starter needed to jump directly to the next controlled block.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Growing dyadic counts and $\gcd(A)=1$ alone cannot produce the missing starter. For $A=3\mathbb N\cup\{1\}$, both hold, but every subset sum is $0$ or $1$ modulo $3$. At $\theta=1/3$, the fractional-part sum is only $1/3$, so this example does not satisfy the additional divergence assumption. It illustrates precisely why that assumption still needs to enter the proof.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The propagation step is rigorous after an indexing correction. Deriving a sufficiently long interval from the original hypotheses remains entirely necessary; no implication from the fractional-part condition to that interval has been established here.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{254.tex}, read 2026-09-23. The interval proof and modular obstruction above are self-contained. An attempted official-page retrieval was unavailable, so no additional external formulation is asserted.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward proving completeness under all original hypotheses.
+\textbf{COMPLETION: 10\%}

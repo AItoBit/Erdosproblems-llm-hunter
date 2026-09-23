@@ -1,0 +1,75 @@
+\section{Erd\H{o}s Problem 67: discrepancy on homogeneous progressions}
+
+\subsection{1) Statement and scope}
+For every $f:\mathbb N\to\{-1,1\}$, is
+\[
+ \sup_{d,m\geq1}\left|\sum_{j=1}^m f(jd)\right|=\infty?
+\]
+The answer is affirmative by Tao's discrepancy theorem. This note uses
+its stronger Hilbert-space formulation as an external theorem, gives the
+precise scalar and finite deductions, and proves the first nontrivial
+finite obstruction directly. It does not claim a new proof of Tao's
+analytic theorem.
+
+\subsection{2) External input and deduction}
+Tao proves that if $v_n$ are unit vectors in a real or complex Hilbert
+space, then the norms of $\sum_{j=1}^m v_{jd}$, over positive integers
+$d,m$, are unbounded. Apply this with the Hilbert space $\mathbb R$
+and $v_n=f(n)$. Norm is absolute value, so this proves exactly the
+assertion, with no multiplicativity or periodicity hypothesis.
+
+It also implies the following uniform finite statement. For each real
+$C>0$ there is an integer $N(C)$ such that every sign sequence on
+$[N(C)]$ has a homogeneous progression whose sum has absolute value
+greater than $C$. Suppose otherwise. Form the rooted binary tree of
+finite sign sequences for which all such sums have absolute value at
+most $C$. Every prefix of a vertex is again a vertex, and arbitrarily
+deep vertices exist. Starting at the root, choose a child with arbitrarily
+deep descendants; such a child exists because there are only two children.
+Iterating constructs an infinite sequence all of whose finite prefixes
+satisfy the bound. Each homogeneous progression lies in one prefix,
+contradicting the scalar theorem. This argument proves existence of
+$N(C)$; it does not supply an efficient bound for it.
+
+\subsection{3) An elementary certificate at discrepancy one}
+Assume all homogeneous progression sums inside $[12]$ have absolute
+value at most $1$. Every even-length such sum is an even integer in
+$[-1,1]$, hence zero. Subtracting successive even-length sums gives
+\[
+ f((2r-1)d)+f(2rd)=0\quad\text{whenever }2rd\leq12.
+\]
+Changing every sign if necessary, let $f(1)=1$. The displayed relations
+give, successively,
+\[
+ f(2)=-1,\quad f(4)=1,\quad f(8)=-1,\quad
+ f(6)=1,\quad f(3)=f(5)=-1.
+\]
+The relation on $\{5,10\}$ gives $f(10)=1$, so that on $\{9,10\}$
+gives $f(9)=-1$. Now $\{9,12\}$ forces $f(12)=1$, whereas
+$\{6,12\}$ forces $f(12)=-1$, a contradiction. Thus $N(1)\leq12$.
+The paired positions used here are respectively consecutive pairs
+inside a homogeneous progression, not arbitrary equal-spaced pairs.
+
+There is a further elementary special case. If $f$ is eventually
+periodic with period $q$, then $f(kq)$ is a fixed sign for all sufficiently
+large $k$. Consequently $\sum_{k\leq m}f(kq)$ grows linearly in
+absolute value. This does not handle general nonperiodic sequences.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED, as a deduction from the established
+Hilbert-space discrepancy theorem.} The finite compactness deduction
+and the discrepancy-one certificate are proved above. The deep
+analytic input is not independently reproved or formally checked here.
+The computational check accompanying this batch exhausts sign
+sequences of length $12$ and verifies the finite certificate's conclusion.
+
+\begin{itemize}
+\item T. Tao, \emph{The Erd\H{o}s discrepancy problem}, Discrete
+Analysis 2016:1, \texttt{https://arxiv.org/abs/1509.05363}.
+\item T. F. Bloom, Problem 67,
+\texttt{https://www.erdosproblems.com/67}, checked 23 September 2026.
+\end{itemize}
+The estimate measures coverage using the stated external theorem,
+not an independent reconstruction of all its proof.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,26 @@
+\section{Problem 217: a bounded exact search for a ninth point}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is to determine the sizes of planar crescent configurations: no three collinear, no four concyclic, and distance multiplicities $1,2,\ldots,n-1$. I read \texttt{gpt\_pro\_5.4/217.tex} in full, including the seven-point construction, eight-point construction, and subset checks. I tested a concrete continuation of its eight-point configuration, instead of treating those already supplied constructions as new progress.
+\subsection*{2) WORK}
+Use coordinates $(a\sqrt3/2,b/2)$ and write the supplied eight points as
+\[
+(a,b)\in\{(0,2),(2,0),(4,0),(5,5),(3,9),(1,7),(3,7),(2,4)\}.
+\]
+Four times the squared distance between two such points is the integer $3(a-a')^2+(b-b')^2$. Exact integer computation verifies the eight-point squared-distance multiplicities
+\[
+1:1,\quad19:2,\quad21:3,\quad3:4,\quad4:5,\quad7:6,\quad13:7.
+\]
+All 56 triple determinants and all 70 circle determinants are nonzero; for the latter one can use rows $(3a^2+b^2,a,b,1)$ because the omitted scale factors are nonzero.
+
+For a ninth point, the seven existing distance classes survive. Exactly one new class is therefore permitted. Its eight new edges must raise the old multiplicities and introduce the new one in such a way that the resulting multiset is exactly $\{1,2,\ldots,8\}$. This gives an exact necessary filter without geometry tolerances.
+
+I executed this filter for every integer coordinate pair $-20\le a\le20$, $-20\le b\le30$, excluding the eight existing points: 2083 candidates. None even passed the multiplicity filter. Consequently there is no one-point extension on this finite grid box. The standard-library code and result are in \texttt{verification/batch\_1\_checks.py} and \texttt{verification/batch\_1\_checks.json}.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The integer representation is exact and distinguishes squared distances without floating-point rounding. The result does not exclude points outside the box, points outside this lattice, moving the original eight points, or nine-point configurations having no such eight-point subset. General position alone is hereditary; the crescent multiplicity property is not, as the supplied seven-point deletion check already illustrates.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The attempted lattice extension failed in the precisely stated finite search region. No ninth-point construction or universal nonexistence proof was obtained, and this negative finite result is not evidence of a full solution.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied file and exact local computation dated 2026-09-23. Burt et al., \emph{Crescent configurations}, \texttt{https://arxiv.org/abs/1509.07220}, checked for the problem and existing construction context. The grid search is the only additional computational claim.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the unrestricted existence problem.
+\textbf{COMPLETION: 8\%}

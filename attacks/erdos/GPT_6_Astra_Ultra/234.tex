@@ -1,0 +1,59 @@
+\section{Erd\H{o}s Problem \#234: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{234.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+For $a_n=(p_{n+1}-p_n)/\log n$, the problem asks that the empirical
+distribution converge to a continuous distribution. The source supplies
+a sieve-based small-gap upper bound and correctly leaves convergence open.
+Its assertion that there are no prime pairs of odd difference is false:
+$2$ and $2+h$ can both be prime. There is at most one such pair for each odd
+$h$. Consecutive gaps for $n\ge2$ are even, so restricting that argument to
+even $h$ removes the error without changing the intended estimate.
+
+\subsection*{2) WORK: WHAT COMPACTNESS DOES AND DOES NOT GIVE}
+Assume the mean estimate already used in the source,
+\[
+ \frac1{N-1}\sum_{n=2}^N a_n\longrightarrow1.
+\]
+Define probability measures $\mu_N=(N-1)^{-1}\sum_{n=2}^N\delta_{a_n}$.
+For every $R>0$, Markov's inequality gives
+$\mu_N([R,\infty))\le(1+o(1))/R$. These measures are tight.
+One can prove subsequential compactness directly: choose successively
+subsequences on which $\mu_N([0,q])$ converges for each nonnegative rational
+$q$, use a diagonal subsequence, then take right limits to obtain a
+nondecreasing right-continuous distribution function. Tightness gives
+total mass one; squeezing between rational endpoints gives convergence
+at every continuity point of the limiting function.
+
+Every resulting probability measure $\mu$ satisfies
+\[
+ \int_0^\infty t\,d\mu(t)\le1.
+\]
+For proof, apply weak convergence to $\min(t,R)$, whose average is at most
+$1+o(1)$, and let $R$ increase. Equality of the limiting mean is not justified
+without uniform integrability: a small amount of mass can escape to large
+values while preserving total first moment.
+
+If one additionally retains the source's small-gap estimate
+$\limsup_N\mu_N([0,c))\le Cc$, then the open-set inequality for weak
+convergence gives $\mu([0,c))\le Cc$. Letting $c$ decrease to zero shows
+$\mu(\{0\})=0$. This last conclusion uses the stated sieve input; the
+compactness and moment arguments above do not require it.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Neither tightness nor the absence of an atom at zero implies uniqueness of
+the subsequential measure. They also do not exclude an atom at a positive
+point. For example, $\delta_1$ and $(\delta_{1/2}+\delta_{3/2})/2$ both have
+mean one and no atom at zero. This is an illustration of the logical gap,
+not a model of the actual prime gaps.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} The precise remaining tasks are uniqueness of all
+subsequential limits and absence of positive atoms. The supplied elementary
+bounds do not supply either. No new prime-gap theorem is claimed.
+Exact target checked at \url{https://www.erdosproblems.com/234} through its
+indexed primary record.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

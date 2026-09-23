@@ -1,0 +1,55 @@
+\section{Erd\H{o}s Problem \#506: exact circle counts in a structured family and the first admissible orders}
+
+\subsection*{1) Formal restatement and status}
+For a finite planar set $P$, let $c(P)$ count the distinct Euclidean circles containing at least three points of $P$. We study
+\[
+ f(n)=\min\{c(P):|P|=n,\ P\text{ is neither collinear nor concyclic}\}.
+\]
+The exclusion of collinear sets is essential: without it the literal displayed question has the trivial answer zero. We use the weaker nondegeneracy convention, not the different problem which forbids every collinear triple.
+
+The current problem page, checked 23 September 2026, says DECIDABLE: the corrected large-$n$ formula is known for $n>393$, with small orders remaining. We do not claim that a finite sample closes that gap. The argument below independently establishes an exact structured-family formula and $f(4)=3$, $f(5)=5$. No novelty over the literature is claimed for these elementary facts.
+
+\subsection*{2) Objective}
+The proposed route is to identify precisely how collinear triples reduce the number of circles in the usual nearly concyclic construction, and then determine whether a small-order extremizer must have that structure. We complete the count, but the structural reduction for general $n$ remains missing.
+
+\subsection*{3) Work: a complete count}
+\textbf{Proposition.} Let $Q$ be a set of $m\geq3$ distinct points on a circle $C$, and let $x\notin C$. Let $z$ be the number of unordered pairs $\{a,b\}\subset Q$ collinear with $x$. Then
+\[
+ c(Q\cup\{x\})=1+\binom m2-z,
+ \qquad 0\leq z\leq\lfloor m/2\rfloor.
+\]
+\emph{Proof.} A circle determined by three members of $Q$ is $C$. Every other circle must contain $x$ and two members of $Q$. A pair $a,b$ determines such a circle exactly when $x,a,b$ are not collinear. Different eligible pairs give different circles: otherwise a circle different from $C$ would share at least three points with $C$, which is impossible. A line through $x$ intersects $C$ in at most two points. The pairs counted by $z$ are therefore disjoint as pairs of members of $Q$, proving the upper bound. This counts all possible triples and proves the formula. $\square$
+
+Consequently the minimum within this family is
+\[
+ 1+\binom{n-1}{2}-\lfloor(n-1)/2\rfloor.
+\]
+It is attained by taking $x$ at the centre and taking $\lfloor m/2\rfloor$ antipodal pairs on $C$, with one additional point if $m$ is odd. The extra point can be chosen with its antipode absent. For the stronger convention of no three collinear points, $z=0$ and this construction instead gives $1+\binom m2$. Confusing these conventions changes the extremal problem.
+
+\textbf{Comparison family.} If $m$ points are on a line $L$ and $x\notin L$, exactly $\binom m2$ circles are determined. Every triple giving a circle consists of $x$ and a pair on $L$; distinct pairs give distinct circles since a circle meets $L$ in at most two points. This proves the claim without a general-position assumption.
+
+\subsection*{4) Exact small orders}
+\textbf{Theorem.} Under the stated convention, $f(4)=3$ and $f(5)=5$.
+
+\emph{Proof for four points.} If three points are collinear, the comparison family gives exactly three circles. If there is no collinear triple, all four triples determine circles; two of those circles could coincide only if all four points were concyclic, which is excluded. Thus there are four circles in the second case, establishing $f(4)=3$.
+
+\emph{Proof for five points.} If four points are concyclic, the fifth is off that circle, so the proposition gives at least $1+6-2=5$ circles. Suppose no four points are concyclic. If four are collinear, the comparison family gives six circles. In the remaining case there are neither four collinear nor four concyclic points. Every noncollinear triple gives a different circle. There are at most two collinear triples: if there were three, each pair of distinct triples would intersect in at most one point, since otherwise four points would lie on one line. Inclusion--exclusion would then give at least $9-3=6$ points in their union, a contradiction. Thus at least $\binom53-2=8$ triples give distinct circles. Finally the four points $(1,0),(-1,0),(0,1),(0,-1)$ together with the origin determine exactly five circles, proving sharpness. $\square$
+
+\subsection*{5) Verification and limits}
+The file \texttt{verification/add\_root\_checks.py}, run with argument 506, computes the circumcentre and squared radius of every noncollinear triple using rational arithmetic, then removes duplicates. Its completed report \texttt{verification/add\_506\_checks.json} confirms three circles for
+\[
+\{(0,0),(1,0),(2,0),(0,1)\}
+\]
+and five for the five-point construction above. These examples verify attainment; the lower bounds are the proofs, not conclusions inferred from sampling. There is no admissible three-point set under our convention: every noncollinear triple is concyclic.
+
+The structured-family count does not prove that every minimizer has $n-1$ concyclic points. A configuration with several circles each containing fewer points is precisely the obstruction to this route. We have not exhausted such configurations for $6\leq n\leq393$.
+
+\subsection*{6) Final}
+\textbf{UNRESOLVED.} We prove the exact formula for the nearly concyclic family, a comparison formula for nearly collinear sets, and the global minimum for $n=4,5$. The remaining finite-order classification is not solved.
+
+\subsection*{7) References}
+\url{https://www.erdosproblems.com/506}, current statement, nondegeneracy warning and corrected large-order result; checked 23 September 2026. The proofs in this attempt are self-contained.
+
+The following estimate is subjective and measures the limited scope of this attempt; it is not a probability of correctness or a measured fraction of the remaining proof.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

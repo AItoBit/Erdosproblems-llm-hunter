@@ -1,0 +1,63 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#119; reconstruction of Korsky's determinant argument, 2026-09-23.}
+Let $|z_j|=1$, $p_n(z)=\prod_{j=1}^n(z-z_j)$, and $M_n=\max_{|z|=1}|p_n(z)|$. The three questions ask whether $\limsup M_n=\infty$, whether $M_n>n^c$ infinitely often for some absolute $c>0$, and whether $\sum_{n\leq N}M_n>N^{1+c}$ for every sufficiently large $N$, for some absolute $c>0$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current source records affirmative answers and describes the recent cumulative-bound proof of Samuel Korsky. Earlier local attempts treated the third question as unresolved; that historical limitation is superseded by the current manuscript. The proof below reconstructs its determinant argument, which yields all three conclusions. The author and source are credited; this is not a claim of an original discovery or a claim that this file has been formally verified.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+For each fixed $N$, construct $N+1$ polynomials of degree at most $N$ whose coefficient determinant is exactly one. Their $L^2$ norms are bounded by successive $M_j$ divided by square roots of consecutive integers. Hadamard's inequality then forces a factorial lower bound on the product of the $M_j$.
+
+\section{WORK}
+Give the unit circle normalized arclength measure and write $\|\cdot\|_2$ for its $L^2$ norm. Set $p_0=1$ and $M_0=1$. Fix $N\geq1$. For $1\leq k\leq N$, define
+\[
+r_k=N-k+1,\qquad q_k(z)=\frac1{r_k+1}\sum_{\nu=0}^{r_k}(\overline{z_k}z)^\nu,
+\qquad f_k=p_{k-1}q_k.
+\tag{1}
+\]
+The conjugate in (1) is essential. It ensures $q_k(z_k)=1$, including when $z_k$ is not real. Orthogonality of the monomials and $|z_k|=1$ give
+\[
+\|q_k\|_2^2=\frac1{r_k+1}=\frac1{N-k+2}.
+\tag{2}
+\]
+Since $q_k(z_k)-1=0$, polynomial division gives $q_k=1+(z-z_k)s_k$ with $\deg s_k\leq N-k$. Therefore
+\[
+f_k=p_{k-1}+p_ks_k.
+\tag{3}
+\]
+The polynomials $p_k,p_{k+1},\ldots,p_N$ span all multiples of $p_k$ of degree at most $N$: division by $p_k$ leaves monic polynomials of successive degrees $0,1,\ldots,N-k$. Thus (3) says that replacing $p_{k-1}$ by $f_k$ adds only a linear combination of the later basis vectors. It follows that the change from $p_0,p_1,\ldots,p_N$ to $f_1,\ldots,f_N,p_N$ is triangular with diagonal entries one. The former basis has coefficient determinant one in the monomial basis because its polynomials are monic of successive degrees. The latter basis consequently has the same determinant.
+
+Parseval identifies a polynomial's coefficient-vector norm with its $L^2$ norm on the circle. Hadamard's determinant inequality now implies
+\[
+1\leq \|p_N\|_2\prod_{k=1}^N\|f_k\|_2
+\leq M_N\prod_{k=1}^N\frac{M_{k-1}}{\sqrt{N-k+2}}
+=\frac{\prod_{k=1}^NM_k}{\sqrt{(N+1)!}}.
+\tag{4}
+\]
+In the middle step we used the pointwise bound $|p_{k-1}|\leq M_{k-1}$, followed by (2). No separation or distinctness assumption on the roots was used. Squaring (4) proves
+\[
+\prod_{k=1}^NM_k^2\geq(N+1)!.
+\tag{5}
+\]
+The arithmetic--geometric mean inequality and Stirling's formula then give
+\[
+\sum_{k=1}^NM_k\geq N((N+1)!)^{1/(2N)}
+=(e^{-1/2}+o(1))N^{3/2}.
+\tag{6}
+\]
+The error term in this lower bound depends only on $N$, so the estimate is uniform over all root sequences. In particular (6) exceeds $N^{1+c}$ for every sufficiently large $N$ whenever $0<c<1/2$, answering the third question.
+
+There must also be infinitely many $n$ for which $M_n>\sqrt n$. Otherwise choose $K$ after the last exception. The finitely many initial factors yield a constant $A>0$ such that $\prod_{k=1}^NM_k^2\leq A N!$ for every $N\geq K$. This contradicts (5) as soon as $N+1>A$. Thus the second question holds with $c=1/2$, and this same infinite subsequence implies $\limsup M_n=\infty$.
+
+\section{VERIFICATION AND SCOPE}
+The proof is complete using only polynomial division, Parseval, Hadamard, arithmetic--geometric mean, and Stirling. Repeated roots cause no problem: the nested monic-polynomial basis remains a basis. A large value among the first $N$ indices alone would not imply infinitely many growing-index witnesses; the product contradiction above checks that quantifier explicitly. No matching upper bound or optimality of the constant in (6) is asserted.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and attribution: \url{https://www.erdosproblems.com/119}.
+\item S. Korsky, \emph{Cumulative bounds for polynomials with zeros on the unit circle}, Theorem 1.1 and its determinant proof, manuscript linked in the problem discussion: \url{https://drive.google.com/file/d/1ibiaGcLV64Kpi7YP5icaadbe1cvernnD/view}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved by reconstruction of the cited proof.} Equations (5)--(6) answer all three questions affirmatively. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

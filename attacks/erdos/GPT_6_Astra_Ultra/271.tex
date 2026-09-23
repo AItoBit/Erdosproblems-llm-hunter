@@ -1,0 +1,34 @@
+\section{Problem 271: sharp oscillation bounds for the regular seed}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read all of \texttt{271.tex}, which identifies the greedy progression-free sequence from $\{0,2\}$ and leaves the general seed $\{0,n\}$ unexplained. Its description of that regular case as a new family needs qualification: the primary 1978 Odlyzko--Stanley paper already describes regular seeds and states their limiting oscillation. I give a direct proof of that oscillation for the two smallest seeds. This is a verification and sharpening of the supplied exposition, not a new literature result or a classification of arbitrary seeds.
+\subsection*{2) WORK}
+Let $a_k$ be obtained by reading the binary digits of $k$ in base three, with $a_0=0$, and put $\alpha=\log_2 3$. Then
+\[
+a_{2m}=3a_m,\qquad a_{2m+1}=3a_m+1.
+\]
+The following pointwise bounds hold for every integer $k\ge0$:
+\[
+\frac{(k+1)^\alpha-1}{2}\le a_k\le k^\alpha.
+\]
+Prove them simultaneously by induction. For the upper bound, the even step is exact; the odd step follows from $3m^\alpha+1\le(2m+1)^\alpha$. The difference on the right minus the left vanishes at $m=0$ and has nonnegative derivative, because $2(2m+1)^{\alpha-1}\ge3m^{\alpha-1}$. For the lower bound the odd step is exact, while the even step uses
+\[
+3(m+1)^\alpha-(2m+1)^\alpha\ge2.
+\]
+This expression equals $2$ at zero and increases: $2(2m+1)^{\alpha-1}\le3(m+1)^{\alpha-1}$.
+
+At $k=2^r$, $a_k=3^r$; at $k=2^r-1$, $a_k=(3^r-1)/2$. The bounds and these two subsequences give
+\[
+\liminf_{k\to\infty}\frac{a_k}{k^\alpha}=\frac12,
+\qquad
+\limsup_{k\to\infty}\frac{a_k}{k^\alpha}=1.
+\]
+For the seed $\{0,2\}$, the supplied digit characterization gives $b_k=a_k+(k\bmod2)$. Its difference from $a_k$ is bounded, so precisely the same two limits follow. In particular there is no asymptotic equivalence $b_k\sim c k^\alpha$ for any constant $c$, despite the valid two-sided order bound.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The induction includes $k=0$ and uses zero-based indexing consistently. The digit characterization of the supplied sequence is compatible with the classical theorem. No finite irregular-seed sample can establish a growth law for that seed. The oscillation calculation explains why replacing a $\Theta$ statement by an assumed leading constant would already fail in the simplest regular examples.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The regular-seed asymptotics are verified sharply, but they were already known. No verified advance toward determining the general seed's behavior is obtained here.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version; A. M. Odlyzko and R. P. Stanley, \emph{Some Curious Sequences Constructed with the Greedy Algorithm} (1978), Theorems 1--2 and Remark 2, \texttt{https://math.mit.edu/\~{}rstan/papers/od.pdf}, checked 2026-09-23.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the general-seed problem.
+\textbf{COMPLETION: 8\%}

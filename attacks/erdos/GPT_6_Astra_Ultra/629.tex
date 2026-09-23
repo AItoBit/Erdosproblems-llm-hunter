@@ -1,0 +1,31 @@
+\section{Problem 629: the exact obstruction when one side has only $k$ lists}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read all of \texttt{629.tex}, including its equivalence between non-$k$-choosability and an unsplittable signed pair $(\mathcal A,\mathcal B)$ of $k$-sets. The global target is the minimum total number $n(k)$ of vertices of a non-$k$-choosable bipartite graph. I determine the entire boundary case $|\mathcal A|=k$ and obtain $n(2)$ directly. These are restricted-case deductions, not a solution of the general asymptotic problem.
+\subsection*{2) WORK}
+If $|\mathcal A|<k$, choose one element from each member of $\mathcal A$ and let $S$ be their union. It meets all left lists and has size less than $k$, so it contains no right $k$-set. Thus it is a splitter, irrespective of $|\mathcal B|$.
+
+Now suppose $|\mathcal A|=k$ and the pair is unsplittable. Its $k$ left lists must be pairwise disjoint. If two intersect, choose one common element for those two and one element for each remaining left list; the resulting hitting set has size at most $k-1$ and again is a splitter.
+
+For $k$ disjoint left lists, each of size $k$, there are exactly $k^k$ transversals obtained by choosing one element of each list. Every such transversal $S$ must contain a right list $B$, or it would split the pair. Since both have size $k$, this requires $B=S$. Distinct transversals therefore require distinct right lists. Consequently
+\[
+|\mathcal A|=k\quad\Longrightarrow\quad |\mathcal B|\ge k^k
+\]
+for any unsplittable pair. Conversely, taking all $k^k$ transversals as right lists gives an unsplittable pair: every hitting set contains one of these transversals. We have proved the exact threshold
+\[
+K_{k,b}\text{ is }k\text{-choosable}\quad\Longleftrightarrow\quad b<k^k.
+\]
+Here the forward construction supplies a bad assignment for $b\ge k^k$, while the previous argument excludes every bad assignment when $b<k^k$.
+
+For $k=2$, every bipartite graph on at most five vertices has a side of size at most two. A side of size one always admits a splitter, and $K_{2,3}$ is 2-choosable by the threshold. But $K_{2,4}$ fails with left lists $\{1,2\},\{3,4\}$ and right lists all four cross pairs. Hence
+\[
+n(2)=6.
+\]
+\subsection*{3) ADVERSARIAL VERIFICATION}
+This does not imply $n(k)=k+k^k$: allowing more than $k$ vertices on both sides can yield much smaller total obstructions. Duplicate lists within one side never help a minimum witness, because removing a duplicate leaves precisely the same splitter constraints; the source's multiset formalism is valid but duplicates are redundant for the minimization. The elementary threshold is not claimed to be new in the list-colouring literature.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The smallest-side regime is completely characterized and the $k=2$ value is verified. The optimal balance and size of general asymmetric signed families remain undetermined.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{629.tex}, read 2026-09-23. The threshold proof, construction, and $n(2)$ calculation are self-contained consequences of the explicitly reviewed signed-family reformulation.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the general minimum-order problem.
+\textbf{COMPLETION: 15\%}

@@ -1,0 +1,30 @@
+\section{Erd\H{o}s Problem \#276: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Construct positive integers $a_0,a_1$ such that $a_{n+2}=a_{n+1}+a_n$ is always composite and, for every integer $m>1$, some term is coprime to $m$.
+
+All supplied versions considered: \texttt{276.tex}, \texttt{276\_v2.tex}, \texttt{276\_v3.tex}.
+Version 1 confuses ``no common divisor of all terms'' with the stated stronger quantifier. Its assertion that an even-term prime cover obstructs the strong condition is false: odd terms can supply the coprime witness. Versions 2 and 3 correctly use the strong condition. Version 3 has a CRT coprimality omission and a claimed finite covering check; I repair both below.
+\subsection{2) WORK}
+\paragraph{Repairing CRT coprimality.}
+Suppose compatible local initial data are imposed modulo $Q$, a product of distinct covering primes, and at each such prime the two initial residues are not both zero. Choose a positive representative $a_0$ of its prescribed class. For every prime $\ell\mid a_0$ with $\ell\nmid Q$, additionally require $a_1\equiv1\pmod\ell$. These conditions are compatible with the prescribed $a_1\pmod Q$ by CRT. Choosing a large positive solution gives $\gcd(a_0,a_1)=1$. Thus arbitrary CRT representatives need not be coprime, but suitable representatives exist.
+
+\paragraph{Replacing the six-prime computation.}
+For a coprime recurrence, each prime that divides some term divides exactly one index class modulo its Fibonacci rank $z(p)$: at a zero index $r$ the recurrence is a nonzero scalar multiple of $F_{n-r}$ modulo $p$. Hence a finite prime cover requires $\sum_p1/z(p)\ge1$.
+The smallest ranks for distinct primes are $3,4,5,7$; their reciprocal sum is $389/420<1$. A five-prime cover would have largest rank at most $420/31<14$. Factoring $F_1,\ldots,F_{13}$ gives the possible ranks
+$3,4,5,7,8,9,10,11,13$, each attached to one prime in this range. The only five-element selections with reciprocal sum at least one are
+\[
+(3,4,5,7,t)\ (t=8,9,10,11,13),\quad(3,4,5,8,9),\quad(3,4,5,8,10).
+\]
+A residue class whose modulus is coprime to the least common multiple of all other moduli cannot complete a cover unless the other classes already cover: if they miss $r\pmod L$, CRT supplies an integer congruent to $r\pmod L$ but outside that single class.
+For the first five selections delete modulus $7$; the remaining reciprocal sum is at most $1/3+1/4+1/5+1/8<1$. For the last two delete respectively $5$ and $3$; again the remaining sum is below one. None covers. Thus at least six primes are necessary, with no exhaustive computation.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The rank list is only claimed for ranks at most thirteen; distinct primes can have equal larger ranks. An even-subsequence cover and absence of an odd-subsequence cover together imply absence of a whole-sequence finite cover, rather than obstruct it. These repairs certify structural lemmas only.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No all-composite recurrence escaping every finite prime cover is constructed. Necessary covering-size bounds do not resolve the infinite avoidance condition.
+\subsection{5) SOURCES CHECKED}
+All three supplied versions read. Actual quantifiers checked in \texttt{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/276.lean}, 2026-09-23. The rank-class fact is reproved locally in the supplied versions; no claim of a new literature result is made.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 15\%}

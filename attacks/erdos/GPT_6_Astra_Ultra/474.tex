@@ -1,0 +1,58 @@
+\section{Problem 474: an obstruction to splitting a Sierpi\'nski colouring}
+\subsection*{1) FORMAL RESTATEMENT AND CURRENT STATUS}
+Attempt dated 2026-09-23. Write $[S]^2$ for the unordered pairs of distinct elements of $S$. In the partition-relation formulation explicitly supplied by the problem page, the question asks for assumptions ensuring a map
+\[
+c:[S]^2\longrightarrow\{0,1,2\},\qquad |S|=2^{\aleph_0},
+\]
+such that $c[[A]^2]=\{0,1,2\}$ for every uncountable $A\subseteq S$. This is $2^{\aleph_0}\not\to[\aleph_1]^2_3$. This formulation removes a dimensional ambiguity in the displayed prose on the source page; only the cardinality of the underlying set matters.
+
+The live editorial page [1], fetched on the attempt date, labels this NOT PROVABLE. It records a positive answer under CH and consistency of a negative answer for a larger continuum; it specifically leaves open consistency of a negative answer when $2^{\aleph_0}=\aleph_2$. Thus an unconditional construction cannot be the objective. Here the objective is to test a concrete family of candidate constructions for that remaining question. No new consistency result is claimed.
+
+\subsection*{2) WORK: THE TWO-COLOUR BASELINE}
+For completeness, the following is the classical Sierpi\'nski construction, not a new result. Fix a well-order $\prec$ of $\mathbb R$. For $x<y$ in the usual real order define
+\[
+b(\{x,y\})=0\quad\Longleftrightarrow\quad x\prec y.
+\]
+Every uncountable subset realizes both colours. Indeed, a set homogeneous for colour 0 is well-ordered in its usual order. Every well-ordered subset $W$ of $\mathbb R$ is countable: for each nonmaximal $x\in W$, let $x^+$ be its successor and choose a rational strictly between $x$ and $x^+$. The intervals are pairwise disjoint, so these choices inject $W$ minus at most one point into $\mathbb Q$. For colour 1 the reversed usual order is a well-order, and the same argument applies after negating the reals.
+
+This suggests refining one of the two colours, but preserving both old colours only guarantees two of the three desired colours.
+
+\subsection*{3) A WHOLE FAMILY OF REFINEMENTS FAILS}
+Work on $2^{\mathbb N}$, identified with the ternary Cantor subset of $\mathbb R$ by $x\mapsto\sum_{j\ge0}2x(j)3^{-j-1}$. Restrict the preceding $b$ to this subset. For distinct sequences put
+\[
+\Delta(x,y)=\min\{j:x(j)\ne y(j)\}.
+\]
+Let $h:\mathbb N\to\{1,2\}$ be arbitrary, and define the proposed refinement
+\[
+c_h(\{x,y\})=
+\begin{cases}
+0,&b(\{x,y\})=0,\\
+h(\Delta(x,y)),&b(\{x,y\})=1.
+\end{cases}
+\]
+\textbf{Proposition.} Every $c_h$ fails the required three-colour property, regardless of the chosen well-order.
+
+\emph{Proof.} One fibre $M=h^{-1}(i)$ is infinite. Let
+\[
+P_M=\{x\in2^{\mathbb N}:x(j)=0\text{ for every }j\notin M\}.
+\]
+Restriction to the coordinates in $M$ is a bijection from $P_M$ to $2^M$, so $|P_M|=2^{\aleph_0}$. It is also a perfect set: an infinite set of free coordinates leaves a new free coordinate beyond any prescribed finite prefix. For distinct $x,y\in P_M$, their first differing coordinate lies in $M$, hence $h(\Delta(x,y))=i$. Therefore
+\[
+c_h[[P_M]^2]\subseteq\{0,i\}.
+\]
+The remaining colour is absent on this uncountable set. In fact both displayed colours occur, by the baseline argument. This proves failure even on a perfect set.\hfill$\square$
+
+The same proof applies if the coordinate statistic is any function of the first differing coordinate followed by a finite-valued rule: compose those rules to obtain $h$. In particular, parity, congruence classes, and predetermined blocks of digit positions cannot repair the construction. More generally, whenever a two-colouring used to split colour 1 is constant on an uncountable set, that set witnesses failure of the refinement.
+
+\subsection*{4) ADVERSARIAL VERIFICATION}
+The uncountable witness $P_M$ is chosen after $h$, as required to refute a proposed colouring; no single $P_M$ is asserted to refute all $h$ simultaneously. The proof does not assert that all three-colourings, all definable refinements, or all combinations of well-orders have this form. A refinement depending on the actual points and their well-order ranks is not covered. Finite Ramsey experiments cannot verify the uncountable quantifier, so none are offered as evidence for the consistency problem.
+
+\subsection*{5) FINAL}
+\textbf{UNRESOLVED.} The proved contribution of this attempt is a self-contained obstruction to an explicit family of natural three-colour candidates. The known two-colour baseline is reproduced and identified as known. Neither a colouring under $\mathfrak c=\aleph_2$ nor a model with the opposite partition relation has been obtained. A next construction must evade the uncountable homogeneous sets of its splitting rule; the digit-level rules above cannot do so.
+
+\subsection*{6) SOURCES CHECKED}
+[1] T. F. Bloom, current statement and editorial status of Erd\H{o}s problem 474, \url{https://www.erdosproblems.com/474}, fetched directly on 2026-09-23. The historical and consistency assertions above are explicitly a report of that page; their forcing proofs are not used here. The two-colour construction and the obstruction are proved in full in this file. No claim of publication novelty is made.
+
+\subsection*{7) COMPLETION ESTIMATE}
+This subjective estimate measures coverage of the remaining classification problem, not confidence in the proved obstruction. The central consistency question is still untouched.
+\textbf{COMPLETION: 5\%}

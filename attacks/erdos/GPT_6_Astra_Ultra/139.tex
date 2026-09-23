@@ -1,0 +1,100 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#139; reconstruction, 2026-09-23.}
+For a fixed integer $k\ge2$, let $r_k(N)$ be the largest size of a subset
+of $[N]$ containing no $k$-term arithmetic progression with nonzero common
+difference. Prove $r_k(N)=o(N)$ as $N\to\infty$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+This is Szemer\'edi's theorem. We give the standard hypergraph-removal
+route, verifying the algebraic encoding and the edge-disjoint copies.
+The hypergraph removal lemma is a substantial external theorem and is
+not proved here. This is a reconstruction from that explicit input,
+not an independent elementary proof or a new result.
+
+\section{WORK}
+We use the following form of the hypergraph removal lemma. For fixed
+$r$ and a fixed $r$-uniform hypergraph $F$, a hypergraph on $v$ vertices
+with $o(v^{|V(F)|})$ labelled copies of $F$ can be made $F$-free by
+deleting $o(v^r)$ edges. Equivalently, for every $\epsilon>0$ there is
+$\delta>0$ such that at most $\delta v^{|V(F)|}$ copies suffice for
+an $\epsilon v^r$ deletion bound, once $v$ is large enough.
+This theorem follows from the work of Gowers and independently
+Nagle--R\"odl--Schacht--Skokan; see the primary reference below.
+
+For $k=2$, any two distinct elements form a progression, so $r_2(N)=1$.
+Fix $k\ge3$ and a progression-free $A\subseteq[N]$. By Bertrand's
+postulate choose a prime $p$ with $2N<p<4N$, taking $N$ large enough
+that $p>k$. Work over $\mathbb F_p$ and form $k$ vertex classes
+$V_1,\ldots,V_k$, each a copy of $\mathbb F_p$.
+A $(k-1)$-tuple omitting class $i$ is an edge exactly when
+\[
+ \psi_i(x_1,\ldots,\widehat{x_i},\ldots,x_k)
+ :=\sum_{j\ne i}(j-i)x_j\in A.                         \tag{1}
+\]
+A copy of the complete $(k-1)$-uniform hypergraph on $k$ vertices must
+use all $k$ classes. Indeed, every pair of its vertices lies in some
+edge and hence cannot lie in the same class.
+
+For a transversal tuple $(x_1,\ldots,x_k)$ put
+$u=\sum_jjx_j$ and $d=\sum_jx_j$. Its $k$ edge labels are
+\[
+ a_i=\psi_i=u-id\quad(1\le i\le k).                     \tag{2}
+\]
+If all these labels belong to $A$, regard them as integers in $[N]$.
+Every integer second difference $a_i-2a_{i+1}+a_{i+2}$ is zero modulo
+$p$ and has absolute value less than $2N<p$. It is therefore exactly
+zero. Thus the labels form an ordinary integer arithmetic progression.
+Since $A$ is progression-free, it is constant, so $d=0$ in the field.
+Conversely, $d=0$ and $u=a\in A$ give a complete copy.
+
+The linear forms $\sum_jx_j$ and $\sum_jjx_j$ are independent over
+$\mathbb F_p$, so each pair of prescribed values $(0,a)$ has exactly
+$p^{k-2}$ preimages. The number of complete transversal copies is
+therefore exactly
+\[
+ |A|p^{k-2}\le Np^{k-2}=O(p^{k-1})=o(p^k).              \tag{3}
+\]
+More importantly, these copies are edge-disjoint. Once a face omitting
+$i$ is fixed, there is exactly one possible missing coordinate with
+$\sum_jx_j=0$, namely $x_i=-\sum_{j\ne i}x_j$. There cannot be a
+second complete copy containing that face, by (2) and progression
+freeness. This also shows that every edge in (1) belongs to exactly
+one complete copy.
+
+Apply removal with $r=k-1$ and $F$ the complete $(k-1)$-uniform
+hypergraph on $k$ vertices. There are $kp$ vertices, and (3) gives
+$o((kp)^k)$ labelled copies (the fixed labelling factor is harmless).
+We can destroy all copies by removing $o(p^{k-1})$ edges. But their
+edge-disjointness requires at least one different deleted edge for
+each of the $|A|p^{k-2}$ copies. Hence
+\[
+ |A|p^{k-2}=o(p^{k-1}),\qquad |A|=o(p)=o(N).
+\]
+The constants in the removal statement depend only on fixed $k$, so
+the conclusion is uniform over $A$ and proves $r_k(N)=o(N)$.
+\hfill$\square$
+
+\section{VERIFICATION}
+The prime modulus prevents degeneracy of the two linear forms; the
+inequality $p>2N$ prevents wraparound progressions from being mistaken
+for ordinary ones. The script checks the encoding and the exact count
+of edge-disjoint complete copies in small $k=3,4$ examples. The deep
+removal theorem, rather than those finite tests, supplies the
+asymptotic implication.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known theorem reconstructed from an explicit external input).}
+There is no gap in the deduction once the stated hypergraph removal
+lemma is accepted. Its proof is a substantial omitted dependency;
+no self-contained or quantitative bound is claimed here.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/139}.
+W.~T.~Gowers, \emph{Hypergraph regularity and the multidimensional
+Szemer\'edi theorem}, Annals of Mathematics 166 (2007), 897--946,
+\url{https://arxiv.org/abs/0710.3032}.
+Checked 2026-09-23. Completion is relative to the explicitly stated
+standard theorem, not a claim to reproduce its proof.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,29 @@
+\section{Erd\H{o}s Problem \#848: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{848.tex, 848\_v2.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND AUDIT OF BOTH VERSIONS}
+The all-$N$ extremal question includes diagonal pairs. Sawhney's sufficiently-large-$N$ result is recorded on the official page, but a finite remainder remains. Version two already retracts version one's unproved explicit threshold. There are further concrete issues: version one's complement count subtracts from all $Q$ residues instead of only the base classes; its periodic boundary error jumps upwards when a new prime enters the cutoff, so it is not monotone. Version two's off-diagonal lemma wrongly excludes every prime dividing $q$ using a hypothesis only about primes whose squares divide $q$.
+\subsection*{2) A CONCRETE LOCAL COUNTEREXAMPLE TO THAT EXCLUSION}
+Take $q=2$, $t=b=1$, $a=3$. The hypothesis excluding primes with $p^2\mid q$ is vacuous, but $a\equiv t\pmod q$ and $ab+1=4$ is divisible by $2^2$. Thus the inference that a square divisor must be coprime to $q$ is false. This identifies a gap in the proof; it does not by itself disprove the lemma's loose final numerical inequality.
+\subsection*{3) A CORRECT FINITE-PRIME COUNT}
+Fix $a=t+qj$ in the interval $[1,N]$, and let $L$ be the number of allowed integer values of $j$ in this interval. For $p\nmid b$, put $g_p=\gcd(q,p^2)$. The congruence $p^2\mid ab+1$ is soluble precisely when
+\[
+g_p\mid bt+1.
+\]
+When soluble it specifies one residue of $j$ modulo $m_p=p^2/g_p$. If $m_p=1$, every allowed $j$ satisfies it. If $p\mid b$, it is never soluble.
+Start with a finite prime set and let $P$ denote the set remaining after discarding insoluble conditions. If there is an automatic condition the union has size $L$. Otherwise the remaining moduli $m_p>1$ are powers of distinct primes, hence coprime. Inclusion--exclusion and CRT give
+\[
+\left|\#\{j:\exists p\in P,\ p^2\mid b(t+qj)+1\}
+-L\left(1-\prod_{p\in P}(1-1/m_p)\right)\right|
+\le2^{|P|}-1. \tag{1}
+\]
+For each nonempty prime subset, its intersection is one residue class modulo the product, whose count differs from $L$ divided by that product by at most one. Summing these errors proves (1). This handles primes dividing $q$ once, primes dividing it twice, and primes coprime to it in one statement.
+\subsection*{4) WHAT IS NOT CERTIFIED}
+Neither supplied file includes a reproducible computation certifying the asserted complete range $N\le35000$. I do not adopt that range as independently checked. The corrected finite-prime count still requires effective control of omitted primes and all structural reductions before it can yield an explicit global threshold.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The status remains resolved up to a finite check. A local sieve gap is repaired, but the remaining check is not completed here.
+\noindent Official status and attributed theorem: \url{https://www.erdosproblems.com/848}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

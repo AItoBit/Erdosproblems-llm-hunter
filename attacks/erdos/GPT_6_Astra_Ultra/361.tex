@@ -1,0 +1,26 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#361; independent attempt, 2026-09-23.}
+Determine the largest subset of $[1,\lfloor cn\rfloor]$ having no subset sum $n$, including its dependence on $n$. I read all of \texttt{361.tex}, which gives interval and modular lower constructions. Here I add a verified second-order size construction; differing lower bounds alone must not be mistaken for a proof of irregularity of the optimum.
+\section{WORK: A SMALL BLOCK PLUS A LARGE BLOCK}
+Let $n/2<m<n$. Choose $t\le\lfloor n/2\rfloor$ with $t(t+1)/2<n-m$, and put
+\[
+A=[1,t]\cup[\lfloor n/2\rfloor+1,m].
+\]
+A subset with at least two members of the upper block has sum greater than $n$. One with at most one such member has sum at most $m+t(t+1)/2<n$. Thus $n$ is not a subset sum, and
+\[
+G(n,m)\ge m-\lfloor n/2\rfloor+t.
+\]
+For fixed $1/2<c<1$ and $m=\lfloor cn\rfloor$, the maximal admissible $t$ satisfies $t=\sqrt{2(1-c)n}+O(1)$. Therefore
+\[
+G_c(n)\ge(c-1/2)n+\sqrt{2(1-c)n}+O(1).
+\]
+Taking the larger of this and the supplied modular construction gives two complementary lower bounds: the small block supplies a square-root correction uniformly, whereas small nondivisors of $n$ can supply a linear gain. This construction is also discussed in the official comments and is not claimed as new.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The inequality on $t$ is strict; equality could create a forbidden sum using $m$. The two blocks are disjoint by the imposed upper bound on $t$, automatic for sufficiently large $n$ at fixed $c$. These are existence bounds, not matching upper bounds. In particular, a dependence of a chosen construction on $q(n)$ does not prove the true optimum has that dependence. The general extremal value for $c<1$ remains undetermined.
+\section{SOURCES CHECKED}
+Complete local source \texttt{gpt\_pro\_5.4/361.tex}; official statement and construction comments checked at \url{https://www.erdosproblems.com/forum/thread/361}, 2026-09-23.
+\section{FINAL}
+\textbf{UNRESOLVED.} A uniform square-root correction is verified, with no proof that the construction is optimal.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the complete extremal function.
+\textbf{COMPLETION: 12\%}

@@ -1,0 +1,61 @@
+\section{Erd\H{o}s Problem \#49: an elementary proof of the density-zero conclusion}
+\noindent Independent reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known resolution}
+Let $A=\{a_1<\cdots<a_t\}\subseteq[1,N]$ satisfy $\phi(a_1)<\cdots<\phi(a_t)$. The question asks for $t\le(1+o(1))\pi(N)$, or at least $t=o(N)$. The current problem page attributes the sharp asymptotic result to Tao and labels the problem proved. This note proves the weaker requested conclusion from elementary divisibility and the Chinese remainder theorem. It does not reconstruct the sharp prime-scale bound.
+
+\subsection*{2) Objective}
+Strict increase implies that the totient values on $A$ are distinct. Almost every integer has many distinct odd prime factors; its totient is consequently divisible by a large fixed power of two. Counting distinct values with this divisibility gives a density-zero bound. The argument actually applies to every subset of $[1,N]$ on which $\phi$ is injective, whether or not its values are monotone.
+
+\subsection*{3) Many prime factors for almost every integer}
+Let $p_1,\ldots,p_L$ be distinct odd primes and put
+\[
+ Q=\prod_{j=1}^L p_j,\qquad
+ X(n)=\sum_{j=1}^L\mathbf1_{p_j\mid n},\qquad
+ \mu=\sum_{j=1}^L\frac1{p_j}.
+\]
+For a uniformly chosen residue modulo $Q$, the divisibility indicators are independent by the Chinese remainder theorem. Hence $\mathbb EX=\mu$ and $\operatorname{Var}X=\sum_jp_j^{-1}(1-p_j^{-1})\le\mu$. For any fixed positive integer $k<\mu$, Chebyshev's inequality gives
+\[
+ \mathbb P(X<k)\le\frac{\mu}{(\mu-k)^2}.\tag{1}
+\]
+Let $\omega_o(n)$ count the distinct odd prime divisors of $n$. Since $X(n)\le\omega_o(n)$, periodicity of $X$ yields
+\[
+ \#\{n\le N:\omega_o(n)<k\}
+ \le\frac{\mu}{(\mu-k)^2}N+Q.\tag{2}
+\]
+The error $Q$ covers the final incomplete block of residues; $Q$ is fixed before $N$ tends to infinity.
+
+We can make $\mu$ arbitrarily large. Here is the elementary justification, to expose the only number-theoretic input. If $\sum_p1/p$ converged, then $\prod_p(1-1/p)^{-1}$ would converge to a finite number: for $p\ge2$, $-\log(1-1/p)\le1/p+2/p^2$, up to harmless adjustment of the first term. But expanding the finite product over primes at most $x$ gives a sum including every $1/n$ with $n\le x$. It would bound the divergent harmonic sums uniformly, a contradiction. Removing the prime $2$ does not affect divergence. Thus for fixed $k$, taking $N\to\infty$ in (2) and then $L\to\infty$ proves
+\[
+ \#\{n\le N:\omega_o(n)<k\}=o(N).\tag{3}
+\]
+This order of limits avoids any assertion of independence for a growing prime set in a finite interval.
+
+\subsection*{4) Totient divisibility finishes the weaker question}
+Euler's product formula gives
+\[
+ \phi(n)=\prod_{p^a\parallel n}p^{a-1}(p-1).
+\]
+Each odd prime divisor contributes a factor two, so $2^{\omega_o(n)}\mid\phi(n)$. Partition $A$ according to whether $\omega_o(a)<k$. The first part has $o(N)$ members by (3). On the other part the distinct numbers $\phi(a)$ are positive multiples of $2^k$, and all satisfy $\phi(a)\le a\le N$. That part therefore has at most $\lfloor N/2^k\rfloor$ members. Consequently
+\[
+ |A|\le\frac{N}{2^k}+o_k(N).\tag{4}
+\]
+This bound is uniform over the choice of $A$. Given $\epsilon>0$, choose $k$ with $2^{-k}<\epsilon/2$, then take $N$ large enough to make the exceptional set in (3) smaller than $\epsilon N/2$. We obtain $|A|<\epsilon N$, proving $|A|=o(N)$.
+
+An entirely explicit finite bound is also present in the proof: for any chosen odd primes with $\mu>k$,
+\[
+ |A|\le\left(2^{-k}+\frac{\mu}{(\mu-k)^2}\right)N+Q.
+\]
+Its constants are inefficient, but it contains no unspecified probabilistic hypothesis.
+
+\subsection*{5) Limitations and verification}
+The primality example is exact: for primes $p<q$ one has $\phi(p)=p-1<q-1=\phi(q)$, so $|A|\ge\pi(N)$ is achievable. Our upper bound does not approach that scale. In particular, allowing $k$ to vary with $N$ in (4) without tracking $Q$ would be invalid. The nondecreasing variant mentioned in the editorial is also different: repeated totient values defeat the injective-image count used here.
+
+\textbf{ATTEMPT UNRESOLVED for the sharp bound; the weaker requested conclusion is proved.} The original problem is already solved in the literature. This file reproduces an elementary part of that target, with no claim of novelty.
+
+\subsection*{6) Sources}
+\url{https://www.erdosproblems.com/49}, checked 23 September 2026. T. Tao, \emph{Monotone Nondecreasing Sequences of the Euler Totient Function}, publisher page \url{https://link.springer.com/article/10.1007/s44007-024-00115-z}. The paper supplies context for the known full resolution; no theorem from it is used in the argument above.
+
+The estimate credits a complete proof of the explicitly asked weaker conclusion, while leaving the sharp asymptotic reconstruction unfinished. It is subjective, not a correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 25\%}

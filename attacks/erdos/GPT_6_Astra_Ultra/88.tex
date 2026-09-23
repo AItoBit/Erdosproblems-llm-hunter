@@ -1,0 +1,77 @@
+\section{Erd\H{o}s Problem 88: every small induced edge count}
+
+\subsection{1) Statement and external results}
+For each fixed $\epsilon>0$, does there exist $\delta>0$ such that
+every $n$-vertex graph with no clique or independent set of size
+at least $\epsilon\log n$ has an induced subgraph with exactly
+$m$ edges for every integer $0\leq m\leq\delta n^2$?
+This is the Erd\H{o}s--McKay conjecture, proved by Kwan, Sah,
+Sauermann and Sawhney. We reconstruct its deduction from their
+stronger interval theorem and the standard density theorem they
+state, with all uniformity issues explicit.
+
+Call a graph $C$-Ramsey when all its cliques and independent sets
+have size at most $C\log_2 n$. The external inputs are:
+\begin{enumerate}
+\item For each $C>0$ there is $\rho(C)>0$ such that all sufficiently
+large $C$-Ramsey graphs satisfy
+$e(G)\geq\rho(C)\binom n2$. This is the Erd\H{o}s--Szemer\'edi
+density theorem, stated as Theorem 4.1 in the cited paper.
+\item For each $C>0$ and $\eta>0$, every sufficiently large
+$C$-Ramsey graph has an induced subgraph with exactly $m$ edges
+for every integer $0\leq m\leq(1-\eta)e(G)$.
+This is Theorem 1.1 of Kwan--Sah--Sauermann--Sawhney.
+\end{enumerate}
+Their proofs, including the necessary local probability estimates,
+are external dependencies rather than claims proved in this note.
+
+\subsection{2) Deduction, including the small orders}
+Take $\log$ in the problem to mean natural logarithm and choose
+$C=\epsilon\log2$. The hypothesis implies the $C$-Ramsey
+condition. Let $n_0\geq2$ be a common threshold for the two inputs,
+the second with $\eta=1/2$, and put $\rho=\rho(C)$.
+For $n\geq n_0$,
+\[
+ \frac12e(G)\geq\frac{\rho}{2}\binom n2
+               \geq\frac{\rho n^2}{8}.
+\]
+Choose
+\[
+ \delta=\min\left(\frac\rho8,\frac1{2n_0^2}\right)>0.
+\]
+Every integer $m\leq\delta n^2$ then lies in the interval covered
+by the second theorem. For $1\leq n<n_0$, we have
+$\delta n^2<1$, so the only nonnegative integer to consider is
+$m=0$, realized by a one-vertex induced subgraph. Thus the same
+$\delta$, depending only on $\epsilon$, works at every order for
+which the hypothesis is met. If zero-vertex graphs are permitted,
+their empty induced graph treats that case as well.
+
+\subsection{3) Why the exact interval input is essential}
+For comparison, deleting vertices from any graph gives a decreasing
+sequence of induced edge counts from $e(G)$ to $0$, with each jump
+at most $n-1$. Hence for any target $m$ there is an induced subgraph
+whose edge count is within $n-1$ of $m$: take the first step crossing
+the target. This elementary argument does not ensure equality.
+Nor does knowing that there are many distinct induced edge counts
+ensure every integer in an initial interval is present. The stronger
+external theorem addresses precisely that missing exactness.
+
+\textbf{Outcome: SOLVED, established affirmative resolution
+reconstructed relative to the two named external theorems.}
+No new proof of their analytic ingredients or local formal
+verification is claimed.
+
+\subsection{4) Sources}
+\begin{itemize}
+\item M. Kwan, A. Sah, L. Sauermann and M. Sawhney,
+\emph{Anticoncentration in Ramsey graphs and a proof of the
+Erd\H{o}s--McKay conjecture}, Theorems 1.1 and 4.1,
+\texttt{https://arxiv.org/abs/2208.02874}.
+\item T. F. Bloom, Problem 88,
+\texttt{https://www.erdosproblems.com/88}, checked 23 September 2026.
+\end{itemize}
+The estimate measures coverage of the problem using these explicit
+external results.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

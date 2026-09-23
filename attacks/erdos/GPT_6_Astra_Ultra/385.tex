@@ -1,0 +1,23 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#385; independent attempt, 2026-09-23.}
+For $F(n)=\max_{m<n,\ m\text{ composite}}(m+p(m))$, where $p(m)$ is the least prime factor, is $F(n)>n$ eventually, and does $F(n)-n\to\infty$? I read all of \texttt{385.tex}. Its density-zero exceptional-set result and square-subsequence limsup do not control the universal lower limit. I derive an exact local test and independently check a finite range.
+\section{WORK: FINITE LOCAL WINDOW}
+For composite $m<n$, $p(m)\le\sqrt m<\sqrt n$. Therefore $m+p(m)>n$ can hold only when
+\[
+n-\sqrt n<m<n.
+\]
+More generally $F(n)-n>h$ is equivalent to existence of an integer $j\ge1$ with $j<\sqrt n-h$, $n-j$ composite, and $p(n-j)>j+h$. This is simply the original inequality with $m=n-j$, but localizes every possible witness and separates compositeness from absence of small factors. Prime candidates do not qualify.
+The exact running maximum obeys
+\[
+F(n+1)=\max\bigl(F(n),\ n+p(n)\bigr)
+\]
+when $n$ is composite, and $F(n+1)=F(n)$ otherwise. A least-prime-factor sieve and this recurrence, saved in \texttt{verification/batch\_3\_digits\_records.py}, found exactly 100 integers $5\le n\le10^6$ with $F(n)\le n$. The last three are $8742,267672,267680$; the complete list is saved in JSON. This is a bounded check, not a claim that these are all exceptions.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The recurrence adds $m=n$ only when moving from $F(n)$ to $F(n+1)$, respecting the strict inequality $m<n$. The sieve treats primes separately and initializes with the composite $4$ when computing $F(5)$. A very long interval with no new exceptions does not imply eventual positivity. To prove the original assertions one needs composite numbers in every relevant local window whose least prime factor beats their distance to $n$, uniformly for arbitrarily large $n$; neither a density statement nor square examples achieve this.
+\section{SOURCES CHECKED}
+Complete local source \texttt{gpt\_pro\_5.4/385.tex}; exact definition and both questions checked at the indexed primary page \url{https://www.erdosproblems.com/385}, 2026-09-23.
+\section{FINAL}
+\textbf{UNRESOLVED.} An exact local criterion and a reproducible finite check are supplied; universal eventual behavior is unproved.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the eventual statements.
+\textbf{COMPLETION: 10\%}

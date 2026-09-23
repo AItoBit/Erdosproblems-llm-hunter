@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#875: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For infinite $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$ whose sums of different numbers of distinct elements never coincide, how slow can $A$ grow, and for which $c$ can $a_{n+1}-a_n\le n^c$ hold eventually?
+
+All supplied versions considered: \texttt{875.tex}, \texttt{875\_v2.tex}.
+Both versions use the same valid published polynomial-density construction and finite upper bounds. Their discussion mixes a linear-gap coefficient with a power exponent. I give a self-contained sum-of-terms inequality improving their stated linear-gap obstruction, and a stronger interpretation of the known polynomial-growth example.
+\subsection{2) WORK}
+\paragraph{Count all subset-sum cardinalities together.}
+For $A_n=\{a_1,\ldots,a_n\}$ let $S_r$ be its sums of $r$ distinct elements, including $S_0=\{0\}$. Then
+\[
+|S_r|\ge r(n-r)+1.
+\]
+Indeed start from the index set $\{1,\ldots,r\}$, increase its largest index successively up to $n$, then its next-largest up to $n-1$, and continue. There are $r(n-r)$ individual index increments, each giving a strictly larger sum. Since the $S_r$ are disjoint and all their sums lie in $[0,\sum_{i=1}^n a_i]$, we obtain
+\[
+\sum_{i=1}^n a_i+1\ge\sum_{r=0}^n(r(n-r)+1)
+={n^3+5n+6\over6},
+\]
+so
+\[
+\boxed{\sum_{i=1}^n a_i\ge(n^3+5n)/6.} \tag{1}
+\]
+If eventually $a_{j+1}-a_j\le\lambda j$, summation gives $a_i\le\lambda i(i-1)/2+O(1)$ and then
+\[
+\sum_{i=1}^n a_i\le\lambda(n^3-n)/6+O(n).
+\]
+Comparison with (1) forces $\lambda\ge1$. In particular,
+\[
+\boxed{\limsup_{n\to\infty}{a_{n+1}-a_n\over n}\ge1,}
+\]
+which strengthens the supplied coefficient $1/2$. It also implies that an eventual bound $a_{n+1}-a_n\le n^c$ requires $c\ge1$, not merely the source\textquotesingle s weaker exclusion $c<1/2$. No claim of literature novelty is made.
+
+\paragraph{Polynomial growth controls the frequency of relative jumps.}
+The checked 1991 construction has $a_n\le Cn^D$ with $D=5+2\sqrt6$. For any increasing sequence satisfying such a bound and any fixed $\eta>0$, telescoping logarithms give
+\[
+\#\{n<N:a_{n+1}/a_n\ge1+\eta\}
+\le {\log(a_N/a_1)\over\log(1+\eta)}=O_\eta(\log N).
+\]
+More generally, for $0<\theta<1$, the number of $n<N$ with $(a_{n+1}-a_n)/a_n\ge n^{-\theta}$ is $O(N^\theta\log N)$, because every such logarithmic increment is at least $\log(1+N^{-\theta})$. Thus that known admissible example has relative gaps tending to zero in natural density, a stronger conclusion than just a subsequential ratio limit of one.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The chain argument counts distinct sums within a fixed cardinality and then uses admissibility only to separate different cardinalities. Positivity separates $S_0$. The double summation, rather than an individual-term bound, is what improves the linear coefficient. Density-one control permits infinitely many large relative jumps and therefore does not prove $a_{n+1}/a_n\to1$ at every index.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The possibility of eventual gaps $\le n^c$ for $1\le c\le5+2\sqrt6$, including the borderline exponent one, is not resolved by this attempt. The exact growth law and the full consecutive-ratio limit also remain unproved here.
+\subsection{5) SOURCES CHECKED}
+Both supplied versions read in full. Checked the original journal abstract of Erd\H{o}s--Nicolas--S\'ark\H{o}zy, \texttt{https://jtnb.centre-mersenne.org/item/JTNB\_1991\_\_3\_1\_55\_0/}, DOI \texttt{10.5802/jtnb.42}, on 2026-09-23, confirming the admissibility convention and exponent $5-2\sqrt6$. The original question was checked in the indexed official page \texttt{https://www.erdosproblems.com/875}. Inequality (1) and its gap consequence are proved above without an external finite-set theorem.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 18\%}

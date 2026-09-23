@@ -1,0 +1,32 @@
+\section{Problem 28: moments expose the spikes in the digit basis}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The Erd\H{o}s--Tur\'an target is unboundedness of the two-term representation function of every asymptotic additive basis. I read the supplied \texttt{gpt\_pro\_5.4/28.tex} completely. It computes the exceptional-set exponent for one basis $A=E\cup2E$, where $E$ consists of nonnegative integers with base-4 digits 0 or 1. Here $r_A$ counts ordered pairs. I test how large the rare spikes are by estimating all fixed moments greater than one.
+\subsection*{2) WORK}
+For $n<4^m$, let $\rho(n)$ be zero if a base-4 digit is 3, and otherwise $2^{j(n)}$, where $j(n)$ is the number of digits equal to 1. There are exactly $\rho(n)$ ordered representations using two members of $E$: each digit 1 has two choices and digits 0 or 2 have one, without carries. Hence $r_A(n)\ge\rho(n)$.
+
+For fixed real $q>1$, independence of the $m$ digit choices gives
+\[
+\sum_{0\le n<4^m}\rho(n)^q=(2+2^q)^m.
+\]
+On the other hand the union of four representation types gives, for $n\ge1$,
+\[
+r_A(n)\le2+\rho(n)+\mathbf1_{2\mid n}\rho(n/2).
+\]
+The constant 2 counts the two unique mixed representations; overcounting their overlap with same-type representations only strengthens the inequality. Convexity gives $(x+y+z)^q\le3^{q-1}(x^q+y^q+z^q)$ for nonnegative arguments. Summing, and observing that $n/2<4^m$, proves
+\[
+\sum_{1\le n<4^m}r_A(n)^q
+=\Theta_q\bigl((2+2^q)^m\bigr).
+\]
+The lower bound subtracts only the term $n=0$ from the digit sum; the upper bound absorbs $4^m$ because $2+2^q>4$.
+
+Thus, with $X=4^m$, the normalized $q$th moment grows as
+$X^{\log_4(2+2^q)-1}$. In particular the normalized second moment has order $X^{\log_4 6-1}$, despite density-one baseline representation count 2. At $n=1+4+\cdots+4^{m-1}$, $r_A(n)\ge2^m$, so these are explicit spikes of square-root size along a sequence.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+All moment estimates concern this particular basis, not every basis. Ordered counts include diagonal pairs once, consistent with the digit rule. The supplied set identity must be corrected at zero: since its exceptional set is defined only for $n\ge1$, it is $((E+E)\cup(2E+2E))\setminus\{0,1\}$, not removal of 1 alone. The supplied finite counting formula already subtracts both 0 and 1 and is compatible with this correction.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} This verifies quantitatively that the supplied construction has very large spikes. It gives no argument forcing spikes in an arbitrary asymptotic basis, which remains the exact missing universal step.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version on 2026-09-23. The digit calculation and moment inequality are proved directly; no claim of novelty or unverified external theorem is used.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the universal unboundedness assertion.
+\textbf{COMPLETION: 12\%}

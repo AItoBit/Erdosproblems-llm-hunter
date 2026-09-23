@@ -1,0 +1,83 @@
+\section{Erd\H{o}s Problem 76: packing monochromatic triangles}
+
+\subsection{1) Statement and scope}
+Must every red--blue coloring of $K_n$ have a family of edge-disjoint
+monochromatic triangles of size $(1+o(1))n^2/12$?
+Gruslys and Letzter proved the affirmative answer. This attempt gives
+a self-contained quadratic lower bound with a smaller leading
+constant and proves that the requested constant $1/12$ is optimal.
+It does not reproduce their sharp packing theorem.
+
+\subsection{2) A maximal packing leaves a $K_6$-free graph}
+Take a maximal family of edge-disjoint monochromatic triangles,
+and let its size be $t$. Remove their $3t$ edges, retaining the
+original colors on the remaining graph $H$. There is no monochromatic
+triangle in $H$, by maximality.
+
+Every red--blue $K_6$ contains a monochromatic triangle. Indeed,
+some vertex has three incident edges of one color, say red, to
+$x,y,z$. If any edge within $\{x,y,z\}$ is red, it completes a red
+triangle with that vertex; otherwise those three edges are all blue.
+Consequently the uncolored graph $H$ contains no $K_6$.
+
+Here is an elementary density estimate sufficient for our purpose.
+In a $K_6$-free graph on $v$ vertices, choose a maximum clique of
+size $s\leq5$. Every vertex outside it has at most $s-1$ neighbors
+in it. Hence the sum of degrees of clique vertices is at most
+$(s-1)v$, and one of them has degree at most
+$(s-1)v/s\leq4v/5$. This includes $s=1$, when the graph has no
+edges. Repeated vertex deletion, applied to the remaining induced
+graphs, now gives
+\[
+ e(H)\leq\frac45\sum_{v=1}^n v=\frac25 n(n+1).
+\]
+Since $e(H)=\binom n2-3t$, we conclude
+\[
+ t\geq\frac{n^2}{30}-\frac{3n}{10}.
+\]
+For small $n$ a negative right side is simply a vacuous lower bound.
+This argument uses maximality, not an unproved claim that a greedy
+packing is maximum.
+
+\subsection{3) A sharp obstruction to improving the target constant}
+For even $n=2m$, split the vertices into two sets of size $m$.
+Color edges within each part blue and edges between the parts red.
+There are no red triangles, and every blue triangle lies inside a
+part. Thus any permitted packing has at most
+\[
+ \frac{2\binom m2}{3}
+ =\frac{n^2}{12}-\frac n6
+\]
+triangles. In particular no universal leading constant greater than
+$1/12$ is possible.
+
+For the infinite sequence $m=3^r$, this upper bound is achieved
+exactly. Identify each part with the vector space $\mathbb F_3^r$.
+An affine line has three points. Each pair of distinct points lies
+on exactly one such line, since its direction is their nonzero
+difference and the only nonzero scalars in $\mathbb F_3$ are
+$1,-1$. The triangles formed by all affine lines therefore partition
+the edges of each complete graph on a part. Using them in both
+parts gives exactly the displayed number of triangles.
+
+\subsection{4) Gap and sources}
+\textbf{Outcome of this attempt: UNRESOLVED.} The lower constant
+proved here is $1/30$, whereas the problem requires $1/12$.
+The upper example establishes optimality but does not improve the
+universal lower bound. The needed additional packing structure is
+the substantive missing part of this reconstruction. The batch check
+enumerates all colorings on six vertices for the Ramsey step and
+verifies the affine-line decompositions for small dimensions.
+
+\begin{itemize}
+\item V. Gruslys and S. Letzter, \emph{Monochromatic triangle
+packings in red-blue graphs},
+\texttt{https://arxiv.org/abs/2008.05311}; cited for the known
+resolution, not used in the partial proof above.
+\item T. F. Bloom, Problem 76,
+\texttt{https://www.erdosproblems.com/76}, checked 23 September 2026.
+\end{itemize}
+No novelty is claimed. The estimate concerns the supplied proof,
+not confidence in the published sharp theorem.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 20\%}

@@ -1,0 +1,25 @@
+\section{Problem 142: exact finite certificates and a product construction}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is an asymptotic formula for $r_k(N)$, the largest subset of $[N]$ with no nonconstant $k$-term arithmetic progression. I read \texttt{gpt\_pro\_5.4/142.tex} fully. It cites the Behrend--Rankin--O'Bryant bounds and corrects a finite $r_3$ table. I independently audit and extend the finite part, then give a precise way to propagate any finite witness.
+\subsection*{2) WORK}
+The executed standard-library program \texttt{verification/batch\_1\_checks.py} enumerates every progression-free subset of $[26]$ by increasing elements. When a new $x$ is chosen, every future value $2x-a$ with $a$ already chosen is forbidden. A new progression must have a largest element, so this rule excludes exactly and all the invalid extensions. Every valid set has a unique increasing construction path. The search visited 204380 valid subsets, including the empty set, and recovered the supplied values through 20. The extension is
+\[
+\begin{array}{c|rrrrrr}N&21&22&23&24&25&26\\\hline
+r_3(N)&9&9&9&10&10&11\end{array}.
+\]
+A witness for 26 is $\{1,2,5,7,11,16,18,19,23,24,26\}$. The exhaustive upper certificate is the search recurrence, not just this witness. Exact results and witnesses are saved in \texttt{verification/batch\_1\_checks.json}.
+
+For an integer $L\ge2$ and a finite 3-AP-free set $D\subseteq\{0,\ldots,L-1\}$, set $b=2L-1$. The set of integers with $m$ base-$b$ digits all in $D$ has $|D|^m$ members and is 3-AP-free. Indeed an equation $x+z=2y$ can be read digitwise because both sums of two digits and doubled digits are at most $2L-2<b$; equality forces $x_j+z_j=2y_j$ in each coordinate, hence $x_j=y_j=z_j$. Translating the resulting set by 1 puts it in $[b^m]$. Our witness therefore gives
+\[
+r_3(51^m)\ge11^m.
+\]
+This is weaker asymptotically than the known near-linear constructions; its purpose is an explicit certified propagation of finite data.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The search does not prune by a conjectural bound, and every returned witness is separately checked for all triples. The base $b$ is chosen to forbid carries on both sides; using base $L$ would invalidate this proof. Small exact values and the product construction do not justify extrapolating a leading asymptotic constant.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} No improvement to the known asymptotic upper or lower bounds is claimed. Matching those bounds, let alone obtaining an asymptotic formula for each fixed $k$, remains beyond these finite certificates.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied \texttt{142.tex} and the actual exhaustive computation on 2026-09-23. The product lemma is proved directly; the prior literature bounds are context and are not used as unchecked premises of a new theorem.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the asymptotic problem.
+\textbf{COMPLETION: 8\%}

@@ -1,0 +1,46 @@
+\section{Erd\H{o}s Problem \#57: from long odd intervals to a divergent reciprocal sum}
+\noindent Reconstruction with an explicit external theorem, 23 September 2026.
+
+\subsection*{1) Statement and approach}
+For a graph $G$ of infinite chromatic number, let $L_o(G)$ be the set of its distinct odd cycle lengths. Prove $\sum_{a\in L_o(G)}1/a=\infty$. We derive this conclusion, including the finite-to-infinite step, from a theorem of Liu and Montgomery. Their cycle-construction theorem is an external input; its proof is not reproduced here.
+
+\subsection*{2) External input}
+Theorem 1.4 of H. Liu and R. Montgomery, \emph{A solution to Erd\H{o}s and Hajnal's odd cycle problem}, states: for each $\epsilon>0$ and all sufficiently large $k$, a finite graph of chromatic number $k$ has some $\ell\in\mathbb N$ for which every odd integer in $[\ell,\ell k^{1-\epsilon}]$ is a cycle length. Source: \url{https://arxiv.org/html/2010.15802v2}.
+
+\subsection*{3) A bound independent of the interval's starting point}
+For $R\ge3$ and an integer $\ell\ge1$, set $a$ to be the first odd integer at least $\max(3,\ell)$, and $b$ to be the last odd integer at most $\ell R$. Then $a\le\ell+2\le3\ell$, $b+2>\ell R$, and $b\ge a$. Since $1/x$ decreases,
+\[
+ \sum_{\substack{\ell\le j\le\ell R\\j\ge3,\ j\text{ odd}}}\frac1j
+ \ge\frac12\int_a^{b+2}\frac{dx}{x}
+ \ge\frac12\log R-\frac12\log3.\tag{1}
+\]
+Thus the lower bound remains valid even when $\ell$ varies with the graph. Apply the external theorem with $R=k^{1-\epsilon}$. For every sufficiently large $k$,
+\[
+ \sum_{j\in L_o(H)}\frac1j
+ \ge\frac{1-\epsilon}{2}\log k-\frac12\log3
+ \quad\text{if }\chi(H)=k.\tag{2}
+\]
+The sum is over lengths, so the number of different cycles realizing a length has no effect.
+
+\subsection*{4) Passing to an infinite graph}
+We use finite-colour compactness: if every finite subgraph of a graph is $k$-colourable, then the whole graph is $k$-colourable. One justification is to take the compact product $\{1,\ldots,k\}^{V(G)}$. Each edge imposes a closed constraint that its endpoints receive different colours. Every finite collection of constraints is satisfiable by colouring its finitely many endpoints. Compactness gives a colouring satisfying all constraints. This is the usual de Bruijn--Erd\H{o}s principle, in the standard set-theoretic setting.
+
+It follows that an infinite-chromatic graph has finite subgraphs of arbitrarily large chromatic number. Fix $T>0$, take $\epsilon=1/2$, and choose a finite subgraph $H$ with chromatic number $k$ so large that the right side of (2) exceeds $T$. Every cycle of $H$ is a cycle of $G$, whence a finite subset of $L_o(G)$ has reciprocal sum larger than $T$. Since this holds for every $T$ and all terms are positive, the desired infinite series diverges. No local finiteness or countability assumption on $G$ is needed for this argument.
+
+\subsection*{5) Sharpness check and scope}
+For $K_k$, the odd cycle lengths are exactly the odd integers from three to $k$, so
+\[
+ \sum_{j\in L_o(K_k)}\frac1j
+ =H_k-\frac12H_{\lfloor k/2\rfloor}-1
+ =\frac12\log k+O(1).
+\]
+Together with (2), this checks the leading coefficient in the finite lower bound. The deduction and the compactness step above are complete. The hard theorem producing a long interval of lengths remains an explicitly cited dependency; no independent proof or formal verification of it is claimed.
+
+\textbf{SOLVED, by a complete deduction from the stated published theorem.} This reconstructs a known resolution and claims no novelty.
+
+\subsection*{6) Sources}
+Problem and current status: \url{https://www.erdosproblems.com/57}, checked 23 September 2026. Primary theorem: Liu--Montgomery, cited above, Theorem 1.4.
+
+The estimate measures coverage of the problem using the declared external input, not the amount of that input reproved here, and is not a correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

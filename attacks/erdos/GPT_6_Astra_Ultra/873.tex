@@ -1,0 +1,37 @@
+\section{Erd\H{o}s Problem \#873: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For increasing $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$, let $F(A,X,k)$ count $i$ with $\operatorname{lcm}(a_i,\ldots,a_{i+k-1})<X$. For every $\epsilon>0$, does some $k$ give $F(A,X,k)<X^\epsilon$ for all $X>0$?
+
+All supplied versions considered: \texttt{873.tex}, \texttt{873\_v2.tex}.
+Both versions give the same divisor-block lower bound and claim it forces dependence of $k$ on $A$ and $\epsilon$. That inference is not justified: their lower bound is $X^{o(1)}$, compatible with every fixed positive power. The blocks themselves do not depend on $k$, so one set already works simultaneously for every fixed $k$. I replace the inference by a precise elementary obstruction from $A=\mathbb N$.
+\subsection{2) WORK}
+\paragraph{Consecutive integers give the right fixed-$k$ obstruction.}
+For every $m,k\ge1$, put $L=\operatorname{lcm}(m,m+1,\ldots,m+k-1)$. Then
+\[
+{m(m+1)\cdots(m+k-1)\over(k-1)!}\le L\le(m+k-1)^k. \tag{1}
+\]
+To prove the lower bound, fix a prime $p$. At each power $p^a$, let $c_a$ be the number of multiples in this interval of $k$ consecutive integers. When $c_a>0$, its contribution to the valuation of the product divided by $L$ is $c_a-1$. Such an interval has $c_a\le\lfloor(k-1)/p^a\rfloor+1$. Summing gives
+\[
+v_p\!\left({\prod_{j=0}^{k-1}(m+j)\over L}\right)
+\le\sum_{a\ge1}\left\lfloor{k-1\over p^a}\right\rfloor=v_p((k-1)!).
+\]
+This proves (1), including $k=1$.
+
+Every $m$ with $m+k-1<X^{1/k}$ is counted by $F(\mathbb N,X,k)$, while (1) shows every counted $m$ is smaller than $((k-1)!X)^{1/k}$. Therefore
+\[
+F(\mathbb N,X,k)=\Theta_k(X^{1/k})\qquad(X\to\infty).
+\]
+In particular no fixed $k$ can handle every $\epsilon>0$: choose $\epsilon<1/k$. A necessary condition for a proposed $k$ at exponent $\epsilon$ is $1/k\le\epsilon$. This argument does not establish that $k$ must depend on $A$; uniformity over $A$ at a fixed $\epsilon$ remains a different issue.
+
+The source\textquotesingle s primorial lower bound has exponent $(\log2+o(1))/\log\log X\to0$, so it proves a super-polylogarithmic obstruction only. Calling it an obstruction to all power bounds confuses two different scales.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The valuation proof subtracts one for each prime power occurring at least once, exactly the maximum valuation in the lcm. Strict inequalities at $X$ only change the counting bounds by $O_k(1)$. The result does not address the all-$X$ target for general $A$, or the borderline $1/k=\epsilon$.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+A general upper bound with arbitrarily small positive exponent is still missing. The corrected fixed-$k$ obstruction clarifies necessary quantifiers but supplies no such upper bound.
+\subsection{5) SOURCES CHECKED}
+Both supplied versions read in full. Checked the formal-conjectures statement \texttt{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/873.lean} on 2026-09-23, including its all-$X$ quantifier. Its open theorem contains a placeholder proof; it is used as a statement reference only.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

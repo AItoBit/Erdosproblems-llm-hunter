@@ -1,0 +1,36 @@
+\section{Problem 11: reusing two square divisors}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is the representation of every sufficiently large odd integer as a positive squarefree integer plus a power of two. I read the complete supplied \texttt{gpt\_pro\_5.4/11.tex}. Its Chinese remainder construction excludes small exponents using a different prime for each exponent; that is an obstruction to a restricted search, not a counterexample to the representation conjecture. Here two primes are reused periodically. No claim of literature novelty is made.
+\subsection*{2) WORK}
+Write $e_{\min}(n)=\min\{e\ge0:n-2^e\ge1\text{ is squarefree}\}$, with value $+\infty$ if the set is empty. For each integer $K$, let
+\[
+R_K=\{0\le e\le K:6\nmid e,\ 20\nmid e\},\qquad r=|R_K|.
+\]
+In every block of 60 exponents, 10 are divisible by 6, 3 by 20, and 1 by both. Thus $r=4K/5+O(1)$. List $R_K$ as $e_1,\ldots,e_r$ and let $q_1,\ldots,q_r$ be the first $r$ primes exceeding 5. Impose
+\[
+n\equiv1\pmod2,\quad n\equiv1\pmod9,\quad n\equiv1\pmod{25},\quad
+n\equiv2^{e_j}\pmod{q_j^2}\quad(1\le j\le r).
+\]
+The Chinese remainder theorem gives one class modulo
+$M_K=450\prod_{j\le r}q_j^2$. Since $2^6\equiv1\pmod9$ and $2^{20}\equiv1\pmod{25}$, all exponents $0\le e\le K$ are killed by a specified prime square. Every member of the class exceeding $2^K$ therefore has $e_{\min}(n)>K$.
+
+Using the standard prime bound $q_j=O(j\log(j+2))$ gives
+\[
+\log M_K\le2r\log r+O(r\log\log(r+2))
+=\frac85K\log K+O(K\log\log(K+2)).
+\]
+For $K=\lfloor c\log X/\log\log X\rfloor$, $0<c<5/8$, the number of admissible progression members in $(2^K,X]$ is at least
+\[
+\frac{X-2^K}{M_K}-1
+\ge X^{1-8c/5-o(1)}.
+\]
+Here $2^K=X^{o(1)}$ and $M_K\le X^{8c/5+o(1)}$. Consequently at least this many odd $n\le X$ satisfy $e_{\min}(n)>c\log X/\log\log X$. This improves the supplied method's constant $1/2$ to $5/8$ by a concrete modification of its congruences.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The condition $n>2^K$ is essential: divisibility of a nonpositive difference is not a failed positive representation. The congruences use distinct prime moduli, so sharing the same residue 1 modulo 9 and 25 causes no compatibility problem. Inclusion--exclusion counts multiples of 60 once. The assertion for the maximum of $e_{\min}$ alone would be vacuous if small exceptional integers already have value $+\infty$; the growing counting statement above avoids relying on that issue.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} This forces a longer initial interval of bad exponents, but leaves roughly $\log_2 n$ admissible exponents in the original problem. It proves neither an eventual squarefree representation nor failure of every admissible exponent for any sufficiently large $n$.
+\subsection*{5) SOURCES CHECKED}
+The supplied file was read in full. Rosser--Schoenfeld, \emph{Approximate formulas for some functions of prime numbers} (1962), publisher record \texttt{https://doi.org/10.1215/ijm/1255631807}, checked 2026-09-23; the prime-growth estimate is the only external input. The official problem-page request returned HTTP 403; no claim of a new live status check is made.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the original question, not a probability of correctness.
+\textbf{COMPLETION: 15\%}

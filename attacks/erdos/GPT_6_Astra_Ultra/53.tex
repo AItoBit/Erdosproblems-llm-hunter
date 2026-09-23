@@ -1,0 +1,63 @@
+\section{Erd\H{o}s Problem \#53: a rank reduction for sums and products of distinct elements}
+\noindent Independent attempt, 23 September 2026.
+
+\subsection*{1) Statement and known answer}
+For a finite set $A$ of integers, let $S(A)$ and $P(A)$ be the sets of sums and products of nonempty subsets of $A$. The question asks whether, for each fixed $k$, all sufficiently large $A$ satisfy $|S(A)\cup P(A)|\ge|A|^k$. The current editorial attributes the affirmative answer to Chang. This note establishes elementary lower bounds, solves a high-multiplicative-rank subcase, and identifies the low-rank part not covered by those arguments. No novelty is claimed.
+
+\subsection*{2) A quadratic supply of distinct subset sums}
+If $0<b_1<\cdots<b_r$ are distinct positive integers, their subset sums, including the empty sum, number at least $1+r(r+1)/2$.
+
+Proof is by induction. Let $T=b_1+\cdots+b_{r-1}$ and let $S_{r-1}$ be the previous subset sums. They all lie in $[0,T]$. For each of the $r$ distinct choices
+\[
+ x\in\{0,b_1,\ldots,b_{r-1}\},
+\]
+the number $T-x$ is a previous subset sum, and
+\[
+ b_r+T-x>T
+\]
+because $x<b_r$. Thus adding $b_r$ supplies at least $r$ distinct new sums above $T$. Starting with the single empty sum proves the claim. Excluding that sum leaves at least $r(r+1)/2$ nonempty sums.
+
+If $|A|=N$, discard zero if present. At least $r=\lceil(N-1)/2\rceil$ remaining elements have the same sign. Apply the preceding lemma directly to positive elements, or negate a negative subset. All its resulting sums are still sums of distinct members of $A$, up to that sign reversal. Consequently
+\[
+ |S(A)|\ge\frac{r(r+1)}2\ge\frac{N^2-1}{8}
+\]
+when $N$ is odd, and the stated $r$ formula gives a slightly stronger bound when $N$ is even. In particular $|S(A)|\gg N^2$. This alone does not meet the requested arbitrary power, nor even the exact coefficient-one bound $N^2$.
+
+\subsection*{3) Independent prime valuations give exponentially many products}
+For a nonzero integer $a$ with $|a|>1$, write its prime-valuation vector as
+\[
+ v(a)=(v_p(|a|))_p,
+\]
+a finitely supported integer vector. Let $r_\times$ be the dimension over $\mathbb Q$ of the span of these vectors as $a$ ranges over $A$. Choose $r_\times$ elements whose vectors are linearly independent.
+
+Their distinct subsets have distinct absolute products. Indeed, an equality of two absolute products gives
+\[
+ \sum_i\epsilon_i v(a_i)=0,\qquad\epsilon_i\in\{-1,0,1\},
+\]
+and independence forces every $\epsilon_i=0$. Distinct absolute products also give distinct signed products, even if some selected elements are negative. Since every selected absolute value exceeds one, no nonempty product has absolute value one. Hence
+\[
+ |P(A)|\ge2^{r_\times}-1.\tag{1}
+\]
+For example, the problem's conclusion follows immediately whenever
+$r_\times\ge k\log_2N+1$. The extra one accommodates exclusion of the empty product; no empty-subset convention is being used to reach the target.
+
+A useful directly checkable sufficient condition is an ordering $a_1,\ldots,a_r$ of nonzero elements of $A$, with primes $p_i$ such that $p_i\mid a_i$ and $p_i\nmid a_j$ for $j<i$. The valuation matrix with these primes as rows is triangular with nonzero diagonal, so these elements are multiplicatively independent and (1) applies. Nonzero elements are required because zero has no finite prime-valuation vector.
+
+\subsection*{4) What the low-rank reduction leaves}
+Any counterexample to the target inequality must have
+\[
+ 2^{r_\times}-1<N^k,
+\]
+and therefore $r_\times<\log_2(N^k+1)$. This is a real reduction, but not a proof: a rank bound of order $\log N$ still permits complicated exponent vectors and does not imply a sufficiently large set of subset sums by the elementary lemma above.
+
+Low rank itself need not be an obstruction. If $N\ge2$ and
+$A=\{1,b,b^2,\ldots,b^{N-1}\}$ with integer $b\ge2$, its multiplicative rank is one, yet all $2^N$ subset sums are different. For an alleged equality, look at the highest power whose inclusion differs: it exceeds the sum of all smaller powers, which is $(b^j-1)/(b-1)<b^j$. Thus $|S(A)|=2^N-1$ with nonempty subsets. Meanwhile its subset products have only $N(N-1)/2+1$ values, because the exponents obtained as subset sums of $0,1,\ldots,N-1$ fill exactly the interval from zero to $N(N-1)/2$. This example illustrates the needed interaction of addition and multiplication rather than proving it for general low-rank sets.
+
+\subsection*{5) Outcome and references}
+\textbf{ATTEMPT UNRESOLVED for general $A$.} The quadratic sum bound, exponential rank bound, and reduction to logarithmic multiplicative rank are proved. The principal low-rank additive argument needed to reproduce Chang's full theorem is not supplied.
+
+Sources checked: \url{https://www.erdosproblems.com/53}, 23 September 2026; M.-C. Chang, \emph{New results on the Erd\H{o}s--Szemer\'edi sum-product problems}, \url{https://numdam.org/articles/10.1016/S1631-073X(03)00018-9/}. The full resolution is attributed to the literature; it is not inferred from these weaker elementary bounds.
+
+This subjective estimate credits the proved subcase and reduction, while the general mechanism remains to be reconstructed.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}

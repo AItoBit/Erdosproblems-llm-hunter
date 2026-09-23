@@ -1,0 +1,103 @@
+\section{Erd\H{o}s Problem \#25: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+
+\subsection{1) TARGET AND SOURCE AUDIT}
+Let $1\le n_1<n_2<\cdots$ and choose a residue $a_i$ modulo each $n_i$. Define
+\[
+ A=\{m\ge1:\ \forall i,\ m<n_i\text{ or }m\not\equiv a_i\pmod{n_i}\}.
+\]
+Must the logarithmic density of $A$ exist? The activation thresholds are essential.
+
+All eleven supplied versions were considered in full: \texttt{25.tex}, \texttt{25\_v2.tex}, \texttt{25\_v3.tex}, \texttt{25\_v4.tex}, \texttt{25\_v5.tex}, \texttt{25\_v6.tex}, \texttt{25\_v7.tex}, \texttt{25\_v8.tex}, \texttt{25\_v9.tex}, \texttt{25\_v10.tex}, and \texttt{25\_v11.tex}. Byte comparison confirms that versions 5 and 6 are identical, as are versions 9, 10 and 11; there are eight distinct texts.
+
+The first version develops activated inclusion--exclusion. Versions 2 and 3 give reciprocal-summability and zero-stage-density criteria, but incorrectly assert global containment in every finite stage; version 7 correctly repairs this to tail containment. Version 4 gives affine padding, while versions 5 and 6 extract its compression of stage-density variation. Version 8 gives a correct first-hit decomposition, but proposes a universal statement about the thresholdless core that the later explicit example disproves. Versions 9--11 give that valid dense exceptional-set example, but also incorrectly claim the earlier exact decomposition itself was refuted. These are distinct issues. I correct the latter claim and strengthen the reciprocal-summability theorem to ordinary natural density, with a finite-stage error bound.
+
+\subsection{2) WORK}
+Write
+\[
+ A^{(k)}=\{m\ge1:m\not\equiv a_i\pmod{n_i}\ (i\le k)\},\quad
+ \delta_k=d(A^{(k)}),\quad \delta=\lim_k\delta_k,
+\]
+and $L_k=\operatorname{lcm}(n_1,\ldots,n_k)$. The stage sets are periodic and decreasing, so the displayed limit exists. Let $r_i\in\{0,\ldots,n_i-1\}$ represent $a_i$.
+
+\paragraph{The earlier exceptional-set formula is valid.}
+Put
+\[
+ B=\bigcap_k A^{(k)},\qquad
+ E=\{r_i:1\le r_i<n_i,\ r_i\in A^{(i-1)}\},\qquad A^{(0)}=\mathbb N_{>0}.
+\]
+Then $A=B\sqcup E$, exactly as claimed in version 8. Here is an independent proof. Every point of $B$ is in $A$. If $m=r_i$ is counted in $E$, it avoids all earlier classes, while its own and all later constraints are inactive since $m<n_i$; hence $m\in A\setminus B$. Conversely, for $m\in A\setminus B$, choose the \emph{least} index $i$ whose class contains $m$. All earlier classes miss $m$, and the class at $i$ must be inactive, so $m<n_i$ and $m=r_i\in E$.
+
+A repeated representative can qualify only at its earliest occurrence, but it need not qualify at every occurrence. The later versions' example
+\[
+(n_1,a_1)=(5,1),\qquad(n_2,a_2)=(7,1)
+\]
+therefore does not refute the set formula: $r_2=1\notin A^{(1)}$, but $r_1=1\in A^{(0)}$, so $1$ is still in $E$. It only refutes the unnecessary implication $r_i\in A\Rightarrow r_i\in A^{(i-1)}$ for a prescribed, possibly nonfirst index.
+
+There is a separate harmless finite-point error in version 4: its exact formula always inserts $\{1\}$ into a thresholdless finite stage of the padded instance. If some embedded residue is $b_j=0\pmod{m_j}$, then the padded congruence $1\pmod{Mm_j}$ excludes $1$ from that stage. The stage-density formulas are unaffected by this singleton error.
+
+\paragraph{Reciprocal summability actually gives natural density.}
+Assume
+\[
+ \sum_{i\ge1}{1\over n_i}<\infty,\qquad R_k=\sum_{i>k}{1\over n_i}.
+\]
+An activated class has an especially simple counting bound:
+\[
+\#\{m\le x:m\ge n_i,\ m\equiv r_i\pmod{n_i}\}
+\le {x\over n_i}. \tag{1}
+\]
+Indeed its elements are $jn_i+r_i$ for integers $j\ge1$, including the case $r_i=0$; there are at most $x/n_i$ such integers. There is no additive one per modulus in (1), precisely because the small representative is inactive.
+
+For $m\ge n_k$, membership in $A$ implies membership in $A^{(k)}$. Any point in $A^{(k)}\setminus A$ must be caught by a later active class. Consequently, writing $A(x)=|A\cap[1,x]|$,
+\[
+ A^{(k)}(x)-xR_k\le A(x)\le A^{(k)}(x)+n_k. \tag{2}
+\]
+The periodic counting estimate is
+\[
+ |A^{(k)}(x)-\delta_kx|\le L_k.
+\]
+Moreover, a finite union bound on the later classes and then a limit give $0\le\delta_k-\delta\le R_k$. Combining with (2) yields the explicit bound
+\[
+ \boxed{|A(x)-\delta x|\le xR_k+L_k+n_k\qquad(k\ge1).} \tag{3}
+\]
+For fixed $k$, divide by $x$ and let $x\to\infty$; then let $k\to\infty$. Since $R_k\to0$, this proves
+\[
+ \boxed{d(A)=\delta.}
+\]
+Partial summation also gives its logarithmic density. This strengthens the supplied logarithmic-only theorem, but is a special-case theorem, not a solution in the divergent-reciprocal regime.
+
+In particular the source's family $n_i=Q^i+i$, $r_i=i$, $Q\ge3$, has empty thresholdless core $B$: the class at index $i=m$ catches every positive integer $m$ without activation. Nevertheless (3) proves that $A=E$ has \emph{natural} density
+\[
+ d(E)=\delta\ge1-\sum_{i\ge1}{1\over Q^i+i}>1-{1\over Q-1}.
+\]
+Thus the source's large-exceptional-set example is valid, even in the stronger natural-density sense. It disproves universal negligibility of $E$, not the decomposition $A=B\sqcup E$. The conditional implication $\delta_{\log}(B)=\delta\Rightarrow\delta_{\log}(A)=\delta$ also remains valid; its proposed universal premise fails on this example.
+
+\paragraph{The ostensibly more general tail criterion has exactly the same scope.}
+The sources define
+\[
+\Theta_k=\limsup_{x\to\infty}{1\over\log x}
+\sum_{\substack{i>k\\n_i\le x}}{\log(x/n_i)+1\over n_i}.
+\]
+In fact
+\[
+ \boxed{\Theta_k=\sum_{i>k}1/n_i}\tag{4}
+\]
+as an extended nonnegative real number, and the limit exists. Each fixed summand tends to $1/n_i$. If the reciprocal tail is finite, for $x\ge e$ it is dominated by $2/n_i$, so dominated convergence proves (4). If that tail diverges, restricting to any finite subcollection shows that the liminf is at least its reciprocal sum; these finite sums are arbitrarily large. Thus every $\Theta_k$ is infinite in the divergent case. The condition $\Theta_k\to0$ does not reach beyond reciprocal summability.
+
+\subsection{3) ADVERSARIAL VERIFICATION}
+The earliest-index argument handles repeated residues rather than imposing an unwarranted condition on every occurrence. The bound (1) uses activation and would generally fail for the thresholdless progression because of its first positive representative. The period $L_k$ may be enormous, but (3) takes $x\to\infty$ before $k\to\infty$, so no uniform period assumption is hidden. The parameter $k$ may also be optimized in (3) if an explicit rate is desired.
+
+A small exhaustive checker in \texttt{verification/batch\_2\_25\_checks.py} verifies the decomposition for all choices of three distinct moduli from $\{2,\ldots,7\}$, all their residue assignments, and all positive integers through 30. It also checks the repeated-representative example and the finite-stage singleton error. These computations are sanity checks; the proofs above cover unbounded parameters.
+
+The padding constructions control the amplitude of a stage-density change, not its convergence rate as a function of the modulus or period. Accordingly they do not, by themselves, rule out every possible quantitative convergence-rate hypothesis.
+
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The verified progress is an ordinary-density theorem with error bound (3), the exact identification (4) of the tail criterion's scope, and a correction of the latest versions' attempted refutation of a valid decomposition. None handles general positive stage-limit instances with divergent reciprocal moduli. An argument controlling their activated tail beyond the union bound, or a genuine example of logarithmic nonconvergence, remains missing.
+
+\subsection{5) SOURCES CHECKED}
+All eleven local versions were read or, for byte-identical copies, compared against the full text already read; equality was verified by SHA-256 and by direct byte comparison in the checker. The exact target and activation convention were checked on 2026-09-23 in \texttt{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/25.lean}. That file contains a placeholder proof and is used only as a statement reference. The arguments in this attempt use no external density theorem.
+
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a measure inherited from the earlier 88--98 percent estimates.
+\textbf{COMPLETION: 15\%}

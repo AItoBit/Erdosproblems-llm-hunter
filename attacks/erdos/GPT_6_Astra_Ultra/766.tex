@@ -1,0 +1,37 @@
+\section{Problem 766: the two possible families immediately below the endpoint}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{766.tex}. It defines $f(n;k,l)=\min_{|V(H)|=k,|E(H)|=l}\operatorname{ex}(n;H)$ and leaves the strict monotonicity question in $l$ unresolved. Its eventual bipartite reduction and balanced endpoint do not evaluate the underlying extremal numbers. I classify the candidates one edge below that endpoint and simplify the reduction without an Erd\H{o}s--Stone input.
+\subsection*{2) WORK}
+Every nonbipartite $H$ is avoided by the balanced complete bipartite graph, so
+\[
+\operatorname{ex}(n;H)\ge\lfloor n^2/4\rfloor
+\]
+uniformly, without a graph-dependent threshold. There is a bipartite candidate $B$ whenever $l\le\lfloor k^2/4\rfloor$, and $B\subseteq K_{k,k}$. An elementary common-neighbour count gives $\operatorname{ex}(n;K_{k,k})=O_k(n^{2-1/k})$: in a $K_{k,k}$-free graph,
+\[
+\sum_v\binom{d(v)}k\le(k-1)\binom nk.
+\]
+Indeed every $k$-vertex set has at most $k-1$ common neighbours. The inequality $\binom dk\ge(d-k+1)_+^k/k!$ and convexity bound the average degree by $(k-1)^{1/k}n^{1-1/k}+k-1$. Thus the fixed bipartite candidate eventually beats every nonbipartite candidate simultaneously. This reproves the needed reduction directly.
+
+Let $k=2r$, $r\ge3$, and $l=r^2-1$. In a bipartite candidate with parts of sizes $a,2r-a$, we need
+\[
+a(2r-a)=r^2-(a-r)^2\ge r^2-1.
+\]
+Up to interchanging the sides, either $a=r$ or $a=r-1$. The former graph is $K_{r,r}$ with one edge removed; the latter is the full $K_{r-1,r+1}$. Consequently, for all sufficiently large $n$,
+\[
+f(n;2r,r^2-1)=\min\{\operatorname{ex}(n;K_{r,r}-e),
+\operatorname{ex}(n;K_{r-1,r+1})\}.
+\]
+For $k=2r+1$, $r\ge3$, one edge below the maximum means $l=r(r+1)-1$. An unbalanced split has at most $(r-1)(r+2)=r(r+1)-2$ edges. Only the balanced split survives, giving
+\[
+f(n;2r+1,r(r+1)-1)=\operatorname{ex}(n;K_{r,r+1}-e)
+\]
+eventually. Edge transitivity makes the choice of deleted edge immaterial.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+These are exact identifications with other extremal functions, not numerical evaluations of those functions. Isolated vertices do not create extra candidates: every bipartition must still have capacity at least $l$, and the near-maximum edge count forces the listed graphs. Ordinary non-strict monotonicity follows by deleting an edge from an $(l+1)$-edge minimizer; strict inequality does not follow from graph containment alone.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The first layer below the endpoint reduces to one or two explicit extremal numbers. Their necessary strict comparisons, and the general strict-monotonicity question, remain unproved.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{766.tex}, read 2026-09-23. The bipartite reduction, common-neighbour estimate, and near-endpoint classification are proved here and require no uninspected external theorem.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the strict-monotonicity problem.
+\textbf{COMPLETION: 15\%}

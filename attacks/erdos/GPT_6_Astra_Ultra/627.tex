@@ -1,0 +1,30 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#627; independent attempt, 2026-09-23.}
+Let $f(n)=\max_{|V(G)|=n}\chi(G)/\omega(G)$. Does $f(n)(\log_2 n)^2/n$ converge? I read all of \texttt{627.tex}, including the inverse-threshold proof. Its sufficient condition $L=M$ is not a proved necessary condition; calling that equality the exact remaining obstruction overstates the deduction. I test whether elementary regularity of $f$ could close the gap.
+\section{WORK: BOUNDED INCREMENTS DO NOT FORCE A LIMIT}
+For $n\ge1$,
+\[
+0\le f(n+1)-f(n)\le1.
+\]
+The lower bound follows by adding an isolated vertex. For the upper bound, take an optimizing graph $G$ on $n+1$ vertices and delete any vertex, obtaining $H$. Then $\chi(G)\le\chi(H)+1$ and $\omega(G)\ge\omega(H)\ge1$, so
+$\chi(G)/\omega(G)\le f(n)+1$.
+Nevertheless these inequalities plus $f(n)=\Theta(n/(\log_2 n)^2)$ do not imply convergence. To see this, for fixed $a>b>0$ define for large real $x$
+\[
+h(x)=\frac{x}{(\log_2 x)^2}\bigl(a+b\sin(\log\log x)\bigr),
+\qquad F(n)=\lfloor h(n)\rfloor.
+\]
+Differentiation gives $h'(x)=(a+b\sin(\log\log x))/(\log_2 x)^2+O((\log x)^{-3})$. Thus eventually $0<h'(x)<1$, and $F$ is nondecreasing with increments zero or one. Yet
+\[
+\liminf F(n)(\log_2n)^2/n=a-b,\qquad
+\limsup F(n)(\log_2n)^2/n=a+b.
+\]
+Integer rounding contributes only $o(1)$, and the phases of $\log\log n$ approach the maxima and minima along suitable integer subsequences.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The constructed $F$ is an abstract sequence, not the graph extremal function. It disproves only a proposed inference from monotonicity, bounded jumps and order of growth. The source's inverse transformation remains valid, but transfers rather than resolves oscillation. Its inequalities $\liminf g\ge L^2$ and $\limsup g=M^2$ allow convergence even when $L<M$; a stronger graph or Ramsey argument is still needed.
+\section{SOURCES CHECKED}
+Complete local source \texttt{gpt\_pro\_5.4/627.tex}; primary Araujo--Filipe--Miyazaki record \url{https://arxiv.org/abs/2512.16062}, checked 2026-09-23. No unverified numerical constant from that paper is needed above.
+\section{FINAL}
+\textbf{UNRESOLVED.} Elementary regularity is established and shown insufficient to force the desired limit.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward convergence.
+\textbf{COMPLETION: 8\%}

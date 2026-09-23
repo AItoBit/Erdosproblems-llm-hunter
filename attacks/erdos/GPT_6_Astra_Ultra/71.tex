@@ -1,0 +1,73 @@
+\section{Erd\H{o}s Problem 71: cycle lengths in an arithmetic progression}
+
+\subsection{1) Statement and approach}
+Let $P=\{a+jb:j\geq0\}$, where $a,b$ are positive integers, and
+suppose $P$ contains an even integer. Does a sufficiently large
+constant average degree force a cycle with length in $P$?
+Bollob\'as proved the answer is yes. We reconstruct a complete
+deduction from a later, stronger theorem of Liu and Montgomery.
+The latter theorem is an explicit external input, not reproved here.
+
+\subsection{2) The external interval theorem}
+Theorem 1.1 of Liu--Montgomery states that there is $d_0$ such that
+every finite graph of average degree $d\geq d_0$ has some real number
+\[
+ \ell\geq\frac{d}{10(\log d)^{12}}
+\]
+for which every even integer in $[(\log\ell)^8,\ell]$ is a cycle
+length of the graph. Logarithms are natural. Only the existence of
+such an interval, and the fact that its endpoint tends to infinity
+with $d$, will be needed.
+
+\subsection{3) Fitting an even term of the progression}
+The even terms of $P$ form another infinite progression
+\[
+ P\cap2\mathbb N=\{a_0+jh:j\geq0\},\qquad h=\operatorname{lcm}(b,2).
+\]
+Indeed, when $b$ is even, the hypothesis forces $a$ to be even and
+$h=b$; when $b$ is odd, exactly every other term is even and $h=2b$.
+Here $a_0$ denotes its first even term.
+
+Choose $L$ so large that, for every $x\geq L$,
+\[
+ (\log x)^8\geq\max(a_0,3),\qquad
+ x-(\log x)^8\geq h.
+\]
+Such an $L$ exists because $(\log x)^8=o(x)$ and grows without bound.
+Choose $D\geq d_0$ so large that
+$d/[10(\log d)^{12}]\geq L$ for all $d\geq D$.
+The limit of this expression is infinite, so the choice is uniform
+over all such $d$.
+
+For a graph of average degree $d\geq D$, obtain $\ell\geq L$ from
+the external theorem. The least member of $a_0+h\mathbb Z$ that is
+at least $(\log\ell)^8$ is smaller than $(\log\ell)^8+h$ and at
+least $a_0$. Hence it belongs to $P\cap2\mathbb N$ and is at most
+$\ell$. The theorem supplies a cycle of exactly that length.
+This proves the required assertion with a constant depending only
+on the progression.
+
+\subsection{4) Why the parity condition matters}
+If $P$ contains only odd integers, complete bipartite graphs
+$K_{r,r}$ have arbitrarily large average degree $r$ but no cycle
+whose length is in $P$. Thus the parity assumption is necessary,
+not an artifact of the interval theorem. The proof also handles
+progressions beginning after any prescribed finite cutoff, since
+the choice of $L$ incorporates $a_0$.
+
+\textbf{Outcome: SOLVED, known affirmative resolution reconstructed.}
+All deductions from the stated interval theorem are proved above;
+its expansion and cycle-construction proof is the external dependency.
+No novelty or independent formal verification is claimed.
+
+\subsection{5) Sources}
+\begin{itemize}
+\item H. Liu and R. Montgomery, \emph{A solution to Erd\H{o}s and
+Hajnal's odd cycle problem}, Theorem 1.1,
+\texttt{https://arxiv.org/abs/2010.15802}.
+\item T. F. Bloom, Problem 71,
+\texttt{https://www.erdosproblems.com/71}, checked 23 September 2026.
+\end{itemize}
+The estimate refers to full coverage using the explicit external theorem.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

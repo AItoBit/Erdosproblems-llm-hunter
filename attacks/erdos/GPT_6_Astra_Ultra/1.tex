@@ -1,0 +1,264 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#1; reconstruction of the known counterexample, 2026-09-23.}
+A finite set $A$ of positive integers is \emph{dissociated} if its subset
+sums are all distinct. The conjecture asks whether an absolute $c>0$
+satisfies $\max A\geq c2^{|A|}$ for every such $A$. We prove the negative
+answer: for every $\epsilon>0$ there are arbitrarily large $n$ and
+dissociated $n$-element sets with $\max A<\epsilon2^n$.
+The covering-system question is problem \#2, not this problem.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The live problem page labels this conjecture disproved and reports a Lean
+verification. Its exposition by Thomas Bloom, edited 2026-09-03, attributes
+the counterexample to GPT-6 Astra. The lattice construction below is a
+reconstruction of that already reported result; no novelty is claimed.
+I have not independently run the referenced Lean development.
+The earlier local attempts concern the correct distinct-sums problem but
+do not contain this counterexample.
+
+The source exposition leaves its primitive-lattice approximation step in
+a sketch form. We give an explicit integer-matrix argument for precisely
+the rational lattices used here. The only standard algebraic input is
+Smith normal form for an integer matrix: integral row and column
+operations with determinant $\pm1$ reduce a full-column-rank matrix to
+a diagonal matrix followed by zero rows. This follows by the Euclidean
+algorithm on the entries. No equidistribution theorem is used.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Construct rational lattices in the sum-zero hyperplane that avoid the
+open unit cube and have a small normalized covolume. Approximate a slight
+dilation by primitive integer lattices using Smith normal form. Their
+positive normal vectors give integer weights without short relations;
+binary expansion converts these weights into ordinary dissociated sets.
+The slight dilation and the dyadic choice of the relation bound are both
+essential bookkeeping steps in this argument.
+
+\section{WORK}
+\subsection{1. An odd-cycle building block}
+Write $V_d=\{x\in\mathbb R^d:\sum_i x_i=0\}$. A pair $(\Lambda,v)$ is
+admissible if $\Lambda\subset V_d$ is a lattice of rank $d-1$,
+$h:=\sum_i v_i>0$, and
+\[
+ \Lambda\cap(-1,1)^d=\{0\},\qquad
+ (\Lambda+t v)\cap(-1,1)^d\ne\varnothing\ \Longrightarrow\ |t|<1.
+ \tag{1}
+\]
+Take an odd integer $b\geq3$, number coordinates modulo $b$, and set
+\[
+ (Tz)_i=z_i+\tfrac12z_{i-1},\quad
+ \Lambda_1=T(V_b\cap\mathbb Z^b),\quad v_1=Te_0.
+\]
+Then $h_1=3/2$. The eigenvalue calculation, or expansion of the cyclic
+determinant, gives $\det T=1+2^{-b}>0$. In particular, $T$ is invertible.
+
+We check both assertions in (1). Whenever $\|Tz\|_\infty<1$, putting
+$M=\|z\|_\infty$ gives $M<1+M/2$, hence $M<2$. If $z$ is integral,
+its coordinates belong to $\{-1,0,1\}$. A coordinate equal to $1$ forces
+its predecessor to be $-1$, and a coordinate $-1$ forces its predecessor
+to be $1$. Any nonzero coordinate would therefore force alternating
+signs around an odd cycle, an impossibility. Thus $z=0$, proving the
+first assertion even for the larger lattice $T\mathbb Z^b$.
+
+For the second assertion let $z=z'+t e_0$, where $z'\in V_b\cap\mathbb
+Z^b$, and suppose $\|Tz\|_\infty<1$. The coordinates $z_1,\ldots,z_{b-1}$
+are integral, and $t=\sum_i z_i$. The nonzero entries among these integral
+coordinates must form an initial alternating segment: a nonzero entry
+forces the preceding entry to have the opposite sign, while a zero
+cannot be followed by a nonzero entry. If the entire segment is zero,
+$|z_0|<1$ and $t=z_0$. Otherwise change all signs so that $z_1=1$.
+The inequality $|1+z_0/2|<1$ implies $z_0<0$. If $z_{b-1}=0$, the
+coordinate-zero inequality gives $-1<z_0<0$; the sum of the integral
+segment is either $0$ or $1$, so $|t|<1$. If the segment reaches
+$b-1$, it has even length, has sum zero, and ends in $-1$. Consequently
+$|z_0-1/2|<1$ and $z_0<0$ give $-1/2<t=z_0<0$. This proves (1).
+
+For any admissible pair put $\Gamma=\Lambda+\mathbb Zv$. Taking a basis
+of $\Lambda$ and appending $v$ shows
+\[
+ \operatorname{covol}(\Gamma)
+ =\frac{h}{\sqrt d}\operatorname{covol}(\Lambda),\qquad
+ \Delta(\Lambda):=\frac{\operatorname{covol}(\Lambda)}{\sqrt d}
+ =\frac{\operatorname{covol}(\Gamma)}h.                 \tag{2}
+\]
+Here $h/\sqrt d$ is the perpendicular component of $v$ relative to
+$V_d$. In the building block $\Gamma_1=T\mathbb Z^b$, since
+$(V_b\cap\mathbb Z^b)+\mathbb Ze_0=\mathbb Z^b$. Thus
+$\operatorname{covol}(\Gamma_1)=1+2^{-b}$.
+
+\subsection{2. Iteration makes the normalized covolume arbitrarily small}
+Given an admissible rational pair $(\Lambda_s,v_s)$ in dimension $d$, set
+\[
+ \Lambda_{s+1}=\left\{(\lambda_j+\beta_jv_s)_{j=0}^{b-1}:
+       \lambda_j\in\Lambda_s,\ \beta\in\Lambda_1\right\},
+ \qquad v_{s+1}=((v_1)_jv_s)_{j=0}^{b-1}.                 \tag{3}
+\]
+All these vectors are rational. The sum of block $j$ is $h_s\beta_j$,
+so the parametrization is injective, its image lies in $V_{bd}$, and
+its rank is $b(d-1)+(b-1)=bd-1$. It is a lattice, as the image of a
+product lattice under an injective linear map.
+
+If a vector of $\Lambda_{s+1}$ lies in the open unit cube, the second
+part of (1), applied block by block, gives $|\beta_j|<1$. Then
+$\beta\in\Lambda_1$ and the first part of (1) imply $\beta=0$.
+The remaining $\lambda_j$ vanish by the same first part for $\Lambda_s$.
+More generally a vector of $\Lambda_{s+1}+t v_{s+1}$ in the cube has
+block coefficients $\gamma=\beta+t v_1$. Their absolute values are
+less than one by block admissibility. Admissibility of the building
+block then gives $|t|<1$. The new pair is therefore admissible, and
+$h_{s+1}=(3/2)h_s$.
+
+To compute volumes, choose a basis $B_s$ of $\Lambda_s$ and use the
+block coordinate maps $(x_j,\alpha_j)\mapsto B_sx_j+\alpha_jv_s$.
+Each map has determinant of absolute value
+$\operatorname{covol}(\Gamma_s)$. The allowed coefficient lattice for
+the full-rank lattice $\Gamma_{s+1}$ is
+$(\mathbb Z^{d-1})^b\times\Gamma_1$. Hence
+\[
+ \operatorname{covol}(\Gamma_{s+1})
+ =(1+2^{-b})\operatorname{covol}(\Gamma_s)^b.
+\]
+In dimension $d=b^s$, (2) consequently gives
+\[
+ \Delta_s=
+ \frac{(1+2^{-b})^{1+b+\cdots+b^{s-1}}}{(3/2)^s}.       \tag{4}
+\]
+Fix $s$ first. As odd $b\to\infty$, the logarithm of the numerator is
+at most $(1+b+\cdots+b^{s-1})2^{-b}\to0$. Therefore
+$\Delta_s\to(2/3)^s$. Choosing $s$ and then $b$ makes $\Delta_s$ as
+small as desired. This order of parameter choices matters.
+
+\subsection{3. Explicit primitive approximation, including dyadic scales}
+Let $B$ be a rational $d$ by $m$ basis matrix for one of these lattices,
+where $m=d-1$, and let $\Delta=\operatorname{covol}(B\mathbb Z^m)/\sqrt d$.
+Choose a positive integer $r$ with $C=rB$ integral. Smith normal form
+provides unimodular integer matrices $U,W$ such that
+\[
+ UCW=D=\begin{pmatrix}\operatorname{diag}(s_1,\ldots,s_m)\\0\end{pmatrix},
+ \qquad s_i>0.
+\]
+Let $E_t$ be the $d$ by $m$ matrix with entries $t s_i$ in position
+$(i,i)$, entries $1$ in position $(i+1,i)$, and zero elsewhere.
+Define
+\[
+ A_t=U^{-1}E_tW^{-1}.
+\]
+These are integer matrices and $A_t/t\to C$. The last $m$ rows of
+$E_t$ form a triangular matrix with diagonal entries $1$. Thus its
+columns generate a saturated integer lattice: if an integer vector
+lies in their real span, its coefficients are integral, as can be
+read from these last $m$ coordinates. Unimodular transformations
+preserve this property. The signed maximal minors of $A_t$ therefore
+give a primitive integral normal vector $u_t$, with
+\[
+ A_t\mathbb Z^m=u_t^\perp\cap\mathbb Z^d.             \tag{5}
+\]
+Equivalently, the minor equal to $1$ before the transformations ensures
+that the greatest common divisor of all maximal minors is $1$.
+
+Because the columns of $C$ span $V_d$, its signed-minor vector is
+$r^m\Delta(1,\ldots,1)$ after choosing its overall sign. Continuity
+of the minors gives
+\[
+ \frac{u_t}{t^m}\longrightarrow r^m\Delta(1,\ldots,1). \tag{6}
+\]
+In particular all coordinates of $u_t$ are positive for large $t$.
+
+Fix $\delta>0$. For each dyadic $Q=2^\ell$, choose
+$t=\lceil(1+\delta)Q/r\rceil$. Then $A_t/Q\to(1+\delta)B$.
+For all sufficiently large such $Q$,
+\[
+ (A_t\mathbb Z^m)\cap(-Q,Q)^d=\{0\}.                 \tag{7}
+\]
+Indeed, if this failed along an infinite sequence, write a nonzero
+short vector as $A_t z_t$. Uniformly bounded left inverses of $A_t/Q$
+show that the integer vectors $z_t$ remain bounded. Passing to a
+subsequence makes them a fixed nonzero $z$. Taking limits yields
+$\|(1+\delta)Bz\|_\infty\leq1$, whereas cube avoidance for $B\mathbb
+Z^m$ gives $\|Bz\|_\infty\geq1$, a contradiction. This also explains
+why the positive dilation cannot simply be omitted.
+
+It follows from (5)--(7) that the coordinates $u_1,\ldots,u_d$ of
+$u_t$ are positive integers satisfying
+\[
+ \sum_i c_i u_i=0,\quad c_i\in\mathbb Z,\quad |c_i|<Q
+ \quad\Longrightarrow\quad c_i=0\text{ for every }i,
+ \qquad
+ \frac{\max_i u_i}{Q^{d-1}}\longrightarrow(1+\delta)^{d-1}\Delta.
+ \tag{8}
+\]
+This is the required $Q$-dissociation statement at actual powers of two.
+
+\subsection{4. Binary expansion finishes the counterexample}
+For the weights in (8), form
+\[
+ A_Q=\{2^j u_i:1\leq i\leq d,\ 0\leq j<\ell\}.
+\]
+An equality of two subset sums gives
+$\sum_i c_i u_i=0$, where
+$c_i=\sum_j\eta_{ij}2^j$, $\eta_{ij}\in\{-1,0,1\}$, and
+$|c_i|\leq2^\ell-1=Q-1$. By (8), every $c_i$ vanishes; uniqueness
+of binary expansions then says that the two subsets used exactly the
+same powers for each $i$. In particular all the displayed elements
+are distinct and $A_Q$ is dissociated, with $n=d\ell$. Moreover
+\[
+ \frac{\max A_Q}{2^n}
+ =\frac{(Q/2)\max_i u_i}{Q^d}
+ \longrightarrow\frac{(1+\delta)^{d-1}\Delta}{2}.       \tag{9}
+\]
+Given $\epsilon>0$, use (4) to choose a lattice with $\Delta<\epsilon$.
+Then choose $\delta>0$ so small that $(1+\delta)^{d-1}<2$.
+The limit in (9) is strictly less than $\epsilon$, and all sufficiently
+large $\ell$ give $\max A_Q<\epsilon2^{|A_Q|}$. Their cardinalities
+$d\ell$ tend to infinity. This disproves the conjectured uniform
+positive constant. \hfill$\square$
+
+\section{ADVERSARIAL VERIFICATION}
+The accompanying exact-arithmetic script checks the building block's
+integer and single-real-coordinate assertions for $b=3,5,7,9$.
+For the latter it intersects the strict rational intervals allowed for
+$z_0$, so it checks every possible real value rather than a grid sample.
+The proof above handles all odd $b$.
+
+As a concrete check of the primitive approximation when $b=3$, a basis
+matrix after clearing denominators is
+\[
+ C=\begin{pmatrix}1&-1\\1&2\\-2&-1\end{pmatrix}.
+\]
+The procedure gives
+\[
+ A_t=\begin{pmatrix}t&-t\\t+1&2t-1\\-2t-1&2-t\end{pmatrix},
+ \qquad u_t=(3t^2+t+1,\ 3t^2-t,\ 3t^2).
+\]
+The script verifies the normal-vector identities and primitivity, then
+checks (8) by exhaustive short-relation searches for
+$Q=2,4,8,16,32,64,128$ and $t=\lceil3Q/5\rceil$. These finite checks
+support the formulas; the limiting argument supplies the theorem for
+arbitrary dimension and sufficiently large scales. The script also
+demonstrates the failure of the odd-cycle argument for even cycle length.
+
+\section{FINAL STATUS AND REMAINING WORK}
+\textbf{SOLVED (reproduction of the known negative answer).}
+The argument establishes arbitrarily small $\max A/2^{|A|}$ with
+arbitrarily large $|A|$. Its input construction is credited to the
+current proof exposition. The matrix approximation, boundary argument,
+volume computation, and conversion to subsets have been checked here.
+There is no remaining mathematical gap identified in this reconstruction;
+the standard Smith normal form theorem is explicitly invoked. The
+published formal verification has not been audited here, and this
+write-up does not provide an efficient numerical construction at large
+dimension or improve the known asymptotic result.
+
+\section{SOURCES AND REPRODUCIBILITY}
+T.~F.~Bloom, problem \#1 and its proof exposition,
+\url{https://www.erdosproblems.com/1}, accessed 2026-09-23.
+The source records the attribution of the construction and the current
+problem status. Exact checks for this reconstruction are in
+\texttt{verification/solved\_1\_checks.py} and their saved results in
+\texttt{verification/solved\_1\_checks.json}.
+
+The estimate concerns completion of this mathematical reconstruction,
+not a claim of novelty, a new formal proof, or an improved quantitative
+bound.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

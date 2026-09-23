@@ -1,0 +1,68 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#8; reconstruction of a known counterexample, 2026-09-23.}
+Given a finite colouring of the positive integers, must there be a distinct covering system whose moduli all have the same colour? A distinct covering system consists of finitely many residue classes $a_d+d\mathbb Z$, with different moduli $d>1$, whose union is $\mathbb Z$. The question concerns the colours of the moduli, not the colours of the integers covered by their residue classes.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current source labels the question disproved and attributes the counterexample to Hough's absolute bound for the smallest modulus. It also asks whether a strong lower bound on the reciprocal sum of available moduli forces a covering. Both assertions fail. The present proof uses the explicit coarse bound already proved in \texttt{2.tex}; it does not require the numerical value of Hough's much stronger published bound.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Use a cutoff above which no distinct covering system can live. Give every smaller permitted modulus its own colour. The only remaining colour class is the tail beyond the cutoff. Check separately that a singleton class cannot supply a covering and that the tail cannot supply one. Then examine the proposed reciprocal-density condition on this same tail.
+
+\section{WORK}
+\subsection{The precise input}
+The complete argument in \texttt{2.tex} proves the following statement:
+\[
+ P=2^{4096},\quad M=2^{8P}\quad\Longrightarrow\quad
+ \text{every distinct covering system has a modulus less than }M.
+\tag{1}
+\]
+That proof reconstructs the credited measure method of Balister, Bollob\'as, Morris, Sahasrabudhe, and Tiba. Only the existence of a finite integer $M>2$ with property (1) is needed here. One may alternatively use Hough's published theorem, taking any integer cutoff larger than $10^{16}$.
+
+\subsection{An explicit finite colouring}
+Define
+\[
+ c(d)=\begin{cases}d,&1\le d<M,\\M,&d\ge M.\end{cases}
+\]
+There are exactly $M$ colours, a finite number. Suppose that $\{a_d+d\mathbb Z:d\in D\}$ is a monochromatic distinct covering system. If its colour is $j<M$, every $d\in D$ equals $j$. Since the moduli are distinct, $D$ contains at most one element. If $j=1$, there is no permitted modulus at all. If $j>1$, a single residue class modulo $j$ misses every residue different from its chosen one, so it cannot cover the integers.
+
+The remaining possibility is colour $M$. Then every $d\in D$ is at least $M$, contradicting (1). These cases exhaust the colours, proving a negative answer. The fact that the number of colours is extremely large is irrelevant to a statement quantified over \emph{every} finite colouring. \hfill$\square$
+
+If the colouring is formally defined on all of $\mathbb Z$, extend $c$ arbitrarily to zero and negative integers. All covering moduli are positive, so this extension has no effect on the contradiction.
+
+\subsection{A density-one set of unusable moduli}
+Let
+\[
+ A=\{M,M+1,M+2,\ldots\}.
+\]
+Its natural density is $1$, because for $X\ge M$,
+$|A\cap[1,X]|=\lfloor X\rfloor-M+1$. Nevertheless, no finite subset of $A$ supplies the moduli of a distinct covering system, by (1). Thus even natural density $1$ of the available moduli is insufficient.
+
+The literal infinite tail sum in the editorial satisfies
+\[
+ \sum_{\substack{a\in A\\a>N}}\frac1a=\infty
+\]
+for every fixed $N$, so it certainly cannot be a sufficient lower-bound criterion. A finite, quantitatively meaningful variant also fails: for every integer $N\ge\max\{M,2\}$,
+\[
+ \sum_{\substack{a\in A\\N<a\le N^2}}\frac1a
+ =\sum_{a=N+1}^{N^2}\frac1a
+ \ge\int_{N+1}^{N^2+1}\frac{dt}{t}
+ =\log\frac{N^2+1}{N+1}
+ \ge\log N-\log2.
+\]
+The last inequality follows from $(N^2+1)/(N+1)\ge N/2$. Thus the same set has reciprocal mass of order $\log N$ already between $N$ and $N^2$, while having no usable finite covering subfamily.
+
+\subsection{Why the distinctness convention matters}
+If repetitions of a modulus were allowed, any permitted $d$ by itself would make the question trivial: use all $d$ residue classes modulo $d$, each carrying the same modulus colour. The single-class argument above is valid precisely because the original covering-system convention permits a given modulus only once. This is a substantive hypothesis, not a choice of how to write the family.
+
+\section{VERIFICATION AND SCOPE}
+The proof checks both possible kinds of colour class and explicitly excludes the trivial modulus $1$. No computational search over the enormous colour set is needed. The only non-elementary dependency is the absolute minimum-modulus theorem, for which this folder already contains a complete coarse-bound reconstruction. This file supplies all additional deductions needed for both the colouring and density counterexamples.
+
+\section{FINAL}
+\textbf{SOLVED (negative, known-result reconstruction).} The displayed finite colouring has no monochromatic distinct covering system. The tail set $A$ simultaneously gives a density-one and large-reciprocal-mass counterexample. The argument is credited to the known minimum-modulus obstruction and makes no novelty claim.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/8}, accessed 2026-09-23. B. Hough, \emph{Solution of the minimum modulus problem for covering systems}, Annals of Mathematics 181 (2015), 361--382, \url{https://annals.math.princeton.edu/2015/181-1/p06}. The explicit weaker theorem used here is proved in this folder's \texttt{2.tex}; its method is attributed there to \url{https://arxiv.org/abs/1811.03547}. No earlier local numbered attempt for \#8 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+All deductions for the stated question are proved, with the precise minimum-modulus dependency identified. This measures completion of the known counterexample reconstruction, not originality.
+\textbf{COMPLETION: 100\%}

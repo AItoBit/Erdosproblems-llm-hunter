@@ -1,0 +1,35 @@
+\section{Problem 287: a stronger two-adic span obstruction}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read all of \texttt{287.tex}. The target is to rule out an Egyptian partition of one with distinct denominators $2\le n_1<\cdots<n_k$ and every successive gap at most two. The supplied general valuation lemma yields $n_i\mid\operatorname{lcm}(1,\ldots,W)$, where $W=n_k-n_1$. I refine the factor-of-two restriction and record the exact residue condition when an odd prime power has only two representatives.
+\subsection*{2) WORK}
+Let $t=\max_i v_2(n_i)$. If $t\ge1$, multiply the identity $\sum_i1/n_i=1$ by the least common multiple $L$. Modulo two, precisely the terms of valuation $t$ contribute one. Their number must therefore be even and at least two. Any two such denominators are $2^t$ times distinct odd integers, so they differ by at least $2^{t+1}$. Consequently
+\[
+2^{v_2(n_i)}\le W/2\qquad\text{for every even }n_i.
+\]
+Combining this with the supplied prime-power bound gives the stronger necessary divisibility
+\[
+n_i\mid 2^{\max\{0,\lfloor\log_2W\rfloor-1\}}
+\prod_{\substack{p\le W\\p\text{ odd prime}}}p^{\lfloor\log_pW\rfloor}
+\qquad(W\ge2).
+\]
+The greatest allowed power of two has been reduced by a factor two.
+
+For an odd prime $p$, let $t$ be the maximum positive valuation and suppose exactly two denominators have valuation $t$, say $p^tu$ and $p^tv$, where $p\nmid uv$. Reduction of the same cleared identity modulo $p$, followed by cancellation of the common unit $L/p^t$, gives
+\[
+u^{-1}+v^{-1}\equiv0\pmod p,
+\quad\text{equivalently}\quad u+v\equiv0\pmod p.
+\]
+In particular, if $p^t>W/2$, at most two multiples of $p^t$ fit in the interval. Both must occur and they are consecutive multiples: $v=u+1$. Thus
+\[
+2u+1\equiv0\pmod p.
+\]
+This is a residue restriction beyond merely demanding a repeated maximum valuation.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The two-adic argument concerns denominators at the maximal valuation; counting all multiples of $2^t$ would lose the required odd-coefficient spacing. These conditions hold for every finite distinct Egyptian partition, not only the dense gap-two configuration. For $1=1/2+1/3+1/6$, $W=4$ and the two maximal even denominators are exactly four apart, so the factor $W/2$ cannot be decreased in this general lemma. No inference from these necessary conditions to impossibility of dense configurations has been justified.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The span sieve is stricter and includes exact cancellation congruences. A global argument showing that all gap-two candidate sets fail is still missing.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{287.tex}, read 2026-09-23. All refinements above follow directly from its cleared-denominator identity and are proved here; no unverified search or literature novelty is claimed.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward excluding every proposed dense partition.
+\textbf{COMPLETION: 15\%}

@@ -1,0 +1,36 @@
+\section{OBJECTIVE AND REVIEW OF ALL VERSIONS}
+\textbf{Erd\H{o}s \#12; independent attempt, 2026-09-23.}
+Assume $A\subseteq\mathbb N$ contains no distinct $a,b,c$ with $b,c>a$ and $a\mid b+c$. I read \texttt{12.tex}, \texttt{12\_v2.tex}, and \texttt{12\_v3.tex} completely: respectively the restricted square construction, its block extension, and the primitive-kernel reduction. Their claim that all three original subquestions remain open is stale. The checked official entry reports a construction of size at least $N/(\log N)^{O(\log\log\log N)}$ for all large $N$, settling the square-root existence question positively and the universal power-saving question negatively. The remaining question is whether every such $A$ has $\sum_{a\in A}1/a<\infty$.
+\section{WORK: A SUFFICIENT CONDITION FOR RECIPROCAL CONVERGENCE}
+Here is a self-contained conditional result directed at that remaining question. Suppose $A$ contains pairwise coprime elements $a_1,a_2,\ldots\ge3$ such that
+\[
+\sum_{j\ge1}2^{-j}\log a_j<\infty.
+\tag{1}
+\]
+Then $\sum_{a\in A}1/a$ converges. For instance (1) holds if $a_j\le\exp(Cj^d)$ for fixed $C,d$.
+Fix $a_j$. Among elements of $A$ larger than $a_j$, opposite non-self-opposite residue classes modulo $a_j$ cannot both occur: representatives would be distinct and have sum divisible by $a_j$. A self-opposite class contains at most one such element. There are at most two self-opposite classes. Consequently, after discarding at most two exceptional elements, all elements larger than $a_j$ occupy a residue set $R_j$ of size at most $a_j/2$.
+Put $Q_r=\prod_{j\le r}a_j$. After discarding at most $\max_{j\le r}a_j+2r$ elements, the Chinese remainder theorem places $A$ in at most
+\[
+\prod_{j\le r}|R_j|\le Q_r2^{-r}
+\]
+residue classes modulo $Q_r$. Thus, writing $A(t)=|A\cap[1,t]|$,
+\[
+A(t)\le 2^{-r}t+3Q_r.
+\tag{2}
+\]
+Here the class-counting boundary error is at most $Q_r$, and $\max a_j+2r\le2Q_r$ since every $a_j\ge3$.
+Integrate (2) over $Q_r^2\le t<Q_{r+1}^2$ after dividing by $t^2$:
+\[
+\int_{Q_r^2}^{Q_{r+1}^2}\frac{A(t)}{t^2}\,dt
+\le 2^{1-r}\log a_{r+1}+\frac3{Q_r}.
+\]
+The sum of the first terms converges by (1); the second terms converge because $Q_r\ge3^r$. Since these intervals cover the tail, the integral $\int_1^\infty A(t)t^{-2}\,dt$ is finite. Tonelli's identity identifies it with $\sum_{a\in A}1/a$, proving the claim.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The CRT step requires actual pairwise coprimeness, not merely distinct or primitive elements. Neither the supplied primitive-kernel reduction nor the original avoidance property guarantees anchors satisfying (1). Finite exceptional residues are explicitly charged before applying CRT, and no independence assumption is made about the remaining set. This is a sufficient condition proved here, not an asserted new literature result. Removing the coprimeness and growth hypotheses is precisely the missing step toward the original reciprocal-sum question.
+\section{SOURCES CHECKED}
+All three complete supplied versions; official indexed entry \url{https://www.erdosproblems.com/12}, including its updated separation of the three subquestions. The proof above uses only the stated avoidance property, CRT, and summation of nonnegative terms.
+\section{FINAL}
+\textbf{UNRESOLVED.} The first two subquestions have existing resolutions; the remaining reciprocal-sum question is proved here only under the explicit anchor hypothesis (1).
+\section{COMPLETION ESTIMATE}
+Subjective progress toward the remaining open subquestion, not inherited from solved parts.
+\textbf{COMPLETION: 15\%}

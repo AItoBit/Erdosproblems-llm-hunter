@@ -1,0 +1,61 @@
+\section{Erd\H{o}s Problem \#243: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{243.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+Suppose increasing integers $a_n$ satisfy $a_{n+1}/a_n^2\to1$ and
+$\sum1/a_n\in\mathbb Q$. Must the sequence eventually obey
+$a_{n+1}=a_n^2-a_n+1$? The supplied file proves a tail asymptotic and
+invokes an external bounded-lcm theorem. I give a direct arithmetic
+criterion in terms of reduced tail numerators, without using that theorem.
+
+\subsection*{2) WORK: RECIPROCAL TAIL RIGIDITY}
+Put $T_n=\sum_{j>n}1/a_j=b_n/c_n$ in lowest positive terms, and
+$r_n=1/T_n=c_n/b_n$. Write $a=a_{n+1}$, $b=a_{n+2}$ (the temporary
+$b$ here is a sequence term, not the tail numerator $b_n$). Quadratic
+growth gives
+\[
+ T_n=1/a+1/b+O(b^{-2}),\qquad
+ r_n=a-\frac{a^2}{b}+O(a^{-1}).
+\]
+The tail bound follows since eventually each new term is at least half
+the square of the previous one; the terms after $b$ contribute $O(b^{-2})$.
+Expanding the reciprocal, with $b\sim a^2$, proves the second formula.
+In particular $r_n-(a-1)\to0$.
+
+If the reduced numerator $b_n$ is bounded for all sufficiently large $n$,
+the integer
+$c_n-b_n(a_{n+1}-1)=b_n(r_n-a_{n+1}+1)$ tends to zero and therefore
+eventually vanishes. Hence $r_n=a_{n+1}-1$ exactly. The identity
+\[
+ T_{n+1}=T_n-1/a_{n+1}
+\]
+now gives $r_{n+1}=a_{n+1}(a_{n+1}-1)$. Comparing it with
+$r_{n+1}=a_{n+2}-1$ proves the desired Sylvester recurrence.
+
+The same proof permits growing numerators under the explicit condition
+\[
+ b_n\left(\left|\frac{a_{n+2}}{a_{n+1}^2}-1\right|
+             +\frac1{a_{n+1}}\right)\longrightarrow0. \tag{1}
+\]
+Indeed the reciprocal expansion bounds $|r_n-(a_{n+1}-1)|$ by a constant
+times the expression inside parentheses. Multiplication by $b_n$ again
+forces the integer difference to be zero eventually.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The assumption that the reciprocal sum is rational makes every $T_n$
+rational, but does not bound its reduced numerator. Approaching an integer
+does not imply eventual equality for rationals with growing denominators.
+Condition (1) explicitly supplies that missing discrete separation.
+Bounded numerator only along a subsequence would not justify the two
+consecutive exact identities used in the recurrence argument.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} A self-contained sufficient condition is proved, along
+with a quantitative description of what prevents the rounding argument.
+No argument establishing (1) from the original hypotheses is available here.
+The full target was checked in the indexed primary history:
+\url{https://www.erdosproblems.com/history/243}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

@@ -1,0 +1,110 @@
+\section{Erd\H{o}s Problem 37: why lacunary sets are not essential components}
+
+\subsection{1) Problem and the known resolution}
+For a set $B$ of nonnegative integers, write
+\[
+ d_s(B)=\inf_{n\geq1}\frac{|B\cap[1,n]|}{n}
+\]
+for its Schnirelmann density. An essential component $A$ must satisfy
+\[
+ d_s(A+B)>d_s(B)\qquad\hbox{whenever }0<d_s(B)<1.
+\]
+The question is whether an increasing lacunary sequence can have this
+property. Here lacunary means that its positive elements
+$a_1<a_2<\cdots$ satisfy $a_{j+1}/a_j\geq q>1$ for every sufficiently
+large $j$.
+
+The current problem page, checked on 23 September 2026, records a
+negative answer due to Ruzsa. We reconstruct the deduction from his
+published counting obstruction. The deep obstruction is an explicitly
+used external theorem; this note does not reprove Ruzsa's paper or
+claim a new disproof.
+
+\subsection{2) The external theorem actually needed}
+Let $H(x)=|H\cap[1,x]|$. The following consequence of Ruzsa's
+\emph{Essential Components} is sufficient:
+\begin{quote}
+There is no essential component whose counting function is
+$O((\log x)^{1+o(1)})$ as $x\to\infty$.
+\end{quote}
+This is the obstruction stated in the paper's abstract. In particular,
+a set with $H(x)=O(\log x)$ cannot be an essential component.
+The complementary existence result in the same abstract says that,
+for every fixed $\epsilon>0$, there are essential components with
+counting function $O((\log x)^{1+\epsilon})$.
+We do not need to strengthen the obstruction to any additional uniform
+pointwise assertion.
+
+If the additive-set convention requires $0\in A$, we adjoin zero first.
+This changes no count on $[1,x]$. It also causes no problem logically:
+if $A$ were essential, then $A\cup\{0\}$ would be essential because
+\[
+ A+B\subseteq(A\cup\{0\})+B
+\]
+and Schnirelmann density is monotone under inclusion.
+
+\subsection{3) The complete deduction for every lacunary set}
+Fix $j_0$ such that $a_{j+1}\geq q a_j$ for $j\geq j_0$.
+Iteration gives
+\[
+ a_{j_0+r}\geq a_{j_0}q^r\qquad(r\geq0).
+\]
+If $a_{j_0+r}\leq x$, then
+\[
+ r\leq\frac{\log(x/a_{j_0})}{\log q}.
+\]
+Thus, for $x\geq a_{j_0}$,
+\[
+ A(x)\leq j_0+rac{\log(x/a_{j_0})}{\log q}=O(\log x).
+\]
+Ruzsa's obstruction now applies and shows that $A$ is not an essential
+component. Every implied constant here may depend on $A$ and $q$;
+no uniform lacunarity ratio across different sequences is needed.
+The same conclusion holds if the original definition assumes only
+$\liminf_j a_{j+1}/a_j>1$: choose any $q$ strictly between $1$ and that
+lower limit, and discard a finite initial segment in the calculation.
+
+\subsection{4) Consequences and checks of the scope}
+The counting argument also treats a finite union of lacunary sets,
+since a sum of finitely many $O(\log x)$ counting functions remains
+$O(\log x)$. Adding or deleting finitely many elements likewise cannot
+remove this obstruction. In particular, adjoining $0$ does not provide
+an exception.
+
+Every infinite essential component, listed increasingly through its
+positive elements, must therefore satisfy
+\[
+ \liminf_j\frac{a_{j+1}}{a_j}=1.
+\]
+The ratios are always at least $1$, and a lower limit strictly exceeding
+$1$ would contradict the argument just proved. This necessary condition
+is not asserted to be sufficient.
+
+It would be incorrect to replace Ruzsa's theorem by the much weaker
+observation that a lacunary set has zero natural density. Indeed,
+Ruzsa's existence result gives essential components with counting
+function $O((\log x)^{1+\epsilon})$, which also have zero natural
+density. The obstruction used here concerns the substantially thinner
+logarithmic scale.
+
+\textbf{Outcome: SOLVED, known negative answer reconstructed from
+Ruzsa's theorem.} The logarithmic growth estimate and its implications
+are proved above. Producing an explicit obstructing set $B$ for each
+particular lacunary $A$ is not needed for the conclusion and is not
+claimed by this exposition.
+
+\subsection{5) Sources}
+\begin{itemize}
+\item I. Z. Ruzsa, \emph{Essential Components}, Proceedings of the
+London Mathematical Society (3) 54 (1987), 38--56,
+\texttt{https://doi.org/10.1112/plms/s3-54.1.38}. The publisher's
+abstract was checked on 23 September 2026 for the exact external
+counting obstruction used here.
+\item T. F. Bloom, Problem 37,
+\texttt{https://www.erdosproblems.com/37}, checked 23 September 2026.
+\end{itemize}
+
+The estimate measures coverage of the question using the named external
+theorem, not a new proof of that theorem or independent formal checking.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

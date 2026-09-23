@@ -1,0 +1,63 @@
+\section{Erd\H{o}s Problem \#213: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{213.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The target is an arbitrarily large finite planar set with integral pairwise
+distances, no three collinear and no four concyclic. I read the supplied
+characteristic proof and seven-point coordinates. Those are established
+background, not a new construction. I independently executed all of its
+finite checks, then derived an exact bounded extension search.
+
+\subsection*{2) EXACT VERIFICATION}
+Represent each source coordinate as $(x_i,t_i\sqrt{2002})$, with rational
+$x_i,t_i$. Exact rational arithmetic gives the 21 distances, in lexicographic
+pair order,
+\[
+\begin{split}
+&22270,22098,16637,9248,8908,8636,21488,11397,15138,20698,13746,\\
+&10795,14450,13430,20066,7395,11135,11049,5780,5916,10744.
+\end{split}
+\]
+All 35 determinants with rows $(x_i,t_i,1)$ are nonzero. All 35 determinants
+with rows $(x_i,t_i,x_i^2+2002t_i^2,1)$ are nonzero. Multiplying the second
+column by $\sqrt{2002}$ recovers the geometric determinants, so these exact
+checks certify both general-position conditions. The companion script
+\texttt{verification/root\_checks.py} contains the rational calculation.
+
+\subsection*{3) WORK: COMPLETE FINITE EXTENSION PARAMETRIZATION}
+More generally, normalize three old points to
+$O=(0,0)$, $B=(d,0)$, $C=(u,v\sqrt k)$ with $d>0$, $v\ne0$, and
+$d,u,v\in\mathbb Q$. Any new point $P=(x,t\sqrt k)$ at integer distances
+$a,b,c$ from them must satisfy
+\[
+ x=\frac{a^2-b^2+d^2}{2d},\qquad
+ t=\frac{a^2+u^2+kv^2-c^2-2ux}{2kv}. \tag{1}
+\]
+These follow by subtracting the three squared-distance equations.
+Conversely, a triple $(a,b,c)$ of positive integers and (1) gives a valid
+point at those three distances precisely when $x^2+kt^2=a^2$.
+Distances to the remaining old points are then tested by checking whether
+their rational squared distances are integer squares. The two determinant
+tests above enforce general position after adjoining $P$.
+
+Thus all extensions with $a,b,c\le D$ are covered by at most $D^3$ exact
+tests. This is completeness for a specified bounded search, not a heuristic
+coordinate grid. It also avoids assuming the new point has rational
+Cartesian coordinates when the characteristic is nonsquare.
+
+\subsection*{4) ADVERSARIAL VERIFICATION}
+The old seven-point determinant checks were run; an exhaustive $D^3$
+extension search was not run and no eight-point example is claimed.
+Arbitrarily large configurations need not extend this particular heptagon,
+so even proving it unextendible would not decide the problem.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} The old certificate is now independently reproducible,
+and (1) provides an exact finite search specification. The first unsupplied
+construction remains eight points. The primary problem record checked via
+search is \url{https://www.erdosproblems.com/213}; it credits the heptagon
+to Kreisel--Kurz. No literature novelty is claimed.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

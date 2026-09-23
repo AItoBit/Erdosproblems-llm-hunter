@@ -1,0 +1,38 @@
+\section{Erd\H{o}s Problem \#22: a barrier for complete-join constructions}
+\noindent Independent attempt, 23 September 2026.
+
+\subsection*{1) Target and known solution}
+For every $\epsilon>0$ and all sufficiently large $N$, construct a $K_4$-free graph with at least $N^2/8$ edges and independence number at most $\epsilon N$. The problem page records the affirmative theorem of Fox, Loh, and Zhao. Their paper addresses the exact critical density; a construction with only $(1/8-o(1))N^2$ edges does not automatically reach the requested threshold. We examine a natural elementary construction and prove that it cannot solve the question when $\epsilon<1/12$.
+
+\subsection*{2) Complete joins are too rigid}
+Suppose a graph $G$ has a partition into two nonempty sets $X,Y$, with every edge between $X$ and $Y$ present. If both induced graphs contain an edge, those two edges and the four cross edges form a $K_4$. Thus, in a $K_4$-free join, at least one side, say $X$, is independent. Also $G[Y]$ is triangle-free: any triangle in $Y$, together with any vertex in $X$, would give a $K_4$.
+
+Write $a=|X|$, $b=|Y|$, $N=a+b$, and $\alpha=\alpha(G)$. We have $a\le\alpha$. Every neighbourhood in the triangle-free graph $G[Y]$ is independent in $G$, so its maximum degree is at most $\alpha$. The degree sum now gives
+\[
+ e(G)=ab+e(G[Y])\le ab+\frac{\alpha b}{2}
+ \le\frac32\alpha b\le\frac32\alpha N.\tag{1}
+\]
+In particular, $e(G)\ge N^2/8$ forces
+\[
+ \boxed{\alpha(G)\ge N/12.}
+\]
+This is uniform in the choice of both parts and their internal graphs. It rules out the entire complete-join strategy for sufficiently small $\epsilon$, even when the second part is an excellent triangle-free Ramsey graph.
+
+The obstruction can be phrased constructively. Start with a triangle-free graph $H$ on $b$ vertices and join it to an independent set of size $a$. Then the resulting graph is $K_4$-free, has $ab+e(H)$ edges, and independence number exactly $\max(a,\alpha(H))$: an independent set cannot use vertices on both sides. Thus a complete join does preserve $K_4$-freeness, but (1) shows the density--independence trade-off it imposes.
+
+\subsection*{3) Why merely choosing a dense multipartite graph fails}
+The complete balanced three-partite graph is $K_4$-free and has roughly $N^2/3$ edges, comfortably above the requested density. Its largest part is an independent set of size at least $N/3$, so its edge count does not solve the problem. More generally, in a blow-up of a loopless graph on $r$ vertices, the $r$ vertex classes are independent. The largest class has at least $N/r$ vertices. A fixed template therefore cannot give arbitrarily small independence ratio.
+
+This observation does not rule out templates whose size depends on $\epsilon$. Such a family would itself have to solve the finite density--independence trade-off. In particular it would be wrong to argue that all blow-up constructions are impossible merely because every fixed one has a positive independence ratio.
+
+\subsection*{4) Exact threshold bookkeeping}
+Suppose one only knows graphs $H_N$ with $e(H_N)\ge(1/8-\delta_N)N^2$ and $\delta_N\to0$. Adding isolated vertices can only reduce the edge density and cannot turn this lower bound into $N^2/8$. Blowing up every vertex by the same integer factor preserves the ratio $e(H_N)/N^2$ exactly, so it also cannot repair a shortfall. Adding edges can repair a count, but then $K_4$-freeness requires a separate proof. These elementary facts explain why the exact threshold in the original question contains additional content beyond the classical asymptotic construction.
+
+\subsection*{5) Outcome and source check}
+\textbf{ATTEMPT UNRESOLVED.} The complete-join obstruction and the threshold audit are proved here. They do not reproduce the affirmative construction, and do not improve the known quantitative bounds. The original problem is already resolved; this label refers to the limited reconstruction in this file.
+
+Sources: \url{https://www.erdosproblems.com/22}, checked 23 September 2026; J. Fox, P.-S. Loh, and Y. Zhao, \emph{The critical window for the classical Ramsey--Tur\'an problem}, \url{https://arxiv.org/abs/1208.3276}. The known resolution is attributed to that paper; none of its deep construction results is silently assumed in the proof of (1). No novelty is claimed.
+
+This subjective estimate credits a rigorous obstruction to an attempted construction, while the central positive construction remains absent.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

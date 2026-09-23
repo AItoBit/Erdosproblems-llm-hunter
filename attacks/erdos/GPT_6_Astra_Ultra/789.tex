@@ -1,0 +1,29 @@
+\section{OBJECTIVE AND REVIEW OF ALL VERSIONS}
+\textbf{Erd\H{o}s \#789; independent attempt, 2026-09-23.}
+Call a finite integer set admissible if equal sums of nonempty subsets have equal cardinalities. Determine the asymptotic order of the largest $h(n)$ guaranteed as an admissible subset of every $n$-element integer set. I read both \texttt{789.tex} and \texttt{789\_v2.tex} completely, including the first file's unrelated archived discussion of \#873 and \#875. The relevant arguments transfer an interval upper bound to $h(n)$ but do not close the known lower/upper exponent gap. The checked formal statement confirms that sums are subset sums, without repeated summands.
+\section{WORK: TRANSLATION CAN REMOVE EVERY OBSTRUCTION}
+Let $B=\{b_1,\ldots,b_m\}\subset\mathbb Z$, $L=\min B$, and $D=\max B-L$. If an integer $T$ satisfies
+\[
+L+T>(m-1)D,
+\]
+then $B+T$ is admissible. Indeed put $u=L+T>0$. A sum of $r$ elements lies in $[ru,r(u+D)]$. For $0\le r<m$,
+\[
+r(u+D)<(r+1)u
+\]
+because $rD\le(m-1)D<u$. Thus the possible sum intervals for different cardinalities are disjoint. This even proves the stronger convention allowing the empty subset.
+There are in fact only finitely many exceptional translations, in either direction. Cancel the common elements of two unequal-cardinality subsets. A remaining collision in $B+T$ has the form
+\[
+\sum_{i=1}^m\varepsilon_i b_i+T\sum_{i=1}^m\varepsilon_i=0,
+\qquad \varepsilon_i\in\{-1,0,1\},\quad\sum_i\varepsilon_i\ne0.
+\]
+Each sign vector permits at most one integer $T$. Vectors $\varepsilon$ and $-\varepsilon$ give the same candidate, so there are at most $(3^m-1)/2$ exceptional integer translations. This is only an upper bound: many candidates are nonintegral or coincide.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Admissibility is therefore not translation invariant. For example $\{1,2,3\}$ is not admissible since $1+2=3$, whereas $\{11,12,13\}$ is admissible by the proved interval criterion. This prevents normalizing an arbitrary input set by translation and then carrying an admissible subset back unchanged. Nonzero scaling does preserve the property; translation adds a cardinality-dependent term and does not.
+The universal problem concerns the input at its actual location, so the translation lemma cannot improve $h(n)$. Using $[1,n]$ as a particular adverse input, as the supplied upper-bound argument does, remains valid. The useful conclusion here is a precise obstruction to a plausible but invalid compression strategy, not a new asymptotic estimate.
+\section{SOURCES CHECKED}
+Both complete local versions; official indexed entry \url{https://www.erdosproblems.com/789}; the subset-based definition in \url{https://raw.githubusercontent.com/google-deepmind/formal-conjectures/main/FormalConjectures/ErdosProblems/789.lean}.
+\section{FINAL}
+\textbf{UNRESOLVED.} The effect of translation is proved exactly; the asymptotic order of $h(n)$ remains undetermined.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress, not a probability of eventual success.
+\textbf{COMPLETION: 8\%}

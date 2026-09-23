@@ -1,0 +1,91 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#1176; independent attempt, 2026-09-23.}
+Let $G=(V,E)$ be a simple graph with $\chi(G)=\aleph_1$. The question asks whether there always exists an edge colouring $c:E\to\omega_1$ such that
+\[
+\forall f:V\to\omega\ \exists n<\omega\ \forall\xi<\omega_1\
+\exists\{u,v\}\in E:\quad f(u)=f(v)=n,\quad c(uv)=\xi.
+\]
+Thus a single vertex-colour class must contain an edge of every prescribed colour. The vertices witnessing different edge colours may be different. The vertex map $f$ is arbitrary and is not required to be proper. The requested property itself forces $c$ to be onto $\omega_1$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The live problem page, checked 2026-09-23, retains the classification \emph{not disprovable} and attributes consistency to Hajnal and Komj\'ath. Their original paper \emph{Some Remarks on the Simultaneous Chromatic Number}, Combinatorica 23 (2003), 89--104, has a publisher abstract explicitly describing this conjecture and partial/consistency results. I checked that abstract, not an inaccessible full proof; no specific forcing theorem from that paper is used below. The live status does not amount to a theorem that the question is independent of ZFC.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+The quantifier order is the main obstruction: it is easy to confuse ``each edge colour appears somewhere'' with ``one vertex class contains every edge colour.'' I derive an exact bounded-palette criterion, test a natural chromatic-number substitute against an explicit counterexample, and identify a sufficient hereditary condition which would solve the problem if it could be constructed.
+
+\section{WORK}
+\subsection{Every individual colour graph must be uncountably chromatic}
+For a proposed colouring $c$, write
+\[
+G_\xi=(V,\{e\in E:c(e)=\xi\})\qquad(\xi<\omega_1).
+\]
+If $c$ has the desired property, then $\chi(G_\xi)=\aleph_1$ for every $\xi$. Indeed, if $G_\xi$ had a proper countable colouring $f$, no $f$-class could contain an edge of colour $\xi$, contradicting the required conclusion for this $f$. The upper bound $\chi(G_\xi)\le\aleph_1$ follows by restricting a proper $\aleph_1$-colouring of $G$.
+
+This already rules out any construction in which one colour class is a matching, a forest, a bipartite graph, or any other countably chromatic graph. In particular merely making every edge colour occur many times is inadequate.
+
+\subsection{An explicit failure of the tempting sufficient condition}
+The preceding necessary condition is not sufficient. Let
+\[
+V=\omega_1\times\omega_1
+\]
+and join $(\xi,\alpha)$ to $(\eta,\beta)$ exactly when $\xi=\eta$ and $\alpha\ne\beta$. Thus $G$ is a disjoint union of $\omega_1$ copies of $K_{\aleph_1}$. It has chromatic number $\aleph_1$: a component supplies the lower bound, and colouring $(\xi,\alpha)$ by $\alpha$ supplies the upper bound.
+
+Assign every edge within component $\xi$ the edge colour $\xi$. For every $\xi$, the graph $G_\xi$ contains a full $K_{\aleph_1}$ and has chromatic number $\aleph_1$. Nevertheless put
+\[
+f(\xi,\alpha)=
+\begin{cases}0,&\xi=0,\\1,&\xi>0.\end{cases}
+\]
+The class $f^{-1}(0)$ sees only edge colour $0$. The class $f^{-1}(1)$ sees precisely the nonzero edge colours. Neither sees all of $\omega_1$. This refutes the proposed sufficiency condition, not the original problem: a different edge colouring on the same graph might still work.
+
+\subsection{An exact reduction to bounded initial palettes}
+For $A\subseteq V$ let $S_c(A)=\{c(e):e\in E\cap[A]^2\}$. A fixed $c:E\to\omega_1$ has the required property if and only if
+\[
+\forall\delta<\omega_1\ \forall f:V\to\omega\ \exists n<\omega:
+\quad \delta\subseteq S_c(f^{-1}(n)).\tag{*}
+\]
+Here $\delta$ is the set of all smaller ordinals, so every palette tested in $(*)$ is countable. Crucially, it is the \emph{same} edge colouring $c$ for all $\delta$.
+
+\textit{Proof.} The forward implication is immediate. Conversely fix $f$ and suppose no vertex class sees all edge colours. For every $n<\omega$ choose a missing colour $\xi_n\in\omega_1\setminus S_c(f^{-1}(n))$. Countability of this family gives
+\[
+\delta=\sup_{n<\omega}(\xi_n+1)<\omega_1.
+\]
+Every $\xi_n$ belongs to $\delta$, so no class sees all of $\delta$, contrary to $(*)$. \hfill$\square$
+
+An equivalent covering formulation makes the construction target explicit. For $\delta<\omega_1$, let $\mathcal J_\delta(c)$ consist of sets contained in a countable union of subsets $A_m\subseteq V$, where each $A_m$ omits at least one edge colour below $\delta$. Then $\mathcal J_\delta(c)$ is a sigma-ideal: taking subsets preserves such covers, and a countable union of countable covers is countable. We have
+\[
+(*)\quad\Longleftrightarrow\quad
+V\notin\mathcal J_\delta(c)\quad\hbox{for every }0<\delta<\omega_1.
+\]
+To verify the nontrivial direction, a countable cover by colour-omitting sets can be disjointified by assigning a vertex to its first containing set. The resulting vertex classes still omit their selected colours. Conversely the classes of a vertex colouring that fails $(*)$ form just such a cover. For $\delta=0$ the palette condition is vacuous, so excluding it in the ideal formulation avoids an empty-palette convention.
+
+This reduction does not assert the existence of a coherent $c$. Separate colourings $c_\delta$ for separate countable palettes would leave a compatibility problem and cannot simply be substituted into $(*)$.
+
+\subsection{A stronger sufficient condition using chromatic number}
+Suppose one could construct $c$ such that for every $\xi<\omega_1$ and every $A\subseteq V$,
+\[
+\xi\notin S_c(A)\quad\Longrightarrow\quad\chi(G[A])\le\aleph_0.\tag{**}
+\]
+Then $c$ would solve the original problem for $G$. To prove this, consider any countable vertex colouring whose every class $A_n$ misses a colour. By $(**)$ choose a proper countable colouring $h_n:A_n\to\omega$. The map
+\[
+v\longmapsto(n,h_n(v))\in\omega\times\omega\qquad(v\in A_n)
+\]
+properly colours all of $G$: vertices in different classes have distinct first coordinates, and adjacent vertices in one class have distinct second coordinates. This contradicts $\chi(G)=\aleph_1$.
+
+Condition $(**)$ asks that every subset inducing uncountable chromatic number see every edge colour. It is stronger than the original requirement, and its construction is not established here. It does, however, specify a sufficient target without an illicit exchange of the quantifiers $\forall\xi$ and $\exists n$.
+
+\section{VERIFICATION AND EXACT REMAINING GAP}
+The bounded-palette equivalence uses the fact that every countable subset of $\omega_1$ is bounded. It would fail as written for a palette ordinal of countable cofinality. The counterexample has only two vertex colours and all its edge-colour graphs really have chromatic number $\aleph_1$; it therefore directly tests the quantifier error rather than relying on a low-chromatic degenerate case.
+
+The covering formulation was checked in both directions, including overlapping covers and empty vertex classes. The sufficient condition permits different proper colourings $h_n$ for different classes; pairing the labels is what turns them into a single global proper colouring. No finite computation certifies existence at $\aleph_1$, and none is claimed to do so.
+
+The remaining task is to construct, for every $\aleph_1$-chromatic graph, one edge colouring whose avoidance ideals are all proper, or else to produce an appropriate model and a graph where no such colouring exists. Proving only that each $G_\xi$ is uncountably chromatic falls short, as the explicit example shows.
+
+\section{FINAL}
+\textbf{UNRESOLVED.} An exact bounded-palette/covering reduction and a sufficient hereditary criterion are proved. A natural but incorrect chromatic-number shortcut is ruled out by a concrete example. No universal edge-colouring construction has been obtained.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, statement and current status, \url{https://www.erdosproblems.com/1176}, accessed 2026-09-23. A. Hajnal and P. Komj\'ath, \emph{Some Remarks on the Simultaneous Chromatic Number}, Combinatorica 23 (2003), 89--104, publisher abstract \url{https://link.springer.com/article/10.1007/s00493-003-0015-2}. No existing numbered source was found in the local attempts tree. The reductions and counterexample above are proved directly; no novelty claim is made.
+
+\section{COMPLETION ESTIMATE}
+This is a subjective assessment of progress toward the unrestricted problem. The exact reduction and adversarial example make the missing construction precise, but do not establish that such a construction is possible in ZFC.
+\textbf{COMPLETION: 7\%}

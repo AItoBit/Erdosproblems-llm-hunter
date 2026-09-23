@@ -1,0 +1,39 @@
+\section{Erd\H{o}s Problem \#616: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For an $r$-uniform hypergraph whose every edge subfamily on at most $3r-3$ vertices has a common vertex, determine the largest possible transversal number $t(r)$.
+
+All supplied versions considered: \texttt{616.tex}.
+The source proves exact small cases through $r=6$ and the upper bound $r-1$. Its claimed distinction between induced and arbitrary subgraphs is unnecessary here: a common vertex of all induced edges also hits every chosen subfamily. I extend its obstruction argument to $r=7$, without claiming a new literature result.
+\subsection{2) WORK}
+\paragraph{Rechecking the intersection input.}
+Two edges must intersect, since their union has at most $2r\le3r-3$ vertices. If three edges had empty intersection, their three pair intersections would be nonempty and disjoint, so inclusion--exclusion would give union size at most $3r-3$, a contradiction. Consequently every pair intersection is a transversal of the whole hypergraph.
+
+Choose a minimal empty-intersection family $E_1,\ldots,E_m$. For each $i$ take $x_i\in\bigcap_{j\ne i}E_j\setminus E_i$. These witnesses are distinct; $E_i$ contains the other $m-1$ witnesses, so $4\le m\le r+1$. With $X=\{x_1,\ldots,x_m\}$ write
+\[
+E_i=(X\setminus\{x_i\})\cup B_i,\qquad |B_i|=r-m+1,
+\]
+where every $B_i$ is disjoint from $X$. Therefore the union has at most $m(r-m+2)$ vertices.
+
+\paragraph{The next uniformity.}
+Let $r=7$. Empty total intersection forces union size at least $19$. For $m\ge6$ the preceding bound is at most $18$, so $m=4$ or $5$. In either case its maximum is $20$. Thus
+\[
+\sum_i|B_i|-\left|\bigcup_i B_i\right|\le1.
+\]
+There is at most one overlapping pair of petals: a vertex in three petals already contributes two to this difference, and two separate pair overlaps also contribute at least two. In particular some pair $B_i,B_j$ is disjoint. For that pair,
+\[
+E_i\cap E_j=X\setminus\{x_i,x_j\},\qquad \tau(G)\le m-2\le3.
+\]
+If the minimal obstruction has four edges, the stronger bound $\tau(G)\le2$ follows.
+
+The four-edge construction in the source, with $|X|=4$ and four disjoint private petals of size four, has union $20>18$, empty total intersection and common intersection for every proper subfamily. Any two witness vertices hit all edges. Hence $2\le t(7)\le3$.
+\subsection{3) ADVERSARIAL VERIFICATION}
+If total intersection is nonempty, the upper bound is immediate. For a potentially infinite edge family, an empty intersection has a finite witness subfamily: fix one finite edge and choose an edge omitting each of its vertices. Minimality is therefore legitimate. The overlap argument uses the integer lower bound 19, not just a weak asymptotic inequality.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+This does not distinguish $t(7)=2$ from $3$, nor determine the general function. The original small-uniformity proofs and this extension are not claimed to improve published bounds.
+\subsection{5) SOURCES CHECKED}
+Full source read. The official indexed statement at \texttt{https://www.erdosproblems.com/616} was checked on 2026-09-23. The displayed literature bounds in that index need qualification at small $r$ and are not used in this self-contained proof.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

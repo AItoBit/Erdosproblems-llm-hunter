@@ -1,0 +1,137 @@
+\section{Erd\H{o}s Problem 90: the negative unit-distance resolution}
+
+\subsection{1) Statement and scope of this reconstruction}
+For a finite planar set $P$, let $u(P)$ count its unordered pairs
+at distance one. The question asks whether there are constants
+$C,N_0$ such that every $n$-point set with $n\geq N_0$ satisfies
+\[
+ u(P)\leq n^{1+C/\log\log n}.
+\]
+The current source records a negative answer. We reconstruct the
+geometric passage from the arithmetic construction in OpenAI's
+\emph{Planar Point Sets with Many Unit Distances}. The number-field
+existence input is explicit and external. The argument below uses
+a cube window and proves the projection, counting and exponent
+steps. This is an exposition of the known disproof, not a claim
+to have discovered it or verified its formalization.
+
+\subsection{2) Exact arithmetic input}
+The combination of Propositions 2.2 and 3.8 of the cited paper
+provides a fixed integer $D\geq1$, a fixed real $\gamma>0$, and
+fields $K_j=L_j(i)$ with $L_j$ totally real of degrees
+$f_j=[L_j:\mathbb Q]\to\infty$, having finite sets
+\[
+ U_j\subseteq D^{-1}\mathcal O_{K_j},\qquad |U_j|\geq e^{\gamma f_j},
+ \qquad |\sigma(u)|=1
+\]
+for every $u\in U_j$ and every complex embedding $\sigma$ of
+$K_j$. Their arithmetic construction uses an infinite unramified
+tower with prescribed split primes, class-group counting and norm-one
+elements. None of that existence argument is reproved here.
+
+We also use the standard Minkowski embedding fact: choosing one
+embedding from each conjugate pair identifies
+$D^{-1}\mathcal O_{K_j}$ with a full lattice in $\mathbb C^{f_j}$.
+The fixed values $D,\gamma$ must be independent of $j$; allowing
+the denominator to grow arbitrarily would invalidate the argument.
+
+\subsection{3) Averaging translations inside a cube}
+Fix one field, suppress $j$, and write $f=f_j$. Let
+\[
+ \Phi(x)=(\sigma_1(x),\ldots,\sigma_f(x)),\qquad
+ \Lambda=\Phi(D^{-1}\mathcal O_K)\subseteq\mathbb R^{2f}.
+\]
+Regard each complex coordinate as two real coordinates. Every real
+coordinate of every $\Phi(u)$ has absolute value at most one.
+Choose a fixed $R>1$ so large that
+\[
+ \gamma+2\log\left(1-\frac1{2R}\right)\geq\frac\gamma2.
+\]
+Let $W=[-R,R]^{2f}$. For a translate $a+\Lambda$, define
+$X_a=(a+\Lambda)\cap W$, $N_a=|X_a|$, and let $E_a$ be the
+number of ordered pairs in $X_a$ whose difference belongs to
+$\Phi(U)$.
+
+Averaging $a$ over a fundamental domain of the lattice, with
+normalized Lebesgue measure, unfolds the lattice translates to give
+\[
+ \mathbb EN_a=\frac{\operatorname{vol}(W)}{\operatorname{covol}(\Lambda)},
+ \quad
+ \mathbb EE_a=\frac1{\operatorname{covol}(\Lambda)}
+       \sum_{u\in U}\operatorname{vol}(W\cap(W-\Phi(u))).
+\]
+Each coordinate interval overlaps its shift in length at least
+$2R-1$. Consequently
+\[
+ \mathbb EE_a\geq
+ |U|\left(1-\frac1{2R}\right)^{2f}\mathbb EN_a
+ \geq e^{\gamma f/2}\mathbb EN_a.
+\]
+Some nonempty $X_a$ therefore satisfies
+$E_a\geq e^{\gamma f/2}N_a$: otherwise integrate the strict reverse
+inequality, noting that empty translates contribute zero.
+
+\subsection{4) Projection is injective and preserves the selected distances}
+Fix such an $X=X_a$ and project it to the first complex coordinate.
+If two points have the same projection, their difference is
+$\Phi(\beta/D)$ for some $\beta\in\mathcal O_K$ with
+$\sigma_1(\beta)=0$. A field embedding is injective, so $\beta=0$.
+Thus the planar image $P$ has $n=|X|$ distinct points.
+
+Each ordered pair counted by $E_a$ projects to a unit-distance pair,
+because $|\sigma_1(u)|=1$. Each unordered pair has at most two
+orientations, irrespective of whether $U$ is closed under negation.
+Hence
+\[
+ u(P)\geq\frac12 e^{\gamma f/2}n.
+\]
+
+\subsection{5) Uniform control of the number of points}
+For distinct $x,y\in X$, write $x-y=\Phi(\beta/D)$ with nonzero
+$\beta\in\mathcal O_K$. Its algebraic norm is a nonzero integer,
+and conjugate embeddings occur in pairs. Therefore
+\[
+ \prod_{r=1}^f|\sigma_r(\beta/D)|
+ =D^{-f}|N_{K/\mathbb Q}(\beta)|^{1/2}\geq D^{-f}.
+\]
+Some complex coordinate has magnitude at least $D^{-1}$; some real
+coordinate consequently has magnitude at least $1/(\sqrt2D)$.
+Thus the real sup-norm cubes of radius $1/(2\sqrt2D)$ centered
+at the points of $X$ have disjoint interiors. They lie in the
+cube obtained by enlarging $W$ by that radius. Comparing volumes gives
+\[
+ n\leq(1+2\sqrt2RD)^{2f}=e^{Bf},\qquad
+ B=2\log(1+2\sqrt2RD)>0.
+\]
+On the other hand $E_a\leq n(n-1)$, so
+$n-1\geq e^{\gamma f/2}$. The constructed orders tend to infinity.
+Since $f\geq(\log n)/B$,
+\[
+ u(P)\geq\frac12 n^{1+\gamma/(2B)}
+          \geq n^{1+\delta},\qquad \delta=\frac\gamma{4B}>0,
+\]
+where the last inequality holds for all sufficiently large members
+of the constructed sequence.
+
+Given any proposed $C,N_0$, choose a member with
+$n\geq N_0$ and $\log\log n>C/\delta$. Then
+$u(P)\geq n^{1+\delta}>n^{1+C/\log\log n}$. This negates the
+question with its full quantifiers; a subsequence suffices.
+
+\textbf{Outcome: SOLVED, the known negative resolution reconstructed
+relative to the stated arithmetic existence input.} The geometric
+argument is supplied above; the field-tower theorem and any Lean
+formalization are not independently verified here.
+
+\subsection{6) Sources}
+\begin{itemize}
+\item OpenAI, \emph{Planar Point Sets with Many Unit Distances},
+Propositions 2.2 and 3.8 and the geometric construction in Section 2,
+\texttt{https://cdn.openai.com/pdf/74c24085-19b0-4534-9c90-465b8e29ad73/unit-distance-proof.pdf}.
+\item T. F. Bloom, Problem 90,
+\texttt{https://www.erdosproblems.com/90}, checked 23 September 2026.
+\end{itemize}
+The estimate measures full coverage using the explicit external
+arithmetic theorem, not an independent proof of that theorem.
+\subsection{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

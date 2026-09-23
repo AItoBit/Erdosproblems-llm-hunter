@@ -22,6 +22,9 @@ REVIEWS_DIR = BASE_DIR / "reviews"
 ERDOS_STATUS_PATH = LISTS_DIR / "erdos_status.json"
 # Tao's database includes independence results in its total solved count.
 RESOLVED_ERDOS_STATUSES = {'proved', 'disproved', 'solved', 'independent'}
+# Requested display rule for the Erdos LLM Claim column. This deliberately
+# differs from the database's resolved categories and from individual attempts.
+UNRESOLVED_ERDOS_CLAIM_STATUSES = {'open', 'falsifiable', 'decidable'}
 
 
 def load_erdos_status():
@@ -31,7 +34,7 @@ def load_erdos_status():
 
 
 def apply_erdos_status(problems, snapshot):
-    """Keep LLM claims separate from the current mathematical problem status."""
+    """Apply the database display rule while preserving actual attempt claims."""
     statuses = snapshot['problems']
     missing = sorted(set(problems) - set(statuses), key=int)
     if missing:
@@ -43,7 +46,17 @@ def apply_erdos_status(problems, snapshot):
 
     for number, problem in problems.items():
         upstream = statuses[number]
-        problem['llm_status'] = problem['status'] if problem.get('attacks') else 'none'
+        has_attempts = any(
+            attack.get('entry_kind') != 'statement_only'
+            for attack in problem.get('attacks', [])
+        )
+        problem['attempt_status'] = problem['status'] if has_attempts else 'none'
+        problem['llm_status'] = (
+            'unresolved'
+            if upstream['informal_status'] in UNRESOLVED_ERDOS_CLAIM_STATUSES
+            else 'solved'
+        )
+        problem['llm_status_source'] = 'database_rule'
         problem['status'] = upstream['status']
         problem['status_updated'] = upstream['status_updated']
         problem['is_solved'] = upstream['informal_status'] in RESOLVED_ERDOS_STATUSES
@@ -173,8 +186,51 @@ def get_file_date(filepath):
         return datetime.now().strftime('%Y-%m-%d')
 
 
+def parse_collection_metadata(content):
+    """Read an attributed collection record without treating its header as prose.
+
+    Invalid metadata stops the build: silently discarding attribution could
+    misrepresent an imported writeup as a new mathematical attempt.
+    """
+    first_line, separator, remainder = content.partition('\n')
+    marker = re.match(r'^\s*%\s*COLLECTION_METADATA:\s*(.*)$', first_line)
+    if not marker:
+        return None, content
+    try:
+        metadata = json.loads(marker.group(1))
+    except json.JSONDecodeError as exc:
+        raise ValueError('Invalid COLLECTION_METADATA JSON') from exc
+    if not isinstance(metadata, dict) or metadata.get('schema_version') != 1:
+        raise ValueError('Unsupported COLLECTION_METADATA schema_version')
+    kind = metadata.get('kind')
+    if kind not in {'reused_writeup', 'statement_only'}:
+        raise ValueError('Invalid COLLECTION_METADATA kind')
+    if metadata.get('independently_reviewed') is not False:
+        raise ValueError('Collection imports must explicitly be independently_reviewed: false')
+    if kind == 'reused_writeup':
+        for key in ('source_model', 'primary_source'):
+            if not isinstance(metadata.get(key), str) or not metadata[key].strip():
+                raise ValueError(f'COLLECTION_METADATA requires {key}')
+        paths = metadata.get('source_paths')
+        if not isinstance(paths, list) or not paths or not all(isinstance(p, str) and p for p in paths):
+            raise ValueError('COLLECTION_METADATA requires source_paths')
+        if metadata.get('source_claim') not in {'solved', 'unresolved'}:
+            raise ValueError('Invalid COLLECTION_METADATA source_claim')
+        completion = metadata.get('source_completion')
+        if completion is not None and (
+            type(completion) not in (int, float) or not 0 <= completion <= 100
+        ):
+            raise ValueError('Invalid COLLECTION_METADATA source_completion')
+    else:
+        urls = metadata.get('source_urls')
+        if not isinstance(urls, list) or not all(isinstance(url, str) for url in urls):
+            raise ValueError('COLLECTION_METADATA requires source_urls')
+    return metadata, remainder if separator else ''
+
+
 def parse_attack(content, model_name, date_posted=None):
     """Parse an attack TeX file and extract structured data."""
+    provenance, content = parse_collection_metadata(content)
     # Look for section markers
     sections = {}
     current_section = 'preamble'
@@ -206,6 +262,14 @@ def parse_attack(content, model_name, date_posted=None):
     ) else 'solved'
 
     completion = extract_completion(content)
+    if provenance:
+        if provenance['kind'] == 'statement_only':
+            status, completion = 'unresolved', 0
+        else:
+            status = provenance['source_claim']
+            # Other included versions may quote incompatible estimates. Only
+            # the attributed primary source supplies this record's estimate.
+            completion = provenance.get('source_completion')
 
     attack_data = {
         'model': model_name,
@@ -213,6 +277,10 @@ def parse_attack(content, model_name, date_posted=None):
         'status': status,
         'raw': content
     }
+
+    if provenance:
+        attack_data['provenance'] = provenance
+        attack_data['entry_kind'] = provenance['kind']
 
     if completion is not None:
         attack_data['completion'] = completion
@@ -278,10 +346,13 @@ def build_erdos_data():
     """
     attacks_dir = ATTACKS_DIR / "erdos"
     problems_list = load_erdos_problems_list()
+    status_snapshot = load_erdos_status()
+    for problem_num in status_snapshot['problems']:
+        problems_list.setdefault(problem_num, {})
 
     problems = {}
 
-    # Initialize problems from the CSV list (link to external sources only)
+    # Include the full upstream catalogue, retaining any CSV-specific links.
     for problem_num, list_info in problems_list.items():
         problems[problem_num] = {
             'number': problem_num,
@@ -348,7 +419,7 @@ def build_erdos_data():
     # Aggregate status across all attacks for each problem
     problems = aggregate_problem_status(problems)
 
-    return apply_erdos_status(problems, load_erdos_status())
+    return apply_erdos_status(problems, status_snapshot)
 
 
 def build_mo_data():
@@ -439,7 +510,10 @@ def aggregate_problem_status(problems):
     then the problem status is 'unresolved'. Otherwise, it's 'solved'.
     """
     for problem_id, problem_data in problems.items():
-        attacks = problem_data.get('attacks', [])
+        attacks = [
+            attack for attack in problem_data.get('attacks', [])
+            if attack.get('entry_kind') != 'statement_only'
+        ]
         
         # Check if any attack is unresolved
         has_unresolved = any(
@@ -477,7 +551,10 @@ def generate_js_data(erdos_problems, mo_problems):
     stats = {
         'erdos': {
             'total_problems': len(erdos_problems),
-            'with_attacks': sum(1 for p in erdos_problems.values() if p.get('attacks')),
+            'with_attacks': sum(
+                1 for p in erdos_problems.values()
+                if any(a.get('entry_kind') != 'statement_only' for a in p.get('attacks', []))
+            ),
             'solved_problems': sum(1 for p in erdos_problems.values() if p['is_solved']),
             'models': sorted(set(
                 a['model']

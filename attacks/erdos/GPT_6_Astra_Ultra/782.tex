@@ -1,0 +1,32 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#782; independent attempt, 2026-09-23.}
+Do the squares contain quasi-progressions of unbounded length with one fixed bound on the spread of consecutive gaps? Do they contain Hilbert cubes of unbounded dimension? I read the entire supplied \texttt{782.tex}, including its Pell construction, five-term examples, and conditional cube obstruction. Its displayed numerical Pell solution has the wrong sign.
+\section{WORK: CORRECTING AND CERTIFYING THE PELL FAMILY}
+In fact
+\[
+1068^2-73\cdot125^2=-1,
+\]
+not $+1$. Nevertheless this yields a completely explicit infinite width-one family. Define $x_0=1,y_0=0$ and
+\[
+x_{r+1}=1068x_r+9125y_r,\qquad
+y_{r+1}=125x_r+1068y_r.
+\]
+Multiplication of $x_r+y_r\sqrt{73}$ by $1068+125\sqrt{73}$ proves inductively
+\[
+x_r^2-73y_r^2=(-1)^r.
+\]
+For $r\ge1$, the four positive squares
+\[
+y_r^2,\quad25y_r^2,\quad49y_r^2,\quad x_r^2
+\]
+have consecutive gaps $24y_r^2,24y_r^2,24y_r^2+(-1)^r$. All are positive, and their spread is exactly one. The recurrence strictly increases $y_r$, so the families are distinct. Squaring the initial unit gives the genuine positive-norm solution $(x_2,y_2)=(2281249,267000)$. Thus the sign error does not invalidate the intended infinite construction; it changes which of the two adjacent possible gaps occurs.
+As a separate elementary check, the five squares $1,9,16,25,36$ have gaps $8,7,9,11$, hence spread four. This improves the width-six example in the supplied text, but is only a finite witness and is not asserted to be new.
+\section{THE CUBE QUESTION AND REMAINING GAP}
+The checked April 2026 preprint of Bremner--Elsholtz--Ulas proves infinitely many dimension-three square cubes, including a quantitative lower bound. This updates the supplied background, but fixed dimension three does not imply unbounded dimension. Neither the recurrence above, which always gives four terms, nor the five-term witness supplies unbounded quasi-progression length for one fixed width. I have no verified advance on the required uniformity, nor on the cube dimension beyond the cited known result. No conditional obstruction is promoted to an unconditional proof.
+\section{SOURCES CHECKED AND VERIFICATION}
+The complete local \texttt{782.tex}; primary preprint abstract \url{https://arxiv.org/abs/2604.05459}. The Pell norm, recurrence, positive-norm solution, and five gaps are checked by exact integer arithmetic in \texttt{verification/batch\_3\_final\_checks.py}. The failed raw GitHub fetch for \texttt{782.lean} is not counted as a reviewed source.
+\section{FINAL}
+\textbf{UNRESOLVED.} A numerical error is repaired and small constructions checked; both unboundedness questions remain.
+\section{COMPLETION ESTIMATE}
+Subjective progress toward the original two questions.
+\textbf{COMPLETION: 10\%}

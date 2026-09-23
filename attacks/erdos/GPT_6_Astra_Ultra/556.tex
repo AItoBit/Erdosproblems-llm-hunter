@@ -1,0 +1,65 @@
+\section{Erd\H{o}s Problem \#556: the triangle exception and two restricted upper bounds}
+\noindent Date: 2026-09-23. Partial research attempt; the intended cycle Ramsey problem remains unresolved.
+
+\subsection{1) TARGET AND SOURCE AUDIT}
+Write $R_3(C_n)$ for the least order of a complete graph whose every three-colouring of the edges has a monochromatic cycle of length exactly $n$. The displayed target on the problem page is
+\[
+R_3(C_n)\le4n-3.
+\]
+The page labels the question DECIDABLE and cites large-order results for both parities. Its displayed statement omits a small-parameter restriction. The case $n=3$ is false, as the construction below shows; the standard odd-cycle conjecture concerns odd $n\ge5$. I therefore distinguish this boundary defect from the intended unsolved upper bound for nontriangle cycles. I do not treat finding the defect as a solution of that intended problem.
+
+The objectives are to verify the defect explicitly, prove the requested inequality when $n=4$, and identify a structural family of colourings for which the sharp odd-cycle upper bound follows directly.
+
+\subsection{2) WORK}
+\paragraph{An explicit counterexample to the unrestricted $n=3$ wording.}
+Partition ten vertices into five pairs $V_0,\ldots,V_4$, with indices modulo $5$. Colour the edges within a pair green. Between different pairs use red when their indices differ by $1$ or $-1$, and blue when they differ by $2$ or $-2$.
+
+The green graph is a matching. A red or blue triangle cannot use two vertices of one pair, because their connecting edge would be green. A triangle using three different pairs would project to a triangle in the red or blue graph on the five indices. Both index graphs are $5$-cycles, so this too is impossible. Thus this colouring of $K_{10}$ contains no monochromatic triangle. Its restriction to any nine vertices disproves the proposed upper bound $R_3(C_3)\le9$. This is an elementary check of the omitted exception, not a new Ramsey-number determination.
+
+\paragraph{A self-contained upper bound for $n=4$.}
+Every $C_4$-free graph $F$ on $13$ vertices has at most $25$ edges. Indeed, any two vertices have at most one common neighbour, so
+\[
+\sum_{v\in V(F)}\binom{d(v)}2\le\binom{13}2=78.
+\tag{1}
+\]
+If $m=e(F)$, Cauchy's inequality gives
+\[
+\sum_v\binom{d(v)}2
+=\frac12\left(\sum_v d(v)^2-2m\right)
+\ge\frac{2m^2}{13}-m.
+\]
+For $m>26$ this exceeds $78$. If $m=26$, equality holds throughout, hence every vertex has degree $4$ and every pair of distinct vertices has exactly one common neighbour.
+
+Fix $v$. Each neighbour $u$ of $v$ has exactly one neighbour within $N_F(v)$, because common neighbours of $u$ and $v$ are precisely such vertices. Therefore $F[N_F(v)]$ is a perfect matching on four vertices. Exactly two triangles contain $v$. Summing over all $13$ vertices would give $26$ incidences of a vertex with a triangle, but this number must be divisible by $3$. This contradiction excludes $m=26$ and proves the claim.
+
+If a three-colouring of $K_{13}$ had no monochromatic $C_4$, its three colour graphs would consequently contain at most $3\cdot25=75$ edges in total. But $K_{13}$ has $78$ edges. Thus
+\[
+R_3(C_4)\le13=4\cdot4-3.
+\]
+This proves exactly the requested inequality at $n=4$. It is not claimed to give the best known value of $R_3(C_4)$.
+
+\paragraph{The two-bipartite-colour subclass.}
+Suppose the red and blue graphs of a three-colouring of $K_N$ are both bipartite. Choose a bipartition of each colour graph, assigning isolated vertices arbitrarily. Every vertex receives a pair of bits indicating its two sides. Vertices with the same bit pair can be joined by neither a red edge nor a blue edge, so each of the four bit classes induces a green clique.
+
+For $N=4(n-1)+1$, one such class has at least $n$ vertices. It contains a green $C_n$, for every $n\ge3$. Consequently any counterexample to the desired bound must have at least two nonbipartite colour graphs. The statement is symmetric in the three colours.
+
+For odd $n$, this restricted result has the correct threshold. Take four classes $V_{00},V_{01},V_{10},V_{11}$, each of size $n-1$. Colour inside classes green; colour edges between classes with distinct first bits red; and colour edges between distinct classes with the same first bit blue. Both red and blue graphs are bipartite, so neither contains an odd cycle. The green components have only $n-1$ vertices. This gives a colouring on $4(n-1)$ vertices without a monochromatic $C_n$ and proves the classical lower bound $R_3(C_n)\ge4n-3$ for odd $n$.
+
+Thus the desired odd-cycle value is proved within a well-defined structural class, and the familiar lower construction lies in that class. The missing step would be to control colourings with two or three nonbipartite colour graphs; the bit-class argument supplies no such control.
+
+\subsection{3) ADVERSARIAL VERIFICATION}
+The four-class construction fails as a lower-bound construction for even cycles, because bipartite colour graphs can contain even cycles. It has only been used for odd $n$. The upper bound with two bipartite colours works for either parity, because it finds a clique in the third colour. A long monochromatic cycle would not automatically give every shorter length, so no cycle-shortening assumption is used. The $C_4$ proof counts pairs with common neighbours, which remains valid when the resulting $4$-cycle has chords. The accompanying verification program checks all $120$ triangles in the ten-vertex boundary construction.
+
+\subsection{4) FINAL}
+\textbf{UNRESOLVED for the intended nontriangle problem.} The unrestricted printed wording has the explicit $n=3$ defect above. The inequality for $n=4$ and the subclass with two bipartite colour graphs are proved. These are elementary partial results and not claimed as new literature advances; arbitrary small nontriangle parameters outside known theorems remain unaddressed.
+
+\subsection{5) SOURCES CHECKED}
+\begin{itemize}
+\item T. F. Bloom, live statement and status, fetched 2026-09-23: \url{https://www.erdosproblems.com/556}.
+\item T. \L uczak, M. Simonovits, and J. Skokan, primary-paper discussion of the standard odd-cycle range and the recursive lower bound: \url{https://www.renyi.hu/~miki/LuczSimSkok.pdf}.
+\end{itemize}
+The small constructions and counting proof above are checked directly; no claimed full resolution of the finite remainder is used.
+
+\subsection{6) COMPLETION ESTIMATE}
+This percentage concerns progress toward the intended nontriangle conjecture, not the easily refuted unrestricted wording. It is a conservative subjective estimate, not a mathematical guarantee or a probability of eventual success.
+\textbf{COMPLETION: 5\%}

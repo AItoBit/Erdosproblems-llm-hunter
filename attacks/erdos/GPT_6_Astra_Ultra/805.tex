@@ -1,0 +1,369 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.2/805.tex", "source_paths": ["attacks/erdos/codex_5.2_extra_high/805.tex", "attacks/erdos/gpt_pro_5.2/805.tex"], "source_model": "gpt_pro_5.2", "source_completion": null, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 805 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/805
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.2/805.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{codex\_5.2\_extra\_high}.
+Original file: \texttt{attacks/erdos/codex\_5.2\_extra\_high/805.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/codex_5.2_extra_high/805.tex
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+
+Let $n\ge 2$ and let $g=g(n)$ satisfy
+\[
+ n>g\ge (\log n)^2.
+\]
+Fix $s:=\lceil \log_2 n\rceil$ (any other fixed log base changes $s$ by a constant factor; the problem statement uses $\log n$ without specifying base).
+We ask for which functions $g(n)$ there exists a graph $G$ on vertex set $[n]$ such that for \emph{every} subset $S\subseteq [n]$ with $|S|=g(n)$, the induced subgraph $G[S]$ contains
+\begin{itemize}
+\item a clique of size at least $s$, and
+\item an independent set of size at least $s$.
+\end{itemize}
+Equivalently, each $g(n)$-vertex induced subgraph has both $\omega(G[S])\ge s$ and $\alpha(G[S])\ge s$.
+
+\medskip
+\noindent\textbf{2) QUICK LITERATURE/CONTEXT CHECK.}
+
+The problem text states (without proofs) that Erd\H{o}s--Hajnal suspected nonexistence for $g(n)=(\log n)^3$, that Alon--Sudakov rule out graphs for $g(n)=\frac{c}{\log\log n}(\log n)^3$ for some $c>0$, and that Alon--Buci\'c--Sudakov construct examples for extremely large $g(n)$ (doubly exponential in a power of $\log\log n$). I do not use any additional external results.
+
+\medskip
+\noindent\textbf{3) ATTACK PLAN.}
+
+\emph{Proof/existence strategies.}
+\begin{itemize}
+\item Construct graphs with many vertex-disjoint ``certificates'' (disjoint $K_s$'s and disjoint independent $s$-sets) so that any large induced subgraph must contain one of each.
+\item Explore randomized constructions where every $g$-set typically contains many $K_s$ and many independent $s$-sets, then attempt a union bound (or stronger tail estimate) over all $\binom{n}{g}$ subsets.
+\end{itemize}
+
+\emph{Disproof/nonexistence strategies.}
+\begin{itemize}
+\item Try to show that for $g$ as small as $(\log n)^3$, one can always find a $g$-subset whose induced graph is ``too Ramsey'' to contain both a $K_s$ and an independent $s$-set.
+\item Search for a general obstruction: e.g. if $g$ is too small, show some induced subgraph must have either clique number or independence number $<s$.
+\end{itemize}
+
+I did not resolve the main range $(\log n)^2\le g(n)\ll n$; below are two elementary, fully proved bounds (one necessary, one sufficient in a very large-$g$ regime) and basic sanity checks.
+
+\medskip
+\noindent\textbf{4) WORK.}
+
+\textbf{Lemma 805.1 (a necessary size condition from set intersection).}
+Let $H$ be any graph on $g$ vertices. If $H$ contains both a clique of size $s\ge 2$ and an independent set of size $s$, then
+\[
+ g\ge 2s-1.
+\]
+
+\emph{Proof.}
+Let $C$ be a clique of size $s$ and $I$ be an independent set of size $s$ in $H$. If $|C\cap I|\ge 2$, pick two distinct vertices $x,y\in C\cap I$. Since $x,y\in C$, they are adjacent; since $x,y\in I$, they are nonadjacent. This is a contradiction. Hence $|C\cap I|\le 1$, and therefore
+\[
+ g\;\ge\;|C\cup I|\;=\;|C|+|I|-|C\cap I|\;\ge\; s+s-1\;=\;2s-1.
+\]
+\qed
+
+\textbf{Lemma 805.2 (a simple construction when $g$ is very close to $n$).}
+Let $n\ge 2$ and $s:=\lceil\log_2 n\rceil$. Let $B:=\left\lfloor \frac{n}{2s}\right\rfloor$ and assume $B\ge 1$.
+There exists a graph $G$ on $n$ vertices such that for every $g$ with
+\[
+ g\ge n-B+1,
+\]
+every induced subgraph of $G$ on $g$ vertices contains both a clique of size at least $s$ and an independent set of size at least $s$.
+
+\emph{Proof.}
+Partition the vertex set into $2B$ disjoint blocks
+\[
+C_1,\dots,C_B,\; I_1,\dots,I_B
+\]
+with $|C_i|=|I_j|=s$ for all $i,j$, plus a leftover set $L$ of remaining vertices (possibly empty) of size $|L|=n-2Bs<2s$.
+Define $G$ by:
+\begin{itemize}
+\item For each $i\le B$, make $G[C_i]$ a complete graph (a clique on $s$ vertices).
+\item For each $j\le B$, make $G[I_j]$ an empty graph (an independent set of size $s$).
+\item Put no edges between distinct blocks and no edges incident to $L$ (edges in these places can be chosen arbitrarily; choosing none only strengthens the independent-set presence).
+\end{itemize}
+
+Now take any subset $S$ of vertices with $|S|=g$, and write $k:=n-g$ for the number of deleted vertices.
+Assume $g\ge n-B+1$, i.e. $k\le B-1$.
+
+To \emph{destroy} a clique block $C_i$ (i.e. to make $S\cap C_i\ne C_i$), we must delete at least one vertex from $C_i$. Since at most $k\le B-1$ vertices are deleted total, at most $B-1$ of the $B$ clique blocks can be destroyed. Therefore there exists some $i$ with $C_i\subseteq S$, and then $G[S]$ contains $K_s$.
+
+The same argument applies to the independent blocks $I_1,\dots,I_B$: deleting at most $B-1$ vertices cannot hit all $B$ blocks, so some $I_j\subseteq S$, and then $G[S]$ contains an independent set of size $s$.
+
+Thus every induced subgraph on $g\ge n-B+1$ vertices contains both required structures.
+\qed
+
+\textbf{FAST REALITY CHECK (scale sanity).}
+The specific question $g(n)=(\log n)^3$ only becomes nontrivial once $(\log n)^3<n$.
+Using base-$2$ logs, the inequality $(\log_2 n)^3<n$ first holds at $n=1024$ (since $(\log_2 1024)^3=10^3=1000<1024$), and fails at $n=512$ (since $9^3=729>512$).
+So brute-force search is not meaningful even for moderately small $n$.
+
+\medskip
+\noindent\textbf{5) VERIFICATION.}
+
+\begin{itemize}
+\item Lemma 805.1: the key check is that a clique and an independent set cannot share two vertices, since that would force an edge and a non-edge simultaneously.
+\item Lemma 805.2: verified that deleting $k\le B-1$ vertices can intersect at most $k$ of the $B$ blocks of a given type, so at least one full block survives.
+\item The construction indeed produces both an $s$-clique and an $s$-independent set inside $G[S]$ because the edges between blocks were chosen empty, so the induced subgraph on a full block is exactly as required.
+\end{itemize}
+
+\medskip
+\noindent\textbf{6) FINAL.} \textbf{UNRESOLVED.}
+
+\begin{enumerate}
+\item[(i)] \emph{Strongest proved partial result here:} a necessary condition for any $g$-vertex induced subgraph to contain both a clique and independent set of size $s$ is $g\ge 2s-1$ (Lemma 805.1). A (very weak) sufficient regime is $g\ge n-\left\lfloor \frac{n}{2s}\right\rfloor+1$, for which an explicit construction works (Lemma 805.2).
+\item[(ii)] \emph{First gap (crisp):} decide whether there exists, for all sufficiently large $n$, a graph $G$ on $n$ vertices such that every induced subgraph on $g(n)=(\log n)^3$ vertices contains both a clique of size at least $\log n$ and an independent set of size at least $\log n$.
+\item[(iii)] \emph{Top 3 next moves:}
+  \begin{enumerate}
+  \item Attempt a probabilistic construction and prove a tail bound strong enough to union bound over all $\binom{n}{g}$ subsets (second moment seems too weak; one would need a stronger ``no $K_s$'' estimate).
+  \item Try to prove a universal obstruction for $g(n)=(\log n)^3$ by finding, in any $n$-vertex graph, a $g$-subset whose induced subgraph is close to a Ramsey graph on $g$ vertices with both $\omega$ and $\alpha$ less than $\log n$.
+  \item Do computational search at the smallest nontrivial $n$ (around $n\approx 1024$) for heuristic constructions (e.g. algebraic/pseudorandom graphs), checking the property on random samples of $g$-subsets.
+  \end{enumerate}
+\item[(iv)] \emph{What a minimal counterexample would likely look like:} if nonexistence holds at $g(n)=(\log n)^3$, then for every $n$ and every $G$ one should be able to find a $g$-subset $S$ such that $G[S]$ is simultaneously $K_s$-free and $\overline{G[S]}$ is $K_s$-free (i.e. $\omega(G[S])<s$ and $\alpha(G[S])<s$), so $G[S]$ behaves like a $(s,s)$-Ramsey graph on $g$ vertices with $s\approx \log n$.
+\end{enumerate}
+
+
+
+% END REUSED SOURCE: attacks/erdos/codex_5.2_extra_high/805.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/805.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/805.tex
+# Erdős Problem #805 — Research Analysis
+
+## 1) FORMAL RESTATEMENT
+
+### Problem statement (precise form)
+
+Let (n\ge 1) be an integer. Define
+[
+m_n(r)
+:=\min\Bigl{m:\ \exists\text{ a graph }G\text{ on }n\text{ vertices such that }
+\forall S\subseteq V(G),\ |S|=m,\
+\omega(G[S])\ge r\ \text{and}\ \alpha(G[S])\ge r
+\Bigr}.
+]
+
+Here:
+
+* graphs are finite, simple, undirected;
+* (G[S]) denotes the induced subgraph on (S);
+* (\omega(\cdot)) is clique number, (\alpha(\cdot)) independence number;
+* logarithms are natural.
+
+Erdős–Hajnal ask:
+
+> (**EH-805**)
+> Is it true that
+> [
+> m_n(\lceil\log n\rceil)\le (\log n)^3
+> \quad\text{for all sufficiently large }n?
+> ]
+
+Equivalently: does there exist, for large (n), a graph on (n) vertices such that **every** induced subgraph on ((\log n)^3) vertices contains both
+
+* a clique of size at least (\log n), and
+* an independent set of size at least (\log n)?
+
+Erdős and Hajnal conjectured the answer is **no**.
+
+---
+
+## 2) QUICK LITERATURE / CONTEXT CHECK
+
+Known results (chronological):
+
+* **Alon–Sudakov (2007)** proved a non-existence result when
+  [
+  m \le c,\frac{(\log n)^3}{\log\log n},
+  ]
+  showing that graphs with the required property **cannot** exist at that scale.
+
+* **Alon–Bucić–Sudakov (2021)** constructed graphs showing
+  [
+  m_n(\log n)\ \le\ 2^{2^{(\log\log n)^{1/2+o(1)}}}.
+  ]
+
+Thus the current gap is
+[
+\frac{(\log n)^3}{\log\log n}
+\ \lesssim\
+m_n(\log n)
+\ \lesssim\
+2^{2^{(\log\log n)^{1/2+o(1)}}},
+]
+and the specific threshold (m=(\log n)^3) remains **open**.
+
+---
+
+## 3) ATTACK PLAN
+
+Two possible routes:
+
+### (A) Disproof route (Erdős–Hajnal conjecture true)
+
+Strengthen the Alon–Sudakov lower-bound mechanism to eliminate the remaining (\log\log n) gap, showing that ((\log n)^3) is still too small.
+
+### (B) Construction route (Erdős–Hajnal conjecture false)
+
+Improve the ABS21 construction dramatically, compressing the current double-exponential bound down to polylogarithmic scale.
+
+The only route where a **fully rigorous result** can currently be completed is (A), up to the known ((\log n)^3/\log\log n) barrier.
+
+---
+
+## 4) WORK (Complete Rigorous Partial Result)
+
+### Key auxiliary parameter
+
+For integers (n>s>t\ge2), define (f(n,s,t)) to be the **minimum possible independence number** of an (n)-vertex graph (H) satisfying:
+
+> every induced subgraph of (H) on (s) vertices contains an independent set of size at least (t).
+
+---
+
+### Lemma 1 (Alon–Sudakov reduction lemma)
+
+Let (n) be large and (n/2 > s > t \ge 2).
+If
+[
+f(\lfloor n/2\rfloor,s,t) > \frac{s}{t-1},
+]
+then **no** graph (G) on (n) vertices has the property that every induced subgraph on (s) vertices contains **both**
+
+* a clique of size at least (t), and
+* an independent set of size at least (t).
+
+#### Proof
+
+Assume such a graph (G) exists.
+
+Let (F := f(\lfloor n/2\rfloor,s,t)).
+Every induced subgraph of (G) on (\lfloor n/2\rfloor) vertices must contain an independent set of size at least (F).
+
+Iteratively remove such independent sets (I_1,I_2,\dots).
+After at most (t-1) steps, the union
+[
+U := I_1\cup\cdots\cup I_{t-1}
+]
+satisfies
+[
+|U| \ge \min{\lfloor n/2\rfloor,(t-1)F} > s.
+]
+
+But (G[U]) is ((t-1))-colorable, hence contains **no** clique of size (t).
+Choosing any (s)-subset of (U) contradicts the defining property of (G). ∎
+
+---
+
+### Theorem 2 (Alon–Sudakov lower bound)
+
+There exists an absolute constant (c_0>0) such that for all sufficiently large (n),
+[
+m_n(\lceil\log n\rceil)
+\ \ge
+c_0,\frac{(\log n)^3}{\log\log n}.
+]
+
+#### Proof
+
+Let
+[
+t=\lceil\log n\rceil,
+\qquad
+s=\left\lfloor c_0\frac{(\log n)^3}{\log\log n}\right\rfloor,
+\qquad
+n'=\lfloor n/2\rfloor.
+]
+
+Alon–Sudakov proved that for (2t\le s<n'/2),
+[
+f(n',s,t)
+\ \ge
+C,t\frac{\log(n'/s)}{\log(s/t)}
+]
+for an absolute constant (C>0).
+
+Elementary estimates give:
+[
+\log(n'/s)\ge \tfrac12\log n,
+\qquad
+\log(s/t)\le 3\log\log n,
+]
+hence
+[
+f(n',s,t)
+\ \ge
+\frac{C}{6}\frac{(\log n)^2}{\log\log n}.
+]
+
+Meanwhile,
+[
+\frac{s}{t-1}
+\le
+2c_0\frac{(\log n)^2}{\log\log n}.
+]
+
+Choosing (c_0<C/12) ensures
+[
+f(n',s,t)>\frac{s}{t-1},
+]
+so Lemma 1 applies, proving non-existence at this scale. ∎
+
+---
+
+## 5) VERIFICATION
+
+* All inheritance steps are valid for induced subgraphs.
+* Parameter constraints (2t\le s\ll n) are satisfied.
+* Floors/ceilings affect constants only.
+* The argument explicitly shows **where the (\log\log n) loss occurs**.
+
+No hidden assumptions are used.
+
+---
+
+## 6) FINAL: **UNRESOLVED**
+
+### Summary
+
+* It is **rigorously proved** that
+  [
+  m_n(\log n)\ \ge\ c,\frac{(\log n)^3}{\log\log n}.
+  ]
+* It remains **open** whether this lower bound can be pushed to ((\log n)^3), or whether a construction exists at that scale.
+* The precise obstacle is that current bounds on the auxiliary function (f(n,s,t)) lose a factor of (\log\log n), and no method is known to recover it using both the clique and independence requirements simultaneously.
+
+### Minimal next gap
+
+> Prove or refute:
+> [
+> f(n,\log^3 n,\log n)\ \gg\ (\log n)^2
+> ]
+> under the **two-sided** Erdős–Hajnal hypothesis.
+
+This is exactly the missing step separating the conjecture from resolution.
+
+If you want, next we can:
+
+* isolate the obstruction combinatorially (why (\log\log n) appears),
+* attempt a strengthening of the Alon–Sudakov inequality,
+* or analyze why the ABS21 construction fundamentally stalls far above polylogarithmic scale.
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/805.tex
+
+\subsection*{COMPLETION ESTIMATE}
+The primary source supplies no extractable numerical completion estimate. Its mathematical progress is not numerically assessed here.
+
+Newly verified progress in this collection pass: $0\%$. This measures new verification work, not the amount of mathematics achieved in the reused text.

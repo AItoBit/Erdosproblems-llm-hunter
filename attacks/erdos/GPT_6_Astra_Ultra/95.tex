@@ -1,0 +1,56 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#95; reconstruction using a stated incidence theorem, 2026-09-23.}
+For any $n$ distinct points $P\subset\mathbb R^2$, let $f(r)$ be the number of unordered pairs at distance $r>0$. Prove, for each $\varepsilon>0$, that $\sum_r f(r)^2=O_\varepsilon(n^{3+\varepsilon})$. We obtain the stronger bound $O(n^3\log(2n))$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem is known to be proved by Guth and Katz. Their distinct-distance theorem is obtained from a bound for partial rigid symmetries, which is precisely the useful input for the multiplicity question. We state that deep input explicitly and prove the reduction, including the translation contribution and all ordered/unordered factors. This is not an independent proof of their incidence theorem or a new solution.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+An equality of two nonzero distances determines one orientation-preserving rigid motion. Count such motions according to how many points of $P$ they map back into $P$, then sum their contributions by a telescoping identity.
+
+\section{WORK}
+\subsection{The external input}
+We use Proposition 2.5 of Guth--Katz: there is an absolute constant $C$ such that for every finite $P\subset\mathbb R^2$, $|P|=n$, and $2\leq k\leq n$,
+\[
+|\{g:\ g\text{ is an orientation-preserving Euclidean isometry},\ |P\cap gP|\geq k\}|\leq Cn^3/k^2.
+\tag{1}
+\]
+This counts rotations and translations, including the identity. For $k\geq2$ the set is finite: a motion is determined by its values on two distinct points. The difficult incidence geometry establishing (1) remains an explicitly cited external theorem.
+
+\subsection{The exact counting identity}
+Let $Q$ consist of ordered quadruples $(a,b,c,d)\in P^4$ with $a\ne b$ and $|a-b|=|c-d|$. Each unordered pair can be oriented in two ways, independently for the two pairs, so
+\[
+|Q|=4\sum_r f(r)^2.
+\tag{2}
+\]
+There is exactly one orientation-preserving isometry $g$ with $g(a)=c$ and $g(b)=d$. Indeed, after translating $a$ to $c$, the nonzero vector $b-a$ is carried to the equal-length vector $d-c$ by a unique planar rotation. This permits coincidences between the two pairs; it only excludes zero distances.
+
+For a fixed $g$, write $m(g)=|P\cap gP|$. Choosing two distinct ordered image points in this intersection, then taking their unique preimages under $g$, produces exactly $m(g)(m(g)-1)$ quadruples assigned to $g$. If $G_k$ denotes the set in (1), the identity
+\[
+m(m-1)=\sum_{k=2}^{m}2(k-1)
+\]
+therefore gives
+\[
+|Q|=\sum_{k=2}^{n}2(k-1)|G_k|
+\leq2Cn^3\sum_{k=2}^{n}\frac1k
+\leq2Cn^3\log n\qquad(n\geq2).
+\tag{3}
+\]
+Together with (2) this is the desired logarithmic improvement. For $n\leq1$ the sum vanishes.
+
+Translations alone also admit a direct check. For $v\in\mathbb R^2$ put $m_v=|P\cap(P+v)|$. Since each ordered pair of points gives exactly one difference, $\sum_vm_v=n^2$, while $m_v\leq n$. Hence the translation contribution to $|Q|$ is at most $\sum_vm_v^2\leq n^3$. The logarithm in (3) comes from summing the allowed multiplicities of rotations, rather than an overlooked family of translations.
+
+For fixed $\varepsilon>0$, the elementary inequality $\log n\leq n^\varepsilon/\varepsilon$ follows by integrating $t^{-1}\leq t^{\varepsilon-1}$ from $1$ to $n$. Thus (3) implies the exact form requested in the problem. It also gives $|\{r:f(r)>0\}|\gg n/\log(2n)$ by applying Cauchy--Schwarz to $\sum_r f(r)=\binom n2$.
+
+\section{VERIFICATION AND SCOPE}
+The reduction is complete assuming the precisely stated, proved-in-the-literature theorem (1). In particular, one cannot deduce the multiplicity bound solely from a lower bound for the number of distances: that would reverse Cauchy--Schwarz. Here the stronger partial-symmetry estimate is the input, so this direction-of-implication gap does not occur.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement: \url{https://www.erdosproblems.com/95}.
+\item L. Guth and N. H. Katz, \emph{On the Erd\H{o}s distinct distance problem in the plane}, Section 2, especially Proposition 2.5: \url{https://arxiv.org/html/1011.4105}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved using the explicit Guth--Katz external input.} The argument proves $\sum_r f(r)^2\ll n^3\log(2n)$ and hence all the requested $n^{3+\varepsilon}$ bounds. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

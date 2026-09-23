@@ -1,0 +1,120 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#35; reconstruction, 2026-09-23.}
+For $E\subseteq\mathbb N_0$ write
+$\sigma(E)=\inf_{n\geq1}|E\cap[1,n]|/n$.
+Assume $0\in B$ and $kB=\mathbb N_0$, where repetitions of summands
+are allowed. With $\alpha=\sigma(A)$, prove
+\[
+ \sigma(A+B)\geq\alpha+\frac{\alpha(1-\alpha)}k.
+\]
+The basis assumption concerns all nonnegative integers, not merely
+all sufficiently large ones; this matters for Schnirelmann density.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page marks this proved and credits the deduction to Ruzsa
+from Pl\"unnecke's stronger density theorem. We reconstruct that stronger
+bound in the basis case from the finite Pl\"unnecke graph inequality,
+then prove the required numerical comparison. The graph inequality is
+an explicitly cited standard input, not reproved below. The source is
+Ruzsa's \emph{Sumsets and structure}, Chapter~4, Section~7; this is a
+reconstruction of known work with no novelty claim.
+
+\section{WORK}
+\subsection{1. The finite graph input}
+For a finite commutative layered graph with layers $V_0,\ldots,V_k$,
+let $D_i$ be the minimum of $|\operatorname{Im}_i(X)|/|X|$ over nonempty
+$X\subseteq V_0$. The Pl\"unnecke inequality says
+\[
+ D_k\leq D_1^k.                                      \tag{1}
+\]
+We use this for the truncated addition graph
+$V_i=(A+iB)\cap[1,n]$, with edges $x\to x+b$ for $b\in B$.
+It is finite after discarding $b>n$. It is commutative: the usual
+matching of two successive additions interchanges their order, and
+all intermediate vertices remain in $[1,n]$ because the summands
+are nonnegative. Thus truncation does not invalidate (1).
+
+\subsection{2. Passing from finite prefixes to the density bound}
+Assume first $0<\alpha\leq1$ and $k\geq2$, and put
+$\gamma=\alpha^{1-1/k}$. We prove the following finite assertion by
+induction on $n$: if $|A\cap[1,r]|\geq\alpha r$ for every $r\leq n$,
+then $|(A+B)\cap[1,n]|\geq\gamma n$.
+For $n=1$, the hypothesis forces $1\in A$ and $0\in B$ completes the
+proof.
+
+Suppose there is a split $1\leq t<n$ for which
+\[
+ |A\cap[t+1,t+r]|\geq\alpha r\qquad(1\leq r\leq n-t).
+\]
+Apply induction to $A\cap[1,t]$ and to
+$(A\cap[t+1,n])-t$. Their sumsets with $B$, restricted to the disjoint
+intervals $[1,t]$ and $[t+1,n]$, contribute at least $\gamma t$ and
+$\gamma(n-t)$ respectively.
+
+Otherwise every potential split has a deficient subsequent interval.
+Starting at any $t\in\{1,\ldots,n-1\}$, choose one such interval,
+then repeat at its endpoint until reaching $n$. Adding the strict
+deficits yields
+\[
+ |A\cap[t+1,n]|<\alpha(n-t)\qquad(1\leq t<n).         \tag{2}
+\]
+Write $a=|A\cap[1,n]|$ and $c=|(A+B)\cap[1,n]|$.
+For a nonempty $X\subseteq A\cap[1,n]$, let its first element be
+$t+1$. Because $kB=\mathbb N_0$, its image in layer $k$ contains
+every integer from $t+1$ to $n$, and has size at least $n-t$.
+If $t>0$, (2) implies $|X|<\alpha(n-t)$ and hence the expansion
+ratio exceeds $1/\alpha\geq n/a$. If $t=0$, the ratio is at least
+$n/|X|\geq n/a$. Thus $D_k\geq n/a$.
+On the other hand, choosing all of $V_0$ gives $D_1\leq c/a$.
+Using (1),
+\[
+ \frac na\leq\left(\frac ca\right)^k,
+ \qquad c\geq n^{1/k}a^{1-1/k}
+ \geq\alpha^{1-1/k}n.
+\]
+This proves the induction and therefore
+$\sigma(A+B)\geq\alpha^{1-1/k}$.
+
+\subsection{3. The requested improvement and edge cases}
+For $0<\alpha\leq1$, the elementary inequalities
+$-\log\alpha\geq1-\alpha$ and $e^u\geq1+u$ give
+\[
+ \alpha^{1-1/k}
+ =\alpha\exp\left(\frac{-\log\alpha}{k}\right)
+ \geq\alpha\left(1+\frac{1-\alpha}{k}\right).
+\]
+If $\alpha=0$, the requested conclusion is simply nonnegativity of
+density. If $k=1$, then $B=\mathbb N_0$; when $\alpha>0$ we have
+$1\in A$, so $A+B$ contains every positive integer and has density
+one. These arguments also avoid the undefined expression $0^0$.
+The case $\alpha=1$ follows directly from $A\subseteq A+B$.
+\hfill$\square$
+
+\section{VERIFICATION AND LIMITS}
+The prefix argument does not assume that the infimum defining density
+is attained. It proves a bound at every finite cutoff. The split
+argument is needed: applying (1) directly to an arbitrary prefix would
+not supply the lower bound for every subset $X$. The finite graph
+inequality is the only unreproduced mathematical input; it is stated
+precisely and its hypotheses have been checked for this application.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known theorem reconstructed using Pl\"unnecke's graph inequality).}
+The reduction from the finite graph theorem, the density passage and
+the numerical comparison are proved here. This is a complete proof
+with that standard theorem as an external input, not a self-contained
+new proof of Pl\"unnecke's theorem or an independent formal verification.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/35}.
+I.~Z.~Ruzsa, \emph{Sumsets and structure}, Chapter~1 on commutative
+graphs and Chapter~4, Section~7 on the density theorem:
+\url{https://www.math.cmu.edu/~af1p/Teaching/AdditiveCombinatorics/Additive-Combinatorics.pdf}.
+Checked 2026-09-23.
+
+This measures completion of the proof using the explicitly stated
+standard graph theorem; it does not measure reconstruction of that
+theorem's separate proof.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

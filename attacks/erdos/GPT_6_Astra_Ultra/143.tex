@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#143: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+If $\mathcal A\subset(1,\infty)$ satisfies $|kx-y|\ge1$ for distinct $x,y\in\mathcal A$ and every positive integer $k$, must $\sum_{x\in\mathcal A}1/(x\log x)$ converge?
+
+All supplied versions considered: \texttt{143.tex}.
+The source reduces convergence to weighted block masses and treats rational sets with finitely many denominators. There are repairable errors: its logarithmic comparison needs $a\ge q^2$, not $a\ge2q$; its Abel lemma needs local finiteness rather than mere countability. The hypothesis supplies local finiteness, since distinct points have distance at least one.
+\subsection{2) WORK}
+\paragraph{A simpler corrected bounded-denominator proof.}
+Suppose every denominator divides an integer $Q$. The set $B=\{Qx:x\in\mathcal A\}\subset\mathbb N$ is primitive: if $b'=kb$ for distinct members, then $y=kx$, violating the hypothesis. By the classical primitive-set convergence theorem,
+\[
+\sum_{b\in B}{1\over b\log b}<\infty.
+\]
+For $b\ge Q^2$ (and $b>1$), $\log(b/Q)\ge\tfrac12\log b$, so
+\[
+{1\over (b/Q)\log(b/Q)}\le {2Q\over b\log b}.
+\]
+The finitely many smaller $b$ contribute a finite amount. Thus the desired series converges in this subclass. Taking the least common multiple of the finitely many reduced denominators obtains the source\textquotesingle s conclusion using one primitive set rather than separate slices.
+
+\paragraph{Exact summation statement.}
+Define $U(t)=\sum_{2<x\le t,\ x\in\mathcal A}1/x$. Local finiteness makes this finite, and integration by parts gives exactly
+\[
+\sum_{2<x\le X}{1\over x\log x}={U(X)\over\log X}+\int_2^X{U(t)\over t(\log t)^2}\,dt.
+\]
+There is no uncontrolled boundary term, since $U(2)=0$. The one-separation assumption allows at most two points in $(1,2]$, so restoring these terms is legitimate. This repairs the stated generality without extending convergence to arbitrary real sets.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The comparison fails at $a=2q$ when $q$ is large: $\log(a/q)=\log2$ whereas $\tfrac12\log a$ grows. Replacing the cutoff by $q^2$ fixes the proof. A countable set can accumulate near one, so countability alone cannot justify discarding finitely many small elements. Bounded denominators are still a restrictive hypothesis.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No control of the integral is established for a general dilation-separated real set. The repaired subclass theorem does not bridge that remaining gap.
+\subsection{5) SOURCES CHECKED}
+Read all of \texttt{143.tex}; checked Lichtman, \emph{A proof of the Erd\H{o}s primitive set conjecture}, \texttt{https://arxiv.org/abs/2202.02384}, on 2026-09-23 for the primitive-set input. The argument imports that known convergence theorem and does not label it novel.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

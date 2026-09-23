@@ -1,0 +1,40 @@
+\section{Erd\H{o}s Problem \#55: a colouring bound for every fixed number of colours}
+\noindent Independent partial reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known resolution}
+A set $A\subseteq\mathbb N$ is Ramsey $r$-complete when every $r$-colouring of $A$ represents every sufficiently large integer as a sum of distinct elements of one colour. The threshold may depend on the colouring. The question asks for growth bounds when $r>2$. Conlon, Fox and Pham have determined the optimal order $r(\log N)^2$. This attempt proves a weaker necessary bound, with its dependence on $r$ explicit; it does not reproduce their construction or their sharp lower bound.
+
+\subsection*{2) One fixed colouring, valid at every cutoff}
+Write $A=\{a_1<a_2<\cdots\}$ and colour $a_j$ by $j$ modulo $r$. For a given $N$, put $m=|A\cap[1,N]|$. Each colour has at most $\lceil m/r\rceil$ elements in this prefix. Since all elements are positive, a representation of a number at most $N$ cannot use any later element. Therefore the number of different positive integers at most $N$ represented by monochromatic subsets is at most
+\[
+ \sum_{i=1}^r(2^{m_i}-1)\le r\,2^{\lceil m/r\rceil}\le r\,2^{m/r+1},
+ \qquad \sum_i m_i=m.\tag{1}
+\]
+Possible coincidences between subset sums only decrease this number.
+
+If $A$ is Ramsey $r$-complete, there is a threshold $N_0$ for this particular, already fixed colouring. For every $N\ge N_0$ all $N-N_0+1$ integers in $[N_0,N]$ must be represented. Applying (1) gives
+\[
+ |A\cap[1,N]|\ge r\log_2(N-N_0+1)-r\log_2r-r.\tag{2}
+\]
+In particular, for each fixed $r$,
+\[
+ \liminf_{N\to\infty}\frac{|A\cap[1,N]|}{\log_2N}\ge r.
+\]
+There is no interchange of colourings and thresholds here: the rank colouring was selected once on the entire infinite set.
+
+\subsection*{3) A stronger obstruction for sets with unique subset sums}
+Call $A$ dissociated if different finite subsets of $A$ have different sums. Such an infinite set is not Ramsey $r$-complete for any $r\ge2$. Choose an element $a\in A$, colour it red and all other elements blue. For each $b\in A\setminus\{a\}$, the integer $a+b$ has the unique subset representation $\{a,b\}$, which is mixed. These omitted integers are unbounded. Extra colours can be left unused; if the convention requires all colours to occur, recolour finitely many other elements, keeping infinitely many blue choices of $b$. Uniqueness still prevents their mixed sums from having monochromatic representations.
+
+More generally, a Ramsey $r$-complete set is Ramsey $q$-complete for every $q\le r$, simply by viewing a $q$-colouring as an $r$-colouring. Supersets preserve Ramsey completeness, since a colouring restricts to the original complete set. These facts do not produce a sparse example: the obstruction above shows why a rapidly growing sequence with unique subset sums cannot serve as one.
+
+\subsection*{4) What remains}
+Estimate (2) supplies only a logarithmic necessary bound. It leaves a full logarithmic factor between this elementary argument and the known optimal lower bound, and supplies no Ramsey-complete construction. Finite subset-sum coverage would not establish the required infinite, every-colouring assertion.
+
+\textbf{ATTEMPT UNRESOLVED at the known optimal scale.} The problem itself is resolved in the literature. No novelty is claimed for the elementary counting argument.
+
+\subsection*{5) Sources}
+Problem and current status: \url{https://www.erdosproblems.com/55}, checked 23 September 2026. D. Conlon, J. Fox and H. T. Pham, \emph{Subset sums, completeness and colorings}, \url{https://arxiv.org/abs/2104.14766}. The paper is cited for context; its main theorems are not used to prove (1)--(2).
+
+The estimate credits the uniform-in-cutoff counting argument and the dissociation obstruction, while leaving the sharp result and construction unproved here. It is a subjective coverage estimate, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}

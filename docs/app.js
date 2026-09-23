@@ -101,16 +101,23 @@ function sortByScore(a, b) {
 /**
  * Get unique models from attacks
  */
+function getMathematicalAttempts(attacks) {
+    return (attacks || []).filter(a => a.entry_kind !== 'statement_only');
+}
+
 function getUniqueModels(attacks) {
-    if (!attacks || !attacks.length) return [];
-    return [...new Set(attacks.map(a => a.model))];
+    return [...new Set(getMathematicalAttempts(attacks).map(a =>
+        a.entry_kind === 'reused_writeup'
+            ? a.provenance.source_model.replace(/_/g, ' ')
+            : a.model
+    ))];
 }
 
 /**
  * Count problems with attacks
  */
 function countWithAttacks(problems) {
-    return Object.values(problems).filter(p => p.attacks && p.attacks.length > 0).length;
+    return Object.values(problems).filter(p => getMathematicalAttempts(p.attacks).length > 0).length;
 }
 
 /**
@@ -323,9 +330,12 @@ function getProblemStatusClass(problem) {
 
 function getCompletionSourceLabel(problem) {
     if (!formatCompletion(problem.completion)) return '';
-    return problem.completion_source === 'database'
-        ? 'Resolved in Tao\'s database'
-        : 'LLM estimate';
+    if (problem.completion_source === 'database') return 'Resolved in Tao\'s database';
+    if (!getMathematicalAttempts(problem.attacks).length &&
+        (problem.attacks || []).some(a => a.entry_kind === 'statement_only')) {
+        return 'Statement only; awaiting a mathematical attempt';
+    }
+    return 'LLM estimate';
 }
 
 function formatStatusSync(sync) {
@@ -424,6 +434,7 @@ window.ProblemHunting = {
     sortByNumber,
     sortByScore,
     getUniqueModels,
+    getMathematicalAttempts,
     countWithAttacks,
     formatDate,
     getStatusClass,

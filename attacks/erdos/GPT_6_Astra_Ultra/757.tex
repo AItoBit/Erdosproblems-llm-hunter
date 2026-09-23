@@ -1,0 +1,29 @@
+\section{Erd\H{o}s Problem \#757: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{757.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND FINITE CHECK}
+A weak $(4,5)$ set of real numbers has at least five distinct positive distances on every four-element subset. The source reduces its strong $(3,3)$ subsets to sets containing no three-term arithmetic progression, and supplies
+\[
+A=\{0,136,200,243,246,249,272,286,298,323,400,528,596,1056\}.
+\]
+I checked all $\binom{14}{4}=1001$ four-element subsets using integer arithmetic. Every one has at least five distances. There are exactly twelve arithmetic-progression triples. Enumerating all $2^{14}$ subsets gives maximum progression-free size eight. These checks are reproduced in \texttt{verification/root\_checks.py}.
+\subsection*{2) REPLICATION WITHOUT CREATING EXTRA RELATIONS}
+Ordinary translated copies fail: equal internal distances in two copies violate the four-point requirement. Instead fix a positive transcendental real $t$ and form
+\[
+B_k=\bigcup_{i=1}^k\{t^{2i}+a t^{2i+1}:a\in A\}.
+\]
+Different listed points are distinct, because a nonzero integer polynomial cannot vanish at $t$.
+Any equality of positive distances can be written $x-y=\pm(z-w)$. For four distinct endpoints in more than one block, comparison of the coefficients of each $t^{2i}$ forces each occupied block to occur equally often on the two sides. The only mixed possibility is two blocks each containing one point on each side; comparison of $t^{2i+1}$ then forces those points to coincide, a contradiction. For three distinct endpoints a repeated distance means $2x=y+z$. Its constant-block coefficients force all three into the same block.
+Therefore all nontrivial distance repetitions are internal. Four points in one block inherit the property of $A$; three in one block and one outside have at most the one distance repetition possible on three real points; every other mixed four-set has all six distances distinct. Thus $B_k$ is weak $(4,5)$.
+\subsection*{3) EXACT INDEPENDENCE RATIO}
+The same coefficient argument shows that every arithmetic progression in $B_k$ lies in a single block. A progression-free subset has at most eight points in each block, and independent choices of eight-point progression-free subsets attain this bound. Consequently
+\[
+|B_k|=14k,\qquad \alpha_{\rm AP}(B_k)=8k.
+\]
+The finite $4/7$ obstruction therefore persists at arbitrarily large sizes, rather than being an isolated fourteen-point effect.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} This verifies and amplifies the supplied example. It does not close the source's gap between the general lower bound and $4/7$, nor claim a new best upper bound.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

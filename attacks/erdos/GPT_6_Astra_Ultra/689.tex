@@ -1,0 +1,31 @@
+\section{OBJECTIVE AND REVIEW OF ALL VERSIONS}
+\textbf{Erd\H{o}s \#689; independent attempt, 2026-09-23.}
+For all sufficiently large $n$, can one choose one residue class modulo each prime $p\le n$ so that every $m\in[1,n]$ belongs to at least two chosen classes? I read \texttt{689.tex} completely and checked that \texttt{689\_v2.tex} is byte-for-byte identical. Their residual-demand argument rules out zero residues through $\max(5,n/6)$, but leaves most assignments untouched.
+\section{WORK: A WEIGHTED CAPACITY CERTIFICATE}
+After fixing residues at primes in $S$, put $d(m)=\max(0,2-h_S(m))$. Let $R$ be the remaining primes. For arbitrary nonnegative weights $w_m$, every completion necessarily satisfies
+\[
+\sum_{m=1}^n w_m d(m)\le
+\sum_{p\in R}\max_{a\bmod p}\sum_{\substack{1\le m\le n\\m\equiv a\ (p)}}w_m.
+\tag{1}
+\]
+Indeed, the remaining incidences at each $m$ must number at least $d(m)$. Multiply by $w_m$ and sum. For each remaining prime, its actual chosen residue contributes at most the displayed maximum. This proves (1) by double counting. It retains where the unfilled demand lies, unlike the unweighted ceiling bound.
+Here is an explicit strict improvement to the supplied obstruction test. Take $n=174$, fix $a_2=a_3=a_5=0$, and leave every larger prime available. Direct exact enumeration gives
+\[
+\sum_m d(m)=174=\sum_{5<p\le174}\lceil174/p\rceil.
+\]
+Thus the supplied total-capacity test does not rule out this assignment. Now let $U=\{m\le174:d(m)>0\}$ and choose $w_m=1_U(m)$. Exact residue counts give
+\[
+\sum_{m\in U}d(m)=174,
+\qquad
+\sum_{5<p\le174}\max_{a\bmod p}|U\cap(a+p\mathbb Z)|=154.
+\]
+Inequality (1) would require $174\le154$, a contradiction. Therefore zero residues modulo just $2,3,5$ cannot be completed at $n=174$. This lies outside the earlier $y\ge n/6=29$ hypothesis. The saved verifier enumerates the primes, every residual demand, and every residue count, and exports the individual capacities, so the numerical certificate is reproducible without an optimizer.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The maxima for different primes are independent upper bounds: using them can only overestimate feasible coverage, so strict failure is a valid obstruction. Passing all such tests need not give an integral choice of one residue per prime. The particular computation excludes one partial assignment at one $n$, not all assignments and not the eventual-existence question. The weighted inequality is a standard covering dual certificate; no novelty beyond its explicit application here is asserted.
+\section{SOURCES CHECKED}
+Both supplied files, with byte equality verified; official indexed statement \url{https://www.erdosproblems.com/history/689}. Computation: \texttt{python3 verification/batch\_3\_final\_checks.py}. Unverified claims in website comments are not used as theorems.
+\section{FINAL}
+\textbf{UNRESOLVED.} A stronger finite obstruction is certified, but unrestricted eventual two-fold coverings remain unsettled.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the original question.
+\textbf{COMPLETION: 12\%}

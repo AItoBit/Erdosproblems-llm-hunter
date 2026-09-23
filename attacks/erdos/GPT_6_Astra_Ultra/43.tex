@@ -1,0 +1,208 @@
+\section{Erd\H{o}s Problem 43: both proposed bounds are false}
+
+\subsection{1) Problem and source status}
+Let $f(N)$ be the largest size of a Sidon subset of $[N]=\{1,\ldots,N\}$.
+For Sidon sets $A,B\subset[N]$ satisfying
+$(A-A)\cap(B-B)=\{0\}$, put
+\[
+ Q(A,B)=\binom{|A|}{2}+\binom{|B|}{2}.
+\]
+The questions ask whether $Q(A,B)\leq\binom{f(N)}2+O(1)$, and whether,
+when $|A|=|B|$, there is a fixed $c>0$ giving the stronger asymptotic bound
+\[
+ Q(A,B)\leq(1-c+o(1))\binom{f(N)}2.
+\]
+The current page, checked on 23 September 2026, reports both answers
+negative. The older local files \texttt{gpt\_pro\_5.4/43.tex} through
+\texttt{43\_v9.tex} already discuss the second disproof but do not
+incorporate the general solution of Problem 42 into the first question.
+This note reconstructs the two known disproofs and states their
+dependencies explicitly. No new discovery is claimed.
+
+\subsection{2) The additive constant cannot exist}
+Use the now-known theorem for Problem 42: for each $m\geq1$, there is
+$N_0(m)$ such that every nonempty Sidon set $A\subset[N]$, $N\geq N_0(m)$,
+has a Sidon companion $B\subset[N]$ of size $m$ with disjoint nonzero
+differences. The adjacent \texttt{42.tex} supplies a complete deduction
+from the explicitly cited compact Cayley theorem.
+
+Define
+\[
+ g(N)=\max Q(A,B),
+\]
+where the maximum ranges over the feasible pairs. Choose $A$ with
+$|A|=f(N)$; the maximum exists because $[N]$ is finite. For every
+$N\geq N_0(m)$, Problem 42 gives a suitable companion of size $m$, and
+therefore
+\[
+ g(N)-\binom{f(N)}2\geq\binom m2.
+\]
+Since $m$ is arbitrary, this proves the stronger conclusion
+\[
+ g(N)-\binom{f(N)}2\longrightarrow+\infty\qquad(N\to\infty).
+\]
+To check the quantifiers, given any constant $K$, choose $m$ with
+$\binom m2>K$. The displayed inequality then exceeds $K$ for every
+$N\geq N_0(m)$, rather than only for one finite counterexample.
+This disproves the first question. It requires neither a quantitative
+threshold in Problem 42 nor an asymptotic formula for $f(N)$.
+
+\subsection{3) A self-contained form of the Bose--Chowla construction}
+We next reconstruct Kevin Barreto's parity argument for the second
+question, including the finite-field construction it uses.
+Let $q$ be an odd prime power. In the quadratic extension
+$\mathbb F_{q^2}$ choose a generator $\theta$ of its multiplicative
+group, of order $v=q^2-1$. Put
+\[
+ S=\{s\in\{0,\ldots,v-1\}:\theta^s=\theta+t
+       \hbox{ for some }t\in\mathbb F_q\}.
+\]
+Because $\theta\notin\mathbb F_q$, every $\theta+t$ is nonzero,
+and distinct $t$ give distinct exponents. Thus $|S|=q$ and $0\notin S$.
+
+Suppose $s_1+s_2\equiv s_3+s_4\pmod v$, and write
+$\theta^{s_i}=\theta+t_i$. Multiplication and cancellation of $\theta^2$
+give
+\[
+ (t_1+t_2-t_3-t_4)\theta+(t_1t_2-t_3t_4)=0.
+\]
+The elements $1,\theta$ are linearly independent over $\mathbb F_q$.
+Consequently $t_1+t_2=t_3+t_4$ and $t_1t_2=t_3t_4$.
+The two pairs are roots, with multiplicities, of the same monic quadratic,
+so $\{t_1,t_2\}=\{t_3,t_4\}$ and
+$\{s_1,s_2\}=\{s_3,s_4\}$. This proves that $S$ is Sidon modulo $v$.
+Only the standard existence of finite fields and a generator of their
+multiplicative groups is used in this construction.
+
+In any abelian group a Sidon set has unique representations of nonzero
+directed differences: if $s_1-s_2=s_3-s_4\neq0$, then
+$s_1+s_4=s_3+s_2$, and the Sidon condition forces
+$(s_1,s_2)=(s_3,s_4)$.
+
+\subsection{4) Splitting by parity and obtaining equal sizes}
+Set $N=v/2=(q^2-1)/2$. Let $E$ and $O$ be the even and odd exponent
+classes of $S$, with sizes $a$ and $b$. Because $v$ is even, parity is
+well-defined modulo $v$. The nonzero directed differences within $E$
+and within $O$ occupy mutually distinct nonzero even residues, of which
+there are exactly $N-1$. Thus
+\[
+ a(a-1)+b(b-1)\leq N-1=\frac{q^2-3}{2}.
+\]
+As $a+b=q$, this is equivalent to
+\[
+ (a-b)^2\leq2q-3.
+\]
+Put $m=\min(a,b)$, and trim the larger class so that
+$E'\subset E$ and $O'\subset O$ both have size $m$. Then
+\[
+ m\geq\frac{q-\sqrt{2q-3}}2=\frac q2-O(\sqrt q).
+\]
+Define
+\[
+ A=\{e/2+1:e\in E'\},\qquad
+ B=\{(o+1)/2:o\in O'\}.
+\]
+Using representatives between $1$ and $v-1$ shows that both sets lie in
+$[N]$. They have equal size $m$ and are Sidon: an equality of sums lifts,
+after multiplication by two and cancellation of the translation, to an
+equality of sums in the modular Sidon set $S$.
+
+If a nonzero integer $d$ were a common difference, then
+\[
+ e_1-e_2=2d=o_1-o_2
+\]
+for members of $E'$ and $O'$. This common difference is nonzero modulo
+$v$, since distinct representatives lie between $1$ and $v-1$.
+Uniqueness of nonzero modular directed differences would force
+$(e_1,e_2)=(o_1,o_2)$, contrary to parity. Hence
+$(A-A)\cap(B-B)=\{0\}$.
+
+Since $m\leq q/2$, the construction gives
+\[
+ Q(A,B)=m(m-1)=\frac N2+O(N^{3/4}).
+\]
+In particular, $Q(A,B)\geq N/2-O(N^{3/4})$ for infinitely many
+$N$, as odd primes $q$ tend to infinity.
+
+\subsection{5) The necessary upper bound for $f(N)$}
+For completeness, we prove the classical estimate sufficient to compare
+the construction with $\binom{f(N)}2$. Let $C\subset[N]$ be Sidon,
+$s=|C|$, and let $H\geq1$ be an integer. Define
+\[
+ r(x)=\#\{(c,h)\in C\times[H]:c+h=x\}.
+\]
+Its support has at most $N+H-1$ elements and $\sum_xr(x)=sH$, so
+Cauchy--Schwarz gives
+\[
+ \frac{s^2H^2}{N+H-1}\leq\sum_xr(x)^2.
+\]
+Expanding the right side by differences, the zero difference contributes
+$sH$. Each nonzero difference of $C$ has at most one representation, so
+\[
+ \sum_xr(x)^2
+ \leq sH+2\sum_{d=1}^{H-1}(H-d)
+ =sH+H(H-1).
+\]
+Consequently
+\[
+ s^2\leq(N+H-1)\left(1+\frac{s-1}{H}\right).
+\]
+Distinct positive differences also give $s(s-1)/2\leq N-1$, hence
+$s=O(\sqrt N)$. Choosing $H=\lceil N^{3/4}\rceil$ yields
+\[
+ f(N)^2\leq N+O(N^{3/4}),\qquad
+ \binom{f(N)}2\leq\frac N2+O(N^{3/4}).
+\]
+The diagonal contribution was $sH$, not $s^2H$; this is the distinction
+needed for a useful convolution estimate.
+
+For any proposed $0<c<1$, the upper bound on $f(N)$ makes
+\[
+ (1-c+o(1))\binom{f(N)}2
+ \leq (1-c+o(1))\frac N2,
+\]
+whereas the constructed equal-size pairs have score
+$(1+o(1))N/2$. These inequalities conflict along the infinite sequence
+$N=(q^2-1)/2$. Values $c\geq1$ fail immediately as well.
+This proves the second disproof without importing the full asymptotic
+formula $f(N)\sim\sqrt N$.
+
+\subsection{6) Verification and outcome}
+The first argument uses the known general theorem for Problem 42 as its
+external mathematical input. The second argument is written out here
+from finite-field algebra, unique directed differences, parity counting,
+and Cauchy--Schwarz. The two constructions serve different purposes:
+the first makes the additive excess diverge, while the second rules out
+a fixed proportional saving for equal-sized sets.
+
+The accompanying \texttt{verification/solved\_42\_43\_checks.py}
+constructs the finite fields explicitly for odd primes through $101$,
+checks every directed modular difference, verifies the parity bound,
+and checks the two final integer sets. These finite checks illustrate
+the infinite-family argument; the general proof is the algebra above.
+
+\textbf{Outcome: SOLVED, reconstruction of both known disproofs.}
+The attribution and the dependency on Problem 42 are part of this
+conclusion. No fresh Lean verification is asserted.
+
+\subsection{7) Sources and attribution}
+\begin{itemize}
+\item T. F. Bloom, Problem 43 and its discussion,
+\texttt{https://www.erdosproblems.com/43} and
+\texttt{https://www.erdosproblems.com/forum/discuss/43}, checked
+23 September 2026. Kevin Barreto's comment of 19 December 2025 gives
+the parity construction. The implication from Problem 42 is also
+recorded on the current problem page.
+\item Problem 42 and the compact Cayley theorem, cited and precisely
+stated in the adjacent \texttt{42.tex}; the formal source is
+\texttt{https://github.com/Shashi456/erdos-formalizations/blob/main/Erdos/P42/CompactCayley/Proof.lean}.
+\item The Bose--Chowla construction is proved in Section 3 rather than
+used as an unexplained assumption. Its use for this problem follows
+Barreto's cited argument.
+\end{itemize}
+
+This measures coverage of both original questions by the known proofs,
+with the stated theorem for Problem 42 accepted. It is not a novelty
+claim or a measure of independent formal verification.
+\subsection{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

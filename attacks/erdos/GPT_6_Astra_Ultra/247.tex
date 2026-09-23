@@ -1,0 +1,25 @@
+\section{Problem 247: periodic approximants inside the nonlacunary regime}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is transcendence of $\alpha=\sum_n2^{-a_n}$ for increasing positive integers with $\limsup a_n/n=\infty$. I read \texttt{gpt\_pro\_5.4/247.tex} in full. Its Ridout and digit-count deductions leave nonlacunary polynomial growth. I give a concrete transcendental family within that surviving regime, using periodic approximants rather than truncations. This is an example, not a proof for every such sequence.
+\subsection*{2) WORK}
+Put $L_j=2^{2^j}$ for $j\ge1$. After any fixed initial binary prefix of length $L_1$, fill positions $L_{j-1}+1,\ldots,L_j$ for each $j\ge2$ by repetitions of the length-$j$ word $0^{j-1}1$, truncating the last repetition if necessary. Let $a_n$ be the positions of the ones.
+
+The ones have density zero. Indeed, for any fixed $J$, the stages after $J$ contribute at most $X/J+O(\log\log X)$ ones up to position $X$, while the first $J$ stages contribute a constant. Let $X\to\infty$ and then $J\to\infty$. Thus $a_n/n\to\infty$. There are infinitely many ones, so the expansion is not eventually periodic: any eventually periodic binary sequence with infinitely many ones has positive one-density. Hence $\alpha$ is irrational.
+
+Inside stage $j$ gaps between ones are $j$; across its boundary they are at most $2j+2$. Their positions are at least $L_{j-1}-j$, so $a_{n+1}/a_n\to1$. Also $j=O(\log\log a_n)$ and the number of ones up to $a_n$ is at least $a_n/j-O(j+L_1)$: in each preceding stage its period is at most $j$, with at most one lost incomplete period per stage. Thus $a_n=O(n\log\log a_n)$, in particular $a_n=O(n^2)$.
+
+Let $R_j$ retain the first $L_{j-1}$ digits and then repeat the same length-$j$ word forever. It is rational with reduced denominator $q_j\le2^{L_{j-1}}(2^j-1)$ and
+\[
+0<|\alpha-R_j|\le2^{-L_j}.
+\]
+For every fixed $D$,
+$L_j-D(L_{j-1}+j)\to\infty$. These approximations contradict algebraicity of degree $D$: if $P\in\mathbb Z[x]$ is a minimal polynomial of such an $\alpha$, then $P(R_j)\ne0$ and $|P(R_j)|\ge q_j^{-D}$; the mean-value bound on a fixed neighborhood gives $|P(R_j)|\le C|R_j-\alpha|$. Therefore $|R_j-\alpha|\ge C^{-1}q_j^{-D}$, incompatible with the displayed estimates. The constructed number is transcendental.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The upper denominator estimate is sufficient in the Liouville comparison and remains valid after reduction. Irrationality excludes equality with any periodic approximant. Polynomial growth and consecutive-position ratios tending to one show that neither of the supplied sufficient conditions alone explains this family. The imposed long repetitions are an additional structural assumption absent from the original question.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} This handles an explicit subclass within the previously isolated regime. A general sparse binary sequence need not contain these long periodic blocks, so the universal transcendence assertion remains unproved.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied version, read 2026-09-23. The additional construction and elementary polynomial approximation obstruction are proved directly; the supplied deep external theorems are not invoked as premises here.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the universal sparse-digit assertion.
+\textbf{COMPLETION: 15\%}

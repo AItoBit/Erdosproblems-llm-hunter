@@ -1,0 +1,93 @@
+\section{Erd\H{o}s Problem 74: local edge bipartization}
+
+\subsection{1) Statement and current negative resolution}
+For every function $f(n)\to\infty$, is there a graph of infinite
+chromatic number such that each $n$-vertex subgraph becomes bipartite
+after deletion of at most $f(n)$ edges?
+The page checked on 23 September 2026 records a disproof and a Lean
+formalization. Its exposition attributes the disproof to GPT-6 Astra
+and describes an obstruction at a logarithmic scale. This note is a
+new exposition of two local ingredients, not a claim to have produced
+that earlier proof or checked its Lean code. The global induction
+is not completed here.
+
+\subsection{2) A bounded certificate for short odd cycles}
+Fix an integer $L\geq2$ and put $B_0=0$ and
+$B_k=L+L^2+\cdots+L^k$. Call a family of odd cycles of length at
+most $L$ \emph{$k$-rich} if every set of fewer than $k$ edges fails
+to meet some member of the family.
+
+We prove by induction that every $k$-rich family has a $k$-rich
+subfamily whose union has at most $B_k$ edges. At $k=0$ choose the
+empty family; the defining assertion is vacuous. Suppose the result
+holds for $k$ and let $\mathcal S$ be $(k+1)$-rich. It is nonempty,
+so choose $C\in\mathcal S$. For $e\in E(C)$, let
+$\mathcal S_e$ consist of those cycles avoiding $e$.
+If some set $F$ of fewer than $k$ edges hit every member of
+$\mathcal S_e$, then $F\cup\{e\}$, of size at most $k$, would hit
+every member of $\mathcal S$. This is impossible. Hence each
+$\mathcal S_e$ is $k$-rich and has a suitable subfamily
+$\mathcal S'_e$ on at most $B_k$ edges.
+
+Take $\mathcal S'=\{C\}\cup\bigcup_{e\in E(C)}\mathcal S'_e$.
+Its edge union has size at most $L+LB_k=B_{k+1}$. Given $|F|<k+1$,
+either $F$ misses $C$, or choose $e\in F\cap E(C)$. In the latter
+case $|F\setminus\{e\}|<k$, so some cycle of $\mathcal S'_e$
+misses $F\setminus\{e\}$. It also misses $e$ and hence misses $F$.
+This proves the induction, including for an infinite original family.
+
+Consequently, if every subgraph with at most $B_{d+1}$ edges can be
+made bipartite by deleting at most $d$ edges, then all odd cycles
+of length at most $L$ in the entire graph can be hit with at most
+$d$ edges. Otherwise the family would be $(d+1)$-rich; its finite
+certificate would contradict the assumed bipartization bound.
+
+\subsection{3) Checking the four-layer coloring join}
+Suppose vertex layers have integer indices and every edge changes
+the index by at most one. Let $a$ and $b$ be proper colorings,
+defined on overlapping inner and outer regions, and suppose both
+use only colors $1,2$ on layers $t,t+1,t+2,t+3$.
+Start with $a$ on layers at most $t+1$ and $b$ on layers at least
+$t+2$. On the middle two layers recolor to $3$ precisely those
+vertices $v$ satisfying $a(v)=2$ and $b(v)=1$.
+
+The recolored vertices are independent: an edge between two of them
+would have both endpoints of color $2$ under the proper coloring
+$a$. At the inner boundary, a recolored vertex meets only colors
+$1,2$ in layer $t$; the same holds at the outer boundary with layer
+$t+3$. Edges within an unchanged-color region remain proper.
+The only possible original conflict therefore crossed from $u$
+in layer $t+1$ to $v$ in layer $t+2$ with $a(u)=b(v)$.
+If this common value is $1$, properness of $a$ gives $a(v)=2$,
+so $v$ is recolored. If it is $2$, properness of $b$ gives
+$b(u)=1$, so $u$ is recolored. Exactly one endpoint is recolored
+in either case. Every edge is therefore properly colored.
+
+\subsection{4) Parameter issue and remaining gap}
+The original hypothesis counts vertices; the certificate counts
+edges. A graph with at most $m$ edges has at most $2m$ nonisolated
+vertices, so for a nondecreasing $f$ the vertex hypothesis gives
+an edge bound $D(m)\leq f(2m)$. Isolated vertices do not affect
+bipartiteness. This factor cannot simply be ignored in a quantitative
+argument. Restricting to a carefully chosen nondecreasing divergent
+$f$ is legitimate for a disproof of the universal assertion.
+
+What is still missing from this attempt is a fully specified sequence
+of cycle-length cutoffs, deletion budgets and neighborhood radii
+which always supplies the required four-layer overlaps and preserves
+the coloring induction. The certificate and the join do not alone
+establish that sequence. The source's stated disproof is accepted as
+context; this note does not claim a complete independent disproof.
+
+\textbf{Outcome of this attempt: UNRESOLVED; two proof ingredients
+rigorously reconstructed.} The batch script checks the join on every
+allowed pair of color states and adjacent layer types.
+
+\subsection{5) Source and attribution}
+T. F. Bloom, Problem 74 and its proof exposition dated 3 September
+2026, \texttt{https://www.erdosproblems.com/74}, checked
+23 September 2026. The two reconstructed ingredients follow that
+exposition. No new discovery or local Lean verification is claimed.
+The estimate concerns this partial reconstruction.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 25\%}

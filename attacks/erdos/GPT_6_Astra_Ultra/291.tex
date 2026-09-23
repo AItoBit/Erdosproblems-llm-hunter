@@ -1,0 +1,25 @@
+\section{Erd\H{o}s Problem \#291: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Put $L_n=\operatorname{lcm}(1,\ldots,n)$ and $a_n=L_nH_n$, where $H_n=\sum_{j\le n}1/j$. Are there infinitely many $n$ with $\gcd(a_n,L_n)=1$, as well as infinitely many with gcd greater than one?
+
+All supplied versions considered: \texttt{291.tex}.
+The source develops the already accessible greater-than-one side and correctly warns that multivariate logarithm independence is not automatic. I turn back to the difficult gcd-one side, rederive its exact finite test and run it with rational arithmetic.
+\subsection{2) WORK}
+Fix $p\le n$, let $e=\lfloor\log_p n\rfloor$ and $m=\lfloor n/p^e\rfloor$. Modulo $p$, only denominators divisible by $p^e$ survive in $a_n=\sum_{j\le n}L_n/j$. Consequently
+\[
+a_n\equiv {L_n\over p^e}\sum_{u=1}^{m}u^{-1}\pmod p.
+\]
+The coefficient is invertible, since $v_p(L_n)=e$. Thus $p$ divides the gcd exactly when the harmonic sum of the leading base-$p$ digit $m$ is zero modulo $p$. For $p=2$, $m=1$ always, so two never divides the gcd. More generally primes with leading digit one cannot obstruct it.
+
+The reproducible exact-rational loop in \texttt{verification/batch\_2\_checks.py} computes $H_n$ and $L_n$ incrementally for every $1\le n\le1000$. In lowest terms $H_n=u_n/v_n$, the gcd is $L_n/v_n$, so the test is simply $v_n=L_n$. It finds 145 successful indices, including every $n$ from 968 through 1000. This last run is finite and gives no extrapolation beyond the checked range.
+\subsection{3) ADVERSARIAL VERIFICATION}
+Primes greater than $n$ do not divide $L_n$ and are excluded. The formula is modulo $p$, not a complete higher-valuation formula. Testing larger and larger initial intervals does not furnish an infinite family, and successful runs may stop abruptly when a leading digit changes.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No structural mechanism guaranteeing infinitely many simultaneous good leading digits is proved. The greater-than-one half is known from the source; the gcd-one infinitude remains unresolved.
+\subsection{5) SOURCES CHECKED}
+No external theorem is used in the new argument. The supplied source was read in full; the saved Tao status snapshot is dated 2026-09-22.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 10\%}

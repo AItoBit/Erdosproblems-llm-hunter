@@ -1,0 +1,72 @@
+\section{Erd\H{o}s Problem \#551: restrictions on a smallest cycle--clique counterexample}
+\noindent Date: 2026-09-23. Partial research attempt; no claim of a new Ramsey bound.
+
+\subsection{1) TARGET AND SOURCE AUDIT}
+For $k\ge n\ge3$, excluding $k=n=3$, the target is
+\[
+R(C_k,K_n)=(k-1)(n-1)+1.
+\]
+Equivalently, every graph on the displayed number of vertices should contain either a cycle of length exactly $k$ or an independent set of size $n$. Cycles and copies are not required to be induced. The live page labels the problem DECIDABLE and records a theorem covering all sufficiently large clique parameters. The finite remainder is not automatically settled by that theorem.
+
+The objective here is to obtain exact necessary conditions on a smallest remaining counterexample and to verify a small instance with a reproducible exhaustive search.
+
+\subsection{2) WORK}
+\paragraph{The lower bound.}
+The disjoint union of $n-1$ copies of $K_{k-1}$ has $(k-1)(n-1)$ vertices. Every cycle stays in a component, so it has no $C_k$. An independent set meets each component in at most one vertex, so it has no independent $n$-set. Hence the stated expression is always a lower bound. The entire unresolved content is the matching upper bound.
+
+\paragraph{Independent sets in a minimal failure must expand.}
+Fix $k\ge4$, and suppose $n\in\{3,\ldots,k\}$ is the smallest clique parameter for which the upper bound fails at this $k$. Let $G$ be a counterexample with
+\[
+N=(k-1)(n-1)+1
+\]
+vertices. If $S$ is a nonempty independent set of size $s$, then
+\[
+|N_G(S)|\ge(k-2)s+1,
+\tag{1}
+\]
+where $N_G(S)$ means vertices outside $S$ adjacent to at least one vertex of $S$.
+
+To prove this, let $W$ consist of vertices outside $S$ with no neighbour in $S$. The graph $G[W]$ is $C_k$-free and cannot contain an independent set of size $n-s$, because such a set together with $S$ would contradict $\alpha(G)<n$. Minimality of $n$ therefore gives
+\[
+|W|\le(k-1)(n-s-1).
+\tag{2}
+\]
+The smaller parameters $n-s=2$ and $n-s=1$ cause no gap: $R(C_k,K_2)=k$, since a graph with no independent pair is complete, and $R(C_k,K_1)=1$. Also $s\le n-1$. Subtracting (2) and $|S|$ from $N$ proves (1).
+
+In particular $\delta(G)\ge k-1$, by taking $s=1$. More generally, an independent set cannot be separated from the rest of the graph by at most $(k-2)|S|$ vertices. This is a stronger necessary condition than the minimum-degree condition and can be used to reject candidate graphs in a finite search.
+
+\paragraph{Why the minimum-degree conclusion is insufficient.}
+A large minimum degree does not by itself force a cycle of a specified length. For example, if $k$ is odd then $K_{k-1,k-1}$ has minimum degree $k-1$ but has no odd cycle. This example is not a counterexample to the conjecture because it has a large independent set. It demonstrates precisely why an argument retaining only $\delta(G)\ge k-1$ has discarded crucial information.
+
+\paragraph{An additional restriction away from the diagonal.}
+Choose the smallest $k$ for which any failure occurs, and then the smallest $n$ for that $k$. If $k>n$, the established statement for $(k-1,n)$ forces $G$ to contain a cycle $C$ of length $k-1$: the graph has at least $(k-2)(n-1)+1$ vertices and no independent $n$-set. The potential exception $(k,n)=(4,3)$ is ruled out by the finite verification below, so this argument never invokes the excluded pair $(3,3)$.
+
+No vertex outside $C$ can be adjacent to two consecutive vertices of $C$. Otherwise replacing that cycle edge by the two-edge path through the outside vertex gives a cycle of length exactly $k$. Consequently,
+\[
+|N_G(v)\cap V(C)|\le\left\lfloor\frac{k-1}{2}\right\rfloor
+\quad(v\notin V(C)).
+\]
+Combining this with (1) for singletons gives
+\[
+\delta\bigl(G-V(C)\bigr)\ge\left\lceil\frac{k-1}{2}\right\rceil.
+\tag{3}
+\]
+The restriction does not assume that $C$ is induced. It does require $k>n$: applying the conjecture at $(k-1,n)$ on the diagonal would leave the permitted parameter range. Also (3) does not by itself force a suitable cycle or independent set; it only sharpens the description of a possible minimal failure.
+
+\paragraph{A completed finite check: $R(C_4,K_3)=7$.}
+The accompanying program \texttt{verification/add\_graphs\_checks.py} recursively generates every labelled triangle-free graph $B$ on seven vertices. An edge is added only when its endpoints have no common neighbour among edges already present. Since every prefix of a triangle-free graph is triangle-free, this pruning omits none of the target graphs. Each of the $133501$ generated graphs is checked separately.
+
+Set $G=\overline B$. The absence of a triangle in $B$ is exactly the absence of an independent triple in $G$. A graph contains a $C_4$ if and only if some two distinct vertices have at least two common neighbours. The program checks this criterion, including cycles with chords, and finds a $C_4$ in every complement. Thus the upper bound is verified. The disjoint union of two triangles proves the lower bound on six vertices. This is a verification of a known small instance, not an improvement over existing results or a finite check of all outstanding pairs.
+
+\subsection{3) ADVERSARIAL VERIFICATION}
+Minimality is taken first in $n$ at fixed $k$ for (1), and first in $k$ and then $n$ for (3); these hypotheses have been kept explicit. Formula (2) concerns the common nonneighbour set, not the union of the individual nonneighbour sets. The finite program uses labelled graphs without a potentially unsafe isomorphism reduction. Its search covers seven vertices only, and there is no extrapolation to larger parameters.
+
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.} The lower bound, the independent-set expansion requirement, the off-diagonal cycle restriction, and the $(k,n)=(4,3)$ check are complete. No contradiction has been obtained from the necessary conditions for arbitrary remaining pairs. These observations are not claimed to be new to the literature.
+
+\subsection{5) SOURCES CHECKED}
+The statement and current status were fetched on 2026-09-23 from \url{https://www.erdosproblems.com/551}. The bibliographic results recorded there supply context only; the arguments above are self-contained apart from the explicitly conditional use of minimality. The reproducible computation is in \texttt{verification/add\_graphs\_checks.py}, with results in its adjacent JSON file.
+
+\subsection{6) COMPLETION ESTIMATE}
+Only one small parameter pair is computationally settled here; the structural restrictions have not resolved the remaining finite range. The estimate is subjective and is neither a probability nor a guaranteed fraction of the mathematics completed.
+\textbf{COMPLETION: 4\%}

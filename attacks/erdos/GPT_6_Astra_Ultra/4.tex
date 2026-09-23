@@ -1,0 +1,92 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#4; reconstruction of a known implication, 2026-09-23.}
+Write $\log_j x$ for the $j$-fold iterated natural logarithm, with $x$ sufficiently large that all expressions below are positive. Is it true that for every $C>0$ there are infinitely many indices $n$ such that
+\[
+ p_{n+1}-p_n>C\frac{\log n\,\log_2n\,\log_4n}{(\log_3n)^2}?
+\]
+We reconstruct the affirmative answer from the stronger interval-covering theorem of Ford, Green, Konyagin, Maynard, and Tao. That deep theorem is stated explicitly as an external input; the passage to actual consecutive primes and then to the prime index is proved below.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current editorial marks the problem proved, credits Maynard and Ford--Green--Konyagin--Tao with its resolution, and records the subsequent stronger joint theorem. It also describes a more recent claimed improvement. The present argument uses only the published 2018 theorem and does not depend on, or certify, that more recent claim.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+A covering of a finite interval by one residue class for each small prime can be translated to an interval of composite numbers. Care is needed: being divisible by a small prime does not make an integer composite when it equals that prime. We choose the translation above the small primes. We also control the size of the preceding prime, so that the iterated logarithms have the correct argument and the quantifier ``for every $C$'' follows from a factor tending to infinity.
+
+\section{WORK}
+\subsection{The exact external input}
+For a real number $x$, let $Y(x)$ be the largest integer $y$ for which residue classes $a_q\pmod q$, one for each prime $q\le x$, cover all integers in $[1,y]$. The covering theorem proved in \emph{Long gaps between primes}, equation (1.2), asserts that there are constants $c>0$ and $x_0$ such that
+\[
+ Y(x)\ge c\frac{x\log x\,\log_3x}{\log_2x}
+ \qquad(x\ge x_0).
+\tag{1}
+\]
+The constant may be decreased to absorb integer rounding. Its proof uses the authors' sieve estimates and hypergraph covering argument; these analytic and probabilistic ingredients are not reproved here.
+
+We also use the standard prime number theorem in the forms
+\[
+ \vartheta(x)=\sum_{q\le x}\log q\sim x,
+ \qquad \pi(t)\sim\frac t{\log t},
+\tag{2}
+\]
+and Bertrand's postulate to locate a prime between $a/2$ and $a$ when $a$ is large. These established inputs are separate from the deductions that follow.
+
+\subsection{A finite covering becomes an interval of composites}
+Choose an integer
+\[
+ y=\left\lfloor c\frac{x\log x\,\log_3x}{\log_2x}\right\rfloor
+\]
+and residue classes supplied by (1). Put $P(x)=\prod_{q\le x}q$. By the Chinese remainder theorem there is an integer $a$ with
+\[
+ P(x)\le a<2P(x),\qquad a\equiv-a_q\pmod q\quad(q\le x).
+\]
+Such an $a$ is obtained by taking the representative of the simultaneous residue class in $[0,P(x))$ and adding $P(x)$.
+
+For every integer $1\le t\le y$, the covering supplies a prime $q\le x$ with $t\equiv a_q\pmod q$. Thus $q\mid a+t$. For sufficiently large $x$, $a+t\ge P(x)>x\ge q$, so $a+t$ is composite. This last inequality explicitly excludes the exceptional possibility $a+t=q$.
+
+Let $p$ be the largest prime at most $a$, and let $p'$ be the next prime. The interval $(a,a+y]$ contains no prime, so
+\[
+ p'-p>y.
+\tag{3}
+\]
+Bertrand's postulate gives $p>a/2$ for sufficiently large $a$. Consequently
+\[
+ P(x)/2<p<2P(x),\qquad
+ \log p=\log P(x)+O(1)=(1+o(1))x.
+\tag{4}
+\]
+In particular, the prime $p$ tends to infinity with $x$. The construction therefore yields infinitely many different consecutive-prime pairs.
+
+\subsection{Converting the scale to the prime index}
+Write $p=p_n$. From (2),
+\[
+ n=\pi(p_n)\sim\frac{p_n}{\log p_n},\qquad
+ \log n=\log p_n-\log\log p_n+o(1)\sim\log p_n\sim x.
+\]
+Taking further logarithms gives, successively,
+\[
+ \log_2n\sim\log x,\qquad
+ \log_3n\sim\log_2x,\qquad
+ \log_4n\sim\log_3x.
+\tag{5}
+\]
+For example, the first relation follows from $\log n/x\to1$, so $\log_2n=\log x+o(1)$; each subsequent relation follows in the same manner because the comparison quantity tends to infinity. Thus (3)--(5) imply that for infinitely many $n$,
+\[
+ p_{n+1}-p_n\ge c'\frac{\log n\,\log_2n\,\log_4n}{\log_3n}
+\tag{6}
+\]
+for some fixed $c'>0$ independent of $n$.
+
+Dividing the right side of (6) by the scale in the question leaves the factor $c'\log_3n$, which tends to infinity. Given any $C>0$, discard the finitely many constructed indices with $c'\log_3n\le C$. Every remaining index satisfies the required strict inequality. This proves both the arbitrary-constant quantifier and infinitude for each constant. \hfill$\square$
+
+\section{VERIFICATION AND SCOPE}
+The constructed interval contains only composite integers because its left endpoint exceeds every sieving prime. The preceding prime is within a constant multiplicative factor of $P(x)$, preventing an uncontrolled substitution of $\log n$ for $x$. No assertion that every large prime gap has this size is made; the construction supplies an unbounded sequence of witnesses. The gain of one factor $\log_3n$ over the question's denominator is what converts a single fixed positive constant into every prescribed constant.
+
+\section{FINAL}
+\textbf{SOLVED (affirmative, using the published covering theorem).} The full deduction from the precisely stated covering estimate is established, including consecutiveness, scale conversion, and quantifiers. The proof of that external covering estimate itself is not reconstructed here, and no improvement over the known theorem is claimed.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/4}, accessed 2026-09-23. K. Ford, B. Green, S. Konyagin, J. Maynard, and T. Tao, \emph{Long gaps between primes}, Journal of the American Mathematical Society 31 (2018), 65--105, \url{https://arxiv.org/abs/1412.5029}; the covering formulation and its estimate were checked in Section 1 of \url{https://arxiv.org/html/1412.5029v3}. No earlier local numbered attempt for \#4 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+The estimate measures completion of the deduction from the named established theorem, not an independent reconstruction of the substantial sieve and hypergraph arguments underlying it.
+\textbf{COMPLETION: 100\%}

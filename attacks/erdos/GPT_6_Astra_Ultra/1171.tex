@@ -1,0 +1,77 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#1171; independent attempt, 2026-09-23.}
+Let $\Omega=\omega_1\cdot\omega_1$ and $\beta=\omega_1\cdot\omega$, where the products are ordinal products. For every finite $k$, must every map
+\[
+c:[\Omega]^2\longrightarrow\{0,1,\ldots,k\}
+\]
+have either a colour-$0$ homogeneous subset of order type $\beta$, or three vertices whose three pairs all have one common colour $i\in\{1,\ldots,k\}$? This is
+\[
+\Omega\longrightarrow(\beta,\underbrace{3,\ldots,3}_{k})^2_{k+1}.
+\]
+For $k=0$ the assertion is immediate. The issue is an unconditional ZFC statement for every finite $k$, rather than merely its consistency.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page, downloaded 2026-09-23, retains the status \emph{not disprovable}. Baumgartner's publisher abstract for \emph{Remarks on partition ordinals} states that $\mathrm{MA}_{\aleph_1}$ makes $\beta$ a partition ordinal, in particular giving $\beta\to(\beta,3)^2$. The paper's stronger conclusions are not needed here.
+
+The live proof-claims tab contains a partial claim submitted by Lezhe Gao on 2026-09-05, disclosing DeepSeek and GPT-5.5 assistance, concerning the finite-colour conclusion under $\mathrm{MA}_{\aleph_1}$. It expressly leaves the ZFC case open. I checked the elementary implication it describes directly below; the conditional conclusion is already reported there and is not new progress claimed by this note. That tab is an unreviewed proof claim, not independent certification of a theorem.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First identify exactly which two-colour hypothesis permits iteration without losing the required order type. Then construct and verify an obstruction to replacing the large ordinal domain by a small finite stack of uncountable blocks. These two directions distinguish a valid conditional reduction from an invalid unrestricted proof.
+
+\section{WORK}
+\subsection{A valid iteration lemma and its conditional consequence}
+\textbf{Lemma.} If an ordinal $\alpha$ satisfies $\alpha\to(\alpha,3)^2$, then, for every finite $k$,
+\[
+\alpha\to(\alpha,\underbrace{3,\ldots,3}_{k})^2_{k+1}.
+\]
+\textit{Proof.} Begin with a colouring having no triangle in any of the colours $1,\ldots,k$. Let $H_0$ be the full ordered set of type $\alpha$. At stage $j\in\{1,\ldots,k\}$, colour a pair of $H_{j-1}$ red exactly when its original colour is $j$, and blue otherwise. Transport this binary colouring to $\alpha$ through an order isomorphism. The hypothesis supplies a red triangle or a blue subset of order type $\alpha$. The red outcome contradicts our assumption. Let $H_j$ be the blue subset. Since $H_j\subseteq H_{j-1}$, colours removed at earlier stages remain absent. After finitely many steps, $H_k$ has order type $\alpha$ and every pair has colour $0$. \hfill$\square$
+
+Apply this with $\alpha=\beta$ using Baumgartner's result under $\mathrm{MA}_{\aleph_1}$, then restrict any colouring of $\Omega$ to its initial segment of order type $\beta$. This proves the stated problem under that extra axiom. No assertion about forcing axioms being theorems of ZFC is being made.
+
+The same induction cannot start from only $\Omega\to(\beta,3)^2$. After one use it may leave a set of type $\beta$, and a hypothesis about colourings on $\Omega$ says nothing about that smaller domain. This is the precise loss-of-order-type gap in that proposed proof.
+
+\subsection{An explicit obstruction on sixteen uncountable blocks}
+Identify the integers $0,\ldots,15$ with $\mathbb F_2^4$ using their four binary digits; write $a\oplus b$ for coordinatewise addition. Partition the nonzero vectors as
+\[
+S_1=\{1,2,4,8,15\},\quad
+S_2=\{3,5,7,10,11\},\quad
+S_3=\{6,9,12,13,14\}.
+\]
+Each $S_i$ is sum-free for sums of distinct elements. For complete arithmetic verification, its ten pair sums form, respectively,
+\[
+\begin{split}
+\{3,5,6,7,9,10,11,12,13,14\},\\
+\{1,2,4,6,8,9,12,13,14,15\},\\
+\{1,2,3,4,5,7,8,10,11,15\}.
+\end{split}
+\]
+Each displayed sum set is disjoint from the corresponding $S_i$.
+
+On the complete graph with vertex set $\mathbb F_2^4$, colour $\{a,b\}$ by $i$ if $a\oplus b\in S_i$. There is no monochromatic triangle: in a triangle with distinct vertices $a,b,d$, the nonzero differences $a\oplus b$ and $b\oplus d$ are distinct and their sum is $a\oplus d$. All three cannot lie in the same sum-free set.
+
+Now take sixteen consecutive blocks $C_0,\ldots,C_{15}$, each of order type $\omega_1$. Colour every within-block pair $0$; colour every pair between $C_a$ and $C_b$ by the preceding colour of $\{a,b\}$. A triangle with repeated block indices has an edge of colour $0$. A triangle with three distinct block indices cannot be monochromatic in a nonzero colour by the finite construction. Finally, a colour-$0$ homogeneous set cannot meet two different blocks. Hence this gives the fully explicit relation
+\[
+\omega_1\cdot16\not\longrightarrow
+(\omega_1\cdot2,3,3,3)^2_4.
+\]
+It also fails to have a colour-$0$ set of type $\beta$. This is a rigorous finite-block obstruction for three triangle colours, not a counterexample on $\Omega$. The finite difference colouring is not asserted to be novel or optimal.
+
+\subsection{Why finite colour removal differs from countably many stages}
+Even nested sets of order type $\omega_1$ can have empty intersection. Partition $\omega_1$ into countably many disjoint uncountable sets $A_m$, using a bijection $\omega_1\times\omega\to\omega_1$, and put $H_n=\bigcup_{m\ge n}A_m$. Every $H_n$ has order type $\omega_1$, while $\bigcap_nH_n=\varnothing$. Thus the finite induction above cannot be extended to infinitely many colours by taking an intersection without another preservation argument. This reinforces the importance of both the self-preserving target and the finite number of steps.
+
+\section{VERIFICATION AND EXACT REMAINING GAP}
+The calculation of all pair sums and all $\binom{16}{3}=560$ triples is independently repeated by \texttt{verification/add\_sets\_b\_checks.py}. It verifies only the finite arithmetic underlying the blow-up; the ordinal conclusion follows from the written block argument. The within-block colour is $0$, so mixed triangles were checked separately rather than being silently identified with finite triangles.
+
+For the positive argument, every application acts on an order-isomorphic copy of the very same $\alpha$. A binary colouring that simply merges all nonzero colours need not turn its monochromatic triangle into an original monochromatic triangle: original edge colours $1,1,2$ already refute that inference. The proof above avoids that inference by eliminating one original colour at a time, at the cost of its stronger initial hypothesis.
+
+The missing step is a ZFC method handling the full domain $\Omega$ and arbitrary finite $k$ while preserving enough ordered structure through the eliminations. The conditional lemma and the smaller-domain obstruction leave this step open.
+
+\section{FINAL}
+\textbf{UNRESOLVED.} The finite-colour consequence of a self-preserving binary relation is proved, and an explicit sixteen-block obstruction is verified. The existing forcing-axiom hypothesis has not been removed.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, current statement and status, \url{https://www.erdosproblems.com/1171}; live partial claim, \url{https://www.erdosproblems.com/forum/thread/1171/proof-claims}, both accessed 2026-09-23. J. E. Baumgartner, \emph{Remarks on partition ordinals}, Lecture Notes in Mathematics 1401 (1989), 5--17; publisher abstract checked at \url{https://link.springer.com/chapter/10.1007/BFb0097328}. The local attempts tree contained no existing numbered source for this problem.
+
+\section{COMPLETION ESTIMATE}
+This subjective estimate concerns the unrestricted question, not the already conditional theorem. The verified finite construction and the quantifier audit clarify obstacles; they supply no general ZFC argument and no new claim of resolution.
+\textbf{COMPLETION: 6\%}

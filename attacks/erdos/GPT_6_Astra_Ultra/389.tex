@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#389: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{389.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+Write $d=n-1$ and
+\[
+R(n,k)=\frac{(n+2k-1)!(n-1)!}{(n+k-1)!^2}.
+\]
+The desired divisibility holds exactly when $R(n,k)$ is an integer. The source's final failure-family proof uses purported base-$p$ digits $2$ and $3$ even when $p=2$ or $3$, which is not valid. A direct floor calculation avoids that issue and gives a simpler family.
+\subsection*{2) EXACT VALUATION AT A PRIME-POWER MIDPOINT}
+Fix $n\ge2$, any prime $p$, and $j$ with $p^j>n-1$. Set
+\[
+k=p^j-n+1>0.
+\]
+Then the two factorial endpoints are $p^j$ and $2p^j-d$. For $1\le\ell\le j$,
+\[
+\left\lfloor\frac{2p^j-d}{p^\ell}\right\rfloor+
+\left\lfloor\frac d{p^\ell}\right\rfloor-
+2\left\lfloor\frac{p^j}{p^\ell}\right\rfloor
+=
+\begin{cases}0,&p^\ell\mid d,\\-1,&p^\ell\nmid d.\end{cases}
+\]
+For $\ell>j$ all terms vanish, since $0<d<p^j$ and $2p^j-d<p^{j+1}$. Legendre's formula now gives the exact result
+\[
+\boxed{v_p(R(n,p^j-n+1))=v_p(n-1)-j<0.}
+\]
+Thus every such $k$ fails, for every prime, without any restriction excluding two or three. In particular each fixed $n\ge2$ has an explicit infinite sequence of failed lengths $2^j-n+1$ whose negative two-adic valuation tends to minus infinity.
+\subsection*{3) CONSEQUENCE FOR SEARCHES}
+The criterion excludes prime-power midpoints before any large products are formed. It is a necessary obstruction, not a construction of successful lengths. The supplied positive families for $n=2,3$ are consistent with it because their midpoint is a product of two distinct primes. Proving that every $n$ has even one successful midpoint remains the central unresolved issue.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} A flawed digit argument is replaced by a stronger exact valuation certificate. Finite checks of the formula for small $n,p,j$ are saved in \texttt{verification/root\_checks.py}; the proof is uniform.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

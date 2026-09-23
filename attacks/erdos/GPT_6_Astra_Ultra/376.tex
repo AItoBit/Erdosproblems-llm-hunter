@@ -1,0 +1,25 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#376; independent attempt, 2026-09-23.}
+Are there infinitely many positive $n$ with $\gcd(\binom{2n}{n},105)=1$? I read all of \texttt{376.tex}. It carefully labels the proposed very small exponent conditional, but its broader assertion that no unconditional power-saving upper bound is available is false literally: one base already provides one. I make that distinction precise and independently enumerate a bounded range.
+\section{WORK: AN UNCONDITIONAL BASELINE AND EXACT CHECK}
+By the digit characterization, every admissible $n<3^k$ has only digits zero or one in its $k$ base-three positions. There are exactly $2^k$ such nonnegative integers. Consequently
+\[
+G_{3,5,7}(N)\le2(N+1)^{\log_3 2}.
+\]
+To justify the digit condition directly, Legendre's factorial valuation gives
+$v_p(\binom{2n}{n})=\sum_{j\ge1}(\lfloor2n/p^j\rfloor-2\lfloor n/p^j\rfloor)$, the number of carries on doubling $n$ in base $p$. There are no carries exactly when every digit is at most $(p-1)/2$.
+The saved program \texttt{verification/batch\_3\_digits\_records.py} generates all $2^{20}$ zero-one base-three strings and tests their base-five and base-seven digits. It finds exactly 14 positive solutions below $3^{20}=3486784401$:
+\[
+1,10,756,757,3160,3186,3187,3250,7560,7561,7651,
+20007,59548377,59548401.
+\]
+The list and bounds are saved in its JSON output. This is an exact bounded reproduction check, not a claimed record search.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Leading zero digits are permitted, ensuring every integer below the cutoff is considered. Zero is explicitly excluded from the displayed list. The unconditional exponent $\log_3 2$ is much larger than the source's conditional $0.026$; it does not validate that stronger assertion. Neither any power-saving upper bound nor a finite list proves finiteness or infinitude. Constructing arbitrarily large simultaneous digit-restricted integers remains the exact gap.
+\section{SOURCES CHECKED}
+Complete local source \texttt{gpt\_pro\_5.4/376.tex}; official primary statement and digit equivalence checked at \url{https://www.erdosproblems.com/latex/376}, 2026-09-23.
+\section{FINAL}
+\textbf{UNRESOLVED.} A literal overstatement about unconditional bounds is corrected and a bounded exhaustive check reproduced.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward infinitude.
+\textbf{COMPLETION: 8\%}

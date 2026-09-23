@@ -1,0 +1,315 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.2/91.tex", "source_paths": ["attacks/erdos/claude_opus_4.5/91.tex", "attacks/erdos/gpt_5.2/91.tex", "attacks/erdos/gpt_pro_5.2/91.tex"], "source_model": "gpt_pro_5.2", "source_completion": null, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 91 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/91
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.2/91.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{claude\_opus\_4.5}.
+Original file: \texttt{attacks/erdos/claude\_opus\_4.5/91.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/claude_opus_4.5/91.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+For a finite set $A\subset\mathbb{R}^2$, let
+\[
+d(A)=\bigl|\{\|x-y\|: x,y\in A,\ x\ne y\}\bigr|
+\]
+be the number of distinct pairwise distances. Define
+\[\delta(n)=\min\{d(A): A\subset\mathbb{R}^2,\ |A|=n\}.\]
+Let $\mathcal{M}_n$ be the family of minimizers $A$ with $|A|=n$ and $d(A)=\delta(n)$.
+Two sets are similar if one is obtained from the other by a Euclidean similarity
+(translation, rotation, reflection, uniform scaling).
+
+Claim: There exists $N_0$ such that for all $n\ge N_0$ there are $A,B\in\mathcal{M}_n$ with $A$ not similar to $B$.
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Browsing is not available. I only record what the problem statement itself claims:
+- $n=3$: equilateral triangle is the unique minimizer.
+- $n=4$: square and two equilateral triangles sharing an edge are two non-similar minimizers.
+- $n=5$: regular pentagon is the unique minimizer (Kov\'acs).
+- $6\le n\le 9$: at least two non-similar minimizers exist (Erd\H{o}s).
+These claims are not re-proved here except for the $n=3,4$ cases below.
+
+3) ATTACK PLAN
+Proof strategies:
+1. Show that for large $n$ the minimizer set $\mathcal{M}_n$ is non-rigid and has multiple
+   combinatorial types.
+2. Construct two explicit non-similar minimizers for all large $n$.
+3. Use stability ideas: near-minimizers come in families, forcing non-uniqueness.
+
+Disproof strategies:
+1. Show that all minimizers are similar for infinitely many $n$ (unlikely).
+2. Find a rigidity theorem that forces a unique combinatorial type for large $n$.
+
+Chosen path: Prove the small cases $n=3$ and $n=4$ rigorously and isolate the gap for large $n$.
+
+4) WORK
+Lemma 1 (Three points).
+For $n=3$, $\delta(3)=1$, and the unique minimizer up to similarity is the equilateral triangle.
+
+Proof.
+Any three non-collinear points determine at least one distance. If not all three distances are
+ equal, then $d(A)\ge 2$. Thus $\delta(3)=1$, achieved only when all three pairwise distances are
+ equal, i.e., the triangle is equilateral. ∎
+
+Lemma 2 (Equidistant sets in the plane are small).
+If all pairwise distances among points of $A\subset\mathbb{R}^2$ are equal, then $|A|\le 3$.
+
+Proof.
+Choose distinct $a,b,c\in A$; then $\triangle abc$ is equilateral. Any $x\in A$ must satisfy
+$\|x-a\|=\|x-b\|=\|x-c\|$. The locus $\|x-a\|=\|x-b\|$ is a perpendicular bisector line, and the
+ intersection of two such bisectors is a single point. Hence no fourth point exists. ∎
+
+Lemma 3 (Four points).
+For $n=4$, $\delta(4)=2$, and there are at least two non-similar minimizers: the square and the
+"double equilateral triangle" (two equilateral triangles sharing an edge).
+
+Proof.
+By Lemma 2, four points cannot have all pairwise distances equal, so $\delta(4)\ge 2$.
+Both the square and the double-equilateral configuration realize exactly two distances, so
+$\delta(4)=2$ and there are at least two non-similar minimizers. ∎
+
+These are the only fully verified cases in this attempt.
+
+5) VERIFICATION
+Edge cases:
+- $n=3$ handled in Lemma 1.
+- $n=4$ handled in Lemma 3.
+
+Quantifiers:
+The large-$n$ statement remains open; the lemmas only verify small-$n$ instances.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+For $n=3$, the equilateral triangle is the unique minimizer (Lemma 1). For $n=4$, $\delta(4)=2$ and
+there are at least two non-similar minimizers (Lemma 3).
+
+(ii) First gap:
+Construct or prove the existence of two non-similar minimizers for all sufficiently large $n$.
+
+(iii) Top 3 next moves:
+1. Identify structural families of minimizers for large $n$ and prove they are not all similar.
+2. Establish stability results showing multiple combinatorial types achieve $\delta(n)$ for large $n$.
+3. Prove monotonicity/extension results: if non-uniqueness holds for some $n$, propagate it to larger $n$.
+
+(iv) Minimal counterexample structure (if statement is false):
+Infinitely many $n$ for which all minimizers are similar, forced by a rigid geometric structure
+(e.g., a unique lattice-like arrangement).
+
+% END REUSED SOURCE: attacks/erdos/claude_opus_4.5/91.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_5.2/91.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_5.2/91.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+Definitions/Conventions.
+For a finite set $A\subset\mathbb R^2$, define the number of distinct distances
+\[D(A):=\big|\{|x-y|: x,y\in A,\ x\ne y\}\big|.\]
+Let
+\[D_{\min}(n):=\min\{D(A): A\subset\mathbb R^2,\ |A|=n\}.\]
+Say that $A$ is an \emph{extremizer} if $|A|=n$ and $D(A)=D_{\min}(n)$.
+Two sets are \emph{similar} if one can be obtained from the other by a similarity transformation (composition of isometry and scaling).
+
+Question.
+For large $n$, prove that there exist at least two non-similar extremizers $A$ for $D_{\min}(n)$.
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Web browsing is not available in this session.
+I will not use external results about $D_{\min}(n)$ beyond the small-$n$ examples stated in the problem text.
+
+3) ATTACK PLAN
+Proof track ideas:
+1. Understand small-$n$ extremizers and extract a mechanism for nonuniqueness (e.g. different combinatorial distance graphs).
+2. Attempt to show that for large $n$, extremizers must be ``highly structured'' but not uniquely so, by comparing regular polygons vs. other configurations.
+
+Disproof track ideas:
+1. Try to show uniqueness of extremizers for infinitely many $n$; the problem statement suggests this is false for large $n$.
+
+Chosen path in this attempt: establish the $n=4$ nonuniqueness rigorously as a model case by proving (i) $D_{\min}(4)=2$ and (ii) there are at least two non-similar extremizers achieving it.
+
+4) WORK
+Lemma 1 (Four points determine at least two distinct distances).
+For any set $A\subset\mathbb R^2$ with $|A|=4$, one has $D(A)\ge 2$.
+
+Proof.
+Assume for contradiction that $D(A)=1$.
+Then all pairwise distances between distinct points in $A$ are equal to some value $d>0$; i.e. $A$ is a set of four pairwise equidistant points.
+Pick three points $x,y,z\in A$.
+Since $|x-y|=|y-z|=|z-x|=d$, the triangle $xyz$ is equilateral.
+Let $O$ be the circumcenter of triangle $xyz$; in an equilateral triangle, the circumcenter is unique and satisfies $|O-x|=|O-y|=|O-z|=d/\sqrt3$.
+
+Let $w$ be the fourth point in $A$.
+Because $|w-x|=|w-y|=d$, the point $w$ lies on the perpendicular bisector of segment $xy$.
+Similarly, $w$ lies on the perpendicular bisector of $xz$.
+The intersection of these two perpendicular bisectors is unique and equals the circumcenter $O$.
+Therefore $w=O$.
+But then $|w-x|=|O-x|=d/\sqrt3\ne d$, contradiction.
+Hence $D(A)\ge 2$. \qed
+
+Lemma 2 (Two non-similar extremizers for $n=4$).
+There exist two non-similar 4-point sets $A,B\subset\mathbb R^2$ with $D(A)=D(B)=2$.
+
+Proof.
+Let $A$ be the vertices of a square of side length $1$. Then the pairwise distances among vertices are either $1$ (sides) or $\sqrt2$ (diagonals), so $D(A)=2$.
+
+Let $B$ be the vertices of a rhombus with side length $1$ and acute angle $60^\circ$ (equivalently, two equilateral triangles sharing an edge).
+Then distances among its vertices are either $1$ (edges) or $\sqrt3$ (the longer diagonal), so again $D(B)=2$.
+
+By Lemma 1, any 4-point set has at least 2 distinct distances, so $D_{\min}(4)=2$, and both $A$ and $B$ are extremizers.
+They are not similar because in a square the ratio of diagonal to side is $\sqrt2$, while in the $60^\circ$ rhombus the longer diagonal to side ratio is $\sqrt3$; similarity preserves this ratio.
+Thus $A$ and $B$ are non-similar extremizers. \qed
+
+FAST REALITY CHECK
+The problem statement says: $n=3$ has a unique extremizer (equilateral), $n=4$ has at least two, $n=5$ is unique (regular pentagon).
+Lemma 2 confirms the $n=4$ nonuniqueness with a complete proof.
+
+5) VERIFICATION
+- Lemma 1's key fact is that the intersection of perpendicular bisectors of $xy$ and $xz$ is unique; this is standard Euclidean geometry.
+- Lemma 2 checks the distance sets explicitly and uses diagonal/side ratio as a similarity invariant.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+I proved that $D_{\min}(4)=2$ and that there are at least two non-similar extremizers achieving it (Lemmas 1--2).
+
+(ii) First gap:
+Extend beyond small $n$ and prove that for all sufficiently large $n$ there are at least two non-similar extremizers for $D_{\min}(n)$.
+
+(iii) Top 3 next moves (concrete):
+1. For each $n$, characterize the distance graph structure of extremizers (which distances occur with which multiplicities) and look for incompatible structures that can both realize $D_{\min}(n)$.
+2. For $6\le n\le 9$ (where Erd\H{o}s claimed nonuniqueness), write down explicit non-similar candidate extremizers and verify they achieve the same minimal number of distances.
+3. Investigate whether known near-extremal constructions for the distinct distances problem (e.g. subsets of grids, regular polygons) can be perturbed in two inequivalent ways without increasing $D(A)$.
+
+(iv) What a minimal counterexample would likely look like (structure/parameters):
+An infinite sequence $n_i\to\infty$ for which the extremizer is unique up to similarity, i.e. any $A$ with $|A|=n_i$ and $D(A)=D_{\min}(n_i)$ must be similar to a single canonical configuration.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_5.2/91.tex
+
+\subsection*{REUSED SOURCE 3}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/91.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/91.tex
+
+\noindent\textbf{FORMAL RESTATEMENT.}
+For $n\ge 2$ define
+\[
+g(n):=\min\{D(A): A\subset\mathbb{R}^2,\ |A|=n\},
+\]
+where $D(A)$ is the number of distinct Euclidean distances determined by unordered pairs from $A$.
+Call two finite point sets $A,B\subset\mathbb{R}^2$ \emph{similar} if $B$ is obtained from $A$ by a similarity transformation (composition of a rigid motion and a uniform scaling; optionally allowing reflection---either choice does not affect the arguments below).
+Let $\mathcal{M}_n$ be the set of similarity classes of minimisers:
+\[
+\mathcal{M}_n:=\{[A]_{\sim}: |A|=n,\ D(A)=g(n)\}.
+\]
+Question: prove that for all sufficiently large $n$ there are at least two non-similar minimisers, i.e.
+\[
+|\mathcal{M}_n|\ge 2\qquad\text{for all large }n.
+\]
+
+\medskip
+\noindent\textbf{QUICK LITERATURE/CONTEXT CHECK.}
+The problem statement gives small-$n$ facts: for $n=3$ the equilateral triangle is the unique minimiser; for $n=4$ there are at least two non-similar minimisers; for $n=5$ the regular pentagon is claimed to be the unique minimiser (with a cited proof). I do not use results beyond these statements; instead I verify the $n=4$ and the value $g(5)=2$ directly.
+
+\medskip
+\noindent\textbf{ATTACK PLAN.}
+\begin{itemize}
+\item \emph{Reality check:} verify the minimisation claims for $n=4,5$ directly by elementary arguments.
+\item \emph{General strategy (unresolved):} attempt to build, for large $n$, two different-looking configurations $A,B$ with $D(A)=D(B)=g(n)$, e.g. by producing two distinct constructions achieving the same (conjecturally optimal) order of magnitude.
+\end{itemize}
+The general strategy step remains open; we record small-$n$ verified structure.
+
+\medskip
+\noindent\textbf{WORK.}
+
+\smallskip
+\noindent\textbf{Lemma 91.1 ($n=4$: two non-similar minimisers).}
+We have $g(4)=2$, and there are at least two non-similar point sets $A\subset\mathbb{R}^2$ with $|A|=4$ and $D(A)=2$.
+\textit{Proof.}
+\emph{Step 1: $g(4)\ge 2$.} If $D(A)=1$, then all $\binom{4}{2}=6$ pairwise distances in $A$ are equal to some $r>0$. But in the plane, there is no set of 4 points that are pairwise equidistant: among any three of the points we get an equilateral triangle of side $r$; a fourth point at distance $r$ from all three would have to lie in the intersection of three circles of radius $r$ around the triangle's vertices. The first two circles intersect in at most two points, and neither of those points is at distance $r$ from the third vertex (the third circle), so the triple intersection is empty. Thus $D(A)\ne 1$ and $g(4)\ge 2$.
+
+\emph{Step 2: two explicit examples with $D=2$.}
+\begin{itemize}
+\item \emph{Square.} Take the unit square with vertices $(0,0),(1,0),(1,1),(0,1)$. The pairwise distances are $1$ (edges) and $\sqrt2$ (diagonals), so $D=2$.
+\item \emph{Two equilateral triangles sharing an edge.} Take points
+$B=(0,0)$, $C=(1,0)$, $A=(\tfrac12,\tfrac{\sqrt3}{2})$, $D=(\tfrac12,-\tfrac{\sqrt3}{2})$.
+Then $AB=AC=BC=1$ and $BD=CD=BC=1$, while $AD=\sqrt3$. Thus the distinct distances are $\{1,\sqrt3\}$, so again $D=2$.
+\end{itemize}
+\emph{Step 3: non-similarity.}
+In the square example, the ratio of the larger distance to the smaller is $\sqrt2$, while in the two-triangles example the ratio is $\sqrt3$. Similarity transformations preserve all distance ratios, hence these two configurations are not similar.
+
+Combining Steps 1--3 shows $g(4)=2$ and $|\mathcal{M}_4|\ge 2$.\hfill $\square$
+
+\smallskip
+\noindent\textbf{Lemma 91.2 ($n=5$: the minimum value is 2).}
+We have $g(5)=2$.
+\textit{Proof.}
+As in Lemma 91.1, $g(5)\ge 2$ because 5 points cannot be pairwise equidistant in the plane.
+It remains to exhibit 5 points with exactly 2 distinct distances.
+Take a regular pentagon with side length $1$. In a regular pentagon, the pairwise distances are either the side length or the diagonal length, and there are no other distances among vertex pairs.
+More concretely, on a circle of radius $R=\bigl(2\sin(\pi/5)\bigr)^{-1}$, let $p_k=(R\cos(2\pi k/5),R\sin(2\pi k/5))$ for $k=0,1,2,3,4$. Then consecutive vertices satisfy $|p_{k+1}-p_k|=1$ by the choice of $R$, while nonconsecutive pairs are all diagonals and have the same length (by rotational symmetry). Therefore $D(\{p_0,\dots,p_4\})=2$, so $g(5)\le 2$.
+Thus $g(5)=2$.\hfill $\square$
+
+\smallskip
+\noindent\textbf{FAST REALITY CHECK (explicit distance computations).}
+A direct computation of squared distances for the configurations above gives:
+\begin{verbatim}
+Square: squared distances = {1, 2}
+Two equilateral triangles sharing an edge: squared distances = {1, 3}
+Regular pentagon (side=1): distances = {1, 1.6180339...}
+\end{verbatim}
+so indeed each has exactly two distinct distances.
+
+\medskip
+\noindent\textbf{VERIFICATION.}
+\begin{itemize}
+\item The nonexistence of 4 (or 5) pairwise equidistant points in $\mathbb{R}^2$ follows from the fact that two circles intersect in at most two points.
+\item The regular pentagon argument uses only rotational symmetry: all sides equal; all diagonals equal; no other pairs.
+\item Non-similarity check is by the invariant distance ratio $\max\{|x-y|\}/\min\{|x-y|\}$.
+\end{itemize}
+
+\medskip
+\noindent\textbf{FINAL.} \textbf{UNRESOLVED}
+\begin{enumerate}
+\item[(i)] \textbf{Strongest proved partial result.}
+We verified $g(4)=2$ and exhibited two non-similar minimisers for $n=4$ (Lemma 91.1). We also proved $g(5)=2$ by exhibiting a regular pentagon with two distances (Lemma 91.2).
+\item[(ii)] \textbf{First gap (crisp).}
+For large $n$, prove existence of two non-similar minimisers: construct $A,B$ with $|A|=|B|=n$, $D(A)=D(B)=g(n)$, and $A\not\sim B$.
+\item[(iii)] \textbf{Top 3 next moves.}
+\begin{itemize}
+\item For moderately small $n$ (say $6\le n\le 12$), run constrained numeric optimisation / discrete searches (e.g. restricting to small integer grids) to guess candidate minimisers and test for non-uniqueness.
+\item Prove stability/rigidity results: if $A$ is a minimiser with near-grid structure, show that small deformations strictly increase $D(A)$, then look for a \emph{different} structured family with the same $D$.
+\item Attempt a ``two constructions'' approach: produce two explicit infinite families (e.g. square grids vs. certain circular-arc constructions) with the same asymptotic $D$ and then prove that this asymptotic is optimal for $g(n)$.
+\end{itemize}
+\item[(iv)] \textbf{Likely structure of a minimal counterexample.}
+A minimal counterexample would be an $n_0$ such that every minimiser for $g(n_0)$ is unique up to similarity, while for all smaller $n$ there are at least two classes. Such a unique minimiser would likely be extremely symmetric/rigid (analogous to the equilateral triangle for $n=3$), suggesting a highly constrained distance multiset.
+\end{enumerate}
+
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/91.tex
+
+\subsection*{COMPLETION ESTIMATE}
+The primary source supplies no extractable numerical completion estimate. Its mathematical progress is not numerically assessed here.
+
+Newly verified progress in this collection pass: $0\%$. This measures new verification work, not the amount of mathematics achieved in the reused text.

@@ -1,0 +1,32 @@
+\section{Problem 33: correcting the cited excess bound}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. For an additive complement $W$ of the positive squares, the target is the infimum of $\limsup W(N)/\sqrt N$. I read \texttt{gpt\_pro\_5.4/33.tex} completely. Its asserted strict lower bound $1.273309104\ldots$ relies on a positive linear representation excess attributed to an earlier version of arXiv:2512.15407. The current version checked below does not supply that linear estimate. I therefore do not inherit the strict constant improvement.
+\subsection*{2) WORK}
+Let $f(n)=|\{(w,m):n=w+m^2,\ w\in W,\ m\ge1\}|$ and $R(N)=\sum_{n\le N}f(n)$. The current paper's Theorem 2 and Corollary 2 give
+\[
+R(N)-N\gg_{W,\varepsilon}N^{3/4-\varepsilon}
+\quad\text{for each fixed }\varepsilon>0.
+\]
+This is an external input, not a theorem newly proved here. It does imply a precise obstruction stronger than merely rejecting a bounded error term:
+\[
+W(x)\le\frac4\pi\sqrt x+O(x^\theta),\quad 0\le\theta<\frac14,
+\quad\text{cannot hold for all large }x.
+\]
+To prove this consequence, absorb the finite initial interval into the error and sum the proposed envelope in the exact identity
+\[
+R(N)=\sum_{1\le m<\sqrt N}W(N-m^2).
+\]
+Since $x\mapsto\sqrt{N-x^2}$ decreases,
+\[
+\sum_{1\le m<\sqrt N}\sqrt{N-m^2}\le\int_0^{\sqrt N}\sqrt{N-t^2}\,dt=\frac\pi4N.
+\]
+The error sum is $O(N^{\theta+1/2})$, hence $R(N)-N=O(N^{\theta+1/2})$. Choose $0<\varepsilon<1/4-\theta$. This contradicts the external lower bound since $3/4-\varepsilon>\theta+1/2$.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The quantitative contradiction uses the same complement $W$ throughout; its allowed constants may depend on $W$. An eventual complement may miss finitely many small integers, which changes only bounded terms. Dividing the available excess $N^{3/4-o(1)}$ by $N$ gives a quantity tending to zero; it cannot by the supplied envelope argument yield a fixed improvement over $4/\pi$ in the limsup. Nor does the envelope obstruction rule out $W(x)=(4/\pi)\sqrt x+o(\sqrt x)$ with an error larger than $x^{1/4}$.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The strict constant asserted in the prior attempt is not justified by the current cited theorem. The verified additional consequence excludes all the displayed small-error envelopes, but does not determine the infimum or prove that it exceeds $4/\pi$.
+\subsection*{5) SOURCES CHECKED}
+Supplied \texttt{33.tex}; the original arXiv version record; and Ding, Krause, S\'andor, Sun, Zhang, \emph{Cross representations of additive complements of $r$-th powers}, version 6 dated 2026-07-09, \texttt{https://arxiv.org/html/2512.15407v6}, especially Theorem 2 and Corollary 2, checked 2026-09-23. The source review is a correction of what can currently be cited, not a claim that the stronger conjecture is false.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the optimal limsup constant.
+\textbf{COMPLETION: 15\%}

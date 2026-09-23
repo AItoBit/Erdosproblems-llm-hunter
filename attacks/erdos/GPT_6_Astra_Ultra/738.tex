@@ -1,0 +1,26 @@
+\section{Erd\H{o}s Problem \#738: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Does every triangle-free graph of infinite chromatic number contain every finite tree as an induced subgraph?
+
+All supplied versions considered: \texttt{738.tex}.
+The source transfers known finite theorems about radius-two trees, subdivided stars, induced subdivisions and path-induced copies. Those are literature consequences, not a solution for all trees. I isolate a sufficient cycle exclusion that makes an elementary embedding argument work, and explain precisely why triangle-freeness alone does not supply it.
+\subsection{2) WORK}
+\paragraph{A direct high-girth case.}
+Let $T$ have $t\ge2$ vertices and diameter $d$. Every finite graph $G$ with $\chi(G)\ge t$ and girth greater than $d+1$ contains an induced copy of $T$.
+
+First, $G$ has a nonempty subgraph of minimum degree at least $t-1$. Otherwise successively deleting a vertex of degree at most $t-2$ and coloring in reverse order would give a $(t-1)$-coloring. Root $T$ and embed it greedily in this subgraph, parents before children. When inserting a child, at most $t-2$ already used vertices other than its parent can block neighbors of the parent. Minimum degree $t-1$ therefore leaves an unused neighbor. This produces an ordinary copy of $T$.
+
+Any additional ambient edge between two nonadjacent vertices of this copy, at tree distance $s$, would create a cycle of length $s+1\le d+1$. The girth hypothesis excludes every such edge, so the copy is induced. By the finite-coloring compactness theorem the same conclusion holds when $G$ has infinite chromatic number and that girth condition.
+
+More precisely it suffices to exclude the lengths $\{d_T(u,v)+1:u,v\text{ nonadjacent in }T\}$, rather than all short cycles. Triangle-freeness excludes only the distance-two chords. Chords between vertices at distance three create four-cycles, which are entirely compatible with triangle-freeness. Removing ambient edges to obtain a high-girth subgraph does not repair this, since inducedness must be measured in the original graph.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The greedy proof is for a finite tree and an ordinary subgraph, followed by a separate ambient-chord check. It is not valid to confuse a subdivision with the original tree or to transfer inducedness from an arbitrary edge-deleted subgraph. The additional girth assumption is explicitly stronger than the target.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+An argument ruling out the longer-distance chords using only triangle-freeness and large chromatic number is still missing. This is a verified special case and an identified obstruction, not an extension of the known general tree families.
+\subsection{5) SOURCES CHECKED}
+Full supplied source read. Checked Nguyen--Scott--Seymour, \texttt{https://arxiv.org/abs/2302.08922}, on 2026-09-23; its abstract states the path-induced conclusion and retains the full induced-tree question as open. No stronger statement is attributed to it.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 8\%}

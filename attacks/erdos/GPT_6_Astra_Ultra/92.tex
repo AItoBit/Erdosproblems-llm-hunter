@@ -1,0 +1,95 @@
+\section{Erd\H{o}s Problem 92: many equidistant neighbors at every point}
+
+\subsection{1) Statement and the source of a counterexample}
+For a finite planar set $A$, put
+\[
+ g(A)=\min_{x\in A}\max_{r>0}
+       |\{y\in A\setminus\{x\}:|x-y|=r\}|,
+ \qquad f(n)=\max_{|A|=n}g(A).
+\]
+Is $f(n)\leq n^{o(1)}$, or even
+$f(n)\leq n^{O(1/\log\log n)}$? Both assertions are false.
+We give the complete graph-theoretic deduction from the established
+negative resolution of Problem 90. This is a reconstruction of the
+known implication, not a new counterexample construction.
+
+The explicit external input is the theorem of OpenAI's
+\emph{Planar Point Sets with Many Unit Distances}: there is a
+fixed $\delta>0$ and sets $P_j$ of $N_j\to\infty$ planar points
+whose unit-distance graphs have at least $N_j^{1+\delta}$ edges.
+The geometric part of a reconstruction is also given in the
+companion attempt for Problem 90; its arithmetic existence input
+is not reproved here.
+
+\subsection{2) Converting many edges into a minimum-degree bound}
+Let a finite graph have $N$ vertices and $E>0$ edges. Repeatedly
+delete a vertex whose current degree is less than $E/N$, where
+$E/N$ remains the original fixed threshold. If all vertices were
+deleted, count each edge at the moment its first endpoint is removed.
+The resulting count would be strictly less than
+$N(E/N)=E$, a contradiction. A nonempty induced subgraph therefore
+remains, with minimum degree at least $E/N$.
+
+Apply this to the unit-distance graph on $P_j$. The remaining
+vertices form a planar set $Q_j$ of order $M_j\leq N_j$, with
+\[
+ \deg_{Q_j}(x)\geq E_j/N_j\geq N_j^\delta
+       \quad\hbox{for every }x\in Q_j.
+\]
+All these neighbors have the same radius $1$ at every vertex, a
+stronger requirement than allowing a different radius at each point.
+Since degree is at most $M_j-1$, we also have
+\[
+ M_j\geq N_j^\delta+1\longrightarrow\infty.
+\]
+Finally, $M_j\leq N_j$ implies
+\[
+ f(M_j)\geq g(Q_j)\geq N_j^\delta\geq M_j^\delta.
+\]
+Thus the counterexamples occur at unbounded orders, not merely in
+a bounded core repeatedly extracted from larger sets.
+
+\subsection{3) Negating both asymptotic assertions}
+The estimate $f(n)\leq n^{o(1)}$ would imply, for example,
+$f(n)\leq n^{\delta/2}$ for all sufficiently large $n$, contradicting
+the preceding subsequence. If instead some constant $C$ gave
+$f(n)\leq n^{C/\log\log n}$ eventually, choose $M_j$ so large
+that $C/\log\log M_j<\delta$. The same subsequence contradicts
+that bound as well. No monotonicity of $f$ is needed.
+
+\subsection{4) An elementary upper-bound consistency check}
+For an $n$-point set with $g(A)=t$, select at each center a circle
+containing at least $t$ other points. The $n$ circles are distinct
+because their centers are distinct. Let $r_p$ count how many selected
+circles contain $p\in A$, and put $I=\sum_p r_p\geq nt$.
+Two distinct circles meet at most twice, so double counting gives
+\[
+ \sum_{p\in A}\binom{r_p}{2}\leq2\binom n2=n(n-1).
+\]
+By Cauchy--Schwarz the left side is at least
+$(I^2/n-I)/2$. Writing $z=I/n\geq t$ yields
+$z^2-z\leq2(n-1)$, and hence
+\[
+ f(n)\leq\frac{1+\sqrt{8n-7}}2.
+\]
+This weak upper bound is compatible with a fixed positive lower
+exponent. It does not restore either conjectured subpolynomial bound.
+
+\textbf{Outcome: SOLVED, known negative answer reconstructed using
+the explicit unit-distance theorem.} The pruning argument and
+quantifier checks are proved in full. The batch verification exhausts
+small graphs to check the fixed-threshold pruning procedure; it is
+not a formal or numerical verification of the number-field theorem.
+
+\subsection{5) Sources}
+\begin{itemize}
+\item OpenAI, \emph{Planar Point Sets with Many Unit Distances},
+Theorem 1.1 and the discussion immediately following it,
+\texttt{https://cdn.openai.com/pdf/74c24085-19b0-4534-9c90-465b8e29ad73/unit-distance-proof.pdf}.
+\item T. F. Bloom, Problem 92,
+\texttt{https://www.erdosproblems.com/92}, checked 23 September 2026.
+\end{itemize}
+The estimate measures full coverage relative to the stated external
+unit-distance theorem, not independent formal checking or novelty.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

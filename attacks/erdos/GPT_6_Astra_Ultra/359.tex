@@ -1,0 +1,29 @@
+\section{Problem 359: a density constraint and a reproducible greedy prefix}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{359.tex}. Under its increasing-sequence convention, start at $a_1=1$ and choose the least larger integer not expressible as a consecutive block sum of previous terms. The main target is $a_k/k\to\infty$, equivalently zero density of the selected integers. The source proves an upper density bound $3/4$. I extract a sharper constraint when the density exists and independently compute an exact prefix.
+\subsection*{2) WORK}
+Let $A(x)=|\{k:a_k\le x\}|$. The source's injective list of adjacent sums gives, for integer $x$,
+\[
+A(x)+A(\lfloor x/2\rfloor)\le x+1.
+\]
+Define $d_- =\liminf A(x)/x$ and $d_+=\limsup A(x)/x$. Along a sequence where $A(x)/x\to d_+$, the other term has lower limit at least $d_-/2$. Thus
+\[
+d_++\frac12d_-\le1.
+\]
+In particular, if a natural density $d$ exists, then $d\le2/3$. Equivalently, if the sequence has a finite linear asymptotic $a_k\sim ck$, then $c\ge3/2$. This improves the source's constant $4/3$ under an explicitly additional regularity hypothesis; it does not improve the unconditional $3/4$ upper-density bound.
+
+For a finite check, maintain prefix sums $s_0=0$, $s_j=\sum_{i\le j}a_i$. After choosing $a_j$, every new consecutive block sum ending there is $s_j-s_i$ for $0\le i<j$. Insert these integers into the forbidden set, then scan upward for the next unmarked integer. This is an exact implementation of the defining rule. A run through 1,000 terms gives
+\[
+a_{10}=21,\qquad a_{100}=274,\qquad a_{500}=1477,
+\qquad a_{1000}=3165.
+\]
+An additional pass reconstructs all block sums in each prefix, verifies that each selected term was eligible, and verifies that every skipped integer was already forbidden. The full prefix is stored with the code.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The limit manipulation uses a liminf for the half-scale term; substituting $d_+$ there would be unjustified without convergence and would falsely claim the unconditional $2/3$ bound. Increasing values of $a_k/k$ in a finite table do not prove divergence. The generated sequence follows the source's monotonicity correction; no assertion about a differently defined nonmonotone process is made.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} A hypothetical positive limiting density is constrained to at most $2/3$, and the first 1,000 greedy steps are certified. Neither existence nor vanishing of the density is proved.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version; \texttt{verification/batch\_1\_checks.py} and \texttt{verification/batch\_1\_checks.json}, executed 2026-09-23. The density argument is self-contained and does not claim a new literature bound.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward $a_k/k\to\infty$.
+\textbf{COMPLETION: 10\%}

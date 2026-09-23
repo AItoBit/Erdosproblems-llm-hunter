@@ -1,0 +1,32 @@
+\section{Erd\H{o}s Problem \#879: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{879.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) RESTORING BOTH ORIGINAL QUESTIONS}
+The official formulation uses admissible subsets of $[1,n]$, their maximum sum $G(n)$, and $H(n)=\sum_{p<n}p+n\pi(\sqrt n)$. It asks both for a gap of size at most $n^{1+o(1)}$ and for prime-factor complexity in maximizing sets. The supplied file changes the definitions and does not address the second question. Small counterexamples to a literally universal strict upper bound do not justify silently replacing an asymptotic problem.
+\subsection*{2) THE SOURCE'S NORMALIZATION IS ASYMPTOTICALLY HARMLESS}
+Use its auxiliary quantities $G_*(n)$ excluding one and $H_*(n)=\sum_{\sqrt n<p\le n}p+n\pi(\sqrt n)$. Since one can always be added,
+\[
+G(n)=G_*(n)+1,
+\quad H(n)-H_*(n)=\sum_{p\le\sqrt n}p-n\mathbf1_{n\text{ prime}}=O(n).
+\]
+The last estimate follows even by summing all integers up to $\sqrt n$. Hence a bound $H_*(n)-G_*(n)\le n^{1+o(1)}$ would imply the requested upper bound on $H(n)-G(n)$, and conversely, up to an $O(n)$ term. This preserves the actual question without claiming its definitions are invalid.
+\subsection*{3) AN EXACT FINITE OPTIMALITY CERTIFICATE}
+Let $P$ be the primes at most $n$, and for each nonempty prime-support mask $S\subseteq P$ define
+\[
+w(S)=\max\{a\le n:\{p:p\mid a\}=S\},
+\]
+with absent supports omitted. Pairwise coprimality means the chosen supports are disjoint; for each chosen support only its largest integer can improve the sum. Thus $G_*(n)$ is exactly the maximum weight of a disjoint family of supports. For example the recurrence
+\[
+F(U)=\max\left(0,\max_{\varnothing\ne S\subseteq U}\{w(S)+F(U\setminus S)\}\right)
+\]
+computes it, ignoring absent $w(S)$, and $G_*(n)=F(P)$. Each transition removes at least one prime, so induction on $|U|$ proves correctness.
+Restricting transitions to $|S|<k$ computes the maximum sum attainable using only integers with fewer than $k$ distinct prime factors. A strict gap below $F(P)$ then certifies that every maximizing set has a member with at least $k$ distinct prime factors. If the intended count includes multiplicity instead, filter integers by that count before defining the weights; the same proof applies.
+\subsection*{4) LIMITATION AND SOURCE CORRECTION}
+The source's packing formula is valid after maximizing, but its proof incorrectly says an arbitrary admissible set already contains every freely addable large prime; that is true only for a maximizing set. The recurrence here avoids that inference. Its prime-mask state space grows exponentially; no uniform asymptotic estimate or eventual prime-factor theorem is obtained from it.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} Both original targets are retained. The normalization is related rigorously to the original one, and a finite certificate for the neglected complexity question is provided without claiming an unperformed computation.
+\noindent Official formulation checked: \url{https://www.erdosproblems.com/879}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

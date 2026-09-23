@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#317: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{317.tex, 317\_v2.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND ALL-VERSION AUDIT}
+Both supplied versions contain the same meet-in-the-middle argument and numerical table. Describing an algorithm does not independently certify its reported output. Here I give short modular certificates for the strict lower-bound question that do not require enumerating $3^{n/2}$ signed sums.
+\subsection*{2) A PRIME CERTIFICATE EXCLUDING NUMERATOR ONE}
+Let $L=\operatorname{lcm}(1,\ldots,n)$ and let $p$ be a prime with $n/2<p\le n$. Only the denominator $p$ is divisible by $p$. Reducing a scaled signed sum modulo $p$ yields
+\[
+L\sum_{k=1}^n\frac{\delta_k}{k}\equiv\delta_p L/p\pmod p,
+\qquad\delta_k\in\{-1,0,1\}.
+\]
+Therefore a scaled numerator equal to $1$ or $-1$ is impossible whenever
+\[
+L/p\not\equiv1,-1\pmod p. \tag{1}
+\]
+Since every nonzero scaled numerator is an integer, any prime certificate (1) proves the strict bound $|\sum\delta_k/k|>1/L$.
+\subsection*{3) EXACT CERTIFICATES FOR THE SUPPLIED NEW RANGE}
+The following small residues, recomputed with integer arithmetic, certify all six of the source's additional cases:
+\[
+\begin{array}{c|rrrrrr}
+n&27&28&29&30&31&32\\\hline
+p&19&19&17&17&17&17\\
+(L/p)\bmod p&4&4&5&5&2&4
+\end{array}
+\]
+Each residue is different from $1$ and $p-1$. These certificates establish only that the minima exceed $1/L$; they do not independently certify the much larger exact minima in the source's table.
+More generally, reduction modulo any prime $p\le n$ isolates the denominators whose $p$-adic valuation equals that of $L$. The possible residues of their signed contributions form a finite set; excluding $1$ and $-1$ from that set gives the same conclusion, even if several denominators survive.
+\subsection*{4) REMAINING GAP}
+I have not proved that a certifying prime or a stronger modular obstruction exists for every large $n$. This route concerns the strict lower bound only; it supplies no $O(2^{-n})$ upper bound for the minimum nonzero signed sum. The cardinality argument in the sources already appears in the official discussion and is not a new general estimate here.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} Several large exhaustive-search claims are replaced, for one of their conclusions, by tiny independently reproducible certificates.
+\noindent Discussion checked: \url{https://www.erdosproblems.com/forum/thread/317}. Verification: \texttt{verification/root\_checks.py}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

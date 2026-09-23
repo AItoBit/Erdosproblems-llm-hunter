@@ -1,0 +1,52 @@
+\section{Erd\H{o}s Problem \#307: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{307.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+We seek prime sets whose reciprocal sums multiply to one. The source's
+squarefree two-cycle reformulation and cross-congruences are valid. I
+turn them into an exact one-sided search specification and check the
+small-cardinality reciprocal bound with rational arithmetic.
+
+\subsection*{2) WORK: ONE SIDE DETERMINES THE OTHER}
+For squarefree $D>1$ define $g(D)=\sum_{p\mid D}D/p$. For every $p\mid D$,
+$g(D)\equiv D/p\not\equiv0\pmod p$, so $(g(D),D)=1$. Consequently a
+fixed finite nonempty prime set $P$, with product $D$, can belong to a
+solution if and only if $E=g(D)>1$ is squarefree and $g(E)=D$.
+The other side is then uniquely the prime factors of $E$. Since $(D,E)=1$, the two prime sets are disjoint.
+This follows because reduced fractions for the two reciprocal sums must
+be mutual reciprocals. It is also sufficient by direct multiplication.
+
+For a bounded search over $P$, an exact rejection sequence is therefore:
+compute $D,E$; reject $E=1$; factor $E$; reject a repeated prime factor;
+finally test the integer identity $g(E)=D$. Merely passing the source's
+local congruences is not a substitute for the last equality.
+
+The two reciprocal sums have product one, so their sum is at least two by the arithmetic--geometric mean inequality. Disjointness makes this sum the reciprocal mass of their union.
+
+Here is a useful bound on one finite boundary case. Let $s_j$ be the
+sum of reciprocals of the first $j$ primes. Exact fraction arithmetic gives
+$s_{58}<2<s_{59}$. If a solution had exactly 59 distinct primes in its
+union, and largest prime $q$, then
+\[
+ 2\le\sum_{p\in P\cup Q}1/p\le s_{58}+1/q,
+\]
+so
+\[
+ q\le\left\lfloor\frac1{2-s_{58}}\right\rfloor=793.
+\]
+Thus that boundary case is a genuinely finite search among primes at most
+793; it is not made infinite by an unbounded last prime. I have computed
+this bound but have not enumerated all such partitions.
+
+\subsection*{3) VERIFICATION AND FINAL}
+The official page records the stronger lower bound 60 on the union size;
+I do not claim to improve it, nor to reprove it merely from $s_{58}<2$.
+The finite-bound calculation and exact two-cycle test are independent
+checks that avoid the erroneous inference that cross-congruences alone
+force a solution. \textbf{UNRESOLVED.} No nontrivial two-cycle was found
+or excluded in general. The target and literature comparison were checked
+at \url{https://www.erdosproblems.com/307}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

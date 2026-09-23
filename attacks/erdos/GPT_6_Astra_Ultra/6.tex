@@ -1,0 +1,85 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#6; reconstruction using a named prime-sieve theorem, 2026-09-23.}
+Let $p_n$ be the $n$th prime and $d_n=p_{n+1}-p_n$. Are there infinitely many $n$ for which $d_n<d_{n+1}<d_{n+2}$? We prove the more general assertion that, for every fixed $r\ge1$, there are infinitely many strings of $r+1$ consecutive primes with strictly increasing successive gaps. Reflection of the construction gives decreasing gaps too.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current source labels the question proved and credits Banks, Freiberg, and Turnage-Butterbaugh. Their primary paper derives monotone consecutive gaps from the Maynard--Tao theorem. The argument below reconstructs that route: the deep prime-sieve theorem is an explicit external input; the admissibility, exclusion of unwanted primes, and monotonicity deductions are proved here. This is not an independent proof of the Maynard--Tao theorem and is not presented as a new resolution.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose an admissible tuple whose \emph{every} increasing subsequence has increasing gaps. Before using the prime-sieve theorem, impose finitely many congruences making every intervening integer outside the tuple composite. This ensures that the primes delivered by the theorem are consecutive in the sequence of all primes, a condition not supplied merely by having many primes in a tuple.
+
+\section{WORK}
+\subsection{The external theorem, with its quantifiers}
+We use the following form of the Maynard--Tao theorem, stated in Section 1 of the cited Banks--Freiberg--Turnage-Butterbaugh paper. For every integer $s\ge2$ there exists $k_s$ such that any $k\ge k_s$ distinct admissible affine forms
+\[
+ L_j(t)=g_jt+b_j\qquad(1\le j\le k)
+\]
+with positive leading coefficients and $g_ib_j-g_jb_i\ne0$ for $i\ne j$ take prime values in at least $s$ positions for infinitely many positive integers $t$. Admissibility means that no prime divides $\prod_jL_j(t)$ for every integer $t$. Only forms with a common leading coefficient are needed below.
+
+This theorem is established in the literature. Everything after it is a finite construction and a deduction from this stated input.
+
+\subsection{An admissible tuple with strong spacing}
+Fix $r$ and choose $k\ge\max\{k_{r+1},r+1\}$. Put
+\[
+ K=k!,\qquad h_j=K3^j\quad(1\le j\le k),\qquad H=\{h_1,\ldots,h_k\}.
+\]
+The monic forms $t+h_j$ are admissible. If a prime $\ell\le k$, every $h_j$ is divisible by $\ell$, so the residue $t\equiv1\pmod\ell$ avoids all their zeros. If $\ell>k$, at most $k<\ell$ residue classes are forbidden, leaving at least one choice.
+
+For any three indices $a<b<c$,
+\[
+ h_c-h_b\ge2h_b>h_b-h_a.
+\tag{1}
+\]
+Thus every increasing subsequence of $H$, not just the full tuple, has strictly increasing consecutive gaps. This protects the construction against not knowing which positions the prime-sieve theorem will make prime.
+
+\subsection{Blocking every intervening position}
+Let
+\[
+ T=\{h_1,h_1+1,\ldots,h_k\}\setminus H.
+\]
+For each $u\in T$, choose a different prime $q_u>h_k$. There are finitely many such positions, so the infinitude of primes permits these choices. Let $Q=\prod_{u\in T}q_u$. By the Chinese remainder theorem choose an integer $b$ satisfying
+\[
+ b\equiv-u\pmod{q_u}\qquad(u\in T).
+\tag{2}
+\]
+Consider the $k$ affine forms
+\[
+ L_j(t)=Qt+b+h_j.
+\]
+They are distinct and have positive common coefficient $Q$, so their pairwise determinants are $Q(h_j-h_i)\ne0$.
+
+They are also admissible. If $\ell\nmid Q$, multiplication by $Q$ and translation by $b$ permute residue classes modulo $\ell$, reducing admissibility to that of $t+h_j$. If $\ell=q_u\mid Q$, then
+\[
+ L_j(t)\equiv h_j-u\not\equiv0\pmod{q_u},
+\]
+because $u\notin H$ and $0<|h_j-u|<q_u$. No form is ever zero modulo this prime. These two cases cover every prime.
+
+Apply the external theorem with $s=r+1$. For infinitely many $t$, at least $r+1$ numbers $Qt+b+h_j$ are prime. Restrict to sufficiently large such $t$ that every $Qt+b+u$ is positive and greater than $q_u$. Equation (2) then makes each of these intervening numbers composite, since it is divisible by $q_u$. Consequently every prime in the entire interval
+\[
+ [Qt+b+h_1,Qt+b+h_k]
+\]
+occurs at a position in $H$.
+
+\subsection{Consecutiveness and monotonicity}
+List all the prime values in that interval in increasing order:
+\[
+ Qt+b+h_{i_1}<\cdots<Qt+b+h_{i_s},\qquad s\ge r+1.
+\]
+Between two successive listed primes there is no other prime: an intermediate tuple position would have been listed if prime, and every non-tuple position has just been proved composite. The first $r+1$ listed primes therefore form a string of consecutive primes in the global prime sequence. Their gaps are strictly increasing by (1).
+
+As the successful values of $t$ are unbounded, the first prime of each such string tends to infinity. Hence this construction supplies infinitely many indices, rather than repeated witnesses at a fixed initial prime. Taking $r=3$ proves the problem as stated.
+
+For decreasing gaps, replace $H$ by its reflection $\{h_k-h_j:1\le j\le k\}$. Reflection preserves admissibility, since the forbidden residue classes are carried bijectively to those of the original tuple. Every increasing subsequence of the reflected tuple corresponds to a reversed subsequence of $H$, so its gaps decrease. The same blocking argument applies, including the possible zero endpoint of the reflected tuple.
+
+\section{VERIFICATION AND SCOPE}
+The key checks are that $k$ depends only on the desired number of primes, that all blocking primes are fixed before $t$ varies, and that the new affine tuple remains admissible at primes dividing $Q$. A long run of arbitrary tuple primes alone would not establish the required consecutive-gap pattern. Equation (1) works for all subsequences, while the Chinese remainder construction accounts for all intervening integers.
+
+\section{FINAL}
+\textbf{SOLVED (affirmative, with the Maynard--Tao theorem as an explicit input).} The full deduction of infinitely many increasing, and decreasing, strings of gaps is given above. The analytic prime-sieve theorem itself is cited rather than reproved. This is a reconstruction of the known solution's method.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/6}, accessed 2026-09-23. W. D. Banks, T. Freiberg, and C. L. Turnage-Butterbaugh, \emph{Consecutive primes in tuples}, Acta Arithmetica 167 (2015), 261--266, \url{https://arxiv.org/abs/1311.7003}; the explicit affine-form theorem and proof framework were checked at \url{https://arxiv.org/html/1311.7003v3}. No earlier local numbered attempt for \#6 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+The stated question is completely deduced from a precisely identified, established prime-sieve theorem. The estimate concerns this deduction and does not claim that the deep external theorem has been independently reconstructed.
+\textbf{COMPLETION: 100\%}

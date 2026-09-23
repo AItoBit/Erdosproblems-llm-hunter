@@ -1,0 +1,72 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#21; constructive partial reconstruction, 2026-09-23.}
+For $n\ge1$, let $f(n)$ be the smallest number of edges in an intersecting $n$-uniform hypergraph $\mathcal F$ with the property that every set of at most $n-1$ vertices misses some edge. Equivalently, the transversal number $\tau(\mathcal F)$ is $n$: the stated property gives $\tau\ge n$, while any edge is a transversal because all edges intersect. Is $f(n)=O(n)$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The question has been solved affirmatively by Kahn. His 1994 paper proves a linear upper bound, as confirmed by its official publication abstract and the current problem editorial. The best lower bound reported in the editorial is substantially stronger than the elementary bound reconstructed below. This note does not reproduce Kahn's linear-size construction. It supplies fully proved baseline constructions, exact small values, and a precise explanation of what the projective-plane approach still needs.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Work directly with the transversal formulation so that every construction is checked against the universal quantifier over all small vertex sets. Establish a universal lower bound by pairing edges. Then compare a construction valid for every $n$ with the more efficient projective-plane construction at prime-power orders. Finally, remove a line from the smallest plane to recover the exact value $f(3)=6$.
+
+\section{WORK}
+\subsection{An elementary linear lower bound}
+Suppose an intersecting family has $m$ edges. Pair the edges arbitrarily and choose one vertex in the intersection of each pair. If one edge remains unpaired, choose one vertex from it. The chosen vertices form a transversal of size at most $\lceil m/2\rceil$. Therefore
+\[
+ \tau(\mathcal F)=n\quad\Longrightarrow\quad m\ge2n-1.
+\tag{1}
+\]
+Repeated choices of a vertex can only make this transversal smaller. No assumption about pairwise intersections having size one is needed. The bound is useful as a baseline, though weaker than the known Erd\H{o}s--Lov\'asz bound.
+
+\subsection{A construction for every uniformity}
+Take all $n$-element subsets of a fixed $(2n-1)$-element vertex set. Any two edges intersect because disjoint edges would require $2n$ vertices. Given any set $S$ of at most $n-1$ vertices, at least $n$ vertices remain, and they contain an edge disjoint from $S$. Thus
+\[
+ f(n)\le\binom{2n-1}{n}.
+\tag{2}
+\]
+This proves existence for every $n$ with no arithmetic restrictions. Its size is exponential, so it does not resolve the asymptotic question.
+
+\subsection{A quadratic construction at prime-power orders}
+Let $q$ be a prime power, and use the three-dimensional vector space $V=\mathbb F_q^3$. Define points to be one-dimensional subspaces and lines to be the sets of points inside two-dimensional subspaces. There are
+\[
+ v=\frac{q^3-1}{q-1}=q^2+q+1
+\]
+points. Each line has $(q^2-1)/(q-1)=q+1$ points. Distinct two-dimensional subspaces of $V$ meet in a one-dimensional subspace, so every pair of lines intersects.
+
+There are also $v$ lines: every two-dimensional subspace is the kernel of a nonzero linear functional, and two nonzero functionals have the same kernel exactly when they differ by a nonzero scalar. Each point is on $q+1$ lines, because the lines containing its one-dimensional subspace correspond to one-dimensional subspaces of the two-dimensional quotient space.
+
+A set of at most $q$ points meets at most $q(q+1)=q^2+q<v$ lines, by a union bound on the incident lines. It therefore misses at least one line. Conversely, any line meets all lines and has $q+1$ points. Hence the line hypergraph has transversal number exactly $q+1$, and
+\[
+ f(q+1)\le q^2+q+1.
+\tag{3}
+\]
+All quantifiers in the required property have been verified. However, (3) is quadratic in $n=q+1$, not linear. Also, choosing a nearby prime power and simply padding every edge with common vertices would destroy the transversal requirement: one common new vertex would hit every edge. An interpolation to arbitrary $n$ must preserve $\tau=n$ and cannot be assumed for free.
+
+\subsection{The exact cases $n=1,2,3$}
+For $n=1$, one singleton gives $f(1)=1$. For $n=2$, the three edges of a triangle have transversal number two. Equation (1) gives the matching lower bound, so $f(2)=3$.
+
+For $n=3$, use the projective plane with $q=2$, which has seven points and seven lines of size three. Delete any one line, leaving six edges. They remain pairwise intersecting. Any two different points of the plane lie together on exactly one line, so the number of lines incident to at least one of the two points is
+\[
+ 3+3-1=5.
+\]
+At least two of the original seven lines avoid both points. Deleting just one line leaves an edge avoiding them. Thus every two-element set misses a remaining edge, and the six-line family has transversal number three. This proves $f(3)\le6$.
+
+For the converse, a family with at most four edges has a transversal of size at most two by the pairing argument. Consider an intersecting three-uniform family with exactly five edges. If some vertex belongs to at least three edges, choose it; the at most two remaining edges can be hit with one additional vertex, using their intersection when there are two. This gives a two-element transversal.
+
+If every vertex belongs to at most two edges, fix an edge $E$. Each of its three vertices lies in at most one other edge, so $E$ can meet at most three other edges. But it must meet all four other edges, a contradiction. In either case five edges cannot have transversal number three. Hence
+\[
+ \boxed{f(1)=1,\qquad f(2)=3,\qquad f(3)=6.}
+\]
+For an explicit finite model, identify the seven points with the nonzero vectors of $\mathbb F_2^3$; the lines are the triples $\{a,b,a+b\}$ with $a\ne b$. The verification script lists them and checks the six-line construction directly.
+
+\section{VERIFICATION AND EXACT REMAINING GAP}
+The finite verification checks all pairwise intersections and all two-point candidate transversals for the six-line family. The vector-space proof establishes the quadratic construction for every prime power. The general linear construction would require retaining or building only $O(n)$ edges while ensuring that \emph{every} $(n-1)$-element set misses an edge. Pairwise intersections alone do not guarantee this large transversal number; any family with a common vertex shows the failure. No argument accomplishing that sparse construction is supplied here.
+
+\section{FINAL}
+\textbf{ATTEMPT UNRESOLVED.} The original question is known to be solved affirmatively. This independent reconstruction establishes baseline bounds, the complete projective-plane construction, and exact values through $n=3$, but does not reproduce Kahn's linear upper bound. None of these elementary results is claimed to be new.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/21}, accessed 2026-09-23. J. Kahn, \emph{On a problem of Erd\H{o}s and Lov\'asz. II: $n(r)=O(r)$}, Journal of the American Mathematical Society 7 (1994), 125--143, \url{https://doi.org/10.1090/S0894-0347-1994-1224593-5}; official publication abstract checked at \url{https://www.researchwithrutgers.org/en/publications/on-a-problem-of-erd%C5%91s-and-lov%C3%A1sz-ii-nr-or/}. Verification: \texttt{verification/solved\_batch\_4\_checks.py}. No earlier local numbered attempt for \#21 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+This subjective estimate measures progress toward reconstructing the original linear upper bound, not the known problem status or confidence in the finite and projective-plane results. The main sparse-construction step remains absent.
+\textbf{COMPLETION: 20\%}

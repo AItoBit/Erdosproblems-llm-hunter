@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#58: the odd-cycle bound and its equality case}
+\noindent Reconstruction with an explicit external theorem, 23 September 2026.
+
+\subsection*{1) Statement}
+If a graph $G$ has at most $k$ distinct odd cycle lengths, prove that $\chi(G)\le2k+2$, with equality precisely when $G$ contains $K_{2k+2}$. We supply the critical-subgraph reduction, taking Gy\'arf\'as's structural theorem as an external input.
+
+\subsection*{2) Exact structural input}
+Theorem 1 of A. Gy\'arf\'as, \emph{Graphs with $k$ odd cycle lengths}, Discrete Mathematics 103 (1992), pp. 41--48, gives the following implication for a finite graph $H$:
+\[
+ H\text{ is 2-connected},\quad |L_o(H)|=q\ge1,\quad
+ \delta(H)\ge2q+1
+ \quad\Longrightarrow\quad H=K_{2q+2}.\tag{1}
+\]
+Primary source: \url{https://users.renyi.hu/~gyarfas/Cikkek/57_Gyarfas_GraphsWithKOddCycleLengths.pdf}.
+The positive condition $q\ge1$ is essential: high-degree bipartite graphs would invalidate an extension to $q=0$. We do not reprove the structural theorem.
+
+\subsection*{3) Elementary facts about a critical graph}
+For a finite graph with chromatic number $r$, delete vertices while the chromatic number stays $r$. The resulting induced graph $H$ has $\chi(H)=r$ and $H-v$ is $(r-1)$-colourable for every vertex $v$. It follows that $\delta(H)\ge r-1$: a vertex with at most $r-2$ neighbours could be assigned an unused colour after colouring $H-v$.
+
+If $r\ge3$, then $H$ is 2-connected. It is connected because otherwise all components, being proper induced subgraphs, could be coloured with $r-1$ colours. If $v$ were a cut vertex, each subgraph induced by $v$ and a component of $H-v$ would be proper and $(r-1)$-colourable. Permute the colour names in each subgraph to give $v$ the same colour; the resulting colourings combine to contradict $\chi(H)=r$. Such an $H$ also has an odd cycle, since a graph without odd cycles is bipartite by colouring vertices according to distance parity in each component.
+
+\subsection*{4) Bound and equality for finite graphs}
+Suppose first $k\ge1$. If $r=\chi(G)\ge2k+3$, take the critical $H$ above and put $q=|L_o(H)|$. Then $1\le q\le k$ and
+\[
+ \delta(H)\ge r-1\ge2k+2\ge2q+1.
+\]
+By (1), $H=K_{2q+2}$, which would give $r=2q+2\le2k+2$, a contradiction. This proves the bound.
+
+If $r=2k+2$, the same critical graph satisfies $\delta(H)\ge2k+1\ge2q+1$. Again (1) gives $H=K_{2q+2}$; comparing chromatic numbers gives $q=k$ and hence the required copy of $K_{2k+2}$. Conversely such a clique forces at least $2k+2$ colours, and the bound supplies the reverse inequality.
+
+When $k=0$, there is no odd cycle, so $G$ is bipartite. Its chromatic number is two exactly when it has an edge, which is precisely a copy of $K_2$. Edgeless and empty graphs cause no exception to the inequality or this equality criterion.
+
+\subsection*{5) Infinite graphs and verification}
+The same conclusions hold for infinite graphs by finite-colour compactness. Briefly, proper colourings are simultaneous edge constraints in the compact space $\{1,\ldots,s\}^{V(G)}$; if every finite group of constraints is satisfiable then all are. Applying the finite bound with $s=2k+2$ gives the upper bound for $G$. If $\chi(G)=2k+2$, failure of $(2k+1)$-colourability is witnessed by a finite subgraph; its chromatic number equals $2k+2$, so the finite equality argument supplies the clique.
+
+The finite audit enumerates all labelled graphs on at most six vertices, checking their distinct odd cycle lengths, exact chromatic numbers, and the equality criterion. This supports the reductions and boundary cases; it does not verify the external theorem for arbitrary graphs.
+
+\textbf{SOLVED, using the explicitly stated Gy\'arf\'as theorem.} The critical-subgraph argument is complete; the structural theorem is a published dependency, and no independent Lean verification or novel solution is claimed.
+
+\subsection*{6) Sources}
+\url{https://www.erdosproblems.com/58}, checked 23 September 2026; Gy\'arf\'as, primary paper linked above, Theorem 1.
+
+The estimate is for the complete deduction using the declared input, not a claim that the structural theorem has been reproved, and not a correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

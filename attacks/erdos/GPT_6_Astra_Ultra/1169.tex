@@ -1,0 +1,68 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#1169; independent attempt, 2026-09-23.}
+Work in ZFC and put $\Omega=\omega_1\cdot\omega_1$, with ordinal multiplication and its ordinal ordering. The displayed question on the source page is whether
+\[
+\Omega\not\longrightarrow(\Omega,3)^2.
+\]
+Explicitly, does there exist $c:[\Omega]^2\to\{0,1\}$ such that no subset of order type $\Omega$ has all its pairs coloured $0$, and no three vertices have all three pairs coloured $1$? Equivalently, does there exist a triangle-free graph on this ordered set with no independent subset of order type $\Omega$?
+
+The source's introductory quantifier mentions a finite $k$, but its displayed formula contains no $k$. This note addresses that displayed two-colour statement; it does not replace $3$ by an unspecified parameter. An arbitrary uncountable independent set would not answer this question.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The live problem page, downloaded on 2026-09-23, labels the problem \emph{not disprovable}, retaining the unrestricted question. Hajnal's original 1971 paper proves the negative relation under CH; its abstract also records additional forbidden bipartite subgraphs. This is a conditional construction, not a ZFC construction without CH.
+
+Golshani's August 2026 preprint, checked at its primary arXiv page and full text, studies preservation of existing negative witnesses and additional relative consistency results. Its introduction explicitly leaves the relevant general forcing-axiom question open. No theorem from that preprint is needed in the proofs below. The elementary block geometry here is compatible with its Lemma 2.1 and is not claimed as a new discovery.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+The construction route must simultaneously prohibit triangles and intersect every candidate independent copy of $\Omega$. I examine whether sparse or countably colourable constructions can do this, and isolate a precise obstruction that such an approach would have to overcome. The resulting statements are necessary conditions, not a construction of a negative witness.
+
+\section{WORK}
+\subsection{A countable vertex colouring cannot destroy all full ordinal copies}
+Write
+\[
+B_\xi=[\omega_1\xi,\omega_1(\xi+1))\qquad(\xi<\omega_1).
+\]
+For every map $f:\Omega\to\omega$, there is $n<\omega$ for which $f^{-1}(n)$ contains a copy of $\Omega$.
+
+\textit{Proof.} Each $B_\xi$ is uncountable. If all its intersections with the fibres of $f$ were countable, their countable union would make $B_\xi$ countable. Choose $n(\xi)$ whose intersection is uncountable. Some fixed $n$ is chosen for uncountably many $\xi$, since otherwise $\omega_1$ would itself be a countable union of countable sets. List those indices increasingly as $(\xi_\eta)_{\eta<\omega_1}$. Every uncountable subset of a block has order type $\omega_1$: it is unbounded in that copy of $\omega_1$, and every proper initial segment is countable. Taking the union of these selected block intersections therefore gives order type
+\[
+\sum_{\eta<\omega_1}\omega_1=\Omega.
+\]
+All its vertices have colour $n$. \hfill$\square$
+
+Consequently any graph on $\Omega$ admitting a proper countable vertex colouring has an independent copy of $\Omega$. More strongly, if a graph $G$ were a negative witness and $A\subseteq\Omega$ had order type $\Omega$, then
+\[
+\chi(G[A])=\aleph_1.
+\]
+Indeed a proper countable colouring of $G[A]$, pulled back by its order isomorphism with $\Omega$, would give the forbidden independent copy. The opposite bound follows from $|A|=\aleph_1$.
+
+\subsection{A sparse construction that necessarily fails}
+Suppose every vertex of a graph has at most countably many neighbours. Each connected component is countable. To see this, fix a vertex $v$, put $D_0=\{v\}$ and let $D_{m+1}$ contain the neighbours of vertices of $D_m$. Induction makes each $D_m$ countable, and every vertex joined to $v$ by a finite path lies in $\bigcup_{m<\omega}D_m$. This union is the component. Use choice to enumerate each component by a subset of $\omega$, and assign distinct natural numbers inside each component. Reuse the numbers in different components, between which there are no edges. This is a proper countable colouring.
+
+Thus a locally countable graph on $\Omega$, even if triangle-free, cannot be a negative witness. Moreover the same conclusion holds if it becomes locally countable after deleting a set $D$ that meets every block in a countable set. Every $B_\xi\setminus D$ still has order type $\omega_1$; their union has order type $\Omega$, and the preceding argument applies to the induced graph there.
+
+\subsection{Neighbourhoods show why large cardinality is not enough}
+In a triangle-free graph, $N(v)$ is independent: an edge between two neighbours would complete a triangle with $v$. Therefore a negative witness must satisfy
+\[
+\operatorname{otp}(N(v))<\Omega\qquad(v\in\Omega).
+\]
+In particular, for each $v$, only countably many blocks can meet $N(v)$ uncountably. Otherwise the union of those intersections, in increasing block order, would already be an independent copy of $\Omega$ by the same ordinal-sum calculation.
+
+These requirements leave a genuine unresolved possibility. A vertex can have $\aleph_1$ neighbours concentrated in one block; that neighbourhood has order type $\omega_1$, not $\Omega$. Thus the failure of local countability does not itself contradict the neighbourhood restriction. A prospective construction must distribute uncountable chromatic complexity across every full ordinal copy, while each individual neighbourhood remains small in this order-type sense.
+
+\section{VERIFICATION AND EXACT REMAINING GAP}
+The proofs use regularity of $\omega_1$ only in elementary countability arguments. No step replaces ordinal multiplication by cardinal multiplication. For example, selecting the first vertex in every block produces $\aleph_1$ vertices but only order type $\omega_1$; selecting uncountably many vertices in uncountably many blocks is essential.
+
+The locally countable hypothesis is a bound on total degree. A bound only on earlier neighbours in some well-order would not justify the connected-component proof, and is not asserted here. Likewise, countable chromatic number of individual blocks does not imply countable chromatic number of their union when edges run between blocks.
+
+The missing step is an unconditional construction of a triangle-free graph meeting every full-order-type subset with an edge, or a proof in an appropriate model that all such constructions fail. The necessary conditions above do neither. There is no finite computation that certifies these uncountable assertions; the verification supplied is the explicit proof and the order-type stress tests.
+
+\section{FINAL}
+\textbf{UNRESOLVED.} Countably colourable and locally countable candidates are rigorously excluded, with a stronger restriction after thin vertex deletion. No new ZFC witness or independence theorem is obtained.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, problem statement and current status, \url{https://www.erdosproblems.com/1169}, accessed 2026-09-23. A. Hajnal, \emph{A negative partition relation}, Proceedings of the National Academy of Sciences 68 (1971), 142--144, \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC391181/}. M. Golshani, \emph{Martin's axiom and $\omega_1^2\longrightarrow(\omega_1^2,3)^2$}, arXiv:2608.13213v1, \url{https://arxiv.org/html/2608.13213v1}. The local attempts tree was searched for existing numbered sources for this problem; none was present.
+
+\section{COMPLETION ESTIMATE}
+This is a conservative subjective estimate of progress toward the unrestricted problem, not a probability that it has been solved. The note establishes useful construction barriers but does not address the central existence/independence step. It makes no novelty claim for these elementary observations.
+\textbf{COMPLETION: 5\%}

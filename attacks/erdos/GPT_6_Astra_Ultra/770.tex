@@ -1,0 +1,41 @@
+\section{Erd\H{o}s Problem \#770: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{770.tex, 770\_v2.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND ALL-VERSION AUDIT}
+Both supplied versions use the common-gcd definition
+\[
+h(n)=\min\{m\ge2:\gcd_{2\le a\le m}(a^n-1)=1\}.
+\]
+This is the convention used here; pairwise coprimality would be a different problem. The original questions concern densities of fixed values, limiting behaviour, and the greatest prime $p$ with $p-1\mid n$. Proving odd unboundedness alone does not settle them.
+\subsection*{2) DIVISIBILITY MONOTONICITY AND POSITIVE LOWER DENSITY}
+If $d\mid n$, then $a^d-1\mid a^n-1$ for every $a$, so
+\[
+h(d)\le h(n). \tag{1}
+\]
+Take one odd $d$ with $h(d)>M$, whose existence follows from the odd-unboundedness construction in the supplied source (also recorded on the official problem page). Every odd multiple of $d$ has $h(n)>M$. Consequently
+\[
+\liminf_{x\to\infty}\frac{\#\{n\le x:n\text{ odd},\ h(n)>M\}}x\ge\frac1{2d}>0.
+\]
+Thus the source's $\gg_M x/\log x$ conclusion can be strengthened to positive lower density, once just one odd witness is available. This does not assert existence of a density for $h(n)=p$.
+\subsection*{3) PERIODIC FINITE APPROXIMATIONS}
+For any prime $q>M$, define
+\[
+d_q=\operatorname{lcm}_{2\le a\le M}\operatorname{ord}_q(a).
+\]
+Then
+\[
+h(n)>M\quad\Longleftrightarrow\quad d_q\mid n\text{ for some prime }q>M. \tag{2}
+\]
+Indeed a prime dividing every $a^n-1$ must exceed $M$, and for such a prime the simultaneous power congruences are exactly the displayed divisibilities. For a finite set of primes $Q$, the corresponding union of multiples is periodic and has density
+\[
+\sum_{\varnothing\ne S\subseteq Q}(-1)^{|S|+1}
+\frac1{\operatorname{lcm}_{q\in S}d_q}.
+\]
+These are rigorous computable lower bounds. If one could control the density of the tail union uniformly as $Q$ grows, then density existence would follow. The present argument provides no such tail estimate, and an infinite union of periodic sets must not be declared to have a density without it.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The quantitative odd-unboundedness consequence is strengthened, and the density obstacle is isolated exactly. The source's boundary case $h(1)=2$ must be handled directly when its proof refers to an empty gcd.
+\noindent Statement checked: \url{https://www.erdosproblems.com/forum/thread/770}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

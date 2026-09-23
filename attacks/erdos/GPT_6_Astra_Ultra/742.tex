@@ -1,0 +1,69 @@
+\section{Erd\H{o}s Problem \#742: critical-edge witnesses and an exact finite audit}
+
+\subsection*{1) Formal restatement and context}
+A finite simple graph $G$ is diameter-two edge-critical if it has diameter exactly two and deleting any edge makes some pair have distance greater than two, including infinite distance. Must
+\[
+ e(G)\leq\lfloor |V(G)|^2/4\rfloor
+\]
+always hold? The live problem page was checked on 23 September 2026. It lists the problem as DECIDABLE and attributes the sufficiently-large-order result to F\"uredi. We address the remaining finite/general structural question. We do not have an effective threshold from that theorem and do not infer a full solution from small computations.
+
+\subsection*{2) Objective}
+An edge deletion is a global distance condition. We first replace it by an exact local certificate, then try to count the certificates. This gives transparent reductions and a reproducible finite verification, but the certificate-counting inequality obtained below is too weak to prove the conjecture.
+
+\subsection*{3) Exact local characterization}
+Write $N(v)$ for the open neighbourhood. For an edge $uv$ in a diameter-two graph, the following are equivalent:
+\begin{enumerate}
+\item deleting $uv$ increases the diameter;
+\item either $N(u)\cap N(v)=\varnothing$, or there exists $x\notin\{u,v\}$ satisfying one of
+\[
+ x\in N(u)\setminus N(v),\quad N(x)\cap N(v)=\{u\},
+\]
+\[
+ x\in N(v)\setminus N(u),\quad N(x)\cap N(u)=\{v\}.
+\]
+\end{enumerate}
+\emph{Proof.} If the endpoints have no common neighbour, deleting their edge leaves no path of length at most two between them. In the first displayed witness case, $x,v$ were nonadjacent with exactly one common neighbour $u$. Their only two-step path uses $uv$, and deleting that edge destroys it. The other case is symmetric.
+
+Conversely, suppose deleting $uv$ increases the distance of a pair $a,b$ beyond two. If $a,b$ were adjacent before deletion, their edge must be $uv$; otherwise it survives. In that case the endpoints had no common neighbour. If $a,b$ were nonadjacent, every two-edge path between them must use $uv$. Such a path necessarily has one endpoint $u$ or $v$ and its middle vertex the other endpoint of $uv$. Taking $x$ to be the remaining endpoint gives exactly one of the displayed cases. $\square$
+
+\textbf{Counting consequence.} Let $T$ be the set of edges lying in at least one triangle, and let $U$ be the set of unordered nonadjacent pairs with exactly one common neighbour. Then every diameter-two critical graph satisfies
+\[
+ |T|\leq2|U|.
+\]
+Indeed each edge in $T$ needs a witness pair in $U$ by the characterization. A fixed pair $\{a,b\}\in U$, with common neighbour $w$, can witness only the two edges $aw,bw$. Select one witness for every edge of $T$ and count multiplicities. The factor two is real: both edges of that unique two-path may need the same witness.
+
+\subsection*{4) Structural cases settled by the reduction}
+\textbf{Universal vertex.} If $v$ is adjacent to every other vertex in a diameter-two critical graph, all other vertices form an independent set. Otherwise deleting an edge between two of them leaves every pair at distance at most two through $v$, contradicting criticality. Hence the graph is a star and satisfies the desired bound.
+
+\textbf{A leaf.} If a diameter-two graph has a vertex $x$ of degree one with neighbour $v$, then $v$ is universal: for every other vertex $y$, a path from $x$ to $y$ of length at most two must be $xvy$. The preceding argument again gives a star in the critical case.
+
+\textbf{Adjacent twins cannot occur.} Suppose adjacent vertices $u,v$ have identical neighbours outside $\{u,v\}$. Unless $G=K_2$, connectedness forces a common neighbour. Neither witness in the local characterization is possible, since every third vertex adjacent to one twin is adjacent to the other. Thus $uv$ is not critical. Since $K_2$ has diameter one, it is not an exception to our original class.
+
+\textbf{Triangle-free case.} Here the desired bound follows by a short proof of Mantel's inequality. For every edge $uv$, disjointness of $N(u)$ and $N(v)$ gives $d(u)+d(v)\leq n$. Summing over edges gives $\sum_v d(v)^2\leq ne(G)$. Cauchy--Schwarz gives $4e(G)^2/n\leq\sum_vd(v)^2$, hence $e(G)\leq n^2/4$. Consequently a counterexample must contain a triangle, have minimum degree at least two, have no universal vertex and no adjacent twins.
+
+\subsection*{5) Exact computational verification}
+The accompanying script \texttt{verification/add\_root\_checks.py}, run with argument 742, enumerates labelled graphs using integer bitsets and the proved witness characterization. For $3\leq n\leq6$ it checks every graph. For $n=7$ it checks every graph with at least 13 edges, the only possible counterexamples. The completed report \texttt{verification/add\_742\_checks.json} records:
+\[
+\begin{array}{c|r|r|r}
+n&\text{graphs checked}&\text{critical graphs in scope}&\text{largest edge count in scope}\\
+3&8&3&2\\
+4&64&7&4\\
+5&1024&27&6\\
+6&32768&571&9\\
+7&401930&0&\text{none}
+\end{array}
+\]
+The witness test was independently cross-checked against literal edge deletion for every labelled graph through five vertices. No counterexample exists through seven vertices. The balanced complete bipartite graphs witness sharpness of the bound in this range.
+
+\subsection*{6) Adversarial verification and gap}
+The algorithm rejects complete graphs because the hypothesis is diameter exactly two. Disconnected graphs fail the distance test. A criticality witness must concern a nonadjacent pair; merely exhibiting a common neighbour is insufficient. All labelled graphs in each specified range are enumerated, so the computation is not a random search.
+
+The inequality $|T|\leq2|U|$ does not imply $e(G)\leq n^2/4$: it neither controls the triangle-free edges sharply enough nor prevents witnesses from being shared. The missing step is an assignment/counting scheme that uses the simultaneous neighbourhood constraints to overcome that loss. We have not supplied it.
+
+\subsection*{7) Final and references}
+\textbf{UNRESOLVED.} The local criterion, structural exclusions and finite check are fully established. They are not claimed as new literature-level results or as a proof for every order.
+\url{https://www.erdosproblems.com/742}, checked 23 September 2026. All structural proofs used in this attempt are included above.
+
+The numerical estimate is subjective and deliberately gives little credit for a small verified range in a problem with an uncontrolled finite threshold.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

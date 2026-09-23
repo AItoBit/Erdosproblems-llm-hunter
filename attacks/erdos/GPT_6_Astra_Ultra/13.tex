@@ -1,0 +1,75 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#13; partial reconstruction and structural bounds, 2026-09-23.}
+Let $A\subseteq\{1,\ldots,N\}$ satisfy property P: there are no $a,b,c\in A$ such that $a<\min\{b,c\}$ and $a\mid b+c$. Must $|A|\le N/3+O(1)$? The elements $b$ and $c$ are permitted to be equal; neither the statement nor the primary source requires them to be distinct.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The answer is known to be yes, by Bedert. The current editorial labels the problem proved. The primary paper establishes the $N/3+O(1)$ bound and a stronger eventual estimate. This note does not reproduce its substantial additive-combinatorial argument. It proves an explicit weighted residue obstruction for every possible minimum element, derives useful sharp subcases, and checks exact small maxima. The distinction between the known resolution and the coverage of this reconstruction is retained below.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First exploit the repeated-summand case $b=c$ to obtain an injective dyadic compression. Then retain the full restriction imposed by the smallest element of $A$: occupied residue classes cannot be additive inverses. This gives an explicit optimization with no hidden asymptotic constants. Finally, identify why that one-minimum obstruction is not enough for a uniform $N/3$ bound.
+
+\section{WORK}
+\subsection{A sharp lower construction}
+The set
+\[
+ A_0=\{\lfloor2N/3\rfloor+1,\ldots,N\}
+\]
+has size $\lceil N/3\rceil$ and property P. If $a,b,c\in A_0$ with $b,c>a$, then
+\[
+ 2a<b+c\le2N<3a.
+\]
+No integer strictly between $2a$ and $3a$ is a multiple of $a$. This proves the claim, including repeated summands. Thus the coefficient $1/3$ in the desired upper bound cannot be lowered.
+
+\subsection{A universal dyadic upper bound}
+Property P implies that no two distinct elements $a<b$ of $A$ satisfy $a\mid b$: otherwise taking $c=b$ gives $a\mid b+c$. For each $a\in A$, repeatedly double $a$ until reaching an integer $\phi(a)\in(N/2,N]$. If $\phi(a)=\phi(b)$ for distinct $a,b$, one of $a,b$ is a positive power-of-two multiple of the other, contradicting the preceding divisibility restriction. Hence $\phi$ is injective and
+\[
+ |A|\le\lceil N/2\rceil.
+\tag{1}
+\]
+This argument is elementary but falls short of the target by a positive fraction of $N$.
+
+\subsection{The exact obstruction from the minimum element}
+Suppose $A\ne\varnothing$ and put $m=\min A$. For each residue $r\pmod m$, consider the elements of $A\setminus\{m\}$ in that residue class. Residue $0$ is forbidden. If $m$ is even, residue $m/2$ is also forbidden. In both cases, an element $b>m$ in that class would have $m\mid2b$. Furthermore, the classes $r$ and $-r$ cannot both be occupied: taking $b,c>m$ from the two classes would give $m\mid b+c$.
+
+For $1\le r<m$, the number of integers available in $(m,N]$ with residue $r$ is
+\[
+ c_r=\max\left\{0,\left\lfloor\frac{N-r}{m}\right\rfloor\right\}.
+\]
+The non-self-inverse classes partition into pairs $\{r,m-r\}$, with $1\le r\le\lfloor(m-1)/2\rfloor$. At most one member of each pair may supply elements. Therefore
+\[
+ \boxed{\displaystyle
+ |A|\le1+\sum_{r=1}^{\lfloor(m-1)/2\rfloor}
+                \max\{c_r,c_{m-r}\}.}
+\tag{2}
+\]
+This is an exact upper bound for the relaxation in which only violations with smallest element $m$ are forbidden. Indeed, choose the heavier residue class from each inverse pair and take all its available integers, together with $m$. No forbidden sum is divisible by $m$. Other elements of the resulting set may still create violations of property P, which is why (2) is an upper bound for the original problem rather than an exact extremal formula.
+
+When $N=3m$, all $c_r=2$, and (2) becomes
+\[
+ |A|\le1+2\lfloor(m-1)/2\rfloor\le m=N/3.
+\tag{3}
+\]
+More generally, if $N=2m+t$ with $0\le t\le m$, then, for $s=\lfloor(m-1)/2\rfloor$,
+\[
+ |A|\le1+s+\min\{t,s\}.
+\tag{4}
+\]
+To check (4), note that $c_r=1+\mathbf1_{r\le t}$, and for the representative $r\le s$ we have $r<m-r$. The maximum of the two class sizes is therefore $1+\mathbf1_{r\le t}$. Summing gives the formula. The endpoint $m=1$ is included by the empty-sum convention and forces $|A|=1$.
+
+\subsection{Why this relaxation does not complete the proof}
+For example, take $m$ odd and $N=(5m-1)/2$. Then $s=(m-1)/2$ and $t=s$, so (4) permits $|A|=m$, whereas $N/3$ is approximately $5m/6$. Thus the minimum-element residue argument alone leaves a gap of order $m$. It is not valid to infer the desired global bound by maximizing (2) over $m$ and ignoring the other divisibility restrictions. A successful completion must use the constraints associated with many elements of $A$ simultaneously.
+
+\subsection{Exact finite optimization}
+The batch verification finds the exact maximum $\lceil N/3\rceil$ for every $1\le N\le32$. It searches in decreasing order. If a new element $b$ is selected, a lower candidate $a<b$ is deleted whenever $a\mid2b$ or $a\mid b+c$ for an already selected $c>b$. These are exactly the new repeated-summand and distinct-summand violations whose two larger elements are now fixed. Every forbidden triple is caught at the stage its middle element is selected, so the search enumerates all valid possibilities subject only to safe cardinality pruning. Each reported witness is separately checked against the original divisibility condition.
+
+This finite result is consistent with the sharp construction; it is not an induction proof for untested $N$. Neither the search nor the minimum-element bound supplies Bedert's missing global argument.
+
+\section{FINAL}
+\textbf{ATTEMPT UNRESOLVED.} The known affirmative theorem is acknowledged. This reconstruction proves the sharp lower example, the universal $N/2$ upper bound, the weighted residue bound (2), its sharp $N=3\min A$ consequence, and exact small cases. It does not independently derive the full $N/3+O(1)$ upper bound.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/13}, accessed 2026-09-23. B. Bedert, \emph{On a problem of Erd\H{o}s and S\'ark\"ozy about sequences with no term dividing the sum of two larger terms}, \url{https://arxiv.org/abs/2301.07065}; definition and theorem checked at \url{https://arxiv.org/html/2301.07065v1}. Verification: \texttt{verification/solved\_batch\_4\_checks.py}. No earlier local numbered attempt for \#13 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+This subjective estimate measures how much of the original upper-bound argument has been reconstructed, not the official status or confidence in the established local lemmas. The global interaction between different divisors remains the main missing step.
+\textbf{COMPLETION: 20\%}

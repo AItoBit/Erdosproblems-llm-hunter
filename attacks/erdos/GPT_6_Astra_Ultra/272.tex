@@ -1,0 +1,20 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#272; independent attempt, 2026-09-23.}
+Determine the maximum size $t(N)$ of a family of distinct subsets of $[N]$ whose pairwise intersections are nonempty arithmetic progressions. I read all of \texttt{272.tex}. It asserts a complete exact search through $N=15$ without providing executable code or certificates. I independently checked a smaller range with a saved exact implementation rather than treating that assertion as established.
+\section{WORK: REPRODUCIBLE FINITE VERIFICATION}
+Encode a nonempty subset by its binary mask. Two masks are adjacent when their bitwise intersection is nonempty and its increasing positions have constant successive difference (singletons and pairs qualify). Thus valid families are exactly cliques.
+The saved standard-library program \texttt{verification/batch\_3\_cliques.py} constructs the full graph and uses recursive clique expansion. At each node it greedily partitions the candidate vertices into independent colour classes. A clique contains at most one vertex of each class, giving an upper bound by the number of classes. Candidates are processed in reverse colour order; after processing a vertex it is removed, so the colour prefix still bounds every remaining branch. Pruning therefore loses no improving clique. Every other possible extension is explored.
+Running that program on 2026-09-23 produced
+\[
+(t(1),\ldots,t(8))=(1,2,4,7,12,17,23,30).
+\]
+Witness masks are saved alongside it in \texttt{batch\_3\_cliques.json}. These agree with $\binom N2+\lfloor(N-1)/4\rfloor+1$ in this range. This is a reproduction check, not an extension beyond known small cases.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The independent-colour bound applies to the candidate graph, not to the original support $[N]$. Empty intersections are rejected explicitly. Distinct masks enforce distinct sets. The code is an ordinary exact computation, not a formally verified proof certificate. No run for $9\le N\le15$ was performed here; the supplied claim for that range remains unverified by this attempt. Finite agreement cannot prove the formula for all $N$, the proposed $O(N)$ error term, or that all extremizers possess a common point. The official entry already records the leading asymptotic $N^2/2+o(N^2)$, so that leading asymptotic is not the remaining issue.
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/272.tex}. Official indexed entry and comments checked at \url{https://www.erdosproblems.com/272}. Reproduction command: \texttt{python3 verification/batch\_3\_cliques.py} from this attempt directory.
+\section{FINAL}
+\textbf{UNRESOLVED.} The finite values through eight are independently reproduced; neither the unsupported larger computation nor a general exact formula is asserted.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the unresolved exact extremal problem.
+\textbf{COMPLETION: 8\%}

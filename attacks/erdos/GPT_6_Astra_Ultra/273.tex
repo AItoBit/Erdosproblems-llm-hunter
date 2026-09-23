@@ -1,0 +1,39 @@
+\section{Problem 273: at least twenty distinct congruences are necessary}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{273.tex}. I investigate the intended problem: a covering system with pairwise distinct moduli $p-1$, where $p\ge5$ is prime. Repeating modulus $4$ does not address this convention. The supplied necessary bounds were eighteen congruences and a modulus at least seventy. The following elementary overlap argument improves those bounds relative to that source; no literature-priority claim is made.
+\subsection*{2) WORK}
+Write $w(M)=\sum_{m\in M}1/m$. Any cover must have $w(M)\ge1$ by the union bound for periodic densities. The twenty smallest allowed moduli are
+\[
+4,6,10,12,16,18,22,28,30,36,40,42,46,52,58,60,66,70,72,78.
+\]
+Their first nineteen reciprocal weights total
+\[
+S_{19}=\frac{493867499}{480720240}<\frac{31}{30},
+\]
+and all twenty total $S_{20}=500030579/480720240$.
+
+Suppose a cover has at most nineteen moduli. It must include each of $4,6,10$. Indeed, if it omits any one of them, its weight is at most the sum of the nineteen largest reciprocal weights available with that omission. The largest of these three possibilities omits $10$, giving
+\[
+w(M)\le S_{20}-\frac1{10}
+=\frac{90391711}{96144048}<1,
+\]
+a contradiction.
+
+Consider now the three selected congruences modulo $4,6,10$. Two of their residues have the same parity. Every pair of these three moduli has greatest common divisor two, so that pair of congruences intersects, with intersection density
+\[
+\frac1{\operatorname{lcm}(m,n)}=\frac2{mn}\ge\frac1{30}.
+\]
+First combine this pair exactly, then apply the union bound to all remaining classes. The total covered density is at most
+\[
+w(M)-\frac1{30}\le S_{19}-\frac1{30}<1,
+\]
+contradicting coverage. Thus every such covering system has at least twenty classes. Distinctness then forces at least one modulus to be $78$ or larger.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Subtracting one known intersection is safe even if additional congruences intersect it: it follows by replacing those two sets by their exact union before taking the ordinary union bound. We do not subtract every pairwise intersection, which could give an invalid upper bound. The parity argument depends only on residues modulo two, and the prime condition is used only to list the allowed reciprocal weights. Exact fractions, primality by trial division, and both strict inequalities were checked in the accompanying script.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} Any intended cover requires at least twenty congruences and a modulus at least seventy-eight. This excludes all smaller systems but provides neither a construction nor an obstruction to arbitrarily large systems.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied \texttt{273.tex}; exact arithmetic in \texttt{verification/batch\_1\_checks.py} and its JSON output, executed 2026-09-23. The official page retrieval returned HTTP 403, so the distinctness convention is taken explicitly from the supplied formulation.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward existence or nonexistence of a cover.
+\textbf{COMPLETION: 20\%}

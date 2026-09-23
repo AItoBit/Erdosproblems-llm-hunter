@@ -1,0 +1,24 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#761; independent attempt, 2026-09-23.}
+Write $\delta(G)$ for the maximum dichromatic number of an orientation of $G$, and $\zeta(G)$ for its cochromatic number. Must unbounded chromatic number force unbounded $\delta$? Must large $\zeta$ force a subgraph of large $\delta$? I read the complete \texttt{761.tex}, including its equivalence argument, order-dependent bound, and distinction between list and ordinary dichromatic numbers. Those results do not remove the dependence on graph order in the original question.
+\section{WORK: AN ELEMENTARY CLIQUE-SIZE SPECIAL CASE}
+For $m\ge2$, put $k=\lceil2\log_2m+2\rceil$. Orient $K_m$ randomly and independently. On any specified $k$ vertices, an acyclic tournament is transitive and has a unique linear order, so at most $k!$ of the $2^{\binom{k}{2}}$ orientations are acyclic. The expected number of acyclic $k$-sets is at most
+\[
+\binom mk k!2^{-\binom{k}{2}}
+\le m^k2^{-k(k-1)/2}<1.
+\]
+If $k>m$ the count is zero directly. Hence some orientation has no acyclic $k$-set, and every acyclic colour class has at most $k-1$ vertices. Therefore
+\[
+\delta(K_m)\ge\left\lceil\frac{m}{\lceil2\log_2m+2\rceil-1}\right\rceil.
+\]
+The only structural fact used is elementary: a finite acyclic digraph has a source, and deleting sources orders all its vertices; in a tournament every edge must follow that order.
+If $G$ contains $K_m$, extend this orientation arbitrarily to its other edges. Any acyclic colouring of the resulting orientation restricts to one of the clique, proving the same lower bound for $\delta(G)$. This rederives a classical probabilistic special case without relying on a list-colouring theorem.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The estimate uses the largest clique, not the chromatic number. Graphs of bounded clique number can have arbitrarily large chromatic number, so this does not settle the first question. In particular, replacing $m=\omega(G)$ by $\chi(G)$ in the displayed proof would be invalid: the induced orientation on a general vertex subset need not be a tournament. For the cochromatic question, the elementary implication $\zeta(G)\le\chi(G)$ would transfer a positive answer to the first question, but the first question remains unproved. No improvement to the supplied general bound is claimed.
+\section{SOURCES CHECKED}
+The complete local \texttt{761.tex}; official indexed statement under \url{https://www.erdosproblems.com/tags/chromatic\%20number/open}. The counting proof above is self-contained and is not claimed novel.
+\section{FINAL}
+\textbf{UNRESOLVED.} A uniform lower bound in terms of clique size is verified; both unrestricted questions remain.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the unrestricted questions.
+\textbf{COMPLETION: 8\%}

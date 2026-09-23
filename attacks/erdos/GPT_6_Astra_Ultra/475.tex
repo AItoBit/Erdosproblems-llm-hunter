@@ -1,0 +1,69 @@
+\section{Erd\H{o}s Problem \#475: collision counting, a greedy barrier and an exact sequencing audit}
+
+\subsection*{1) Formal restatement and source check}
+Let $p$ be prime and $A\subseteq\mathbb F_p\setminus\{0\}$ have size $t$. We seek a permutation $a_1,\ldots,a_t$ whose sums
+\[
+ s_j=a_1+\cdots+a_j\quad(1\leq j\leq t)
+\]
+are pairwise distinct. The initial value $s_0=0$ is not in the required list. In particular $s_t=0$ is allowed and must not be rejected by a search routine. The empty set has the empty ordering.
+
+The current problem page, fetched 23 September 2026, lists this as DECIDABLE. It records the combined results for all sufficiently large primes, but not a complete treatment of every remaining prime. We do not replace the finite remainder by an assertion that the large-prime theorem proves all cases. The older local attempt gives geometric-progression examples and only a partial computational audit at $p=17$. Here we supply different elementary criteria and complete, reproducible checks of every subset for every prime through 19. No literature novelty is claimed for the criteria or for these small instances.
+
+\subsection*{2) A collision-counting sufficient condition}
+For $2\leq r\leq t-1$, let
+\[
+ Z_r(A)=|\{B\subseteq A:|B|=r,\ \sum_{b\in B}b=0\}|.
+\]
+\textbf{Proposition.} A valid ordering exists whenever
+\[
+ \sum_{r=2}^{t-1}(t-r)\frac{Z_r(A)}{\binom tr}<1.
+\tag{1}
+\]
+\emph{Proof.} Choose a uniformly random ordering. A collision $s_i=s_j$, with $1\leq i<j\leq t$, is exactly a zero-sum block in positions $i+1,\ldots,j$. A block of length one cannot have sum zero because $0\notin A$. For length $r\geq2$, there are exactly $t-r$ possible blocks in the relevant range: their first positions range from 2 through $t-r+1$. The elements in any prescribed block form a uniformly distributed $r$-subset of $A$, so its probability of zero sum is $Z_r(A)/\binom tr$. Thus the expected number of collisions is exactly the left side of (1). A nonnegative integer which is always at least one cannot have expectation below one. Some ordering therefore has no collision. $\square$
+
+The exclusion of the first-position block is essential. Counting all $t-r+1$ blocks would concern a stronger condition involving $s_0$, and could discard valid orderings. A zero sum of the entire set causes no collision by itself.
+
+\textbf{A deterministic special case.} If there exists $x\in A$ such that $A\setminus\{x\}$ has no nonempty zero-sum subset, put $x$ first and arrange the rest arbitrarily. Any collision would give a nonempty zero-sum block entirely inside the suffix, which is impossible. This criterion remains valid even if the total sum of $A$ is zero. It is sufficient, not necessary.
+
+Condition (1) also illustrates its own limitation: if the sum is at least one, the first-moment argument says nothing. A large average collision count does not imply that every ordering has a collision. We have not bounded the $Z_r(A)$ sharply enough for arbitrary $A$ to make (1) universal.
+
+\subsection*{3) What greedy extension always achieves}
+\textbf{Lemma.} Every nonempty $t$-element set has an ordered subset of size at least $\lfloor t/2\rfloor+1$ with distinct nonempty partial sums.
+
+\emph{Proof.} Suppose a greedy construction has already used $k$ elements and its sums $s_1,\ldots,s_k$ are distinct. An unused nonzero $a$ is forbidden precisely when $s_k+a=s_i$ for some $i\leq k$. The value $i=k$ would require $a=0$, so at most $k-1$ unused values are forbidden. If $t-k>k-1$, at least one extension is available. Consequently a maximal greedy construction has $k\geq\lceil(t+1)/2\rceil=\lfloor t/2\rfloor+1$. $\square$
+
+In the tight odd case $t=2m+1$ and $k=m+1$, a blocked construction must have remaining set exactly
+\[
+ A\setminus\{a_1,\ldots,a_k\}=\{s_i-s_k:1\leq i<k\}.
+\tag{2}
+\]
+Both sides have $k-1$ elements and the forbidden values are distinct, proving the equality. This is a useful description of a failed search branch, not a contradiction.
+
+For example, in $\mathbb F_7$, take $A=\{1,2,5\}$. Starting with $1,2$ gives sums $1,3$, and adding 5 repeats 1. But the ordering $2,1,5$ has sums $2,3,1$ and succeeds. Thus a blocked greedy branch cannot certify a counterexample, even in the smallest tight case. A complete search must backtrack or make a separately justified rearrangement.
+
+\subsection*{4) Completed exhaustive finite audit}
+The script \texttt{verification/add\_root\_checks.py}, run with argument 475, enumerates every subset of $\mathbb F_p\setminus\{0\}$, including the empty set, for each prime $p\leq19$. It uses exact modular arithmetic and backtracking over unused elements. On finding an ordering, a separate check recomputes its elements and every partial sum and verifies both the permutation condition and distinctness. No subset is omitted by sampling or by a symmetry assumption.
+
+Two safe pruning rules are used. First, repeated partial sums are forbidden. Second, the final sum $S=\sum_{a\in A}a$ is fixed independently of ordering; a partial sum at a nonfinal position may not equal $S$, since the final step would then repeat it. Failed states are memoized by the remaining elements and visited sums. The current sum is determined by the remaining elements as $S-\sum_{a\text{ remaining}}a$, so this memoization does not conflate inequivalent states. Crucially, the visited set is initially empty, not $\{0\}$.
+
+The completed report \texttt{verification/add\_475\_checks.json} records:
+\[
+\begin{array}{c|r}
+p&\text{all subsets checked}\\
+2&2\\3&4\\5&16\\7&64\\11&1024\\13&4096\\17&65536\\19&262144
+\end{array}
+\]
+All 332886 subsets have verified valid orderings. This completes the small-prime range that the earlier local text did not finish, but is not presented as progress beyond the published small-parameter results. The prime $p=2$ is handled directly by the same program, avoiding division by $g-1$ in geometric-progression arguments when $g=1$.
+
+\subsection*{5) Adversarial verification and remaining gap}
+The expectation in (1) counts pairs of equal sums, so several collisions in one permutation do not invalidate linearity of expectation. The greedy bound concerns an ordered subset only. Formula (2) constrains a blocked ordering, not every possible ordering of the set. The computational result proves existence only for the listed primes. Without an explicit theorem covering all primes above 19, it cannot be combined with an unspecified sufficiently-large-prime theorem to conclude the full conjecture.
+
+\subsection*{6) Final}
+\textbf{UNRESOLVED.} We establish a zero-sum-subset sufficient criterion, a guaranteed greedy prefix length with an exact blocking description, and the complete stated finite audit. The main missing ingredient is a rearrangement principle that escapes all possible saturated configurations, or an effective bridge from the verified range to the published asymptotic result.
+
+\subsection*{7) References}
+\url{https://www.erdosproblems.com/475}, current formulation and status checked 23 September 2026. The elementary proofs and all computations used in this attempt are supplied here and in the accompanying script. The older local GPT Pro 5.2 file was read for comparison, not used as verification evidence.
+
+The estimate is subjective. It measures the limited scope of this partial attempt, not the fraction of all primes checked and not a probability that the conjecture is true.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

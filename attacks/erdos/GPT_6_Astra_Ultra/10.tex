@@ -1,0 +1,32 @@
+\section{Erd\H{o}s Problem \#10: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{10.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The question is whether some fixed number of powers of two suffices with one prime for every sufficiently large integer. The supplied file only treats failure with at most three powers. Its stage-location argument has a boundary error: when $s=11$, the quotient $(2^{2^s}-1)/G_{10}$ need not retain the entire factor $F_{s-1}$, since $G_{10}$ divides $F_{10}$.
+\subsection*{2) REPAIR OF THE FIRST STAGE}
+For the concrete construction audited in the companion attempt for Problem 9,
+\[
+F_j=2^{2^j}+1,\quad G_{10}=F_{10}/45592577,
+\quad M_s=(2^{2^s}-1)/G_{10}.
+\]
+At $s=11$ this gives
+\[
+M_{11}=45592577(2^{1024}-1)>2^{1024}+1.
+\]
+For $s\ge12$, $F_{s-1}$ really does survive in $M_s$. Thus in every stage $s\ge11$, a positive multiple $t$ of $M_s$ with $t\le2^{2^s}-1$ satisfies
+\[
+2^{2^{s-1}}+2\le t+1\le2^{2^s}.
+\]
+The companion verifier checks the factor $45592577$, the CRT covering data, and one actual residue family; the location repair itself is elementary.
+\subsection*{3) THE SHIFT, INCLUDING THE PRIME TWO}
+Suppose $t>15$, $t\equiv15\pmod{16}$, $t$ is composite, and $t$ is neither a prime plus one positive power of two nor a prime plus two positive powers. Then $N=t+1$ cannot be a prime plus at most three powers of two, repetitions allowed. Combine equal powers until the summand has binary weight at most three. If the prime is odd, this summand is odd, so removing its final bit $1$ leaves at most two positive powers, and $t$ contradicts one of the hypotheses (including compositeness if none remain). If the prime is two, the summand is $t-1\equiv14\pmod{16}$. Its last four bits already have weight three, and $t-1>14$ forces at least one further bit, again impossible.
+The corrected, independently checked family in \texttt{9.tex} satisfies these hypotheses. Its disjoint stages therefore give infinitely many even obstructions to three powers. This does not rule out four powers or a larger fixed bound.
+\subsection*{4) LIMITATION OF THE QUANTITATIVE CLAIM}
+The source's factor $7827\cdot2^{554}$ additionally requires all its stage-count inequalities and admissible-residue multiplicities. The first-stage correction alone does not independently certify those counts; I do not relabel the entire numerical multiplicity argument as verified here. The smaller certified infinite family suffices for the rigorous conclusion above.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The stage boundary and parity proof are repaired. The existence of a universal $k$ remains open.
+\noindent Statement: \url{https://www.erdosproblems.com/10}. Arithmetic certificate: \texttt{verification/batch\_3\_problem9.py}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 12\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

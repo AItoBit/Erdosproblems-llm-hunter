@@ -1,0 +1,150 @@
+\section{Erd\H{o}s Problem 47: the harmonic-mass criterion and its arithmetic limits}
+
+\subsection{1) Problem and source status}
+Fix $\delta>0$. If $N$ is sufficiently large in terms of $\delta$ and
+$A\subset[1,N]$ satisfies
+\[
+ R(A):=\sum_{a\in A}\frac1a>\delta\log N,
+\]
+must there be a subset $S\subseteq A$ with $R(S)=1$?
+The current problem page, checked on 23 September 2026, records the
+affirmative answer due to Bloom, with a subsequently improved
+quantitative bound by Liu and Sawhney.
+
+We use Bloom's explicitly stated quantitative theorem to deduce the
+original assertion and its stability under deleting small denominators.
+We then prove elementary arithmetic obstructions explaining why an
+exact unit sum does not follow from a merely large fixed reciprocal
+mass. The analytic theorem is an external dependency, not a proof
+newly established in this note.
+
+\subsection{2) The external quantitative theorem}
+Theorem 3 of Bloom's \emph{On a density conjecture about unit fractions}
+states that an absolute constant $C>0$ suffices as follows: for all
+sufficiently large $N$, if $A\subset[1,N]$ and
+\[
+ R(A)\geq C\frac{\log\log\log N}{\log\log N}\log N,
+\]
+then some $S\subseteq A$ has $R(S)=1$.
+We use this theorem in exactly this form. Its proof involves an
+arithmetic selection argument and a Fourier estimate; those parts are
+not rederived here. The more recent improvements are unnecessary for
+the fixed-$\delta$ question, and no optimal threshold is claimed.
+
+\subsection{3) Completing the fixed-$\delta$ deduction}
+Put $t=\log\log N$. The factor in Bloom's threshold is
+\[
+ \frac{\log\log\log N}{\log\log N}=\frac{\log t}{t},
+\]
+which tends to zero as $N$ tends to infinity. For a concrete sufficient
+condition in terms of the theorem's constant, use
+$\log t\leq\sqrt t$ for $t\geq1$ and choose
+\[
+ t\geq\max\{1,(2C/\delta)^2\}.
+\]
+Then
+\[
+ C\frac{\log t}{t}\leq\frac{C}{\sqrt t}\leq\frac\delta2.
+\]
+Choose $N$ also beyond the absolute threshold in Bloom's theorem.
+The assumed inequality $R(A)>\delta\log N$ exceeds the required
+threshold, so the desired subset exists.
+
+This proves the assertion for every fixed $\delta>0$, with one
+threshold depending only on $\delta$ and the constants in the cited
+theorem. If $1\in A$, the conclusion is already given by $S=\{1\}$;
+otherwise the theorem supplies a set of denominators all at least $2$.
+We have not converted the proof into a numerical value of $N_0(\delta)$,
+because the absolute constants in the external input have not been
+numerically specified.
+
+\subsection{4) Deleting an initial segment and obtaining disjoint witnesses}
+Fix a cutoff $T\geq1$. Removing all denominators at most $T$ decreases
+the reciprocal mass by at most
+\[
+ H_T=\sum_{n=1}^T\frac1n.
+\]
+If $N$ is also large enough that $H_T<\delta\log N/2$, then
+\[
+ R(A\cap(T,N])>\frac\delta2\log N.
+\]
+Applying the fixed-density deduction with $\delta/2$ gives a witness
+using only denominators larger than $T$.
+
+As a consequence, suppose an infinite set $A\subset\mathbb N$ has
+positive upper logarithmic density:
+\[
+ \limsup_{N\to\infty}\frac{R(A\cap[1,N])}{\log N}>0.
+\]
+Choose a fixed positive $\delta$ smaller than this upper limit.
+There are arbitrarily large $N$ satisfying the required mass bound,
+so the preceding argument gives a witness past every cutoff $T$.
+Repeating with the maximum denominator found so far produces
+infinitely many pairwise disjoint finite subsets of $A$, each of
+reciprocal sum $1$. This argument specifically uses logarithmic
+density; it does not replace an ordinary-density theorem by an
+unjustified comparison of finite cardinalities and reciprocal sums.
+
+\subsection{5) A prime-power obstruction and safe elimination rule}
+Let $S$ be a finite set of integers at least $2$ with $R(S)=1$.
+Fix a prime $p$ which divides some element of $S$, and let
+\[
+ a=\max_{n\in S}v_p(n)\geq1.
+\]
+At least two elements must attain this maximum. For if exactly one
+element $n_0$ attained it, take $L=\operatorname{lcm}(S)$ and multiply
+the unit-fraction equality by $L$:
+\[
+ \sum_{n\in S}L/n=L.
+\]
+Modulo $p$, every term except $L/n_0$ is zero, whereas $L/n_0$ is
+nonzero. The right side is zero. This contradiction proves the claim.
+
+This gives a valid finite preprocessing rule. If an element $n_0$ of
+an available denominator set $A$ uniquely maximizes a positive
+$p$-adic valuation for some prime $p$, it cannot belong to any subset
+of $A$ with reciprocal sum $1$, and may be removed. Applying the
+same reasoning after each removal preserves all possible witnesses.
+The terminal set need not contain a witness: for instance
+$\{6,10,15\}$ has no uniquely attained positive maximal valuation,
+but its total reciprocal mass is only $1/3$.
+
+In particular, no finite set of distinct prime denominators has a unit
+sum, since each prime appears to positive valuation only in its own
+denominator. Nevertheless, the sum of reciprocals of the primes
+diverges. Thus no fixed absolute reciprocal-mass threshold can replace
+the hypothesis in the problem. This does not contradict the theorem:
+prime reciprocal mass grows much more slowly than $\log N$.
+
+\subsection{6) Verification and outcome}
+The analytic dependence is confined to the explicitly stated theorem
+in Section 2. The limit estimate, deletion argument, and valuation
+obstruction are proved above. The finite verification script
+\texttt{verification/solved\_37\_45\_46\_47\_checks.py} checks that
+the elimination rule never removes a denominator belonging to a unit
+subset for any set of available denominators in $\{2,\ldots,14\}$.
+It uses exact rational arithmetic. This validates a finite illustration
+of the elementary rule, not Bloom's infinite theorem.
+
+\textbf{Outcome: SOLVED using Bloom's quantitative theorem.}
+The original fixed-$\delta$ assertion follows completely. No claim
+is made to prove the best possible harmonic-mass threshold, to
+reproduce the full analytic argument, or to rerun a formal proof.
+
+\subsection{7) Sources}
+\begin{itemize}
+\item T. F. Bloom, \emph{On a density conjecture about unit fractions},
+arXiv:2112.03726v2, Theorem 3,
+\texttt{https://arxiv.org/html/2112.03726v2}; the theorem statement
+and surrounding discussion were checked on 23 September 2026.
+\item T. F. Bloom, Problem 47,
+\texttt{https://www.erdosproblems.com/47}, checked 23 September 2026,
+for the current status and the distinction between the proved bound
+and sharper threshold questions.
+\end{itemize}
+
+The estimate records coverage of the original question with the stated
+external theorem accepted, not a fresh proof of that theorem or a
+novelty assessment.
+\subsection{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

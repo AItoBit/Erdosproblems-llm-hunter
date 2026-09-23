@@ -1,0 +1,46 @@
+\section{Erd\H{o}s Problem \#56: exact elementary cases of the coprime-set bound}
+\noindent Independent partial reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known resolution}
+Let $p_k$ be the $k$th prime and $N\ge p_k$. If $A\subseteq[1,N]$ contains no $k+1$ pairwise coprime integers, must its size be at most the number of integers in $[1,N]$ divisible by at least one of $p_1,\ldots,p_k$? The current editorial records a counterexample for $k=212$, due to Ahlswede and Khachatrian. This note proves exact special cases, rather than reconstructing that counterexample.
+
+\subsection*{2) The benchmark always gives a valid construction}
+Let
+\[
+ B_k(N)=\{n\le N:p_i\mid n\text{ for some }i\le k\}.
+\]
+If $k+1$ members were pairwise coprime, select for each one a prime from $\{p_1,\ldots,p_k\}$ dividing it. No prime could be selected twice. This contradicts the pigeonhole principle. Thus the benchmark is attainable, irrespective of whether it is optimal.
+
+\subsection*{3) Complete proof for $k=1$}
+If $N$ is even, partition $[1,N]$ into consecutive pairs $(1,2),(3,4),\ldots,(N-1,N)$. Every pair is coprime, so an admissible set contains at most one member of each pair. Hence $|A|\le N/2$.
+
+If $N\ge3$ is odd and $1\in A$, admissibility forces $A=\{1\}$, whose size is at most $\lfloor N/2\rfloor$. Otherwise partition $[2,N]$ into $(2,3),(4,5),\ldots,(N-1,N)$ to obtain the same bound. The even integers attain $\lfloor N/2\rfloor$. This proves the proposed extremal value for every allowed $N$ when $k=1$.
+
+\subsection*{4) Complete proof before the next prime}
+If $p_k\le N<p_{k+1}$, every integer in $[2,N]$ has a prime divisor among the first $k$ primes. Thus $B_k(N)=[2,N]$ has $N-1$ members. The only larger subset is $[1,N]$ itself, which contains the pairwise coprime set $\{1,p_1,\ldots,p_k\}$. Consequently the extremal value is exactly $N-1$ throughout this interval, for every $k$.
+
+\subsection*{5) Complete proof for $k=2$ and $6\mid N$}
+Partition $[1,N]$ into blocks $\{6j+1,\ldots,6j+6\}$. Every five-element subset of such a block contains three pairwise coprime integers. To see this, write $x=6j$. If none of the three odd numbers is omitted, use $x+1,x+3,x+5$: consecutive odd numbers have gcd one, and the outer pair has gcd dividing four and is odd. If an odd number is omitted, use respectively
+\[
+ \begin{array}{c|c}
+ \text{omitted number}&\text{coprime triple}\hline
+ x+1&(x+3,x+4,x+5)\\
+ x+3&(x+1,x+2,x+5)\\
+ x+5&(x+1,x+2,x+3).
+ \end{array}
+\]
+Consecutive pairs are coprime; the remaining gcds divide two, three, or four. Parity, together with $x+2\equiv2\pmod3$, excludes these possible common factors. A six-element subset contains a five-element subset, so it also contains a triple.
+
+An admissible $A$ therefore has at most four elements per block, giving $|A|\le2N/3$. Exactly four numbers per block are divisible by two or three. The benchmark attains the bound. The proof uses the assumption $6\mid N$; no estimate for a final incomplete block is silently inserted.
+
+\subsection*{6) Remaining gap and verification}
+These arguments settle infinitely many parameter pairs but do not settle the universal assertion, which is false. In particular, they neither construct the known $k=212$ obstruction nor establish the result for every $N$ when $k=2$. The accompanying finite check exhausts the five-element block patterns across a range of blocks and all admissible subsets for small $N$; it is a check on these lemmas, not a replacement for the general proofs.
+
+\textbf{ATTEMPT UNRESOLVED for reconstruction of the general disproof.}
+
+\subsection*{7) Sources}
+\url{https://www.erdosproblems.com/56}, checked 23 September 2026. The editorial attributes the general counterexample to R. Ahlswede and L. H. Khachatrian, \emph{On extremal sets without coprimes}, Acta Arithmetica (1994), pp. 89--99. No result of that paper is assumed in the elementary arguments above.
+
+The estimate credits complete proofs in the stated cases, while leaving the decisive counterexample unreconstructed. It is subjective, not a correctness probability.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

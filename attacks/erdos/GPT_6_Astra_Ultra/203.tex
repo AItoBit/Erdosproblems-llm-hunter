@@ -1,0 +1,26 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#203; independent attempt, 2026-09-23.}
+The original target requires $m>1$ with $(m,6)=1$ (a condition omitted from the supplied formulation) for which every $2^k3^\ell m+1$, $k,\ell\ge0$, is composite. I read the complete \texttt{203.tex}, including its finite-ray theorem and prime strengthening. Those results quantify over a new $m$ for each finite collection of rays. This attempt isolates precisely what a finite modular certificate for the full two-dimensional problem would have to prove.
+\section{WORK: FINITE PERIODIC CERTIFICATE}
+Take a finite set $Q$ of primes greater than three and choose residues $c_q\in\mathbb Z/q\mathbb Z$. Put
+\[
+U=\operatorname{lcm}_{q\in Q}\operatorname{ord}_q(2),\qquad
+V=\operatorname{lcm}_{q\in Q}\operatorname{ord}_q(3).
+\]
+Suppose the following finite check succeeds:
+\[
+\forall (i,j)\in\{0,\ldots,U-1\}\times\{0,\ldots,V-1\},\quad
+\exists q\in Q:\quad 2^i3^j c_q\equiv-1\pmod q.
+\tag{*}
+\]
+Then the Chinese remainder theorem gives positive $m\equiv1\pmod6$ with $m\equiv c_q\pmod q$ for all $q$. Choose such an $m>\max Q$. Reducing $(k,\ell)$ modulo $(U,V)$ and using (*) gives $q\mid 2^k3^\ell m+1$. This integer exceeds $q$, so it is composite. The pair $(0,0)$ is also covered (or simply handled by parity).
+Conversely, if a proposed fixed finite family of primes $Q>3$ divides at least one of the values for \emph{every} exponent pair for some fixed $m$, its residues $c_q=m\bmod q$ satisfy (*). Hence (*) is an exact finite test for this specified covering-prime strategy, including the proper-divisor check via sufficiently large CRT representatives.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The multiplicative orders exist because $q>3$. Choosing one residue per prime avoids incompatible CRT demands. Separate periods $U,V$ cover the full lattice rather than merely finitely many rays. No choices satisfying (*) have been found or claimed here. The existence of successful finite-ray constructions does not imply one finite $Q$ meeting (*). Nor is every hypothetical composite-valued $m$ guaranteed to have a finite covering-prime certificate. Compactness in a profinite completion would produce a profinite integer, not necessarily an ordinary positive integer. Thus neither direction silently exchanges $\forall D\,\exists m$ with $\exists m\,\forall D$.
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/203.tex}. Filaseta's cited primary record was checked: \url{https://arxiv.org/abs/2305.09219}. The certificate theorem uses only elementary multiplicative orders and CRT, and does not reassert unverified details of its prime-string corollary.
+\section{FINAL}
+\textbf{UNRESOLVED.} A candidate finite covering can now be checked on an explicit rectangle, but no successful certificate or unrestricted impossibility proof is supplied.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward one integer handling every exponent pair.
+\textbf{COMPLETION: 10\%}

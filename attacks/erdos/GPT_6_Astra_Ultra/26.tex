@@ -1,0 +1,95 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#26; reconstruction, 2026-09-23.}
+For an infinite set $A$ of positive integers and $k\geq1$, put
+\[
+ M_k=\{n\geq1:\text{some }a\in A\text{ satisfies }a+k\mid n\}.
+\]
+Must some $M_k$ have natural density one? We construct an $A$ for which
+every $M_k$ has upper density at most $1/2$. We also give a counterexample
+whose reciprocal sum diverges, so the obstruction need not be summability.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page labels the problem disproved and reports formal
+verification. It credits Ruzsa with a Chinese-remainder construction
+and discusses the reciprocal-sum obstruction and a divergent-sum
+modification. The proofs below reconstruct these elementary mechanisms;
+they are not presented as new results. No formal verification is claimed
+for this write-up.
+
+\section{WORK}
+\subsection{1. A direct counting counterexample}
+Take $A=\{2^j:j\geq2\}$. For every positive integer $X$,
+\[
+ |M_k\cap[1,X]|
+ \leq\sum_{\substack{j\geq2\\2^j+k\leq X}}
+          \left\lfloor\frac{X}{2^j+k}\right\rfloor
+ \leq X\sum_{j\geq2}\frac1{2^j+k}
+ \leq X\sum_{j\geq2}2^{-j}=\frac X2.
+\]
+The first inequality is a union bound: overcounting an integer with
+several such divisors is harmless. Terms with modulus larger than $X$
+contribute zero. Thus there is no interchange of a limiting density
+with an infinite union. Dividing by $X$ and taking an upper limit proves
+$\overline d(M_k)\leq1/2$ simultaneously for every $k\geq1$.
+This already answers the problem negatively. More generally, starting
+the powers at $2^J$ gives the uniform bound $2^{1-J}$.
+
+\subsection{2. A divergent reciprocal sum is possible as well}
+Let $p_1,p_2,\ldots$ be the primes. At stage $j$ the Chinese remainder
+theorem gives a residue class $r_j$ modulo $P_j=p_1\cdots p_j$ such that
+\[
+ r_j\equiv-i\pmod{p_i}\qquad(1\leq i\leq j).
+\]
+Choose a finite block $F_j$ of positive integers in this residue class,
+all larger than every integer chosen earlier, with
+\[
+ \sum_{a\in F_j}\frac1a\geq1.
+\]
+Such a block exists because the reciprocal sum over any positive
+arithmetic progression diverges: for sufficiently large $t$,
+$r_j+tP_j\leq2P_jt$, so its reciprocal dominates $1/(2P_jt)$.
+One can make the choice deterministic by taking successive members
+until the displayed sum first reaches one. Put $A=\bigcup_{j\geq1}F_j$.
+The blocks are disjoint, so $A$ is infinite and $\sum_{a\in A}1/a=\infty$.
+
+Fix $k\geq1$. Every element from a block of index $j\geq k$ satisfies
+$a+k\equiv0\pmod{p_k}$. Consequently its positive multiples lie among
+the multiples of $p_k$. Let $E_k=\bigcup_{j<k}F_j$, a finite set, and set
+\[
+ L_k=p_k\prod_{a\in E_k}(a+k).
+\]
+Every integer $n\equiv1\pmod{L_k}$ is indivisible by $p_k$ and by each
+$a+k$ with $a\in E_k$. The latter moduli exceed one. Such $n$ therefore
+has no divisor from $A+k$. This missing arithmetic progression has
+density $1/L_k>0$, whence
+\[
+ \overline d(M_k)\leq1-1/L_k<1.
+\]
+The dependence of $L_k$ on $k$ is immaterial: the original assertion
+requires density one for at least one fixed shift. \hfill$\square$
+
+\section{VERIFICATION AND LIMITS}
+The first construction proves the claim using inequalities for every
+finite $X$, which is stronger than merely disproving existence of a
+density-one limit. The second construction checks the quantifiers
+separately for each shift and permits finitely many exceptional blocks.
+There is no requirement that the missing progressions be the same for
+different shifts. The Chinese remainder theorem only involves finitely
+many pairwise coprime primes at any stage.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known negative answer reconstructed).}
+Both constructions above are complete. The first gives a uniform
+quantitative density bound; the second proves that even divergence of
+the reciprocal sum does not force a successful shift. No new literature
+result or Lean verification is claimed.
+
+\section{SOURCES}
+T.~F.~Bloom, problem \#26 and its editorial attribution to I.~Z.~Ruzsa,
+\url{https://www.erdosproblems.com/26}, checked 2026-09-23.
+
+The estimate measures completion of this reconstruction of the stated
+problem, not novelty.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,42 @@
+\section{Erd\H{o}s Problem \#24: the sharp bound for graphs mapping to a pentagon}
+\noindent Independent attempt, 23 September 2026.
+
+\subsection*{1) Statement and current resolution}
+Does every triangle-free graph on $5n$ vertices contain at most $n^5$ copies of $C_5$? Copies here are unlabelled cycles. The current page records affirmative solutions by Grzesik and independently Hatami, Hladk\'y, Kr\'al, Norine, and Razborov. This note proves the sharp inequality for graphs admitting a homomorphism to $C_5$, and precisely identifies why that subclass does not cover every triangle-free graph.
+
+\subsection*{2) The blow-up calculation}
+Suppose $h:G\to C_5$ is a graph homomorphism. Put $V_i=h^{-1}(i)$ and $a_i=|V_i|$, with indices modulo five. There are no edges inside $V_i$ or between nonconsecutive classes. Adding every missing edge between consecutive classes produces a complete blow-up $H$ of $C_5$ containing $G$ and still triangle-free.
+
+Every five-cycle in $H$ uses exactly one vertex from each class. Indeed, under $h$ the five directed steps around such a cycle are each $+1$ or $-1$ modulo five. Their integer sum belongs to $\{-5,-3,-1,1,3,5\}$ and must be divisible by five. Thus it is $5$ or $-5$, and all steps have the same sign. Conversely every choice of one vertex from each class forms precisely one unlabelled pentagon. Hence
+\[
+ \#C_5(G)\le\#C_5(H)=a_0a_1a_2a_3a_4
+ \le\left(\frac{a_0+\cdots+a_4}{5}\right)^5.\tag{1}
+\]
+The last step is arithmetic--geometric mean. For $|G|=5n$, this is the requested $n^5$ bound. No factor of $10$ is missing: ten choices of starting point and orientation represent the same cycle, whereas a transversal of the five named classes is counted once by the product.
+
+Equality for positive class sizes requires all $a_i=n$. It also requires every consecutive-class edge: if one is missing, choosing arbitrary vertices from the other three nonempty classes produces a transversal cycle present in $H$ but absent in $G$. Thus within this subclass equality is attained exactly by the balanced complete blow-up.
+
+\subsection*{3) The same argument for every odd cycle template}
+For odd $r\ge5$, a graph homomorphism $G\to C_r$ similarly partitions $G$ into $r$ independent classes with edges only between consecutive classes. A closed walk of length $r$ in $C_r$ has a sum of $r$ signs congruent to zero modulo $r$. Since the sum is odd and lies in $[-r,r]$, it must be $r$ or $-r$. Therefore every cycle of length $r$ in a complete blow-up uses each class once, giving
+\[
+ \#C_r(G)\le\prod_{i=0}^{r-1}a_i\le(|G|/r)^r.
+\]
+Moreover such a blow-up has no shorter odd cycle: a sum of an odd number fewer than $r$ of signs cannot be zero modulo $r$. This proves the proposed generalization from the editorial on an explicit large family, but it does not establish it for arbitrary graphs of odd girth $r$.
+
+\subsection*{4) Why the homomorphism hypothesis is a real gap}
+Here is an explicit triangle-free graph outside the subclass. Start with vertices $v_0,\ldots,v_4$ inducing a pentagon, add vertices $u_0,\ldots,u_4$ with $u_i$ adjacent to $v_{i-1},v_{i+1}$, and add a vertex $w$ adjacent to all $u_i$. There are no other edges.
+
+It is triangle-free: a triangle containing $w$ would require an edge between two $u_i$; a triangle containing exactly one $u_i$ would require an edge between $v_{i-1}$ and $v_{i+1}$; and the original pentagon has no triangle. All three possibilities are impossible.
+
+It has no proper three-colouring. If such a colouring existed, rename colours so that $w$ has colour three. Then every $u_i$ has colour one or two. Whenever an original $v_i$ has colour three, recolour it with the colour of $u_i$. Its two original neighbours have colours different from $u_i$, since both are adjacent to $u_i$. Two adjacent original vertices could not both originally have colour three, so these simultaneous replacements cause no conflict. This produces a two-colouring of the original odd cycle, a contradiction. Since $C_5$ is three-colourable, this graph cannot map homomorphically to it.
+
+Thus replacing an arbitrary triangle-free graph by a pentagon blow-up without proving a suitable extremal reduction would leave the crucial step unjustified.
+
+\subsection*{5) Outcome and sources}
+\textbf{ATTEMPT UNRESOLVED beyond the homomorphism subclass.} Formula (1), its equality case, the odd-cycle extension, and the obstruction to the shortcut are proved here. The published full result is not being disputed; its global extremal argument has not been reconstructed in this note.
+
+Sources checked: \url{https://www.erdosproblems.com/24}; H. Hatami, J. Hladk\'y, D. Kr\'al, S. Norine, and A. Razborov, \emph{On the Number of Pentagons in Triangle-Free Graphs}, \url{https://arxiv.org/abs/1102.1634}. No novelty is claimed for the blow-up calculation or the classical Mycielski construction used above.
+
+This subjective estimate credits the sharp construction and a full subclass proof, while the main global reduction is still absent.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

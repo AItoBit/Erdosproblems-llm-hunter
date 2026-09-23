@@ -1,0 +1,33 @@
+\section{OBJECTIVE AND REVIEW OF ALL VERSIONS}
+\textbf{Erd\H{o}s \#36; independent attempt, 2026-09-23.}
+For balanced partitions $A\sqcup B=[2N]$, write $r(k)=|\{(a,b)\in A\times B:a-b=k\}|$. Determine the optimal asymptotic lower bound for $\max_k r(k)/N$. I read all six supplied versions: \texttt{36.tex}, \texttt{36\_v2.tex}, \texttt{36\_v3.tex}, \texttt{36\_v4.tex}, \texttt{36\_v5.tex}, and \texttt{36\_v6.tex}. They develop a variance bound, its limitation, a Fourier obstruction, and finally import known numerical bounds. Importing a published bound is not an independent improvement to the optimum.
+\section{WORK: CORRECTING THE CONTINUOUS CONVENTION}
+The later versions write $\int f(t)(1-f(t+x))\,dt$ without specifying the complement outside $[-1,1]$. The correct compactly supported complement is
+\[
+g=1_{[-1,1]}-f,\qquad M_f(x)=\int_{\mathbb R}f(t)g(t+x)\,dt,
+\]
+where both $f$ and $g$ vanish outside $[-1,1]$. If instead one simply extends $f$ by zero and literally uses $1-f$ on the entire line, the displayed overlap on $[-2,2]$ has total mass $4-1=3$, contradicting the asserted mass one. With $g$ correctly supported, Fubini gives $\int M_f=(\int f)(\int g)=1$.
+An exact discrete identity makes the Fourier constraint unambiguous. For $\theta=\pi j/N$, $1\le j<2N$, set $\widehat A(\theta)=\sum_{a\in A}e^{i\theta a}$, and likewise for $B$. The full geometric sum on $[2N]$ vanishes, so $\widehat B=-\widehat A$. Therefore
+\[
+\sum_k r(k)e^{i\theta k}
+=\widehat A(\theta)\overline{\widehat B(\theta)}
+=-|\widehat A(\theta)|^2\le0.
+\tag{1}
+\]
+Thus the cosine inequalities have a direct finite proof; no misextended complement is needed.
+\section{EXACT REPLICATION OF A FINITE CERTIFICATE}
+Replace each position $a$ by its block $\{t(a-1)+1,\ldots,ta\}$ and put all positions of that block in the same part. Write $r_t$ for the resulting balanced partition on $[2tN]$. Counting pairs of offsets gives, for any integer $k$ and $0\le s<t$,
+\[
+r_t(tk+s)=(t-s)r(k)+sr(k+1).
+\tag{2}
+\]
+Indeed the offset difference is either $s$ with $t-s$ choices, or $s-t$ with $s$ choices; these require original differences $k$ and $k+1$, respectively. Hence $\max r_t=t\max r$ exactly, with equality at a multiple of $t$. This proves that a finite partition certificate reproduces its normalized height at every integer dilation. The saved verifier checks (1) at $\theta=\pi$ by exact integers and checks every value in (2) for every balanced partition with $N\le5$ and $t=2,3$.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Replication does not improve the certificate's normalized height. The Fourier identity is a necessary constraint, not a characterization of realizable overlap functions. Neither identity determines the optimal constant or improves a published record. Website comments contain later claimed refinements; I have not verified their certificate packages and do not label any quoted interval as the latest certified record. The remaining task is an optimal construction with a matching universal lower bound.
+\section{SOURCES CHECKED}
+All six complete local versions; official indexed statement and discussion \url{https://www.erdosproblems.com/forum/thread/36}. Verification: \texttt{python3 verification/batch\_3\_final\_checks.py}. All mathematical assertions newly used above are proved directly.
+\section{FINAL}
+\textbf{UNRESOLVED.} The complement convention is repaired and finite Fourier/replication certificates are exact; the optimal constant remains undetermined.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the optimum.
+\textbf{COMPLETION: 10\%}

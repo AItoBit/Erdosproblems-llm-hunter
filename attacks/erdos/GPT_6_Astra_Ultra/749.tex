@@ -1,0 +1,21 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#749; independent attempt, 2026-09-23.}
+For every $\epsilon>0$, seek $A\subseteq\mathbb N$ with $\underline d(A+A)\ge1-\epsilon$ and uniformly bounded ordered representation function $r_A(m)$. I read the complete supplied \texttt{749.tex}. Its quadratic bounds on the enumeration of a hypothetical $A$ are necessary conditions, not a construction. The indexed official entry distinguishes this lower-density question from the resolved upper-density variant.
+\section{WORK: A PRECISE FINITE COMPATIBILITY CRITERION}
+Fix $0<\delta<1$, an integer $g$, and $N_0$. The following two assertions are equivalent:
+\begin{enumerate}
+\item An infinite $A\subseteq\{1,2,\ldots\}$ satisfies $r_A(m)\le g$ for every $m$ and $|(A+A)\cap[1,n]|\ge\delta n$ for every $n\ge N_0$.
+\item For arbitrarily large $N$, there is $B_N\subseteq[1,N]$ such that $r_{B_N}(m)\le g$ for every $m$, and $|(B_N+B_N)\cap[1,n]|\ge\delta n$ simultaneously for every $N_0\le n\le N$.
+\end{enumerate}
+The forward implication uses $B_N=A\cap[1,N]$: a positive summand in a sum at most $n$ is at most $n$.
+For the converse, form the binary tree of all finite membership strings satisfying the displayed constraints up to their length. Prefixes remain valid, since deleting elements greater than $n$ cannot affect sums at most $n$, and cannot increase representation counts. There are nodes at arbitrarily large depths. At each node having arbitrarily deep descendants, at least one of its two children has arbitrarily deep descendants. Recursively choosing that child constructs an infinite branch. Its set $A$ satisfies every finite constraint. Positive $\delta$ forces $A$ infinite.
+Consequently the original question, with its quantifier over every $\epsilon$, is equivalent to the existence of such uniformly compatible finite witnesses for every $\delta<1$, with $g,N_0$ depending on $\delta$. In the forward direction choose a hypothetical lower density strictly greater than $\delta$, so the eventual inequality follows from the definition of liminf.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Requiring coverage only at the terminal value $N$, or allowing the initial threshold $N_0$ to tend to infinity with $N$, destroys the prefix argument. Likewise $g$ must stay fixed as $N$ grows. Thus a sequence of isolated good finite blocks or a construction with good upper density does not supply the required tree. This is a standard compactness argument applied explicitly to this problem; it is not a new existence theorem. I have not constructed its finite witnesses with all intermediate-scale inequalities.
+\section{SOURCES CHECKED}
+The complete local \texttt{749.tex}; indexed official entry \url{https://www.erdosproblems.com/749}; statement formalization \url{https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/ErdosProblems/749.lean}.
+\section{FINAL}
+\textbf{UNRESOLVED.} The missing uniform compatibility requirement is made exact, but no lower-density construction is obtained.
+\section{COMPLETION ESTIMATE}
+Subjective progress toward the original existence question, not a probability.
+\textbf{COMPLETION: 8\%}

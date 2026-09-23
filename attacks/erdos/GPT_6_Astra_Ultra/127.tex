@@ -1,0 +1,116 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#127; reconstruction, 2026-09-23.}
+Let $b(m)$ be the minimum, over graphs with $m$ edges, of the size of
+a maximum cut. Put
+\[
+ f(m)=b(m)-\left(\frac m2+\frac{\sqrt{8m+1}-1}{8}\right).
+\]
+Is $f(m)$ unbounded along some sequence? We reconstruct Alon's proof
+that $f(n^2/2)\gg\sqrt n$ for large even $n$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page credits Alon's 1996 paper. We follow its chromatic
+number and large-clique dichotomy. We explicitly use the previously
+proved Edwards inequality $b(m)\ge m/2+(\sqrt{8m+1}-1)/8$.
+The proof below is a reconstruction of the known argument, not a new
+improvement. Integer parity in the complete-graph example is recorded
+separately.
+
+\section{WORK}
+If a graph is $2s$-colorable, randomly divide its $2s$ independent color
+classes into two groups of size $s$. Each edge crosses with probability
+$s/(2s-1)$, so some cut has size at least
+\[
+ m/2+m/(4s-2).                                             \tag{1}
+\]
+Fix $\epsilon=10^{-3}$, take large even $n$, and let $m=n^2/2$.
+If the chromatic number is below $n-\epsilon\sqrt n$, round it up to
+an even integer $2s\le n-\epsilon\sqrt n+1$. Formula (1) gives
+\[
+ \operatorname{maxcut}(G)\ge m/2+
+ \frac{n^2}{4(n-\epsilon\sqrt n)}
+ \ge m/2+n/4+(\epsilon/4)\sqrt n.                         \tag{2}
+\]
+
+Otherwise write $\chi(G)=n-k$, where $0\le k\le\epsilon\sqrt n$.
+The upper bound $\chi(G)\le n$ follows because a minimum proper coloring
+has an edge between every two color classes, while
+$m<\binom{n+1}{2}$. Take a vertex-critical subgraph $H$ with the same
+chromatic number. Every vertex has degree at least $n-k-1$; hence
+\[
+ |V(H)|\le n^2/(n-k-1)\le n+2\epsilon\sqrt n
+\]
+for large $n$. In a proper coloring of $H$ with $n-k$ colors there are
+at least $2(n-k)-|V(H)|\ge n-4\epsilon\sqrt n$ singleton classes.
+Every two are joined, again because merging nonadjacent color classes
+would reduce the chromatic number. Thus $G$ contains a clique $U$ of
+size $h=n-r$, with $0\le r\le4\epsilon\sqrt n$.
+Let $W=V(G)\setminus U$, $w=e(W)$, and $t=e(U,W)$. Direct subtraction gives
+\[
+ w+t=rh+n/2+(r^2-r)/2.                                    \tag{3}
+\]
+
+If $w\ge n/32$, Edwards' inequality gives a cut of $G[W]$ with at least
+$w/2+\sqrt{w/8}-1/8\ge w/2+\sqrt n/16-1/8$ edges. A balanced cut
+of the clique has at least $e(U)/2+(h-1)/4$ edges. Choose the better
+of the two relative orientations of these cuts; this retains at least
+$t/2$ crossing edges between $U$ and $W$. Altogether the cut has size
+at least
+\[
+ m/2+n/4+(1/16-\epsilon)\sqrt n-O(1).                    \tag{4}
+\]
+
+Suppose instead $w<n/32$. In (3), the remainder
+$R=n/2+(r^2-r)/2-w$ lies between $h/4$ and $3h/4$ for large $n$;
+this follows from $r\le4\epsilon\sqrt n$ and the chosen small constant.
+In particular $t/h=r+R/h$ is at distance at least $1/4$ from an integer.
+Write the degrees from $U$ into $W$ in increasing order
+$d_1\le\cdots\le d_h$, with mean $\bar d=t/h$. If
+$d_{\lfloor h/2\rfloor}\ge\bar d$, every degree in the upper half
+is at least $\bar d+1/4$. Otherwise all degrees in the lower half are
+at most $\bar d-1/4$. In either case the upper $\lceil h/2\rceil$
+vertices have at least
+\[
+ t/2+\tfrac14\lfloor h/2\rfloor\ge t/2+n/12
+\]
+neighbors in $W$, counted with multiplicity, for large $n$.
+Put all of $W$ on the other side from that upper half. The clique is
+cut as evenly as possible, and the resulting cut has at least
+\[
+ e(U)/2+(h-1)/4+t/2+n/12
+ =m/2+n/4+n/12-w/2-r/4-O(1).
+\]
+Since $w<n/32$ and $r=O(\sqrt n)$, this is larger than
+$m/2+n/4+c\sqrt n$ for a fixed $c>0$ and all large $n$.
+Together with (2) and (4), this proves
+\[
+ b(n^2/2)\ge n^2/4+n/4+c\sqrt n.
+\]
+The Edwards correction at $m=n^2/2$ is
+$(\sqrt{4n^2+1}-1)/8=n/4-1/8+O(1/n)$. Therefore
+$f(n^2/2)\ge c\sqrt n+O(1)\to\infty$ as required.
+\hfill$\square$
+
+\section{VERIFICATION}
+The paper's $b(m)$ is denoted $f(m)$ there, whereas the problem's $f(m)$
+means the surplus over Edwards; these quantities must not be confused.
+For $m=\binom h2$, the complete graph gives surplus $0$ for odd $h$ and
+$1/4$ for even $h$, since its maximum cut is $\lfloor h^2/4\rfloor$.
+Thus the informal assertion that the surplus vanishes for every
+complete-graph size needs this parity qualification. It is irrelevant
+to unboundedness on the sequence proved above.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known positive answer reconstructed).}
+All parts of the large-clique dichotomy are proved here. Edwards'
+classical cut inequality is the explicit external input. We do not
+claim a new constant or an optimal upper bound for $f(m)$.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/127}.
+N.~Alon, \emph{Bipartite subgraphs}, Combinatorica 16 (1996), 301--311,
+Section 2, \url{https://web.math.princeton.edu/~nalon/PDFS/bipartite3.pdf}.
+Checked 2026-09-23. Completion refers to the stated unboundedness result.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

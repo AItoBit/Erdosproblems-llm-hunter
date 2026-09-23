@@ -1,0 +1,38 @@
+\section{Problem 278: removing an unnecessary coprimality hypothesis}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is to determine the best attainable coverage density for prescribed moduli. I read all of \texttt{278.tex}, including its labelled-partition formula. Cambie's primary paper already contains the $q=3$ prime-factor partition reduction, so that reduction should not be represented as a new discovery. I extend the supplied formula slightly and derive an explicit bound on the value lost through imperfect balancing.
+\subsection*{2) WORK}
+For moduli $\{q,qb_1,\ldots,qb_m\}$, let $q\ge2$, $b_i\ge2$, and assume only that the $b_i$ are pairwise coprime. The hypothesis $(q,b_i)=1$ in the supplied attempt is unnecessary. Normalize the class modulo $q$ to zero. Assign every other congruence to a nonzero class $j$ modulo $q$; one placed in the zero class can be moved out without losing coverage. Write its representative as $j+qc_i$. Then
+\[
+j+qt\equiv j+qc_i\pmod{qb_i}
+\quad\Longleftrightarrow\quad t\equiv c_i\pmod{b_i},
+\]
+by ordinary integer cancellation, with no coprimality requirement involving $q$. The Chinese remainder theorem for the $b_i$ proves
+\[
+D_{\max}=1-\frac1q\min_{I_1\sqcup\cdots\sqcup I_{q-1}=[m]}
+\sum_{j=1}^{q-1}\prod_{i\in I_j}(1-1/b_i).
+\]
+
+For $q=3$, put $w_i=-\log(1-1/b_i)$, $W=\sum_iw_i$, and let $\delta$ be the least achievable absolute difference of the two subset weight sums. The formula becomes exactly
+\[
+D_{\max}=1-\frac23e^{-W/2}\cosh(\delta/2).
+\]
+Assigning each successive weight to the currently lighter bin leaves discrepancy at most $w_{\max}$: after an assignment the new discrepancy is $|d-w_i|$, which preserves this bound inductively. Consequently
+\[
+1-\frac23e^{-W/2}\cosh(w_{\max}/2)
+\le D_{\max}\le1-\frac23e^{-W/2}.
+\]
+This is a rigorous approximation interval available without solving the exact partition problem. For example $q=3$, $(b_1,b_2)=(3,4)$ violates the old extra hypothesis but is allowed here. Placing the two moduli in separate classes yields the optimum
+\[
+D_{\max}=1-\frac13(2/3+3/4)=\frac{19}{36}.
+\]
+Putting them together gives only $1/2$.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The two-bin greedy assignment proves a bound, not optimality. The logarithms require $b_i>1$, unlike the source's overly broad positive-integer wording. Pairwise coprimality of the $b_i$ remains essential for the product calculation. A hard partition instance does not by itself prove that no conceivable general formula exists.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The structured formula has a broader domain and a quantitative balancing bound. Arbitrary prescribed moduli still require a different analysis.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version; S. Cambie, \emph{Proving it is impossible; on Erd\H{o}s problem \#278}, equations and reduction checked at \texttt{https://arxiv.org/html/2508.18270v1}, 2026-09-23. The removal of the extra coprimality condition and the discrepancy estimate are proved above.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward a general determination of optimal density.
+\textbf{COMPLETION: 15\%}

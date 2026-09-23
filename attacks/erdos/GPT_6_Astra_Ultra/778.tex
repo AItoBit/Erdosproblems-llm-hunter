@@ -1,0 +1,33 @@
+\section{Erd\H{o}s Problem \#778: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+In the complete-graph edge claiming games, Alice claims one red edge per move and Bob claims blue edges, with ties awarded to Bob. Compare their largest cliques, also considering the maximum-degree (star) variant and Bob bias two.
+
+All supplied versions considered: \texttt{778.tex}.
+The source imports the symmetric outcomes through $n=8$ and retains biased Clique$^{(1,2)}(n)$ only through $n=6$. I independently implement exact minimax and extend the checked biased range to $n=7$. This is a finite computational result, with no claim of a general strategy.
+\subsection{2) WORK}
+\paragraph{Exact recursion.}
+Index the edges of $K_n$ by bit positions. A state is $(R,B,t)$, the disjoint red and blue masks and the player to move. At terminal states return true precisely when Alice has the strictly larger score. For a clique score, test all vertex subsets for completeness; for a star score, take maximum degree. The recursion is
+\[
+W(R,B,A)=\bigvee_{e\ \mathrm{free}}W(R\cup\{e\},B,B\mathrm{ob}),
+\]
+\[
+W(R,B,B\mathrm{ob})=\bigwedge_{S\subseteq E_{\rm free},\ |S|=\min(b,|E_{\rm free}|)}W(R,B\cup S,A),
+\]
+where $b$ is Bob's bias. An induction on the number of unclaimed edges proves the recursion exactly represents optimal play. Bob's consecutive selections form an unordered batch, since Alice does not move between them.
+
+The executable \texttt{verification/batch\_2\_games.py} evaluates this recursion with memoization and short-circuit logical operations. Actual results: Bob wins both clique biases for $3\le n\le5$, Alice wins the star game at $n=3$, and Bob wins it at $n=4,5$. For bias two, Bob also wins at $n=6$ and $n=7$. The $n=6$ run visits 5,947 memoized states; the $n=7$ run visits 199,911. Thus the source\textquotesingle s independently checked biased range extends to
+\[
+\boxed{\text{Bob wins Clique}^{(1,2)}(n)\quad(3\le n\le7).}
+\]
+This is a reproducible finite certificate by exhaustive recursive evaluation, not an assertion that all ternary colorings were explicitly visited. Unvisited branches are skipped only when the Boolean recurrence already determines the value.
+\subsection{3) ADVERSARIAL VERIFICATION}
+Ties go to Bob, Alice moves first, and a final incomplete Bob move takes every remaining edge. These conventions are implemented explicitly. There is no symmetry reduction or heuristic pruning. A single implementation is evidence with an inspectable exhaustive algorithm, not a formally verified game proof; the source\textquotesingle s symmetric $n=7,8$ computations were not reproduced here.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No winning strategy for arbitrary $n$ is obtained for either bias or for the star variant. The new bounded computation cannot justify extrapolation.
+\subsection{5) SOURCES CHECKED}
+Full source read. Checked Cambie--Provoost, \texttt{https://arxiv.org/html/2505.03497v2}, Proposition 9, on 2026-09-23, confirming the symmetric $3\le n\le8$ range. The biased $n=7$ result above comes from the local executable computation.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

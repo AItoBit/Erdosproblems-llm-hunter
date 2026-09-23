@@ -1,0 +1,46 @@
+\section{Problem 390: four prime intervals strengthen the valuation lower bound}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read all of \texttt{390.tex}. Let $f(n)$ be the least largest factor in a representation of $n!$ by distinct integers exceeding $n$. The target is whether $(f(n)-2n)\log n/n$ converges and to what constant. I extend the supplied $1/9$ lower-bound method to four disjoint prime intervals. This improves that supplied derivation, without claiming the best published constant.
+\subsection*{2) WORK}
+Put $H=f(n)-2n$. The known order bound gives $H=O(n/\log n)$ and $H>0$ for large $n$. If $B$ consists of the omitted factors from $(n,2n]$ and $C$ of the included factors above $2n$, then
+\[
+\prod_{b\in B}b=\binom{2n}{n}\prod_{c\in C}c.
+\]
+For $j=1,2,3,4$, take primes in
+\[
+I_j=\left(\frac n{j+1},\frac{2n}{2j+1}\right].
+\]
+For sufficiently large $n$ their squares exceed $2n$, and the two floor counts are $j$ and $2j+1$. Hence every such prime has valuation one in $\binom{2n}{n}$. It forces an omitted multiple $rp\in B$, where
+\[
+j+1\le r\le2j+1\le9.
+\]
+Every integer $2\le r\le9$ has a prime factor in $Q=\{2,3,5,7\}$. Define $V(m)=\sum_{q\in Q}v_q(m)$. Then $V(rp)\ge1$. Different selected primes cannot use the same omitted factor: they all exceed $n/5$, so the product of two distinct ones exceeds $2n$ for large $n$. Thus
+\[
+\sum_{j=1}^4|I_j\cap\mathbb P|\le V\left(\prod_{b\in B}b\right).
+\]
+For each fixed $q$, Legendre's formula gives $v_q\binom{2n}{n}=O(\log n)$ and the valuation of the entire overhang interval is at most $H/(q-1)+O(\log n)$. Summing over $Q$ yields
+\[
+V\left(\prod_{b\in B}b\right)\le
+\left(1+\frac12+\frac14+\frac16\right)H+O(\log n)
+=\frac{23}{12}H+O(\log n).
+\]
+The prime number theorem in the four fixed-proportion intervals gives
+\[
+\sum_{j=1}^4|I_j\cap\mathbb P|
+=\left(\frac16+\frac1{15}+\frac1{28}+\frac1{45}+o(1)\right)\frac n{\log n}
+=\left(\frac{367}{1260}+o(1)\right)\frac n{\log n}.
+\]
+Consequently
+\[
+f(n)-2n\ge\left(\frac{367}{2415}+o(1)\right)\frac n{\log n},
+\qquad \frac{367}{2415}=0.151966\ldots>\frac19.
+\]
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The prime intervals are disjoint, so no prime is counted twice. The valuation sums run only over powers up to $2n+H$; their error is $O(\log n)$ because the cited upper bound makes $H=O(n)$. Multiple small-prime factors of a multiplier only strengthen the inequality. This argument alone does not assert that $367/2415$ improves the literature's strongest available lower constant.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The supplied explicit lower bound is strengthened. Convergence of the normalized function and a matching upper constant remain unproved.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version; the correct classical reference is P. Erd\H{o}s, R. K. Guy and J. L. Selfridge, \emph{Another property of 239 and some related questions} (1982), checked at \texttt{https://users.renyi.hu/\~{}p\_erdos/1982-01.pdf}, 2026-09-23. The source's reference title was inaccurate. The four-interval extension is proved here.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the limiting-constant question.
+\textbf{COMPLETION: 20\%}

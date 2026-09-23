@@ -1,0 +1,26 @@
+\section{Problem 23: extending a certified cut through a small exceptional set}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The conjecture is $\tau_B(G)\le |V(G)|^2/25$ for triangle-free graphs, where $\tau_B$ is the fewest edges deleted to obtain a bipartite graph. I read \texttt{23.tex}, \texttt{23\_v2.tex}, \texttt{23\_v3.tex}, and \texttt{23\_v4.tex} in full: they respectively use universal bounds, $C_5$ homomorphisms, longer odd-cycle homomorphisms, and a cited common-neighborhood theorem. I investigate graphs close to the certified homomorphism class.
+\subsection*{2) WORK}
+Let $S\subseteq V(G)$ have $t$ vertices, and suppose $H=G-S$ maps to $C_5$. Write $b=e(S,V(G)\setminus S)$ and $h=e(G[S])$. Then
+\[
+\tau_B(G)\le\frac{(N-t)^2}{25}+\frac{b+h}{2},\qquad N=|V(G)|.
+\]
+For completeness, the homomorphism fibers have sizes $a_0,\ldots,a_4$ with sum $N-t$. A cut leaving only fiber pair $i,i+1$ uncut costs at most $a_ia_{i+1}$. Their minimum is at most $(N-t)^2/25$: their product is $(\prod a_i)^2\le((N-t)/5)^{10}$. Fix this cut on $H$ and assign each vertex in $S$ independently to either side with probability $1/2$. Each edge incident with $S$, including an edge inside $S$, is uncut with probability $1/2$. Some assignment costs no more than the expectation, proving the claim.
+
+In particular the conjectured bound holds whenever
+\[
+b+h\le\frac{4Nt-2t^2}{25}.
+\]
+For $t=1$, a vertex of degree at most $(4N-2)/25$ can be restored to any graph already satisfying the $(N-1)^2/25$ bound. Consequently a counterexample with the smallest possible number of vertices must have minimum degree strictly greater than $(4N-2)/25$. This last observation applies without a homomorphism assumption, by minimality.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The cut on $S$ is optimized after the cut on $H$ is fixed, so no independence of different edges is asserted or needed. The number $b+h$ counts edges inside $S$ once. No structural theorem saying that every graph has a suitable $S$ has been established.
+
+There is also a scope correction to \texttt{23\_v3.tex}: every odd cycle of length at least 5 maps to $C_5$. A closed walk of length $5+2j$ is obtained by one circuit of $C_5$ and $j$ backtracks. Thus allowing these longer cycle targets does not enlarge the class of graphs covered by $C_5$ colorability for the original $N^2/25$ question, although the length-dependent numerical bound can be sharper.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The result gives an explicit certificate when a small exceptional set has few incident edges. The missing step is to find such a certificate, or an equally strong cut, in every triangle-free graph.
+\subsection*{5) SOURCES CHECKED}
+All four supplied versions. Balogh--Clemen--Lidick\'y, \emph{Max Cuts in Triangle-free Graphs}, \texttt{https://arxiv.org/abs/2103.14179}, checked 2026-09-23, confirms the conjecture and the published $N^2/23.5$ bound. The extension lemma is proved here; it is not presented as an improvement of that published universal bound.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the universal conjecture.
+\textbf{COMPLETION: 15\%}

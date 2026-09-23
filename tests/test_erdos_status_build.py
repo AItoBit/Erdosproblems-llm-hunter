@@ -1,4 +1,4 @@
-"""Ensure database results do not become claims about the hosted LLM attempts."""
+"""Check the Erdos display rule independently of actual hosted attempt claims."""
 
 import copy
 import unittest
@@ -40,7 +40,8 @@ class ErdosStatusBuildTests(unittest.TestCase):
                 self.assertEqual(result['completion'], 100)
                 self.assertEqual(result['completion_source'], 'database')
                 self.assertEqual(result['llm_completion'], 35)
-                self.assertEqual(result['llm_status'], 'unresolved')
+                self.assertEqual(result['llm_status'], 'solved')
+                self.assertEqual(result['attempt_status'], 'unresolved')
                 self.assertEqual(result['attacks'], original['attacks'])
                 self.assertEqual(result['review'], original['review'])
 
@@ -52,15 +53,51 @@ class ErdosStatusBuildTests(unittest.TestCase):
                 self.assertEqual(result['completion'], 35)
                 self.assertEqual(result['completion_source'], 'llm')
 
+    def test_claim_display_rule_covers_every_upstream_category_with_or_without_attempts(self):
+        expected_statuses = {
+            'open': 'unresolved',
+            'falsifiable': 'unresolved',
+            'decidable': 'unresolved',
+            'proved': 'solved',
+            'disproved': 'solved',
+            'solved': 'solved',
+            'independent': 'solved',
+            'verifiable': 'solved',
+            'not provable': 'solved',
+            'not disprovable': 'solved',
+        }
+        for state, expected in expected_statuses.items():
+            for has_attempts in [True, False]:
+                with self.subTest(state=state, has_attempts=has_attempts):
+                    problem = copy.deepcopy(self.problem)
+                    if not has_attempts:
+                        problem['attacks'] = []
+                    original = copy.deepcopy(problem)
+                    result = apply_erdos_status({'1': problem}, snapshot(state))['1']
+                    self.assertEqual(result['llm_status'], expected)
+                    self.assertEqual(result['llm_status_source'], 'database_rule')
+                    self.assertEqual(result['attempt_status'], 'unresolved' if has_attempts else 'none')
+                    self.assertEqual(result['attacks'], original['attacks'])
+                    self.assertEqual(result['review'], original['review'])
+
+    def test_open_database_state_overrides_a_solved_attempt_aggregate(self):
+        problem = {'status': 'solved', 'attacks': [{'status': 'solved'}]}
+        result = apply_erdos_status({'1': problem}, snapshot('open'))['1']
+        self.assertEqual(result['llm_status'], 'unresolved')
+        self.assertEqual(result['attempt_status'], 'solved')
+        self.assertEqual(result['attacks'][0]['status'], 'solved')
+
     def test_formalization_alone_does_not_resolve_open_problem(self):
         result = apply_erdos_status({'1': copy.deepcopy(self.problem)}, snapshot('open', 'Lean'))['1']
         self.assertEqual(result['status'], 'open (Lean)')
         self.assertFalse(result['is_solved'])
         self.assertEqual(result['completion'], 35)
+        self.assertEqual(result['llm_status'], 'unresolved')
 
     def test_solved_problem_without_attempts_still_gets_full_completion(self):
         result = apply_erdos_status({'1': {'status': 'solved', 'attacks': []}}, snapshot('proved'))['1']
-        self.assertEqual(result['llm_status'], 'none')
+        self.assertEqual(result['llm_status'], 'solved')
+        self.assertEqual(result['attempt_status'], 'none')
         self.assertEqual(result['completion'], 100)
         self.assertNotIn('llm_completion', result)
 

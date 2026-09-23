@@ -1,0 +1,83 @@
+\section{Erd\H{o}s Problem \#38: a density-exact obstruction for every real density}
+\noindent Independent continuation, 23 September 2026. Source version considered: \texttt{gpt\_pro\_5.4/38.tex}.
+
+\subsection*{1) Statement and current resolution}
+For $A\subseteq\mathbb N=\{1,2,\ldots\}$ let
+\[
+ d_s(A)=\inf_{n\ge1}\frac{|A\cap[1,n]|}{n}.
+\]
+The question asks for a set $B$ which is not an additive basis, but which admits a function $f(\alpha)>0$ for $0<\alpha<1$ such that, for every $A$ of Schnirelmann density $\alpha$ and every $N$, some $b\in B$ satisfies
+\[
+ |(A\cup(A+b))\cap[1,N]|\ge(\alpha+f(\alpha))N.
+\]
+The current editorial reports a positive solution, with a sparse random $B$ and $f(\alpha)\gg\alpha(1-\alpha)^2$, and labels the problem PROVED (LEAN). Thus the older source's description of the original question as open is outdated. This note does not reconstruct that positive construction. It independently proves an obstruction, extending the supplied rational-density argument to every real density without any regularity assumption on $f$.
+
+\subsection*{2) Audit and objective}
+The earlier attempt proves the familiar random-set ceiling $f(\alpha)\le\alpha(1-\alpha)$ for rational $\alpha$ using exact-density periodic sets. A periodic set always has rational density, and rational approximation alone would not extend the conclusion: the problem assumes no continuity or monotonicity of $f$.
+
+We close precisely that logical gap. The resulting theorem is an upper bound compatible with the reported positive solution; it is not a disproof of the problem or a claim of a new literature result.
+
+\subsection*{3) A cyclic prefix with controlled correlations}
+Fix $\alpha\in(0,1)$ and $\varepsilon>0$. For a sufficiently large integer $Q$, put $k=\lceil\alpha Q\rceil$ and $\beta=k/Q\in(0,1)$. There exists $R\subseteq\mathbb Z/Q\mathbb Z$ with $|R|=k$ and
+\[
+ |R\cap(R+t)|\ge(\beta^2-\varepsilon)Q\qquad(t\ne0).
+ \tag{1}
+\]
+To see this, take independent Bernoulli variables $\xi_x$ of mean $\beta$ and set $X_t=\sum_x\xi_x\xi_{x+t}$. For $t\ne0$, $\mathbb EX_t=\beta^2Q$. Changing one coordinate changes $X_t$ by at most two, including when $2t=0$: in that case there are two equal summands, still giving the bound two. The bounded-differences inequality gives
+\[
+ \mathbb P(X_t<\beta^2Q-\varepsilon Q)\le e^{-\varepsilon^2Q/2}.
+\]
+For completeness, the needed inequality follows by exposing the independent coordinates in order. The corresponding conditional-expectation martingale difference has conditional range of length at most two. Hoeffding's elementary exponential bound for a centred variable of range length two is $\mathbb E e^{\lambda Z}\le e^{\lambda^2/2}$. Multiplication of these conditional bounds and Markov's inequality give $\mathbb P(X_t-\mathbb EX_t\le-u)\le\inf_{\lambda>0}\exp(-\lambda u+Q\lambda^2/2)=\exp(-u^2/(2Q))$. This argument uses coordinate independence, not independence of the overlapping products.
+
+The binomial variable $Y=\sum_x\xi_x$ has $k$ as a mode, so $\mathbb P(Y=k)\ge1/(Q+1)$. This mode assertion follows directly from the ratio of consecutive binomial probabilities, since $\beta=k/Q$. A union bound gives
+\[
+ \mathbb P(\exists t\ne0\text{ violating (1)})\le(Q-1)e^{-\varepsilon^2Q/2}<\frac1{Q+1}
+\]
+for large $Q$. Therefore some outcome has both $Y=k$ and (1). The estimate is uniform in $\beta$, so its dependence on $Q$ creates no issue.
+
+Write the indicator of $R$ as a binary word $w_1,\ldots,w_Q$ and let $D_j=\sum_{i=1}^j(w_i-\beta)$. Rotate the word to start immediately after a minimum of $D_0,\ldots,D_{Q-1}$. Because $D_Q=0$, every prefix of the rotated word has at least $\beta$ times its length ones; this follows by subtracting the minimum discrepancy, including across the cyclic boundary. Rotation preserves (1). Identify this rotated word with a subset $R'\subseteq[1,Q]$.
+
+\subsection*{4) Exact irrational density from a nonperiodic tail}
+Define $A\cap[1,Q]=R'$. For $j\ge1$, include $Q+j$ in $A$ precisely when
+\[
+ \lceil\alpha j\rceil-\lceil\alpha(j-1)\rceil=1.
+\]
+The difference is always zero or one. Thus
+\[
+ |A\cap[1,Q+j]|=k+\lceil\alpha j\rceil\ge\alpha(Q+j).
+\]
+For prefixes at most $Q$, the rotation gives density at least $\beta\ge\alpha$. All initial densities are therefore at least $\alpha$. On the other hand their limit is $\alpha$, since the fixed initial excess and the ceiling error vanish after division by $Q+j$. Consequently $d_s(A)=\alpha$, whether $\alpha$ is rational or irrational. This exact equality is the essential improvement over a continuity argument.
+
+\subsection*{5) The universal ceiling}
+At the particular cutoff $N=Q$, no part of the added tail affects $A$ or a positive translate of $A$. If $b\ge Q$, the translate contributes no points. If $1\le b<Q$, deleting wrapped points only decreases the union, so (1) gives
+\[
+ |(A\cup(A+b))\cap[1,Q]|\le |R'\cup(R'+b)|_{\rm cyclic}
+ \le(2\beta-\beta^2+\varepsilon)Q.
+\]
+The same upper bound holds for $b\ge Q$, since $|R'|=\beta Q$ and $\beta\le2\beta-\beta^2$. Now $0\le\beta-\alpha<1/Q$ and
+\[
+ (2\beta-\beta^2)-(2\alpha-\alpha^2)
+ =(\beta-\alpha)(2-\alpha-\beta)\le2/Q.
+\]
+It follows that every positive shift satisfies
+\[
+ |(A\cup(A+b))\cap[1,Q]|\le
+ \bigl(\alpha+\alpha(1-\alpha)+\varepsilon+2/Q\bigr)Q.
+\]
+If a proposed gain at this exact $\alpha$ were greater than $\alpha(1-\alpha)$, choose $\varepsilon$ smaller than half the excess and then choose a sufficiently large $Q$ so that $2/Q$ is smaller than the remaining excess. The displayed bound contradicts the required property even for $B=\mathbb N$. Hence
+\[
+ \boxed{f(\alpha)\le\alpha(1-\alpha)\quad\hbox{for every real }0<\alpha<1.}
+\]
+No limit of values $f(\beta)$ has been taken: all test sets have the original density $\alpha$ exactly.
+
+\subsection*{6) What this attempt does and does not complete}
+The ceiling is now proved for the entire stated density domain, with the irrational-density gap removed. The positive existence theorem still requires a sparse set $B$ which works simultaneously for every $A$ and every cutoff. This note does not supply that construction, its probabilistic quantifiers, or a verification that the constructed $B$ fails to be an additive basis.
+
+\textbf{ATTEMPT UNRESOLVED.} This label describes the incomplete reconstruction in this file; the original problem is reported solved affirmatively by the current source. In particular, the ceiling proved here is compatible with a gain of order $\alpha(1-\alpha)^2$ and cannot negate that result.
+
+\subsection*{7) Sources}
+\url{https://www.erdosproblems.com/38}, current statement and attributed resolution, checked 23 September 2026. The older local \texttt{gpt\_pro\_5.4/38.tex} supplies the rational-density baseline considered above. The extension and all deductions used here are written out; no publication novelty is asserted.
+
+The estimate measures the portion of the original existence problem reconstructed here, rather than correctness of the proved ceiling or the problem's official resolution status.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

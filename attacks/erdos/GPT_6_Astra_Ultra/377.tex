@@ -1,0 +1,29 @@
+\section{Problem 377: separating a trivial uniform bound from digit-count information}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is boundedness of $f(n)=\sum_{p\le n,\ p\nmid\binom{2n}{n}}1/p$. I read all of \texttt{377.tex} and checked the 1975 primary paper. The source's bound $\log(m+1)+o(1)$ above $n^{1/(m+1)}$ already follows by dropping the nondivisibility restriction and applying the prime reciprocal asymptotic. Its digit-window lemma is valid, but its stated leading constant is not an improvement over that trivial estimate. Here I give a self-contained averaged consequence of the digit condition, without presenting it as a new literature result.
+\subsection*{2) WORK}
+For an odd prime $p$, put $r_p=(p+1)/2$ and $L=\lfloor\log X/\log p\rfloor$. Nondivisibility means that every base-$p$ digit of $n$ belongs to $\{0,\ldots,(p-1)/2\}$. Hence the number $G_p(X)$ of such integers $0\le n\le X$ is at most $r_p^{L+1}$. Since $X\ge p^L$,
+\[
+\frac{G_p(X)}{pX}\le\left(\frac{r_p}{p}\right)^{L+1}.
+\]
+Fix $0<c<\sqrt{\log2}$ and set $y=\exp(c\sqrt{\log X})$. Choose a constant $c_0$ with $c^2<c_0<\log2$. For all sufficiently large fixed $P$, every prime $p\ge P$ has $\log(p/r_p)\ge c_0$. Since $L+1>\log X/\log p$, we obtain
+\[
+\sum_{P\le p\le y}\frac{G_p(X)}{pX}
+\le y\exp\left(-\frac{c_0\log X}{\log y}\right)
+=\exp\left((c-c_0/c)\sqrt{\log X}\right)\to0.
+\]
+For each of the finitely many primes below $P$, $G_p(X)/(pX)\to0$ directly from the digit bound; prime two contributes nothing for positive $n$. Interchanging two finite sums therefore proves
+\[
+\frac1{\lfloor X\rfloor}\sum_{1\le n\le X}
+\sum_{\substack{p\le\min(n,y)\\p\nmid\binom{2n}{n}}}\frac1p\longrightarrow0.
+\]
+By Markov's inequality, the contribution from this growing small-prime range is $o(1)$ outside a set of $o(X)$ integers, in the usual convergence-in-density sense.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+An averaged estimate permits exceptional integers with large contributions. It therefore does not conflict with the source's observation that any unboundedness must arise from small primes relative to $n$. The cutoff uses $X$, the averaging range, rather than silently replacing it by each individual $n$. The primary paper already establishes stronger average behavior for the full function; this proof is an elementary verification of one mechanism, not an improvement on that theorem.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} Typical digit behavior is controlled, while boundedness at every exceptional integer remains open in this attempt. No new verified worst-case bound for $f$ is obtained.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version; P. Erd\H{o}s, R. L. Graham, I. Z. Ruzsa and E. G. Straus, \emph{On the Prime Factors of $\binom{2n}{n}$}, digit criterion and Theorem 2 checked at \texttt{https://renyi.hu/\~{}p\_erdos/1975-27.pdf}, 2026-09-23.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward uniform boundedness or an unbounded sequence.
+\textbf{COMPLETION: 10\%}

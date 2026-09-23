@@ -1,0 +1,63 @@
+\section{Erd\H{o}s Problem \#44: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{44.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+Given a finite Sidon set $A\subset[1,N]$, the original problem asks for
+an extension of size $(1-\varepsilon)\sqrt M$ for some $M$.
+The supplied argument upgrades a previously asserted block construction
+to every sufficiently large cutoff, at constant $1/\sqrt2$. I audit that
+construction instead of assuming the missing earlier round. The following
+lemma also replaces a loss depending on $N$ by one depending on $|A|$.
+
+\subsection*{2) WORK: EXPLICIT COMPATIBILITY PRUNING}
+Write $k=|A|$, assume $L\ge N$, and let $S\subset[1,L]$ be any Sidon set of size $s$.
+There is a subset $S'\subset S$ of size at least
+$s-\binom{k}{2}$ such that
+\[
+ A\cup(N+L+S')\quad\hbox{is Sidon}.
+\]
+For each positive difference in $A-A$, delete one endpoint of the pair
+in $S$ realizing that difference, if such a pair exists. Each difference
+has at most one such pair because $S$ is Sidon. The set of forbidden positive
+differences has size $\binom{k}{2}$, so at most that many points are deleted.
+Now $(S'-S')\cap(A-A)\subseteq\{0\}$.
+
+Put $B=N+L+S'$. The three types of sums lie in disjoint intervals:
+\[
+ A+A\subset[2,2N],\quad A+B\subset[N+L+2,2N+2L],\quad
+ B+B\subset[2N+2L+2,2N+4L],
+\]
+provided $L\ge N$. Sums of the first and third type are unique as unordered
+pairs by the individual Sidon hypotheses. An equality
+$a+b=a'+b'$ in the middle type would give $a-a'=b'-b$, hence $a=a'$ and
+$b=b'$. This proves the lemma, including sums with repeated summands.
+
+In particular, whenever a Singer-type block of length $L=q^2+q+1$
+and size $q+1$ is supplied with $L\ge N$, this gives
+\[
+ |A\cup B|\ge q+1+k-\binom{k}{2},\qquad
+ A\cup B\subset[1,N+2L].
+\]
+The bound is uniform over the locations of the old points. Using the
+standard prime-near-target selection from the supplied attempt yields
+$(1/\sqrt2-o(1))\sqrt M$ at every sufficiently large $M$, now with
+a completely explicit compatibility proof. This corollary is conditional
+only on the stated classical block input; the pruning lemma needs no
+finite-field theorem.
+
+\subsection*{3) VERIFICATION AND REMAINING GAP}
+The factor $2L$ is essential to this particular proof: moving the new block
+down can make mixed sums overlap new--new sums. Avoiding old differences
+alone does not exclude these new collisions. Thus improved deletion costs
+do not turn $1/\sqrt2$ into $1$; the principal asymptotic gap is untouched.
+The all-large-$M$ conclusion is already in the source, not a new result here.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} A self-contained block-compatibility lemma and a better
+finite loss are established; no constant-$1$ extension has been found.
+Official target checked through the indexed primary page:
+\url{https://www.erdosproblems.com/44}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

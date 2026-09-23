@@ -1,0 +1,37 @@
+\section{Erd\H{o}s Problem \#17: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+A prime $p$ is cluster if every even $2\le n\le p-3$ is a difference of two primes at most $p$. Are infinitely many primes cluster?
+
+All supplied versions considered: \texttt{17.tex}.
+The source proves simultaneous CRT obstructions for any fixed finite set of composite offsets and a necessary preceding gap of at most six. I do not promote these obstructions to a proof about all sufficiently large primes.
+\subsection{2) WORK}
+\paragraph{An exact moving-offset hitting condition.}
+For a prime $p>3$, define the set of backward prime offsets
+\[
+D_p=\{p-r:r\le p\text{ prime}\}.
+\]
+Then $p$ is cluster if and only if every odd composite $m$ with $9\le m\le p-2$ satisfies
+\[
+D_p\cap\{m-q:q\le m\text{ prime}\}\ne\varnothing. \tag{1}
+\]
+Indeed set $n=p-m$. Any witness $n=r-q$ forces $q\le m$ and $p-r=m-q$; conversely an intersection supplies those two primes. Prime $m\ge3$ is covered by $r=p,q=m$, so only composite offsets remain. This establishes both directions, including the moving range up to $p-2$.
+
+For $p>17$, the first two conditions in (1) require
+\[
+D_p\cap\{2,4,6\}\ne\varnothing,\quad
+D_p\cap\{2,4,8,10,12\}\ne\varnothing.
+\]
+The omitted $q=2$ choices give even upper numbers greater than two. Thus if neither $p-2$ nor $p-4$ is prime, cluster forces $p-6$ prime and at least one of $p-8,p-10,p-12$ prime. This is a two-offset constraint stronger than the source\textquotesingle s single necessary gap test.
+
+A reproducible exhaustive check, \texttt{verification/batch\_2\_checks.py}, uses trial division and all pair differences for every prime at most 500. It finds 65 cluster primes, with largest 491, and checks the preceding-gap necessity for each. This is finite evidence only.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The CRT argument fixes offsets before choosing $p$. Condition (1) ranges over offsets depending on $p$, so the quantifiers cannot be interchanged. Prime $2$ is included by the program under the vacuous-range definition; excluding it changes no infinitude question.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The required simultaneous covering of all composite $m\le p-2$ remains unproved for infinitely many $p$. The local constraints and finite computation neither establish finiteness nor infinitude.
+\subsection{5) SOURCES CHECKED}
+All of \texttt{17.tex} was read. The official statement URL \texttt{https://www.erdosproblems.com/17} returned 403 on this date; the exact definition above is the supplied one. No unverified external sieve theorem is invoked.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 8\%}

@@ -1,0 +1,62 @@
+\section{Erd\H{o}s Problem \#19: a colouring reduction for the intersection core}
+\noindent Date: 2026-09-23. Research attempt with proved special cases; no claim of a new published theorem.
+
+\subsection{1) TARGET AND SOURCE AUDIT}
+Let $A_1,\ldots,A_n$ be the vertex sets of $n$ edge-disjoint copies of $K_n$, and let $G$ be their union. The question is whether $\chi(G)=n$. The lower bound follows from any one copy of $K_n$. For $n\ge2$, edge-disjointness means that $|A_i\cap A_j|\le1$ whenever $i\ne j$.
+
+The current problem page labels the question DECIDABLE, rather than completely proved: its remaining cases form a finite range. The theorem of Kang, Kelly, K\"uhn, Methuku, and Osthus proves the assertion for sufficiently large $n$. This attempt does not remove the unverified finite range. Its objective is to separate the genuinely difficult intersections from vertices belonging to only one or two cliques.
+
+\subsection{2) WORK}
+\paragraph{An exact reduction.}
+For a vertex $x$, write $I(x)=\{i:x\in A_i\}$. Call $x$ private if $|I(x)|=1$, a pair vertex if $|I(x)|=2$, and a multiple vertex if $|I(x)|\ge3$. Let $Q$ be the set of multiple vertices. Define a simple graph $H$ on $\{1,\ldots,n\}$ by placing an edge $ij$ for each pair vertex in $A_i\cap A_j$. Simplicity follows from $|A_i\cap A_j|\le1$.
+
+Suppose the vertices of $Q$ have been coloured from $[n]$, with distinct colours on $Q\cap A_i$ for each $i$. Put
+\[
+F_i=\{\text{colours used on }Q\cap A_i\},\qquad
+L(ij)=[n]\setminus(F_i\cup F_j).
+\]
+Then this partial colouring extends to an $n$-colouring of $G$ if and only if $H$ has a proper edge colouring in which every edge $ij$ receives a colour in $L(ij)$.
+
+For necessity, restrict an extension to the pair vertices. Pair vertices belonging to $A_i$ are mutually adjacent, so the incident edges at $i$ have different colours; their colours also avoid $F_i$. For sufficiency, transfer the edge colours to the pair vertices. Within each $A_i$, all nonprivate vertices now have distinct colours. If $r_i$ of its vertices are private, precisely $r_i$ colours of $[n]$ remain unused there. Assign those colours bijectively to the private vertices. A private vertex belongs to no other clique, so this creates no conflict. Every edge of $G$ belongs to some $A_i$, completing both directions.
+
+This is an equivalence, not a proof that the required list edge colouring always exists. The lists depend on a global colouring of $Q$, and their sizes alone do not settle the extension problem.
+
+\paragraph{Complete proof when there are no multiple vertices.}
+If $Q=\varnothing$, label the clique indices by $0,1,\ldots,n-1$ and colour a pair vertex in $A_i\cap A_j$ by
+\[
+c(ij)=i+j\pmod n.
+\]
+At a fixed index $i$, distinct values of $j$ give distinct residues. This is therefore a proper edge colouring of $H$ using at most $n$ colours. The exact reduction supplies the private vertices and yields $\chi(G)=n$. The argument works for both parities of $n$; it does not divide by $2$ modulo $n$. For $n=1$, the assertion is immediate.
+
+Consequently every counterexample must contain a vertex lying in at least three of the original cliques. The obstruction is incidence multiplicity, not a difficulty with colouring an arbitrary simple graph on the clique indices.
+
+\paragraph{A sufficient condition allowing multiple vertices.}
+Suppose $Q$ can be coloured with $q\le n$ colours so that each $Q\cap A_i$ has distinct colours. If $H$ is bipartite and
+\[
+\Delta(H)\le n-q,
+\tag{1}
+\]
+then $G$ is $n$-colourable. Reserve those $q$ colours for $Q$ and use the other $n-q$ colours for a proper edge colouring of $H$.
+
+Here is the needed edge-colouring argument. A bipartite graph of maximum degree $d>0$ can be extended to a $d$-regular bipartite multigraph: first balance the two vertex classes with isolated vertices, and then pair vertices with positive degree deficit on opposite sides, adding edges, with parallel edges allowed. The total deficit is the same on the two sides, so this process terminates. In the resulting graph, every subset $S$ of one side sends $d|S|$ edges into its neighbourhood, which receives at most $d|N(S)|$ of them. Thus $|N(S)|\ge|S|$, and Hall's theorem gives a perfect matching. Remove the matching and repeat with degree $d-1$. The resulting $d$ matchings give a proper edge colouring; restriction gives one for $H$. The case $d=0$ requires no colours. Condition (1) therefore proves the sufficient condition.
+
+This does not require every multiple vertex to get its own colour. Two multiple vertices may share a colour if they belong to no common $A_i$. The condition is useful only after that separate colouring has been justified.
+
+\paragraph{A second elementary family.}
+If the cliques can be ordered so that each $A_i$ meets $A_1\cup\cdots\cup A_{i-1}$ in at most one vertex, colour them in that order. At each step there is at most one previously coloured vertex, and the remaining vertices can be assigned the other colours bijectively. This handles arbitrary multiplicity at a common intersection vertex. It also shows why merely having a multiple vertex is not itself an obstruction.
+
+\subsection{3) ADVERSARIAL VERIFICATION}
+The graph $H$ contains only vertices shared by exactly two cliques. Replacing a multiple vertex by all pairs of its incident indices would change the colouring constraints and is not permitted. The private-vertex step is valid because the union has no edges beyond the given clique edges. Reserving $q$ colours may waste colours in individual cliques; it proves a sufficient condition, not a necessary one. None of these arguments bounds the size of the exceptional finite range in the large-$n$ theorem.
+
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.} The exact extension problem and two special families are proved. For a general system, choosing colours on $Q$ so that all of the edge lists admit a proper colouring remains open in this attempt. The special cases are elementary and are not claimed as improvements over the existing literature.
+
+\subsection{5) SOURCES CHECKED}
+\begin{itemize}
+\item T. F. Bloom, current statement and status: \url{https://www.erdosproblems.com/19}, fetched 2026-09-23.
+\item D. Y. Kang, T. Kelly, D. K\"uhn, A. Methuku, and D. Osthus, \emph{A proof of the Erd\H{o}s--Faber--Lov\'asz conjecture}: \url{https://arxiv.org/abs/2101.04698}. The abstract explicitly restricts the result to sufficiently large orders.
+\end{itemize}
+
+\subsection{6) COMPLETION ESTIMATE}
+The original unrestricted question remains unsettled here. The reduction identifies an exact remaining task but does not make that task easy. This estimate is subjective progress for this attempt, not a probability or a mathematical guarantee.
+\textbf{COMPLETION: 5\%}

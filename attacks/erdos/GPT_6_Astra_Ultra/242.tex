@@ -1,0 +1,63 @@
+\section{Erd\H{o}s Problem \#242: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{242.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The target is $4/n=1/x+1/y+1/z$ with $x<y<z$ positive integers, for every
+$n>2$. The supplied congruence identities are correct; the surviving
+$n\equiv1\pmod{24}$ condition does not itself generate denominators.
+I replace further ad hoc congruence guessing by a complete divisor test
+for each fixed $n$, and apply it to survivors of the supplied tests.
+
+\subsection*{2) WORK: AN EXACT DIVISOR CRITERION}
+There is a solution if and only if there is an integer
+\[
+ n/4<x<3n/4
+\]
+and positive divisors $d<e$ of $N^2$, where $N=nx$ and $m=4x-n$, such that
+\[
+ de=N^2,\qquad d\equiv e\equiv-N\pmod m,\qquad (d+N)/m>x.
+\]
+The corresponding denominators are $y=(d+N)/m$, $z=(e+N)/m$.
+Indeed, after removing $1/x$ the equation becomes
+$m/N=1/y+1/z$, which is equivalent to
+\[
+ (my-N)(mz-N)=N^2.
+\]
+Each factor is positive because $m/N>1/y$ and $m/N>1/z$.
+The congruences make $y,z$ integral, $d<e$ makes them distinct, and the
+last inequality enforces the order. Conversely the factor identity
+expands to exactly the required unit-fraction equation.
+Finally, $4/n>1/x$ and $4/n<3/x$ give the strict range for $x$.
+
+Exact arithmetic gives
+\[
+\begin{array}{c|ccc}
+n&x&y&z\\\hline
+73&20&210&30660\\
+97&25&810&392850\\
+193&50&1380&1331700
+\end{array}
+\]
+For example, for $n=73,x=20$, $m=7,N=1460$ and the factors are
+$d=10$, $e=213160$. All three displayed rows were independently checked
+as rational identities. Each $n$ is $1\pmod{24}$, and respectively
+$n+1=2\cdot37,2\cdot7^2,2\cdot97$; the middle example is already handled
+by the source's divisor criterion, while the first and third are not.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The factor test is finite for a fixed $n$ but its search range grows with
+$n$. Exhibiting solutions for these values proves no uniform coverage of
+the surviving residue class. The factorization identity is standard algebra,
+not a claimed new resolution of the Erd\H{o}s--Straus conjecture.
+The companion exact checks are in \texttt{verification/root\_checks.py}.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} I obtain a complete finite criterion and explicit
+certificates beyond some of the supplied modular cases. The missing step
+is a proof that a suitable divisor pair exists for every surviving $n$.
+The distinct-denominator convention was checked in the indexed official
+statement, \url{https://www.erdosproblems.com/242}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

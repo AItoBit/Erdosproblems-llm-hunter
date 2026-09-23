@@ -1,0 +1,35 @@
+\section{Problem 14: one mixed-radix construction at exponent $1/2+o(1)$}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. For $A\subseteq\mathbb N$, let $r_A(n)$ count unordered representations $n=a+b$, allowing $a=b$, and put $E_A(N)=|\{1\le n\le N:r_A(n)\ne1\}|$. The original lower-side questions concern how small $E_A$ can be, in particular the square-root threshold. I read \texttt{14.tex} and \texttt{14\_v2.tex} in \texttt{gpt\_pro\_5.4} completely. The former gives an envelope obstruction; the latter constructs a different fixed-base set for each exponent $1/2+\varepsilon$. I extend the latter to a single set working for all positive $\varepsilon$.
+\subsection*{2) WORK}
+For $j\ge0$ put $s_j=j+2$, $q_j=s_j^2$, $Q_0=1$, $Q_{j+1}=q_jQ_j$, and define finite-support digit sets
+\[
+F=\left\{\sum_j u_jQ_j:0\le u_j<s_j\right\},\qquad
+G=\left\{\sum_j s_jv_jQ_j:0\le v_j<s_j\right\}.
+\]
+Every nonnegative integer has a unique mixed-radix expansion with $j$th digit less than $q_j$. Splitting that digit uniquely as $u_j+s_jv_j$ proves that every $m\ge0$ has exactly one ordered representation $m=f+g$, $f\in F,g\in G$. Also $F\cap G=\{0\}$. Take $A=(F+1)\cup(G+1)$.
+
+Every $n\ge2$ has its canonical mixed representation. Any different unordered representation must use two members of the same set; consequently
+\[
+E_A(N)\le1+|(F+F)\cap[0,N]|+|(G+G)\cap[0,N]|.
+\]
+Choose $k$ with $Q_k\le N<Q_{k+1}$. Nonnegativity means that summands contributing a sum at most $N$ have no nonzero digits above $k$. For each $j\le k$ there are at most $2s_j-1$ possible sums of the corresponding digits. For $G+G$ carries may occur, but the number of resulting integers is at most the number of digit-sum vectors. Hence each of the last two counts is at most
+\[
+\prod_{j=0}^k(2s_j-1)\le2^{k+1}\prod_{j=0}^ks_j
+=2^{k+1}\sqrt{Q_{k+1}}
+\le2^{k+1}(k+2)\sqrt N.
+\]
+Since $Q_k=((k+1)!)^2$, elementary factorial estimates give $k=O(\log N/\log\log N)$. Therefore this single infinite set satisfies
+\[
+E_A(N)\le\sqrt N\exp\!\left(O\left(\frac{\log N}{\log\log N}\right)\right)=N^{1/2+o(1)}.
+\]
+This strengthens the quantifier order of the supplied fixed-base construction, without claiming a new published result.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The low-$m$ case of Theorem 14.10 in \texttt{14.tex} asserts $P_A(N)\le\binom{m+1}{2}$ for $m=A(N/2)$; this misses pairs whose larger member exceeds $N/2$. The correct bound is $P_A(N)\le mA(N)=O_{C,D}(\sqrt N)$ when $m\le\lceil D\rceil$, which repairs that case without changing its main term. Here we do not use that theorem. Mixed representations remain unique despite the common element 1. Counting digit vectors is an upper bound even when different vectors coalesce through carries.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The displayed upper bound does not give $E_A(N)=o(\sqrt N)$, nor prove a universal $N^{1/2-o(1)}$ lower bound. Those original lower-side issues remain untouched.
+\subsection*{5) SOURCES CHECKED}
+Both supplied versions, read in full on 2026-09-23. The mixed-radix proof is self-contained. The official problem-page request returned HTTP 403, so no live statement or literature-priority claim is inferred from it.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective coverage of the original problem; known upper-side constructions are not counted as a solution.
+\textbf{COMPLETION: 25\%}

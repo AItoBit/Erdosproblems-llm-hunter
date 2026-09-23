@@ -1,0 +1,170 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#123; reconstruction, 2026-09-23.}
+Let $a,b,c>1$ be pairwise coprime. Must every sufficiently large integer
+be a sum of distinct numbers $a^ib^jc^k$, with nonnegative exponents,
+such that no selected number divides another?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page records a recent affirmative resolution. We reconstruct
+the level-set argument in the primary exposition hosted by Thomas Bloom,
+expanding its residue-correction and interval steps. Van der Waerden's
+theorem is an external classical input. This is an exposition of that
+known proof, not a new solution or a report of running its formalization.
+
+\section{WORK}
+Relabel the bases so that $a<c<b$, and write
+$L_D=\{a^ib^jc^k:i+j+k=D\}$. Pairwise coprimality implies divisibility
+is coordinatewise in $(i,j,k)$; thus every subset of one $L_D$ is an
+antichain for divisibility. We seek long intervals of subset sums on one
+level.
+
+\subsection*{Progressions with a bounded $b$ exponent}
+Put $\phi=\varphi(c)$ and $H=\phi(c-2)$. For $E\ge H$ and
+$0\le r<c$, take
+\[
+ P_E(r)=\{a^{E-H+\phi t}b^{\phi(c-2-t)}:0\le t<r\}\subseteq L_E.
+\]
+Its sum is $r a^{E-H}$ modulo $c$, by Euler's theorem. Given a word
+$(r_0,\ldots,r_{h-1})\in\{0,\ldots,c-1\}^h$, form
+\[
+ F=\bigcup_{i=0}^{h-1}c^iP_{H+h-1-i}(r_i)\subseteq L_{H+h-1}.
+\]
+These unions have no repeated terms since their $c$ exponents differ.
+If two words first differ at index $i$, the difference of their sums
+has $c$-adic order exactly $i$: after division by $c^i$, the difference
+is $(r_i-r_i')a^{h-1-i}$ modulo $c$, which is nonzero. Hence the sums
+represent all residues modulo $c^h$, exactly once.
+All $b$ exponents are at most $H$. Since $a<c$, summing the resulting
+geometric series bounds every sum by $Kc^h$, with $K$ independent of
+$h$. Color each residue in $[0,c^h)$ by the quotient of its sum by
+$c^h$. The number of colors is bounded. Van der Waerden's theorem
+therefore gives, for any prescribed $L>1$, sets
+$E_0,\ldots,E_{L-1}\subseteq L_\delta$ whose sums are
+$s,s+d,\ldots,s+(L-1)d$ with $d>0$, and whose $b$ exponents are at most
+$H$.
+
+\subsection*{Two auxiliary interval and residue facts}
+For coprime integers $1<A<B$, put $L=4AB$. The digit sums
+\[
+ T_N=\left\{\sum_{e=0}^N r_e A^{N-e}B^e:0\le r_e<L\right\}
+\]
+contain integer intervals $[U_N,V_N]$ satisfying
+\[
+ V_N-U_N\ge2AB^{N+1},\qquad 0\le U_N\le V_N\le K_1B^{N+1}.       \tag{1}
+\]
+For completeness start with $U_0=0,V_0=L-1$. Given an interval at
+stage $N-1$, use $T_N=AT_{N-1}+\{0,\ldots,L-1\}B^N$.
+For each residue modulo $A$, the allowed digits form a progression of
+step $A$. Their translated intervals overlap in that residue, since
+$V_{N-1}-U_{N-1}\ge B^N-1$. All residues therefore fill the interval
+with endpoints
+\[
+ U_N=AU_{N-1}+(A-1)B^N,\quad
+ V_N=AV_{N-1}+(L-A)B^N.
+\]
+Its width is at least $2A^2B^N+(4AB-2A+1)B^N\ge2AB^{N+1}$.
+The endpoint upper bound follows by summing a geometric series with
+ratio $A/B<1$.
+
+Fix a modulus $\Delta$. For all large $D$, every residue modulo
+$\Delta$ is a subset sum of face monomials in $L_D$, of total size at
+most $K_2c^D$. Here a face means that at least one exponent is zero.
+To verify this sometimes useful detail, choose a common eventual period
+$T$ and threshold for the three sequences $a^j,b^j,c^j$ modulo $\Delta$.
+Choose a fixed $R$ larger than that threshold plus $\Delta T$. For
+large $D$, the three numbers
+\[
+ b^Rc^{D-R},\quad a^Rc^{D-R},\quad a^{D-R}b^R
+\]
+have collective gcd $1$, so their residues generate $\mathbb Z/\Delta$.
+Any desired residue is a combination with coefficients in
+$\{0,\ldots,\Delta-1\}$. Replace a coefficient by that many distinct
+copies obtained by moving $0,T,2T,\ldots$ units of exponent along the
+same face. Eventual periodicity preserves every residue. The three
+families lie in different face interiors and so are disjoint. Their
+$b$ exponents are bounded independently of $D$, and $a<c$, proving
+the claimed $K_2c^D$ sum bound.
+
+\subsection*{Amplification to every large integer}
+Choose $u>H+1$ and then $v\ge2$ so large that $ba^v<c^v$. Set
+\[
+ A=a^{u+v},\quad B=b^uc^v,\quad q=abc,
+\]
+so $A<B$ and $(A,B)=1$. Obtain the progression of sets $E_r$ above
+with length $L=4AB$, and put $\Delta=qd$. At stage $N$, multiply
+$E_{r_e}$ by $qA^{N-e}B^e$ for $0\le e\le N$ and take their union.
+All terms lie in
+\[
+ L_{D_N},\qquad D_N=\delta+(u+v)N+3.
+\]
+Their $b$ exponents lie in the disjoint ranges
+$[ue+1,ue+H+1]$, so there are no repeated terms. Their sums range over
+\[
+ O_N+\Delta T_N,\qquad O_N=qs\sum_{e=0}^NA^{N-e}B^e.
+\]
+Every such term lies in the interior of the exponent simplex. We can
+therefore adjoin the face corrections without collisions. By (1), all
+integers in
+\[
+ J_N=[\lceil O_N+\Delta U_N+K_2c^{D_N}\rceil,
+          O_N+\Delta V_N]
+\]
+are represented: choose a face correction of the needed residue
+modulo $\Delta$ and subtract it. Since
+$c^{D_N}/B^N=c^{\delta+3}(c/b)^{uN}\to0$, the interval $J_N$ has
+length at least $X=qB^N$ for large $N$, and its lower endpoint is at
+most $KB^{N+1}$ for a fixed $K$.
+
+For each $H+2\le s\le N$, consider the interior monomials with $b$
+exponent $uN+s+1$. Along this line successive values have ratio $c/a$.
+The smallest value, with $c$ exponent $1$, divided by $X$ is
+\[
+ a^{\delta-s}(ba^v/c^v)^N b^{s-N}\le
+ a^\delta(ba^v/c^v)^N\longrightarrow0.
+\]
+Equivalently its exact ratio is $a^{\delta-s}b^s(a/c)^{vN}$;
+the displayed bound uses $s\le N$ and $a^{-s}\le1$.
+The largest value, with $a$ exponent $1$, has ratio
+$c^\delta(b/c)^s>1$. The line therefore contains a term $z_s$ with
+$(a/c)X<z_s\le X$. These terms are distinct, lie above every earlier
+block in $b$ exponent, and lie off the faces. They may be adjoined
+independently. Adding a new available summand no larger than the length
+of an interval of represented integers extends that interval by the
+summand. Thus we obtain an interval $I_N$ of subset sums on $L_{D_N}$
+with
+\[
+ \inf I_N\le KB^{N+1},\qquad
+ |I_N|-1\ge\kappa N B^N
+\]
+for fixed $\kappa>0$ and large $N$.
+Choose an integer $t$ such that $KB^{1-t}\le1$. For large $M$ take
+$N=M-t$. Then the lower endpoint is at most $B^M$, while the interval
+length is at least $B^{M+1}$. Hence $[B^M,B^{M+1})\subseteq I_N$.
+These intervals cover every sufficiently large integer. Each
+representation belongs to one level and is therefore primitive.
+\hfill$\square$
+
+\section{VERIFICATION}
+Distinctness is enforced in three separate places: the initial words
+use distinct $c$ exponents; amplified blocks use disjoint $b$ ranges;
+face corrections and final extension terms occupy disjoint regions.
+Pairwise coprimality is essential for coordinatewise divisibility and
+the residue corrections. A mere collective gcd of $1$ does not suffice.
+Finite tests of the digit intervals and primitive levels accompany
+this batch, but do not replace the asymptotic construction.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known affirmative proof reconstructed).}
+The only substantial general theorem used without proof is van der
+Waerden's finite coloring theorem. The auxiliary radix and face-residue
+arguments are expanded above. No new result is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/123}.
+\emph{Primitive Representations by Three Coprime Bases}, primary
+exposition linked from the current problem page,
+\url{https://www.thomasbloom.org/erdos123.pdf}.
+Checked 2026-09-23. Completion is relative to the stated classical input.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

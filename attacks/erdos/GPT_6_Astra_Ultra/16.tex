@@ -1,0 +1,108 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#16; reconstruction of Chen's counterexample, 2026-09-23.}
+Let $U$ be the set of positive odd integers not representable as $p+2^k$, with $p$ prime and $k\ge1$. Is $U$ the union of one infinite arithmetic progression and a set of asymptotic density zero? We give a complete negative answer. Allowing $k=0$ changes only the possible odd value $3=2+1$, so it does not affect the argument or conclusion.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current editorial credits Chen with disproving this conjecture. The two progressions below and the common-modulus obstruction are taken from the primary proof, explicitly attributed rather than presented as a new construction. All modular calculations and the density argument are reconstructed here. At the final step, the existence of arbitrarily large odd primes suffices; a positive-density theorem for representable numbers is unnecessary for this one-progression question.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Build two entire progressions inside $U$. If $U$ agreed with one progression apart from a density-zero set, that progression's modulus would divide the step of each constructed progression and the difference of their residues. The resulting greatest common divisor is $2$, forcing the purported main progression to contain every sufficiently large odd integer. Values $p+2$ then give a contradiction.
+
+\section{WORK}
+\subsection{An elementary rigidity lemma}
+Suppose
+\[
+ U=\{a+dt:t\ge0\}\cup W,\qquad d(W)=0,
+\tag{1}
+\]
+where $a,d$ are positive integers. Since the progression is a subset of the odd integers, $a$ is odd and $d$ is even. If another progression $\{b+ms:s\ge0\}$ lies in $U$, then
+\[
+ d\mid m\quad\hbox{and}\quad d\mid b-a.
+\tag{2}
+\]
+Indeed, if infinitely recurring values of $s\pmod d$ made $b+ms\not\equiv a\pmod d$, those values form a nonempty residue class of $s$, whose image is a positive-density arithmetic progression lying outside the progression in (1). Apart from finitely many initial values, it would be contained in $W$, contradicting $d(W)=0$. Thus every residue class of $s\pmod d$ must satisfy $b+ms\equiv a\pmod d$. Evaluating at $s=0,1$ proves (2). Initial endpoints of the progressions do not affect this positive-density argument.
+
+\subsection{Two exponent covers and their prime divisors}
+The following six exponent classes cover all integers:
+\[
+ 0\pmod2,\quad1\pmod4,\quad3\pmod8,\quad
+ 1\pmod3,\quad3\pmod{12},\quad23\pmod{24}.
+\tag{3}
+\]
+For a direct check, the first three cover every residue except $7\pmod8$. The remaining residues modulo $24$ are $7,15,23$, covered respectively by the last three classes. Subtracting $1$ from every exponent gives the second cover
+\[
+ 1\pmod2,\quad0\pmod4,\quad2\pmod8,\quad
+ 0\pmod3,\quad2\pmod{12},\quad22\pmod{24}.
+\tag{4}
+\]
+Use, in the displayed order, the distinct primes
+\[
+ (q_j)=(3,5,17,7,13,241),\qquad
+ (e_j)=(2,4,8,3,12,24).
+\]
+They satisfy $q_j\mid2^{e_j}-1$, checked by direct exponentiation. If $k$ belongs to the $j$th class of (3) or (4), respectively, then $2^k$ has the corresponding entry in the following residue table:
+\[
+\begin{array}{c|rrrrrr}
+ q&3&5&17&7&13&241\\ \hline
+ A_q&1&2&8&2&8&121\\
+ B_q&2&1&4&1&4&181
+\end{array}
+\tag{5}
+\]
+Thus, for every exponent $k$, at least one prime in the table divides $n-2^k$ whenever $n$ has all the residues in either row.
+
+\subsection{The two progressions really contain no representable integer}
+Put
+\[
+ L=2\cdot3\cdot5\cdot17\cdot7\cdot13\cdot241=11184810,
+ \quad A=992077,\quad B=3292241.
+\]
+Direct reduction shows that $A$ and $B$ are odd and have the residues in the first and second rows of (5). Hence the progressions $A+L\mathbb N_0$ and $B+L\mathbb N_0$ satisfy the required simultaneous congruences.
+
+If $n$ in either progression were $p+2^k$, the covering argument would imply
+\[
+ p\in\{3,5,17,7,13,241\}.
+\tag{6}
+\]
+It is essential to exclude these exceptional primes: divisibility alone would not show that $n-2^k$ is composite.
+
+For the progression starting at $A$, reduction modulo $3$ gives
+$p\equiv1-2^k\not\equiv1\pmod3$, excluding $7,13,241$. Modulo $7$, the powers of $2$ are $1,2,4$, so
+$p\equiv2-2^k\in\{0,1,5\}\pmod7$, excluding $3,17$. Finally, the powers of $2$ modulo $17$ are
+$\{1,2,4,8,16,15,13,9\}$. Therefore
+\[
+ p\equiv8-2^k\in\{0,4,6,7,9,10,12,16\}\pmod{17},
+\]
+excluding $5$. This eliminates (6) entirely.
+
+For the progression starting at $B$, modulo $3$ we have
+$p\equiv2-2^k\not\equiv2\pmod3$, excluding $5,17$. Modulo $7$ the possibilities are $1-2^k\in\{0,4,6\}$, excluding $3,241$. Modulo $17$ the possibilities are
+\[
+ p\equiv4-2^k\in\{0,2,3,5,6,8,12,13\}\pmod{17},
+\]
+excluding $7$. The only candidate is $p=13$. In that case modulo $3$ we get $2^k\equiv2-13\equiv1$, so $k$ is even; modulo $5$ we get $2^k\equiv1-13\equiv3$, so $k\equiv3\pmod4$. This contradiction eliminates the last candidate. Both progressions are therefore subsets of $U$.
+
+\subsection{The forced modulus and the contradiction}
+Apply (2) to these two progressions. Equation (1) would force
+\[
+ d\mid L,\qquad d\mid A-a,\qquad d\mid B-a,
+ \quad\hbox{hence}\quad d\mid\gcd(L,B-A).
+\]
+The Euclidean algorithm gives
+\[
+ \gcd(11184810,2300164)=2.
+\]
+Since $d$ is positive and even, $d=2$. Since $a$ is odd, the progression in (1) then contains every sufficiently large odd integer. But for every sufficiently large odd prime $p$, the odd number $p+2$ lies in that progression and is representable, so cannot belong to $U$. Infinitely many such primes exist. This contradicts (1) and proves the negative answer. \hfill$\square$
+
+\section{VERIFICATION AND SCOPE}
+The accompanying batch verification checks all $24$ exponent residues in both covers, the power congruences, both CRT rows, the exceptional-prime eliminations, and the final greatest common divisor. These are finite identities used in a proof valid for all exponents; they are not a finite search being extrapolated. The rigidity argument requires asymptotic density zero, exactly as in the question. This note addresses one main progression and does not claim a proof of the stronger variant involving an arbitrary finite union of progressions.
+
+\section{FINAL}
+\textbf{SOLVED (negative, reconstruction of Chen's proof).} The two explicit progressions force any proposed main progression to contain all sufficiently large odd numbers, which is impossible. All ingredients for the stated one-progression question are proved above; the construction is attributed to its source.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, \url{https://www.erdosproblems.com/16}, accessed 2026-09-23. Y.-G. Chen, \emph{A conjecture of Erd\H{o}s on $p+2^k$}, \url{https://arxiv.org/abs/2312.04120}; the elementary original proof and its two progression constants were checked at \url{https://arxiv.org/html/2312.04120v1}. No earlier local numbered attempt for \#16 was found at the start of this pass.
+
+\section{COMPLETION ESTIMATE}
+The estimate concerns the complete reconstruction of the stated negative answer, not novelty or the stronger finite-union variant.
+\textbf{COMPLETION: 100\%}

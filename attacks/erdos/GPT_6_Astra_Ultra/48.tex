@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#48: exact common values and the coprime-composition gap}
+\noindent Independent attempt, 23 September 2026.
+
+\subsection*{1) Statement and current status}
+Are there infinitely many pairs of positive integers $n,m$ with $\phi(n)=\sigma(m)$? The current page records an affirmative theorem of Ford, Luca, and Pomerance, with quantitative improvements by Garaev. This note develops and checks elementary mechanisms for producing common values, while separating them from the deeper unconditional infinitude theorem. Here $\phi$ is Euler's totient and $\sigma$ is the sum of positive divisors.
+
+\subsection*{2) A parity filter, including the exceptional cases}
+For $n\ge3$, $\phi(n)$ is even: reduced residues modulo $n$ pair under $x\mapsto n-x$, without a fixed point. For a prime power,
+\[
+ \sigma(p^e)=1+p+\cdots+p^e.
+\]
+For $p=2$ this is odd; for odd $p$ it is odd exactly when $e$ is even. By multiplicativity, $\sigma(m)$ is odd exactly when the exponents of all odd primes in $m$ are even. Equivalently, $m$ is a square or twice a square.
+
+Consequently any solution with $n\ge3$ requires $m$ to be neither a square nor twice a square. When $n=1$ or $2$, the common value is one, which forces $m=1$. These exceptions are isolated, and parity cannot by itself produce an infinite family.
+
+\subsection*{3) The prime-pair mechanism}
+If $p$ and $p+2$ are both prime, then
+\[
+ \sigma(p)=p+1=\phi(p+2).
+\]
+Distinct such $p$ give distinct common values. Thus the twin-prime conjecture would imply the desired conclusion, exactly as the problem page notes. This implication is a conditional argument, not an unconditional solution.
+
+One can also solve the prime-versus-prime case exactly: if $m=p$ and $n=q$ are primes, equality is $p+1=q-1$, hence $q=p+2$. There is no additional family hidden in this simplest specialization.
+
+\subsection*{4) Coprime multiplication of solutions}
+Suppose $\phi(n_i)=\sigma(m_i)=a_i$ for $i=1,2$, with
+\[
+ \gcd(n_1,n_2)=\gcd(m_1,m_2)=1.
+\]
+Then multiplicativity gives
+\[
+ \phi(n_1n_2)=a_1a_2=\sigma(m_1m_2).\tag{1}
+\]
+For example $(n_1,m_1)=(5,3)$ and $(n_2,m_2)=(7,5)$ give the common value $24$ through $(n,m)=(35,15)$. No condition on $\gcd(n_1,m_2)$ is needed: the two multiplicativity hypotheses concern different sides of the equality.
+
+More generally, if one could construct infinitely many such pairs with $a_i>1$, pairwise coprime $n_i$, and pairwise coprime $m_i$, products of the first $r$ pairs would yield common values tending to infinity. This states a precise sufficient construction target. It is not supplied by the existence of two examples: reusing the same pair violates coprimality, and generally $\phi(n^r)\ne\phi(n)^r$ and $\sigma(m^r)\ne\sigma(m)^r$.
+
+The distinction between infinitely many pairs and infinitely many common values causes no loophole here. Each fixed common value has only finitely many preimages on either side. For $\sigma$, $\sigma(m)\ge m$ bounds $m$. For $\phi(n)=a$, every prime factor $p$ of $n$ satisfies $p-1\mid a$, so $p\le a+1$, and if $p^e\mid n$ then $p^{e-1}\mid a$, bounding its exponent. There are therefore finitely many possible $n$. Thus the two infinitude formulations are equivalent.
+
+\subsection*{5) Reproducible finite audit and limit of the approach}
+The accompanying \texttt{verification/solved\_root\_checks.py} computes both functions exactly for every argument at most 5000 using integer sieves, records the common-value count and witnesses, and independently checks each recorded witness by direct divisor and greatest-common-divisor counts. It also checks the parity characterization on that range and identity (1) for explicit coprime pairs. This verifies finite examples; it does not extrapolate their observed abundance to infinity.
+
+\textbf{ATTEMPT UNRESOLVED.} The arithmetic filters, exact prime specialization, coprime composition, and finiteness of each fibre are established here. An unconditional supply of compatible new pairs, or another argument giving unbounded common values, remains absent from this reconstruction. The known literature resolves that step, but it has not been reproved in this file.
+
+\subsection*{6) Source}
+\url{https://www.erdosproblems.com/48}, current statement and attribution to Ford--Luca--Pomerance and Garaev, checked 23 September 2026. All elementary deductions claimed in this attempt are proved above. No novelty or improvement over the published infinitude theorem is claimed.
+
+The estimate is subjective and credits only the elementary mechanisms and their verified scope, not the solved status of the original problem.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}

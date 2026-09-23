@@ -1,0 +1,24 @@
+\section{Problem 98: a uniform linear bound and exact verification of the example}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. Let $h(n)$ be the least number of distinct distances in an $n$-point planar set with no three collinear and no four concyclic. The target is whether $h(n)/n\to\infty$. I read the entire supplied \texttt{gpt\_pro\_5.4/98.tex}, which discusses $h(5)$ via a classification and explicit coordinates. Here I verify its coordinates exactly and derive an elementary bound for every $n$.
+\subsection*{2) WORK}
+Fix a vertex $v$. At most three other vertices can be at any one distance from $v$: four would lie on the circle with that center and radius. If $d$ distances occur in the whole configuration, it follows that
+\[
+n-1\le3d,\qquad h(n)\ge\left\lceil\frac{n-1}{3}\right\rceil.
+\]
+The argument uses only the no-four-concyclic condition. Equivalently, each fixed-distance graph has maximum degree at most three, so its at most $3n/2$ edges cannot cover more than that many of the $\binom n2$ pairs. This improves the elementary scale quoted in the supplied discussion but does not reach the conjectured superlinear scale.
+
+I also rechecked its five coordinates
+\[
+(0,0),(1,0),(\sqrt3/2,1/2),(1/2,1-\sqrt3/2),(0,1)
+\]
+using rational arithmetic in $\mathbb Q(\sqrt3)$. The ten squared distances have multiplicities $5,4,1$ at $1,2-\sqrt3,2$. All ten signed-area determinants and all five circle determinants are nonzero. Thus the concrete upper bound $h(5)\le3$ is certified. The independently executed code and exact determinant values are in \texttt{verification/batch\_1\_checks.py} and its JSON output. This verifies an existing example rather than claiming a new one.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The distance circle need not contain its center; four neighbors alone already violate the hypothesis. The linear lower bound gives only two at $n=5$ and does not replace the supplied classification argument. The source's arXiv citation has an incorrect author list: the checked record lists Zolt\'an Kov\'acs alone. Its abstract concerns six-point isosceles configurations, so I do not treat the abstract alone as verification of the precise five-point classification.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The bound remains linear. To prove the original limit one needs a restriction coupling many distinct distance graphs; maximum degree three separately in each graph cannot supply that restriction. No verified superlinear improvement was found.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied file and exact local computation on 2026-09-23. Kov\'acs, \emph{A note on Erd\H{o}s's mysterious remark}, \texttt{https://arxiv.org/abs/2412.05190}, checked for citation accuracy; no unverified classification is used in the new proof.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the asymptotic question.
+\textbf{COMPLETION: 10\%}

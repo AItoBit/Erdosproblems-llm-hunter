@@ -1,0 +1,33 @@
+\section{Problem 251: prime-like coefficients can still telescope to a rational}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is irrationality of $S=\sum_{n\ge1}p_n/2^n$. I read \texttt{251.tex}, \texttt{251\_v2.tex}, \texttt{251\_v3.tex}, and \texttt{251\_v4.tex} fully. They concern corrected tail periodicity, continued-fraction denominator exclusions, nested intervals, and a larger Stern--Brocot computation. I do not inherit their large numerical certificates without rerunning them. I test whether the elementary features of the prime coefficients can contradict rationality.
+\subsection*{2) WORK}
+Define $f(x)=\tfrac12(x+1000)\log(x+1000)$, $b_n=\lfloor f(n)\rfloor$, and, for $n\ge1$,
+\[
+c_n=2(2b_{n-1}-b_n)+1.
+\]
+These are positive odd integers, strictly increasing, and $c_n\sim n\log n$. Here are direct verifications. Let $g(x)=2f(x-1)-f(x)$. For $x\ge1$,
+\[
+g'(x)=2f'(x-1)-f'(x)
+\ge\tfrac12(\log1000+1)-\frac1{2000}>3.
+\]
+This uses $f''(t)=1/(2(t+1000))$. Since $2b_{n-1}-b_n-g(n)$ lies in $(-2,1)$, consecutive values of $2b_{n-1}-b_n$ differ by more than zero. Positivity follows already at $n=1$ from $g(1)>2$ and then monotonicity. Finally $g(n)=f(n)-2(f(n)-f(n-1))\sim\tfrac12 n\log n$, proving the asymptotic.
+
+Nevertheless the series is an integer. For every $N$,
+\[
+\sum_{n=1}^N\frac{2b_{n-1}-b_n}{2^n}=b_0-\frac{b_N}{2^N}.
+\]
+Letting $N\to\infty$ yields
+\[
+\sum_{n\ge1}\frac{c_n}{2^n}=2b_0+1\in\mathbb Z.
+\]
+Thus increasing odd integer coefficients with precisely the prime first-order scale $n\log n$ can satisfy all the tail lattice relations and still give a rational sum. A successful proof must use additional arithmetic of the primes.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+This sequence is not asserted to consist of primes. The floor errors have been included in proving strict monotonicity. The source \texttt{251\_v2.tex}'s unqualified open-interval continued-fraction rule has an endpoint exception: $x=[0;2]=1/2$, $y=[0;1,2]=2/3$ produce the proposed candidate $[0;2]=x$, outside the open interval. Endpoint-aware algorithms can repair this, so the example alone does not refute the source's reported numerical values. It does show why an exact implementation and certificate are necessary.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The rational model rules out an inference from positivity, parity, monotonicity, and prime-scale growth alone. No contradiction to eventual periodicity for the actual prime tails, and no new verified denominator exclusion, is obtained here.
+\subsection*{5) SOURCES CHECKED}
+All four complete supplied versions, read 2026-09-23. The model and the continued-fraction endpoint counterexample are self-contained; no unexecuted computation is claimed as evidence.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward irrationality for the actual primes.
+\textbf{COMPLETION: 10\%}

@@ -1,0 +1,68 @@
+\section{Erd\H{o}s Problem \#848: an independently checked finite certificate and the fixed-prime barrier}
+
+\subsection*{1) Formal restatement and current status}
+Let
+\[
+f(N)=\max\{|A|:A\subseteq\{1,\ldots,N\},\quad ab+1\text{ is not squarefree for every }a,b\in A\}.
+\]
+The quantifier includes $a=b$. The conjectured value is
+\[
+g(N)=|\{a\leq N:a\equiv7\pmod{25}\}|=\lfloor(N+18)/25\rfloor.
+\]
+The live page, checked 23 September 2026, marks the problem DECIDABLE and records Sawhney's sufficiently-large-$N$ theorem and stability statement. Its finite remainder is still not closed there.
+
+The older local GPT Pro attempts assert computations through 35000. We do not treat those assertions as verified input, and do not claim to extend them. Our computation below is an independent, reproducible verification through 2000. The purpose is to replace an unsupported computational claim by an explicit check in a precisely stated range.
+
+\subsection*{2) A rigid special case}
+\textbf{Proposition.} Suppose a single prime $p$ satisfies $p^2\mid ab+1$ for every $a,b\in A$, where $A$ is nonempty. Then $p\equiv1\pmod4$ and all members of $A$ lie in one residue class $r\pmod{p^2}$ with $r^2\equiv-1\pmod{p^2}$. Conversely every such class is admissible.
+
+\emph{Proof.} The diagonal condition gives $p^2\mid b^2+1$ for each $b\in A$, so $b$ is invertible modulo $p^2$. The case $p=2$ is impossible since a square is 0 or 1 modulo 4. For odd $p$, an element whose square is $-1$ has multiplicative order four modulo $p$, so $4\mid p-1$. Fix $b\in A$. From $ab\equiv-1\equiv b^2\pmod{p^2}$ we obtain $a\equiv b\pmod{p^2}$ for all $a\in A$. The converse is immediate. $\square$
+
+For $p=5$ the two possibilities are $r=7,18$ modulo 25. Since the first class begins earlier, its count is never smaller. This proves the natural construction and explains why a genuinely different extremizer must exploit several square-prime witnesses. It does not prove that every admissible set has one common witness prime; that would be an unjustified strengthening.
+
+\subsection*{3) Exact graph reduction and certificates}
+Define
+\[
+V_N=\{a\in\{1,\ldots,N\}:a^2+1\text{ is not squarefree}\}.
+\]
+Join distinct $a,b\in V_N$ when $ab+1$ is not squarefree. Then $f(N)$ is exactly the clique number of this graph. Necessity includes the diagonal restriction defining $V_N$; sufficiency follows by checking the diagonal and every edge separately.
+
+\textbf{Anchor restriction.} If $Q$ is a clique already chosen, every further element lies in the intersection of the neighbourhoods of its members, excluding $Q$. Therefore an extension of $Q$ has size at most $|Q|+c$ whenever the remaining candidate graph has a proper colouring with $c$ colours. This is a rigorous upper certificate: a clique uses at most one vertex from each independent colour class.
+
+The implemented branch-and-bound enumerates every possible next vertex unless such a colouring proves that its entire branch cannot improve the current best. The colour classes are produced greedily but are genuine independent sets; optimal colouring is unnecessary. At each recursion the candidates are intersected with the neighbourhood of the selected vertex. Processing candidates in reverse colouring order permits the recorded colour bounds for each prefix to be used safely. Thus the pruning does not discard a possible larger clique.
+
+More explicitly, each greedy colour class is built by selecting a candidate and excluding all its neighbours from that class. Concatenating these independent classes gives an ordering whose prefix ending in class $c$ has a proper colouring with at most $c$ colours. At reverse-search step $i$, all later vertices have already been removed, so this prefix bound applies to the actual remaining candidates. The recursion selects the current vertex and retains only its neighbours. Every clique either uses that vertex, in which case it is represented in the recursive branch, or omits it, in which case it remains available to subsequent steps. The initial lower bound is justified by the residue-class construction, so pruning against it is also valid.
+
+\subsection*{4) Reducing an interval to endpoints}
+For $k\geq1$, $g(N)=k$ precisely on
+\[
+25k-18\leq N\leq25k+6.
+\]
+Both $f$ and $g$ are nondecreasing and the residue-class construction gives $f\geq g$. If $f(25k+6)=k$, then throughout that interval
+\[
+k=g(N)\leq f(N)\leq f(25k+6)=k.
+\]
+The initial interval $1\leq N\leq6$ has $g=0$ and is handled by checking $N=6$. For a verification ending inside an interval, its final endpoint must also be checked. Consequently checking $N=6,31,56,\ldots,1981$ and $N=2000$ proves the claim for every integer $1\leq N\leq2000$.
+
+\subsection*{5) Completed exact check}
+Run \texttt{verification/add\_root\_checks.py} with argument 848. It builds an exact squarefreeness table through $2000^2+1$ by marking multiples of every integer square $d^2$, $d\geq2$. Marking composite squares as well as prime squares adds no false positives: divisibility by a composite square also implies divisibility by a prime square. Conversely every nonsquarefree integer is marked by a prime square. No floating point arithmetic or probabilistic factorization occurs.
+
+The script builds the compatibility graph, solves its clique problem at all 81 required endpoints, and checks equality with $g(N)$. On endpoint graphs with at most 20 vertices, it independently compares its result with brute-force enumeration of every vertex subset. The completed report is \texttt{verification/add\_848\_checks.json}. Every endpoint passes. Hence
+\[
+f(N)=\lfloor(N+18)/25\rfloor\qquad(1\leq N\leq2000).
+\]
+In particular the last report entry has $N=2000$, 208 candidate vertices and maximum clique size 80. The endpoint $1981$ has maximum clique size 79. These are separate checks, because the proposed value increases at 1982.
+
+An independent review reproduced the completed report without changing it and checked the clique routine against brute-force clique enumeration on all 1100 labelled graphs with at most five vertices. It also checked that the stated endpoints cover every integer through 2000 within intervals on which $g$ is constant. These finite checks support the implementation; they do not replace the pruning argument or the endpoint monotonicity proof. This is a finite computational conclusion with accompanying reproducible code, not a claim of formal proof-assistant verification.
+
+\subsection*{6) Remaining obstruction and final}
+The fixed-prime proposition does not control cliques whose edges use different prime-square divisors. The finite check gives no uniform bound on those mixed-witness cliques. Combining a check through 2000 with an unspecified asymptotic threshold leaves a gap; we explicitly do not bridge it.
+
+\textbf{UNRESOLVED.} The useful deliverables are the exact fixed-prime classification, the full candidate/diagonal specification, the justified pruning rule, and a completed independent finite audit. No new asymptotic estimate is established, and no claim of novelty over the literature is made for these elementary reductions.
+
+\subsection*{7) References}
+\url{https://www.erdosproblems.com/848}, current statement and Sawhney result, checked 23 September 2026. Earlier local attempts were read as proposals, not adopted as proofs. The finite verification is recorded in the accompanying script and JSON report cited above.
+
+The estimate below is subjective, not the fraction of all integers checked and not a claim that the unbounded remainder is small.
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 5\%}

@@ -1,0 +1,89 @@
+\section{Erd\H{o}s Problem \#580: embedding trees through their nonleaf core}
+\noindent Date: 2026-09-23. Partial research attempt with explicit embedding lemmas; no claim of a full solution.
+
+\subsection{1) TARGET AND SOURCE AUDIT}
+Suppose $G$ is a finite simple graph on $n$ vertices and at least $n/2$ vertices have degree at least $n/2$. The question asks whether every tree with at most $n/2$ vertices occurs as a subgraph of $G$. Integer rounding matters: there must be at least $\lceil n/2\rceil$ vertices of degree at least $\lceil n/2\rceil$, and the target trees have at most $\lfloor n/2\rfloor$ vertices. Copies need not be induced.
+
+The live page still labels the problem DECIDABLE. It records Zhao's theorem for sufficiently large $n$. Its discussion also contains a July 2026 claim of certified finite verification for $1\le n\le19$. That claim expressly concerns only a finite range; I have not independently audited its certificates and do not rely on it below.
+
+The objective is a direct proof for trees with small nonleaf cores, together with an explicit obstruction to extending the same elementary argument to arbitrary cores.
+
+\subsection{2) WORK}
+\paragraph{A leaf-extension lemma.}
+Let $T$ have $t\ge3$ vertices, and let $I(T)$ be the subtree induced by its nonleaf vertices. This subtree is connected: every internal vertex on a path between two nonleaf vertices is itself nonleaf. Suppose $I(T)$ has an embedding in the subgraph of $G$ induced by
+\[
+D_t=\{v:d_G(v)\ge t-1\}.
+\]
+Then the embedding extends to $T$.
+
+Attach the leaves one at a time to their already embedded parents. Every such parent is a nonleaf vertex of $T$ and lies in $D_t$. Immediately before a leaf is added, at most $t-1$ vertices are occupied, one of them being its parent. Thus at most $t-2$ neighbours of the parent are occupied. Its degree is at least $t-1$, so it has an unused neighbour available for the new leaf. This proves the lemma. It does not require the initial copy of $I(T)$ to be induced.
+
+\paragraph{Every qualifying graph has a three-vertex path in an adequate degree core.}
+First let $n=2k$ with $k\ge2$, and put
+\[
+D=\{v:d_G(v)\ge k-1\},\qquad g=|D|.
+\]
+There are at least $k$ vertices of degree at least $k$, so $g\ge k$ and
+\[
+\sum_{v\in D}d_G(v)\ge(k-1)g+k.
+\tag{1}
+\]
+Every vertex outside $D$ has degree at most $k-2$. If $\Delta(G[D])\le1$, then
+\[
+\sum_{v\in D}d_G(v)
+=2e(G[D])+e(D,V(G)\setminus D)
+\le g+(2k-g)(k-2).
+\]
+Together with (1), this gives
+\[
+2(k-2)g+k\le2k(k-2),
+\]
+which contradicts $g\ge k$ and $k\ge2$. Thus $G[D]$ contains a vertex with at least two neighbours, and hence a copy of the three-vertex path.
+
+Now let $n=2k+1$ with $k\ge3$, keeping the definition $D=\{v:d_G(v)\ge k-1\}$. At least $k+1$ vertices have degree at least $k+1$, so
+\[
+g\ge k+1,\qquad
+\sum_{v\in D}d_G(v)\ge(k-1)g+2(k+1).
+\tag{2}
+\]
+Suppose $\Delta(G[D])\le3$. Bounding the cross edges by the degrees outside $D$ gives
+\[
+(k-1)g+2(k+1)\le3g+(2k+1-g)(k-2),
+\]
+or
+\[
+(2k-6)g+2k+2\le2k^2-3k-2.
+\]
+Since $k\ge3$ and $g\ge k+1$, the left side is at least $2k^2-2k-4$, which exceeds the right side by $k-2>0$. Therefore $G[D]$ contains a copy of $K_{1,4}$.
+
+\paragraph{Consequences for the target trees.}
+For every $n$, the hypothesis therefore implies the desired embedding conclusion for every tree with at most $\lfloor n/2\rfloor$ vertices and at most three nonleaf vertices. For $n\le5$, all admissible trees have at most two vertices and are immediate. For larger $n$, a tree with one nonleaf vertex is a star, with two it is a double star, and with three its nonleaf core is a three-vertex path. The preceding arguments embed each of these cores into $D$, whose vertices have degree at least $k-1\ge t-1$. The leaf-extension lemma completes the embeddings. This includes all trees of diameter at most three, but also trees of diameter four with a three-vertex nonleaf core.
+
+For odd $n=2k+1\ge7$, a stronger conclusion holds: any target tree whose nonleaf core is a star with at most four leaves embeds. Indeed that core is a subgraph of the $K_{1,4}$ just proved to exist in $G[D]$. This includes every target tree of diameter four having at most four branches at its centre that continue beyond the first neighbour.
+
+\paragraph{Why the same method cannot force arbitrary cores.}
+For each $k\ge3$, construct a qualifying graph on $2k$ vertices as follows. Split the vertices into sets $A=\{a_0,\ldots,a_{k-1}\}$ and $B=\{b_0,\ldots,b_{k-1}\}$. Put a cycle on $A$, no edges within $B$, and join $a_i$ to every $b_j$ except $b_i$ and $b_{i+1}$, with indices modulo $k$.
+
+Every vertex of $A$ has degree $2+(k-2)=k$, and every vertex of $B$ has degree $k-2$. Thus the original half-degree hypothesis holds exactly. However,
+\[
+\{v:d_G(v)\ge k-1\}=A,\qquad G[A]=C_k,
+\]
+and this degree core has maximum degree $2$. It contains no $K_{1,3}$. When $k\ge7$, there are trees on at most $k$ vertices whose nonleaf core is $K_{1,3}$, for example the seven-vertex tree obtained by subdividing each edge of $K_{1,3}$ once. The elementary method cannot embed that core entirely in $D$.
+
+This is an obstruction to the method, not a counterexample to the conjecture. In a genuine embedding, a nonleaf vertex can have degree much less than $t-1$ when only a few of its neighbours are needed. The leaf-extension lemma deliberately imposes a stronger sufficient condition.
+
+\subsection{3) ADVERSARIAL VERIFICATION}
+The sums in (1) and (2) count internal edges twice and cross edges once; the outside-degree bound is used only for cross edges. For even order, the contradiction also works at $k=2$. The stronger odd-order calculation explicitly starts at $k=3$. The program \texttt{verification/add\_graphs\_checks.py} checks the degree-core assertions against every labelled graph on four through seven vertices, and verifies the explicit obstruction for $3\le k\le20$. These are auxiliary finite checks; the displayed inequalities are the proofs for arbitrary orders.
+
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.} Trees with at most three nonleaf vertices are handled for every admissible order, and odd host orders allow the stated larger star cores. The cycle-core construction shows exactly why this sufficient-condition approach stops. Handling arbitrary nonleaf trees, possibly by embedding some of their vertices below the degree threshold and controlling leaf allocation jointly, remains open in this attempt. No novelty over the tree-embedding literature is claimed.
+
+\subsection{5) SOURCES CHECKED}
+\begin{itemize}
+\item T. F. Bloom, current statement and status, fetched 2026-09-23: \url{https://www.erdosproblems.com/580}.
+\item Current discussion, including the explicitly finite verification claim and the reference to Y. Zhao, \emph{Proof of the $(n/2-n/2-n/2)$ Conjecture for Large $n$}, Electronic Journal of Combinatorics 18 (2011), P27: \url{https://www.erdosproblems.com/forum/thread/580}.
+\end{itemize}
+
+\subsection{6) COMPLETION ESTIMATE}
+The proved classes allow arbitrarily many leaves but only restricted nonleaf cores, so they do not settle the full remaining finite problem. This is a subjective estimate of this attempt's progress, not a probability or mathematical guarantee.
+\textbf{COMPLETION: 8\%}

@@ -1,0 +1,81 @@
+\section{Erd\H{o}s Problem 73: hereditary independence and odd cycles}
+
+\subsection{1) Statement and known status}
+Suppose every finite subgraph $H$ of a graph $G$ satisfies
+\[
+ \alpha(H)\geq\frac{|V(H)|-k}{2},
+\]
+where $k$ is a fixed nonnegative integer. Must deleting a number of
+vertices bounded in terms of $k$ make $G$ bipartite?
+The current problem page records an affirmative theorem of Reed.
+This attempt proves the zero-defect case, a necessary odd-cycle
+packing bound, and the assertion for graphs whose cycles are
+pairwise vertex-disjoint. It does not reprove Reed's general theorem.
+
+\subsection{2) A defect parameter and the easy direction}
+For a finite graph define
+\[
+ b(G)=\max_{U\subseteq V(G)}\bigl(|U|-2\alpha(G[U])\bigr).
+\]
+The empty set ensures $b(G)\geq0$. It suffices to test induced
+subgraphs in the hypothesis: deleting edges cannot decrease an
+independence number. Thus the hypothesis is exactly $b(G)\leq k$.
+
+Let $X$ be a vertex set for which $G-X$ is bipartite. For every $U$,
+the larger part of a bipartition of $G[U\setminus X]$ is independent
+in $G[U]$ and has size at least $(|U|-|X|)/2$. Therefore
+\[
+ b(G)\leq |X|.
+\]
+This is the easy direction. The requested theorem reverses it up to
+some function of $k$, and that reversal does not follow by rearranging
+this inequality.
+
+\subsection{3) Odd-cycle packing and the case $k=0$}
+Suppose $G$ contains $t$ pairwise vertex-disjoint odd cycles of
+lengths $2r_1+1,\ldots,2r_t+1$. Take the subgraph $H$ consisting
+only of their edges and vertices, deleting all other edges. On each
+cycle an independent set has maximum size $r_i$, so
+\[
+ |V(H)|-2\alpha(H)=
+ \sum_{i=1}^t(2r_i+1)-2\sum_{i=1}^t r_i=t.
+\]
+The hypothesis consequently forces $t\leq k$.
+For $k=0$ even one odd cycle is impossible. A graph without odd
+cycles is bipartite: in each component choose a root and partition
+vertices by parity of distance from it. An edge joining equal
+parities would, together with shortest root paths, produce an odd
+closed walk and hence an odd cycle. This proof also works for
+infinite graphs, since each root path is finite. Thus no deletion
+is needed when $k=0$.
+
+If all cycles of $G$ are pairwise vertex-disjoint, the odd cycles
+are a packing and there are at most $k$ of them. Delete one vertex
+from each. Every surviving cycle was already a cycle of $G$, and
+all its odd cycles were hit. The remaining graph is therefore
+bipartite, proving the desired assertion for this class with bound $k$.
+
+\subsection{4) A sharp elementary lower obstruction and the gap}
+For $G=K_{k+2}$, a nonempty induced subgraph on $s$ vertices has
+independence number $1$, so $b(G)=k$. A complete graph is bipartite
+precisely when it has at most two vertices. Hence exactly $k$
+vertices must be removed from $K_{k+2}$. Any universal deletion
+bound must therefore be at least $k$.
+
+For general graphs, a maximum packing of odd cycles has at most
+$k$ members, but deleting all their vertices may cost arbitrarily
+many vertices because their lengths are unbounded. No bounded
+transversal has been constructed here. This is the precise remaining
+gap; the packing bound alone is not treated as the requested theorem.
+
+\textbf{Outcome of this attempt: UNRESOLVED, with the stated special
+cases and necessary bounds proved.} The known general resolution
+is acknowledged, and no new result is claimed.
+
+\subsection{5) Source}
+T. F. Bloom, Problem 73,
+\texttt{https://www.erdosproblems.com/73}, checked 23 September 2026,
+records Reed's resolution. No external theorem is needed for the
+partial proofs above. The estimate measures only their coverage.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

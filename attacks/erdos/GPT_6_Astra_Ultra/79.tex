@@ -1,0 +1,88 @@
+\section{Erd\H{o}s Problem 79: infinitely many minimal Ramsey obstructions}
+
+\subsection{1) Statement and the external input}
+A finite graph $F$ is Ramsey size-linear if $r(F,H)=O_F(e(H))$
+for every nonempty graph $H$ with no isolated vertices. Are there
+infinitely many graphs which fail this property although every
+proper subgraph has it? The answer is yes. We reconstruct Wigderson's
+argument and prove the elementary forest and large-girth ingredients.
+Graphs are considered up to isomorphism throughout.
+
+The external Ramsey lower bound used is the following standard
+consequence of the Lov\'asz local lemma, stated in Wigderson's note:
+for a fixed graph $F$ with $v=v(F)\geq3$ and $e=e(F)$,
+\[
+ r(F,K_q)=\Omega_F\left((q/\log q)^{(e-1)/(v-2)}\right).
+\]
+Only graphs satisfying $e\geq2v-2$ are needed. For these,
+$(e-1)/(v-2)\geq2+1/(v-2)>2$, and hence
+$r(F,K_q)/e(K_q)\to\infty$. Such $F$ are not Ramsey size-linear.
+The cited lower bound, rather than its probabilistic proof, is
+the sole non-elementary dependency of this reconstruction.
+
+\subsection{2) Forests are Ramsey size-linear}
+Let $F$ be a forest on $s\geq2$ vertices, and let $H$ have $m\geq1$
+edges and no isolated vertices. Then $v(H)\leq2m$. A graph of minimum
+degree at least $s-1$ contains $F$: embed each tree from a root,
+always extending a previously embedded parent to an unused neighbor.
+At each step at most $s-2$ neighbors are already used; new component
+roots can likewise be chosen among unused vertices.
+
+Consider a red--blue coloring on $N=2(s-1)m$ vertices with no red
+$F$. Every nonempty induced red subgraph has a vertex of degree
+at most $s-2$, by the preceding embedding argument. Remove such
+vertices successively and color them in reverse order with $s-1$
+colors. This gives a proper vertex coloring of the red graph.
+One color class has at least $N/(s-1)=2m$ vertices, all mutual
+edges blue. It contains a blue copy of $H$. Thus
+$r(F,H)\leq2(s-1)m$. A one-vertex forest is trivial, so every
+forest has the required property.
+
+\subsection{3) Graphs of arbitrary girth and average degree at least four}
+Fix an integer $g\geq3$. In the random graph on $n$ vertices with
+independent edge probability $p=n^{-1+1/(2g)}$, let $X$ be the
+number of edges and $Y$ the number of cycles of length less than $g$.
+Then
+\[
+ \mathbb EX=\binom n2p,\qquad
+ \mathbb EY\leq\sum_{j=3}^{g-1}\frac{n^jp^j}{2j}
+ =O_g(n^{(g-1)/(2g)}).
+\]
+For sufficiently large $n$, $\mathbb E(X-Y)>2n$. Some realization
+therefore has $X-Y>2n$. Delete one edge from each original cycle
+of length less than $g$. At most $Y$ edges are deleted, and deletion
+creates no cycles. The resulting graph has girth at least $g$ and
+more than $2n$ edges, hence average degree greater than four.
+
+\subsection{4) Producing infinitely many minimal obstructions}
+For each $g$, choose such a graph $G_g$. Since
+$e(G_g)>2v(G_g)\geq2v(G_g)-2$, the external lower bound shows
+it is not Ramsey size-linear. Among its finitely many subgraphs
+choose one, $F_g$, minimal under proper subgraph containment with
+that failure. Every proper subgraph of $F_g$ is size-linear by
+minimality. Since forests are size-linear, $F_g$ contains a cycle.
+Every cycle in $F_g$ has length at least $g$.
+
+If there were only finitely many possible isomorphism types of
+these minimal obstructions, choose one cycle in each and let $L$
+be the maximum of their lengths. Taking $g>L$ contradicts that
+$F_g$ must be one of those types. Thus there are infinitely many.
+This proves existence; it does not identify the minimal subgraph
+inside any particular large-girth example.
+
+\textbf{Outcome: SOLVED, Wigderson's known resolution reconstructed
+with its Ramsey lower bound explicit.} No novel proof or local
+formal verification is claimed.
+
+\subsection{5) Sources}
+\begin{itemize}
+\item Y. Wigderson, \emph{Infinitely many minimally non-Ramsey
+size-linear graphs}, especially Lemma 3,
+\texttt{https://ywigderson.math.ethz.ch/math/static/RamseySizeLinear.pdf}.
+\item T. F. Bloom, Problem 79,
+\texttt{https://www.erdosproblems.com/79}, checked 23 September 2026.
+\end{itemize}
+The estimate measures complete coverage relative to the stated
+external Ramsey bound.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

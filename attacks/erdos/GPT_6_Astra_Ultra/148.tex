@@ -1,0 +1,32 @@
+\section{Problem 148: decoding the splitting tree and retaining the lower-order gain}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is the growth of $F(k)$, the number of representations of 1 by $k$ distinct positive unit fractions. I read \texttt{gpt\_pro\_5.4/148.tex} fully. Its two-phase splitting construction is useful, but the assertion that two different persistent denominators force different final sets needs their positions in the ordered list to be specified. I supply that decoding and optimize the quantitative bound without discarding two powers of 2 at every branching step.
+\subsection*{2) WORK}
+Start with $(2,3,6)$ and replace a largest denominator $L$, using $d\mid L$ and $d<L$, by
+\[
+L+d,\qquad L'=L(L+d)/d.
+\]
+Both exceed $L$ and $L+d<L'$. Thus every frozen denominator is smaller than every denominator created later. In the final increasing list the frozen denominators occur in chronological order. Given the fixed initial list and a final list, the first newly frozen entry recovers $d=(L+d)-L$; it also recovers $L'$. Induction recovers the entire sequence of choices. This is a full injectivity proof, not just persistence of individual entries.
+
+After $r$ forced choices $d=1$, the largest denominator $M_r$ satisfies $M_0=6$, $M_{j+1}=M_j(M_j+1)$. Coprimality of the factors gives $\tau(M_r)\ge2^{r+2}$. All proper divisors of $M_r$ remain valid in each later step, since the current largest denominator remains a multiple of $M_r$. The decoded branching tree therefore proves
+\[
+F(3+r+s)\ge(2^{r+2}-1)^s.
+\]
+Put $u=\lfloor(k-1)/2\rfloor$, $r=u-2$, and $s=k-1-u$. For $k\ge7$ these are nonnegative, $u\ge3$, and $s\le u+1$. Consequently
+\[
+(1-2^{-u})^s\ge1-s2^{-u}\ge\frac12
+\]
+by Bernoulli's inequality. Since $us=\lfloor(k-1)^2/4\rfloor$, we obtain the explicit refinement
+\[
+F(k)\ge2^{\lfloor(k-1)^2/4\rfloor-1}\qquad(k\ge7).
+\]
+The leading quadratic exponent agrees with the supplied construction; the gain is a rigorously retained linear-order term, not a new growth scale.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+Different branches might contain some of the same numbers later, so persistence alone is insufficient; their ordered ranks are what ensure injectivity. All fractions remain distinct because both children exceed the replaced maximum. The estimate concerns a subset of all representations and gives no matching upper bound.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The splitting family has been rigorously decoded and its bound modestly sharpened. Determining the asymptotic growth of all representations remains open in this attempt; no improvement over the strongest literature bounds is claimed.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied file, read 2026-09-23. The splitting, divisor count, and optimization are proved directly without importing an external asymptotic estimate.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the estimation problem.
+\textbf{COMPLETION: 12\%}

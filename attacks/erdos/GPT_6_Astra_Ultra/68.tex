@@ -1,0 +1,263 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.2/68.tex", "source_paths": ["attacks/erdos/gpt_5.2/68.tex", "attacks/erdos/gpt_pro_5.2/68.tex"], "source_model": "gpt_pro_5.2", "source_completion": null, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 68 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/68
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.2/68.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{gpt\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_5.2/68.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_5.2/68.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+Definitions/Conventions.
+Let
+\[S:=\sum_{n=2}^{\infty}\frac{1}{n!-1},\]
+which converges absolutely.
+
+Question.
+Is $S$ irrational?
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Web browsing is not available in this session.
+From the problem text only:
+- Weisenberg observed the identity $S=\sum_{k\ge 1}\sum_{n\ge 2}(n!)^{-k}$.
+- Erd\H{o}s noted related series $\sum 1/(n!+t)$ should be transcendental.
+I do not claim any further known results.
+
+3) ATTACK PLAN
+Proof track ideas:
+1. Try to adapt standard irrationality arguments for rapidly convergent series: assume $S=p/q$, multiply by a carefully chosen integer (e.g. $N!$ or an lcm) and derive a contradiction by bounding the fractional part.
+2. Use the geometric-series expansion $1/(n!-1)=\sum_{k\ge 1} (n!)^{-k}$ to rewrite $S$ in a form amenable to factorial-base expansions.
+
+Disproof track ideas:
+1. Produce an exact rational closed form by telescoping or expressing $1/(n!-1)$ as a difference of rational terms with factorial denominators (seems unlikely).
+
+Chosen path in this attempt: prove two basic, fully rigorous identities/bounds and compute a high-precision numerical value to support sanity, but I do not reach irrationality.
+
+4) WORK
+Lemma 1 (Geometric-series expansion).
+For every integer $n\ge 2$,
+\[\frac{1}{n!-1}=\sum_{k=1}^{\infty}\frac{1}{(n!)^k}.\]
+
+Proof.
+For $n\ge 2$, we have $n!\ge 2$, so $|1/n!|<1$.
+Compute
+\[\frac{1}{n!-1}=\frac{1}{n!\left(1-\frac{1}{n!}\right)}=\frac{1}{n!}\cdot \frac{1}{1-\frac{1}{n!}}.\]
+Since $|1/n!|<1$, the geometric series converges:
+\[\frac{1}{1-\frac{1}{n!}}=\sum_{k=0}^{\infty}\left(\frac{1}{n!}\right)^k.\]
+Multiplying by $1/n!$ gives
+\[\frac{1}{n!-1}=\sum_{k=0}^{\infty}\frac{1}{(n!)^{k+1}}=\sum_{k=1}^{\infty}\frac{1}{(n!)^k}.\qed\]
+
+Lemma 2 (A concrete tail bound).
+For every $N\ge 2$,
+\[\sum_{n=N+1}^{\infty}\frac{1}{n!-1}\ <\ \frac{2(N+2)}{(N+1)!(N+1)}.\]
+
+Proof.
+For $n\ge 2$ we have $n!-1\ge \tfrac12 n!$, hence
+\[\frac{1}{n!-1}\le \frac{2}{n!}.\]
+Therefore
+\[\sum_{n=N+1}^{\infty}\frac{1}{n!-1}\le 2\sum_{n=N+1}^{\infty}\frac{1}{n!}.\]
+Now factor out $(N+1)!$:
+\[\sum_{n=N+1}^{\infty}\frac{1}{n!}=\frac{1}{(N+1)!}\sum_{j=0}^{\infty}\frac{1}{(N+2)(N+3)\cdots(N+1+j)}.\]
+For each $j\ge 1$, the denominator is at least $(N+2)^j$, hence
+\[\sum_{j=0}^{\infty}\frac{1}{(N+2)(N+3)\cdots(N+1+j)}\le 1+\sum_{j=1}^{\infty}\frac{1}{(N+2)^j}=\frac{1}{1-\frac{1}{N+2}}=\frac{N+2}{N+1}.\]
+Thus
+\[\sum_{n=N+1}^{\infty}\frac{1}{n!}\le \frac{1}{(N+1)!}\cdot\frac{N+2}{N+1},\]
+and multiplying by $2$ gives the stated tail bound. \qed
+
+FAST REALITY CHECK (numerics).
+Using high precision arithmetic, the partial sum up to $n=20$ is
+\[\sum_{n=2}^{20}\frac{1}{n!-1}\approx 1.2534987556999534716228579572195523287580046561.\]
+Lemma 2 with $N=20$ gives a tail bound
+\[\sum_{n\ge 21}\frac{1}{n!-1}<4.11\times 10^{-20}.\]
+So the displayed decimal is correct to at least $19$ decimal places.
+
+5) VERIFICATION
+- Lemma 1 is a direct geometric-series manipulation and is valid because $|1/n!|<1$ for $n\ge 2$.
+- Lemma 2 uses only the inequality $n!-1\ge \tfrac12 n!$ and a simple domination of the factorial tail by a geometric series.
+- The numerical value is consistent with the rigorous tail bound.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+I proved the exact expansion $\frac{1}{n!-1}=\sum_{k\ge 1}(n!)^{-k}$ (Lemma 1) and a very strong explicit tail bound (Lemma 2),
+which yields high-precision control of the value of the series from modest partial sums.
+
+(ii) First gap:
+Turn the rapid convergence and factorial structure into an irrationality proof: show that no rational $p/q$ can match the value because
+after multiplying by a suitable integer, the fractional part cannot be both nonzero and arbitrarily small.
+
+(iii) Top 3 next moves (concrete):
+1. Attempt a rational-contradiction argument: assume $S=p/q$, choose $M$ divisible by many $(n!-1)$, and bound $|MS-\mathrm{round}(MS)|$ from above (via Lemma 2) and below (via a congruence obstruction).
+2. Explore factorial-base expansions using Lemma 1: rewrite $S$ as $\sum_{n,k}(n!)^{-k}$ and try to show that the factorial digits cannot eventually become periodic (a standard signature of rationality).
+3. Investigate whether known irrationality criteria for series of rational terms (e.g. Engel/L\"uroth-type expansions) can be adapted to denominators $n!-1$.
+
+(iv) What a minimal counterexample would likely look like (structure/parameters):
+If $S$ were rational, then there would exist integers $p,q$ such that for all large $N$,
+the quantity $q\sum_{n=N+1}^{\infty}\frac{1}{n!-1}$ would have to cancel exactly the fractional part of $q\sum_{n=2}^{N}\frac{1}{n!-1}$.
+Given Lemma 2 makes the tail extremely small, this would force extraordinarily rigid congruence relations among the partial sums mod $1$,
+suggesting that any rationality proof would need a hidden telescoping/congruence structure in $(n!-1)^{-1}$ that is not apparent.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_5.2/68.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/68.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/68.tex
+
+\noindent\textbf{FORMAL RESTATEMENT.}
+Define the real number
+\[
+S:=\sum_{n=2}^{\infty}\frac{1}{n!-1}.
+\]
+(Each term is well-defined since $n!-1\neq 0$ for $n\ge 2$.)
+Question: is $S$ irrational?
+
+\medskip
+\noindent\textbf{QUICK LITERATURE/CONTEXT CHECK.}
+The problem statement notes:
+(i) the decimal expansion is OEIS A331373;
+(ii) Weisenberg observed the identity $\sum_{n\ge2}\frac{1}{n!-1}=\sum_{k\ge1}\sum_{n\ge2}\frac{1}{(n!)^k}$;
+(iii) Erd\H{o}s noted (in the cited source) that $\sum \frac{1}{n!+t}$ should be transcendental for each integer $t$.
+No additional literature claims are used here.
+
+\medskip
+\noindent\textbf{ATTACK PLAN.}
+\emph{Proof track ideas.}
+(1) Try to adapt the classical irrationality proof of $e=\sum_{n\ge0}1/n!$ (multiply by $N!$ and analyze a tiny tail), but denominators $n!-1$ do not divide $N!$.
+(2) Use the double-series expansion to view $S$ as a sum of rapidly convergent "factorial-power" series and attempt a Cantor-series/Engel-series style irrationality criterion.
+
+\emph{Disproof track ideas.}
+(1) Attempt to detect a rational relation by computing many digits / continued fraction and searching for a very small denominator; this cannot prove rationality, but may guide structure.
+
+I did not reach an irrationality proof or a rationality counterexample; below are problem-specific lemmas and computations.
+
+\medskip
+\noindent\textbf{WORK.}
+
+\medskip
+\noindent\textbf{Lemma 68.1 (geometric-series expansion).}
+For every integer $n\ge 2$,
+\[
+\frac{1}{n!-1}=\sum_{k=1}^{\infty}\frac{1}{(n!)^k}.
+\]
+Consequently,
+\[
+S=\sum_{n=2}^{\infty}\frac{1}{n!-1}=\sum_{n=2}^{\infty}\sum_{k=1}^{\infty}\frac{1}{(n!)^k}=\sum_{k=1}^{\infty}\sum_{n=2}^{\infty}\frac{1}{(n!)^k},
+\]
+with absolute convergence justifying the interchange of sums.
+
+\noindent\textbf{Proof.}
+For $n\ge 2$ we have $0<1/n!\le 1/2$. Then
+\[
+\frac{1}{n!-1}=\frac{1}{n!\,(1-1/n!)}=\frac{1}{n!}\cdot\sum_{k=0}^{\infty}\Big(\frac{1}{n!}\Big)^k
+=\sum_{k=1}^{\infty}\frac{1}{(n!)^k},
+\]
+where we used the geometric-series identity $1/(1-x)=\sum_{k\ge0}x^k$ valid for $\lvert x\rvert<1$.
+
+For the double sum, note that
+\[
+\sum_{n=2}^{\infty}\sum_{k=1}^{\infty}\Big\lvert\frac{1}{(n!)^k}\Big\rvert
+=\sum_{n=2}^{\infty}\sum_{k=1}^{\infty}\frac{1}{(n!)^k}
+=\sum_{n=2}^{\infty}\frac{1}{n!-1}
+<\sum_{n=2}^{\infty}\frac{2}{n!}<\infty,
+\]
+so the series is absolutely convergent and Fubini/Tonelli applies to swap summations.
+This proves the lemma.\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 68.2 (explicit tail bound).}
+For every integer $N\ge 2$,
+\[
+0<\sum_{n=N+1}^{\infty}\frac{1}{n!-1}
+<\frac{4}{(N+1)!}.
+\]
+
+\noindent\textbf{Proof.}
+For $n\ge 2$ we have $n!-1\ge \frac12 n!$ (since $n!\ge 2$), hence
+\[\frac{1}{n!-1}\le \frac{2}{n!}.\]
+Therefore
+\[
+\sum_{n=N+1}^{\infty}\frac{1}{n!-1}
+\le 2\sum_{n=N+1}^{\infty}\frac{1}{n!}
+=\frac{2}{(N+1)!}\sum_{j=0}^{\infty}\frac{1}{(N+2)(N+3)\cdots (N+1+j)}.
+\]
+For each $j\ge 0$, the denominator $(N+2)(N+3)\cdots(N+1+j)$ is at least $(N+2)^j$, so
+\[
+\sum_{j=0}^{\infty}\frac{1}{(N+2)(N+3)\cdots (N+1+j)}
+\le \sum_{j=0}^{\infty}\frac{1}{(N+2)^j}=\frac{1}{1-1/(N+2)}=\frac{N+2}{N+1}.
+\]
+Thus
+\[
+\sum_{n=N+1}^{\infty}\frac{1}{n!-1}
+\le \frac{2}{(N+1)!}\cdot\frac{N+2}{N+1}
+<\frac{4}{(N+1)!}
+\]
+for all $N\ge 2$. Positivity is clear termwise.\hfill$\square$
+
+\medskip
+\noindent\textbf{FAST REALITY CHECK (computation).}
+Using 80-digit arithmetic, I evaluated partial sums and a high-precision estimate:
+\begin{itemize}
+\item Partial sum through $n=24$:
+\[
+\sum_{n=2}^{24}\frac{1}{n!-1}
+\approx 1.25349875569995347164336087086146605027663723112268710688\dots
+\]
+\item A direct high-precision summation (mpmath) gives
+\[
+S\approx 1.25349875569995347164336093790579894036923220833201341706\dots
+\]
+\item The difference between the $n\le 24$ partial sum and the high-precision estimate is about
+\[6.7\times 10^{-26},\]
+consistent with Lemma 68.2 (for $N=24$, the tail bound $4/25!\approx 1.34\times 10^{-25}$).
+\item Continued fraction initial segment (for sanity checking only):
+\[[1, 3, 1, 17, 8, 1, 4, 3, 2, 2, 2, 1, \dots].\]
+\end{itemize}
+
+\medskip
+\noindent\textbf{VERIFICATION.}
+\begin{itemize}
+\item Lemma 68.1: checked algebraic identity $1/(n!-1)=(1/n!)/(1-1/n!)$ and geometric series for $\lvert 1/n!\rvert<1$.
+\item Lemma 68.2: verified each inequality and the comparison of the factorial tail by a geometric series with ratio $1/(N+2)$.
+\item Computation: the tail estimate and the observed numerical difference match in order of magnitude.
+\end{itemize}
+
+\medskip
+\noindent\textbf{FINAL: \textbf{UNRESOLVED}.}
+\begin{itemize}
+\item[(i)] \emph{Strongest proved partial result.} The identity $\frac{1}{n!-1}=\sum_{k\ge1}1/(n!)^k$ holds termwise and yields the absolutely convergent double-series representation of $S$ (Lemma 68.1). The remainder after $N$ terms satisfies an explicit bound $<4/(N+1)!$ (Lemma 68.2).
+\item[(ii)] \emph{First gap (crisp).} Prove that no rational $p/q$ equals $S$, i.e.
+\[S\neq p/q\quad\text{for all integers }p,q\ (q\ge1).\]
+A concrete route would be: for each $q$, show there exists $N$ such that $\big\lVert q\sum_{n=2}^{N}\frac{1}{n!-1}\big\rVert$ is bounded away from the tail error, forcing $qS$ to have nonzero distance to the integers.
+\item[(iii)] \emph{Top 3 next moves.}
+(1) Multiply $S$ by a structured integer (e.g. a product of $(n!-1)$ up to some cutoff) and try to force a contradiction via congruences/modular reductions.
+(2) Exploit Lemma 68.1 to express $S$ in a "factorial-Cantor" expansion and seek a general irrationality criterion for expansions with bases $n!$.
+(3) Extend computation: compute many continued-fraction convergents and check whether any convergent denominator interacts unusually with the factorial-minus-one structure (guiding a modular argument).
+\item[(iv)] \emph{Minimal counterexample structure.} If $S$ were rational, say $S=p/q$, then the extremely small tails (Lemma 68.2) would force the partial sums to be extraordinarily close to $p/q$ with error $\ll 1/(N!)$. Any disproof strategy would likely need to show that such "too-good" approximations cannot persist because the denominators $n!-1$ are not compatible with a fixed $q$ modulo many integers.
+\end{itemize}
+
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/68.tex
+
+\subsection*{COMPLETION ESTIMATE}
+The primary source supplies no extractable numerical completion estimate. Its mathematical progress is not numerically assessed here.
+
+Newly verified progress in this collection pass: $0\%$. This measures new verification work, not the amount of mathematics achieved in the reused text.

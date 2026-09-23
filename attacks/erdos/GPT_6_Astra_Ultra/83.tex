@@ -1,0 +1,83 @@
+\section{Erd\H{o}s Problem 83: the sharp two-intersection bound}
+
+\subsection{1) Statement}
+Let $\mathcal F\subseteq\binom{[4n]}{2n}$ satisfy
+$|A\cap B|\geq2$ for all $A,B\in\mathcal F$. Prove
+\[
+ |\mathcal F|\leq\frac12\left(\binom{4n}{2n}-\binom{2n}{n}^2\right).
+\]
+This is a known special case of the complete intersection theorem
+of Ahlswede and Khachatrian. We state the external extremal theorem
+precisely and supply the parameter calculation, exact count and
+sharpness verification. Its general extremal proof is not reproduced.
+
+\subsection{2) Applying the complete intersection theorem}
+In the nontrivial range of parameters, the theorem determines the
+largest $t$-intersecting family of $k$-subsets of $[m]$. If
+\[
+ \frac1{r+1}\leq
+ \frac{m-2k+2t-2}{(t-1)(k-t+1)}<\frac1r,
+\]
+an extremal family is
+\[
+ \left\{A\in\binom{[m]}k:|A\cap[t+2r]|\geq t+r\right\}.
+\]
+As usual the upper endpoint is interpreted as infinity for $r=0$;
+ties at the other endpoint do not affect the maximum cardinality.
+
+For $n\geq2$, put $m=4n$, $k=2n$, $t=2$ and $r=n-1$.
+The middle fraction becomes $2/(2n-1)$, and
+\[
+ \frac1n<\frac2{2n-1}<\frac1{n-1}.
+\]
+The theorem therefore bounds $|\mathcal F|$ by the size of
+\[
+ \mathcal A=
+ \left\{A\in\binom{[4n]}{2n}:|A\cap[2n]|\geq n+1\right\}.
+\]
+For $n=1$ the conclusion is immediate: distinct two-element sets
+cannot intersect in two elements, so $|\mathcal F|\leq1$.
+
+\subsection{3) Exact enumeration and attainment}
+Fixing $j=|A\cap[2n]|$ gives
+\[
+ |\mathcal A|=\sum_{j=n+1}^{2n}
+      \binom{2n}j\binom{2n}{2n-j}
+   =\sum_{j=n+1}^{2n}\binom{2n}j^2.
+\]
+Counting all $2n$-subsets of two disjoint blocks of size $2n$ gives
+Vandermonde's identity
+\[
+ \sum_{j=0}^{2n}\binom{2n}j^2=\binom{4n}{2n}.
+\]
+The terms indexed by $j$ and $2n-j$ agree. Removing the single
+middle term and halving therefore gives
+\[
+ |\mathcal A|=\frac12\left(\binom{4n}{2n}-\binom{2n}n^2\right),
+\]
+which proves the required bound. Moreover, if $A,B\in\mathcal A$,
+then inside the first block their intersection has size at least
+$(n+1)+(n+1)-2n=2$. Thus $\mathcal A$ meets the hypothesis and
+attains the bound. It also gives attainment for $n=1$.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED, known sharp bound reconstructed using the
+complete intersection theorem.} Counting the proposed family alone
+would only prove a lower bound for the extremal quantity; the
+external theorem supplies the essential upper bound. The batch
+verification checks the finite counts and the displayed parameter
+inequalities. It does not verify the general theorem in Lean.
+
+\begin{itemize}
+\item R. Ahlswede and L. H. Khachatrian, \emph{The Complete
+Intersection Theorem for Systems of Finite Sets}, European Journal
+of Combinatorics 18 (1997), 125--136, main theorem and equations
+(1.7)--(1.10),
+\texttt{https://www.math.uni-bielefeld.de/ahlswede/homepage/public/122.pdf}.
+\item T. F. Bloom, Problem 83,
+\texttt{https://www.erdosproblems.com/83}, checked 23 September 2026.
+\end{itemize}
+The estimate measures coverage using the explicit external theorem,
+not novelty or a replacement proof of that theorem.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

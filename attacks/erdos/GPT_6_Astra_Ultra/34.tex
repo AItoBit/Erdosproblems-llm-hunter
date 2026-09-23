@@ -1,0 +1,79 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#34; reconstruction, 2026-09-23.}
+For a permutation $\pi$ of $\{1,\ldots,n\}$, let $S(\pi)$ count the
+distinct sums of nonempty intervals of positions. Must $S(\pi)=o(n^2)$
+uniformly over permutations? We construct permutations of every even
+size $n=2m$ having at least $m(m+1)$ distinct interval sums. In particular
+the proposed assertion is false.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem page marks the assertion disproved, crediting the first
+counterexample to Hegyv\'ari. Konieczny's primary paper gives the simple
+alternating permutation used below in Proposition~1.1. We reconstruct
+its proof with explicit ranges for the sums. This is a known construction,
+not a new improvement of the extremal constant.
+
+\section{WORK}
+Let $H=2m+1$ and put
+\[
+ \pi(2i-1)=i,\qquad \pi(2i)=H-i\qquad(1\leq i\leq m).
+\]
+Thus the permutation is $1,2m,2,2m-1,\ldots,m,m+1$.
+Every pair beginning in an odd position sums to $H$.
+
+Consider intervals of odd length $2k+1$, with $0\leq k\leq m-1$.
+An interval beginning at position $2i-1$ consists of $k$ complete
+odd-position pairs and one final entry $i+k$. Its sum is
+\[
+ kH+i+k\qquad(1\leq i\leq m-k).                     \tag{1}
+\]
+An interval beginning at position $2i$ consists of the initial entry
+$H-i$ followed by $k$ complete odd-position pairs. Its sum is
+\[
+ kH+H-i\qquad(1\leq i\leq m-k).                     \tag{2}
+\]
+For fixed $k$, the residues modulo $H$ in (1) run through
+$k+1,\ldots,m$, while those in (2) run through $m+k+1,\ldots,2m$.
+They are nonzero, distinct within each range, and the ranges are disjoint.
+Furthermore all these sums have quotient $k$ upon division by $H$.
+Sums arising from different $k$ therefore cannot coincide. Consequently
+\emph{all odd-length interval sums of this permutation are distinct}.
+Their number is
+\[
+ \sum_{k=0}^{m-1}2(m-k)=m(m+1)=\frac{n^2}{4}+\frac n2.
+\]
+This establishes $S(\pi)/n^2\geq1/4$ along infinitely many $n$ and
+disproves $o(n^2)$. For an odd size $n=2m+1$, append the unused integer
+$2m+1$ to this permutation of $[2m]$. Every previously counted interval
+remains, giving $S(\pi)\geq m(m+1)=(n^2-1)/4$ as well.
+\hfill$\square$
+
+\section{VERIFICATION}
+For $n=6$, the permutation $1,6,2,5,3,4$ has odd-length sums
+\[
+ \{1,2,3,4,5,6\},\quad\{9,10,12,13\},\quad\{17,20\}.
+\]
+These twelve values match $m(m+1)$ for $m=3$. The argument never assumes
+that even-length sums are distinct or disjoint from the counted sums;
+they can only increase $S(\pi)$. The script accompanying this batch
+checks the formulas and distinctness for every even $n\leq200$.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known negative answer reconstructed).}
+The complete counterexample establishes a quadratic lower bound for
+the number of consecutive sums. Determining the optimal asymptotic
+constant is a further question, not a gap in answering the stated one.
+No novelty or independent formal-verification claim is made.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/34}.
+J.~Konieczny, \emph{On consecutive sums in permutations},
+Proposition~1.1, \url{https://arxiv.org/abs/1504.07156}.
+Checked 2026-09-23. Finite checks appear in
+\texttt{verification/solved\_batch\_26\_checks.py}.
+
+This estimate concerns completion of the stated counterexample proof,
+not improvement of the known extremal bounds.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,29 @@
+\section{Problem 96: a two-degeneracy argument on a parabola}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The target is a linear bound for unit distances among vertices in convex position. I read \texttt{gpt\_pro\_5.4/96.tex} fully. Its circle argument is sound and its quartic-root argument gives $2n$ for a parabola, though its expanded quartic is incorrect. I strengthen the latter bound to $2n-3$ for $n\ge2$ using a vertex that can always be removed.
+\subsection*{2) WORK}
+Let $P(t)=(t,t^2)$ and fix a distance $r>0$. In a finite set of parameters choose $a$ with $|a|$ minimal. Reflection permits $a\ge0$. Every remaining parameter lies either in $[a,\infty)$ or in $(-\infty,-a]$. The squared distance from $P(a)$ is
+\[
+D_a(x)=(x-a)^2+(x^2-a^2)^2,
+\qquad D_a'(x)=2(x-a)\bigl(1+2x(x+a)\bigr).
+\]
+For $x>a$ both factors are positive. For $x<-a$, the first factor is negative and $x(x+a)\ge0$, so the second is positive. Thus $D_a$ is strictly increasing on the right ray and strictly decreasing as $x$ increases on the left ray. Each ray contributes at most one point with $D_a(x)=r^2$. The chosen vertex has at most two distance-$r$ neighbors.
+
+Every subset has the same property, by choosing its own smallest absolute parameter. Removing such vertices until two remain counts each edge once and gives
+\[
+e_r(A)\le2(n-2)+1=2n-3\qquad(n\ge2).
+\]
+For $n=1$ the bound is zero. Euclidean similarities transport this argument to every parabola, because the prescribed distance merely rescales. No assumption of uniform spacing is used.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The actual expansion is
+\[
+D_a(x)-r^2=x^4+(1-2a^2)x^2-2ax+a^4+a^2-r^2;
+\]
+the cubic term and several coefficients in the supplied expansion should be removed or changed. This does not invalidate its root-count bound, but it does invalidate the printed polynomial identity. When $a=0$, the two rays meet only at the center point, which cannot be a distance-$r$ neighbor. When both $a$ and $-a$ occur, the latter is included in the left ray without duplicating the chosen point.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The proof certifies a stronger linear bound on the parabolic subclass. General convex polygons do not admit a common parabolic parameter or this monotonicity argument. A uniformly bounded-degree vertex in every convex subset remains unproved here.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version, read 2026-09-23. The algebra, differentiation, and deletion proof are self-contained and do not use an unverified external geometric theorem. No literature-priority claim is made.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward arbitrary convex polygons.
+\textbf{COMPLETION: 12\%}

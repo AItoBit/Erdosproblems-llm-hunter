@@ -1,0 +1,74 @@
+\section{Problem 739: countable extraction and a precise induced-subgraph barrier}
+\subsection*{1) FORMAL RESTATEMENT AND CURRENT STATUS}
+Attempt dated 2026-09-23. If a graph $G$ has infinite chromatic number $\mathfrak m$, must it have a subgraph of chromatic number exactly $\mathfrak n$ for every infinite cardinal $\mathfrak n<\mathfrak m$? Edges may be deleted: ``subgraph'' does not mean ``induced subgraph''.
+
+The current page [1] labels the question NOT PROVABLE. Komj\'ath [2] proves consistency of an $\aleph_2$-chromatic graph with no $\aleph_1$-chromatic subgraph. The live page leaves the general assertion under GCH open, and records a positive constructibility result for the $\aleph_2,\aleph_1$ case. An unconditional proof would conflict with the known consistency obstruction. This attempt therefore proves the countable-target case and examines, with complete proofs, why an induced-subgraph construction does not settle the ordinary-subgraph question.
+
+\subsection*{2) THE COUNTABLE TARGET}
+\textbf{Proposition 1.} Every graph of infinite chromatic number contains a countable induced subgraph of chromatic number $\aleph_0$.
+
+\emph{Proof.} For each positive integer $r$, some finite subgraph $F_r$ has chromatic number exceeding $r$. To justify this, suppose every finite subgraph were $r$-colourable. In the compact product $\{1,\ldots,r\}^{V(G)}$, each edge prescribes a closed set of assignments assigning different colours to its endpoints. Every finite collection of these constraints is satisfiable, so compactness gives an $r$-colouring of $G$, a contradiction. Let $X=\bigcup_{r\ge1}V(F_r)$. Then $X$ is countable and $G[X]$ contains every $F_r$, hence has no finite colouring. Giving each vertex its own colour proves $\chi(G[X])\le\aleph_0$, yielding equality.\hfill$\square$
+
+This is a standard consequence of finite-colour compactness, not a claimed new solution. In the stated problem it settles $\mathfrak n=\aleph_0$ whenever $\mathfrak m>\aleph_0$.
+
+\subsection*{3) THE SHIFT TRANSFORM FOR ARBITRARY EDGE SETS}
+Let $(S,<)$ be a linearly ordered set and let $X\subseteq[S]^2$. Write $G_X=(S,X)$. Define $H_X$ to have vertex set $X$, with an edge between $\{a,b\}$ and $\{b,c\}$ whenever $a<b<c$ and both pairs belong to $X$.
+
+\textbf{Lemma 2.} For any infinite cardinal $\lambda$,
+\[
+\chi(H_X)\le\lambda\quad\Longleftrightarrow\quad\chi(G_X)\le2^\lambda.\tag{1}
+\]
+This is the standard shift-transform argument behind Galvin's induced-subgraph obstruction [3]; both directions are proved here.
+
+\emph{Forward direction.} Let $q:X\to\lambda$ properly colour $H_X$. For $a\in S$ put
+\[
+B_a=\{q(\{a,b\}):a<b,\ \{a,b\}\in X\}.
+\]
+If $\{a,b\}\in X$ with $a<b$, then $q(\{a,b\})\in B_a$. This colour does not belong to $B_b$, since every vertex $\{b,c\}\in X$ with $b<c$ is adjacent to $\{a,b\}$ in $H_X$. Thus $B_a\ne B_b$. The map $a\mapsto B_a\in\mathcal P(\lambda)$ is a proper $2^\lambda$-colouring of $G_X$.
+
+\emph{Reverse direction.} Let $a\mapsto f_a\in2^\lambda$ be a proper colouring of $G_X$. Adjacent $a,b$ receive distinct binary functions, so for $\{a,b\}\in X$ with $a<b$ the ordinal
+\[
+d(a,b)=\min\{\xi<\lambda:f_a(\xi)\ne f_b(\xi)\}
+\]
+exists. Colour the vertex $\{a,b\}$ of $H_X$ by $(d(a,b),f_a(d(a,b)))$. For adjacent vertices $\{a,b\},\{b,c\}$, different $d$'s separate their colours; if the $d$'s agree at $\xi$, then $f_a(\xi)\ne f_b(\xi)$ separates their second entries. The palette has cardinal $2\cdot\lambda=\lambda$. This proves (1).\hfill$\square$
+
+\subsection*{4) A COMPLETE CONDITIONAL OBSTRUCTION, AND ITS LIMIT}
+\textbf{Proposition 3 (the induced version).} Suppose infinite cardinals $\lambda<\kappa$ satisfy $2^\lambda=2^\kappa$. There is a graph $H$ with $\chi(H)>\kappa$ and no induced subgraph of chromatic number exactly $\kappa$.
+
+\emph{Proof.} Well-order a set $S$ of size $(2^\kappa)^+$ and let $H=H_{[S]^2}$. Since $G_{[S]^2}$ is the complete graph on $S$, Lemma 2 gives $\chi(H)>\kappa$. Every induced subgraph of $H$ has the form $H_X$ for some $X\subseteq[S]^2$. If $H_X$ is $\kappa$-colourable, (1) gives
+\[
+\chi(G_X)\le2^\kappa=2^\lambda,
+\]
+and applying (1) again gives $\chi(H_X)\le\lambda<\kappa$. Thus no induced subgraph has chromatic number $\kappa$.\hfill$\square$
+
+This does \emph{not} settle problem 739: an arbitrary subgraph on vertex set $X$ may omit edges of $H_X$. Its $\kappa$-colouring need not properly colour $H_X$, so the forward implication in (1) cannot be applied. Specifically, if an edge joining $\{a,b\}$ to $\{b,c\}$ is removed, those vertices may receive the same colour, and the proof that $q(\{a,b\})\notin B_b$ fails. That is the exact obstruction to extending this elementary proof to ordinary subgraphs. Moreover, GCH excludes the assumed equality $2^\lambda=2^\kappa$, so this construction gives no answer to the remaining GCH question.
+
+\subsection*{5) A LOCAL REFLECTION REDUCTION}
+There is also a useful criterion for targets obtainable on few vertices. For any infinite cardinal $\nu$, the following are equivalent:
+\[
+\begin{split}
+&\text{some }X\subseteq V(G),\ |X|\le\nu,\text{ satisfies }\chi(G[X])=\nu;\tag{2}\\
+&\text{for every cardinal }\rho<\nu\text{ there is }X_\rho\subseteq V(G),\ |X_\rho|\le\nu,
+\text{ with }\chi(G[X_\rho])>\rho.\tag{3}
+\end{split}
+\]
+Certainly (2) implies (3). Conversely there are at most $\nu$ cardinals below $\nu$. Taking the union of the witnesses in (3) gives a set $X$ of size at most $\nu\cdot\nu=\nu$. Its induced graph has chromatic number exceeding every cardinal below $\nu$, and at most $\nu$ by its vertex count, proving (2).
+
+Consequently, if $G$ has no subgraph at all of chromatic number $\nu$, then there is a \emph{single} $\rho<\nu$ such that every induced subgraph on at most $\nu$ vertices is $\rho$-colourable. The converse is not asserted: a subgraph of chromatic number $\nu$ might require more than $\nu$ vertices. This reduction isolates a necessary local failure of reflection for any counterexample, including limit targets.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+Finite-colour compactness in Proposition 1 uses a finite compact palette. An infinite discrete palette is not compact, so the same proof cannot be used for $\aleph_1$ or larger targets. Lemma 2 applies to all $X$, including empty edge sets and vertices with no outgoing edges. Its upper bound needs the extra bit in the colour. Proposition 3 excludes induced subgraphs only. Criterion (2)--(3) controls vertex size and explicitly does not assume that chromatic number equals vertex cardinality in an arbitrary subgraph.
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The countable target is established, the known induced-subgraph obstruction is proved with its exact limitation, and a local reflection criterion is derived. None of these proves or refutes ordinary-subgraph interpolation for uncountable targets under GCH. No novelty is claimed for the standard constructions or their elementary consequences.
+
+\subsection*{8) SOURCES CHECKED}
+[1] T. F. Bloom, current statement and editorial status of Erd\H{o}s problem 739, \url{https://www.erdosproblems.com/739}, fetched directly on 2026-09-23.
+
+[2] P. Komj\'ath, \emph{Consistency results on infinite graphs}, Israel Journal of Mathematics 61 (1988), 285--294, \url{https://doi.org/10.1007/BF02772573}. The paper's abstract and introduction were checked in the available scanned original, \url{https://electronicsandbooks.com/edt/manual/Magazine/I/Israel%20Journal%20of%20Mathematics%20IS/1988/61_3/fulltext04.pdf}. They distinguish the ordinary and induced subgraph obstructions explicitly.
+
+[3] F. Galvin, \emph{Chromatic numbers of subgraphs}, Periodica Mathematica Hungarica 4 (1973), 117--119, \url{https://doi.org/10.1007/BF02276099}. Attribution and bibliographic context are corroborated by [2]; the full text of [3] was not available in this check. The shift-transform argument needed here is supplied completely above.
+
+\subsection*{9) COMPLETION ESTIMATE}
+Subjective coverage of the stated problem, crediting a known countable special case and an explicit barrier but no new uncountable interpolation theorem. This percentage is not a probability of an eventual solution.
+\textbf{COMPLETION: 10\%}

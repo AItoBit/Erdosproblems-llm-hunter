@@ -1,0 +1,90 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#125; reconstruction, 2026-09-23.}
+Let $A$ and $B$ be the nonnegative integers whose base-$3$ and base-$4$
+digits, respectively, belong to $\{0,1\}$. Does $A+B$ have positive
+lower asymptotic density? We prove that its lower density is zero.
+This does not assert that its upper density is zero.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current problem page records a negative answer and a Lean proof.
+The linked formal development uses aligned powers of $3$ and $4$ and a
+contraction of counting densities. We reconstruct that argument in
+ordinary mathematical notation. This is an exposition of the known
+resolution, with no claim of novelty or of having run the Lean checker.
+
+\section{WORK}
+Put $S=A+B$, $S(X)=|S\cap[0,X)|$, and $d(X)=S(X)/X$ for integral $X>0$.
+Splitting the digit strings after $k$ and $m$ positions gives
+\[
+ a=3^k a'+a_0,\quad b=4^m b'+b_0,
+ \qquad a'\in A,\ b'\in B,
+\]
+with $0\le a_0\le(3^k-1)/2$ and $0\le b_0\le(4^m-1)/3$.
+Let $q=\min(3^k,4^m)$ and $r=\max(3^k,4^m)$. Consequently every
+$x=a+b<qM$ can be written
+\[
+ x=qy+c,\qquad y=a'+b'\in S,\quad 0\le y<M,
+\]
+where
+\[
+ 0\le c\le C:=(3^k-1)/2+(4^m-1)/3+(r-q)M.       \tag{1}
+\]
+Indeed the excess term is $(r-q)a'$ or $(r-q)b'$, and either quotient
+is at most $y<M$. Counting possible pairs $(y,c)$, without requiring
+unique representations, yields
+\[
+ S(qM)\le S(M)(C+1),\qquad
+ d(qM)\le d(M)\frac{C+1}{q}.                    \tag{2}
+\]
+
+For any fixed $M$, there are arbitrarily large $k,m$ with $r/q\to1$.
+Here is the precise elementary input. The number
+$\theta=\log4/\log3$ is irrational: a rational equality would imply
+$4^u=3^v$ for positive integers $u,v$. Dirichlet approximation supplies
+unbounded $m$ and integers $k$ with $|m\theta-k|\to0$; the denominators
+must be unbounded since no fixed nonzero $m$ gives equality. Exponentiating
+gives $4^m/3^k\to1$, with both powers tending to infinity.
+Along these pairs, (1) gives
+\[
+ \frac{C+1}{q}\longrightarrow\frac12+\frac13=\frac56.
+\]
+If $\delta=\liminf_{X\to\infty}d(X)$, (2), with $M$ fixed, therefore implies
+\[
+ \delta\le\frac56d(M)\quad\hbox{for every positive integer }M.
+\]
+Choose a sequence $M\to\infty$ on which $d(M)\to\delta$. Then
+$\delta\le5\delta/6$, so $\delta=0$.
+
+There is also an explicit iterative formulation. Starting with $M_0=1$,
+at stage $j$ select aligned powers with $q_j\ge100$ and
+$(r_j-q_j)/q_j\le1/(100M_j)$. Formula (1) gives
+\[
+ (C_j+1)/q_j\le (5/6)(1+1/(100M_j))+1/100+1/100<9/10.
+\]
+Set $M_{j+1}=q_jM_j$. Then $M_j\to\infty$ and
+$d(M_j)\le(9/10)^j$. Thus the proof produces a subsequence of explicitly
+searchable scales at which the density tends to zero.\hfill$\square$
+
+\section{VERIFICATION}
+All counting is over $[0,X)$, including $0$; changing finitely many
+terms has no effect on density. The upper bound for $c$ is deliberately
+allowed to overcount. Alignment must become more accurate as $M$ grows;
+a single approximate equality $3^k\approx4^m$ is insufficient for all
+iterations. The batch script checks the digit decomposition and (2)
+for several small scales.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known negative answer reconstructed).}
+The lower density is zero. No conclusion about the existence or value of
+the upper density is included. The only general input is elementary
+Dirichlet approximation, with its application explained above.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/125}.
+The linked formal-conjectures development, specifically its digit-splitting,
+counting, and aligned-scale lemmas:
+\url{https://github.com/mo271/formal-conjectures/blob/c27415379b5dbe34105d1fdd707994540c4c6fc7/FormalConjectures/ErdosProblems/125.lean}.
+Checked 2026-09-23. Completion measures the lower-density question.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

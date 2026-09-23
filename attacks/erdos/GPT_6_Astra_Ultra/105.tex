@@ -1,0 +1,70 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#105; exact audit of a known counterexample, 2026-09-23.}
+If $A,B\subset\mathbb R^2$ are disjoint, $|A|=n$, $|B|=n-3$, and $A$ is not collinear, must some line contain at least two points of $A$ and no point of $B$? The answer is no. We give ten points $A$ whose every determined line meets a six-point set $B_0$; adding one further point gives the required $|B|=7$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The source records that the assertion was disproved in 2025. The explicit stronger ten/six configuration used here was posted in the problem discussion by Core\_65536 in July 2026. This file independently checks that posted configuration using integer arithmetic and gives a complete line certificate. It does not claim to have discovered the example.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+List all the distinct lines determined by pairs from $A$, and exhibit a point of $B_0$ on every one. An exact incidence table avoids relying on a diagram, rounded coordinates, or a numerical collinearity tolerance.
+
+\section{WORK}
+In the order used for the indices below, let
+\[
+\begin{aligned}
+A=\{&(168,0),(280,560),(280,140),(420,630),(360,240),\\
+ &(504,672),(280,-280),(420,0),(840,840),(0,-840)\},\\
+B_0=\{&(0,420),(840,3360),(336,336),(280,0),(420,315),(-840,-2520)\}.
+\end{aligned}
+\tag{1}
+\]
+All ten points of $A$ are distinct, all six of $B_0$ are distinct, and inspection of their coordinate pairs gives $A\cap B_0=\varnothing$. The first three points of $A$ are not collinear: the determinant of their two difference vectors from $A_1$ is
+\[
+\det\begin{pmatrix}112&560\\112&140\end{pmatrix}=-47040\ne0.
+\]
+
+In the table, $(a,b,c)$ denotes the line $ax+by+c=0$. The next column lists its points of $A$, and the final column gives an index of a point of $B_0$ on it. Every incidence in the table is verified by substitution in that integer equation.
+\[
+\begin{array}{r|r|r|l|c}
+a&b&c&A\text{ indices}&B_0\text{ index}\\\hline
+0&1&0&1,8&4\\
+1&-2&840&2,4,6,9&1\\
+1&0&-420&4,8&5\\
+1&0&-280&2,3,7&4\\
+1&1&-420&3,8&1\\
+2&-1&-840&7,8,9,10&6\\
+2&-1&-336&1,6&3\\
+3&-1&-840&5,6,10&4\\
+4&1&-1680&2,5,8&3\\
+5&-4&-840&1,3,5,9&5\\
+5&-2&-840&1,4&6\\
+5&-1&-840&1,2,10&2\\
+5&2&-840&1,7&1\\
+7&-2&-1680&3,4,10&3\\
+8&-1&-3360&6,8&2\\
+13&-2&-4200&4,5,7&2\\
+17&-4&-5880&6,7&5\\
+19&-8&-4200&3,6&6
+\end{array}
+\tag{2}
+\]
+These are eighteen distinct lines: their coefficient triples are primitive and their first nonzero entries are positive, so distinct triples represent distinct lines. They contain three sets of four $A$-points, six sets of three, and nine sets of two. Consequently the table accounts for
+\[
+3\binom42+6\binom32+9\binom22=18+18+9=45=\binom{10}2
+\]
+pairs. Two distinct lines cannot account for the same pair of distinct points. Thus every pair of points of $A$ appears on a line in the table, proving that every $A$-determined line meets $B_0$.
+
+Finally take $B=B_0\cup\{(10000,10000)\}$. This new point is different from every listed point, so $|B|=7=|A|-3$ and $A\cap B=\varnothing$. Enlarging $B_0$ cannot remove its incidence with any line. Therefore the required line does not exist, and all hypotheses of the original question hold.
+
+\section{VERIFICATION AND SCOPE}
+The accompanying exact checker normalizes the line equation for every one of the $45$ pairs, obtains exactly the eighteen rows in (2), checks disjointness and noncollinearity, and checks a blocking point on each row. Its source is \texttt{verification/solved\_batch\_93\_checks.py}; the full certificate is in the corresponding JSON file. The table and pair count above are already a finite proof, rather than an inference from a search that failed to find a line.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement: \url{https://www.erdosproblems.com/105}.
+\item Core\_65536's explicit ten/six configuration and preceding counterexamples: \url{https://www.erdosproblems.com/forum/thread/105}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved by verification of a known counterexample.} Equations (1)--(2) disprove the assertion at $n=10$. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

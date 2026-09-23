@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#304: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Let $N(a,b)$ be the least number of distinct unit fractions with denominators greater than one representing $a/b$, and $N(b)=\max_{1\le a<b}N(a,b)$. Is $N(b)=O(\log\log b)$?
+
+All supplied versions considered: \texttt{304.tex}.
+The source proves a fixed lower bound for prime boundary fractions and asserts exact values at denominator 79. I repair its ordered two-term parametrization and independently verify those finite assertions; this does not address the asymptotic upper bound.
+\subsection{2) WORK}
+For reduced $u/v>0$, a representation $u/v=1/x+1/y$ with $2\le x<y$ corresponds exactly to divisors
+\[
+d\mid v^2,\quad 0<d<v,\quad u\mid v+d,\quad x=(v+d)/u\ge2,
+\]
+with $y=(v+v^2/d)/u$. Indeed $(ux-v)(uy-v)=v^2$, and $x<y$ gives $d<v$. Conversely the congruence on $d$ implies that on $v^2/d$ because $(u,d)=1$, and $d<v$ gives strict ordering. The source omitted this ordering restriction in its displayed construction.
+
+For a general search with residual fraction $r>0$ and $k>1$ remaining terms whose denominators begin at $s$, every first denominator satisfies
+\[
+\max\{s,\lfloor1/r\rfloor+1\}\le x\le\lfloor k/r\rfloor.
+\]
+The lower inequality leaves a strictly positive residual; the upper follows from $r\le k/x$. Recursing with exact fractions and increasing denominators is therefore complete. For $k=1$, a representation exists precisely when $1/r$ is an integer at least $s$.
+
+The saved implementation verifies $N(78,79)=5$ and $N(77,79)=6$, finding respectively
+\[
+(2,3,7,90,24885),\qquad(2,3,8,62,4524,7386184)
+\]
+as denominator lists, and exhaustively rejecting all shorter lengths. Thus the largest numerator need not be hardest even at one fixed denominator. No claim that 77 maximizes over all numerators is needed for this counterexample to the boundary-only strategy.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The search has a proved finite range at every node, uses exact rational residuals, and enforces distinct denominators. Fixed examples and fixed lower bounds do not establish a logarithmic-logarithmic upper bound for all $b$.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The required uniform short decompositions for arbitrary numerators and denominators remain missing. This attempt supplies a corrected finite decision procedure and independently checked local evidence only.
+\subsection{5) SOURCES CHECKED}
+Full \texttt{304.tex} read; asymptotic target checked in formal-conjectures \texttt{ErdosProblems/304.lean}, 2026-09-23. Exact search executed with \texttt{verification/batch\_2\_checks.py}.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 8\%}

@@ -1,0 +1,59 @@
+\section{Erd\H{o}s Problem \#151: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{151.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+Let $\tau(G)$ hit every maximal clique with at least two vertices, and let
+$H(n)$ be the minimum independence number among triangle-free $n$-vertex
+graphs. The target is $\tau(G)\le n-H(n)$.
+The source codegree bound is correct, but its proof only uses one endpoint:
+the stronger bound $\tau(G)\le n-\Delta(G)$ follows immediately. The asserted
+new codegree obstruction is therefore redundant with this simpler bound.
+
+\subsection*{2) WORK: A LOCAL-PLUS-REMOTE CERTIFICATE}
+For a vertex $v$ put $U=N(v)$, and let $W$ consist of vertices outside
+$U\cup\{v\}$ which have no neighbour in $U$. Then
+\[
+ \tau(G)\le n-|U|-\alpha(G[W]). \tag{1}
+\]
+Take an independent set $I\subset W$ of size $\alpha(G[W])$ and set
+$T=V(G)\setminus(U\cup I)$. There are no edges between $U$ and $I$ and
+no edges inside $I$. Consequently a clique of size at least two contained
+in $U\cup I$ must lie entirely in $U$. It extends by adding $v$, so is
+not maximal in $G$. Thus $T$ is a transversal, proving (1).
+The convention excluding singleton cliques is important here.
+
+A computable weaker form is
+\[
+ \tau(G)\le n-d(v)-\frac{|W|}{\Delta(G[W])+1},
+\]
+with the last term zero when $W$ is empty. Indeed, greedily select a vertex
+of $G[W]$ and remove it and its neighbours; at most $\Delta(G[W])+1$
+vertices are removed at each step, leaving an independent set of the
+claimed size (with an integer ceiling if desired).
+
+Hence a counterexample must satisfy, for every $v$,
+\[
+ d(v)+\alpha(G[W_v])<H(n),
+\]
+as well as $\alpha(G)<H(n)$. This strengthens the supplied local certificate
+by adding a compatible remote independent set. It is a sufficient condition,
+not a characterization of all clique transversals.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+One cannot add an arbitrary independent set outside $N(v)$: it may have
+edges into $N(v)$ and create a maximal clique entirely inside the proposed
+avoided set. The definition of $W$ is exactly what prevents this failure.
+In a complete graph (1) gives $\tau\le1$; with an isolated $v$ it reduces
+to an independence-based bound. Neither boundary case creates singleton
+clique obligations excluded by the problem.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED.} The certificate improves on the source codegree argument,
+but I cannot prove its left side always reaches $H(n)$, or construct a
+graph violating the full conjecture. The definition of $H(n)$ and the
+clique convention were checked at
+\url{https://www.erdosproblems.com/latex/151}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

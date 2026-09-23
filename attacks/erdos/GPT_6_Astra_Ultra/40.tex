@@ -1,0 +1,34 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#40; independent attempt, 2026-09-23.}
+Which functions $g(N)\to\infty$ force unbounded two-sum representation counts from $A(N)\gg\sqrt N/g(N)$? I read the complete supplied \texttt{40.tex}, including its distinction between local Sidon extraction and finite Sidon decomposition. The cited Reiher--R\"odl--Schacht paper was located at its primary arXiv page. Here I give an elementary quantitative extraction bound and explicitly measure its loss; I do not assume a decomposition theorem.
+
+\section{WORK: A FINITE ALTERATION BOUND}
+Let $S$ contain $n$ integers and have at most $\lambda$ unordered representations of any sum, with repetitions allowed. For $n\ge8\lambda$, $S$ contains a Sidon subset of size at least
+\[
+\frac{n^{2/3}}{4\lambda^{1/3}}.
+\]
+For each sum, join every two distinct unordered representations to form a forbidden configuration. Two distinct representations cannot share an element unless they are identical. Hence configurations have either four distinct elements or three distinct elements of the form $a+c=2b$.
+The total number of representation pairs is at most
+\[
+\sum_s\binom{r(s)}2\le\frac{\lambda-1}2\sum_s r(s)
+\le\frac{\lambda n^2}{2}.
+\]
+The three-element configurations number at most $\lambda n$, since their middle element determines a diagonal representation and there are at most $\lambda-1$ alternatives.
+Select each element independently with probability $p=(8\lambda n)^{-1/3}$. Then delete one vertex from each retained forbidden configuration. The expected size left is at least
+\[
+pn-\frac{\lambda n^2p^4}{2}-\lambda np^3
+=\frac{15}{16}pn-\frac18\ge\frac12pn
+=\frac{n^{2/3}}{4\lambda^{1/3}}.
+\]
+The displayed inequality uses $pn\ge1$, which follows from $n\ge8\lambda$. Some realization therefore has the claimed size. Removing all configurations makes every unordered sum unique.
+
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Diagonal representations require three-vertex configurations and cannot be hidden in a four-uniform hypergraph. The separate $\lambda np^3$ term handles them. With $n=A(N)=N^{1/2-o(1)}$, this lemma gives only $N^{1/3-o(1)}$ points at each cutoff. Further, the extracted subsets at different cutoffs need not be nested. Thus this standard alteration argument neither constructs a single infinite dense Sidon set nor resolves the near-square-root $B_2[\lambda]$ problem. It identifies two separate missing requirements: density preservation and compatibility across scales.
+
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/40.tex}. Official statement checked through its indexed page, \url{https://www.erdosproblems.com/40}. Reiher--R\"odl--Schacht primary abstract: \url{https://arxiv.org/abs/2409.04809}. No external theorem is needed in the proof above, and no literature novelty is claimed.
+\section{FINAL}
+\textbf{UNRESOLVED.} A self-contained extraction estimate is verified, with an explicit exponent loss that prevents it from settling the original problem.
+\section{COMPLETION ESTIMATE}
+Subjective progress, not a probability or a measured fraction of a proof.
+\textbf{COMPLETION: 8\%}

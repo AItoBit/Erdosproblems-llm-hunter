@@ -1,0 +1,34 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#7; independent attempt, 2026-09-23.}
+Does a finite covering of the integers by congruences with distinct odd moduli greater than one exist? I read the complete supplied \texttt{7.tex}. Its explicit assignment excludes moduli at most $999$, but imports its crucial lemma from a missing earlier round. Here I supply that proof and strengthen its conclusion to a positive lower bound for the density of uncovered integers. This is a verification and quantitative consequence, not a claim of a new literature record.
+
+\section{WORK}
+Let $M$ be a finite collection of moduli, let $L=\operatorname{lcm}(M)$, and assign to each $m$ a prime $\pi(m)\mid m$. Write $L=\prod p^{e_p}$ and
+\[
+\lambda_p=\sum_{\pi(m)=p}p^{-v_p(m)}.
+\]
+For each assigned congruence $x=a_m\pmod m$, forbid its projection $x=a_m\pmod {p^{v_p(m)}}$ in $\mathbb Z/p^{e_p}\mathbb Z$. This removes at most $p^{e_p}\lambda_p$ residues, by the union bound. Consequently at least $p^{e_p}(1-\lambda_p)$ local residues survive. Independently choose a survivor at every prime and apply the Chinese remainder theorem. Every resulting residue modulo $L$ avoids every original congruence, since it fails at its assigned prime. Thus the uncovered set has natural density at least
+\[
+\prod_{p\mid L}(1-\lambda_p)>0
+\quad\text{if every }\lambda_p<1.
+\]
+No independence between the original congruences is assumed; independence is only between the CRT coordinates.
+
+For the supplied assignment on odd $3\le m\le999$, I recalculated the exact loads by trial division and rational arithmetic. They are $715/729,616/625,302/343,114/121,159/169,274/289,343/361$ at $p=3,5,7,11,13,17,19$, respectively. At $p\ge23$ the supplied argument gives $\lambda_p\le22/p<1$. Therefore a fully explicit lower density bound, uniformly over all residues, is
+\[
+\frac{14}{729}\frac9{625}\frac{41}{343}\frac7{121}
+\frac{10}{169}\frac{15}{289}\frac{18}{361}
+\prod_{\substack{23\le p\le999\\p\text{ prime}}}(1-22/p)>0.
+\]
+The finite product is small but strictly positive. Restricting to a subset of moduli improves the load bounds.
+
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The projection condition is stronger than avoiding the original congruence, which is the direction needed. A positive density bound proves noncoverage for these finitely many moduli, but cannot be passed to an infinite product or to arbitrary maximum modulus. Repeated moduli invalidate the use of this particular certificate. No larger cutoff or solution of the unrestricted question has been established.
+
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/7.tex}. The indexed official statement at \url{https://www.erdosproblems.com/7} was checked on 2026-09-23. Its literature remarks are not needed for the self-contained CRT proof. The exact loads are reproduced by \texttt{python3 verification/batch\_3\_final\_checks.py}.
+\section{FINAL}
+\textbf{UNRESOLVED.} The finite obstruction is verified and made quantitative; the unrestricted existence problem remains.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the original problem, not a probability.
+\textbf{COMPLETION: 10\%}

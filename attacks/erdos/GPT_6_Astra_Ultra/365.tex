@@ -1,0 +1,310 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.4/365.tex", "source_paths": ["attacks/erdos/gpt_pro_5.2/365.tex", "attacks/erdos/gpt_pro_5.4/365.tex"], "source_model": "gpt_pro_5.4", "source_completion": 60.0, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 365 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/365
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.4/365.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/365.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/365.tex
+\section*{Problem 365: Consecutive powerful numbers}
+
+\subsection*{FORMAL RESTATEMENT}
+A positive integer $m$ is \emph{powerful} (a.k.a. \emph{squarefull} or \emph{$2$-full}) if for every prime $p\mid m$ we have $p^2\mid m$.
+
+The prompt asks (paraphrasing) whether every pair of consecutive powerful integers $(n,n+1)$ must arise from a Pell-type construction, and then says ``in other words'' whether one of $n,n+1$ must be a square.
+
+\textbf{Ambiguity / minimal correction.} ``Comes from a Pell equation'' is not a mathematically precise property unless one specifies what counts as ``coming from.'' The only precise embedded claim is:
+
+\medskip
+\noindent\textbf{(\*)} \emph{If $n$ and $n+1$ are powerful, then at least one of $n$ or $n+1$ is a perfect square.}
+
+I will disprove (\*) by an explicit counterexample.
+
+\subsection*{QUICK LITERATURE/CONTEXT CHECK}
+The prompt itself records that many examples come from Pell equations such as $x^2=8y^2+1$ (giving $8y^2$ powerful and $x^2$ a square), but also that Golomb found a counterexample with $12167,12168$, and that Walker produced infinitely many counterexamples via a Pell-type equation $7^3x^2=3^3y^2+1$. (These items are also summarized on the Erd\H{o}s-problems site and in OEIS A060355.)
+
+\subsection*{ATTACK PLAN}
+To disprove (\*), it suffices to find one $n$ such that
+(i) $n$ is powerful,
+(ii) $n+1$ is powerful,
+(iii) neither $n$ nor $n+1$ is a square.
+
+\subsection*{WORK (complete counterexample/disproof)}
+Take
+\[
+ n := 12167.
+\]
+We claim that $n$ and $n+1$ are both powerful but neither is a square.
+
+\medskip
+\noindent\textbf{Step 1: $n$ is powerful.}
+We have
+\[
+12167 = 23^3.
+\]
+Thus the only prime dividing $12167$ is $23$, and its exponent is $3\ge 2$. Hence $12167$ is powerful.
+
+\medskip
+\noindent\textbf{Step 2: $n+1$ is powerful.}
+Compute
+\[
+12168 = 8\cdot 9\cdot 169 = 2^3\cdot 3^2\cdot 13^2.
+\]
+Every prime dividing $12168$ has exponent at least $2$ (namely $3,2,2$), so $12168$ is powerful.
+
+\medskip
+\noindent\textbf{Step 3: neither $n$ nor $n+1$ is a square.}
+Since $12167=23^3$ has an odd exponent in its prime factorization, it cannot be a perfect square.
+Similarly, $12168$ has $2$-adic valuation $v_2(12168)=3$ (odd), so it also cannot be a square.
+
+\medskip
+\noindent\textbf{Conclusion.}
+The pair $(12167,12168)$ consists of consecutive powerful numbers, but neither term is a square. This contradicts (\*), hence (\*) is false.
+
+\subsection*{VERIFICATION}
+We explicitly exhibited complete factorizations:
+\[
+12167 = 23^3,\qquad 12168 = 2^3\cdot 3^2\cdot 13^2.
+\]
+Both are powerful because all prime exponents are $\ge 2$. Neither is a square because at least one exponent is odd.
+
+\subsection*{META-CHECK (common failure modes)}
+\begin{itemize}
+\item \emph{Definition check:} Powerful means every prime exponent is $\ge 2$; both factorizations satisfy this.
+\item \emph{Square check:} A square has all exponents even; both numbers have an odd exponent.
+\item \emph{Off-by-one:} Verified that $12168=12167+1$.
+\end{itemize}
+
+\subsection*{FINAL}
+FINAL: LABEL: \textbf{FULL SOLUTION} \quad SUBLABEL: \textbf{COUNTEREXAMPLE/DISPROOF}.
+
+\subsection*{COMPLETION ESTIMATE}
+COMPLETION ESTIMATE: 100\%.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/365.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.4}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.4/365.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.4/365.tex
+\section*{Erd\H{o}s Problem \#365 --- ROUND 2}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+\textbf{Path (C): obstruction/correction.}
+
+Round-1 correctly destroyed the first subquestion by one explicit counterexample, but it overclaimed a \emph{full} resolution. The original problem has a second, still-open counting question:
+\[
+\#\{n\le x : n\mbox{ and }n+1\mbox{ are powerful}\} \stackrel{?}{\ll} (\log x)^{O(1)}.
+\]
+So the most useful round-2 task is to correct the scope, and at the same time strengthen the first-part disproof from \emph{one} counterexample to an \emph{infinite family}.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following round-1 facts without reproving them.
+\begin{itemize}
+\item Round-1 isolated the precise first subquestion: if $n$ and $n+1$ are powerful, must one of them be a square?
+\item Round-1 gave the explicit counterexample
+\[
+12167=23^3,\qquad 12168=2^3\cdot 3^2\cdot 13^2,
+\]
+so the answer to that first subquestion is already \emph{no}.
+\end{itemize}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is a self-contained Walker-type infinite family of counterexamples coming from the biquadratic unit
+\[
+\beta:=2\sqrt{7}+3\sqrt{3}.
+\]
+Odd powers of $\beta^7$ produce infinitely many integer solutions to
+\[
+7^3x^2=3^3y^2+1,
+\]
+which in turn give infinitely many consecutive powerful pairs in which \emph{neither} term is a square.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact round-1 gap is a \emph{scope gap}, not a proof gap: the overall problem was marked ``full solution'' even though the counting question was untouched.
+
+I will therefore do two things:
+\begin{itemize}
+\item prove an infinite family of counterexamples to the first subquestion;
+\item explain why the overall problem remains unresolved because the counting question survives unchanged.
+\end{itemize}
+
+\subsection*{5) WORK (ROUND-2)}
+Let
+\[
+\beta:=2\sqrt{7}+3\sqrt{3},\qquad \beta^{\ast}:=2\sqrt{7}-3\sqrt{3}.
+\]
+Then
+\[
+\beta\beta^{\ast}=28-27=1.
+\]
+A direct expansion gives
+\[
+\beta^7=2637362\sqrt{7}+4028637\sqrt{3}.
+\]
+Set
+\[
+\gamma:=\beta^7=a_1\sqrt{7}+b_1\sqrt{3},
+\]
+so
+\[
+a_1=2637362,\qquad b_1=4028637,
+\]
+and in particular
+\[
+7\mid a_1,\qquad 3\mid b_1.
+\]
+
+For every odd integer $r\ge 1$, write
+\[
+\gamma^r=a_r\sqrt{7}+b_r\sqrt{3}
+\]
+with integers $a_r,b_r>0$. (Odd powers have this form because multiplying an odd-form element $u\sqrt7+v\sqrt3$ by an even-form element $A+B\sqrt{21}$ again gives an odd-form element.)
+
+I claim that for every odd $r$,
+\[
+7\mid a_r,\qquad 3\mid b_r.
+\]
+This is proved by induction on $r$ in steps of size $2$.
+The base case $r=1$ is already known.
+Now suppose
+\[
+\gamma^r=A\sqrt7+B\sqrt3
+\]
+with $7\mid A$ and $3\mid B$.
+Write
+\[
+\gamma^2=u+v\sqrt{21}
+\]
+with integers $u,v$. Since
+\[
+\gamma^2=(a_1\sqrt7+b_1\sqrt3)^2=(7a_1^2+3b_1^2)+2a_1b_1\sqrt{21},
+\]
+we have
+\[
+v=2a_1b_1,
+\]
+so $21\mid v$ because $7\mid a_1$ and $3\mid b_1$.
+Now
+\[
+\gamma^{r+2}=\gamma^r\gamma^2=(A\sqrt7+B\sqrt3)(u+v\sqrt{21})
+\]
+so
+\[
+\gamma^{r+2}=(Au+3Bv)\sqrt7+(Bu+7Av)\sqrt3.
+\]
+Because $7\mid A$ and $7\mid v$, the coefficient $Au+3Bv$ is divisible by $7$.
+Because $3\mid B$ and $3\mid v$, the coefficient $Bu+7Av$ is divisible by $3$.
+Thus the divisibility property propagates from $r$ to $r+2$, proving the claim.
+
+Next, conjugating in the $\sqrt3$-coordinate gives
+\[
+\gamma^{\ast}:=a_1\sqrt7-b_1\sqrt3,
+\]
+and therefore for each odd $r$,
+\[
+\gamma^r\,\gamma^{\ast r}=1.
+\]
+Since
+\[
+\gamma^r=a_r\sqrt7+b_r\sqrt3,
+\qquad
+\gamma^{\ast r}=a_r\sqrt7-b_r\sqrt3,
+\]
+we obtain
+\[
+7a_r^2-3b_r^2=1.
+\]
+Because $7\mid a_r$ and $3\mid b_r$, the integers
+\[
+x_r:=\frac{a_r}{7},\qquad y_r:=\frac{b_r}{3}
+\]
+are well-defined, and the identity becomes
+\[
+343x_r^2-27y_r^2=1.
+\]
+Hence the numbers
+\[
+N_r:=27y_r^2,
+\qquad
+N_r+1=343x_r^2
+\]
+are consecutive.
+Both are powerful:
+\begin{itemize}
+\item $27y_r^2=3^3y_r^2$ is powerful because all exponents coming from $y_r^2$ are even and the exponent of $3$ is at least $3$;
+\item $343x_r^2=7^3x_r^2$ is powerful for the same reason.
+\end{itemize}
+Neither is a square:
+\begin{itemize}
+\item the $3$-adic exponent of $27y_r^2$ is $3+2v_3(y_r)$, which is odd;
+\item the $7$-adic exponent of $343x_r^2$ is $3+2v_7(x_r)$, which is odd.
+\end{itemize}
+So every odd $r\ge 1$ gives a pair of consecutive powerful non-squares.
+Since there are infinitely many odd $r$, there are infinitely many such counterexamples.
+
+The first member of this family comes from $r=1$:
+\[
+x_1=376766,\qquad y_1=1342879,
+\]
+so
+\[
+27y_1^2=48689748233307,
+\qquad
+343x_1^2=48689748233308.
+\]
+Their factorizations are
+\[
+48689748233307=3^3\cdot 139^2\cdot 9661^2,
+\]
+\[
+48689748233308=2^2\cdot 7^3\cdot 13^2\cdot 43^2\cdot 337^2.
+\]
+This is an explicit consecutive powerful pair in which neither term is a square.
+
+Therefore the first subquestion is not merely false; it is false in an infinite family.
+However, the second counting question remains. So the original Erd\H{o}s problem is still unresolved overall.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{itemize}
+\item \emph{Hidden parity issue:} only odd powers of $\gamma$ have the form $a\sqrt7+b\sqrt3$. I used only odd $r$ throughout.
+\item \emph{Integrality of $x_r,y_r$:} proved from the inductive divisibility $7\mid a_r$ and $3\mid b_r$.
+\item \emph{Could one of the two numbers still be a square if $x_r$ or $y_r$ contains extra factors of $7$ or $3$?} No. The exponents of $7$ and $3$ are respectively $3+2v_7(x_r)$ and $3+2v_3(y_r)$, always odd.
+\item \emph{Scope check:} the original problem asks a second counting question, so even an infinite family of counterexamples to the first subquestion does \emph{not} finish the whole problem.
+\end{itemize}
+
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED (BUT STRICTLY ADVANCED)}
+
+The first subquestion is completely settled negatively, and round-2 strengthens round-1 from a single counterexample to an explicit infinite family. But the overall Erd\H{o}s problem remains open because the counting question is still unresolved.
+
+\subsection*{8) COMPLETION ESTIMATE}
+COMPLETION: 60\%
+
+\subsection*{9) REFERENCES}
+\begin{itemize}
+\item[Bloom365] T. F. Bloom, \emph{Erd\H{o}s Problem \#365}, \texttt{https://www.erdosproblems.com/365}, accessed 2026-03-07.
+\end{itemize}
+
+\bigskip\hrule\bigskip
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.4/365.tex
+
+\subsection*{COMPLETION ESTIMATE}
+Inherited primary-source estimate: $60\%$. This is the original source's unverified estimate, not a new assessment or confirmation that the problem is solved.

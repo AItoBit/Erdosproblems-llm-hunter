@@ -1,0 +1,32 @@
+\section{Erd\H{o}s Problem \#634: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{634.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND NUMBERING}
+Problem 634 asks which integers occur as the number of congruent triangles tiling a triangle. The supplied file also mentions 633 and 635; those are different problems and are not silently treated as versions of 634. The task here is an arithmetic refinement of the sufficient condition quoted there, not a classification.
+\subsection*{2) BALANCING THE FACTORIZATION}
+Use Zhang's theorem in the form recorded in the official problem discussion: for positive integers $a\ge b$, the number $n^2ab$ is attainable if
+\[
+n\ge3\left\lceil\frac{a^2+b^2+ab-a-b}{ab}\right\rceil.
+\]
+For $m\ge1$, define the explicitly computable sufficient threshold
+\[
+T(m)=3\min_{ab=m,\ a\ge b}\left\lceil\frac ab+\frac ba+1-\frac1a-\frac1b\right\rceil.
+\]
+Then every $mn^2$ with $n\ge T(m)$ is attainable. The source uses only $(a,b)=(m,1)$ and thus obtains $3m$. Taking the minimum is always at least as good, and can be much better.
+For instance, $m=35=7\cdot5$ gives the expression $97/35$, hence $T(35)\le9$, compared with the source threshold $105$. For $m=143=13\cdot11$, it gives $409/143$, hence $T(143)\le9$, compared with $429$.
+\subsection*{3) UNIFORM BOUND FOR BALANCED FACTORS}
+If $m=ab$ with $1\le a/b\le R$, then
+\[
+T(m)\le3\lceil R+2\rceil,
+\]
+since $b/a\le1$ and the two negative terms can be dropped. Thus the sufficient square multiplier can be bounded independently of $m$ on any family admitting uniformly balanced factors. This follows directly from the quoted theorem; it is not a new tiling construction.
+More generally, for a proposed count $N$, enumerate every factorization $N=mn^2$ and every $m=ab$. Any one successful inequality certifies attainability. It is unnecessary to restrict to the squarefree decomposition.
+\subsection*{4) LIMITATION}
+Failure of this finite sufficient test proves nothing about nonexistence. In particular it cannot classify small exceptional counts or replace the geometric hypotheses in other tiling theorems. I do not use the source's unrestricted triquadratic equivalence without checking all its geometric side conditions.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The improvement is an optimized arithmetic certificate for an existing sufficient theorem, not a solution of the classification problem.
+\noindent The theorem was checked against the official record at \url{https://www.erdosproblems.com/634}; no independent proof of Zhang's construction is claimed.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

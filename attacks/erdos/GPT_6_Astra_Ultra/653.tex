@@ -1,0 +1,32 @@
+\section{Problem 653: outliers also obey the distance multiplicity restriction}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read \texttt{653.tex} and \texttt{653\_v2.tex} fully. For a planar set $X$, put $R_X(x)=|\{|x-y|:y\in X\setminus\{x\}\}|$ and $V(X)=|\{R_X(x):x\in X\}|$. The target concerns how close the maximum possible $V(X)$ can get to $|X|$. The sources establish the sharp line/circle bound and an outlier estimate $2t+\lceil m/2\rceil$. I strengthen the latter by applying circle-intersection geometry also to observers outside the support.
+\subsection*{2) WORK}
+Suppose $|X|=n$ and $Y\subseteq X$, $|Y|=m$, lies on a line. For every $x\in X$, a circle centred at $x$ meets that line in at most two points. There are at least $m-1$ points of $Y$ other than $x$, so
+\[
+R_X(x)\ge q:=\left\lceil\frac{m-1}{2}\right\rceil
+\qquad\text{for every }x\in X.
+\]
+Since $R_X(x)\le n-1$, all distance counts occupy at most $n-q$ integer values. Thus
+\[
+V(X)\le n-\left\lceil\frac{m-1}{2}\right\rceil
+=(n-m)+\left\lceil\frac m2\right\rceil.
+\]
+This removes the extra $t=n-m$ term in the supplied stability estimate.
+
+If $Y$ lies on a nondegenerate circle $C$ with centre $O$, precisely the same argument holds for every $x\ne O$: a circle centred at $x$ is distinct from $C$, and two distinct circles meet in at most two points. The centre $O$, if it belongs to $X$, is the sole exception. Therefore
+\[
+V(X)\le n-\left\lceil\frac{m-1}{2}\right\rceil+\mathbf1_{O\in X}.
+\]
+For completeness, the intersection assertion follows by subtracting the two circle equations: common points lie on a line, which meets either nondegenerate circle at most twice.
+
+Consequently a configuration satisfying $V(X)\ge(1-\eta)n$ has at most $2\eta n+1$ points on any line and at most $2\eta n+3$ on any circle. In particular, if $V(X_n)=(1-o(1))|X_n|$, then every line and every circle contains $o(|X_n|)$ points. This is stronger than the supplied bound allowing roughly two thirds of the points on such a support.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The centre exception is essential: a circle's centre sees its entire support at one distance. It contributes at most one additional count value, regardless of how many outliers there are. The proof uses a lower bound on every observer's distance count, not a claim that adding points preserves the number of distinct count values. At $m=n$ it recovers the supplied sharp $\lceil n/2\rceil$ estimate.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} Near-extremal constructions must have sublinear occupancy on every line and circle. This stronger obstruction does not construct configurations with nearly $n$ different counts or determine the asymptotics of $g(n)$.
+\subsection*{5) SOURCES CHECKED}
+Both complete supplied versions, read 2026-09-23. The strengthened estimate is proved from elementary circle intersections above; no unverified external extremal bound or literature priority is assumed.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the full planar extremal problem.
+\textbf{COMPLETION: 20\%}

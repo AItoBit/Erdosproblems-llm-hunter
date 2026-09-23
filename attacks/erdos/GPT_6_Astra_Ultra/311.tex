@@ -1,0 +1,23 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#311; independent attempt, 2026-09-23.}
+The target is $\delta(N)=e^{-(c+o(1))N}$ for some $0<c<1$, where $\delta(N)$ is the smallest positive distance between one and a reciprocal subset sum from $[N]$. I read the complete \texttt{311.tex}. Its equivalence proof fails at the assertion $1/105<1/N$ for every $N\ge7$. This is false for $N\ge105$. The claimed equivalence can nevertheless be repaired uniformly.
+\section{WORK: A GREEDY BELOW-ONE CERTIFICATE}
+For $N\ge2$, there exists $A\subseteq\{2,\ldots,N\}$ with
+\[
+0<1-\sum_{a\in A}\frac1a\le\frac1N.
+\]
+Start with residual $r_1=1$. At step $n\ge2$, include $n$ exactly when $1/n<r_{n-1}$; subtract $1/n$ if included. The residual always stays strictly positive. Inductively $r_{n-1}\le1/(n-1)$. If $n$ is skipped, $r_n\le1/n$. If included,
+\[
+r_n\le\frac1{n-1}-\frac1n=\frac1{n(n-1)}\le\frac1n.
+\]
+This proves the certificate. Since its total sum is below one, none of its subsets can sum to one.
+Now any inadmissible set in the source's old formulation contains a proper subset summing to one, so its positive excess is at least $1/N$. The greedy admissible certificate has distance at most $1/N$. Thus if a minimizer of the unrestricted problem is inadmissible, its value is at least that of an admissible set; otherwise it already qualifies. This proves equality of the two minima for all $N\ge2$, and $N=1$ follows directly, allowing the empty set.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+Strict inequality is used in the inclusion rule to avoid obtaining zero residual. The resulting bound is non-strict, which is sufficient for the minimization argument; equality causes no problem. This repairs the source without using its unsupported large exact table. The construction gives only an inverse-linear upper bound and says nothing about the asserted exponential rate or its constant. Establishing that asymptotic remains entirely open in this attempt.
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/311.tex}; indexed official entry \url{https://www.erdosproblems.com/311}, checked on 2026-09-23. The equivalence is proved directly above and is not claimed as a new literature result.
+\section{FINAL}
+\textbf{UNRESOLVED.} A false uniform numerical bound is replaced by a valid greedy proof of equivalence, with no new exponential estimate.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the asymptotic target.
+\textbf{COMPLETION: 8\%}

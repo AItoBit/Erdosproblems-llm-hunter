@@ -1,0 +1,78 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#1174; independent attempt, 2026-09-23.}
+All graphs are simple, may have arbitrary cardinality, and are considered in ZFC. There are two existence questions, with potentially different witness graphs:
+\[
+\begin{split}
+&\exists G\quad K_4\not\subseteq G
+\quad\hbox{and}\quad G\to(K_3)^2_\omega,\\
+&\exists H\quad K_{\aleph_1}\not\subseteq H
+\quad\hbox{and}\quad H\to(K_{\aleph_0})^2_\omega.
+\end{split}
+\]
+Here $G\to(F)^2_\omega$ means that for every map from $E(G)$ to $\omega$, some copy of $F$ has all its edges assigned the same value. The copies are ordinary, not necessarily induced, subgraphs. Allowing colours that are unused causes no change.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The live page, checked 2026-09-23, classifies the questions as \emph{not disprovable}; it records consistency results, not an unrestricted construction. I also checked the original Komj\'ath--Shelah paper \emph{A consistent edge partition theorem for infinite graphs}, especially its introduction on page 116 and Theorem 1. It discusses these two graph questions explicitly and gives forcing constructions. These results explain why a blanket impossibility assertion would be inappropriate. They are not used to claim an unconditional solution here.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+A candidate graph must defeat every countable edge colouring. Before attempting a large graph construction, test the widely available colouring obtained by encoding proper vertex colours as binary sequences. This gives an exact theorem about countable decompositions into bipartite graphs and a necessary chromatic-size barrier for both requested witnesses. I then separate that barrier from the actual triangle and infinite-clique requirements.
+
+\section{WORK}
+\subsection{Exact criterion for a countable bipartite edge decomposition}
+Put $\mathfrak c=2^{\aleph_0}$. For an arbitrary graph $G$, the following are equivalent:
+\[
+\chi(G)\le\mathfrak c
+\quad\Longleftrightarrow\quad
+E(G)\text{ is a union of countably many bipartite edge sets}.
+\]
+In particular, when $\chi(G)\le\mathfrak c$, its edges can be coloured by natural numbers so that every colour graph is bipartite.
+
+\textit{Forward proof.} A proper colouring with at most $\mathfrak c$ vertex colours can be encoded as a map $b:V(G)\to2^\omega$ such that $b(u)\ne b(v)$ for every edge $uv$. The map need not distinguish nonadjacent vertices. For an edge put
+\[
+d(uv)=\min\{n<\omega:b(u)(n)\ne b(v)(n)\}.
+\]
+The minimum exists. All edges assigned $n$ join the set of vertices with $n$th bit $0$ to the set with $n$th bit $1$. This is a bipartition of that colour graph. In particular none of those graphs has a triangle. \hfill$\square$
+
+\textit{Reverse proof.} Suppose $E(G)=\bigcup_{n<\omega}F_n$ and each spanning graph $(V(G),F_n)$ is bipartite. Choose a bipartition for each, putting isolated vertices on either side, and let $b_n(v)\in\{0,1\}$ record the side of $v$. The sequence $(b_n(v))_{n<\omega}$ is a proper colouring of $G$ by at most $|2^\omega|=\mathfrak c$ colours: if $uv$ is an edge, choose $n$ with $uv\in F_n$, so its endpoints differ in coordinate $n$. Overlaps among the $F_n$ cause no problem. If an actual partition is wanted, assign each edge to its first containing $F_n$; deleting edges preserves bipartiteness. \hfill$\square$
+
+\subsection{Consequences for both questions}
+If $G$ has the first required arrow property, the forward construction cannot be available. Therefore
+\[
+\chi(G)>\mathfrak c,\qquad |V(G)|>\mathfrak c.
+\]
+The same lower bounds hold for any witness $H$ to the second question. A triangle-free colour graph has no $K_{\aleph_0}$, since any three vertices of such a clique would already form a triangle. Notice that no clique restriction was needed in the proof of these necessary bounds.
+
+Thus checking finite graphs, countable graphs, or even arbitrary graphs with a proper vertex colouring by real numbers cannot produce a witness to either countable-colour problem. The observation also excludes graphs much larger than the continuum when their chromatic number remains at most the continuum. These are elementary barriers, not claimed new lower bounds in the literature.
+
+\subsection{The precise distinction between the two decomposition problems}
+For the first question form a hypergraph $\mathcal T(G)$ whose vertices are the edges of $G$ and whose hyperedges are the three-edge sets of triangles in $G$. Then
+\[
+G\to(K_3)^2_\omega
+\quad\Longleftrightarrow\quad
+\chi(\mathcal T(G))>\aleph_0,
+\]
+where a proper hypergraph colouring forbids a monochromatic hyperedge. This equivalence is immediate in both directions by using exactly the same map $E(G)\to\omega$.
+
+For the second question the corresponding hyperedges are $[A]^2$ for countably infinite cliques $A\subseteq V(H)$. They are infinite sets of edges, and the same equivalence uses this different hypergraph. In particular the second arrow property implies the triangle arrow property on that same graph. The reverse inference is invalid: a monochromatic triangle alone gives no infinite clique.
+
+The continuum barrier concerns decompositions into \emph{bipartite} graphs. Proving that no such decomposition exists does not establish that no countable decomposition into \emph{triangle-free} graphs exists. A triangle-free graph may itself be nonbipartite: the cycle $C_5$ is an explicit example. Replacing one condition by the other would therefore lose exactly the information needed for the first question.
+
+\subsection{Why a union of finite witnesses cannot bridge the gap}
+Let $(G_j)_{j\in J}$ be any family of finite graphs, with no edges between distinct members in their disjoint union $G$. For each $j$, inject the finite set $E(G_j)$ into $\omega$, and use that injection to colour its edges. The same palette is reused on other components. Every monochromatic connected subgraph in one component then has at most one edge, while a clique cannot straddle two components. Consequently $G$ has neither a monochromatic triangle nor a monochromatic infinite clique in this countable edge colouring, regardless of $|J|$.
+
+Even assembling infinitely many finite Ramsey witnesses this way therefore does not give either countable-colour witness. Some additional structure linking the pieces is indispensable, and it must preserve the relevant forbidden clique.
+
+\section{VERIFICATION AND EXACT REMAINING GAP}
+The forward proof only assumes the binary labels of adjacent vertices differ; it does not silently assume $|V(G)|\le\mathfrak c$. The reverse proof chooses bipartitions of spanning colour graphs, so it does not depend on connectedness. The finite checker \texttt{verification/add\_sets\_b\_checks.py} tests the first-differing-bit construction on all pairs and triples of the $64$ binary strings of length six. The full infinite proof is the coordinate bipartition argument, rather than extrapolation from that computation.
+
+For the first problem the missing object is a $K_4$-free graph of chromatic number above $\mathfrak c$ whose triangle hypergraph is not countably colourable. For the second it is a $K_{\aleph_1}$-free graph whose infinite-clique edge hypergraph is not countably colourable. This note supplies neither object and gives no ZFC nonexistence proof.
+
+\section{FINAL}
+\textbf{UNRESOLVED.} Both potential witnesses must exceed the continuum in chromatic number. An exact bipartite-decomposition criterion and an obstruction to disjoint finite assembly are proved, but the required unrestricted existence results remain unproved.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, statement and current status, \url{https://www.erdosproblems.com/1174}, accessed 2026-09-23. P. Komj\'ath and S. Shelah, \emph{A consistent edge partition theorem for infinite graphs}, Acta Mathematica Hungarica 61 (1993), 115--120, original paper \url{https://shelah.logic.at/files/95711/414.pdf}; bibliography at \url{https://shelah.logic.at/papers/414/}. No earlier numbered local attempt was found. The binary-label argument is supplied in full and no claim of novelty is made for it.
+
+\section{COMPLETION ESTIMATE}
+This is a subjective estimate of progress toward the two unrestricted existence questions. The necessary bound and failed-assembly analysis are rigorous, but crossing the bound is not sufficient and the principal construction problem is untouched.
+\textbf{COMPLETION: 7\%}

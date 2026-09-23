@@ -1,0 +1,38 @@
+\section{Erd\H{o}s Problem \#773: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Estimate the largest size $f(N)$ of a standard Sidon subset of $\{1^2,\ldots,N^2\}$, where sums allowing a repeated summand must also be distinct.
+
+All supplied versions considered: \texttt{773.tex}.
+The source repairs weak versus standard Sidonicity using a sharp half-size conversion theorem. I give a direct alteration proof that handles three- and four-vertex collisions together, so that the extraction step no longer depends on that conversion theorem or on an unavailable earlier round.
+\subsection{2) WORK}
+\paragraph{Direct standard-Sidon extraction.}
+Let $A$ be a set of $n$ real numbers such that every real number has at most $k\ge1$ representations as a sum of two distinct elements of $A$. Then $A$ has a standard Sidon subset of size at least
+\[
+{3\over4}k^{-1/3}n^{2/3}-1. \tag{1}
+\]
+For each sum $s$, write $r(s)$ for its number of unordered distinct-pair representations. Distinct representations of the same sum cannot share a vertex. Thus the number of four-vertex collision configurations is at most
+\[
+\sum_s {r(s)\choose2}\le {k-1\over2}\sum_s r(s)
+\le {kn^2\over4}.
+\]
+Three-vertex collisions are precisely $x+z=2y$ with $x<y<z$. Each midpoint $y$ admits at most $k$ endpoint pairs, so there are at most $kn$ such configurations.
+
+Select each element independently with probability $p=(kn)^{-1/3}$. Delete at most one element from every surviving collision configuration. No deletion creates another collision. The expected surviving size after these deletions is at least
+\[
+np-{kn^2\over4}p^4-knp^3
+={3\over4}k^{-1/3}n^{2/3}-1.
+\]
+Some realization attains this bound, proving (1). The list of configurations is exhaustive: equal sums of distinct pairs either involve four distinct elements, or cancellation identifies the pair; one repeated pair gives a three-term progression; two repeated pairs force the same midpoint.
+
+Applying the lemma to the representation bound $k\le N^{3\epsilon}$ quoted for squares in the supplied source recovers $f(N)\gg_\epsilon N^{2/3-\epsilon}$. That application is conditional on that representation estimate; the extraction lemma itself is entirely proved above. It does not improve the stronger $N^{2/3}$ literature lower bound recorded in the source.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The probability satisfies $p\le1$ for $k,n\ge1$. Multiple collisions on the same vertices can only make the deletion bound less efficient, never invalidate it. Repeated summands are explicitly included. This gives a direct proof of a known-strength lower bound, not a new asymptotic exponent.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The gap to the near-linear upper bound for squares remains. Improving the generic extraction constant or removing the weak-Sidon intermediary does not determine $f(N)$.
+\subsection{5) SOURCES CHECKED}
+Full source read. Checked Ma--Tang, \texttt{https://arxiv.org/abs/2602.23282v2}, on 2026-09-23: its abstract establishes the exact half-size weak-Sidon conversion for all nonempty sets. The direct alteration argument above uses none of that paper\textquotesingle s theorems.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

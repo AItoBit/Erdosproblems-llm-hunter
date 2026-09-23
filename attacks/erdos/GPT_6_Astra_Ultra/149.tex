@@ -1,0 +1,25 @@
+\section{Problem 149: a degeneracy threshold beyond the supplied subclass}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. The strong chromatic index conjecture asks for at most $5\Delta^2/4$ colors for even $\Delta$, and $(5\Delta^2-2\Delta+1)/4$ for odd $\Delta$. I read \texttt{gpt\_pro\_5.4/149.tex} fully. It applies Yu's theorem to 2-degenerate graphs. I retain the general degeneracy parameter to obtain a wider certified region.
+\subsection*{2) WORK}
+The checked theorem of Yu states that a $k$-degenerate graph has strong chromatic index at most
+\[
+U(k,\Delta)=(4k-2)\Delta-k(2k-1)+1.
+\]
+This is a published input. Let $k\ge1$ and suppose $k\le5\Delta/16$. Then
+\[
+U(k,\Delta)\le\frac54\Delta^2-2\Delta-2k^2+k+1
+\le\frac54\Delta^2-2\Delta.
+\]
+The last step uses $-2k^2+k+1\le0$. This is below both parity-dependent conjectured bounds for $\Delta\ge1$. Thus every graph with degeneracy at most $5\Delta/16$ satisfies the conjecture. In particular, a counterexample must have degeneracy strictly greater than $5\Delta/16$, in addition to the restrictions in the supplied attempt.
+
+Keeping the constant term gives a better small example: for $k=3$, $U=10\Delta-14$. For even $\Delta\ge8$, the difference from the target, multiplied by 4, is $5\Delta^2-40\Delta+56>0$; it is 56 at 8 and increasing. For odd $\Delta\ge7$ the corresponding difference is $5\Delta^2-42\Delta+57>0$; it is 8 at 7 and increasing. Therefore all 3-degenerate graphs with $\Delta\ge7$ are also certified, even where the simpler ratio threshold does not apply.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The odd target is smaller than $5\Delta^2/4$, so it must be checked separately; the displayed inequalities do so. Degree zero is immediate, with no edges to color. Degeneracy three alone does not settle the intermediate maximum degrees 4, 5, and 6 through this estimate: substituting the bound does not justify those cases. These are corollaries of an existing theorem, not new universal coloring algorithms.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The unsolved regime still includes graphs with degeneracy comparable to their maximum degree, including the extremal constructions. No bound for that whole regime is proved here.
+\subsection*{5) SOURCES CHECKED}
+Complete supplied file; G. Yu, \emph{Strong edge-colorings for $k$-degenerate graphs}, \texttt{https://arxiv.org/abs/1212.6093}, checked 2026-09-23 for the exact formula.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward the universal conjecture.
+\textbf{COMPLETION: 15\%}

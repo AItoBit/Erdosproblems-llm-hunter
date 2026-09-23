@@ -1,0 +1,26 @@
+\section{Erd\H{o}s Problem \#78: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Find an explicit exponential lower-bound construction for diagonal Ramsey numbers: for some $C>1$ and all sufficiently large $k$, construct a graph with at least $C^k$ vertices and no clique or independent set of size $k$.
+
+All supplied versions considered: \texttt{78.tex}.
+The source correctly separates unbounded exhaustive search from efficient construction, but calling the intended problem ill-posed does not solve it. Polynomial-time output and a closed formula are not equivalent formal requirements. I improve its exhaustive search to a standard conditional-expectation algorithm, while making the remaining complexity gap explicit.
+\subsection{2) WORK}
+Let $n=\lfloor2^{k/3}\rfloor$, and let $X$ count homogeneous $k$-subsets of a uniformly random graph. Then
+\[
+\mathbb E X=2\binom nk2^{-\binom k2}\le2^{1-k^2/6+k/2}<1\qquad(k\ge6).
+\]
+Expose edges one at a time. Given any partial assignment, the conditional expectation is computable by summing over all $k$-subsets: a subset already containing both an edge and a nonedge contributes zero; a monochromatically assigned subset contributes the appropriate probability $2^{-u}$ for its $u$ unassigned internal edges; a completely unassigned subset contributes $2^{1-\binom k2}$. Of the two possible values of the next edge, at least one has conditional expectation at most the current one, since their average equals the current expectation. Choose that value.
+At the end $X$ is a nonnegative integer below one, so $X=0$.
+
+The naive implementation takes $O(n^2\binom nk k^2)$ rational-arithmetic operations, with $O(k^2)$-bit probability denominators (and polynomially bounded total bit lengths). Since $k=\Theta(\log n)$ this is $\exp(O((\log n)^2))$, much smaller than enumerating $2^{\binom n2}$ graphs. Also $n\ge2^{k/4}$ for $k\ge12$, so the output has the desired exponential size.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The final algorithm is deterministic and terminates, but its displayed running time is quasipolynomial, not polynomial in $n$. Choosing a low-expectation branch does not magically make the sum over all $k$-sets cheap. The construction is a standard derandomization, not a new Ramsey theorem.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+An efficient explicit exponential construction in the intended strong sense remains unproved. The exact remaining algorithmic obstacle here is evaluating a suitable pessimistic estimator in polynomial time.
+\subsection{5) SOURCES CHECKED}
+Full source \texttt{78.tex} read; Attempted retrieval of the formal-conjectures \texttt{ErdosProblems/78.lean} statement URL on 2026-09-23 failed; no external fact is attributed to that unavailable page. The probabilistic and algorithmic argument is proved above without importing a Ramsey bound.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 12\%}

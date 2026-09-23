@@ -1,0 +1,97 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#134; reconstruction, 2026-09-23.}
+Given $\varepsilon,\delta>0$, is it true that, for all sufficiently large
+$n$, every triangle-free $n$-vertex graph with maximum degree below
+$n^{1/2-\varepsilon}$ can be extended on the same vertex set to a
+triangle-free graph of diameter $2$ by adding at most $\delta n^2$ edges?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page records a positive answer. Alon's primary note proves
+it by a bounded-degree random extension followed by maximal completion.
+We reconstruct that proof with $\eta=\min(\varepsilon,1/12)$, sufficient
+for the question, and supply the relevant probability comparison.
+No new bound or novelty is claimed.
+
+\section{WORK}
+Set $c=n^{-\eta}$, $D=\lceil2c\sqrt n\rceil$, and
+$m=\lfloor c^2 n^{3/2}\rfloor$. Starting from the given graph, make $m$
+random additions. At each step choose uniformly from the pairs of
+nonadjacent vertices that both have degree below $D$ and have no common
+neighbor. Adding such an edge preserves triangle-freeness and the degree
+bound $D$.
+
+At any stage at most $2cn$ vertices have reached degree $D$: each such
+vertex has acquired at least $c\sqrt n$ new incidences, while there
+are at most $2m$ new incidences in total. The number of unordered pairs
+having a common neighbor is at most
+\[
+ \sum_v\binom{d(v)}2\le nD^2/2=(2+o(1))c^2n^2.          \tag{1}
+\]
+There are at least $\binom{n-2cn}{2}$ pairs of unsaturated vertices,
+and at most $nD/2=O(cn^{3/2})$ existing edges. These estimates ensure an
+eligible pair always exists for large $n$, so the process can perform
+all $m$ steps.
+
+Fix a set $U$ of $u=\lceil5cn\rceil$ vertices. Conditional on $U$ still
+being independent, at least $3cn$ of its vertices are unsaturated.
+By (1), its eligible internal pairs number at least
+\[
+ \binom{3cn}{2}-(2+o(1))c^2n^2\ge2c^2n^2
+\]
+for large $n$. There are at most $n^2/2$ eligible pairs altogether.
+Thus, at each step before $U$ ceases to be independent, the chance
+of selecting an edge inside it is at least $4c^2$, and in particular
+at least $3c^2$. Iterated conditional probabilities give
+\[
+ \Pr(U\hbox{ remains independent})\le(1-3c^2)^m
+ \le\exp(-3c^2m).
+\]
+The union bound over all $U$ gives probability at most
+\[
+ \exp\left(u\log(en/u)-3c^2m\right).                     \tag{2}
+\]
+The positive term is $O(cn\log n)$, whereas the magnitude of the
+negative term is $(3+o(1))c^4n^{3/2}$. Their ratio tends to infinity,
+since
+\[
+ \frac{c^3\sqrt n}{\log n}
+ =\frac{n^{1/2-3\eta}}{\log n}\longrightarrow\infty.
+\]
+Therefore (2) is less than one for large $n$. There is an extension
+$H$ with independence number $\alpha(H)<u$.
+
+Now add edges to $H$ as long as this preserves triangle-freeness,
+obtaining a maximal triangle-free graph $J$. Every neighborhood in $J$
+is independent in $J$, and hence independent in $H$. Thus
+\[
+ \Delta(J)<u,\qquad e(J)\le n(u-1)/2=O(cn^2)=o(n^2).
+\]
+Every nonadjacent pair of vertices in $J$ has a common neighbor;
+otherwise their edge could still be added. Consequently $J$ is
+connected and has diameter at most $2$. For $n\ge3$ a triangle-free
+graph cannot be complete, so its diameter is exactly $2$.
+The number of edges added to the original graph is at most
+$e(J)=o(n^2)$, and is therefore at most $\delta n^2$ for all sufficiently
+large $n$.\hfill$\square$
+
+\section{VERIFICATION}
+The estimate is uniform in the initial graph; all probabilities are
+conditional on its history. Independence can only be lost during the
+process, which justifies the survival bound. The final maximal extension
+need not retain the intermediate degree cap $D$; its degree is instead
+controlled by the already established independence bound. These are
+separate stages of the argument.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known positive answer reconstructed).}
+The construction adds $O(n^{2-\min(\varepsilon,1/12)})$ edges. The proof
+uses only elementary counting and the probabilistic method.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/134}.
+N.~Alon, note addressing Problems 133 and 134,
+\url{https://web.math.princeton.edu/~nalon/PDFS/remark1901.pdf}.
+Checked 2026-09-23. Completion measures the stated existence result.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

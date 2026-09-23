@@ -1,0 +1,35 @@
+\section{Problem 386: a prime-gap condition in the thin boundary layer}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{386.tex}, whose target is to classify binomial coefficients $\binom nk$, $2\le k\le n/2$, that are products of distinct consecutive primes. Its entropy argument confines any infinite family to $k=o(n)$. I investigate a smaller part of that remaining layer and prove a further necessary condition. The supplied numerical searches are not inherited as independently verified computations.
+\subsection*{2) WORK}
+For all sufficiently large $n$, if $2\le k\le n^{1/3}$ and $\binom nk$ is a product of consecutive primes, then the interval
+\[
+(n-k,n]
+\]
+contains no prime.
+
+Indeed, by the prime number theorem there is a prime $q$ in $(n/2,2n/3]$ for every sufficiently large $n$. Our range has $k\le n/3$, so $q\le n-k$, $q>k$, and $q^2>n$. Legendre's formula gives
+\[
+v_q\binom nk=1-0-1=0.
+\]
+If a prime $p$ lies in $(n-k,n]$, the same formula gives $v_p\binom nk=1$. Consecutivity of the prime support, together with the missing $q<p$, then forbids all prime factors at most $q$. Every prime between $q$ and $n-k$ also has valuation zero. Therefore all prime factors lie in $(n-k,n]$.
+
+There are at most $\lceil k/2\rceil$ primes in those $k$ consecutive integers, since they are odd for large $n$. Squarefreeness would give
+\[
+\binom nk\le n^{\lceil k/2\rceil}\le n^{2k/3},
+\]
+where the last inequality holds for every $k\ge2$. But
+\[
+\binom nk=\prod_{i=0}^{k-1}\frac{n-i}{k-i}
+>\left(\frac nk\right)^k\ge n^{2k/3}.
+\]
+The strict inequality follows because $n>k$ and at least the factor $i=1$ is strictly greater than $n/k$. This contradiction proves the claim.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The result is necessary, not sufficient. Prime-free intervals of fixed length occur often enough that excluding intervals containing a prime does not resolve even the fixed-$k$ problem. The proof uses an ordinary fixed-proportion consequence of the prime number theorem, not an unproved statement about primes in intervals of length $k$. The odd-prime count is valid because the interval is far above two. Repeated prime factors would invalidate the product bound, so the original distinct-prime hypothesis is essential.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} In the regime $2\le k\le n^{1/3}$, every sufficiently large candidate must end inside a prime-free interval of length $k$. No exclusion of all such intervals or full classification is obtained.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version, read 2026-09-23. Its prime number theorem input is used only to obtain a prime between $n/2$ and $2n/3$; the additional parity/product argument is proved above. No claim of literature priority is made.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward classifying all consecutive-prime binomial coefficients.
+\textbf{COMPLETION: 15\%}

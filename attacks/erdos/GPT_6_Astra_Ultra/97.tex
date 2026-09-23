@@ -1,0 +1,73 @@
+\section{Erd\H{o}s Problem \#97: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{97.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The full question concerns a vertex of a convex polygon from which no four
+other vertices are equidistant. The supplied attempt proves that a hypothetical
+seven-point counterexample, even without convexity, has a $7\times7$ incidence
+matrix with row and column sums four, and pairwise row intersections two.
+I close this seven-point case. This does not settle arbitrary polygon size.
+
+\subsection*{2) WORK: NO SEVEN-POINT CONFIGURATION}
+Suppose seven distinct planar points $p_i$ have circles $C_i$, centered at
+$p_i$ with positive radii $r_i$, each through at least four other points.
+Let $S_{ij}=1$ when $p_j\in C_i$, otherwise zero. If the total incidence count
+is $m$, then $m\ge28$, whereas distinct circles intersect in at most two points,
+so
+\[
+ \frac12(m^2/7-m)\le\sum_j\binom{\sum_iS_{ij}}2\le42.
+\]
+Equality follows throughout: each row and column has four ones, and
+\[
+ SS^t=2I+2J. \tag{1}
+\]
+
+Make a graph $R$ on the seven labels, joining $i,j$ when
+$S_{ij}=S_{ji}=1$. Every vertex has degree at least $4+4-6=2$.
+On every edge of $R$, $r_i=|p_i-p_j|=r_j$, so radii are constant on
+each connected component. Consequently incidences between two vertices
+of the same component are symmetric, including pairs not originally
+known to be adjacent.
+
+If $R$ is disconnected, its component sizes must be three and four.
+The component of size three is a triangle. Let the four-vertex component
+have $e$ edges. Internal directed incidences number $6+2e$. There are at
+most twelve directed incidences between components, because any reciprocal
+pair would connect them. Since the total is 28, $e\ge5$.
+If $e=5$, the two nonadjacent vertices of this component have its other two
+vertices as common out-neighbours. Each also has two out-neighbours in
+the three-vertex component; those two subsets intersect. Their rows then
+intersect in at least three places, contradicting (1).
+If $e=6$, each of the four vertices has exactly one out-neighbour in the
+other component. Two of them choose the same vertex by pigeonhole, again
+giving that pair at least three common out-neighbours. Thus $R$ is connected.
+
+All seven radii are now equal, so $S=S^t$. The all-ones vector is an
+eigenvector of $S$ of eigenvalue four. On its six-dimensional perpendicular
+space, (1) gives $S^2=2I$, so the remaining eigenvalues are $\sqrt2$ or
+$-\sqrt2$. Since the diagonal is zero, the trace would give
+\[
+ 0=4+(a-b)\sqrt2,\qquad a,b\in\mathbb N_0,\quad a+b=6,
+\]
+which is impossible. No such seven-point configuration exists.
+
+\subsection*{3) ADVERSARIAL VERIFICATION}
+The argument uses distinct centers to ensure distinct circles. It does not
+assume the incidence matrix is initially symmetric; equality of radii is
+proved through $R$ before the spectral step. The disconnected case checks
+both possible edge counts, and convexity is never used. A separate finite
+enumeration of the 24 center assignments of the seven Fano lines also found
+their reciprocal graphs connected; that computation motivated the proof
+but is not needed for its validity.
+
+\subsection*{7) FINAL AND REFERENCE}
+\textbf{UNRESOLVED for the full problem.} The first case left by the supplied
+attempt, seven points, is excluded. Thus any counterexample has at least
+eight vertices, using the previously established exclusions below seven.
+I do not claim this small-case result is new to the literature. The exact
+convex-polygon target was checked in the indexed official source:
+\url{https://www.erdosproblems.com/97}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

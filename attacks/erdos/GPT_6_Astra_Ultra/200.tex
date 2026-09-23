@@ -1,0 +1,33 @@
+\section{OBJECTIVE AND SOURCE REVIEW}
+\textbf{Erd\H{o}s \#200; independent attempt, 2026-09-23.}
+Does the maximum length $L(N)$ of a nonconstant prime arithmetic progression in $[1,N]$ satisfy $o(\log N)$? I read the complete supplied \texttt{200.tex}. Its claimed second-order logarithmic improvement uses an invalid comparison of error terms. There is, however, a sharper elementary description of the exceptional first term.
+\section{WORK: CORRECTED EXACT DICHOTOMY}
+Suppose $a,a+d,\ldots,a+(k-1)d$ are prime, with $d>0$, $k\ge2$. Then
+\[
+k\le a.
+\]
+Indeed, if $a\mid d$, the second term is composite. Otherwise, if $k>a$, the term at index $a$ equals $a(1+d)$ and is composite. Consequently the supplied exceptional interval $k/2<a\le k$ reduces to $a=k$, necessarily prime.
+If $a>k$, every prime $q\le k$ divides $d$: otherwise one of the first $q$ indices gives a term divisible by $q$, and that term exceeds $q$. If $a=k$, the same argument works for $q<k$, while $k\nmid d$ is required by the second term. Hence, without any large-$k$ qualification,
+\[
+\begin{cases}
+P(k)\mid d,&a>k,\\
+P(k)/k\mid d,\quad k\nmid d,&a=k\text{ prime},
+\end{cases}
+\qquad P(k)=\prod_{q\le k}q.
+\]
+In particular, for composite $k$ only the first alternative exists. The example $5,11,17,23,29$ verifies the second alternative is possible.
+\section{CORRECTION OF THE ASYMPTOTIC CLAIM}
+The valid generic-case inequality is
+\[
+\log N>\vartheta(k)+\log(k-1).
+\]
+The supplied bound $\vartheta(k)=k+O(ke^{-c\sqrt{\log k}})$ does \emph{not} make the error $o(\log k)$: the ratio of that error allowance to $\log k$ tends to infinity. Nor does $\vartheta(k)=k+o(k)$ imply the supplied pseudoprogression estimate $\log x_{k-1}=k+O(\log k)$; it implies only $k+o(k)$. Thus the asserted $-\log\log N+o(\log\log N)$ improvement is not proved by that argument.
+\section{ADVERSARIAL VERIFICATION AND REMAINING GAP}
+The term of index $a$ exists exactly when $k>a$, so the boundary $k=a$ is retained correctly. The divisibility proof uses positivity of $d$ and primality of every term. The stronger exact dichotomy still gives only logarithmic scale. Pseudoprogressions with step $P(k)$ continue to evade every prime at most $k$, so this correction does not supply the global primality information needed for $o(\log N)$.
+\section{SOURCES CHECKED}
+Complete local source: \texttt{gpt\_pro\_5.4/200.tex}. Official statement and baseline checked at the indexed primary page \url{https://www.erdosproblems.com/history/200}, 2026-09-23. The exact divisibility argument is self-contained.
+\section{FINAL}
+\textbf{UNRESOLVED.} The exception is narrowed to $a=k$ prime; the unjustified second-order estimate is withdrawn.
+\section{COMPLETION ESTIMATE}
+Conservative subjective progress toward the little-oh target.
+\textbf{COMPLETION: 12\%}

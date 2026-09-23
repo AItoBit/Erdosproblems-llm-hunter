@@ -1,0 +1,33 @@
+\section{Problem 282: exact tests of the distinct odd greedy algorithm}
+\subsection*{1) OBJECTIVE AND SOURCE REVIEW}
+Attempt dated 2026-09-23. I read the complete \texttt{282.tex}, including its sparse Sylvester sets, modular invariant, and distinction from the full odd-denominator problem. I investigate its explicitly stated distinct-denominator greedy convention: subtract the reciprocal of the least unused odd integer whose reciprocal does not exceed the positive remainder. Sparse allowed sets do not decide termination for the full odd set.
+\subsection*{2) WORK}
+For a reduced remainder $a/b$ with odd $b$, and a selected odd denominator $n$, the next reduced numerator and denominator are
+\[
+a'=\frac{an-b}{g},\quad b'=\frac{bn}{g},\qquad g=\gcd(an-b,bn).
+\]
+Before termination $g$ is odd. Therefore $b'$ remains odd and
+\[
+a'\equiv a-1\pmod2.
+\]
+Reduced numerator parity alternates at every nonterminal step. If the distinctness restriction does not force skipping the least eligible odd denominator, then $0\le an-b<2a$. This controls one-step growth but does not imply descent. For instance the trajectory from $2/7$ is
+\[
+\frac27\longmapsto\frac3{35}\longmapsto\frac4{455}
+\longmapsto\frac1{10465}\longmapsto0,
+\]
+using denominators $5,13,115,10465$. Its numerator increases twice before a common factor causes a decrease.
+
+I executed an exact rational search for every reduced $a/b\in(0,1)$ with odd $3\le b\le101$. With previous denominator $\ell$, the next denominator is the least odd integer at least
+\[
+\max\{\ell+2,\lceil b/a\rceil\}.
+\]
+This is exactly the least unused eligible denominator: every smaller unused denominator was too small at an earlier, larger remainder and remains ineligible. All 2,106 fractions terminated. The longest run used 18 terms; the largest denominator or intermediate reduced denominator used 11,711 binary digits. No run reached the imposed caps of 200 steps or 100,000 bits. Full denominator lists and run statistics are stored for reproduction.
+\subsection*{3) ADVERSARIAL VERIFICATION}
+This extends the source's stated denominator-51 check, but remains a finite calculation. Very large denominators necessitate integer arithmetic; no floating-point stopping criterion was used. Distinctness matters: $2/3$ cannot use $1/3$ twice under this convention, and instead follows denominators $3,5,9,45$. The parity lemma is valid even when distinctness forces a larger denominator; the bound $an-b<2a$ requires the extra condition stated above. Alternating parity by itself does not prohibit an infinite trajectory.
+\subsection*{4) FINAL}
+\textbf{UNRESOLVED.} The finite range is verified with exact certificates and the numerator transition is explicit. No well-founded decreasing quantity proves universal termination, and no nonterminating admissible full-odd-set example is constructed.
+\subsection*{5) SOURCES CHECKED}
+The complete supplied version, read 2026-09-23. Code and all computed trajectories: \texttt{verification/batch\_1\_checks.py} and \texttt{verification/batch\_1\_checks.json}. An official-page retrieval was unavailable; the algorithm convention is therefore specified rather than silently inferred.
+\subsection*{6) COMPLETION ESTIMATE}
+Subjective progress toward termination for every admissible rational input.
+\textbf{COMPLETION: 15\%}

@@ -1,0 +1,97 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#106; exact reconstruction of a known packing, 2026-09-23.}
+Let $f(n)$ be the supremum of the sum of side lengths of $n$ positive-sided squares contained in the unit square, with pairwise disjoint interiors. Rotations are permitted and boundary contact is permitted. The conjecture $f(k^2+1)=k$ is false: the construction below proves
+\[
+f(17)\geq\frac{2190452873}{547596200}
+=4+\frac{68073}{547596200}>4.
+\tag{1}
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current source records the counterexample of Conner Silverstein, produced with Claude Opus 5, and links an exact rational certificate. Earlier local attempts prove basic packing bounds but do not contain this counterexample. We reconstruct the primary construction and audit it independently by rational separating projections. Attribution belongs to the cited construction; this is not a claim of a new packing.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Arrange sixteen axis-parallel squares in six groups, then place one rationally rotated square in the remaining gap. Give both the coordinates and the finite separation criterion, so that strict improvement over four does not depend on floating-point geometry.
+
+\section{WORK}
+Put
+\[
+C=\frac{255}{257},\quad S=\frac{32}{257},\quad
+a=\frac{96363407}{219038480},\quad
+u=\frac{211886647}{1095192400},\quad b=a-u,\quad s=\frac{u}{C+S}.
+\tag{2}
+\]
+Since $255^2+32^2=257^2$, $(C,S)$ is an exact unit direction. All the lengths below are positive. An axis-parallel square is specified by its lower-left corner $(x,y)$ and its side length $w$; it is $[x,x+w]\times[y,y+w]$.
+\[
+\begin{array}{c|c|c|c}
+\text{indices}&(x,y)&w&\text{parameters}\\\hline
+1,2,3,4&(0,j/4)&1/4&j=0,1,2,3\\
+5,6,7&(1/4,j(a-1/4))&a-1/4&j=0,1,2\\
+8,9,10,11&(a+i(1-a)/2,j(1-a)/2)&(1-a)/2&(i,j)=(0,0),(0,1),(1,0),(1,1)\\
+12&(1/4,1/4+2b)&3/4-2b&\\
+13,14&(1-2b+ib,1-b)&b&i=0,1\\
+15,16&(1-2u+iu,1-a)&u&i=0,1
+\end{array}
+\tag{3}
+\]
+For square $17$, set $x_0=1-3u$, $y_0=1-a$, and use the successive vertices
+\[
+(x_0+sS,y_0),\quad(x_0+u,y_0+sS),\quad
+(x_0+sC,y_0+u),\quad(x_0,y_0+sC).
+\tag{4}
+\]
+Because $u=s(C+S)$, the consecutive edge vectors in (4) are $s(C,S)$, $s(-S,C)$, $-s(C,S)$, $-s(-S,C)$. They are perpendicular and all have length $s$, proving that (4) is a square. Its bounding box has lower-left corner $(x_0,y_0)$ and side $u$.
+
+\subsection{Containment and non-overlap certificate}
+For a convex polygon $Q$ and a vector $v$, write
+\[
+I_v(Q)=[\min_{q\in\operatorname{Vert}(Q)}v\cdot q,\ \max_{q\in\operatorname{Vert}(Q)}v\cdot q].
+\]
+If two such intervals have disjoint interiors, a line perpendicular to $v$ separates the interiors of the two polygons. This is a sufficient condition for non-overlap, including when the intervals share an endpoint. It follows directly from the fact that a linear functional on a convex polygon attains its extreme values at vertices.
+
+Substitution of (2) in (3)--(4) places all $68$ vertices in $[0,1]^2$, so convexity proves containment. Among squares $1$ through $16$, the rectangular coordinate intervals in (3) separate every pair in at least one coordinate. For their pairs with square $17$, the following table lists a sufficient vector. Set $v_1=(1,0)$, $v_2=(0,1)$, $v_3=(C,S)$, $v_4=(-S,C)$.
+\[
+\begin{array}{c|rrrrrrrrrrrrrrrr}
+i&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16\\\hline
+\text{index of separating vector for }(i,17)
+&1&1&1&1&2&2&3&2&2&1&1&4&2&1&1&1
+\end{array}
+\tag{5}
+\]
+All comparisons in this certificate are rational. The two tilted contacts are pinned by the exact identities
+\[
+\begin{aligned}
+a(C+4S)+uC\left(3-\frac S{C+S}\right)&=C+\frac74S,\\
+a(-2S-3C)+u\left(5S+2C+\frac{C^2}{C+S}\right)&=-\frac34C.
+\end{aligned}
+\tag{6}
+\]
+They can alternatively be used to derive the values of $a,u$ in (2). The accompanying checker evaluates every vertex and every one of the $\binom{17}2=136$ separating comparisons with exact fractions. Its JSON output records all the coordinates and all the separating vectors, so (5) is not a numerical picture-based assertion.
+
+\subsection{The strict gain and its propagation}
+The sum of the seventeen side lengths simplifies before numerical evaluation:
+\[
+4\left(\frac14\right)+3\left(a-\frac14\right)
++4\left(\frac{1-a}{2}\right)+(\tfrac34-2b)+2b+2u+s
+=3+a+2u+s.
+\]
+Equation (2) gives exactly (1). Thus this is a strict counterexample, with a positive rational margin.
+
+It also supplies counterexamples for every integer $k\geq4$. Given any packing of $k^2+1$ squares, shrink it by $k/(k+1)$ into the lower-left square of that side. Tile the remaining L-shaped border by $2k+1$ squares of side $1/(k+1)$. The new number of squares is $(k+1)^2+1$, and taking suprema of the side sums yields
+\[
+f((k+1)^2+1)\geq\frac{k}{k+1}f(k^2+1)+\frac{2k+1}{k+1}.
+\]
+Writing $\delta_k=f(k^2+1)-k$, this says $(k+1)\delta_{k+1}\geq k\delta_k$. In particular $\delta_k\geq4\delta_4/k>0$ for $k\geq4$, and the sum of these excesses diverges. This border argument is valid for a supremum as well as for an attained optimum.
+
+\section{VERIFICATION AND SCOPE}
+The verification script \texttt{verification/solved\_batch\_93\_checks.py} independently builds (3)--(4), checks the rotation identity, positive sides, containment, all $136$ pair separations, and the exact excess in (1). It uses no external packing code and no floating-point tests. The construction settles the proposed equality negatively; it does not determine the exact value of $f(17)$. The general area bound $f(n)\leq\sqrt n$, obtained by Cauchy--Schwarz from $\sum w_i^2\leq1$, is consistent with (1).
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and attribution: \url{https://www.erdosproblems.com/106}.
+\item Primary construction and certificate: \url{https://github.com/Sprite143/erdos-106-counterexample}, especially \texttt{CONSTRUCTION.md} and \texttt{CERTIFICATE\_n17.json}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved by exact reconstruction of a known counterexample.} The conjectured equality fails at $k=4$ and consequently at every $k\geq4$. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

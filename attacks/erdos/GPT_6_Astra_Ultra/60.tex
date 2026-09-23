@@ -1,0 +1,34 @@
+\section{Erd\H{o}s Problem \#60: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{60.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The target is a lower bound of order $\sqrt n$ for the number of four-cycles in an $n$-vertex graph with $\operatorname{ex}(n,C_4)+1$ edges. The supplied file correctly demonstrates a limitation of replacing all degree information by its average. I retain the missing local quantities instead.
+\subsection*{2) AN EXACT DEFECT IDENTITY}
+For unordered vertex pairs let $c(u,v)$ be their common-neighbour count. Write
+\[
+M=\sum_v\binom{d(v)}2,\quad N=\binom n2,\quad
+Z=|\{\{u,v\}:c(u,v)=0\}|,
+\quad T=\sum_{c(u,v)\ge3}\binom{c(u,v)-1}{2}.
+\]
+For every positive integer $c$, $\binom c2=(c-1)+\binom{c-1}2$. Also $\sum c(u,v)=M$. Since each four-cycle is counted by its two opposite pairs,
+\[
+\boxed{2\#C_4=M-N+Z+T.} \tag{1}
+\]
+This is an equality, rather than merely the source's surplus inequality.
+Let $m=e(G)$, $\overline d=2m/n$, and $V=\sum_v(d(v)-\overline d)^2$. Then
+\[
+M=2m^2/n-m+V/2.
+\]
+With $R=\frac n4(1+\sqrt{4n-3})$, $D=R-\operatorname{ex}(n,C_4)$, and $m=\operatorname{ex}(n,C_4)+t$, (1) becomes
+\[
+2\#C_4=\sqrt{4n-3}(t-D)+\frac{2(t-D)^2}{n}+V/2+Z+T. \tag{2}
+\]
+\subsection*{3) THE MISSING STRUCTURAL ESTIMATE}
+Equation (2) pinpoints what a repair of the global method needs. At $t=1$, it would suffice to prove that $V/2+Z+T$ exceeds the negative quadratic defect by $c\sqrt n$. Degree variance alone need not be large enough. In a $C_4$-free graph, all codegrees are zero or one, so already $M-N+Z=0$: the zero-codegree term precisely compensates the apparent global deficit. A supersaturation proof must control how that compensation changes after crossing the extremal edge count.
+As a direct check, adding a nonedge $uv$ to a $C_4$-free graph creates exactly as many four-cycles as there are length-three paths from $u$ to $v$ in the original graph. Nothing in the edge count alone guarantees the needed path count for an arbitrary near-extremal graph.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The exact identity sharpens the diagnosis and gives a specific sufficient local estimate, but I have not proved that estimate uniformly. Existing infinite-family results in the source are not presented as new results here.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

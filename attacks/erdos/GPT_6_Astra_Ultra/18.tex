@@ -1,0 +1,27 @@
+\section{Erd\H{o}s Problem \#18: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{18.tex, 18\_v2.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND ALL-VERSION AUDIT}
+For practical $m$, let $h(m)$ be the maximum minimum number of distinct divisors needed to represent an integer in $[0,m)$. Both supplied versions concern lower bounds and a factorial extension lemma. They do not prove either the infinitely-many-practical-numbers polylogarithmic target or the factorial upper-bound targets.
+\subsection*{2) A PRODUCT INEQUALITY}
+If $a,b$ are practical, then $ab$ is practical and
+\[
+\boxed{h(ab)\le h(a)+h(b).}
+\]
+Indeed write $x=aq+r$ with $0\le q<b$ and $0\le r<a$. Represent $q$ by at most $h(b)$ distinct divisors of $b$, and multiply them by $a$. Represent $r$ by at most $h(a)$ distinct divisors of $a$. Every resulting term divides $ab$. Terms in the first group are at least $a$; terms in the second group are smaller than $a$, so the groups cannot collide. Within each group distinctness is preserved. This proves the assertion including $q=0$ or $r=0$.
+Consequently $h(a^j)\le jh(a)$ and, for any factorization into practical integers, $h(\prod_i a_i)\le\sum_i h(a_i)$. Unlike the source's interval-divisibility lemma, this does not require every small integer to divide one factor.
+\subsection*{3) WHAT THIS CONSTRUCTION DOES NOT ACHIEVE}
+For fixed $a>1$, the bound for $a^j$ is linear in $j$, whereas $\log\log(a^j)=O(\log j)$. Thus repeatedly multiplying a fixed practical seed does not yield the required polylogarithmic upper bound. The product inequality also cannot be applied to an arbitrary factorial quotient without proving that quotient practical.
+\subsection*{4) INDEPENDENT FINITE VERIFICATION}
+An exact bounded-cardinality subset-sum computation was rerun for $n=2,\ldots,9$, giving
+\[
+h(n!)=1,2,3,4,5,5,6,7.
+\]
+The saved checker updates cardinality bitsets in descending order, so each divisor is used at most once, and checks every target below $n!$. I have not rerun the supplied $12!$ computation and therefore do not claim its stated witness or exhaustive coverage as newly certified.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} The product construction is proved, but no subpolynomial factorial upper bound follows. Completion measures progress on the original upper-bound questions, rather than on auxiliary lower bounds.
+\noindent Statement checked: \url{https://www.erdosproblems.com/18}. Verification: \texttt{verification/root\_checks.py}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 12\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

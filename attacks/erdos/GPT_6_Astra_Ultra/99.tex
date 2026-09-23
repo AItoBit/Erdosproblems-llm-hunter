@@ -1,0 +1,27 @@
+\section{Erd\H{o}s Problem \#99: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+Among planar $n$-point sets with all mutual distances at least one, must every diameter minimizer contain an equilateral triangle of side one when $n$ is sufficiently large?
+
+All supplied versions considered: \texttt{99.tex}.
+The supplied attempt concerns only the small cases $4\le n\le7$ and imports exact optimization and uniqueness theorems. I do not extrapolate those cases. The following is a self-contained necessary structure theorem for any putative triangle-free minimizer.
+\subsection{2) WORK}
+Form the contact graph with an edge for each pair at distance one, drawn as the actual segment. This drawing is planar. If two edges crossed internally, their four endpoints would form a convex quadrilateral. Its perimeter is strictly less than twice the sum of the diagonal lengths: sum the four triangle inequalities through the crossing point, each strict for a nondegenerate crossing. Since the diagonals are the two unit edges, that perimeter is less than four. But every side connects distinct points and therefore has length at least one, a contradiction. Collinear overlap between distinct unit segments would also create two endpoints at distance less than one. No vertex can lie in an edge interior.
+
+A triangle in this graph is exactly the desired unit equilateral triangle. Thus any counterexample has a simple planar triangle-free contact graph. For $n\ge3$, it has
+\[
+e\le2n-4.
+\]
+For a connected component containing a cycle, each face boundary walk has length at least four; hence $2e\ge4f$, and Euler's formula gives the bound. Tree components have even fewer edges; joining components by noncrossing bridges if necessary gives the same global inequality. In particular some vertex has contact degree at most three, since the average degree is less than four.
+
+This suggests examining low-contact vertices of an optimal configuration, but the geometric objective includes maximal-distance constraints as well as contacts.
+\subsection{3) ADVERSARIAL VERIFICATION}
+A low contact degree does not imply that moving that point decreases the diameter while preserving all lower distance bounds. Diameter pairs may prevent the motion. Even infinitesimal flexibility of the contact graph is insufficient, since the diameter constraints must be handled simultaneously.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+No deformation theorem combining contact constraints and diameter constraints has been proved. The planar sparsity lemma is established, but the sufficiently-large-$n$ assertion remains entirely open here.
+\subsection{5) SOURCES CHECKED}
+Full \texttt{99.tex} read; formal-conjectures \texttt{ErdosProblems/99.lean} statement checked on 2026-09-23. Small-$n$ optimality claims are not used as premises in the contact-graph proof.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 10\%}

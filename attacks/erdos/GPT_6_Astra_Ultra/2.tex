@@ -1,0 +1,196 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#2; reconstruction of a known solution, 2026-09-23.}
+A distinct covering system is a finite family of residue classes
+\[
+ a_d+d\mathbb Z\qquad(d\in D),
+\]
+where $D$ is a finite set of distinct integers greater than $1$, whose union is $\mathbb Z$. Can $\min D$ be arbitrarily large?
+
+The word \emph{distinct} is essential. Without it, the $m$ residue classes modulo any chosen $m$ give an immediate covering. The answer to the actual question is \emph{no}. Below is a complete proof with a deliberately very large absolute bound:
+\[
+ P=2^{4096},\qquad M=2^{8P},\qquad \min D<M.
+\]
+The argument reconstructs the prime-by-prime measure distortion method of Balister, Bollob\'as, Morris, Sahasrabudhe, and Tiba, using coarse estimates to avoid numerical optimization. Neither the method nor the negative resolution is claimed as new.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current problem page labels the question disproved and reports a Lean verification. Hough's published 2015 theorem gives the much stronger bound $10^{16}$; Balister, Bollob\'as, Morris, Sahasrabudhe, and Tiba subsequently obtained $616000$. Their primary paper supplies the measure construction used here. The bound proved below is only for a transparent reconstruction and does not improve either result. This note does not independently audit the Lean formalization.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Assume all moduli are at least $M$. Expose their prime factors in increasing order, assigning each congruence to its largest prime. At each step redistribute probability within a fibre while retaining the total probability of that fibre. This reduces the mass of the newly covered set. Small primes are controlled by the convergent reciprocal sum of integers with prime factors at most $P$. Large primes are controlled by a second moment whose sum converges. If the sum of the final masses of all covered sets is less than $1$, the proposed system leaves an integer uncovered.
+
+\section{WORK}
+\subsection{The finite probability space and the redistribution rule}
+Let $D$ be any finite set of distinct moduli at least $M$ and choose arbitrary residues $a_d$. Put
+\[
+ Q=\operatorname{lcm}_{d\in D}d
+   =\prod_{i=1}^r p_i^{\gamma_i},\qquad p_1<\cdots<p_r,
+ \qquad Q_i=\prod_{j\le i}p_j^{\gamma_j},\quad Q_0=1.
+\]
+It is enough to find a residue modulo $Q$ not covered by the chosen classes. Write $B_i$ for the union of those classes whose modulus has largest prime factor $p_i$. Thus $B_i$ depends only on the coordinates modulo $Q_i$ in the Chinese remainder identification
+\[
+ \mathbb Z/Q\mathbb Z\cong\prod_{j=1}^r\mathbb Z/p_j^{\gamma_j}\mathbb Z.
+\]
+Start with uniform probability $\mu_0$. Inductively, $\mu_{i-1}$ is an arbitrary distribution on the first $i-1$ coordinates and uniform and independent on the remaining coordinates. For a fixed tuple $x$ of the first $i-1$ coordinates, let $\alpha_i(x)\in[0,1]$ be the fraction of choices of the $i$th coordinate that belong to $B_i$.
+
+Define $\mu_i$ by multiplying $\mu_{i-1}$ at each point of this fibre as follows. If $\alpha=\alpha_i(x)\le1/2$, assign multiplier $0$ on $B_i$ and $1/(1-\alpha)$ outside $B_i$. If $\alpha>1/2$, assign multiplier $(2\alpha-1)/\alpha$ on $B_i$ and $2$ outside $B_i$. There is no division by zero in a multiplier that is used: when $\alpha=0$ there are no points in $B_i$, and when $\alpha=1$ there are no points outside it.
+
+In the first case the mean multiplier in the fibre is
+\[
+ \alpha\cdot0+(1-\alpha)/(1-\alpha)=1;
+\]
+in the second it is
+\[
+ \alpha(2\alpha-1)/\alpha+2(1-\alpha)=1.
+\]
+Hence $\mu_i$ is a probability measure, preserves all events depending only on the first $i-1$ coordinates, and remains uniform on future coordinates. Every multiplier is at most $2$, and the multiplier on $B_i$ is at most $1$. In particular,
+\[
+ \mu_i(S)\le2\mu_{i-1}(S),\qquad
+ \mu_i(B_i)\le\mu_{i-1}(B_i).
+\tag{1}
+\]
+The new conditional mass of $B_i$ in a fibre is $(2\alpha_i-1)_+$, where $u_+=\max\{u,0\}$. Since
+\[
+ (2\alpha-1)_+\le\alpha^2\qquad(0\le\alpha\le1),
+\]
+we also have
+\[
+ \mu_i(B_i)\le\mathbb E_{\mu_{i-1}}\alpha_i^2.
+\tag{2}
+\]
+
+For $j<i$, the set $B_j$ depends only on earlier coordinates. Preservation therefore gives $\mu_r(B_i)=\mu_i(B_i)$. Consequently, it suffices to prove
+\[
+ \sum_{i=1}^r\mu_i(B_i)<1.
+\tag{3}
+\]
+
+\subsection{A bound for congruence probabilities}
+Let $m\mid Q_j$, and let $\omega(m)$ denote the number of distinct prime factors of $m$. For every residue $b$,
+\[
+ \mu_j(x\equiv b\pmod m)\le\frac{2^{\omega(m)}}m.
+\tag{4}
+\]
+Here and below a probability on the first coordinates is identified with its extension that is uniform on future coordinates.
+
+To prove (4), induct on $j$. It is trivial for $j=0$. If $p_j\nmid m$, preservation reduces the claim to $j-1$. If $m=p_j^b m'$ with $b\ge1$ and $m'\mid Q_{j-1}$, the still uniform $p_j$ coordinate before this step gives
+\[
+ \mu_{j-1}(x\equiv b_0\pmod m)
+ =p_j^{-b}\mu_{j-1}(x\equiv b_0\pmod {m'}).
+\]
+The factor-$2$ bound in (1) and the induction hypothesis now prove (4). This argument charges a distortion factor only for primes actually dividing $m$.
+
+\subsection{A uniform second moment bound at a large prime}
+Fix a step $i$ and put $p=p_i$. Each newly exposed modulus has a unique representation $d=p^a m$, with $a\ge1$ and $m\mid Q_{i-1}$. Its residue condition either fails on the old coordinates, or removes exactly a proportion $p^{-a}$ of the new coordinate. A union bound gives
+\[
+ \alpha_i(x)\le
+ \sum_{\substack{p^a m\in D\\P^+(p^a m)=p}}
+  p^{-a}\mathbf 1_{x\equiv a_{p^a m}\; (\mathrm{mod}\;m)}.
+\]
+In a product of two indicators the two old congruences are either inconsistent or specify one class modulo $[m_1,m_2]$, their least common multiple. Applying (4), then enlarging sums with nonnegative summands, yields
+\[
+ \mathbb E_{\mu_{i-1}}\alpha_i^2
+ \le\frac1{(p-1)^2}
+ \sum_{m_1,m_2\mid Q_{i-1}}
+ \frac{2^{\omega([m_1,m_2])}}{[m_1,m_2]}.
+\tag{5}
+\]
+Distinctness of the original moduli is used here: there is at most one original class for each pair $(a,m)$.
+
+For a prime $q\mid Q_{i-1}$ and positive integer $t$, exactly $2t+1$ pairs of nonnegative exponents have maximum $t$. Enlarging the exponent bounds to infinity, the sum in (5) is at most
+\[
+ \prod_{q<p,\ q\ \mathrm{prime}}
+ \left(1+2\sum_{t\ge1}\frac{2t+1}{q^t}\right)
+ =\prod_{q<p,\ q\ \mathrm{prime}}
+ \left(1+\frac{2(3q-1)}{(q-1)^2}\right).
+\tag{6}
+\]
+For $q\ge2$,
+\[
+ \frac{2(3q-1)}{(q-1)^2}\le\frac{20}q,
+\]
+because after clearing denominators the difference is
+$2(7q-5)(q-2)\ge0$.
+
+For completeness, the elementary estimate
+\[
+ \sum_{q\le x,\ q\ \mathrm{prime}}\frac1q
+ \le e\log(1+\log x)\qquad(x\ge2)
+\tag{7}
+\]
+needs no prime number theorem. Set $s=1+1/\log x$. For $q\le x$, $q^{-1}\le e q^{-s}$. Expanding a finite Euler product using unique prime factorization gives
+\[
+ \sum_{q\le x}q^{-s}
+ \le\log\prod_{q\le x}(1-q^{-s})^{-1}
+ \le\log\zeta(s).
+\]
+The integral comparison
+$\zeta(s)=\sum_{n\ge1}n^{-s}\le1+1/(s-1)=1+\log x$
+proves (7). Using $1+u\le e^u$, $e<3$, and $(p-1)^{-2}\le4p^{-2}$ in (5)--(7) gives the explicit bound
+\[
+ \boxed{\displaystyle
+ \mu_i(B_i)\le\mathbb E_{\mu_{i-1}}\alpha_i^2
+ \le\frac{4(1+\log p_i)^{60}}{p_i^2}.}
+\tag{8}
+\]
+
+\subsection{Summing the large-prime stages}
+For $t\ge2048$,
+\[
+ 60\log(1+t)\le t/2.
+\tag{9}
+\]
+Indeed, at $t=2048$ we have $\log2049<12$, so the left side is less than $720<1024$. The derivative of $t/2-60\log(1+t)$ is positive on this entire interval. Since $\log P=4096\log2>2048$, (9) implies
+$(1+\log n)^{60}\le\sqrt n$ for every $n>P$. Therefore (8) and an integral comparison give
+\[
+ \sum_{i:p_i>P}\mu_i(B_i)
+ \le4\sum_{n>P}n^{-3/2}
+ \le4\int_P^\infty u^{-3/2}\,du
+ =\frac8{\sqrt P}=2^{-2045}.
+\tag{10}
+\]
+This bounds all future prime stages, regardless of how many occur in $Q$ or how large their exponents are.
+
+\subsection{Summing the small-prime stages}
+Let $\mathcal S_P$ be the positive integers all of whose prime factors are at most $P$, including $1$. At a step with $p_i\le P$, repeated use of (1) gives $\mu_{i-1}\le2^{i-1}\mu_0\le2^P\mu_0$. Each original class of modulus $d$ has uniform mass $1/d$. Since a modulus appears in just one $B_i$, (1) and the union bound imply
+\[
+ \sum_{i:p_i\le P}\mu_i(B_i)
+ \le2^P\sum_{\substack{d\in\mathcal S_P\\d\ge M}}\frac1d.
+\tag{11}
+\]
+For $d\ge M$, $d^{-1}\le M^{-1/2}d^{-1/2}$. As there are only finitely many primes at most $P$, a product of convergent geometric series gives
+\[
+ \sum_{\substack{d\in\mathcal S_P\\d\ge M}}\frac1d
+ \le M^{-1/2}\prod_{q\le P,\ q\ \mathrm{prime}}
+      (1-q^{-1/2})^{-1}
+ \le M^{-1/2}4^P.
+\tag{12}
+\]
+The last inequality uses $(1-1/\sqrt2)^{-1}=2+\sqrt2<4$ and at most $P$ factors. Substituting $M=2^{8P}$ in (11)--(12) gives
+\[
+ \sum_{i:p_i\le P}\mu_i(B_i)\le2^P4^P2^{-4P}=2^{-P}.
+\tag{13}
+\]
+
+\subsection{Conclusion}
+Combining (10) and (13),
+\[
+ \mu_r\left(\bigcup_{i=1}^r B_i\right)
+ \le\sum_{i=1}^r\mu_i(B_i)
+ \le2^{-P}+2^{-2045}<1.
+\]
+Thus some residue modulo $Q$ lies outside every original class. Every integer in that residue class is uncovered. No distinct covering system can have all its moduli at least $M$, proving the claimed absolute upper bound and the negative answer. \hfill$\square$
+
+\section{VERIFICATION AND SCOPE}
+The proof uses only finite probability spaces, the Chinese remainder theorem, geometric series, an Euler product inequality, and elementary estimates. The important preservation property is checked fibre by fibre; independence of the covered events is never assumed. The second moment includes all pairs of congruences, including equal ones and inconsistent ones, the latter safely contributing zero before the upper bound. The split at $P$ is fixed independently of the candidate covering system.
+
+The accompanying \texttt{verification/solved\_2\_checks.py} exercises the exact rational redistribution rule on all residue choices with moduli in $\{2,3,4,6\}$, and additionally on the explicit cover $0\pmod2$, $0\pmod3$, $1\pmod4$, $5\pmod6$, $7\pmod{12}$. It checks fibre preservation, the factor-$2$ inequality, the second-moment inequality, and (4). These finite checks are arithmetic audits; the written argument establishes the assertion for arbitrary finite systems. The huge bound is symbolic and does not require enumerating primes up to $P$.
+
+\section{FINAL}
+\textbf{SOLVED (negative, by reconstruction of a known method).} The minimum modulus is bounded by an absolute constant. The proof above is complete for the original yes/no question and establishes $\min D<2^{8\cdot2^{4096}}$. It does not reproduce the best numerical bound or claim a new solution to a previously open problem.
+
+\section{REFERENCES CHECKED}
+T. F. Bloom, current statement and editorial for problem \#2, \url{https://www.erdosproblems.com/2}, accessed 2026-09-23. B. Hough, \emph{Solution of the minimum modulus problem for covering systems}, Annals of Mathematics 181 (2015), 361--382, \url{https://annals.math.princeton.edu/2015/181-1/p06}. P. Balister, B. Bollob\'as, R. Morris, J. Sahasrabudhe, and M. Tiba, \emph{On the Erd\H{o}s covering problem: the density of the uncovered set}, Inventiones Mathematicae 228 (2022), 377--414; primary preprint \url{https://arxiv.org/abs/1811.03547}, especially the measure construction and moment method in Sections 2--3, read at \url{https://arxiv.org/html/1811.03547v1}. The local attempts tree contained no earlier numbered \texttt{2.tex} source when this attempt began.
+
+\section{COMPLETION ESTIMATE}
+This estimate concerns coverage of the original yes/no question by the reconstructed proof. It does not measure originality or progress toward the best numerical constant. The known method and its source have been explicitly credited, and the complete coarse-bound argument is written out above.
+\textbf{COMPLETION: 100\%}

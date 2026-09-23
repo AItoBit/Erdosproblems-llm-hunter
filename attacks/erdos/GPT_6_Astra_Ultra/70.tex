@@ -1,0 +1,240 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.2/70.tex", "source_paths": ["attacks/erdos/gpt_5.2/70.tex", "attacks/erdos/gpt_pro_5.2/70.tex"], "source_model": "gpt_pro_5.2", "source_completion": null, "source_claim": "unresolved"}
+\section*{Erd\H{o}s Problem 70 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/70
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.2/70.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{gpt\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_5.2/70.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_5.2/70.tex
+
+OUTPUT
+1) FORMAL RESTATEMENT
+Definitions/Conventions.
+- Write $\mathfrak c:=|{\mathbb R}|$ for the cardinality of the continuum, and identify it with its initial ordinal.
+- For a set $X$ and integer $r\ge 1$, write $[X]^r$ for the family of $r$-element subsets of $X$.
+- For cardinals/ordinals $\kappa,\alpha,\gamma$ and $r\ge 1$, the partition relation
+\[\kappa \to (\alpha,\gamma)^r_2\]
+means: for every coloring $c:[\kappa]^r\to\{0,1\}$, there exists either
+  (i) $A\subseteq \kappa$ of order type $\alpha$ such that $c$ is constantly $0$ on $[A]^r$, or
+  (ii) $B\subseteq \kappa$ of order type $\gamma$ such that $c$ is constantly $1$ on $[B]^r$.
+Here, when $\gamma=n\in\mathbb N$, ``order type $n$'' just means ``a subset of size $n$''.
+
+Question.
+Fix a countable ordinal $\beta$ and an integer $n$ with $2\le n<\omega$. Is it true that
+\[\mathfrak c \to (\beta,n)^3_2?\]
+
+2) QUICK LITERATURE/CONTEXT CHECK
+Web browsing is not available in this session.
+From the problem text only:
+- Erd\H{o}s and Rado proved $\mathfrak c\to(\omega+n,4)^3_2$ for $2\le n<\omega$.
+I do not reproduce that proof here.
+
+3) ATTACK PLAN
+Proof track ideas:
+1. Reduce to the first nontrivial finite case $n=4$ by monotonicity in the second parameter (proved below), then attempt to extend the known $(\omega+n,4)$ case to all countable $\beta$.
+2. Try to build an increasing $\omega_1$-sequence inside $\mathfrak c$ via a transfinite recursion and apply canonical partition theorems.
+
+Disproof track ideas:
+1. Try to construct a 2-coloring of $[\mathfrak c]^3$ with no 1-homogeneous $n$-set for some fixed $n\ge 4$ and no 0-homogeneous set of order type $\beta$.
+2. Identify which additional axioms (CH, MA, large cardinals) might affect $\mathfrak c\to(\beta,n)^3_2$.
+
+Chosen path in this attempt: isolate trivial cases and monotonicity reductions (fully proved), to clarify the first genuinely open parameter regime.
+
+4) WORK
+Lemma 1 (Triviality for $n=2$).
+For any infinite cardinal $\kappa$ and any ordinal $\beta$ with $\beta\le \kappa$, one has
+\[\kappa\to(\beta,2)^3_2.\]
+
+Proof.
+Let $c:[\kappa]^3\to\{0,1\}$ be any coloring. Take any two-element subset $B\subseteq\kappa$.
+Then $[B]^3=\emptyset$, so $c$ is vacuously constant $1$ on $[B]^3$.
+Thus the second alternative in the definition of $\kappa\to(\beta,2)^3_2$ always holds (provided $\kappa$ has at least two elements, which is true for infinite $\kappa$). \qed
+
+Lemma 2 (Triviality for $n=3$).
+For any infinite cardinal $\kappa$ and any ordinal $\beta$ with $\beta\le \kappa$, one has
+\[\kappa\to(\beta,3)^3_2.\]
+
+Proof.
+Let $c:[\kappa]^3\to\{0,1\}$ be any coloring.
+If there exists a triple $B\in[\kappa]^3$ with $c(B)=1$, then $B$ itself witnesses the second alternative, since $[B]^3=\{B\}$.
+Otherwise, $c$ is identically $0$ on $[\kappa]^3$. In that case, choose any subset $A\subseteq \kappa$ of order type $\beta$ (possible since $\beta\le\kappa$),
+and then $c$ is constantly $0$ on $[A]^3$. So one of the two alternatives always holds. \qed
+
+Lemma 3 (Monotonicity in the finite parameter).
+Fix $\kappa,\beta$ and integers $3\le m\le n$. If
+\[\kappa\to(\beta,n)^3_2,\]
+then
+\[\kappa\to(\beta,m)^3_2.\]
+
+Proof.
+Let $c:[\kappa]^3\to\{0,1\}$ be any coloring.
+Apply $\kappa\to(\beta,n)^3_2$ to obtain either:
+(i) a $0$-homogeneous set $A$ of order type $\beta$, in which case we are done; or
+(ii) a $1$-homogeneous set $B$ of size $n$ (so $c$ is constantly $1$ on $[B]^3$).
+In case (ii), choose any subset $B'\subseteq B$ of size $m$.
+Then $[B']^3\subseteq[B]^3$, so $c$ is also constantly $1$ on $[B']^3$, giving the second alternative for $(\beta,m)^3_2$.
+Thus $\kappa\to(\beta,m)^3_2$ holds. \qed
+
+FAST REALITY CHECK
+The above shows the statement is vacuous for $n=2$ and $n=3$.
+So the first nontrivial finite case is $n=4$, and the general question for finite $n$ reduces (by Lemma 3) to understanding the hardest values of $n$.
+
+5) VERIFICATION
+- Lemmas 1--2 rely only on the fact that $[B]^3$ is empty for $|B|<3$ and a singleton for $|B|=3$.
+- Lemma 3 is a direct subset argument: $1$-homogeneity is inherited by subsets.
+
+6) FINAL
+**UNRESOLVED**
+
+(i) Strongest fully proved partial result:
+The relation $\kappa\to(\beta,n)^3_2$ is trivial for $n\in\{2,3\}$ (Lemmas 1--2), and is monotone in $n$ (Lemma 3).
+
+(ii) First gap:
+Handle the first genuinely nontrivial case: for fixed countable $\beta$, prove or refute
+\[\mathfrak c\to(\beta,4)^3_2.\]
+The known result in the text only covers $\beta=\omega+n$ with $n=4$.
+
+(iii) Top 3 next moves (concrete):
+1. Specialize to $\beta=\omega_1$ (or to $\beta=\omega^\omega$) and try to either extend the Erd\H{o}s--Rado method or construct an explicit bad coloring of $[\mathfrak c]^3$.
+2. Determine which set-theoretic axioms affect the truth of $\mathfrak c\to(\beta,n)^3_2$; attempt to prove consistency/independence results for some $\beta,n$.
+3. Search for a reduction to canonical colorings on $[\mathfrak c]^3$ (e.g. via a definable well-order of the reals) and analyze homogeneous sets of prescribed order types.
+
+(iv) What a minimal counterexample would likely look like (structure/parameters):
+A 2-coloring $c:[\mathfrak c]^3\to\{0,1\}$ such that every $1$-homogeneous set has size $\le n-1$ (no blue $n$-set),
+and every $0$-homogeneous set has order type strictly less than the target countable $\beta$.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_5.2/70.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/70.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/70.tex
+
+\noindent\textbf{FORMAL RESTATEMENT.}
+Let $\mathfrak c$ denote the initial ordinal of cardinality $2^{\aleph_0}$ (the cardinality of $\mathbb R$). Let $\beta$ be a countable ordinal and let $n$ be an integer with $2\le n<\omega$.
+
+For an ordinal $\kappa$ and integer $r\ge 1$, write $[\kappa]^r$ for the set of $r$-element subsets of $\kappa$.
+For $\kappa,\beta$ ordinals and $n\in\mathbb N$, the partition relation
+\[\kappa\to(\beta,n)_2^3\]
+means:
+
+\emph{for every} coloring $c:[\kappa]^3\to\{0,1\}$, \emph{either}
+\begin{itemize}
+\item there exists $H\subseteq\kappa$ of order type $\beta$ such that $c$ is constantly $0$ on $[H]^3$, \emph{or}
+\item there exists $K\subseteq\kappa$ with $|K|=n$ such that $c$ is constantly $1$ on $[K]^3$.
+\end{itemize}
+
+Question: is it true that $\mathfrak c\to(\beta,n)_2^3$ for every countable ordinal $\beta$ and every integer $2\le n<\omega$?
+
+\medskip
+\noindent\textbf{QUICK LITERATURE/CONTEXT CHECK.}
+The problem statement records that Erd\H{o}s and Rado proved
+\[\mathfrak c\to(\omega+n,4)_2^3\qquad\text{for every integer }2\le n<\omega.
+\]
+No additional literature claims are used here.
+
+\medskip
+\noindent\textbf{ATTACK PLAN.}
+\emph{Proof track ideas.}
+(1) Use monotonicity and the known Erd\H{o}s--Rado instances as base cases; attempt to extend from $\beta=\omega+n$ to general countable $\beta$ by transfinite induction on $\beta$.
+(2) Try to rework the Erd\H{o}s--Rado proof to handle larger countable order types by a refined fusion/diagonalization.
+
+\emph{Disproof track ideas.}
+(1) Attempt to build an explicit $2$-coloring of $[\mathfrak c]^3$ that destroys all $0$-homogeneous sets of a given countable order type while also avoiding $1$-homogeneous $n$-sets.
+(2) Check whether the statement might depend on additional axioms (e.g. CH vs. not-CH) by testing known ``pathological'' colorings.
+
+I did not obtain a full proof or counterexample. The WORK section records basic (but problem-specific) reductions.
+
+\medskip
+\noindent\textbf{WORK.}
+
+\medskip
+\noindent\textbf{Lemma 70.1 (easy cases $n=2$ and $n=3$).}
+Let $\kappa$ be an ordinal and $\beta\le\kappa$ an ordinal.
+\begin{itemize}
+\item[(a)] $\kappa\to(\beta,2)_2^3$ always holds.
+\item[(b)] $\kappa\to(\beta,3)_2^3$ always holds.
+\end{itemize}
+In particular, since every countable ordinal $\beta$ satisfies $\beta<\mathfrak c$, the desired relation holds for all countable $\beta$ when $n\in\{2,3\}$.
+
+\noindent\textbf{Proof.}
+(a) Fix any coloring $c:[\kappa]^3\to\{0,1\}$. Choose any $2$-element subset $K\subseteq\kappa$. Then $[K]^3=\varnothing$, so $c$ is vacuously constantly $1$ on $[K]^3$. Thus the second alternative in the definition of $\kappa\to(\beta,2)_2^3$ always holds.
+
+(b) Fix any coloring $c:[\kappa]^3\to\{0,1\}$. If there exists a triple $\{x,y,z\}\in[\kappa]^3$ with $c(\{x,y,z\})=1$, then letting $K=\{x,y,z\}$ gives $|K|=3$ and $c$ is constantly $1$ on $[K]^3$ (since $[K]^3$ contains exactly that one triple). Otherwise, $c$ colors every triple in $[\kappa]^3$ by $0$. In this case, since $\beta\le\kappa$, there exists $H\subseteq\kappa$ of order type $\beta$ (for example, take the first $\beta$ ordinals below $\kappa$), and then $c$ is constantly $0$ on $[H]^3$ by assumption. Hence one of the two alternatives always holds, proving $\kappa\to(\beta,3)_2^3$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Lemma 70.2 (monotonicity in parameters).}
+Let $\kappa$ be an ordinal.
+\begin{itemize}
+\item[(a)] If $\kappa\to(\beta,n)_2^3$ holds and $\beta'\le\beta$, $n'\le n$, then $\kappa\to(\beta',n')_2^3$ holds.
+\item[(b)] If $\kappa\to(\beta,n)_2^3$ holds and $\kappa'\ge \kappa$ is an ordinal, then $\kappa'\to(\beta,n)_2^3$ holds.
+\end{itemize}
+
+\noindent\textbf{Proof.}
+(a) Fix a coloring $c:[\kappa]^3\to\{0,1\}$. By $\kappa\to(\beta,n)_2^3$, either there is a $0$-homogeneous set $H$ of order type $\beta$, or a $1$-homogeneous set $K$ of size $n$.
+
+If the first alternative occurs, then $H$ contains a subset $H'\subseteq H$ of order type $\beta'$ (because $\beta'\le\beta$ and order types are inherited by appropriate subsets). Since $c$ is constantly $0$ on $[H]^3$, it is also constantly $0$ on $[H']^3$.
+
+If the second alternative occurs, choose any subset $K'\subseteq K$ with $|K'|=n'$. Since $[K']^3\subseteq[K]^3$ and $c$ is constantly $1$ on $[K]^3$, it is also constantly $1$ on $[K']^3$.
+
+Thus $\kappa\to(\beta',n')_2^3$ holds.
+
+(b) Fix a coloring $c':[\kappa']^3\to\{0,1\}$. Restrict $c'$ to the subset $[\kappa]^3\subseteq[\kappa']^3$ (identifying $\kappa$ with the initial segment $\{\alpha<\kappa\}\subseteq\kappa'$). Applying $\kappa\to(\beta,n)_2^3$ to this restricted coloring yields either a $0$-homogeneous $H\subseteq\kappa$ of order type $\beta$, or a $1$-homogeneous $K\subseteq\kappa$ of size $n$. In either case, viewing $H$ or $K$ as subsets of $\kappa'$ gives the required homogeneous set for $c'$. Hence $\kappa'\to(\beta,n)_2^3$.
+\hfill$\square$
+
+\medskip
+\noindent\textbf{Corollary 70.1 (what the recorded Erd\H{o}s--Rado theorem immediately implies).}
+For each integer $m\ge 2$, the recorded statement $\mathfrak c\to(\omega+m,4)_2^3$ implies
+\[\mathfrak c\to(\beta,4)_2^3\quad\text{for every ordinal }\beta\le \omega+m.
+\]
+
+\noindent\textbf{Proof.}
+Apply Lemma 70.2(a) with $\beta'\le\omega+m$ and $n'=4$.\hfill$\square$
+
+\medskip
+\noindent\textbf{FAST REALITY CHECK (small parameter sanity).}
+For this partition relation, the only genuinely nontrivial finite parameter is $n\ge 4$. Lemma 70.1 shows the statement is automatic for $n=2$ and reduces to a trivial dichotomy for $n=3$. Thus, in the main question, the first new difficulty begins at $n=4$ and countable $\beta$ beyond $\omega+\text{(finite)}$.
+
+\medskip
+\noindent\textbf{VERIFICATION.}
+\begin{itemize}
+\item Lemma 70.1(a): checked that $[K]^3$ is empty for $|K|=2$, so ``$1$-homogeneous'' is vacuous.
+\item Lemma 70.1(b): checked the dichotomy ``some triple is colored $1$'' vs ``all triples colored $0$''; in the latter case, the existence of a subset of order type $\beta$ uses only $\beta\le\kappa$.
+\item Lemma 70.2: verified both parameter reductions by subset selection and restriction to an initial segment.
+\end{itemize}
+
+\medskip
+\noindent\textbf{FINAL: \textbf{UNRESOLVED}.}
+\begin{itemize}
+\item[(i)] \emph{Strongest proved partial result.} The relation holds for all countable $\beta$ when $n\in\{2,3\}$ (Lemma 70.1). Moreover, the recorded Erd\H{o}s--Rado theorem implies $\mathfrak c\to(\beta,4)_2^3$ for every $\beta\le \omega+m$ (for each fixed $m\ge 2$) by monotonicity (Corollary 70.1).
+\item[(ii)] \emph{First gap (crisp).} Decide whether $\mathfrak c\to(\omega^2,4)_2^3$ holds (already beyond the $\omega+\text{finite}$ range stated in the problem).
+\item[(iii)] \emph{Top 3 next moves.}
+(1) Attempt an induction on countable ordinals $\beta$ proving $\mathfrak c\to(\beta,4)_2^3$, identifying exactly where the Erd\H{o}s--Rado proof for $\omega+n$ breaks.
+(2) Try to construct an explicit $2$-coloring of $[\mathfrak c]^3$ that avoids $0$-homogeneous sets of some fixed order type (e.g. $\omega^2$) while also avoiding $1$-homogeneous $4$-sets.
+(3) Explore whether additional axioms (e.g. CH) affect the statement by testing known ``canonical'' colorings on $[\omega_1]^3$ and attempting to lift them to size $\mathfrak c$.
+\item[(iv)] \emph{Minimal counterexample structure.} A counterexample would be a coloring $c:[\mathfrak c]^3\to\{0,1\}$ such that (a) every subset of $\mathfrak c$ of order type $\beta$ contains a triple colored $1$ (so it is not $0$-homogeneous), and simultaneously (b) every $n$-element subset contains a triple colored $0$ (so it is not $1$-homogeneous).
+\end{itemize}
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/70.tex
+
+\subsection*{COMPLETION ESTIMATE}
+The primary source supplies no extractable numerical completion estimate. Its mathematical progress is not numerically assessed here.
+
+Newly verified progress in this collection pass: $0\%$. This measures new verification work, not the amount of mathematics achieved in the reused text.

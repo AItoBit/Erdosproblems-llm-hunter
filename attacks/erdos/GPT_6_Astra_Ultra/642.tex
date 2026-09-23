@@ -1,0 +1,32 @@
+\section{Erd\H{o}s Problem \#642: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{642.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND AUDIT}
+Let $f(n)$ maximize edges subject to every cycle having fewer chords than vertices. Equivalently, a cycle on vertex set $S$ must satisfy $e(G[S])<2|S|$. The original question is $f(n)=O(n)$. The supplied join construction gives $f(n)\ge3n-7$ for $n\ge6$. Its classification of fixed cores valid for every independent-set size does not classify all admissible graphs.
+\subsection*{2) GLUING AND AN EXACT ASYMPTOTIC REDUCTION}
+Identify one vertex of two admissible graphs, with no other new edges. Every simple cycle lies wholly in one of the two graphs: a cycle traversing both would have to visit the shared vertex twice. Thus the resulting graph is admissible, and
+\[
+f(a+b-1)\ge f(a)+f(b).
+\]
+Set $h(m)=f(m+1)$. It is nonnegative and superadditive. For any fixed $q$, writing $m=tq+r$ gives $h(m)\ge t h(q)$, so
+\[
+\liminf_{m\to\infty}\frac{h(m)}m\ge\frac{h(q)}q.
+\]
+Taking the supremum over $q$ and comparing with the trivial upper bound by that supremum proves the extended-real limit
+\[
+\boxed{\lim_{n\to\infty}\frac{f(n)}{n-1}
+=\sup_{v\ge2}\frac{f(v)}{v-1}\in[3,\infty].} \tag{1}
+\]
+This also proves existence of the extended-real limit of $f(n)/n$. The lower endpoint follows from $3n-7$.
+\subsection*{3) CONSEQUENCES FOR A POSSIBLE PROOF}
+The original linear-bound problem is exactly whether the supremum in (1) is finite. It is enough to bound $e(B)/(|B|-1)$ uniformly over admissible blocks: every cycle belongs to a block, edges partition over blocks, and for a connected graph the block quantities $|B|-1$ sum to $n-1$ (bridges count as two-vertex blocks). Conversely any single block with ratio $c$ can be repeated at one shared vertex, producing arbitrarily large admissible graphs with limiting density $c$.
+In particular, an asymptotic constant $3$ would require the finite inequality $e(G)\le3(|G|-1)$ for every admissible graph. Testing only the three-vertex-core joins cannot establish that inequality.
+\subsection*{4) LIMITATION}
+The limit in (1) is allowed to be infinite. Its existence does not improve the known near-linear upper bounds or prove the desired uniform block bound.
+\subsection*{7) FINAL}
+\textbf{UNRESOLVED.} A precise asymptotic-density reduction and block obstruction are proved, without a claim of literature novelty.
+\noindent Statement and known-bound record: \url{https://www.erdosproblems.com/642}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

@@ -1,0 +1,53 @@
+\section{Erd\H{o}s Problem \#288: independent continuation}
+\noindent Date: 23 September 2026. Source versions read in full: \texttt{288.tex} in \texttt{gpt\_pro\_5.4}.
+
+\subsection*{1) OBJECTIVE AND SOURCE AUDIT}
+The question is whether only finitely many pairs of finite intervals have
+an integral sum of reciprocals, counting overlaps twice. The supplied
+singleton reduction is valid, and its prime-tail obstruction is explicitly
+restricted to disjoint intervals. I add a prime-power condition applicable
+also when the intervals overlap, keeping the occurrence multiplicities.
+
+\subsection*{2) WORK: MAXIMAL VALUATIONS MUST CANCEL}
+For any finite multiset $D$ of denominators, let $e=\max_{d\in D}v_p(d)$.
+If $e>0$, integrality of $\sum_{d\in D}1/d$ requires
+\[
+ \sum_{\substack{d\in D\\v_p(d)=e}}(d/p^e)^{-1}\equiv0\pmod p. \tag{1}
+\]
+To prove this, take $L=\operatorname{lcm}(D)$ and write $L=p^eL_0$.
+Modulo $p$, the integer numerator $\sum L/d$ receives contributions only
+from denominators of valuation $e$. Divide the resulting congruence by
+the nonzero residue $L_0$. In particular a unique maximal valuation is
+incompatible with integrality, regardless of its exponent.
+
+In a nonempty interval $I$, the largest $2$-adic valuation is attained
+exactly once. Indeed, if two numbers $2^eu<2^ev$ with odd $u,v$ both
+attained the maximum, the intervening even multiple of $2^e$ would belong
+to $I$ and have larger valuation. If intervals $I_1,I_2$ have maximal
+valuations $e_1\ne e_2$, the larger maximum is positive and unique in the
+combined multiset, contradicting (1). Therefore every solution satisfies
+\[
+ \max_{n\in I_1}v_2(n)=\max_{n\in I_2}v_2(n). \tag{2}
+\]
+This remains valid for overlaps: a shared maximum occurs twice, whereas
+unequal maxima cannot be shared. Equality of maxima is necessary, not
+sufficient, since further prime-power cancellations remain.
+
+For a singleton $I_2=\{m\}$ and $\sum_{n=a}^b1/n=u/v$ reduced, the
+source correctly forces $m=v$ and $u\equiv-1\pmod v$. Equation (2)
+then gives the exact extra relation $v_2(v)=\max_{a\le n\le b}v_2(n)$.
+This also follows directly from the unique maximal valuation in one
+interval. The source's sentence $k=\lceil u/v\rceil$ has a minor exception
+when $v=1$: then the added unit fraction must be one, so $k=u+1$.
+
+\subsection*{3) VERIFICATION AND FINAL}
+The identity $1/3+1/4+1/5+1/6+1/20=1$ passes (2): both maxima are two.
+The valuation conditions do not bound the locations of the intervals, so
+they do not establish finiteness. \textbf{UNRESOLVED.} This is a precise
+filter for all interval pairs, extending the source's exponent-one test.
+The full interval-pair convention was checked in the indexed official
+record: \url{https://www.erdosproblems.com/forum/thread/288}.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 10\%}
+This is a subjective estimate of progress toward the entire stated problem, not a probability that the conjecture or an unverified proof is correct.

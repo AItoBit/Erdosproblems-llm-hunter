@@ -1,0 +1,41 @@
+\section{Erd\H{o}s Problem \#788: independent continuation}
+\noindent Date: 2026-09-23. Research attempt; no claim of a new published result.
+\subsection{1) TARGET AND SOURCE AUDIT}
+For $I_n=\{n+1,\ldots,2n-1\}$ and $B\subset(2n,4n)$, let $G_B$ join distinct $x,y\in I_n$ when $x+y\in B$. Estimate the extremal quantity $f(n)=\min_B(|B|+\alpha(G_B))$ in the supplied reformulation.
+
+All supplied versions considered: \texttt{788.tex}.
+The source transfers the Alon--Pham random Cayley-sum bound to obtain exponent $3/5$. I verify the primary theorem, make the logarithmic loss explicit, and make the argument robust to whether loops are counted in the Cayley-sum independence convention.
+\subsection{2) WORK}
+The proof of Alon--Pham Theorem 4 supplies an independence bound
+\[
+C p^{-3/2}(\log q)^{19/4}
+\]
+with high probability for a random generating set $S$ in an abelian group of order $q$. Choose an odd prime $4n<q<8n$, so all sums of distinct vertices of $I_n$ have no modular wraparound, and include group elements in $S$ independently with probability $p$.
+
+Put $B=S\cap(2n,4n)$. If the theorem uses the usual loopless convention, its restriction directly bounds $\alpha(G_B)$. If its convention also excludes a vertex when $2x\in S$, take any independent set $A$ in the loopless interval graph and remove those vertices. The remaining set has $(A+A)\cap S=\varnothing$ even on the diagonal. Since doubling is a bijection modulo odd $q$, at most $|S|$ vertices were removed. Thus in either convention the safe bound is
+\[
+\alpha(G_B)\le C p^{-3/2}(\log q)^{19/4}+|S|.
+\]
+With high probability $|S|\le2pq$, and the simultaneous favorable events therefore give
+\[
+f(n)\le4pq+C p^{-3/2}(\log q)^{19/4}.
+\]
+Choose
+\[
+p=n^{-2/5}(\log n)^{19/10}.
+\]
+Then $p\le1/2$ eventually, $pq\to\infty$, and both terms have order
+\[
+\boxed{f(n)\ll n^{3/5}(\log n)^{19/10}.}
+\]
+The logarithmic exponent follows from $19/4-(3/2)(19/10)=19/10$. This is an explicit form of the source\textquotesingle s $n^{3/5+o(1)}$ transfer, not a better power exponent. The loop correction costs only another $O(pn)$ term.
+\subsection{3) ADVERSARIAL VERIFICATION}
+The input is a theorem about polynomially sparse random generating sets, and its explicit proof was checked at the chosen $p$, rather than interpreting a fixed-$p$ statement as uniform. The diagonal correction avoids silently identifying two independence conventions. Bertrand\textquotesingle s prime choice changes constants only.
+\subsection{4) FINAL}
+\textbf{UNRESOLVED.}
+The interval extremal exponent remains between the square-root lower scale and this $3/5$ upper scale. No argument reaches exponent $1/2$ or a sharp asymptotic.
+\subsection{5) SOURCES CHECKED}
+Entire supplied source read. Checked Alon--Pham, \texttt{https://arxiv.org/html/2509.02561v1}, Theorem 4 and Section 3.1, on 2026-09-23. The displayed $19/4$ factor occurs in its proof. The explicit optimization and the conservative diagonal correction are derived here.
+\subsection{6) COMPLETION ESTIMATE}
+This is a conservative subjective measure of progress toward the original question, not a probability of correctness or a claim that the remaining work is routine.
+\textbf{COMPLETION: 20\%}

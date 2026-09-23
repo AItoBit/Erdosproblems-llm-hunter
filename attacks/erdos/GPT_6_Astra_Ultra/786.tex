@@ -1,0 +1,354 @@
+% COLLECTION_METADATA: {"schema_version": 1, "kind": "reused_writeup", "independently_reviewed": false, "primary_source": "attacks/erdos/gpt_pro_5.4/786.tex", "source_paths": ["attacks/erdos/gpt_pro_5.2/786.tex", "attacks/erdos/gpt_pro_5.4/786.tex"], "source_model": "gpt_pro_5.4", "source_completion": 100.0, "source_claim": "solved"}
+\section*{Erd\H{o}s Problem 786 --- collection record}
+
+\subsection*{PROVENANCE AND STATUS}
+Official problem: https://www.erdosproblems.com/786
+
+Saved collaborative-database status: open.
+Snapshot checked: 2026-09-23T17:22:24Z.
+Latest status and formalization links: https://teorth.github.io/erdosproblems/
+
+This is an attributed collection of existing writeups. The model-folder names below identify their original attribution; placement in GPT\_6\_Astra\_Ultra does not attribute their mathematical work to that model. All locally available source versions selected for this problem are reproduced below, without editing their text.
+
+Proof claims, computations, literature statements, and completion estimates in the reused text have not been independently verified in this collection pass. A source claiming a solution does not change the saved upstream status.
+
+Primary source (latest numbered version in the preferred model folder): \texttt{attacks/erdos/gpt\_pro\_5.4/786.tex}.
+
+\subsection*{REUSED SOURCE 1}
+Original attribution: \texttt{gpt\_pro\_5.2}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.2/786.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.2/786.tex
+\section*{Problem 786}
+\addcontentsline{toc}{section}{Problem 786}
+
+\subsection*{1. Formal restatement}
+Let $A\subset \mathbb{N}$. We say that $A$ has the \emph{length-rigidity} property if for all integers $r,s\ge 1$ and all (not necessarily distinct) choices $a_1,\dots,a_r\in A$ and $b_1,\dots,b_s\in A$, the equality
+\[
+ a_1\cdots a_r=b_1\cdots b_s
+\]
+forces $r=s$.
+
+\medskip
+\noindent\textbf{(a) Infinite version.} Does there exist, for every $\varepsilon>0$, a set $A\subset\mathbb{N}$ with this property and natural density $d(A)>1-\varepsilon$?
+
+\medskip
+\noindent\textbf{(b) Finite version.} Let $A\subset\{1,2,\dots,N\}$ have the length-rigidity property. Must there be an absolute $c>0$ such that $|A|\le (1-c)N$ for all $N$?
+
+\subsection*{2. Quick literature/context check}
+The problem statement records the following constructions/bounds.
+\begin{itemize}[leftmargin=2em]
+\item The residue class $A=\{n\in\mathbb{N}: n\equiv 2\pmod 4\}$ has density $1/4$ and is length-rigid.
+\item (Selfridge) There exist length-rigid sets of density $1/e-\varepsilon$ for any $\varepsilon>0$.
+\item In the finite setting, if $A$ is the set of $n\le N$ having a prime factor $>\sqrt{N}$, then $|A|=(\log 2+o(1))N$ and $A$ is length-rigid.
+\item (Ruzsa, unpublished as quoted in the statement) In the finite setting one should have $|A|\le (1-c)N$ for some absolute $c>0$.
+\end{itemize}
+
+One can further note (from later discussion in the literature) that taking $A$ to be integers $n\le N$ with \emph{exactly one} prime factor exceeding a suitably chosen threshold gives a larger constant-density construction; the best constant of this form is related to the Hall--Montgomery constant. (No attempt is made here to rederive that constant from first principles.)
+
+\subsection*{3. Attack plan}
+\begin{enumerate}[leftmargin=2em]
+\item \textbf{Structural step.} Reinterpret length-rigidity as the existence of a completely additive ``length'' functional on prime-exponent vectors. This converts the multiplicative condition into linear algebra over $\mathbb{Q}$.
+\item \textbf{Finite optimization heuristic.} For $A\subset[1,N]$, natural candidates are level sets of the form
+\[
+F(n)=\sum_{p\le N} \alpha_p v_p(n)\equiv 1,
+\]
+where $v_p$ is the $p$-adic valuation and only primes in a certain range have nonzero weight. One then tries to maximize $|\{n\le N: F(n)=1\}|$ using sieve/asymptotic estimates.
+\item \textbf{Upper bounds.} If one could show that any such level set has density bounded away from $1$ (uniformly in the weights), that would settle (a) negatively and imply the existence of $c>0$ in (b). A possible route is to combine the structural lemma with distribution results for additive functions (or with ``large prime factor'' decompositions).
+\item \textbf{Computational experiments.} For small $N$, brute-force search can be done using the structural lemma (solve a rational linear system) instead of enumerating all multiplicative relations.
+\end{enumerate}
+
+\subsection*{4. Work}
+\subsubsection*{4.1. A linear-algebra characterization (finite sets)}
+For an integer $n$ and a prime $p$ write $v_p(n)$ for the exponent of $p$ in the prime factorization of $n$.
+
+\begin{lemma}[Additive functional criterion]
+\label{lem:additive-functional}
+Let $A\subset\mathbb{N}$ be finite, and let $P$ be the finite set of primes dividing at least one element of $A$. For $a\in A$ write its exponent vector
+\[
+\mathbf v(a)\coloneqq (v_p(a))_{p\in P}\in \mathbb{Z}_{\ge 0}^{P}.
+\]
+Then $A$ is length-rigid if and only if there exist rational numbers $(\alpha_p)_{p\in P}\in\mathbb{Q}^{P}$ such that
+\begin{equation}
+\label{eq:alpha-eq}
+\sum_{p\in P} \alpha_p\, v_p(a)=1\qquad\text{for every }a\in A.
+\end{equation}
+Equivalently, there exists a completely additive function $F:\mathbb{N}\to\mathbb{Q}$ of the form
+\[
+F(n)=\sum_{p\in P} \alpha_p v_p(n)
+\]
+for which $F(a)=1$ for all $a\in A$.
+\end{lemma}
+
+\begin{proof}
+First assume \eqref{eq:alpha-eq} holds. If $a_1\cdots a_r=b_1\cdots b_s$ with all $a_i,b_j\in A$, then comparing prime exponents gives
+\[
+\sum_{i=1}^r v_p(a_i)=\sum_{j=1}^s v_p(b_j)\qquad\text{for all }p\in P.
+\]
+Multiplying by $\alpha_p$ and summing over $p\in P$ yields
+\[
+\sum_{i=1}^r \sum_{p\in P} \alpha_p v_p(a_i)
+=
+\sum_{j=1}^s \sum_{p\in P} \alpha_p v_p(b_j).
+\]
+By \eqref{eq:alpha-eq} each inner sum equals $1$, so the left side is $r$ and the right side is $s$, hence $r=s$.
+
+\medskip
+Conversely, assume $A$ is length-rigid. Consider any rational linear relation among exponent vectors
+\begin{equation}
+\label{eq:relation}
+\sum_{a\in A} c_a\,\mathbf v(a)=\mathbf 0,
+\end{equation}
+where $c_a\in\mathbb{Q}$. Let $D$ be a common denominator of the $c_a$ and set $m_a\coloneqq Dc_a\in\mathbb{Z}$. Then
+$\sum_a m_a\mathbf v(a)=\mathbf 0$. Write $m_a=m_a^+-m_a^-$ with $m_a^+,m_a^-\in\mathbb{Z}_{\ge0}$.
+The vector identity $\sum_a m_a\mathbf v(a)=\mathbf 0$ is equivalent to
+\[
+\prod_{a\in A} a^{m_a^+}=\prod_{a\in A} a^{m_a^-}.
+\]
+Both sides are products of elements of $A$ (allowing repetition). By length-rigidity the total number of factors on each side is equal:
+\[
+\sum_{a\in A} m_a^+=\sum_{a\in A} m_a^-.
+\]
+Hence $\sum_{a\in A} m_a=0$, and dividing by $D$ gives $\sum_{a\in A} c_a=0$.
+
+Thus, any rational relation \eqref{eq:relation} forces $\sum_a c_a=0$, meaning that the assignment $\mathbf v(a)\mapsto 1$ is well-defined as a linear functional on the $\mathbb{Q}$-span of the vectors $\{\mathbf v(a):a\in A\}$. Therefore there exists a linear functional $L$ on $\mathbb{Q}^P$ with $L(\mathbf v(a))=1$ for all $a\in A$. Writing $L$ in coordinates gives coefficients $(\alpha_p)_{p\in P}$ satisfying \eqref{eq:alpha-eq}.
+\end{proof}
+
+\subsubsection*{4.2. Two concrete constructions (finite $[1,N]$)}
+The lemma explains why ``one distinguished prime factor'' constructions work: one chooses weights $\alpha_p\in\{0,1\}$ and forces each $n\in A$ to have total weighted valuation $1$.
+
+\begin{proposition}[Classical $\sqrt N$ threshold]
+Fix $N\ge 1$ and set
+\[
+A_N\coloneqq\{n\in\{1,\dots,N\}: \text{$n$ has a prime factor $p>\sqrt N$}\}.
+\]
+Then $A_N$ is length-rigid.
+\end{proposition}
+
+\begin{proof}
+If $p>\sqrt N$ divides some $n\le N$, then $p$ divides $n$ to exponent exactly $1$ and no other prime $>\sqrt N$ can divide $n$ (since two such primes would multiply to $>N$). Thus every $n\in A_N$ has
+\[
+\sum_{p>\sqrt N} v_p(n)=1.
+\]
+Apply Lemma~\ref{lem:additive-functional} with weights $\alpha_p=1$ for $p>\sqrt N$ and $\alpha_p=0$ otherwise.
+\end{proof}
+
+The size asymptotic $|A_N|=(\log 2+o(1))N$ comes from the classical estimate that the proportion of $\sqrt N$-smooth numbers up to $N$ tends to $1-\log 2$ (Dickman--de Bruijn theory); we do not reprove this here.
+
+\subsubsection*{4.3. Small computational experiment (finite $[1,N]$)}
+Using Lemma~\ref{lem:additive-functional}, one can test length-rigidity of a candidate $A\subset\{1,\dots,N\}$ by solving a rational linear system $\sum_p \alpha_p v_p(a)=1$ for all $a\in A$.
+
+A brute-force search over all subsets for $N\le 12$ (implemented via exact rational Gaussian elimination) finds the following maximum sizes:
+\[
+\begin{array}{c|ccccccccccc}
+N&2&3&4&5&6&7&8&9&10&11&12\\\hline
+\max|A|&1&2&2&3&3&4&4&5&5&6&7
+\end{array}
+\]
+For $N=12$ one extremal example is $A=\{3,5,6,7,10,11,12\}$; it is certified by the weights
+$\alpha_3=\alpha_5=\alpha_7=\alpha_{11}=1$ and all other $\alpha_p=0$, i.e.
+$F(n)=v_3(n)+v_5(n)+v_7(n)+v_{11}(n)$.
+
+\subsection*{5. Verification}
+\begin{itemize}[leftmargin=2em]
+\item Lemma~\ref{lem:additive-functional} is internally consistent: it correctly rules out sets containing $1$ or simultaneously containing $p$ and $p^2$.
+\item The construction $A_N$ is verified by the fact that each $n\in A_N$ has a unique prime factor $>\sqrt N$.
+\item The small-$N$ brute force uses the lemma as a certificate, so any reported $A$ indeed satisfies the defining implication.
+\end{itemize}
+
+\subsection*{6. FINAL}
+\textbf{UNRESOLVED.}
+
+\medskip
+\noindent\textbf{Fail-safe (required):}
+\begin{enumerate}[leftmargin=2em,label=(\roman*)]
+\item \textbf{Strongest partial results proved here.}
+Lemma~\ref{lem:additive-functional} gives a clean equivalence between length-rigidity and the existence of a rational completely additive ``length'' functional constant on $A$. This gives a simple proof of the $\sqrt N$-threshold construction in the finite problem and supports systematic search.
+\item \textbf{First gap that blocks a full solution.}
+Even with the additive-functional characterization, we do not have a general theorem bounding the density of a level set $\{n: F(n)=1\}$ of a (possibly infinitely-supported) additive function $F(n)=\sum_p \alpha_p v_p(n)$.
+\item \textbf{What would likely close the problem.}
+A uniform upper bound of the form $d(\{n: F(n)=1\})\le 1-c$ for all nontrivial additive $F$ with rational values would settle (a) negatively and imply (b). Alternatively, an explicit construction achieving densities $1-\varepsilon$ would settle (a) positively.
+\item \textbf{Why computations didn't settle it.}
+The brute force only explores very small $N$ and cannot distinguish between densities such as $0.83$ vs $1$; it is useful mainly as a sanity check and for pattern-spotting.
+\end{enumerate}
+
+\subsection*{7. COMPLETION ESTIMATE}
+\textbf{35\%.} A structural equivalence and supporting computations are provided, but the main density questions remain open.
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.2/786.tex
+
+\subsection*{REUSED SOURCE 2}
+Original attribution: \texttt{gpt\_pro\_5.4}.
+Original file: \texttt{attacks/erdos/gpt\_pro\_5.4/786.tex}.
+
+% BEGIN REUSED SOURCE: attacks/erdos/gpt_pro_5.4/786.tex
+\section{Problem 786}
+
+\subsection*{1) ROUND-2 OBJECTIVE}
+Path \textbf{(C)}: identify the fatal obstruction in Round 1 and correct the statement. In Round 1 I treated the repetitions-allowed version as still open. That is incorrect. The currently curated literature record shows that, when repetitions are allowed, the problem is already settled negatively: every such set is contained in a level set of a real-valued additive function, and Erd\H{o}s--Ruzsa--S\'ark\"ozy imply an absolute upper-density barrier. The minimal corrected open problem is the \emph{distinct-elements} version.
+
+\subsection*{2) Round-1 FOUNDATION USED}
+I use the following Round-1 results without reproving them.
+\begin{enumerate}
+\item The finite additive-functional criterion: for finite $A$, the repetitions-allowed property is equivalent to the existence of a rational additive functional on prime-exponent vectors taking the value $1$ on every $a \in A$.
+\item The Round-1 diagnosis that the real gap was to control level sets of additive functions.
+\item The standard examples (the class $n \equiv 2 \pmod 4$, Selfridge's construction, and the one-large-prime finite construction).
+\end{enumerate}
+
+\subsection*{3) NEW INSIGHT / TOOL (ROUND-2)}
+The new ingredient is an \emph{infinite-set extension} of the Round-1 structural lemma. Instead of working only with finitely many primes and rational coefficients, I pass to the rational vector space of finitely supported prime-exponent vectors and extend a linear functional from the span of $\{\mathbf v(a): a \in A\}$ to the whole space. This gives a real-valued additive function on all natural numbers.
+
+The second new ingredient is the corrected literature input: the updated 2026 discussion of Problem 786 records that Erd\H{o}s--Ruzsa--S\'ark\"ozy already settle the repetitions version negatively, and that the remaining open variant is the distinct-elements interpretation.
+
+\subsection*{4) ATTACK PLAN (ROUND-2)}
+The exact gap left by Round 1 was this: the finite linear-algebra lemma had not yet been upgraded to arbitrary $A$, so it could not be combined with the known distribution theory of additive functions. I will:
+\begin{enumerate}
+\item extend the structural lemma from finite $A$ to arbitrary $A$;
+\item reduce the repetitions-allowed problem to a level set $\{n : f(n)=1\}$ of a real additive function $f$;
+\item import the Erd\H{o}s--Ruzsa--S\'ark\"ozy consequence recorded in the current literature summary, obtaining a negative answer to both the density and finite problems;
+\item isolate precisely why this argument does \emph{not} resolve the distinct-elements variant.
+\end{enumerate}
+
+\subsection*{5) WORK (ROUND-2)}
+Write the repetitions-allowed property as follows:
+\[
+ a_1 \cdots a_r = b_1 \cdots b_s \quad (a_i,b_j \in A)
+ \implies r=s.
+\]
+
+\paragraph{Lemma 786.1 (global additive-functional criterion).}
+Let $A$ be a subset of the natural numbers with the repetitions-allowed property. Then there exists a real-valued additive function $f$ on the natural numbers such that
+\[
+ f(a)=1 \qquad \text{for every } a \in A.
+\]
+
+\paragraph{Proof.}
+Let $P$ be the set of primes dividing at least one element of $A$. Let $V$ be the vector space over the rationals consisting of all finitely supported tuples
+\[
+ x=(x_p)_{p \in P}, \qquad x_p \in \mathbf Q.
+\]
+For a natural number $n$, let
+\[
+ \mathbf v(n) := (v_p(n))_{p \in P} \in V,
+\]
+where $v_p(n)$ is the exponent of $p$ in the factorisation of $n$.
+
+Let $W$ be the rational span of $\{\mathbf v(a): a \in A\}$ inside $V$. Define a map $L$ on $W$ by declaring
+\[
+ L\!\left(\sum_{i=1}^m q_i \mathbf v(a_i)\right) := \sum_{i=1}^m q_i
+\]
+for rational numbers $q_i$ and elements $a_i \in A$.
+
+I claim this is well-defined. Suppose
+\[
+ \sum_{i=1}^m q_i \mathbf v(a_i)=0.
+\]
+Choose a common denominator $D$ and set $m_i = D q_i \in \mathbf Z$. Then
+\[
+ \sum_{i=1}^m m_i \mathbf v(a_i)=0.
+\]
+Write $m_i = m_i^+ - m_i^-$ with $m_i^+,m_i^- \ge 0$. The equality of exponent vectors is equivalent to
+\[
+ \prod_{i=1}^m a_i^{m_i^+} = \prod_{i=1}^m a_i^{m_i^-}.
+\]
+Each side is a product of elements of $A$, with repetitions allowed. By the defining property of $A$, the total number of factors on the two sides must be equal:
+\[
+ \sum_{i=1}^m m_i^+ = \sum_{i=1}^m m_i^-.
+\]
+Hence
+\[
+ \sum_{i=1}^m m_i = 0,
+\]
+and dividing by $D$ gives $\sum_i q_i = 0$. So $L$ is well-defined.
+
+Now extend $L$ from the subspace $W$ to a linear functional on all of $V$ by choosing a basis of $W$ and extending it to a basis of $V$. Keep the same name $L$ for the extension. Define
+\[
+ f(n) := L(\mathbf v(n)).
+\]
+Because
+\[
+ \mathbf v(mn)=\mathbf v(m)+\mathbf v(n),
+\]
+we have
+\[
+ f(mn)=f(m)+f(n)
+\]
+for all natural numbers $m,n$; that is, $f$ is additive. And for every $a \in A$,
+\[
+ f(a)=L(\mathbf v(a))=1.
+\]
+This proves the lemma.
+\hfill$\square$
+
+\paragraph{Corollary 786.2.}
+Every repetitions-allowed set $A$ is contained in a level set of a real-valued additive function:
+\[
+ A \subseteq \{n : f(n)=1\}
+\]
+for some additive $f$.
+
+\paragraph{External input.}
+The current 2026 update to the Erd\H{o}s Problems page for Problem 786 records the following consequence of Erd\H{o}s--Ruzsa--S\'ark\"ozy (1973): once a set is contained in a fixed level set of a real-valued additive function, one obtains
+\[
+ \overline d(A) \le \frac12,
+\]
+and, in the finite problem, there is an absolute constant $c>0$ such that for all sufficiently large $N$,
+\[
+ |A \cap [1,N]| \le (1-c)N.
+\]
+Applying this to Corollary 786.2 gives the promised negative answers.
+
+\paragraph{Theorem 786.3 (repetitions version is already settled).}
+For the repetitions-allowed interpretation of Problem 786:
+\begin{enumerate}
+\item there is no set $A$ of density $>1-\varepsilon$ for every $\varepsilon>0$; in fact every such $A$ has upper density at most $1/2$;
+\item in the finite problem one cannot have $|A|=(1-o(1))N$; indeed $|A| \le (1-c)N$ for some absolute $c>0$ and all sufficiently large $N$.
+\end{enumerate}
+
+\paragraph{Why the distinct-elements version is genuinely different.}
+The proof above uses arbitrary integer relations among exponent vectors. Such a relation becomes a product identity only because repetitions are allowed. If one insists that all $a_i$ and all $b_j$ be distinct, then only disjoint $0$--$1$ relations are relevant; integer coefficients larger than $1$ are no longer legal. So the additive-function reduction collapses exactly at this point. This isolates the minimal corrected open statement: require the products on both sides to use distinct elements.
+
+\subsection*{6) ADVERSARIAL VERIFICATION}
+\begin{enumerate}
+\item The definition of $L$ uses only finitely many elements of $A$ at a time, so no infinite product or convergence issue appears.
+\item The extension step is safe because $W$ is a rational vector subspace of $V$; I am extending a linear functional on vector spaces, not claiming that a homomorphism to the integers extends on a free abelian group. This avoids the standard obstruction exemplified by $2\mathbf Z \to \mathbf Z$.
+\item The conclusion is only $A \subseteq \{f=1\}$, not equality; this is the correct statement needed for the upper-bound transfer.
+\item The distinct-elements obstruction is real: the argument from an integer relation
+\[
+ \sum m_a \mathbf v(a)=0
+\]
+produces repeated factors $a^{m_a^+}$ and $a^{m_a^-}$, which are illegal in the distinct-elements variant whenever some coefficient has absolute value bigger than $1$.
+\end{enumerate}
+
+\subsection*{7) FINAL}
+\textbf{FULL SOLUTION -- COUNTEREXAMPLE / DISPROOF.}
+
+For the repetitions-allowed interpretation, both optimistic conclusions are false. Every such set is contained in a level set of a real-valued additive function, and the Erd\H{o}s--Ruzsa--S\'ark\"ozy consequences recorded in the current literature give upper density at most $1/2$ and a finite upper bound $|A| \le (1-c)N$. The minimal corrected open problem is the distinct-elements version.
+
+\subsection*{8) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}
+
+\subsection*{9) REFERENCES}
+\begin{thebibliography}{99}
+\bibitem{ERS73-786}
+P. Erd\H{o}s, I. Ruzsa, and A. S\'ark\"ozy,
+\emph{On the number of solutions of $f(n)=a$ for additive functions},
+Acta Arith. 24 (1973), 1--9.
+
+\bibitem{Bloom786}
+T. F. Bloom,
+\emph{Erd\H{o}s Problem \#786}, updated 2 February 2026,
+\texttt{https://www.erdosproblems.com/786}.
+
+\bibitem{Bloom786Thread}
+T. F. Bloom, T. Tao, and others,
+\emph{Discussion thread for Erd\H{o}s Problem \#786}, especially comments of 18 October 2025 and 2 February 2026,
+\texttt{https://www.erdosproblems.com/forum/thread/786}.
+\end{thebibliography}
+
+
+% END REUSED SOURCE: attacks/erdos/gpt_pro_5.4/786.tex
+
+\subsection*{COMPLETION ESTIMATE}
+Inherited primary-source estimate: $100\%$. This is the original source's unverified estimate, not a new assessment or confirmation that the problem is solved.

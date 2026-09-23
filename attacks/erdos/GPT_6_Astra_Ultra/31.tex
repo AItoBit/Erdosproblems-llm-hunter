@@ -1,0 +1,118 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#31; reconstruction, 2026-09-23.}
+Given an infinite set $A\subseteq\mathbb N$, construct a set
+$B\subseteq\mathbb N$ with natural density zero such that $A+B$
+contains every sufficiently large integer. We use positive integers
+throughout; adjoining zero to either set does not affect the conclusion.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page credits Lorentz with proving the Erd\H{o}s--Straus
+conjecture and labels the result proved, with a formal verification
+reported. The following finite-cover and interval-patching argument
+reconstructs the existence result. No novelty or independent verification
+of the reported formal proof is claimed.
+
+\section{WORK}
+\subsection{1. A finite cyclic covering lemma}
+Let $F\subseteq\mathbb Z/q\mathbb Z$ have $j\geq1$ elements. There
+exists $R\subseteq\mathbb Z/q\mathbb Z$ with $F+R=\mathbb Z/q\mathbb Z$
+and
+\[
+ |R|\leq q\eta_j,\qquad \eta_j=\frac{\log j+1}{j}.    \tag{1}
+\]
+For $j=1$ take all residues. For $j\geq2$, choose a random set $R_0$
+by including each residue independently with probability $p=(\log j)/j$.
+Each target residue is missed by $F+R_0$ with probability
+$(1-p)^j\leq e^{-pj}=1/j$. Fix $f_0\in F$. For each missed target $x$,
+add $x-f_0$ to $R_0$. The repaired set covers every target and has
+expected size at most $qp+q/j=q\eta_j$. Some outcome satisfies (1).
+This is a finite existence argument; exhaustive search would select
+such a set without randomness if desired.
+
+\subsection{2. Covers with densities tending to zero}
+List $A$ increasingly as $a_1<a_2<\cdots$, set $a_0=a_1$, and let
+$F_j=\{a_1,\ldots,a_j\}$, $m_j=a_j$, and $q_j=m_j+1$.
+The elements of $F_j$ are distinct modulo $q_j$. Choose $R_j$ by (1),
+and let $P_j$ be the periodic set of integers with residues in $R_j$.
+Then every integer has a representation $a+b$ with $a\in F_j$ and
+$b\in P_j$, and $P_j$ has density at most $\eta_j\to0$.
+For any interval of $L$ consecutive integers,
+\[
+ |P_j\cap I|\leq\eta_j L+q_j,                         \tag{2}
+\]
+by separating complete periods and a final incomplete period.
+
+\subsection{3. Patching the periodic covers}
+Put $H_j=q_j+m_j+a_0+1$. Choose increasing positive integer thresholds
+$T_j$ so large that
+\[
+ T_j\geq j^2\sum_{i=1}^jH_i,\qquad T_1>a_0,
+ \qquad T_{j+1}>2(T_j+m_j+a_0+1).                     \tag{3}
+\]
+This is possible recursively. Define
+\[
+ B=\bigcup_{j\geq1}\left(
+       P_j\cap[T_j,T_{j+1})\right)
+   \ \cup\ \bigcup_{j\geq1}
+       \bigl([T_j-a_0,T_j+m_j]\cap\mathbb Z\bigr).    \tag{4}
+\]
+All elements are positive by the choice of thresholds. The second union
+repairs the left boundary of each interval.
+
+Indeed, given $n\geq T_1$, choose $j$ with $T_j\leq n<T_{j+1}$.
+If $n<T_j+m_j$, then $n=a_0+(n-a_0)$ and the second summand belongs
+to the boundary interval in (4). Otherwise choose $a\in F_j$ with
+$n-a\in P_j$. Since $a\leq m_j$, we have
+$T_j\leq n-a<T_{j+1}$, so this second summand belongs to the first
+union in (4). Thus every $n\geq T_1$ lies in $A+B$.
+
+\subsection{4. Density at every cutoff, including interval boundaries}
+Let $T_J\leq x<T_{J+1}$. By (2), the contribution of the first union
+to $B\cap[1,x]$ is at most
+\[
+ \sum_{j\leq J}\eta_j L_j(x)+\sum_{j\leq J}q_j,
+\]
+where $L_j(x)=|[T_j,T_{j+1})\cap[1,x]\cap\mathbb Z|$ and
+$\sum_jL_j(x)\leq x$. The boundary intervals with $j\leq J$ add at
+most $\sum_{j\leq J}(m_j+a_0+1)$. The interval for $J+1$, if it has
+already begun, adds at most $a_0$ integers below $T_{J+1}$; later
+boundary intervals contribute nothing, by (3). Consequently
+\[
+ |B\cap[1,x]|\leq\sum_{j\leq J}\eta_j L_j(x)
+                   +\sum_{j\leq J}H_j+a_0
+ \leq\sum_{j\leq J}\eta_j L_j(x)+\frac{x}{J^2}+a_0.
+\]
+Given $\epsilon>0$, choose $j_0$ so that $\eta_j<\epsilon$ for
+$j\geq j_0$. The finitely many earlier intervals contribute a fixed
+constant $C_{j_0}$, while the remaining sum is at most $\epsilon x$.
+It follows that
+\[
+ \limsup_{x\to\infty}\frac{|B\cap[1,x]|}{x}\leq\epsilon.
+\]
+Since $\epsilon$ was arbitrary, $B$ has natural density zero.
+\hfill$\square$
+
+\section{VERIFICATION AND LIMITS}
+The proof requires neither positive density nor a growth bound for $A$.
+Large gaps in $A$ are handled by choosing larger thresholds in (3).
+The error terms include both incomplete periods and boundary repairs;
+showing small density only at the thresholds would not have sufficed.
+The finite covering lemma is checked exhaustively on cyclic groups
+of order at most eight in the accompanying batch script.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known affirmative answer reconstructed).}
+The construction and the density estimate are complete. They establish
+existence and a finite-search description relative to an enumeration
+of $A$, without claiming an efficient algorithm or new quantitative
+bounds for the complement.
+
+\section{SOURCES}
+T.~F.~Bloom, problem \#31, with attribution to G.~G.~Lorentz (1954),
+\url{https://www.erdosproblems.com/31}, checked 2026-09-23.
+Checks: \texttt{verification/solved\_batch\_26\_checks.py}.
+
+This estimates completion of the stated existence proof, not novelty.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

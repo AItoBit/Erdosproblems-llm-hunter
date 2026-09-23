@@ -1,0 +1,140 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#126; reconstruction, 2026-09-23.}
+For an $n$-element set $A$ of positive integers, let $P$ be the primes
+dividing at least one $a+b$ with distinct $a,b\in A$. If $f(n)$ is the
+minimum possible $|P|$, must $f(n)/\log n\to\infty$?
+We reconstruct a stronger bound: $n\le3|P|^2$ for $n\ge2$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page records a recent positive resolution. The primary
+three-page exposition linked there gives a signed laminar-family method.
+Below we verify its linear algebra and prime-power translation, keeping
+track of constants. This is an attributed reconstruction, not a new
+solution or an assertion that we ran the associated formal proof.
+
+\section{WORK}
+\subsection*{A finite kernel lemma}
+Let $V$ have $n\ge2$ elements. For each of $r$ labels $p$, take a finite
+laminar family of subsets $B\subseteq V$, each of size at least two,
+with nonnegative weights $w_p(B)$ and vertex signs $\sigma_p(i)\in\{-1,1\}$.
+Repeated supports with different labels are allowed. Set
+\[
+ M_p(i,j)=\sum_{B\ni i,j}w_p(B),\quad
+ C(i,j)=\sum_{\sigma_p(i)\ne\sigma_p(j)}M_p(i,j),\quad
+ R(i,j)=\sum_{\sigma_p(i)=\sigma_p(j)}M_p(i,j).
+\]
+Assume $R(i,j)<C(i,j)$ for $i\ne j$, and $C$ is conditionally negative
+semidefinite, meaning $x^TCx\le0$ whenever $\sum x_i=0$.
+We prove $n\le3r^2$.
+
+Each $M_p$ is positive semidefinite because its quadratic form is
+$\sum_Bw_p(B)(\sum_{i\in B}x_i)^2$. Hence so are
+$Q_p=(\sigma_p(i)\sigma_p(j)M_p(i,j))$ and $Q=\sum_pQ_p=R-C$.
+Write $T=\operatorname{tr}Q$ and $\Sigma=\sum_{i,j}C(i,j)>0$.
+For every sign vector $s$, negative off-diagonal entries of $Q$ imply
+\[
+ s^TQs+\mathbf1^TQ\mathbf1\le2T.
+\]
+Taking $s=\sigma_p$ and discarding nonnegative quadratic forms gives
+$\sum_{i,j}M_p(i,j)\le2T$. Also $\mathbf1^TQ\mathbf1\ge0$, so
+$\sum R\ge\sum C=\Sigma$. Consequently
+\[
+ 2\Sigma\le\sum_p\sum_{i,j}M_p(i,j)\le2rT,
+ \qquad\Sigma\le rT.                            \tag{1}
+\]
+
+Fix $p$. For each $i$, choose the smallest support $A_i$ containing it;
+if none exists put $A_i=V$. There is a map $h$ with
+$h(i)\in A_i\setminus\{i\}$ such that each value is used at most twice.
+To justify this application of Hall's theorem, for $X\subseteq V$ put
+$N(X)=\bigcup_{i\in X}(A_i\setminus\{i\})$. The supports indexed by
+$X\setminus N(X)$ are pairwise disjoint: if two were nested, one of
+their distinct indexing vertices would belong to $N(X)$. Choosing one
+point in each punctured support injects $X\setminus N(X)$ into $N(X)$.
+Thus $|X|\le2|N(X)|$, which is Hall's condition for two copies of $V$.
+Laminarity and minimality now give
+\[
+ M_p(i,i)=M_p(i,h(i))\le C(i,h(i)).              \tag{2}
+\]
+The inequality holds because a term is either counted in $C$ or is
+bounded by $R<C$. It also holds when $M_p(i,i)=0$.
+
+Let $c_i=\sum_j C(i,j)$ and $d_i=2nc_i-\Sigma$. Testing conditional
+negative semidefiniteness on $ne_i-\mathbf1$ and
+$n(e_i+e_j)-2\mathbf1$, using $C(i,i)=0$, gives
+\[
+ d_i\ge0,\qquad n^2 C(i,j)\le d_i+d_j,\qquad
+ \sum_i d_i=n\Sigma.
+\]
+Sum (2), observing that each $h(i)$ is used at most twice:
+\[
+ n^2\sum_iM_p(i,i)\le3n\Sigma.
+\]
+After summing over $p$, $nT\le3r\Sigma$. Combine with (1), and cancel
+$\Sigma>0$, to obtain $n\le3r^2$.
+
+\subsection*{The arithmetic kernels}
+Index $A$ by positive distinct integers $a_i$. For odd $p\in P$, assign
+opposite signs to opposite nonzero residue classes modulo $p$, and give
+$a_i$ the sign of its $p$-free part. For $p=2$, use opposite signs for
+the odd-part residues $1$ and $3$ modulo $4$.
+For every $\ell\ge1$, partition residues modulo $p^\ell$ into negation
+orbits. Retain an orbit $\{u,-u\}$ when $u\ne-u$ and both sides occur
+among the $a_i$; its support receives weight $\log p$. These supports
+are laminar under reduction of the modulus, and there are finitely many:
+each retained orbit supplies a distinct pair whose sum is divisible by
+$p^\ell$. Equal residues in a retained orbit have equal signs and opposite
+residues have opposite signs, including the $2$-adic case.
+
+Define a further kernel $B$ by summing $\log p$ over all self-opposite
+classes modulo $p^\ell$ containing both indices. It is positive
+semidefinite, being a nonnegative sum of kernels
+$\mathbf1_D(i)\mathbf1_D(j)$. Unique factorization gives, for $i\ne j$,
+\[
+ C(i,j)+B(i,j)=\log(a_i+a_j),\qquad
+ R(i,j)+B(i,j)\le\log|a_i-a_j|.                \tag{3}
+\]
+The second inequality follows because equal-residue and self-opposite
+contributions each divide the difference. Therefore $R(i,j)<C(i,j)$.
+
+Finally $L(i,j)=\log(a_i+a_j)$ is conditionally negative semidefinite.
+Indeed set $\rho_i=(a_i-1)/(a_i+1)$, so $0\le\rho_i<1$. Apart from
+terms depending on a single index and a constant,
+\[
+ L(i,j)=\log(1-\rho_i\rho_j)
+       =-\sum_{m\ge1}\frac{\rho_i^m\rho_j^m}{m}.
+\]
+For a zero-sum vector its quadratic form is
+$-\sum_{m\ge1}(\sum_i x_i\rho_i^m)^2/m\le0$.
+Off the diagonal $C+B=L$ by (3). On the diagonal $C(i,i)=0$ and
+$B(i,i)\le\log(2a_i)=L(i,i)$. Thus $L-C-B$ is a nonnegative diagonal
+matrix. Subtracting it and the positive semidefinite $B$ shows that $C$
+has the required conditional property. The finite lemma applies:
+\[
+ f(n)\ge\sqrt{n/3},\qquad
+ \frac{f(n)}{\log n}\longrightarrow\infty.
+\]
+\hfill$\square$
+
+\section{VERIFICATION}
+Self-opposite classes cannot be discarded without retaining the kernel
+$B$: they include common prime factors of the two summands. The diagonal
+inequality, rather than an unjustified diagonal equality in (3), is
+needed for conditional negativity. The batch script constructs all
+kernels for small sets, verifies the valuation identities, and checks
+$R<C$. The infinite argument rests on the proof above, not these tests.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known positive answer reconstructed).}
+The proof uses Hall's finite matching theorem, unique factorization,
+and the convergent power series for $\log(1-z)$. All special-purpose
+kernel estimates are proved here. No novelty is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/126} and its proof-claims page;
+\emph{A Two-Copy Proof of Erd\H{o}s Problem 126},
+\url{https://www.erdosproblems.com/static/126-proof.pdf}.
+Checked 2026-09-23. Completion concerns the stated asymptotic question.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}
