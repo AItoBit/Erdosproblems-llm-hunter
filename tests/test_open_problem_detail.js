@@ -48,6 +48,7 @@ function render(query, open = records) {
         erdosProblems: { '1': { number: '1', status: 'open', llm_status: 'unresolved', problem_url: 'https://www.erdosproblems.com/1', attacks: [] } }
     });
     vm.runInContext(fs.readFileSync(path.join(root, 'docs/app.js'), 'utf8'), context);
+    vm.runInContext(fs.readFileSync(path.join(root, 'docs/catalog-math.js'), 'utf8'), context);
     callbacks.length = 0;
     vm.runInContext(detailScript, context);
     callbacks[0]();
@@ -56,9 +57,10 @@ function render(query, open = records) {
 
 let page = render('?type=open_problems&id=problem.z-first');
 assert.equal(page.element('page-title').textContent, 'Title 1');
-assert.match(page.element('problem-meta').innerHTML, /Catalog status:/);
+assert.match(page.element('problem-meta').innerHTML, /Problem Status:/);
+assert.doesNotMatch(page.element('problem-meta').innerHTML, /Problem ID:|Catalog status:/);
 assert.match(page.element('problem-meta').innerHTML, /No attempts yet/);
-assert.match(page.element('problem-links').innerHTML, /n &lt; 10/);
+assert.match(page.element('problem-links').innerHTML, /\$n &lt; 10\$/);
 assert.match(page.element('problem-links').innerHTML, /Definition &lt;source&gt;/);
 assert.match(page.element('problem-links').innerHTML, /x=1&amp;y=2/);
 assert.equal(page.element('prev-problem').style.visibility, 'hidden');
@@ -92,4 +94,16 @@ const unsafeSource = { ...records['problem.z-first'], sources: [
 page = render('?type=open_problems&id=problem.z-first', { 'problem.z-first': unsafeSource });
 assert.doesNotMatch(page.element('problem-links').innerHTML, /href="javascript:|<img| onmouseover="/);
 assert.match(page.element('problem-links').innerHTML, /&quot;/);
+
+const tate = JSON.parse(fs.readFileSync(path.join(root, 'lists/top500-v22.json'), 'utf8')).records
+    .find(record => record.problemId === 'problem.tate-conjecture-for-abelian-varieties-and-higher-dimensional-varieties');
+const tateProblem = { ...ranked(tate.problemId, tate.releaseRank), exact_target: tate.exactTarget };
+page = render(`?type=open_problems&id=${tate.problemId}`, { [tate.problemId]: tateProblem });
+const statement = page.element('problem-links').innerHTML;
+assert.match(statement, /class="problem-statement-text tex-content"/);
+assert.match(statement, /\\overline\{X\}/);
+assert.match(statement, /Q_\{l\}/);
+assert.match(statement, /\^\{\\operatorname\{Gal\}\(\\overline\{k\} \/ k\)\}/);
+assert.doesNotMatch(statement, /X_bar|H\^\(2i\)|Q_l/);
+assert.doesNotMatch(page.element('problem-meta').innerHTML, /Problem ID:|Catalog status:/);
 console.log('Ranked definitions, citations, stable navigation, empty attempts, review links and legacy detail routes passed.');

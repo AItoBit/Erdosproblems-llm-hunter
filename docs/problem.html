@@ -161,6 +161,7 @@
     <script src="attempt-previews.js"></script>
     <script src="tex-references.js"></script>
     <script src="tex-bare-math.js"></script>
+    <script src="catalog-math.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
@@ -282,9 +283,8 @@
                 const claim = problem.llm_status || determineOverallStatus(problem.attacks);
                 metaDiv.innerHTML = `
                     <p><a href="open_problems.html">Top Open Problems</a> · <strong>Rank:</strong> ${escapeHtml(problem.rank)}</p>
-                    <p><strong>Problem ID:</strong> ${escapeHtml(problem.id)}</p>
                     <p><strong>Field:</strong> ${escapeHtml(problem.domain_label)}</p>
-                    <p><strong>Catalog status:</strong> ${escapeHtml(window.ProblemHunting.getOpenProblemStatusLabel(problem))}</p>
+                    <p><strong>Problem Status:</strong> ${escapeHtml(window.ProblemHunting.getOpenProblemStatusLabel(problem))}</p>
                     ${problem.status_reviewed_at ? `<p><strong>Status reviewed in catalog:</strong> ${escapeHtml(problem.status_reviewed_at)}</p>` : ''}
                     ${problem.status_qualification ? `<p class="status-note">${escapeHtml(problem.status_qualification)}</p>` : ''}
                     <p><strong>LLM Claim:</strong> ${claim === 'none' ? 'No attempts yet' : escapeHtml(claim)}</p>
@@ -327,7 +327,7 @@
                 }).join('');
                 const catalog = window.OPEN_PROBLEMS_CATALOG || {};
                 linksDiv.innerHTML = `
-                    <p>${escapeHtml(problem.exact_target)}</p>
+                    <div class="problem-statement-text tex-content">${formatTeX(window.ProblemHunting.catalogMath(problem.exact_target), false, false)}</div>
                     <h3>Definition and context sources</h3>
                     <ul>${sourceLinks}</ul>
                     <p class="status-note">Catalog edition: ${escapeHtml(catalog.edition_date || '')}.
@@ -445,7 +445,7 @@
             }
         });
 
-        function formatTeX(text, preserveCollection = false) {
+        function formatTeX(text, preserveCollection = false, inferInlineMath = true) {
             if (!text) return '';
 
             // Complete articles include a preamble that is not browser content.
@@ -736,7 +736,7 @@
                 const caption = kind === 'eqref' ? `(${key})` : key;
                 return protectHTML(`<a class="tex-reference" data-tex-reference="${escapeHTML(key)}" data-tex-reference-kind="${kind}" data-tex-scope="${scope}">${escapeHTML(caption)}</a>`);
             });
-            text = convertInlineMath(text);
+            if (inferInlineMath) text = convertInlineMath(text);
             text = window.wrapBareTeXMath ? window.wrapBareTeXMath(text) : text;
             text = protectMath(text);
 
