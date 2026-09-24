@@ -1,0 +1,54 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#515; one path for all positive exponents, 2026-09-24.}
+Given a transcendental entire function $f$, construct one locally rectifiable path $\Gamma$ tending to infinity such that, for every $\lambda>0$,
+\[
+ \int_\Gamma |f(z)|^{-\lambda}\,|dz|<\infty.
+\]
+The integral is with respect to arclength, and the path must be independent of $\lambda$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Lewis--Rossi--Weitsman proved a stronger subharmonic theorem. We reconstruct its level-set argument for $u=\log|f|$, using their short-path lemma as a stated external input. The growth hypothesis for a general subharmonic function is essential and will be verified from transcendence here.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Join successively higher level sets by paths whose lengths grow subexponentially in the current level. The integrand then decays exponentially faster than the length, simultaneously for every exponent.
+
+\section{WORK}
+\textbf{The geometric input.} Lemma 1 of Lewis--Rossi--Weitsman supplies absolute constants $C>0$ and $0<\delta_0<1$ with the following property. If $D$ is a proper simply connected plane domain, $v$ is subharmonic on $D$, $0\leq v\leq1$, and $v(a)\geq1-\delta_0$, there is a rectifiable path from $a$ to some $b\in\partial D$, staying in $D$ before its endpoint, on which $v>0$ before the endpoint, of length at most $C\operatorname{dist}(a,\partial D)$. Its proof uses Hall's lemma and conformal mapping; it is not reproved here.
+
+\textbf{Growth and the successive levels.} Write $u=\log|f|$ and $M_u(r)=\log\max_{|z|=r}|f(z)|$. Cauchy's coefficient estimate gives $M_u(r)\geq d\log r+\log|a_d|$ whenever the Taylor coefficient $a_d$ is nonzero. Such degrees $d$ are unbounded, so $M_u(r)/\log r\to\infty$.
+Choose $a_1$ with $u_1=u(a_1)>0$, and choose $0<\delta<1$ with $(1-\delta)^2\geq1-\delta_0$. Put $q=(1-\delta)^{-1}$. Given $a_j$ with $u_j=u(a_j)>0$, let $D_j$ be the component of $\{u<q u_j\}$ containing $a_j$. This is a proper simply connected domain. To see simple connectivity, every Jordan curve inside $D_j$ bounds a region on which the maximum-modulus principle keeps $|f|$ below its boundary maximum, itself strictly below $e^{q u_j}$; the filled region remains in the same component.
+On $D_j$ define
+\[
+ v_j=\frac{1-\delta}{u_j}\max(u-\delta u_j,0).
+\]
+The maximum removes the singularities of $\log|f|$ at its zeros; $v_j$ is subharmonic, $0\leq v_j<1$, and $v_j(a_j)=(1-\delta)^2$. The lemma gives a path $\gamma_j$ ending at $a_{j+1}\in\partial D_j$ with
+\[
+ L_j\leq C\operatorname{dist}(a_j,\partial D_j),\qquad
+ u\geq\delta u_j\ \hbox{on }\gamma_j,\qquad
+ u_{j+1}=q u_j.                                      \tag{1}
+\]
+For the last equality, continuity of $|f|$ forces $|f(a_{j+1})|=e^{q u_j}$: a boundary point with a strictly smaller value would be an interior point of the same component. In particular $u_j=q^{j-1}u_1$.
+
+\textbf{Controlling the lengths without choosing $\lambda$.} Fix any $\varepsilon>0$. For all large $j$, the growth just proved implies $M_u(e^{\varepsilon u_j})>q u_j$. Some point on this circle lies outside $D_j$, so
+\[
+ L_j\leq C(|a_j|+e^{\varepsilon u_j}),\qquad
+ |a_{j+1}|\leq(1+C)|a_j|+Ce^{\varepsilon u_j}.         \tag{2}
+\]
+Iterating (2) gives $|a_j|\leq K(1+C)^j(1+j e^{\varepsilon u_j})$, with a constant absorbing the finitely many initial terms. Therefore
+$\limsup_j\log(1+|a_j|)/u_j\leq\varepsilon$, since $j/u_j\to0$. As $\varepsilon$ was arbitrary, this ratio tends to zero, and (2) also gives $\log(1+L_j)=o(u_j)$.
+
+Concatenate the paths $\gamma_j$. Equation (1) shows that their tail leaves every compact set, because $u$ is bounded above on each compact set and $\delta u_j\to\infty$. Thus the concatenation tends to infinity and is locally rectifiable. For each fixed $\lambda>0$,
+\[
+ \int_{\gamma_j}e^{-\lambda u}|dz|
+ \leq L_j e^{-\lambda\delta u_j}
+ \leq e^{-\lambda\delta u_j/2}
+\]
+for all sufficiently large $j$. The last series converges because $u_j$ grows geometrically. The finitely many initial integrals are finite by (1). This single construction therefore works for every $\lambda>0$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The deduction for every transcendental entire function, the arclength estimate, and independence of the exponent are proved. The only substantive external geometric input is the precise short-path lemma stated above. This reconstructs the known solution and does not claim a new theorem.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/515}; J. Lewis, J. Rossi and A. Weitsman, \emph{On the growth of subharmonic functions along paths}, Lemma 1 and Theorem 1, \url{https://archive.ymsc.tsinghua.edu.cn/pacm_download/116/7409-11512_2006_Article_BF02384375.pdf}.
+
+\textbf{Completion rate estimate: 100\%.}

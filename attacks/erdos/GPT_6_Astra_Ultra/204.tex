@@ -1,0 +1,54 @@
+\section{Erd\H{o}s Problem \#204}
+\subsection*{1. FORMAL RESTATEMENT}
+Can one choose a residue class $a_d\pmod d$ for every divisor $d>1$ of some integer $n$, covering all integers, such that two distinct classes can overlap only when their moduli are coprime?
+\subsection*{2. LITERATURE AND SCOPE}
+The answer is no, by Adenwalla. We reconstruct his elementary prime-divisor obstruction and density argument. The proof below does not invoke the minimum-modulus theorem for covering systems and makes no claim of novelty.
+\subsection*{3. A NECESSARY FACTORISATION RESTRICTION}
+Let $p$ be the least prime dividing $n>1$. The assumed overlap restriction implies
+\[
+ \omega(n/p)\le p-1,                                      \tag{1}
+\]
+where $\omega$ counts distinct prime factors. Indeed, if distinct primes $q_1,\ldots,q_p$ divide $n/p$, all the moduli $p,pq_1,\ldots,pq_p$ are distinct divisors of $n$. Any two have gcd $p$, including when one $q_i$ equals $p$. Two residue classes whose moduli have gcd $p$ intersect exactly when their residues agree modulo $p$, by the Chinese remainder theorem. Thus these $p+1$ residues would all have to be different modulo $p$, which is impossible.
+
+Write $n=p^a\prod_{i=1}^s q_i^{b_i}$, with $p<q_1<\cdots<q_s$ prime. If $a=1$, (1) gives $s\le p-1$; if $a\ge2$, it gives $s\le p-2$.
+\subsection*{4. DENSITY BELOW ONE IN ALL CASES}
+Any union of the chosen classes has density at most
+\[
+ \sum_{d\mid n,\ d>1}\frac1d
+ =\left(\sum_{j=0}^{a}p^{-j}\right)
+   \prod_{i=1}^s\left(\sum_{j=0}^{b_i}q_i^{-j}\right)-1.       \tag{2}
+\]
+This follows by counting residues modulo $n$; the geometric product lists its divisors.
+
+If $a\ge2$, we bound each finite geometric series strictly by its infinite one. Since $q_i\ge p+i$,
+\[
+ \sum_{d\mid n,d>1}\frac1d
+ <\frac p{p-1}\prod_{i=1}^s\frac{q_i}{q_i-1}-1
+ \le\frac p{p-1}\prod_{i=1}^s\frac{p+i}{p+i-1}-1
+ =\frac{p+s}{p-1}-1\le1.
+\]
+Strictness holds even when $s=0$ because the $p$-series is finite.
+
+Suppose $a=1$ and $p\ge3$. If $s=0$, (2) is $1/p<1$. Otherwise $p$ and each $q_i$ are odd, so $q_i\ge p+1+i$. Therefore
+\[
+ \sum_{d\mid n,d>1}\frac1d
+ <\frac{p+1}{p}\prod_{i=1}^s\frac{p+1+i}{p+i}-1
+ =\frac{p+s+1}{p}-1\le1.
+\]
+
+The only remaining case has $p=2,a=1,s\le1$. The number $n=2$ clearly cannot work. Otherwise $n=2q^b$ with odd prime $q$. The moduli are $2,q^j,2q^j$ for $1\le j\le b$. The only coprime pairs of distinct moduli are $(2,q^j)$. Each such pair necessarily intersects with density $1/(2q^j)$ by CRT. All other pairwise intersections are empty by the hypothesis, and all triple intersections are empty. Inclusion--exclusion therefore gives the exact union density
+\[
+ \delta=\frac12+\sum_{j=1}^b\frac1{q^j}
+          +\sum_{j=1}^b\frac1{2q^j}
+          -\sum_{j=1}^b\frac1{2q^j}
+ =\frac12+\sum_{j=1}^b\frac1{q^j}
+ <\frac12+\frac1{q-1}\le1.
+\]
+This handles the case where the simple union bound alone might exceed one. For $n=1$ the family is empty and also cannot cover.
+\subsection*{5. FINAL AND CHECKS}
+\textbf{SOLVED: no such integer $n$ exists.}
+Every hypothetical admissible family falls into one of the cases above and has density strictly less than one, whereas a finite periodic covering has density one. The proof includes prime powers, the even exceptional family, and the possibility $q_i=p$ in the obstruction. It is a full reconstruction of the known proof, with only elementary CRT and inclusion--exclusion as inputs.
+\subsection*{6. SOURCES}
+Current statement: \texttt{https://www.erdosproblems.com/204}. S. Adenwalla, \emph{A Question of Erd\H{o}s and Graham on Covering Systems}, \texttt{https://arxiv.org/abs/2501.15170}, Lemma 3.1 and Theorem 3.2.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

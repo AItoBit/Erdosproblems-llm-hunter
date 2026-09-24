@@ -1,0 +1,47 @@
+\textbf{Erd\H{o}s problem 537.}
+Must every positive-density subset of $[1,N]$, for sufficiently large $N$, contain $a_1,a_2,a_3$ with $a_1p_1=a_2p_2=a_3p_3$ for three distinct primes?
+
+\textbf{Status and attribution.}
+No. We reconstruct Ruzsa's counterexample recorded at
+\texttt{https://www.erdosproblems.com/537}, checked 24 September 2026, including the positive-density step. The only number-theoretic estimate used below is the classical Chebyshev bound $\pi(x)=O(x/\log x)$.
+
+\textbf{A positive-density set of separated prime factors.}
+Let $B$ consist of squarefree positive integers whose consecutive prime factors have ratio greater than $2$. Equivalently, an integer belongs to $B$ if it is divisible by no $p^2$ and by no $pq$ with primes $p<q\leq2p$.
+The sum of the reciprocal forbidden divisors is finite:
+\[
+ \sum_p\frac1{p^2}+\sum_{p<q\leq2p}\frac1{pq}<\infty.       \tag{1}
+\]
+Indeed, for $2^j\leq p<2^{j+1}$, Chebyshev bounds the number of possible pairs $(p,q)$ by $O(4^j/j^2)$, while $pq\geq4^j$. Summing $O(j^{-2})$ proves the second convergence.
+
+For a finite list of primes, the valuations truncated to $\{0,1,\geq2\}$ of a uniformly chosen residue modulo the product of their squares are independent, by the Chinese remainder theorem. Each of the conditions $p^2\nmid n$ and $pq\nmid n$ is decreasing in these coordinates. Decreasing events in independent ordered coordinates are positively correlated. Here is a short justification: in one coordinate, for decreasing functions $f,g$ and independent identically distributed $X,X'$,
+\[
+ 2\operatorname{Cov}(f(X),g(X))
+ =\mathbb E[(f(X)-f(X'))(g(X)-g(X'))]\geq0.
+\]
+Conditioning on the last coordinate and inducting proves the product-space assertion; iterating it applies to any finite intersection of decreasing events.
+
+It follows that the density of integers obeying any finite collection of the forbidden-divisibility conditions is at least the product of their individual probabilities. By (1), the infinite product
+\[
+ c=\prod_p(1-p^{-2})
+       \prod_{p<q\leq2p}(1-(pq)^{-1})
+\]
+converges to a positive number.
+Let $B_y$ impose just the conditions involving primes at most $y$. Its natural density $d_y$ exists by periodicity and satisfies $d_y\geq c$. The upper density of $B_y\setminus B$ is at most
+\[
+ \sum_{p>y}p^{-2}
+ +\sum_{\substack{p<q\leq2p\\q>y}}(pq)^{-1},
+\]
+which tends to zero. This estimate is uniform in the counting endpoint, since the proportion of multiples of an integer $d$ up to $X$ is at most $1/d$. Thus $B$ has a natural density $d=\lim_y d_y\geq c>0$.
+
+\textbf{The obstruction to three prime multiples.}
+Take $A_N=B\cap(N/2,N]$. Then $|A_N|=(d/2+o(1))N$. Suppose
+$a_1p_1=a_2p_2=a_3p_3=M$ with distinct primes. Since $a_1=M/p_1$ and $p_2p_3\mid M$, both $p_2$ and $p_3$ divide $a_1$. Relabel them so $p_2<p_3$. The defining property of $B$ forces $p_3/p_2>2$, even if these primes are not consecutive factors. On the other hand
+\[
+ \frac{p_3}{p_2}=\frac{a_2}{a_3}<2
+\]
+because both $a_2,a_3$ lie in $(N/2,N]$. This is a contradiction.
+For example, fixing $\epsilon=d/4$ gives a counterexample with $|A_N|\geq\epsilon N$ for every sufficiently large $N$.
+
+\textbf{Completion estimate.}
+Both the positive natural density and the absence of the required configuration are proved above.
+\textbf{COMPLETION: 100\%}

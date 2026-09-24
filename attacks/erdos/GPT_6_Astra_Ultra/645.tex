@@ -1,0 +1,57 @@
+\section*{Erd\H{o}s Problem 645: a three-term progression whose step exceeds its first term}
+
+\paragraph{Statement.}
+Must every two-colouring of the positive integers contain a monochromatic
+progression \(x,x+d,x+2d\) with \(d>x\)?
+
+\paragraph{Claim and attribution.}
+Yes. The elementary propagation argument below reconstructs the proof attributed
+to Ryan Alweiss on \url{https://www.erdosproblems.com/645}.
+It also proves the concrete finite statement that \(\{1,\ldots,200\}\) suffices.
+This is a reconstruction of a known solution.
+
+\paragraph{Proof.}
+Suppose that there is no such progression among the first \(200\) integers.
+Exchange the two colours so that \(1\) is red. Since \(1,3,5\) has
+step \(2>1\), at least one of \(3,5\) is blue.
+Whenever \(n\geq3\) is red and \(2n-1\leq200\), the progression
+\[
+ 1,\ n,\ 2n-1
+\]
+forces \(2n-1\) to be blue.
+
+First suppose that \(3\) is blue. If \(n\geq6\) is red and
+\(2n-1\leq200\), then \(3,n+1,2n-1\) has step \(n-2>3\).
+Its two endpoints are blue, so \(n+1\) is red. If every integer in
+\([6,20]\) were blue, the progression \(6,13,20\) would already give a
+contradiction. Otherwise choose a red \(x\in[6,20]\). The propagation just
+proved makes every integer from \(x\) through \(3x+2\) red: throughout the
+induction the largest auxiliary integer required is
+\(2(3x+1)-1\leq121\). Thus
+\[
+ x,\ 2x+1,\ 3x+2
+\]
+is red and has step \(x+1>x\), a contradiction.
+
+It remains to consider the case where \(5\) is blue. For a red \(n\geq9\)
+with \(2n-1\leq200\), the progression
+\[
+ 5,\ n+2,\ 2n-1
+\]
+has step \(n-3>5\), and forces \(n+2\) to be red.
+If every integer in \([9,31]\) were blue, use \(9,20,31\).
+Otherwise choose a red \(x\in[9,31]\), and let \(d\) be the smallest
+even integer greater than \(x\). Then \(x<d\leq x+2\), and repeated
+propagation makes \(x,x+d,x+2d\) red. Indeed, these integers have the
+same parity, \(x+2d\leq3x+4\leq97\), and each propagation step uses an
+auxiliary integer at most \(2\cdot95-1=189\). This is the final
+contradiction. The threshold \(n\geq9\) ensures the required strict
+inequality \(n-3>5\).
+
+\paragraph{Scope.}
+The requested two-colour assertion is fully proved, with an explicit
+finite bound. No assertion about more colours or longer progressions
+is needed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

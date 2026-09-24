@@ -1,0 +1,55 @@
+\section{Erd\H{o}s Problem \#157: density constraints and the greedy-construction gap}
+\noindent Independent partial reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known resolution}
+Does an infinite Sidon set exist which is an asymptotic basis of order three? A basis of order three represents every sufficiently large integer as a sum of three elements, with repetition permitted. Pilatte proved existence. This attempt proves necessary density estimates and an elementary greedy Sidon construction at the cubic-root scale. It does not establish the required three-sum coverage.
+
+\subsection*{2) A necessary cubic-root lower bound}
+Write $A(N)=|A\cap[1,N]|$. If all integers from $N_0$ to $N$ are sums of three elements of $A$, positivity puts all their summands in $A\cap[1,N]$. There are only $\binom{A(N)+2}{3}$ unordered triples with repetition. Therefore
+\[
+ N-N_0+1\le\binom{A(N)+2}{3}\le\frac{(A(N)+2)^3}{6},
+\]
+and hence $A(N)\ge(6(N-N_0+1))^{1/3}-2$. This is a necessary counting condition, not a covering argument.
+
+\subsection*{3) A sharp leading upper density bound for Sidon sets}
+Let $B\subseteq[1,N]$ be Sidon with $k$ elements. Its positive differences are distinct, so $k(k-1)/2\le N-1$ and initially $k=O(\sqrt N)$. Fix $h=\lceil N^{3/4}\rceil$ and let $r(z)$ count pairs $(b,t)\in B\times[1,h]$ with $b+t=z$. We have $\sum_zr(z)=kh$, over at most $N+h$ positions. Also
+\[
+ \sum_zr(z)^2
+ =kh+2\sum_{d=1}^{h-1}(h-d)|\{b\in B:b+d\in B\}|
+ \le kh+h(h-1),
+\]
+since every positive difference has at most one ordered representation. Cauchy--Schwarz gives
+\[
+ \frac{k^2h^2}{N+h}\le kh+h^2,
+ \qquad k^2\le(N+h)(1+k/h)=N+O(N^{3/4}).
+\]
+Thus $k\le\sqrt N+O(N^{1/4})$.
+
+This also rules out an asymptotic Sidon basis of order two. The number of sums at most $N$ is at most $\binom{A(N)+1}{2}\le N/2+O(N^{3/4})$, which cannot cover $N-O(1)$ integers. Order three avoids this obstruction because its number of potential representations is cubic in $A(N)$.
+
+\subsection*{4) What the elementary greedy construction supplies}
+Start with $a_1=1$ and repeatedly choose the least positive integer which can be adjoined while preserving the Sidon property. For a current $k$-element set $B$, every forbidden new value $x\notin B$ must satisfy either
+\[
+ x+a=b+c\quad(a,b,c\in B),\qquad\text{or}\qquad 2x=b+c\quad(b,c\in B).
+\]
+Indeed, a collision between two different new sums $x+a$ and $x+b$ would require $a=b$, and $2x=x+a$ would require $x=a$. All other collisions involve an old sum and fall into one of the displayed forms. There are at most $k^3+k^2$ values in these forms, and $k$ old values. Among the first $k^3+k^2+k+1$ positive integers there is therefore an admissible new value.
+
+Admissibility can only be lost when the set grows. Every value smaller than the last chosen element was either previously chosen or already forbidden and stays forbidden. Thus this least-admissible procedure is increasing and yields an infinite Sidon sequence with
+\[
+ a_{k+1}\le k^3+k^2+k+1.
+\]
+If $A(N)=k$, then $N<a_{k+1}\le(k+1)^3$, so $A(N)>N^{1/3}-1$. This proves the cubic-root lower order for the greedy sequence.
+
+The exclusion $x=b+c-a$ contains a negative summand. It does not imply $x\in A+A+A$. Consequently saturation of this greedy Sidon set provides no proof that its three-fold sumset contains all sufficiently large integers. Nor does a lower counting bound guarantee that all the potential triple sums are distinct or cover every target.
+
+\subsection*{5) A concrete failure of mere infinitude and the remaining gap}
+The powers $\{3^j:j\ge0\}$ form an infinite Sidon set: two-term sums have unique base-three digits, with a double contributing one digit two. They are not a basis of order three. The base-three digit sum of a sum of three powers is at most three, since carrying only decreases digit sum, whereas $1+3+\cdots+3^r$ has digit sum $r+1$. These give unbounded omitted integers for $r\ge3$.
+
+\textbf{ATTEMPT UNRESOLVED for construction of the required basis.} The density bounds and the greedy construction are proved, but neither establishes the compatibility of Sidon uniqueness with eventual three-sum coverage. That is the essential missing step in this reconstruction.
+
+\subsection*{6) Sources}
+Problem and current status: \url{https://www.erdosproblems.com/157}, checked 23 September 2026. C. Pilatte, \emph{A solution to the Erd\H{o}s--S\'ark\"ozy--S\'os problem on asymptotic Sidon bases of order 3}, \url{https://arxiv.org/abs/2303.09659}. Pilatte's function-field argument is cited for the known affirmative resolution and is not assumed in the partial proofs above. These are elementary known constructions and estimates, with no novelty claim.
+
+The estimate credits the density constraints, the order-two obstruction and the precise greedy-construction gap; it is subjective, not a correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 20\%}

@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem \#728: balanced factorial divisibility}
+\noindent Full logarithmic-excess construction by digit counting, 24 September 2026.
+
+\subsection*{Statement and a nontrivial target}
+For every fixed $C>0$ and $0<\varepsilon<1/2$, we prove that infinitely many triples satisfy
+\[
+ \varepsilon n\leq a,b\leq(1-\varepsilon)n,\qquad
+ a+b>n+C\log n,\qquad a!b!\mid n!(a+b-n)!.
+\]
+Thus the proof addresses the intended balanced version, as well as the printed version that permits trivial choices $a=b=n$. We reconstruct the carry-versus-large-valuation method from the cited contemporary proofs, with simpler nonoptimal constants.
+
+\subsection*{Valuations and a useful interval bound}
+Put $B_m=\binom{2m}{m}$ and $\kappa_p(m)=v_p(B_m)$. Counting multiples of each prime power in factorials gives
+\[
+ \kappa_p(m)=\sum_{j\geq1}
+  \left(\left\lfloor\frac{2m}{p^j}\right\rfloor
+       -2\left\lfloor\frac m{p^j}\right\rfloor\right). \tag{1}
+\]
+Every summand is zero or one. In particular each base-$p$ digit of $m$ that is at least $\lceil p/2\rceil$ contributes one at the corresponding digit level.
+
+For any $K\geq1$ let $J_p=\max_{1\leq i\leq K}v_p(m+i)$. Then
+\[
+ v_p\binom{m+K}{K}\leq J_p. \tag{2}
+\]
+To prove this, select $m+i_0$ attaining the maximum. For each $j\leq J_p$, the number of other multiples of $p^j$ in an interval of $K$ consecutive integers is at most $\lceil K/p^j\rceil-1\leq\lfloor K/p^j\rfloor$. For $j>J_p$ there are no such multiples. Thus
+\[
+ v_p((m+1)\cdots(m+K))\leq J_p+v_p(K!),
+\]
+which proves (2).
+
+\subsection*{Good integers in a dyadic interval}
+Fix $D>0$, let $M$ be a large integer, $L=\log M$, and $K=\lceil DL\rceil$. We show that all but $o_D(M)$ integers $m\in[M,2M)$ simultaneously satisfy, for every prime $p\leq2K$,
+\[
+ \kappa_p(m)\geq\frac L{18\log p},
+ \qquad
+ J_p\leq T_p:=\left\lceil\frac{4\log L}{\log p}\right\rceil. \tag{3}
+\]
+
+For the first assertion put $d=\lfloor L/(2\log p)\rfloor$. Modulo $p^d$ the $d$ low digits are independent uniform digits. The probability that any one is at least $\lceil p/2\rceil$ is $\lfloor p/2\rfloor/p\geq1/3$. The elementary binomial lower-tail estimate gives probability at most $e^{-d/24}$ that fewer than $d/6$ digits have this property. One may obtain this estimate directly from exponential Markov inequality; equivalently, if the mean is $\mu\geq d/3$, the bound $\mathbb P(Y\leq\mu/2)\leq e^{-\mu/8}$ suffices.
+
+The modulus $p^d\leq\sqrt M$. Counting complete residue periods and a remaining incomplete one shows that the number of such bad $m$ in $[M,2M)$ is at most $2M e^{-d/24}$. Uniformly for $p\leq2K$ and large $M$, we have $d\geq L/(3\log p)$. By (1), the good digits imply the first inequality in (3). Summing the exceptional count over at most $2K$ primes gives
+\[
+ 4KM\exp\left(-\frac L{72\log(2K)}\right)=o_D(M). \tag{4}
+\]
+
+For the second assertion, $v_p(m+i)>T_p$ forces $p^{T_p+1}\mid m+i$, where $p^{T_p+1}\geq L^4$. For a fixed $p,i$, at most $M/L^4+1$ integers in the interval can do this. A union bound over at most $2K$ primes and $K$ offsets bounds this exceptional count by
+\[
+ 2K^2(M/L^4+1)=O_D(M/L^2+L^2)=o_D(M). \tag{5}
+\]
+Equations (4)--(5) prove (3). No independence between different primes is assumed.
+
+\subsection*{Every prime is controlled}
+Choose a good $m$. For $p\leq2K$,
+\[
+ T_p\log p\leq4\log L+\log(2K)<L/18
+\]
+once $M$ is large. Equations (2)--(3) then give
+$v_p\binom{m+K}{K}\leq\kappa_p(m)$.
+
+For $p>2K$, let $J=J_p$. If $J=0$ there is nothing to prove. Otherwise choose $i\leq K$ with $p^J\mid m+i$. For every $1\leq j\leq J$ we have
+\[
+ m\bmod p^j=p^j-i>p^j/2,
+\]
+since $i\leq K<p/2$. Thus each of the first $J$ terms of (1) is one, and $\kappa_p(m)\geq J$. Applying (2) proves the same valuation inequality for these primes too. We conclude that
+\[
+ \binom{m+K}{K}\mid\binom{2m}{m}. \tag{6}
+\]
+
+\subsection*{Returning to the requested parameters}
+Take $D=C+1$ and set $n=2m$, $a=m+K$, $b=m$. The ratio in (6) is exactly
+\[
+ \frac{\binom{2m}{m}}{\binom{m+K}{K}}
+   =\frac{(2m)!K!}{m!(m+K)!},
+\]
+so it is the desired divisibility. Since $m\in[M,2M)$,
+$K\geq(C+1)\log M>C\log(2m)$ for large $M$. Also $K/m\to0$, giving both balance inequalities for every fixed $\varepsilon<1/2$. Taking $M$ through increasing powers of two supplies infinitely many distinct $n$.
+
+More precisely, if $0<C_1<C_2$, choose $D$ strictly between them. Since $\log(2m)/\log M\to1$ uniformly in the interval, the construction also gives $C_1\log n<a+b-n<C_2\log n$.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved.} All counting, prime ranges, divisibility and balance steps are proved; no cited final theorem is used as a substitute. This is a reconstruction of the established method, not a claim of a new resolution or a local Lean verification.
+Sources: \url{https://www.erdosproblems.com/728}; C. Pomerance, \emph{Remarks on the middle binomial coefficient}, \url{https://math.dartmouth.edu/~carlp/binomrev2.pdf}; N. Sothanaphan, \emph{Resolution of Erd\H{o}s Problem \#728: a writeup of Aristotle's Lean proof}, \url{https://arxiv.org/abs/2601.07421}.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

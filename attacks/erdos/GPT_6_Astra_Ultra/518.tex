@@ -1,0 +1,66 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#518; the sufficiently-large-order bound and its sharpness, 2026-09-24.}
+In every red-blue coloring of $K_n$, can all vertices be covered by at most $\sqrt n$ monochromatic paths of one common color? Paths may overlap, and singleton vertices count as paths. Let $f(n)$ be the largest, over such colorings, of the minimum number of paths required.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Pokrovskiy--Versteegen--Williams, version 2, Theorem 1.3, proves $f(n)\leq\sqrt n$ for $n>20^{40}$. The printed theorem has this qualification. We reconstruct the final argument using three precise intermediate results from that paper and prove the extremal lower-bound construction. The remaining finite range is not silently included in the conclusion.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+A coloring needing too many paths has a blue path covering almost all vertices. Most remaining vertices are red-adjacent to every vertex of that path. A bipartite covering lemma then yields the desired number of red paths, contradicting the assumption.
+
+\section{WORK}
+\textbf{Explicit external inputs.} Put $C=20^4$. We use Proposition 3.4, which states $f(m)<\sqrt m+C$ for every positive integer $m$. With that bound, Lemma 3.2, specialized to $C_1=C,C_2=0$, says that if $n>10^4(C+1)^4$ and a coloring requires more than $\sqrt n$ paths, it has a monochromatic path $P$, say blue, such that, with $X=V(P)$ and $Y=V(K_n)\setminus X$,
+\[
+ |Y|\leq\sqrt n+10(C+1)n^{1/4},\qquad
+ d_{\rm blue}(y,X)\leq2(C+1)\sqrt n\quad(y\in Y).       \tag{1}
+\]
+Finally Lemma 2.4 concerns a bipartite graph with classes $X,Y$. Write $X_0,Y_0$ for the vertices adjacent to every vertex in the other class, and $X_1=X\setminus X_0$, $Y_1=Y\setminus Y_0$. If $|X|>|Y|$, $Y_0\ne\varnothing$, and either the graph is complete bipartite or
+\[
+ \frac{|X_0|}{|Y_1|}>\frac{2|X_1|}{|Y_0|},             \tag{2}
+\]
+then at most $\lceil |X|/(|Y|+1)\rceil$ paths cover all its vertices. These three results, including their proofs, are external dependencies of the reconstruction below.
+
+\textbf{A blue cover that detects many universal red neighbors.} In the bipartite graph of red edges between $X$ and $Y$, a vertex is in $Y_0$ exactly when it has no blue neighbor on $P$. Any two vertices of $Y_1$ can be joined by a blue path: choose a blue neighbor of each on $P$ and take the intervening subpath, allowing the two neighbors to coincide. Pairing the vertices of $Y_1$, using one extra path for an unpaired vertex, and using singleton paths for $Y_0$, therefore gives a blue cover with at most
+\[
+ 1+\lceil |Y_1|/2\rceil+|Y_0|
+ \leq\tfrac32+\tfrac12|Y|+\tfrac12|Y_0|               \tag{3}
+\]
+paths. The first path is $P$ itself. Overlap between the other paths is permitted.
+
+\textbf{Verifying the quantitative hypotheses.} Suppose $n>C^{10}=20^{40}$ and a coloring requires more than $\sqrt n$ paths. Set $t=n^{1/4}$ and $\alpha=11C/t$. Then $t>400C^2$ and $\alpha<1/100$. Equation (1) gives $|Y|\leq(1+\alpha)t^2$. Equation (3) and the assumed failure imply
+\[
+ |Y_0|>2t^2-|Y|-3>(1-2\alpha)t^2,
+ \qquad |Y_1|<3\alpha t^2=33Ct.                      \tag{4}
+\]
+The second strict inequality in the first bound uses $\alpha t^2=11Ct>3$. Every member of $X_1$ has a blue neighbor in $Y_1$, so counting missing red edges by (1) gives
+\[
+ |X_1|\leq2(C+1)t^2|Y_1|<67C^2t^3.                  \tag{5}
+\]
+If $Y_1$ is empty the bipartite graph is complete. Otherwise, (4)--(5) show
+\[
+ \frac{2|X_1|}{|Y_0|}<\frac{134C^2t}{1-2\alpha}<t^2,
+\]
+while
+\[
+ \frac{|X_0|}{|Y_1|}
+ >\frac{t^4-(1+\alpha)t^2-67C^2t^3}{33Ct}>t^2.
+\]
+For the last inequality it suffices that
+$t>67C^2+33C+(1+\alpha)/t$, which follows from $t>400C^2$. The preceding inequality follows from $134/(1-2\alpha)<400$. Also $|X|>|Y|$ and $Y_0\ne\varnothing$ follow immediately from these bounds. Thus (2) applies.
+
+\textbf{The integer rounding step.} Let $k=\lfloor\sqrt n\rfloor$. The blue cover consisting of $P$ and singleton vertices of $Y$ shows that $|Y|\geq k$; otherwise at most $k$ paths suffice. Since $n\leq k^2+2k$, Lemma 2.4 yields a red cover of size at most
+\[
+ \left\lceil\frac{n-|Y|}{|Y|+1}\right\rceil
+ \leq\left\lceil\frac{n-k}{k+1}\right\rceil\leq k.
+\]
+This is the required contradiction. We have proved $f(n)\leq\lfloor\sqrt n\rfloor$ for $n>20^{40}$, subject to the stated intermediate inputs.
+
+\textbf{Sharpness.} For $n=k^2$, partition the vertices into $A,B$ of sizes $k^2-k+1,k-1$. Color edges inside $A$ blue and every other edge red. A blue cover needs a singleton path for each vertex of $B$ and at least one path for $A$, hence at least $k$ paths. A red path has at most $|B|+1=k$ vertices of $A$, because $A$ is independent in red and consecutive visits to $A$ require distinct intervening vertices of $B$ within that path. Therefore at least $\lceil(k^2-k+1)/k\rceil=k$ red paths are needed, even allowing different paths to reuse $B$. This proves the sharpness of the square-root bound at square orders.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved in the unrestricted all-$n$ formulation.} The known theorem for $n>20^{40}$ is reconstructed from three clearly stated source lemmas, and its sharp lower example is proved. The range $n\leq20^{40}$ is not settled here. The completion estimate concerns this substantial large-order result and does not certify the omitted finite range.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/518}; A. Pokrovskiy, L. Versteegen and E. Williams, \emph{A proof of a conjecture of Erd\H{o}s and Gy\'arf\'as on monochromatic path covers}, version 2, Lemmas 2.4 and 3.2, Proposition 3.4 and Theorem 1.3, \url{https://arxiv.org/html/2409.03623v2}.
+
+\textbf{Completion rate estimate: 90\%.}

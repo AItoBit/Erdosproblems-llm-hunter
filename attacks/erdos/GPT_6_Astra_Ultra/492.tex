@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#492: distribution relative to a subdivision}
+\noindent Partial reconstruction and averaged-distribution calculation, 24 September 2026.
+
+\subsection*{Statement and scope}
+Let $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$ with $a_{i+1}/a_i\to1$, and put
+\[f(x)=\frac{x-a_i}{a_{i+1}-a_i}\quad(a_i\le x<a_{i+1}).
+\]
+Must $f(\alpha n)$ be uniformly distributed on $[0,1)$ for almost every positive $\alpha$? Schmidt's published counterexample gives a negative answer to the general conjecture. We prove an averaged assertion for every such subdivision and the almost-everywhere assertion for every eventually periodic gap pattern. We do not reproduce the counterexample or infer pointwise convergence from an averaged identity.
+
+\subsection*{Continuous sampling is asymptotically uniform}
+Fix $t\in[0,1]$, and write
+\[I_t(X)=\int_{a_1}^X\mathbf1_{\{f(x)<t\}}\,dx.
+\]
+Every complete subdivision interval $[a_i,a_{i+1})$ contributes exactly $t(a_{i+1}-a_i)$. Only the final interval can contribute an error, bounded by its length. If $a_j\le X<a_{j+1}$, this length is
+\[a_{j+1}-a_j=o(a_j)=o(X).
+\]
+Consequently
+\[I_t(X)=t(X-a_1)+o(X).\tag{1}\]
+This argument is uniform in $t$, since the same last-interval error bound applies for every $t$.
+
+\subsection*{The parameter average also has the correct limit}
+Fix $0<u<v<\infty$. Omit finitely many indices $n$ so that $un\ge a_1$. Changing variables and using (1),
+\[\int_u^v\mathbf1_{\{f(\alpha n)<t\}}\,d\alpha
+=\frac{I_t(vn)-I_t(un)}n=t(v-u)+o(1).
+\]
+Taking Ces\`aro means proves
+\[\frac1{v-u}\int_u^v\frac1N\sum_{n\le N}
+\mathbf1_{\{f(\alpha n)<t\}}\,d\alpha\longrightarrow t.\tag{2}\]
+Any arbitrary definition for the finitely many terms with $\alpha n<a_1$ changes the average by $O(1/N)$. Formula (2) controls the integral of the empirical frequencies, not their absolute deviation from $t$ or their variance. It therefore cannot establish the requested almost-everywhere statement by itself.
+
+\subsection*{Eventually periodic subdivisions}
+Suppose there are integers $q,Q\ge1$ and $j_0$ such that $a_{j+q}=a_j+Q$ for all $j\ge j_0$. Equivalently, the integer gap pattern is eventually periodic. Then $f(x+Q)=f(x)$ for all sufficiently large $x$. Over any full period the lengths of the subdivision intervals sum to $Q$, and the portion on which $f<t$ has length exactly $tQ$.
+
+Extend this eventual pattern periodically to a function $F$ on the real line. On a period it is piecewise linear with finitely many jumps, and the indicator $\mathbf1_{F<t}$ is Riemann integrable. If $\alpha/Q$ is irrational, the sequence $\{n\alpha/Q\}$ is uniformly distributed modulo one. For clarity, this standard fact follows by summing the geometric progression $\sum_{n\le N}e^{2\pi ihn\alpha/Q}=O_{h,\alpha,Q}(1)$ for each nonzero integer $h$, then applying the elementary Weyl criterion. Hence
+\[\frac1N\#\{n\le N:F(\alpha n)<t\}\longrightarrow
+\frac1Q\int_0^Q\mathbf1_{F(x)<t}\,dx=t.
+\]
+The eventual equality with $f$ changes only finitely many terms. Thus the sequence in the problem is uniformly distributed for every positive $\alpha$ with $\alpha/Q$ irrational, and in particular for almost every positive $\alpha$.
+
+This includes nonconstant gap patterns. For example $A=\{n\ge1:n\equiv1\text{ or }2\pmod3\}$ has alternating gaps $1,2$ and period $Q=3$. Its gaps are not monotone, yet the preceding proof applies. Conversely, for $A=\mathbb N$ and rational $\alpha$, the sequence $f(\alpha n)=\{\alpha n\}$ is periodic and not uniformly distributed. Those countably many exceptional parameters do not constitute a counterexample to an almost-everywhere assertion.
+
+\subsection*{Outcome and remaining gap}
+\textbf{PARTIAL PROGRESS.} The continuous and parameter-averaged assertions are proved for every subdivision in the statement; the periodic-gap case has a complete almost-everywhere proof. A construction failing on a positive-measure set of parameters, and its verification, remain missing. The correct averages in (1)--(2) do not exclude such a construction.
+Sources: \url{https://www.erdosproblems.com/492} and its original reference W. M. Schmidt, \emph{Disproof of some conjectures on Diophantine approximations}, Studia Sci. Math. Hungar. 4 (1969), 137--144. The editorial growth condition printed as $a_n\gg n^{1/2+\epsilon}$ is not used here: under the stated integer-set convention it is automatic for some $\epsilon>0$, so that line cannot safely be used without checking the original hypotheses. No new disproof or formal verification is claimed.
+
+\textbf{Attempt status: unresolved.}
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

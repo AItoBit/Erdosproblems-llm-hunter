@@ -1,0 +1,47 @@
+\section{Erd\H{o}s Problem \#229: derivative zeros on prescribed discrete sets}
+\noindent Partial reconstruction with a complete finite-set case, 23 September 2026.
+
+\subsection*{1) Statement and result proved here}
+Let $(S_n)_{n\ge1}$ be subsets of $\mathbb C$, each with no finite accumulation point. Is there a transcendental entire $f$ such that for each $n$ some derivative order $k_n\ge0$ satisfies $f^{(k_n)}|_{S_n}=0$? The full affirmative theorem is due to Barth and Schneider.
+
+We prove the assertion when every $S_n$ is finite, allowing their union to be dense or to have accumulation points. We also treat the separate case where the whole union is locally finite. Neither condition covers the full question.
+
+\subsection*{2) Polynomial corrections for finite sets}
+Assume each $S_n$ is finite. Start with $F_0=0$; for this starting step only, use the degree bound $D_0=0$. At stage $n$, put $D_{n-1}=\deg F_{n-1}$ if $n>1$ and choose
+\[
+ k_n=D_{n-1}+1,\qquad t_n=D_{n-1}+1,
+ \qquad W_n(z)=\prod_{i=1}^n\prod_{s\in S_i}(z-s)^{k_i+1}.
+\]
+Empty products are one. Choose a nonzero complex $\epsilon_n$ sufficiently small that
+\[
+ h_n(z)=\epsilon_n z^{t_n}W_n(z),\qquad
+ \max_{|z|\le n}|h_n(z)|\le2^{-n},\tag{1}
+\]
+and set $F_n=F_{n-1}+h_n$. Such a choice is possible because $z^{t_n}W_n$ is a fixed nonzero polynomial with finite norm on the disk.
+
+At each $s\in S_n$, the derivative $F_{n-1}^{(k_n)}$ vanishes identically, since $k_n>D_{n-1}$. The correction $h_n$ has a zero of order at least $k_n+1$ at $s$, so $h_n^{(k_n)}(s)=0$ too. Every later correction $h_m$, $m>n$, contains the factor $(z-s)^{k_n+1}$, since $W_m$ includes all earlier factors. Thus
+\[
+ F_m^{(k_n)}(s)=0\qquad(m\ge n,\ s\in S_n).\tag{2}
+\]
+Repeated occurrences of a point in different sets cause no difficulty: the multiplicities in the product only increase.
+
+\subsection*{3) Entire limit and transcendence}
+Estimate (1) makes $\sum h_n$ uniformly convergent on every fixed disk: after finitely many terms its norms there are bounded by the summable sequence $2^{-n}$. The limit $f$ is entire, and derivatives converge locally uniformly. Passing to the limit in (2) gives the requested vanishing for every $n$ in the finite-set case.
+
+It remains to ensure that $f$ is not a polynomial, rather than merely nonzero. Let
+\[
+ d_n=t_n+\operatorname{ord}_0W_n
+\]
+be the lowest degree of a nonzero coefficient of $h_n$. Then $d_n>D_{n-1}$, so its coefficient in $F_n$ is nonzero and has no contribution from earlier stages. Every later correction has lowest degree strictly greater than the degree of the preceding partial polynomial, hence greater than or equal to $\deg F_n+1>d_n$. Consequently the coefficient of $z^{d_n}$ remains permanently nonzero in $f$. The strictly increasing sequence $(d_n)$ supplies infinitely many nonzero Taylor coefficients. This proves transcendence, including when zero belongs to some or all of the $S_n$.
+
+\subsection*{4) A locally finite union, with arbitrary set sizes}
+If $S=\bigcup_n S_n$ itself has no finite accumulation point, the Weierstrass product theorem supplies an entire function whose zero set is $S$. If $S$ is infinite, this nonzero function is automatically transcendental, since a nonzero polynomial has only finitely many zeros. Taking $k_n=0$ for every $n$ solves this case. If $S$ is finite, use $e^z\prod_{s\in S}(z-s)$; its zero set is $S$ and it is transcendental. For $S=\varnothing$, use $e^z$. This paragraph explicitly uses the classical Weierstrass product theorem as an external analytic input.
+
+\subsection*{5) Remaining gap and sources}
+\textbf{UNRESOLVED in this attempt.} The unhandled case permits infinite individual discrete sets whose union has finite accumulation points. The finite-set construction relies on every partial sum being a polynomial, so that a sufficiently high derivative annihilates it. Replacing $W_n$ by an infinite entire product destroys that property; choosing $k_n$ larger than a nonexistent finite degree is not a valid extension. Nor can one simply prescribe zeros of $f$ on a union with an accumulation point, by the identity theorem.
+
+Source: \url{https://www.erdosproblems.com/229}, checked 23 September 2026, including its attribution of the full result to Barth and Schneider (1972). The finite-set construction is proved above. No reconstruction of the full infinite-set theorem or independent Lean verification is claimed.
+
+The estimate measures coverage of the existence question, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

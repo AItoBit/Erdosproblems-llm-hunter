@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem 658}
+
+\paragraph{Statement and result.}
+For each \(\delta>0\), must every subset \(A\subseteq\{1,\ldots,N\}^2\) of size at least \(\delta N^2\) contain the four vertices of a square when \(N\) is sufficiently large? Yes, even if the square must be axis-aligned. We give the complete reduction to the density Hales--Jewett theorem, which is an explicit external dependency.
+
+\paragraph{The external theorem.}
+For a finite alphabet \(S\) and \(\eta>0\), there is an integer \(L\) such that every subset of \(S^L\) of density at least \(\eta\) contains a combinatorial line. Such a line is specified by a nonempty set \(I\subseteq\{1,\ldots,L\}\) of variable coordinates, with all other coordinates fixed: the variable coordinates are simultaneously set equal to each possible letter of \(S\). This is the density Hales--Jewett theorem of Furstenberg and Katznelson. Its proof is not reproduced here.
+
+\paragraph{A density transfer that handles the boundary.}
+We may assume \(0<\delta\leq1\), since larger densities are impossible. Apply the theorem with the four-letter alphabet
+\[
+ S=\{(0,0),(1,0),(0,1),(1,1)\},\qquad \eta=\delta/2,
+\]
+and fix a resulting length \(L\geq1\). Suppose \(N\geq8L/\delta\). For each translation \(t\in\{1,\ldots,N-L\}^2\), map words to lattice points by
+\[
+ \varphi_t(w)=t+\sum_{j=1}^L w_j.
+\]
+Every image lies in \(\{1,\ldots,N\}^2\), since each coordinate of the sum is between zero and \(L\).
+
+For any fixed word, write \(s=\sum w_j\). Its image as \(t\) varies is a translate of an \((N-L)\)-by-\((N-L)\) square contained in the original grid. At most
+\[
+ N^2-(N-L)^2\leq2LN
+\]
+points of the original grid are outside this translate. Thus
+\[
+ \#\{t:\varphi_t(w)\in A\}\geq\delta N^2-2LN.
+\]
+Average this inequality over all words and then over all translations. Some \(t\) has
+\[
+ \frac{|\varphi_t^{-1}(A)|}{4^L}
+ \geq\frac{\delta N^2-2LN}{(N-L)^2}
+ \geq\delta-\frac{2L}{N}\geq\frac\delta2. \tag{1}
+\]
+In the second inequality the numerator is nonnegative and \((N-L)^2\leq N^2\). The map need not be injective: density is measured in the word space, where the external theorem applies.
+
+\paragraph{The combinatorial line becomes a square.}
+By (1), some combinatorial line is contained in \(\varphi_t^{-1}(A)\). Let \(I\) be its variable coordinate set and let \(u\) be \(t\) plus the sum of its fixed letters. Its four images are
+\[
+ u,\quad u+(|I|,0),\quad u+(0,|I|),\quad u+(|I|,|I|).
+\]
+These are distinct because \(|I|\geq1\); they form an axis-aligned square, and all belong to \(A\). This proves the assertion with, for example, \(N_0=\lceil8L/\delta\rceil\).
+
+\paragraph{Attribution and assessment.}
+The existence of the required word length is the deep part supplied by Furstenberg--Katznelson. A primary account of the theorem and a later proof is D. H. J. Polymath, \emph{A new proof of the density Hales--Jewett theorem}, \url{https://annals.math.princeton.edu/2012/175-3/p06}. Current statement and attribution: \url{https://www.erdosproblems.com/658}, checked 24 September 2026. The reduction above specifies the density loss, noninjective map, boundary control, and positive side length. It is a complete answer relative to the stated theorem, not an independent proof of that theorem. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

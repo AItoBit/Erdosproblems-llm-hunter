@@ -1,0 +1,65 @@
+\section{Erd\H{o}s Problem \#497: counting antichains}
+\noindent Complete asymptotic reconstruction by a graph encoding, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $D(n)$ count the antichains in $\mathcal P([n])$, including the empty family. An antichain has no two \emph{distinct} comparable members. Put $M=\binom n{\lfloor n/2\rfloor}$. We prove the known asymptotic
+\[D(n)=2^{(1+o(1))M}.\tag{1}\]
+This is an asymptotic determination, not an exact formula for every Dedekind number. The lower bound $D(n)\ge2^M$ is immediate: every subfamily of the middle level is an antichain. The work is the matching exponent from above.
+
+\subsection*{2) Discard a negligible number of extreme subsets}
+Let $w=n^{4/5}$ and
+\[\mathcal V=\{A\subseteq[n]:\big||A|-n/2\big|\le w\}.
+\]
+A uniformly random subset has size $X\sim\operatorname{Bin}(n,1/2)$, with variance $n/4$. Chebyshev's inequality gives
+\[|\mathcal P([n])\setminus\mathcal V|
+\le\frac{2^n n}{4w^2}=O(2^n n^{-3/5})=o(M),\tag{2}\]
+using the standard central-binomial estimate $M\asymp2^n/\sqrt n$. We may therefore choose the portion of an antichain outside $\mathcal V$ arbitrarily at a cost of at most $2^{o(M)}$ possibilities. Overcounting there is harmless.
+
+\subsection*{3) A degree bound inside any large family}
+Join two vertices of $\mathcal V$ when their subsets are comparable and distinct. Fix $\eta>0$. We claim that any $\mathcal F\subseteq\mathcal V$ with $|\mathcal F|>(1+\eta)M$ has a vertex of degree at least
+\[d=\frac{\eta n}{3(1+\eta)}\tag{3}\]
+in its induced comparability graph, for all sufficiently large $n$.
+
+Take a uniformly random maximal chain of the Boolean lattice, obtained from a random permutation, and let $Y$ count its members in $\mathcal F$. Then
+\[L=\mathbb EY=\sum_{A\in\mathcal F}\binom n{|A|}^{-1}
+\ge |\mathcal F|/M>1+\eta.
+\]
+For comparable $A\subsetneq B$, the probability that the chain contains both is
+\[\frac1{\binom n{|A|}\binom{n-|A|}{|B|-|A|}}.
+\]
+Within $\mathcal V$, for large $n$ we have $n-|A|\ge n/3$ and
+$1\le |B|-|A|\le2w<n-|A|$. Therefore the second binomial coefficient is at least $n-|A|\ge n/3$. If the maximum degree is $\Delta$, summing with $A$ as the smaller member yields
+\[\mathbb E\binom Y2\le\frac{3\Delta}{n}L.
+\]
+For every nonnegative integer $Y$, $\binom Y2\ge Y-1$. Hence $L-1\le3\Delta L/n$, or
+\[\Delta\ge\frac n3\left(1-\frac1L\right)>d,
+\]
+proving (3). The weighted chain calculation avoids assuming that all levels have the same size.
+
+\subsection*{4) Encode each antichain with few selected vertices}
+Fix a total ordering of $\mathcal V$ to break ties. For an independent set $I$ in its comparability graph, start with a candidate set $C=\mathcal V$ and an empty record $S$. While $|C|>(1+\eta)M$, choose a maximum-degree vertex $v$ in the graph induced by $C$, breaking ties by the fixed order.
+
+If $v\in I$, put $v$ into $S$ and delete $v$ and all its neighbors from $C$. Otherwise delete only $v$. At the end, $I\subseteq S\cup C$, because no neighbor of a selected member of the independent set could belong to $I$. Every addition to $S$ deletes at least $d+1$ vertices by (3), so
+\[|S|\le\frac{2^n}{d+1}=O_\eta(2^n/n).\tag{4}\]
+The final candidate set $C$ is determined by $S$ alone: rerun the deterministic procedure, using the first deletion rule exactly when the chosen vertex belongs to $S$. Induction on the successive candidate sets shows that this reproduces the original run. Thus recording $S$ and the remaining part $I\cap C$ determines $I$.
+
+Let $U=2^n$ and $t=\lceil U/(d+1)\rceil$. For large $n$, $t<U/2$, and the number of possible records is at most
+\[\sum_{j=0}^t\binom Uj\le(t+1)(eU/t)^t.
+\]
+Its base-two logarithm is $O_\eta((2^n/n)\log n)=o(M)$. For each record, the final $C$ has size at most $(1+\eta)M$, hence permits at most $2^{(1+\eta)M}$ choices of its remaining subfamily. Consequently
+\[\#\{I\subseteq\mathcal V:I\text{ antichain}\}
+\le2^{(1+\eta)M+o_\eta(M)}.\tag{5}\]
+
+\subsection*{5) Finish the asymptotic}
+Combine (2), (5), and the middle-level lower bound to obtain
+\[1\le\frac{\log_2D(n)}M\le1+\eta+o_\eta(1).
+\]
+First take the upper limit as $n\to\infty$, with $\eta$ fixed, and then let $\eta\to0$. This proves (1).
+
+\subsection*{6) Attribution and scope}
+\textbf{SOLVED for the requested leading asymptotic.} The proof supplies the needed degree estimate and encoding argument, rather than citing the counting theorem as a black box. Standard binomial estimates, Chebyshev's inequality, and elementary counting are the only auxiliary tools. The method is a reconstruction of established graph-container arguments, and no novelty or Lean verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/497}, checked 24 September 2026, attributing the original asymptotic to Kleitman; the later container treatment, ``Applications of graph containers in the Boolean lattice'', \url{https://arxiv.org/abs/1602.05870}. Finer secondary terms in $D(n)$ are outside the assertion proved here.
+
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

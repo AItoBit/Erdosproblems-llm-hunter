@@ -1,0 +1,61 @@
+\section{Erd\H{o}s Problem \#484: a uniform supply of monochromatic sums}
+\noindent Complete reconstruction of the Erd\H{o}s--S\'ark\H{o}zy--S\'os argument, 24 September 2026.
+
+\subsection*{Statement and target}
+For every $k$-colouring of $[1,N]$, with $N$ sufficiently large depending on $k$, prove that at least $cN$ integers at most $N$ are sums of two distinct elements of the same colour, for an absolute $c>0$. We prove the stronger assertion that all but
+\[O_k\bigl(N^{1-2^{-(k+1)}}\bigr)\]
+of the even integers at most $N$ have such a representation. The requirement that the two summands differ is essential.
+
+\subsection*{An elementary density-cube lemma}
+Fix $d\ge1$. For sufficiently large $N$ depending on $d$, any $B\subseteq[1,N]$ with
+\[|B|>3N^{1-2^{-d}}\tag{1}\]
+contains all the values
+\[u+\sum_{i=1}^d\epsilon_i v_i,\qquad\epsilon_i\in\{0,1\},\tag{2}\]
+where $u,v_i$ are positive integers and the $v_i$ are pairwise distinct. Different subset sums in (2) need not themselves be distinct, and we do not assume this stronger property.
+
+Construct $B_0=B$ and, inductively, a positive shift $v_{j+1}$ not previously used, with
+\[B_{j+1}=B_j\cap(B_j-v_{j+1}),\qquad
+|B_j|>\frac{|B|^{2^j}}{(3N)^{2^j-1}}.\tag{3}\]
+To justify the step, let $s=|B_j|$ and let $r(h)$ count pairs $b,b+h\in B_j$. Then
+\[\sum_{h=1}^{N-1}r(h)=\binom s2.
+\]
+The $j$ forbidden shifts contribute at most $js$. Among the remaining fewer than $N$ shifts, some has
+\[r(h)\ge\frac{s(s-1-2j)}{2N}>\frac{s^2}{3N}\tag{4}\]
+as long as $s>3+6j$. By (1) and (3), for $j\le d-1$ one has
+\[s>3N^{1-2^{j-d}}\ge3\sqrt N,
+\]
+so this condition holds once $N$ is sufficiently large. Equation (4) proves (3) at the next stage. Finally $|B_d|>3$, so choose $u\in B_d$. Repeatedly using $B_{j+1}\cup(B_{j+1}+v_{j+1})\subseteq B_j$ proves (2).
+
+\subsection*{Apply the cube to the missing even sums}
+Let $B$ consist of the even integers in $[1,N]$ which have no monochromatic representation with distinct summands. Suppose (1) held for $d=k+1$. The cube base is even, say $u=2z$. Consider the $k+1$ distinct positive integers
+\[z+v_1,\ldots,z+v_{k+1}.
+\]
+They are all at most $N$, since $u+v_i\le N$. Two, say those with indices $i\ne j$, have the same colour. But their sum
+\[(z+v_i)+(z+v_j)=u+v_i+v_j
+\]
+is a member of $B$ by the cube property. This contradicts the definition of $B$. Therefore
+\[|B|\le3N^{1-2^{-(k+1)}}
+\]
+for all sufficiently large $N$. The number of representable even integers is at least
+\[\lfloor N/2\rfloor-3N^{1-2^{-(k+1)}}.
+\]
+For example, $c=1/3$ works for every $k$ when $N$ is large enough depending on $k$.
+
+\subsection*{Two colours: the logarithmic error and its necessity}
+For two colours, list the missing even sums as $b_1<\cdots<b_s$. Necessarily
+\[b_{j+2}\ge b_j+b_{j+1}.\tag{5}\]
+Otherwise the three integers
+\[\frac{b_j+b_{j+1}-b_{j+2}}2,
+\quad\frac{b_j+b_{j+2}-b_{j+1}}2,
+\quad\frac{b_{j+1}+b_{j+2}-b_j}2
+\]
+are positive, pairwise distinct, at most $N$, and have pairwise sums $b_j,b_{j+1},b_{j+2}$. Two receive the same colour, a contradiction. The equality case in (5) causes no difficulty; the displayed first integer would then be zero, so we use only the justified non-strict inequality. Fibonacci growth in (5) gives $s=O(\log N)$.
+
+For a matching-order obstruction, colour every power of two with colour zero. For any other positive integer $n$, let $2^{r-1}<n<2^r$ and define its colour recursively to be the opposite of the colour of $2^r-n<n$. If distinct positive integers sum to $2^r$, the larger lies in that open dyadic interval and the smaller is its reflected partner. They therefore have opposite colours. This colouring misses every power of two, giving $\gg\log N$ missing even sums. The distinctness exclusion is respected at the midpoint.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED.} The uniform constant, the stronger general error estimate and the two-colour logarithmic refinement are all proved above, with no external combinatorial theorem left as an input.
+Sources: \url{https://www.erdosproblems.com/484}; P. Erd\H{o}s, A. S\'ark\H{o}zy and V. T. S\'os, \emph{On a conjecture of Roth and some related problems I}, Theorem 1 and Lemma 1, \url{https://users.renyi.hu/~p_erdos/1989-14.pdf}. This is an attributed reconstruction of their density-cube proof, not a new result or a local Lean verification.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

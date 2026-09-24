@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#225: integral means with real trigonometric zeros}
+\noindent Partial reconstruction and normalization audit, 23 September 2026.
+
+\subsection*{1) Statement and interpretation}
+For a trigonometric polynomial $f(\theta)=\sum_{k=0}^n c_ke^{ik\theta}$ whose zeros are real, normalized by $\max_{\theta\in[0,2\pi]}|f(\theta)|=1$, the requested estimate is
+\[
+ \int_0^{2\pi}|f(\theta)|\,d\theta\le4.\tag{1}
+\]
+The current problem page records an affirmative solution by Kristiansen and, for complex coefficients, by Saff and Sheil-Small. This attempt proves sharp special families, not their general theorem.
+
+There is a degenerate case to exclude when reading the displayed statement literally: $f(\theta)=e^{im\theta}$ has no zeros, so ``all zeros are real'' is vacuous, but its integral is $2\pi$. Accordingly, the analysis below concerns the nondegenerate zero-bearing case. After removing a nonvanishing factor $e^{im\theta}$, this is a polynomial $Q(e^{i\theta})$ with $Q(0)\ne0$, $\deg Q=d\ge1$, all of whose algebraic zeros lie on the unit circle. A nonzero algebraic zero $\rho e^{it}$ corresponds to trigonometric zeros $\theta=t-i\log\rho+2\pi j$, which explains this correspondence. The degenerate observation is a statement convention, not a claimed new disproof of the classical result.
+
+\subsection*{2) Factorization and a sharp one-zero calculation}
+Write $Q(z)=C\prod_{j=1}^d(z-e^{it_j})$. Then
+\[
+ |Q(e^{i\theta})|=2^d|C|\prod_{j=1}^d\left|\sin\frac{\theta-t_j}{2}\right|.\tag{2}
+\]
+For $d=1$, normalization gives $|C|=1/2$, and changing variables yields
+\[
+ \int_0^{2\pi}\left|\sin\frac{\theta-t_1}{2}\right|\,d\theta=4.
+\]
+Thus the proposed constant cannot be decreased.
+
+\subsection*{3) Coincident zeros, including every multiplicity}
+If all zeros coincide, the normalized modulus is $|\sin((\theta-t)/2)|^d$. Since $0\le u\le1$ implies $u^d\le u$ for integers $d\ge1$, (1) follows immediately. More precisely, with
+\[
+ I_d=2\int_0^\pi\sin^d u\,du,
+\]
+integration by parts gives $I_d=(d-1)I_{d-2}/d$ for $d\ge2$, starting with $I_0=2\pi$ and $I_1=4$. Hence $I_2=\pi$, and $I_d<4$ for every $d\ge2$. The boundary term in integration by parts vanishes since $\sin u=0$ at both endpoints.
+
+\subsection*{4) Regular polygons and repeated regular polygons}
+For integers $q,d\ge1$ consider
+\[
+ Q(z)=\left(\frac{z^q-e^{i\alpha}}2\right)^d.
+\]
+Every zero lies on the unit circle, the supremum of the modulus there is one, and
+\[
+ |Q(e^{i\theta})|=\left|\sin\frac{q\theta-\alpha}{2}\right|^d.
+\]
+The function $|\sin u|^d$ has period $\pi$. The substitution $u=(q\theta-\alpha)/2$ integrates over exactly $q$ periods and therefore gives integral $I_d$, independent of $q$ and $\alpha$. In particular, simple regular-polygon zeros attain equality for every degree $q$, whereas repeated copies give the strict bounds above. Multiplication by a unimodular constant or by $z^m$ preserves these modulus conclusions.
+
+\subsection*{5) Remaining gap and sources}
+\textbf{UNRESOLVED in this attempt.} Arbitrarily spaced roots in (2) have not been treated. Bounding each sine factor by one does not control the product after its own supremum is normalized: the individual factors need not attain their maxima together. The special-family proof therefore does not imply the general result.
+
+Sources: \url{https://www.erdosproblems.com/225}, checked 23 September 2026; E. B. Saff and T. Sheil-Small, \emph{Coefficient and Integral Mean Estimates for Algebraic and Trigonometric Polynomials with Restricted Zeros}, J. London Math. Soc. (2) 9 (1974), 16--22, \url{https://doi.org/10.1112/jlms/s2-9.1.16}. The classical theorem is attribution here, not an unproved step presented as our proof.
+
+The estimate describes the coverage of this partial reconstruction, not the status of the classical problem or a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 20\%}

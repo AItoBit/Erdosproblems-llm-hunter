@@ -1,0 +1,93 @@
+\section{Erd\H{o}s Problem 235: gaps between reduced residues of a primorial}
+
+\subsection{1) Statement and scope}
+Let $N=\prod_{j\leq k}p_j$, and list its $\phi(N)$ reduced residues
+in $[1,N)$ in increasing order. The question asks for a continuous
+limiting distribution of successive gaps divided by $N/\phi(N)$.
+Hooley proved that the limit is $1-e^{-c}$ at $c\geq0$.
+Here we derive exact finite formulas, tightness, and disappearance
+of bounded unscaled gaps. The exponential limit is unresolved
+in this attempt.
+
+\subsection{2) Cyclic normalization}
+Write $a_{\phi+1}=a_1+N$ and
+$d_i=a_{i+1}-a_i$ for $1\leq i\leq\phi=\phi(N)$.
+Then
+\[
+ \sum_i d_i=N,\qquad
+ \frac1\phi\sum_i\frac{d_i}{N/\phi}=1.
+\]
+For each $c>0$, Markov's inequality gives
+\[
+ \frac1\phi\#\{i:d_i>cN/\phi\}\leq\frac1c.
+\]
+Thus the normalized cyclic gap laws are tight. The empirical
+distribution in the problem omits just the wraparound gap and
+uses the same denominator $\phi$, so it differs from the cyclic
+one by at most $1/\phi$, which tends to zero.
+
+\subsection{3) An exact formula for the zero count}
+Choose a reduced residue $a$ uniformly modulo $N$. For $0\leq H<N$
+put
+\[
+ X_H(a)=\sum_{h=1}^H1_{\gcd(a+h,N)=1}.
+\]
+The next cyclic gap exceeds $H$ if and only if $X_H(a)=0$.
+For a subset $S\subseteq\{1,\ldots,H\}$, let
+$\nu_p(S)$ denote the number of distinct residues represented by
+$\{0\}\cup S$ modulo $p$. The Chinese remainder theorem gives
+\[
+ \mathbb P\bigl(\gcd(a+h,N)=1\text{ for every }h\in S\bigr)
+   =\frac{\prod_{p\mid N}(p-\nu_p(S))}{\phi(N)}.
+\]
+Consequently, for each integer $r\geq0$,
+\[
+ \mathbb E\binom{X_H}{r}
+  =\frac1{\phi(N)}
+    \sum_{\substack{S\subseteq[1,H]\\|S|=r}}
+       \prod_{p\mid N}(p-\nu_p(S)),
+\]
+and inclusion--exclusion gives the exact identity
+\[
+ \mathbb P(X_H=0)
+   =\sum_{r=0}^H(-1)^r\mathbb E\binom{X_H}{r}.
+\]
+No independence of the different shifts has been assumed.
+
+\subsection{4) Fixed, unscaled gaps disappear}
+Fix $h\geq1$. If $p\mid h$, its factor in the conditional
+probability $\mathbb P(\gcd(a+h,N)=1)$ is one; otherwise its
+factor is $(p-2)/(p-1)$. In particular the probability is zero
+for odd $h$, once $2\mid N$. For any fixed even $h$, all primes
+greater than $h$ contribute $(p-2)/(p-1)$, and
+\[
+ \prod_{h<p\leq p_k}\left(1-\frac1{p-1}\right)\longrightarrow0
+\]
+by divergence of the sum of prime reciprocals. The union bound
+over $1\leq h\leq H$ therefore proves
+$\mathbb P(d_i\leq H)\to0$ for every fixed $H$.
+This is consistent with the mean scale $N/\phi(N)\to\infty$.
+
+\subsection{5) The precise missing estimate}
+For fixed $c>0$, take $H=\lfloor cN/\phi(N)\rfloor$.
+It would suffice to prove, for every fixed $r$,
+\[
+ \mathbb E\binom{X_H}{r}\longrightarrow\frac{c^r}{r!}.
+\]
+Indeed the odd and even Bonferroni partial sums then sandwich
+$\mathbb P(X_H=0)$ between the corresponding partial sums for
+$e^{-c}$. Letting the truncation order tend to infinity gives the
+desired limit. The case $c=0$ is immediate because all gaps are
+positive. The displayed moment asymptotic is not proved here;
+neither the exact mean nor tightness can replace it.
+
+Sources: \url{https://www.erdosproblems.com/235};
+C.~Hooley, \emph{On the difference between consecutive numbers
+prime to $n$. II}, Publ. Math. Debrecen 12 (1965), 39--49.
+The historical resolution is credited to Hooley; no new resolution
+or formal verification is claimed.
+
+\subsection{6) Completion estimate}
+The CRT formulas and limiting reductions are proved, but their
+essential averaged asymptotic at the growing gap scale is missing.
+\textbf{COMPLETION: 30\%}

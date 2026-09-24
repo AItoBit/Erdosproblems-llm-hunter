@@ -1,0 +1,145 @@
+\section*{Erd\H{o}s Problem 559}
+
+\paragraph{Statement and result.}
+Does every \(n\)-vertex graph of maximum degree at most a fixed
+\(d\) have size Ramsey number \(O_d(n)\)? No, already for maximum
+degree three. We reconstruct Tikhomirov's random-component method
+with a different, simpler sequence of parameters. It gives infinitely
+many orders \(n\) and graphs \(F\) of maximum degree three such that
+\[
+ \widehat R(F)>\frac{Dn}{100},\qquad
+ D=\exp(\Omega(\sqrt{\log n})). \tag{1}
+\]
+Size Ramsey number counts edges of a host whose every red-blue
+colouring contains a monochromatic ordinary copy of \(F\).
+
+\paragraph{A random rooted component.}
+Let \(U_k\) consist of the full rooted binary tree of depth \(k\),
+with a uniformly random Hamilton cycle added on its \(L=2^k\)
+leaves. It has \(s=2L-1\) vertices and maximum degree three.
+All its vertices have distance at most \(k\) from its root.
+
+For a fixed graph \(J\) of maximum degree at most \(D\), and a
+specified root image \(v\), the probability that \(U_k\) embeds
+with root at \(v\) is at most
+\[
+ Q:=\frac{D^{3L}}{(L-1)!}. \tag{2}
+\]
+Indeed, there are at most \(D^{2L-2}\) ways to map the tree edges
+starting at \(v\), a bound also valid for injective embeddings.
+For each fixed embedding, generate the random leaf cycle by fixing
+one starting leaf and choosing a uniform ordering of the others.
+At each successive choice there are at most \(D\) acceptable next
+images. Ignoring the final closing edge gives probability at most
+\(D^{L-1}/(L-1)!\). A union bound proves (2).
+
+\paragraph{Choose components with few possible common root images.}
+Let \(\ell\) tend to infinity through integers and put
+\[
+ k=10\ell,\quad D=2^\ell,\quad L=2^k,\quad
+ h=2^{k^2},\quad B=D^{k+1},\quad r=DB=D^{k+2}.
+\]
+Choose \(h\) independent copies \(U_1,\ldots,U_h\) of \(U_k\).
+With positive probability they have the following property:
+\[
+ \begin{gathered}
+ \text{In every graph of maximum degree at most }D,\\
+ \text{each vertex is a possible root image for fewer than }r
+ \text{ of the indexed components.}
+ \end{gathered} \tag{3}
+\]
+
+To prove this simultaneous assertion, all rooted embeddings in
+question lie in a radius-\(k\) ball, whose order is at most
+\(1+D+\cdots+D^k\leq B\).
+Relabel that ball on \([B]\), with root label 1, adding isolated
+vertices if necessary. The number of possible such labelled graphs
+of maximum degree at most \(D\) is at most \(B^{DB}=B^r\).
+For example, encode each vertex's sorted neighbour list in \(D\)
+slots, padding with its own label; this gives an injection into
+arrays with \(DB\) entries from \([B]\).
+
+For each choice of \(r\) indexed components and one such graph,
+independence and (2) bound the probability that all embed at its
+root by \(Q^r\). Thus the probability that (3) fails is at most
+\[
+ \binom hr B^r Q^r
+ \leq\left(\frac{ehQ}{D}\right)^r. \tag{4}
+\]
+For sufficiently large \(\ell\), the expression in parentheses is
+less than one. To check this rather than assume it, use
+\(\log((L-1)!)\geq(L-1)(\log(L-1)-1)\). Its logarithm is at most
+\[
+ 1+k^2\log2-\ell\log2+3L\ell\log2
+ -(L-1)(\log(L-1)-1).
+\]
+Dividing by \(\ell L\), this tends to
+\((3-10)\log2<0\). Hence (4) is strictly less than one eventually,
+which proves existence of a fixed choice satisfying (3).
+Let \(F\) be its disjoint union, with \(n=hs\) vertices.
+
+\paragraph{Colour every host with at most \(Dn/100\) edges.}
+Fix any such host \(G\), and write \(M=Dn/100\).
+Let \(W\) be its vertices of degree at least \(D+1\).
+There are fewer than \(2M/D=n/50\) of them.
+Delete all edges incident to \(W\), obtaining \(J\) of maximum
+degree at most \(D\). There are at most \(2M\) non-isolated vertices
+in \(J\). For each \(i\), let \(A_i\) be the set of possible root
+images for an embedding of \(U_i\) into \(J\).
+Property (3) implies
+\[
+ \sum_{i=1}^h|A_i|\leq2Mr.
+\]
+Choose \(i_0\) with \(|A_{i_0}|\leq2Mr/h\).
+Colour red all edges incident to \(W\), and all remaining edges
+incident to \(A_{i_0}\). Colour all other edges blue.
+The blue graph contains no \(U_{i_0}\): any such embedding would
+place its root in \(A_{i_0}\), where no blue edge remains.
+It consequently contains no \(F\).
+
+There are at most
+\[
+ D|A_{i_0}|\leq\frac{2MDr}{h}
+ =\frac{D^2sr}{50}<\frac h2 \tag{5}
+\]
+red edges which are not incident to \(W\), for sufficiently large
+\(\ell\). Explicitly, \(s<2^{k+1}\), so the binary logarithm of
+the expression before the last inequality is at most
+\((k+4)\ell+k+1\), whereas \(\log_2h=k^2=100\ell^2\).
+
+Suppose a red copy of \(F\) existed. By (5), fewer than \(h/2\)
+of its disjoint components could use an edge not incident to \(W\).
+At least \(h/2\) components would therefore have every edge incident
+to \(W\). In each of these components the leaf cycle of length
+\(L\) needs at least \(L/2\) vertices of \(W\): every vertex
+covers at most two of its \(L\) edges.
+Disjointness would force
+\[
+ |W|\geq hL/4>n/8,
+\]
+contradicting \(|W|<n/50\). There is no red copy either.
+Since the host was arbitrary, this proves (1).
+
+\paragraph{Growth and scope.}
+Here \(n=2^{100\ell^2}(2^{10\ell+1}-1)\), so
+\(\log n=\Theta(\ell^2)\), whereas \(\log D=\ell\log2\).
+In particular \(\widehat R(F)/n>D/100\to\infty\), contradicting
+any universal linear bound for degree-three target graphs.
+An infinite sequence of orders is sufficient for this disproof;
+the stronger assertion for every large order is not required here.
+
+\paragraph{Attribution.}
+The rooted binary-tree components, random leaf cycles and two-stage
+host colouring are reconstructed from K.~Tikhomirov,
+\emph{On bounded degree graphs with large size-Ramsey numbers},
+Section 2: \url{https://arxiv.org/abs/2210.05818}.
+The parameter selection and all probabilistic and counting steps
+used above are supplied explicitly; no external size-Ramsey theorem
+is assumed. The original disproof is due to R\"odl and Szemer\'edi.
+Current statement: \url{https://www.erdosproblems.com/559},
+checked 24 September 2026. No novelty is claimed.
+
+\paragraph{Completion estimate.}
+The full negative answer follows from a proved superlinear lower bound
+for an infinite family of graphs of maximum degree three.
+\textbf{COMPLETION: 100\%}

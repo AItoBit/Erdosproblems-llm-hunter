@@ -1,0 +1,89 @@
+\section*{Erd\H{o}s Problem 401}
+
+\paragraph{Statement and scope.}
+Writing \(p_r\) for the \(r\)-th prime, does there exist \(f(r)\to\infty\)
+such that, for each \(r\), infinitely many \(n\) admit
+\[
+ a!b!\mid n!\prod_{p\leq p_r}p^n,\qquad
+ a+b>n+f(r)\log n?
+\]
+The problem page reports an affirmative solution by Barreto and Leeham,
+using ChatGPT. The main existence assertion is unresolved in this attempt.
+We prove an obstruction to a different quantifier and give a precise
+denominator-support reduction for the actual question.
+
+\paragraph{The variant requiring every sufficiently large \(n\) fails.}
+Fix \(r\), let \(q=p_{r+1}\), and take \(n=q^h-1\), \(h\geq1\).
+Divisibility implies \(v_q(a!)+v_q(b!)\leq v_q(n!)\).
+It first forces \(a,b\leq n\), because
+\(v_q((n+1)!)=v_q(n!)+h\).
+If \(a+b=n+t\) with \(t\geq1\), then for \(1\leq j\leq h\),
+\[
+ \left\lfloor\frac{a}{q^j}\right\rfloor+
+ \left\lfloor\frac{b}{q^j}\right\rfloor
+ \geq q^{h-j}-1+\left\lfloor\frac{t-1}{q^j}\right\rfloor.
+\]
+Here we used \(\lfloor x\rfloor+\lfloor y\rfloor\geq\lfloor x+y\rfloor-1\).
+Subtracting the Legendre sum
+\(v_q(n!)=\sum_{j=1}^{h}(q^{h-j}-1)\) shows that \(t\geq q+1\)
+is impossible. Thus every admissible pair satisfies
+\[
+ a+b\leq n+q.
+ \tag{1}
+\]
+For any fixed positive logarithmic coefficient, (1) contradicts the desired
+inequality for all sufficiently large members of this subsequence.
+This refines the constant in the obstruction recorded by
+Sothanaphan on the discussion page, but does not address existence on
+other subsequences.
+
+\paragraph{A sufficient lemma for the intended quantifiers.}
+Consider the following denominator-support assertion:
+for every \(c>0\) there is \(A(c)\) such that, for arbitrarily large
+integers \(m\), with \(k=\lfloor c\log m\rfloor\), the reduced denominator
+of
+\[
+ \frac{(2m)!}{m!(m+k)!}
+ \tag{2}
+\]
+has no prime factor exceeding \(A(c)\).
+This assertion is the substantive missing input here. The source
+discussion describes a result of this type in connection with Problem 729;
+it is not proved or assumed established by this attempt.
+
+Here is the complete reduction if that input is supplied.
+For a fixed prime \(p\), Legendre's formula implies
+\[
+ v_p(m!)+v_p((m+k)!)-v_p((2m)!)
+ \leq \frac{k}{p-1}+O(\log m).
+ \tag{3}
+\]
+The upper bounds \(v_p(t!)\leq t/(p-1)\) and the
+lower bound \(v_p((2m)!)\geq2m/(p-1)-O(\log m)\) prove (3).
+Hence each positive deficit at the finitely many primes \(p\leq A(c)\)
+is at most \(2m\) for large \(m\). Taking \(n=2m\),
+\(a=m+k,b=m\), any \(p_r\geq A(c)\) therefore gives the required
+divisibility.
+
+To check the growth quantifier, apply the input with \(c=2j\), \(j\geq1\),
+and choose increasing thresholds \(R_j\) so that \(r\geq R_j\) implies
+\(p_r\geq A(2j)\). Arrange \(R_j\geq j\).
+Define \(f(r)\) as the largest \(j\) with \(R_j\leq r\), or zero if none.
+Then \(f(r)\to\infty\), and for fixed \(j=f(r)\geq1\),
+\[
+ k=\lfloor2j\log m\rfloor>j\log(2m)
+\]
+eventually. For the finitely many \(r\) with \(f(r)=0\), use
+\(a=n,b=1\); this gives \(a+b>n\) and \(a!b!\mid n!\).
+Thus the sufficient lemma yields exactly the stated quantifiers.
+
+\paragraph{Source and remaining gap.}
+\url{https://www.erdosproblems.com/401} and its discussion
+\url{https://www.erdosproblems.com/forum/thread/401},
+checked 24 September 2026. This proves (1) and the implication from
+the explicitly isolated input to the main claim. Establishing the
+denominator-support assertion is the remaining mathematical work.
+
+\paragraph{Completion estimate.}
+The obstruction and reduction are complete; the required existence lemma is missing.
+\textbf{COMPLETION: 40\%}

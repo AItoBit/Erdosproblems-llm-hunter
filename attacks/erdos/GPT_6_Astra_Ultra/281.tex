@@ -1,0 +1,58 @@
+\section{Erd\H{o}s Problem \#281}
+\subsection{Statement and attribution}
+Let $n_1<n_2<\cdots$ be positive integers. Suppose that for every choice of residues $a_i\pmod{n_i}$, the integers avoiding all these classes have density zero. Must every $\varepsilon>0$ admit a finite $k$ such that the first $k$ classes leave density less than $\varepsilon$, uniformly in all residue choices? Yes.
+
+The current discussion gives a proof using the Davenport--Erd\H{o}s theorem on sets of multiples and Rogers's finite extremal inequality. We reconstruct the needed density implication and the finite inequality below, so neither is left as an unexplained external input. These are classical arguments, not a novelty claim.
+
+\subsection{Work I: finite congruences are worst when aligned}
+Fix $n_1,\ldots,n_k$ and put $L=\operatorname{lcm}(n_1,\ldots,n_k)$. Write $L=\prod_p p^{e_p}$. By the Chinese remainder theorem, residues modulo $L$ are tuples of residues modulo these prime powers. The class $a_i\pmod{n_i}$ imposes, in the $p$ coordinate, one residue modulo $p^{v_p(n_i)}$; if $p\nmid n_i$ it imposes no condition there.
+
+Replace all these residues in one fixed $p$ coordinate by zero, leaving the other coordinates unchanged. For any fixed tuple of the other coordinates, a certain collection of the $k$ congruence classes is active. Its original fiber is a union of subsets of sizes $p^{e_p-v_p(n_i)}$, so its size is at least the largest such size. After replacement, those subsets are nested zero congruence classes, and their union has exactly that largest size. If no class is active, both unions are empty. Summing over fibers shows that the replacement cannot increase the covered proportion. Repeat for every prime dividing $L$. The result is that all $a_i$ are zero, and hence
+\[
+ d(U_k(\mathbf a))\le d(U_k(\mathbf0)),
+ \tag{1}
+\]
+where $U_k$ denotes the uncovered set and density exists by periodicity.
+
+\subsection{Work II: density one for all multiples implies finite approximation}
+Let $M_k=\bigcup_{i\le k}n_i\mathbb N$, $M=\bigcup_i n_i\mathbb N$, and $\delta_k=d(M_k)$. The hypothesis for the zero residues gives $d(M)=1$. We prove $\delta_k\to1$.
+
+For a real $s>1$, put a probability distribution on positive integers by
+\[
+ \mathbb P_s(N=m)=\frac{m^{-s}}{\zeta(s)},
+ \qquad \zeta(s)=\sum_{m\ge1}m^{-s}.
+\]
+For any finite collection of primes, the exponents $v_p(N)$ are independent and satisfy
+$\mathbb P_s(v_p(N)\ge a)=p^{-as}$. This follows by factoring the convergent Dirichlet series, or by summing over the integers divisible by prescribed prime powers. Under the uniform residue distribution for the finite modulus defining $M_k$, the truncated exponents instead have tails $p^{-a}$. Thus the first exponent tuple is coordinatewise stochastically smaller than the second. To see the comparison directly, generate each exponent from an independent uniform random number using its tail thresholds; $p^{-as}\le p^{-a}$ makes the inequality simultaneous for every threshold.
+
+The event of being divisible by at least one of $n_1,\ldots,n_k$ is increasing in every prime exponent. Therefore
+\[
+ \mathbb P_s(N\in M_k)\le\delta_k.
+\]
+Let $\delta=\lim_k\delta_k$, which exists since the sequence is increasing and bounded. Countable additivity gives
+\[
+ \mathbb P_s(N\in M)\le\delta \qquad(s>1).
+ \tag{2}
+\]
+We now use $d(M)=1$. If $C=\mathbb N\setminus M$ and $C(x)=|C\cap[1,x]|$, then $C(x)=o(x)$. Partial summation yields
+\[
+ \sum_{m\in C}m^{-s}=s\int_1^\infty C(x)x^{-s-1}\,dx.
+\]
+Given $\eta>0$, take $T$ with $C(x)\le\eta x$ for $x\ge T$. The integral on $[1,T]$ stays bounded as $s\downarrow1$, while the rest is at most $\eta sT^{1-s}/(s-1)$. Since $\zeta(s)\ge1/(s-1)$, division and passage to the limit show
+$\limsup_{s\downarrow1}\mathbb P_s(N\in C)\le\eta$. Letting $\eta\downarrow0$ proves $\mathbb P_s(N\in M)\to1$. Equation (2) now forces $\delta=1$.
+
+\subsection{Conclusion and checks}
+Choose $k$ with $1-\delta_k<\varepsilon$. Then (1) gives
+\[
+ d(U_k(\mathbf a))\le d(U_k(\mathbf0))=1-\delta_k<\varepsilon
+\]
+for every choice of the first $k$ residues. This is precisely the uniform conclusion.
+
+The argument does not interchange natural density with an infinite intersection: that potentially invalid step is replaced by the convergent $s>1$ probability measures. Only the zero choice in the hypothesis is needed once (1) is proved. If $n_1=1$, the conclusion is immediate and is consistent with the proof.
+
+\textbf{SOLVED.} Both classical ingredients needed for the conclusion have been established above.
+
+\subsection{Sources}
+H. Davenport and P. Erd\H{o}s, \emph{On sequences of positive integers}, Acta Arith. 2 (1936), 147--151, \url{https://users.renyi.hu/~p_erdos/1936-04.pdf}; Rogers's inequality as discussed with references and attribution at \url{https://www.erdosproblems.com/281}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

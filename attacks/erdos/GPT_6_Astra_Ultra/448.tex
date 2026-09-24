@@ -1,0 +1,111 @@
+\section*{Erd\H{o}s Problem 448}
+
+\paragraph{Statement and result.}
+Let \(\tau^+(n)\) count the occupied dyadic divisor bins
+\([2^k,2^{k+1})\), and let \(\tau(n)\) count all divisors.
+Must \(\tau^+(n)<\epsilon\tau(n)\) hold for almost all \(n\),
+for every \(\epsilon>0\)?
+No. We deduce the negative answer from the quantitative
+Erd\H{o}s--Tenenbaum theorem, and derive the companion mean-order
+estimate from Ford's interval-divisor bound. The two analytic
+theorems are explicit external inputs.
+
+\paragraph{The external small-ratio estimate and its quantifiers.}
+Theorem 1 of Erd\H{o}s and Tenenbaum (1981) states that, for every
+\(\eta>0\), some constant \(C_\eta\) bounds the upper natural density
+of
+\[
+ \{n:\tau^+(n)<a\tau(n)\}
+\]
+by \(C_\eta a^{1-\eta}\), for \(0<a<1\).
+If a half-open endpoint convention different from the one above is
+used, the same conclusion holds after changing the constant: each
+bin in one dyadic partition meets at most two bins in the other,
+so their occupied-bin counts differ by at most a factor of two.
+
+Take \(\eta=1/2\), and then choose a fixed \(a>0\) small enough that
+\(C_{1/2}\sqrt a<1/2\). The complementary set
+\[
+ \{n:\tau^+(n)\geq a\tau(n)\}
+ \tag{1}
+\]
+has lower natural density at least \(1/2\).
+Thus the proposed assertion fails for the single fixed choice
+\(\epsilon=a\). This checks the necessary positive-density conclusion;
+isolated examples such as primes would not suffice.
+
+More generally, if a set \(\mathcal A\) satisfies
+\(\tau^+(n)/\tau(n)\to0\) as \(n\to\infty\) within \(\mathcal A\),
+then, for every \(a>0\), its tail is contained in the preceding
+small-ratio set. Hence its upper density is at most \(C_{1/2}\sqrt a\).
+Letting \(a\downarrow0\) proves that \(\mathcal A\) has density zero.
+
+\paragraph{The companion average: the required external interval estimate.}
+Write \(H(x,y,2y)\) for the number of integers at most \(x\)
+having a divisor in \((y,2y]\).
+Ford's Corollary 2 gives, uniformly for \(1\leq y\leq x/2\),
+\[
+ H(x,y,2y)\asymp
+ \frac{x}{(\log Y)^\alpha(\log\log Y)^{3/2}},
+ \qquad Y=\min(y,x/y)+3,
+ \tag{2}
+\]
+where \(\alpha=1-(1+\log\log2)/\log2\), so \(0<\alpha<1\).
+The additive three makes the denominator harmless at small \(y\).
+
+Let \(\widetilde\tau^+(n)\) count occupied bins \((2^k,2^{k+1}]\),
+allowing \(k=-1\) to include the divisor \(1\).
+Finite double counting gives
+\[
+ \sum_{n\leq x}\widetilde\tau^+(n)
+ =\sum_{k\geq-1}H(x,2^k,2^{k+1}).
+ \tag{3}
+\]
+The two endpoint bins contribute \(O(x)\).
+Put \(L=\log_2 x\). For \(L/4\leq k\leq3L/4\), (2)
+has \(\log Y\asymp\log x\) and
+\(\log\log Y\asymp\log\log x\).
+There are \(\asymp\log x\) such terms, giving the lower bound
+\[
+ \sum_{n\leq x}\widetilde\tau^+(n)
+ \gg \frac{x(\log x)^{1-\alpha}}{(\log\log x)^{3/2}}.
+\]
+For the upper bound, (2) reduces the sum to a constant multiple of
+\[
+ x\sum_{0\leq j\leq L}
+ \frac1{(j+1)^\alpha(\log(j+2))^{3/2}}.
+\]
+The part \(j\leq\sqrt L\) is \(O(L^{(1-\alpha)/2})\).
+For larger \(j\), \(\log(j+2)\asymp\log L\) and
+\(\sum_{j\leq L}(j+1)^{-\alpha}=O(L^{1-\alpha})\).
+This proves the matching upper bound.
+
+Changing the endpoint assignment can only move divisors which are
+powers of two. Thus
+\[
+ |\tau^+(n)-\widetilde\tau^+(n)|\leq v_2(n)+1,\qquad
+ \sum_{n\leq x}(v_2(n)+1)\leq2x.
+\]
+This error is smaller than the established main order, proving
+\[
+ \sum_{n\leq x}\tau^+(n)\asymp
+ \frac{x(\log x)^{1-\alpha}}{(\log\log x)^{3/2}}.
+ \tag{4}
+\]
+
+\paragraph{Sources and scope.}
+P.~Erd\H{o}s and G.~Tenenbaum,
+\emph{Sur la structure de la suite des diviseurs d'un entier},
+Annales de l'Institut Fourier 31 (1981), 17--37, Theorem 1:
+\url{https://aif.centre-mersenne.org/articles/10.5802/aif.815/}.
+K.~Ford, Annals of Mathematics 168 (2008), 367--433,
+Corollary 2 (and Corollary 5 for (4)):
+\url{https://annals.math.princeton.edu/2008/168-2/p01}.
+Current question: \url{https://www.erdosproblems.com/448},
+checked 24 September 2026.
+This is a complete deduction using the stated analytic inputs,
+not an independent reconstruction of their proofs.
+
+\paragraph{Completion estimate.}
+The density disproof and the companion mean-order estimate follow from the explicit inputs.
+\textbf{COMPLETION: 100\%}

@@ -1,6 +1,6 @@
 # Problem Hunting with LLMs
 
-A collection of attempts by advanced Large Language Models (LLMs), mostly by GPT Pro 5.2, to solve open mathematical problems from the [Erdos Problems](https://www.erdosproblems.com/) collection and [MathOverflow](https://mathoverflow.net/).
+A collection of attempts by advanced Large Language Models (LLMs) to solve [Erdos Problems](https://www.erdosproblems.com/) and **Top Open Problems** across mathematics and theoretical computer science. MathOverflow is retained as a subset of the open-problems collection.
 
 
 **Live Site:** [mehmetmars7.github.io/Erdosproblems-llm-hunter](https://mehmetmars7.github.io/Erdosproblems-llm-hunter)
@@ -17,8 +17,10 @@ The Erdos index includes all **1,221 problems** in the saved collaborative datab
   - Problem statements: [erdosproblems.com](https://www.erdosproblems.com/)
   - Latest status and formalization links: [Terry Tao's Erdos Problems Database](https://teorth.github.io/erdosproblems/)
 
-- **MathOverflow**: Open problems from the professional mathematics Q&A site
-  - Source: [mathoverflow.net](https://mathoverflow.net/)
+- **Top Open Problems**: The 500 ranked records in [lists/top500-v22.json](lists/top500-v22.json), imported from the local `_Local/open_problems/top500-v22.json` publication (edition 2026-09-22).
+  - Each record supplies its stable ID, exact target, domain, source references, and qualified status. Rankings and status qualifications are attributed to that saved publication.
+  - The existing 100 [MathOverflow](https://mathoverflow.net/) problems remain available as a separate source subset within this collection, preserving their attempts and links. The combined listing therefore contains 600 catalog entries; entries from different sources may refer to related mathematical questions.
+  - Catalog inclusion does not count as an LLM attempt. A ranked problem with no submitted mathematical writeup is shown without an attempt.
 
 ### Featured LLM Models
 
@@ -34,39 +36,46 @@ Only the most advanced frontier LLMs with demonstrated mathematical reasoning ca
 
 ```
 Erdosproblems-llm-hunter/
-├── Problems/               # Local reference only (not published)
-│   ├── Erdos_Problems/     # Problem statements link to erdosproblems.com
-│   └── MO_problems/        # Problem statements link to MathOverflow
-├── Attacks/
-│   ├── Erdos_problems/     # LLM attempts organized by model
-│   └── MO_problems/        # LLM attempts for MO problems
-├── Lists/
-│   ├── Erdos_Problems.csv  # Erdos problem metadata with URLs
-│   └── MO_problems.csv     # MO problem metadata with URLs
-├── data/                   # Generated JSON data (auto-generated)
+├── attacks/
+│   ├── erdos/<model>/      # Numbered Erdos TeX attempts
+│   └── open_problems/
+│       ├── <model>/        # Ranked attempts named <problemId>.tex
+│       └── mo/<model>/     # Existing MathOverflow TeX attempts
+├── lists/
+│   ├── top500-v22.json     # Saved Top Open Problems publication
+│   ├── erdos_problems.csv
+│   ├── erdos_status.json  # Saved collaborative database status
+│   └── mo_problems.csv
+├── reviews/               # Community reviews by collection and stable ID
+├── docs/                  # Published GitHub Pages site
+│   ├── data/              # Generated JSON and JavaScript data
+│   ├── index.html
+│   ├── erdos.html
+│   ├── open_problems.html # Ranked problems and MathOverflow subset
+│   ├── mo.html            # Compatible MathOverflow listing
+│   ├── problem.html
+│   ├── about.html
+│   ├── styles.css
+│   └── app.js
+├── scripts/               # Status synchronization and review processing
+├── tests/                 # Python data checks and JavaScript frontend checks
 ├── .github/workflows/      # GitHub Actions for auto-deployment
-├── index.html              # Main page
-├── erdos.html              # Erdos problems listing
-├── mo.html                 # MathOverflow problems listing
-├── problem.html            # Individual problem view
-├── about.html              # About page
 ├── build_site.py           # Build script
-├── styles.css              # Styling
-├── app.js                  # Frontend JavaScript
 ├── CONTRIBUTING.md         # Contribution guidelines
 └── LICENSE                 # Apache 2.0 License
 ```
 
 ## How It Works
 
-1. **Problem Statements**: Canonical statements remain at the external sources below. Each new Astra partial attempt includes a sourced restatement:
+1. **Problem Statements**: Every new writeup includes the mathematical statement, definitions, and relevant source citations:
    - Erdos problems: [erdosproblems.com/X](https://www.erdosproblems.com/) for problem X
-   - MO problems: Original MathOverflow question links
-2. **LLM Attempts**: Stored as TeX files in `Attacks/` directory
-3. **Build Process**: `build_site.py` processes attacks and generates JSON data
+   - Ranked open problems: Exact targets and references from `lists/top500-v22.json`, with primary sources checked when preparing an attempt
+   - MathOverflow subset: Original MathOverflow question links
+2. **LLM Attempts**: Stored as TeX files in `attacks/`. New ranked writeups use `attacks/open_problems/<model>/<problemId>.tex` (or `<problemId>_v2.tex`). Each must contain actual mathematical work, references for definitions and concepts, citations for results used in the attempt, and an honest account of remaining gaps. A statement or research plan alone is not an attempt.
+3. **Build Process**: `build_site.py` processes the catalogs, attempts, and reviews into JSON and JavaScript data in `docs/data/`
 4. **Auto-Update**: GitHub Actions automatically rebuilds the site when:
-   - Files in `Attacks/` are modified
-   - Files in `Lists/` are modified
+   - Files in `attacks/`, `lists/`, or `reviews/` are modified
+   - Site pages, build scripts, or tests are modified
 5. **Rendering**: MathJax renders LaTeX mathematics in the browser
 
 ## Local Development
@@ -102,10 +111,22 @@ proved, disproved, solved, or independent receive **100% Completion**, following
 the database's definition of resolved problems. For other problems, completion
 remains the existing LLM estimate. Statement formalization and solution formalization
 are reported separately; an `open (Lean)` problem remains open. Attempt contents
-and community reviews retain their separate meanings. MathOverflow claim labels
-continue to reflect the hosted attempts.
+and community reviews retain their separate meanings. Top Open Problems claim
+labels, including its MathOverflow subset, reflect the hosted attempts; catalog
+status and its qualifications are shown separately.
 
-Run the synchronization and build checks with `python3 -m unittest discover -s tests`.
+Run the checks before publishing:
+
+```bash
+python3 -m unittest discover -s tests
+for test_file in tests/test_*.js; do node "$test_file"; done
+python3 build_site.py
+```
+
+Ranked detail links use `problem.html?type=open_problems&id=problem.p-versus-np`.
+Existing `problem.html?type=mo&id=<question_id>` links remain supported. Reviews
+for ranked problems are stored in `reviews/open_problems/<problemId>.json`;
+existing MathOverflow reviews retain their `reviews/mo/<question_id>.json` paths.
 
 ## Contributing
 

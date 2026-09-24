@@ -1,0 +1,70 @@
+\section{Erd\H{o}s Problem 175: square factors of central binomial coefficients}
+
+\subsection{1) Statement and scope}
+Show that $\binom{2n}{n}$ is not squarefree for every $n\geq5$.
+The assertion has been proved by Granville--Ramar\'e and independently
+by Velammal. This attempt proves it for every $n$ which is not a power
+of $2$, and also for an infinite family of powers of $2$. It does not
+reconstruct the treatment of every remaining power of $2$.
+
+\subsection{2) The binary-digit reduction}
+For a prime $p$, count the multiples of $p,p^2,\ldots$ in a factorial:
+\[
+ v_p(n!)=\sum_{j\geq1}\left\lfloor\frac n{p^j}\right\rfloor.
+\]
+If $n=\sum_i\epsilon_i2^i$ with $\epsilon_i\in\{0,1\}$, exchanging
+the finite sums gives $v_2(n!)=n-\sum_i\epsilon_i=n-s_2(n)$.
+Because $s_2(2n)=s_2(n)$,
+\[
+ v_2\binom{2n}{n}
+ =(2n-s_2(2n))-2(n-s_2(n))=s_2(n).
+\]
+Every positive integer other than a power of $2$ has at least two binary
+ones. Thus $4$ divides the binomial coefficient for every such $n$.
+This covers all but $O(\log X)$ values of $n\leq X$, but that density
+statement does not settle the universal quantifier.
+
+\subsection{3) A further infinite family of exceptional inputs}
+The factorial formula also yields
+\[
+ v_3\binom{2n}{n}
+ =\sum_{j\geq1}
+ \left(\left\lfloor\frac{2n}{3^j}\right\rfloor
+             -2\left\lfloor\frac n{3^j}\right\rfloor\right).
+\]
+Each summand is either zero or one, and it equals one exactly when
+the residue of $n$ modulo $3^j$ is at least $(3^j+1)/2$.
+
+Set $n=2^k$ with $k\equiv3$ or $5\pmod6$. Such $k$ are odd, so
+$n\equiv2\pmod3$ and the first summand is one. The powers of $2$
+modulo $9$ have period $6$, with residues $2,4,8,7,5,1$.
+For the two specified residue classes of $k$, the residue is respectively
+$8$ or $5$, so the second summand is also one. Hence
+\[
+ 9\mid\binom{2^{k+1}}{2^k}\qquad(k\equiv3,5\pmod6).
+\]
+All later summands are nonnegative. This argument therefore supplies
+genuine square divisors for these infinitely many powers of $2$.
+
+\subsection{4) Gap and outcome}
+The remaining inputs in this proof are powers $n=2^k$, $k\geq3$, with
+$k\equiv0,1,2,4\pmod6$. Some of them have two carries at later powers
+of $3$, or square factors at other primes, but no uniform argument for
+them has been established here. Finite computation cannot replace that
+step. The stronger questions about the largest prime-power divisor,
+mentioned in the problem's commentary, are also not proved here.
+
+\textbf{Outcome of this attempt: UNRESOLVED in full.} The exact valuation
+formula and the two families above are proved; the original all-$n$
+theorem is known from the literature. No new resolution is claimed.
+\begin{itemize}
+\item A. Granville and O. Ramar\'e, \emph{Explicit bounds on exponential
+sums and the scarcity of squarefree binomial coefficients}, Mathematika
+43 (1996), 73--107; bibliographic links are on the problem page.
+\item T. F. Bloom, Problem 175,
+\texttt{https://www.erdosproblems.com/175}, checked 23 September 2026.
+\end{itemize}
+The percentage is a subjective proof-progress estimate, not the density
+of inputs covered; the exceptional powers are the main difficulty.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 25\%}

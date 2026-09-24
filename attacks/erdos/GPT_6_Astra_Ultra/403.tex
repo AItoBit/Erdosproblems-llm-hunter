@@ -1,0 +1,92 @@
+\section*{Erd\H{o}s Problem 403}
+
+\paragraph{Statement and result.}
+Does \(2^m=a_1!+\cdots+a_k!\), with distinct positive indices
+\(a_1<\cdots<a_k\), have only finitely many solutions?
+Yes. We reconstruct the known Frankl--Lin result using an explicit finite
+integer computation: the possible exponents are
+\[
+ m=0,1,3,5,7.
+ \tag{1}
+\]
+The largest solution is \(128=2!+3!+5!\).
+The small computation below is part of the proof; no Lean verification
+of this particular reconstruction is claimed.
+
+\paragraph{Reduction to a bounded computation.}
+For \(m\geq1\), parity excludes \(1!\). Reducing modulo \(3\)
+then forces \(2!\) to occur, since every factorial with index at least
+three is divisible by three. We prove that no sum of distinct factorials
+containing \(2!\) and no \(1!\) is divisible by \(2^{255}\).
+
+Put \(S_2=\{2\}\). For \(3\leq n\leq255\), define
+\[
+ e_n=\min(255,v_2((n+1)!)),\qquad
+ S_n=\{x:x=s\text{ or }s+n!,\ s\in S_{n-1},\ 2^{e_n}\mid x\}.
+ \tag{2}
+\]
+If a full factorial sum is divisible by \(2^{255}\), its partial
+sum through \(n!\) must lie in \(S_n\): all omitted future factorials
+are divisible by \(2^{e_n}\). This follows inductively, including
+zero choices at missing indices. At \(n=255\), all later factorials
+are multiples of \(2^{255}\). Therefore \(S_{255}=\varnothing\)
+excludes every full sum, including those with indices exceeding \(255\).
+
+\paragraph{Exact certificate.}
+The following complete Python code uses only unbounded integer arithmetic.
+The identity \(v_2(t!)=t-\operatorname{popcount}(t)\) evaluates (2).
+\begin{verbatim}
+from math import factorial
+S, F = {2}, 2
+peak = 1
+for n in range(3, 256):
+    F *= n
+    e = min(255, n + 1 - (n + 1).bit_count())
+    S = {x for s in S for x in (s, s + F)
+         if x % (1 << e) == 0}
+    peak = max(peak, len(S))
+assert peak == 496
+assert S == set()
+
+facts = [factorial(i) for i in range(1, 256)]
+answers = []
+for m in range(255):
+    remainder, indices = 1 << m, []
+    for i in range(255, 0, -1):
+        if facts[i - 1] <= remainder:
+            remainder -= facts[i - 1]
+            indices.append(i)
+    if remainder == 0:
+        answers.append((m, sorted(indices)))
+assert answers == [(0,[1]), (1,[2]), (3,[2,3]),
+                   (5,[2,3,4]), (7,[2,3,5])]
+\end{verbatim}
+For additional audit points, the cardinalities \(|S_n|\) for
+\(n=250,251,252,253,254,255\) are respectively
+\(104,57,114,114,228,0\). The code was run successfully.
+
+The first assertion proves \(m\leq254\). Also \(256!>2^{254}\),
+so indices at least \(256\) cannot occur in that remaining range.
+The greedy check is exhaustive because
+\(\sum_{i=1}^{t-1}i!<t!\) for every \(t\geq2\).
+Thus the largest available factorial must be selected if it does not
+exceed the remainder; otherwise no combination of smaller ones can
+replace it. This proves both the enumeration and (1).
+
+\paragraph{Index convention and attribution.}
+The argument uses positive indices. If \(0!\) is also allowed, finiteness
+and the largest solution remain the same. For \(m\geq3\), parity says
+that \(0!\) and \(1!\) occur together or neither does. The contribution
+from indices \(0,1,2\) is then \(0,2,\) or \(4\). Modulo \(3\) rules out
+zero. A contribution of \(4\), together with the optional \(3!=6\),
+is \(4\) or \(2\pmod8\), so is impossible. The contribution is therefore
+exactly \(2\), and the same computation applies. The finitely many
+smaller exponents cause no issue.
+
+The known result is attributed to Frankl and Lin at
+\url{https://www.erdosproblems.com/403}, checked 24 September 2026.
+This is a reproducible reconstruction of that result, not a new discovery.
+
+\paragraph{Completion estimate.}
+The infinite search is rigorously reduced to, and settled by, the displayed finite certificate.
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,61 @@
+\section{Erd\H{o}s Problem 618: a sparse diameter-two extension}
+\subsection*{Statement and approach}
+Suppose $G=G_n$ is triangle-free on $n$ vertices and $\Delta(G)=o(\sqrt n)$. Can one add $o(n^2)$ edges, preserving triangle-freeness, to obtain diameter two? The answer is yes. The following is a full reconstruction of Alon's probabilistic extension argument, with parameters tending to zero so that it applies to the precise little-oh hypothesis.
+
+\subsection*{A random intermediate extension}
+Set
+\[
+ c=\max\{2\Delta(G)/\sqrt n,n^{-1/12}\},\quad
+ D=\lceil2c\sqrt n\rceil,\quad
+ m=\lfloor c^2n^{3/2}\rfloor,\quad u=\lceil5cn\rceil.
+\]
+Thus $c=o(1)$, $c\sqrt n\to\infty$, and $\Delta(G)\le c\sqrt n/2$.
+Starting from $G$, add $m$ random edges sequentially. At each step choose uniformly among pairs which are nonadjacent, have no common neighbour, and whose two current degrees are less than $D$.
+These conditions preserve triangle-freeness and maximum degree at most $D$.
+
+We first check that the process cannot get stuck. A vertex that reaches degree $D$ has received at least $c\sqrt n$ new incident edges. There are at most $2m/(c\sqrt n)\le2cn$ such vertices. The number of pairs having a common neighbour is at most
+\[
+ \sum_v\binom{d(v)}2\le nD^2/2=(2+o(1))c^2n^2.
+\]
+There are at most $nD/2=o(n^2)$ existing edges. Among the at least $n-2cn$ unsaturated vertices, the number of allowable pairs is consequently positive, in fact $(1/2-o(1))n^2$, for all sufficiently large $n$.
+
+Fix a set $U$ of $u$ vertices. Conditional on $U$ still being independent at a given step, it has at least $u-2cn\ge3cn$ unsaturated vertices. No pair within $U$ is already an edge. After excluding pairs with a common neighbour, at least
+\[
+ \binom{3cn}{2}-nD^2/2\ge2c^2n^2
+\]
+allowable pairs remain within $U$ for sufficiently large $n$. Since there are at most $n^2/2$ allowable pairs in total, the conditional chance of destroying independence of $U$ is at least $3c^2$ (with room for rounding). Thus
+\[
+ \Pr(U\text{ survives independently})\le e^{-3c^2m}.
+\]
+A union bound shows that the probability of any surviving independent $u$-set is at most
+\[
+ \binom nu e^{-3c^2m}
+ \le\exp\{u\log(en/u)-3c^2m\}=o(1).
+\]
+Indeed, the positive term is $O(cn\log n)$, whereas $c^2m=(1+o(1))c^4n^{3/2}$, and
+\[
+ \frac{c^4n^{3/2}}{cn\log n}
+ =\frac{c^3\sqrt n}{\log n}
+ \ge\frac{n^{1/4}}{\log n}\longrightarrow\infty.
+\]
+There is therefore a triangle-free extension $H$ of $G$ with $\alpha(H)<u$.
+
+\subsection*{Maximal completion}
+Add further edges to $H$ until it is maximal triangle-free on the same vertex set, obtaining $J$. Every neighbourhood in $J$ is independent in $J$, hence also in $H$. It follows that
+\[
+ \Delta(J)\le\alpha(H)<u,\qquad
+ e(J)\le n(u-1)/2=O(cn^2)=o(n^2).
+\]
+For any two nonadjacent vertices of $J$, maximality says that adding their edge would create a triangle; they must therefore already have a common neighbour. Thus $J$ has diameter at most two. For $n\ge3$ a triangle-free graph cannot be complete, so its diameter is exactly two. The number of edges added to $G$ is at most $e(J)=o(n^2)$, as required.
+
+\subsection*{Checks and conclusion}
+The degree cap is imposed only during the random stage. The later maximal completion is controlled by the independence number instead. Using $c\ge n^{-1/12}$ ensures that all error estimates and the union bound remain valid even when the original maximum degree is extremely small. In particular, the argument includes the empty graph.
+
+\textbf{Status: solved.} All probabilistic and completion steps needed here are proved above; the construction follows Alon's known method rather than asserting a new resolution.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/618} (statement, checked 24 September 2026).
+\item N. Alon, \emph{A remark on diameter two graphs}, \url{https://web.math.princeton.edu/~nalon/PDFS/remark1901.pdf}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\%.}

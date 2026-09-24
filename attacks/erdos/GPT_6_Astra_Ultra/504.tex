@@ -1,0 +1,37 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#504; checked small cases and a qualitative limit, 2026-09-24.}
+For an $N$-point plane set $A$, let $\beta(A)$ be its largest angle formed by three distinct points, using angles in $[0,\pi]$. Determine
+$\alpha_N=\inf_{|A|=N}\beta(A)$ for $N\geq3$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Sendov determined the exact minimax values. Jaudon--Parlier's paper records this attribution and studies the different problem of maximizing the smallest angle. Those two questions must not be interchanged. The piecewise formula currently displayed on the problem page also cannot be copied literally: at $N=5$ its second clause gives $4\pi/5$, whereas a regular pentagon has largest angle $3\pi/5$. This attempt proves elementary bounds and the limit $\alpha_N\to\pi$, but does not reconstruct Sendov's exact formula.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Settle the first two values, use regular polygons for general upper bounds, and force large convex polygons by the finite Ramsey theorem to obtain lower bounds approaching $\pi$.
+
+\section{WORK}
+\textbf{Monotonicity and the first values.} Every $(N+1)$-point set contains an $N$-point subset, so $\alpha_{N+1}\geq\alpha_N$. Any nondegenerate triangle has an angle at least $\pi/3$, and any collinear triple has angle $\pi$. An equilateral triangle therefore proves $\alpha_3=\pi/3$.
+For four points with a collinear triple, the largest angle is $\pi$. Otherwise their convex hull is either a quadrilateral or a triangle. A convex quadrilateral has interior-angle sum $2\pi$, so some angle is at least $\pi/2$. If one point lies inside the triangle of the other three, the three successive angular sectors around that point are each less than $\pi$ and sum to $2\pi$. One sector is at least $2\pi/3$, again giving the required bound. A square has no angle greater than $\pi/2$, so $\alpha_4=\pi/2$.
+
+\textbf{A general upper bound.} For the vertices of a regular $N$-gon, an inscribed angle is half the central angle of the arc between its endpoints that avoids its vertex. That arc contains at most $N-2$ sides. Hence every angle is at most $(N-2)\pi/N$, and an interior angle attains this value. Consequently
+\[
+ \alpha_N\leq\pi\left(1-\frac2N\right).
+\]
+In particular $\alpha_5\leq3\pi/5$, providing a direct check against the erroneous numerical value mentioned above.
+
+\textbf{A qualitative lower bound approaching $\pi$.} Fix $k\geq4$, and let $R_3(k,k)$ be a finite Ramsey number for two-colorings of triples. We use the standard finite Ramsey theorem only to ensure this number exists. Consider any plane set of at least $R_3(k,k)$ points. A collinear triple already supplies an angle $\pi$. Otherwise rotate the coordinate axes so that all horizontal coordinates are distinct, order the points by increasing horizontal coordinate, and color a triple by the sign of its oriented area in that order.
+Ramsey's theorem gives $k$ points whose triples all have the same orientation. These points are in convex position. Indeed, for positive orientation, every middle point of any ordered triple lies strictly below the chord joining the first and last. For each interior point of the ordered sequence, the line through it and its predecessor has all later points on one side, and the increasing-slope condition puts all earlier points strictly on that same side. It is therefore a supporting line of their convex hull. Thus every point is extreme; for negative orientation reflect vertically and use the same argument.
+The resulting convex $k$-gon has angle sum $(k-2)\pi$, so one of its angles is at least $(1-2/k)\pi$. These vertices belong to the original set, proving
+\[
+ N\geq R_3(k,k)\quad\Longrightarrow\quad
+ \alpha_N\geq\pi\left(1-\frac2k\right).
+\]
+Since $k$ is arbitrary and $\alpha_N\leq\pi$, we conclude $\lim_{N\to\infty}\alpha_N=\pi$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved.} The exact values for $N=3,4$, the regular-polygon upper bound, and convergence to $\pi$ are established. The exact minimax values for general $N$, including matching constructions at Sendov's transition points, are not proved here. The only external input to the displayed partial results is the finite Ramsey theorem.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/504}; G. Jaudon and H. Parlier, \emph{On angles formed by $N$ points of the Euclidean and hyperbolic planes}, introduction, \url{https://arxiv.org/abs/math/0603156}; B. Sendov, \emph{Minimax of the angles in a plane configuration of points}, Acta Mathematica Hungarica 69 (1995), 27--46, bibliographic record on the author's publication list: \url{https://parallel.bas.bg/~pencho/sendov/pap9bs.html}.
+
+\textbf{Completion rate estimate: 45\%.}

@@ -1,0 +1,72 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#216; reconstruction of Horton's counterexample, 2026-09-23.}
+For points in the real plane in general position (no three collinear), let $g(k)$ be the least $N$ such that every $N$-point set contains a convex $k$-gon with vertices in the set and with no point of the set in its interior. Does $g(k)$ exist, and what is its size?
+
+The general-position hypothesis is explicit in Horton's original paper and is required for the customary problem. The current problem page omits it. Taken literally without that hypothesis, arbitrarily many collinear points contain no nondegenerate convex polygon, so no $g(k)$ exists for any $k\geq3$. The substantive argument below treats the intended general-position question.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The known classification is $g(3)=3$, $g(4)=5$, $g(5)=10$, $g(6)=30$, with no finite $g(k)$ for $k\geq7$. The values at four, five, and six are used here as explicitly cited external results; their finite-case proofs and the computer-assisted hexagon certificate are not reproduced. The main work of this file is a complete reconstruction of Horton's arbitrarily large sets without an empty convex heptagon, using a larger coordinate base to simplify the inequalities.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Encode the horizontal index in binary, placing its least significant bits at the largest vertical scales. Prove exact separation at each binary split. A visibility lemma then forces at most three vertices of an empty convex polygon into either half.
+
+\section{WORK}
+\textbf{Coordinates and separation.} Fix $k\geq1$, set $N=2^k$, and choose $c=8N$. For $0\leq i<N$, write $i=\sum_{a=0}^{k-1}b_a(i)2^a$, with $b_a(i)\in\{0,1\}$, and define
+\[
+y_i=\sum_{a=0}^{k-1}b_a(i)c^{k-1-a},
+\qquad p_i=(i,y_i),\qquad H_k=\{p_0,\ldots,p_{N-1}\}.
+\tag{1}
+\]
+Heights are distinct. When two indices first differ at bit $a$, reading from the least significant end, their height comparison is determined by that bit: its weight $W=c^{k-1-a}$ exceeds the sum $T$ of all later weights, where $T<W/(c-1)$.
+
+We need a stronger separation statement. Suppose two indices $i,j$ agree in bits $0,\ldots,a$, and a third index $h$ agrees in bits $0,\ldots,a-1$ but has the other bit at $a$. Let $D$ be the contribution from the common earlier bits and $W=c^{k-1-a}$. The two endpoint heights are $D+bW+t_i,D+bW+t_j$, with $0\leq t_i,t_j\leq T<W/(c-1)$. At horizontal coordinate $h$, the line through these endpoints has residual height
+\[
+\frac{j-h}{j-i}t_i+\frac{h-i}{j-i}t_j.
+\]
+Both numerators have absolute value below $N$, and $|j-i|\geq1$, so the absolute value of this residual is below $2NT$. Since $(2N+1)T<W$, the point $p_h$ is strictly above this line when its bit at $a$ is one and the common endpoint bit is zero, and strictly below it in the opposite case. This remains true even when $h$ is outside the interval between $i$ and $j$.
+
+For any three distinct indices, the first bit at which they do not all agree has two equal bits and one different bit. The preceding separation statement proves that these three points are not collinear. Hence (1) is in general position.
+
+\textbf{A visibility lemma.} Suppose $i<j$ and every point $p_h$ with $i<h<j$ lies strictly below the line $p_ip_j$. Then
+\[
+y_h<\min(y_i,y_j)\qquad(i<h<j).
+\tag{2}
+\]
+Fix such an $h$. Being below the segment ensures $y_h<\max(y_i,y_j)$. Suppose first that $y_i>y_h>y_j$. Let $a$ be the first bit where $i,h$ differ and $b$ the first bit where $h,j$ differ. At $a$, the bits of $i,h$ are $1,0$; at $b$, those of $h,j$ are $1,0$. Thus $a\ne b$.
+
+If $a>b$, the indices $i,h$ agree through bit $b$, with bit one, whereas $j$ has bit zero. Separation says $p_j$ is below the line $p_ip_h$. Since $i<h<j$, this means $p_h$ is above $p_ip_j$, a contradiction.
+If $a<b$, put $l=j-2^a$. Since $j$ has bit zero at $a$, subtraction makes that bit one, leaving lower bits unchanged. The indices $l,i$ therefore agree through bit $a$, while $j$ has the opposite bit. Also $j-h$ is a nonzero multiple of $2^b$, so $h<l<j$. Separation says $p_j$ is below the line $p_ip_l$, again forcing the intermediate point $p_l$ above $p_ip_j$, a contradiction.
+
+For completeness, if $y_j>y_h>y_i$, define $a$ using $j,h$ and $b$ using $h,i$. If $a>b$, separation puts $p_i$ below the line $p_hp_j$, contradicting that $p_h$ is below $p_ip_j$. If $a<b$, put $l=i+2^a$. Now $i<l<h$, the indices $l,j$ agree through bit $a$ with bit one, and $i$ has bit zero. Separation puts $p_i$ below $p_lp_j$, forcing $p_l$ above $p_ip_j$. This is again impossible. These cases prove (2).
+
+\textbf{Applying the lemma to an empty polygon.} Split $H_k$ into the even-indexed bottom half $B$ and the odd-indexed top half $T$. Separation at bit zero says every point of $T$ is above every line through two points of $B$, and every point of $B$ is below every line through two points of $T$. Each half is an affine image of the same construction with one fewer bit and the same base $c$, for which all preceding inequalities remain valid.
+
+Let $A$ be the vertex set of an empty convex polygon. If it lies in one half, restrict to that half and apply its invertible affine rescaling. The image remains convex and empty relative to that smaller construction. Continue until both halves are met; a polygon has at least three vertices, so this process must terminate before reaching a one-point set.
+
+Consider selected bottom vertices $p_i,p_j$ with $i<j$ and any bottom point $p_h$ with $i<h<j$. If $p_h$ were above $p_ip_j$, it would be strictly inside the triangle formed by $p_i,p_j$ and any selected top vertex $t$. Indeed $t$ is above the lines $p_ip_h$, $p_hp_j$, and $p_ip_j$; the three resulting orientation inequalities are exactly the strict triangle-interior inequalities. This contradicts emptiness if $p_h$ is unselected and contradicts extremality if it is selected. Thus every intermediate bottom point is below $p_ip_j$.
+
+Apply (2) inside the affine copy $B$. If four selected bottom indices occurred in the order $i<h<l<j$, using the selected endpoints $i,l$ would give $y_h<y_l$, while using the selected endpoints $h,j$ would give $y_l<y_h$. This is impossible. Hence there are at most three selected bottom vertices.
+
+The half-turn
+\[
+(x,y)\longmapsto\left(N-1-x,\ \sum_{a=0}^{k-1}c^{k-1-a}-y\right)
+\]
+preserves the construction and interchanges its two halves. Applying the same bottom argument to the rotated polygon gives at most three selected top vertices. Therefore every empty convex polygon has at most six vertices.
+
+The sets $H_k$ have arbitrarily large cardinality and no empty convex heptagon. In fact there is a counterexample of every prescribed cardinality $M$: choose $2^k\geq M$ and keep just the points $p_0,\ldots,p_{M-1}$. All omitted points have horizontal coordinate at least $M$, hence lie outside the convex hull of the retained points. Any empty heptagon in the retained set would therefore also be empty in $H_k$, which is impossible. If an empty convex polygon with more than seven vertices existed, any seven of its vertices would form an empty convex heptagon: discarded vertices of a strictly convex polygon lie outside the convex hull of the retained ones. Thus there is no finite $g(m)$ for any $m\geq7$.
+
+\textbf{The finite side of the classification.} Every general-position set with at least three points has an empty triangle: choose a triangle of minimum positive area; an interior point would subdivide it into smaller positive-area triangles. Thus $g(3)=3$. The standard five-point convex-quadrilateral result and its empty version give $g(4)=5$; Harborth proved $g(5)=10$; Heule--Scheucher proved $g(6)=30$, with the upper bound also formally verified in subsequent work. These three numerical results are external inputs here, rather than consequences of the Horton construction.
+
+\section{VERIFICATION AND SCOPE}
+The proof explicitly checks general position, separation outside as well as inside an endpoint interval, both height orders in the visibility lemma, and the recursive reduction. Increasing the coordinate base does not change Horton's binary ordering mechanism. The full negative result for every $k\geq7$ is proved without a geometric black box. The finite values for $k=4,5,6$ are credited inputs, and this file makes no claim to regenerate a SAT or Lean certificate.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and classification: \url{https://www.erdosproblems.com/216}.
+\item J. D. Horton, \emph{Sets with no empty convex 7-gons}, Canadian Mathematical Bulletin 26 (1983), 482--484: \url{https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0E7C17D71D9FA4A08B265441FBEB32D7/S0008439500065176a.pdf/sets_with_no_empty_convex_7gons.pdf}.
+\item M. J. H. Heule and M. Scheucher, \emph{Happy Ending: An Empty Hexagon in Every Set of 30 Points}: \url{https://arxiv.org/abs/2403.00737}.
+\item B. Subercaseaux et al., \emph{Formal Verification of the Empty Hexagon Number}: \url{https://arxiv.org/abs/2403.17370}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved by reconstruction of the known counterexample, with cited finite-case inputs.} No finite $g(k)$ exists for $k\geq7$ in general position. The finite cases have the values recorded above. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

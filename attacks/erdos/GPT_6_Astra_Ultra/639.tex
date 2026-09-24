@@ -1,0 +1,109 @@
+\section*{Erd\H{o}s Problem 639: edges outside monochromatic triangles}
+
+\paragraph{Statement and qualification.}
+In a two-colouring of \(K_n\), are there at most \(n^2/4\) edges
+which belong to no monochromatic triangle?
+Call such edges \emph{uncovered}, and let \(h(n)\) be their maximum
+possible number. The exact known answer is
+\[
+ h(n)=
+ \begin{cases}
+ \binom n2,&n\leq5,\\
+ 10,&n=6,\\
+ \lfloor n^2/4\rfloor,&n\geq7.
+ \end{cases}
+\]
+Thus the literal assertion for every \(n\) has small counterexamples;
+the intended large-\(n\) statement is true.
+We reconstruct the proof for \(n\geq10\) from Keevash and Sudakov,
+\emph{On the number of edges not covered by monochromatic copies of
+a fixed graph}, Theorem 1.1 and Proposition 2.1,
+\url{https://people.math.ethz.ch/~sudakovb/nim-edges.pdf}.
+Their verified finite cases \(n=7,8,9\) are used externally.
+See \url{https://www.erdosproblems.com/639}.
+
+\paragraph{A useful counting observation.}
+Suppose disjoint vertices \(u,v\) and a set \(W\) have all edges
+from \(u\) to \(W\) blue and all edges from \(v\) to \(W\) red.
+No edge inside \(W\) is uncovered: its colour forms a triangle
+with \(u\) or \(v\).
+Moreover, at most \(|W|\) uncovered edges join \(\{u,v\}\) to \(W\),
+provided \(|W|\geq2\).
+Indeed, if \(uw\) is uncovered, every edge from \(w\) to
+\(W\setminus\{w\}\) is red, making every \(vw'\), including \(vw\),
+part of a red triangle. Thus none of the red spokes is uncovered.
+If no blue spoke is uncovered, the same bound is immediate.
+
+\paragraph{The bound for \(n\geq10\).}
+Suppose there are more than \(\lfloor n^2/4\rfloor\) uncovered edges.
+Mantel's theorem supplies a triangle all of whose edges are uncovered.
+It cannot be monochromatic, so label it with \(xy,xz\) red and
+\(yz\) blue. Every edge from \(x\) to
+\(S=V\setminus\{x,y,z\}\) is blue: a red \(xt\) would force
+both \(ty,tz\) blue, contradicting that \(yz\) is uncovered.
+
+No \(xt\), \(t\in S\), can itself be uncovered.
+Otherwise all edges from \(t\) to
+\(W=V\setminus\{x,y,z,t\}\) would be red.
+The preceding observation bounds uncovered edges inside \(W\)
+and from \(\{x,t\}\) to \(W\) by \(|W|\).
+Allowing all \(2|W|\) edges from \(\{y,z\}\) to \(W\) and all
+six edges on \(\{x,y,z,t\}\), the total would be at most
+\[
+ 3(n-4)+6=3n-6<\lfloor n^2/4\rfloor
+\]
+for \(n\geq10\), a contradiction.
+
+If another vertex \(v\) has both \(vy,vz\) uncovered, these edges
+must both be red. They cannot both be blue because of \(yz\).
+If, say, \(vy\) were blue and \(vz\) red, the uncovered mixed
+triangle \(vyz\) would force all edges from \(y\) to
+\(V\setminus\{v,y,z\}\) red. On
+\(W=V\setminus\{x,y,z,v\}\), the opposite spokes from \(x,y\)
+would again give the contradictory bound \(3n-6\).
+Therefore \(vy,vz\) are red. Applying the previous paragraph to
+the triangle \(vyz\) shows that every other edge at \(v\) is covered.
+
+Only red edges inside \(S\) can be uncovered, because all blue
+ones form triangles with \(x\). The uncovered red graph is
+triangle-free, so it has at most \(\lfloor(n-3)^2/4\rfloor\)
+edges. Hence the number of uncovered edges from \(\{x,y,z\}\)
+to \(S\) is at least
+\[
+ \lfloor n^2/4\rfloor-\lfloor(n-3)^2/4\rfloor-2\geq n-1.
+\]
+None meets \(x\). Since \(|S|=n-3\), at least two vertices
+\(v,w\in S\) must each have both spokes to \(y,z\) uncovered:
+if at most one did, there would be at most \(|S|+1=n-2\).
+The preceding paragraph says that no other edge at \(v,w\)
+is uncovered. Counting all edges incident with \(y,z\), and
+using Mantel on the remaining \(n-5\) vertices, now gives at most
+\[
+ 2(n-3)+3+\left\lfloor\frac{(n-5)^2}{4}\right\rfloor
+ \leq\left\lfloor\frac{n^2}{4}\right\rfloor
+\]
+uncovered edges. This contradiction proves the upper bound.
+
+\paragraph{Sharpness and the small cases.}
+Colour the edges across a balanced bipartition red and the edges
+within parts blue. All \(\lfloor n^2/4\rfloor\) red edges are
+uncovered, proving sharpness for \(n\geq7\).
+For \(n\leq5\), use the colouring of \(K_5\) whose red and blue
+graphs are both \(5\)-cycles, and take induced subgraphs.
+For \(n=6\), take a red \(5\)-cycle and attach the sixth vertex
+by red edges to three consecutive cycle vertices; colour all
+other edges blue. The only covered edges are the five edges
+in the resulting two red triangles, leaving ten uncovered.
+The upper bound ten for \(n=6\) can be checked by examining
+all \(2^{15}\) colourings; the offline verification accompanying
+this attempt does so. For \(n=7,8,9\), the exact upper bounds
+are the finite cases of the cited primary theorem, not newly
+verified exhaustively here.
+
+\paragraph{Scope.}
+The asymptotic argument is complete and elementary apart from
+Mantel's theorem; the exact all-\(n\) answer additionally uses
+the explicitly identified published finite cases.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

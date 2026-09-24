@@ -1,0 +1,58 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#211; reconstruction using the incidence theorem, 2026-09-23.}
+Let $P$ be a set of $n$ real planar points, and suppose no line contains more than $n-k$ of them, where $1\leq k<n$. Prove that the number $L(P)$ of lines determined by pairs of points satisfies $L(P)\geq ckn$ for an absolute $c>0$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+This is the quantitative form of Beck's theorem, proved by Beck and also by Szemer\'edi--Trotter. The external input here is the Szemer\'edi--Trotter rich-line estimate, not the desired $ckn$ conclusion. The conversion from that estimate to the precise dependence on $k$ is given below.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Separate configurations having no very rich line from configurations with one. In the first case, control how many pairs lie on rich lines by a dyadic sum. In the second, count lines between a richest line and a suitably sized subset outside it.
+
+\section{WORK}
+\textbf{Declared external input.} There is an absolute constant $C\geq1$ such that for every real planar $n$-point set and every integer $r\geq2$,
+\[
+|\{\ell:|P\cap\ell|\geq r\}|\leq C(n^2/r^3+n/r).
+\tag{1}
+\]
+This standard consequence of the Szemer\'edi--Trotter incidence theorem is the sole substantial geometric theorem used without proof.
+
+Write $M=\max_\ell|P\cap\ell|$. Choose an integer $r_0\geq64C$ and put $\alpha=1/(128C)$. Suppose first that $M\leq\alpha n$. A line containing between $r$ and $2r$ points accounts for at most $2r^2$ pairs. Summing (1) over $r=r_0,2r_0,4r_0,\ldots\leq M$, the number of pairs on lines containing at least $r_0$ points is at most
+\[
+\sum_r2C(n^2/r+nr)
+\leq4Cn^2/r_0+4CnM
+\leq 3n^2/32.
+\tag{2}
+\]
+If there are no such $r$, the sum is zero. For $n\geq2$, the total number of pairs is $\binom n2\geq n^2/4$. Thus at least $n^2/8$ pairs lie on lines with fewer than $r_0$ points. Each such line accounts for at most $r_0^2/2$ pairs, so
+\[
+L(P)\geq n^2/(4r_0^2)\geq kn/(4r_0^2).
+\tag{3}
+\]
+
+Now suppose $M>\alpha n$. Fix a richest line $\ell_0$ and write $h=n-M\geq k$. Choose any $q=\min(h,M)$ points off $\ell_0$. For every line $\ell\ne\ell_0$ joining one of the $M$ points on $\ell_0$ to at least one chosen outside point, let $b_\ell$ be the number of chosen outside points on it. Such a line meets $\ell_0$ in exactly one point, so
+\[
+\sum_\ell b_\ell=Mq,\qquad
+\sum_\ell\binom{b_\ell}{2}\leq\binom q2.
+\tag{4}
+\]
+The second inequality holds because each outside pair determines only one line; that line may or may not meet $\ell_0$ at a point of $P$. Since $b-1\leq\binom b2$ for every positive integer $b$, the number of these lines is at least
+\[
+Mq-\binom q2\geq Mq/2.
+\tag{5}
+\]
+If $h\leq M$, this is at least $\alpha nh/2\geq\alpha nk/2$. If $h>M$, it is at least $M^2/2>\alpha^2n^2/2\geq\alpha^2nk/2$. Combining (3)--(5), an admissible absolute constant is
+\[
+c=\min\{1/(4r_0^2),\alpha^2/2\}>0.
+\]
+
+\section{VERIFICATION AND SCOPE}
+The dyadic calculation includes the $n/r$ term in (1), which cannot be dropped for rich lines. In the second case only $q\leq M$ outside points are used, preventing the subtraction in (5) from overwhelming the main term. All constants are independent of $n$, $k$, and the configuration. The proof is complete relative to the explicitly stated incidence theorem; it is not a new proof of that theorem.
+
+\section{SOURCES}
+\begin{itemize}
+\item Exact problem and original attributions: \url{https://www.erdosproblems.com/211}.
+\item E. Szemer\'edi and W. T. Trotter, Jr., \emph{Extremal problems in discrete geometry}, Combinatorica 3 (1983), 381--392, incidence theorem: \url{https://trotter.math.gatech.edu/papers/38.pdf}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved using a named external theorem.} The argument proves the required uniform lower bound $L(P)\gg kn$. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

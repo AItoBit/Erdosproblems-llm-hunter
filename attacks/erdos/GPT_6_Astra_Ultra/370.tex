@@ -1,0 +1,50 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#370; explicit elementary construction, 2026-09-24.}
+Writing $P(a)$ for the largest prime factor of $a>1$, prove that infinitely many positive integers $n$ satisfy
+\[
+P(n)<\sqrt n,\qquad P(n+1)<\sqrt{n+1}.
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current problem page records an affirmative resolution and points out the simple square-neighbour construction. The inequalities are strict; merely taking $n+1$ to be the square of a prime would fail. The following progression of composite square roots avoids that issue.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Factor $m^2-1$ into $m-1$ and $m+1$. Make $m$ composite and give $m+1$ a small fixed divisor so that neither factor can contribute a prime as large as $\sqrt{m^2-1}$.
+
+\section{WORK}
+For any integer $t\geq1$, put
+\[
+m=6t+2,\qquad n=m^2-1.
+\]
+Then $m\geq8$ is even, so every prime factor of $m$ is at most $m/2$: this follows by writing $m=2(m/2)$, with the factor $2$ also at most $m/2$. Therefore
+\[
+P(n+1)=P(m^2)=P(m)\leq m/2<m=\sqrt{n+1}.                 \tag{1}
+\]
+On the other hand,
+\[
+n=(m-1)(m+1),\qquad m+1=3(2t+1).
+\]
+The two factors of $m+1$ are at most $(m+1)/3$, since $2t+1\geq3$. Hence
+\[
+P(m+1)\leq(m+1)/3\leq m-1,
+\qquad P(m-1)\leq m-1.
+\]
+It follows that
+\[
+P(n)=\max(P(m-1),P(m+1))\leq m-1<\sqrt{m^2-1},          \tag{2}
+\]
+because $(m-1)^2<m^2-1$ for $m>1$. Equations (1)--(2) prove both required inequalities. The constructed $n$ increase strictly with $t$, proving infinitude.
+
+The construction also gives a quantitative lower bound. For $X\geq63$, every
+\[
+1\leq t\leq\left\lfloor\frac{\sqrt{X+1}-2}{6}\right\rfloor
+\]
+gives a distinct valid $n\leq X$. Thus there are at least $\sqrt X/6+O(1)$ such integers. For example $t=1$ gives $n=63$, with $P(63)=7<\sqrt{63}$ and $P(64)=2<8$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} Both strict inequalities and infinitely many distinct examples are proved without an external analytic theorem. The counting bound is a lower bound for this explicit family, not an asymptotic count of all solutions. This elementary reconstruction does not claim novelty.
+
+\section{SOURCES}
+Problem statement and the recorded elementary resolution: \url{https://www.erdosproblems.com/370}.
+
+\textbf{Completion rate estimate: 100\%.}

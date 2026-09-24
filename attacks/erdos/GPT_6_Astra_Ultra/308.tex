@@ -1,0 +1,51 @@
+\section{Erd\H{o}s Problem \#308: the first missing integer Egyptian fraction}
+\noindent Reconstruction of the asymptotic result and its indexing, 23 September 2026.
+
+\subsection*{1) Statement and separate extremal quantities}
+Let $\mathcal R_N$ be the positive integers representable as $\sum_{d\in S}1/d$ with $S\subseteq\{1,\ldots,N\}$. Put $H_N=\sum_{d=1}^N1/d$ and
+\[
+ f(N)=\min(\mathbb N\setminus\mathcal R_N),\qquad
+ h(N)=\max\{h:\{1,\ldots,h\}\subseteq\mathcal R_N\}.
+\]
+Thus $f(N)=h(N)+1$. The question asks about this first missing integer and whether $\mathcal R_N$ is always an initial interval. We establish the complete eventual-interval conclusion using Croot's main theorem, with its external status explicit. We do not establish the interval assertion for every finite $N$.
+
+\subsection*{2) The precise external theorem and an indexing correction}
+In \emph{On some questions of Erd\H{o}s and Graham about Egyptian fractions}, Croot defines his extremal quantity as the largest integer up to which \emph{every} positive integer is representable. It is $h(N)$ above, not the first missing integer. His Main Theorem, on page 1 of the author's manuscript, gives, with $E_N=(\log\log N)^2/\log N$,
+\[
+ \left\lfloor H_N-(9/2+o(1))E_N\right\rfloor
+ \le h(N)\le
+ \left\lfloor H_N-(1/2+o(1))E_N\right\rfloor.\tag{1}
+\]
+The two error terms need not be the same. The analytic construction and obstruction proving (1) are external inputs. Accordingly the bounds for the quantity actually called $f(N)$ here are
+\[
+ \left\lfloor H_N-(9/2+o(1))E_N\right\rfloor+1
+ \le f(N)\le
+ \left\lfloor H_N-(1/2+o(1))E_N\right\rfloor+1.\tag{2}
+\]
+Keeping this $+1$ is necessary. Applying (1) directly to the first missing integer changes its meaning.
+
+\subsection*{3) Why there are eventually no internal gaps}
+Every represented integer is at most $H_N$, so $\mathcal R_N\subseteq\{1,\ldots,m_N\}$, where $m_N=\lfloor H_N\rfloor$. Since $E_N\to0$, the subtracted term in the lower bound of (1) lies between zero and one for all sufficiently large $N$. Thus
+\[
+ h(N)\ge m_N-1.
+\]
+Every integer through $m_N-1$ is therefore represented; only $m_N$ itself can be in doubt. Consequently
+\[
+ \mathcal R_N=\{1,\ldots,m_N-1\}
+ \quad\text{or}\quad
+ \mathcal R_N=\{1,\ldots,m_N\},\tag{3}
+\]
+and $f(N)$ is respectively $m_N$ or $m_N+1$. This conclusion requires no downward-closure assumption about arbitrary Egyptian fraction representations.
+
+Writing $H_N=m_N+\theta_N$ with $0\le\theta_N<1$ clarifies the rounding. The upper bound in (1) excludes $m_N$ whenever $\theta_N<(1/2+o(1))E_N$; its lower bound includes $m_N$ whenever $\theta_N\ge(9/2+o(1))E_N$. The narrow intermediate range is not decided by these two estimates alone. In either case $f(N)=\log N+O(1)$ by the elementary estimate $H_N=\log N+\gamma+O(1/N)$.
+
+\subsection*{4) Exact small examples and limits of this reconstruction}
+For $1\le N\le5$, the fractions with denominators at least two cannot sum to an integer. For $N=5$, a putative sum one from $\{1/2,1/3,1/4,1/5\}$, multiplied by 60, would read $30a+20b+15c+12d=60$, with $a,b,c,d\in\{0,1\}$. Reduction modulo 5 gives $d=0$, modulo 3 then gives $b=0$, and $2a+c=4$ is impossible. A sum two is excluded by their total $77/60<2$. Smaller $N$ are subsets of this case. Hence $\mathcal R_N=\{1\}$ and $f(N)=2$ for $N\le5$. At $N=6$, the identity $1/2+1/3+1/6=1$ supplies the integer two when combined with denominator one; $H_6<3$ excludes any larger integer. Thus $\mathcal R_6=\{1,2\}$ and $f(6)=3$.
+
+\textbf{UNRESOLVED in the literal all-$N$ formulation in this attempt.} The eventual interval theorem, correct first-missing indexing, and asymptotic estimates are established relative to (1). No proof eliminating every possible small exceptional $N$, exact decision rule for the transition range, or independent proof of Croot's analytic input is supplied.
+
+Sources: \url{https://www.erdosproblems.com/308}, checked 23 September 2026; E. S. Croot III, Mathematika 46 (1999), 359--372, author's primary manuscript \url{https://ecroot.math.gatech.edu/erdos_graham.pdf}, Main Theorem on page 1. The original definition and formula were checked visually because the PDF text encoding is defective.
+
+The estimate measures coverage of the question, including the remaining all-$N$ qualification, not a correctness probability.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 80\%}

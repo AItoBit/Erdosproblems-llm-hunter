@@ -1,0 +1,51 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#380; structural lemmas and reconstruction from Tao's error estimates, 2026-09-24.}
+An integer interval $I=[u,v]$ is bad if the largest prime dividing $\prod_{m\in I}m$ divides this product at least twice. Let $B(x)$ count positive integers at most $x$ lying in some bad interval, and let
+\[
+A(x)=\#\{2\leq n\leq x:P(n)^2\mid n\}.
+\]
+Prove $B(x)\sim A(x)$. The companion assertion asks for the count of integers lying in intervals whose product is powerful. The harmless convention at $n=1$ affects all counts by at most one.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Tao's \emph{Products of consecutive integers with unusual anatomy} proves both assertions. Below the decisive error bounds from that paper are explicitly imported. The interval structure, the exact singleton counting formula, and the asymptotic for powerful integers are proved here.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Locate a singleton witness inside every bad interval, then distinguish that structural fact from the harder estimate for all the additional integers covered by such intervals. Use the published estimates to complete the comparison.
+
+\section{WORK}
+\textbf{Prime-free intervals.} If an interval $[u,v]$ contains a prime, it contains a prime $q>v/2$. Indeed this is automatic if $u>v/2$; otherwise Bertrand's postulate supplies a prime between $\lfloor v/2\rfloor$ and $2\lfloor v/2\rfloor$, with $v=2,3$ checked directly. Take the largest prime in the interval. It occurs just once in the product, and no larger prime can divide any term: a prime larger than $v/2$ can only occur as the term itself. Hence an interval containing a prime is not bad. In particular, a bad interval with $u\geq2$ has $v<2u-1$, since Bertrand supplies a prime between $u$ and $2u$.
+
+Let $H=v-u+1$. Then $H<u$. The standard Sylvester--Schur theorem says that the product of $H$ consecutive integers, all exceeding $H$, has a prime factor exceeding $H$. Thus the largest prime $p$ in a bad interval satisfies $p>H$. It divides just one of its $H$ terms, say $a$, so the required repeated occurrence forces $p^2\mid a$ and $P(a)=p$. Every bad interval therefore contains a singleton-bad integer. This does not by itself bound how many other integers all such intervals cover.
+
+\textbf{An exact formula for the singleton count.} Let $\Psi(y,z)$ count positive integers at most $y$ all of whose prime factors are at most $z$, including $1$. Classifying an integer counted by $A(x)$ by its largest prime gives the disjoint identity
+\[
+A(x)=\sum_{p\leq\sqrt x}\Psi(x/p^2,p).                    \tag{1}
+\]
+Indeed it is uniquely $p^2a$ with $P(a)\leq p$. Every such integer belongs to its singleton bad interval, so $A(x)\leq B(x)$.
+
+\textbf{The declared analytic input for bad intervals.} Tao's Theorem 1.7 states that the number of additional covered integers is
+\[
+0\leq B(x)-A(x)\ll\frac{A(x)}{(\log x)^{1-o(1)}}.         \tag{2}
+\]
+The anti-sieve and smooth-number correlation estimates proving (2) are not reconstructed here. Since the denominator tends to infinity, division by $A(x)$ proves $B(x)/A(x)\to1$. There is no loss from the possibility that a witnessing interval extends past $x$: (2) is a theorem about membership in the full union of intervals, subsequently intersected with $[1,x]$.
+
+\textbf{Powerful integers and very bad intervals.} Every powerful integer has a unique representation $a^2b^3$ with $b$ squarefree. At a prime with exponent $e\geq2$, choose exponent $0$ in $b$ if $e$ is even and exponent $1$ if $e$ is odd; the remaining exponent is nonnegative and even. Therefore their counting function $F(x)$ satisfies
+\[
+F(x)=\sum_{b\leq x^{1/3}}\mu(b)^2\left\lfloor\sqrt{x/b^3}\right\rfloor
+=\frac{\zeta(3/2)}{\zeta(3)}\sqrt x+O(x^{1/3}).           \tag{3}
+\]
+The floor errors total $O(x^{1/3})$, and the omitted tail of $\sum b^{-3/2}$ contributes $O(x^{1/3})$ after multiplication by $\sqrt x$. Its squarefree Euler product is $\prod_p(1+p^{-3/2})=\zeta(3/2)/\zeta(3)$.
+
+If $V(x)$ counts membership in very bad intervals, singleton intervals give $V(x)\geq F(x)+O(1)$. The second declared analytic input, Tao's Theorem 1.8, is
+\[
+V(x)-F(x)=O(x^{2/5+o(1)}).
+\]
+Together with (3), this yields $V(x)\sim\zeta(3/2)\sqrt x/\zeta(3)$ and in particular $V(x)\ll\sqrt x$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to Tao's two explicitly stated error estimates.} The elementary structure and counting arguments are complete; the difficult estimates (2) and its very-bad counterpart remain published external dependencies. No proof that every member of a very bad interval is itself powerful is asserted, and no such stronger statement is needed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/380}; Tao, \emph{Products of consecutive integers with unusual anatomy}, Theorems 1.7 and 1.8: \url{https://arxiv.org/html/2603.27990}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external estimates.}

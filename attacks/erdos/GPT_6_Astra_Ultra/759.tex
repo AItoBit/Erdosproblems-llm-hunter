@@ -1,0 +1,77 @@
+\section*{Erd\H{o}s Problem 759}
+
+\paragraph{Statement and scope of this attempt.}
+Let \(S_g\) be the orientable surface of genus \(g\), and let \(z(S_g)\) be the maximum cochromatic number of a finite simple graph embeddable in \(S_g\). Determine its growth as \(g\to\infty\).
+
+The known answer, attributed to Gimbel and Thomassen, is
+\[
+ z(S_g)\asymp\frac{\sqrt g}{\log g}.
+\]
+This attempt proves the lower bound and an elementary upper bound
+\[
+ c\frac{\sqrt g}{\log g}
+ \leq z(S_g)\leq C\sqrt{\frac g{\log g}}. \tag{1}
+\]
+The extra factor \(\sqrt{\log g}\) in the upper bound remains unresolved within this attempt. We do not describe (1) alone as a reconstruction of the full known theorem.
+
+\paragraph{A Ramsey bound valid for arbitrary graphs.}
+Every graph on \(N\geq3\) vertices has cochromatic number at most
+\[
+ C_0\frac{N}{\log N}. \tag{2}
+\]
+Here and below changes of logarithm base only change constants. The elementary Ramsey recurrence gives
+\[
+ R(k,k)\leq\binom{2k-2}{k-1}\leq4^{k-1}.
+\]
+Therefore a graph on \(s\) vertices has a clique or independent set of size at least \(\lfloor\tfrac12\log_2s\rfloor\). Repeatedly remove such a homogeneous set while at least \(\sqrt N\) vertices remain. For large \(N\), each removal has size at least \(\tfrac18\log_2N\), so it takes at most \(8N/\log_2N\) classes. Use singleton classes for the fewer than \(\sqrt N\) remaining vertices. This proves (2) for large \(N\); increasing \(C_0\) handles the finite remaining range. The Ramsey recurrence itself follows by partitioning the other vertices into neighbours and nonneighbours of a chosen vertex.
+
+\paragraph{Lower bound by a random graph and a surface embedding.}
+Take \(N=\lfloor\sqrt g\rfloor\) and a random graph \(J\) on \(N\) vertices with independent edge probability \(1/2\). If \(k=\lceil3\log_2N\rceil\), the probability of a clique or independent set of size \(k\) is at most
+\[
+ 2\binom Nk2^{-\binom k2}
+ \leq2N^k2^{-k(k-1)/2}=o(1).
+\]
+Thus, for large \(N\), some such graph has every homogeneous class of size at most \(k-1\), and
+\[
+ \zeta(J)\geq\frac{N}{k-1}\gg\frac{\sqrt g}{\log g}. \tag{3}
+\]
+
+Any graph with \(e\) edges embeds in an orientable surface of genus at most \(e\). One direct construction puts all vertices on a sphere and allocates a distinct handle to each edge: choose disjoint small attachment discs close to its two endpoints, run the edge through its handle, and use disjoint short radial segments near each vertex. The attachment discs and edge interiors can be chosen disjoint because only finitely many are needed. Adding unused handles allows embedding in every larger genus as well. For the present graph,
+\[
+ e(J)\leq\binom N2\leq g,
+\]
+so (3) is a legitimate lower bound for \(z(S_g)\), not merely for graphs with a prescribed number of vertices.
+
+\paragraph{Upper bound: reduce to a controlled number of vertices.}
+Let \(G\) be any graph embedded in \(S_g\), with no bound assumed on \(|V(G)|\). For large \(g\), put
+\[
+ D=7+\left\lceil\sqrt{\frac g{\log g}}\right\rceil.
+\]
+Repeatedly delete a vertex whose current degree is less than \(D\), and let \(K\) be the induced graph left over. The deleted vertices themselves admit a proper colouring with \(D\) colours: reinsert them in reverse order, and give each a colour different from the already reinserted neighbours. Ignoring neighbours in \(K\) is legitimate, since \(K\) will use a disjoint palette. Thus
+\[
+ \zeta(G)\leq D+\zeta(K). \tag{4}
+\]
+
+If the core is nonempty, it has minimum degree at least \(D\), and hence its order \(M\) is at least \(D+1\). The standard Euler edge inequality for a simple graph on an orientable genus-\(g\) surface is
+\[
+ e(K)\leq3M-6+6g\leq3M+6g. \tag{5}
+\]
+This follows by triangulating the embedding and using Euler's formula; the same upper bound applies when the initial embedding is noncellular or the graph is disconnected. Combining (5) with \(e(K)\geq DM/2\) gives
+\[
+ M\leq\frac{12g}{D-6}=O(\sqrt{g\log g}). \tag{6}
+\]
+For \(M\geq3\), the function \(M/\log M\) is increasing. Applying (2) and (6), with constants enlarged for small cores, yields
+\[
+ \zeta(K)=O\left(\frac{\sqrt{g\log g}}{
+          \log(\sqrt{g\log g})}\right)
+ =O\left(\sqrt{\frac g{\log g}}\right).
+\]
+If the core is empty this bound is automatic. Equation (4) proves the upper bound in (1), uniformly over graphs with any number of vertices.
+
+\paragraph{What is still missing.}
+The peeling argument pays \(D\) colours for the low-degree part and leaves up to \(O(g/D)\) core vertices. Optimizing these costs with (2) gives the upper bound in (1), and does not give \(O(\sqrt g/\log g)\). The missing logarithmic improvement is a genuine remaining proof step here. In particular, one must not assume that a genus-\(g\) graph has only \(O(\sqrt g)\) vertices.
+
+\paragraph{Attribution and assessment.}
+The problem of Erd\H{o}s and Gimbel, and its resolution by J. Gimbel and C. Thomassen, \emph{Coloring graphs with fixed genus and girth}, Transactions of the American Mathematical Society 349 (1997), 4555--4564, are recorded at \url{https://www.erdosproblems.com/759}, checked 24 September 2026; paper DOI \url{https://doi.org/10.1090/S0002-9947-97-01926-0}. The known sharp upper theorem is reported for context, not used as a proved step in this partial attempt. The arguments above use only the elementary Ramsey bound, the union bound, and the standard Euler edge inequality. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 70\%.}

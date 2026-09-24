@@ -1,0 +1,100 @@
+\section{Erd\H{o}s Problem 248: uniformly few prime factors in all forward shifts}
+
+\subsection{1) Statement and scope}
+Must infinitely many integers $n$ satisfy
+$\omega(n+k)\leq Ck$ for every $k\geq1$, with one absolute
+constant $C$? Tao and Ter\"av\"ainen proved the stronger
+statement with $\Omega$, which counts prime factors with
+multiplicity. This attempt proves the truncation and moment
+reductions below, but does not construct the necessary sieve
+measure. The full problem is unresolved within this attempt.
+
+\subsection{2) Only a logarithmic window needs attention}
+The elementary inequality $2^{\Omega(m)}\leq m$ gives
+$\Omega(m)\leq\log_2m$, where $\log_2$ here means logarithm
+to base two. Let $x$ be large, $x\leq n\leq2x$, and put
+$L=\lceil\log_2(3x)\rceil$.
+For $L\leq k\leq x$ we have
+$\Omega(n+k)\leq\log_2(3x)\leq k$.
+For $k>x$, we have $n+k<3k$, and
+$\log_2(3k)\leq k$ for $k\geq4$.
+Thus all $k\geq L$ are automatic. The challenge is to control
+$1\leq k<L$ with an absolute constant as $x$ grows.
+
+\subsection{3) Separating primes from higher prime powers}
+Put $R=x^{1/100}$ and, for $m\leq3x$, define
+\[
+ Y(m)=\sum_{p\leq R}1_{p\mid m},\qquad
+ T(m)=\sum_{\substack{p^j\leq R\\j\geq2}}1_{p^j\mid m}.
+\]
+The prime factors greater than $R$, counted with multiplicity,
+contribute at most $\log(3x)/\log R\leq200$ for large $x$.
+For $p\leq R$, put $r_p=\lfloor\log R/\log p\rfloor\geq1$.
+The contribution of $p$ to $Y+T$ is $\min(\nu_p(m),r_p)$.
+If $\nu_p(m)>r_p$, then
+\[
+ \frac{\nu_p(m)}{r_p}
+ \leq\frac{\log(3x)/\log p}
+           {\tfrac12\log R/\log p}\leq400.
+\]
+The same comparison is immediate if $\nu_p(m)\leq r_p$.
+Therefore the deterministic bound
+\[
+ \Omega(m)\leq400\bigl(Y(m)+T(m)+1\bigr)
+\]
+holds. This accounts for multiplicities, rather than silently
+replacing $\Omega$ by $\omega$.
+
+\subsection{4) A sufficient pair of moment estimates}
+Here is a precise probabilistic input that would finish the proof.
+Suppose there are absolute constants $A,B$ such that for every
+sufficiently large $x$ there is a probability measure on integers
+$n\in[x,2x]$ satisfying, for $1\leq k<L$,
+\[
+ \mathbb E\bigl(Y(n+k)-Ak\bigr)_+^4\leq Bk^2,
+ \qquad
+ \mathbb E T(n+k)^2\leq Bk^{1/2}.
+\]
+The subscript $+$ denotes the positive part.
+Choose a fixed $d>0$ so large that
+$2B/d^4+3B/d^2<1$.
+Markov's inequality and the union bound show that the probability
+of any violation of
+$Y(n+k)\leq(A+d)k$ or $T(n+k)\leq dk$ is at most
+\[
+ \sum_{k=1}^{L-1}
+   \left(\frac{B}{d^4k^2}+\frac{B}{d^2k^{3/2}}\right)
+ \leq\frac{2B}{d^4}+\frac{3B}{d^2}<1.
+\]
+We used the integral bounds $\sum k^{-2}\leq2$ and
+$\sum k^{-3/2}\leq3$. Some integer in $[x,2x]$ therefore
+satisfies
+$\Omega(n+k)\leq400(A+2d+1)k$ throughout the finite window.
+The preceding truncation handles every larger $k$.
+The constants are independent of $x$; letting $x\to\infty$
+then gives infinitely many such integers.
+
+\subsection{5) Remaining gap and attribution}
+The moment hypotheses are sufficient conditions proved sufficient
+here, not estimates established in this attempt. Constructing
+one measure that supplies them uniformly over the growing shift
+window is the essential missing step. A different measure for
+each $k$, or constants growing with $x$, would not suffice.
+The published solution uses a slowly growing-dimensional
+Maynard-type sieve and suitable second and fourth moments.
+We have not independently reconstructed its correlation estimates
+or claimed that our simplified moment hypotheses are its
+verbatim statement.
+
+Sources: \url{https://www.erdosproblems.com/248};
+T.~Tao and J.~Ter\"av\"ainen,
+\emph{Quantitative correlations and some problems on prime
+factors of consecutive integers}, Theorem 1.1 and Section 2,
+\url{https://arxiv.org/abs/2512.01739}.
+The known resolution belongs to those authors; this is a partial
+reconstruction of its probabilistic strategy.
+
+\subsection{6) Completion estimate}
+The deterministic reduction and conditional moment argument are
+complete. The central sieve construction is not supplied.
+\textbf{COMPLETION: 30\%}

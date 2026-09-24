@@ -1,0 +1,50 @@
+\section*{Erd\H{o}s Problem 758}
+
+\paragraph{Statement and scope of this attempt.}
+The cochromatic number \(\zeta(G)\) is the least number of parts in a partition of the vertices into cliques or independent sets. Let \(z(n)=\max_{|V(G)|=n}\zeta(G)\). Determine its small values, especially whether \(z(12)=4\).
+
+The database records the answer \(z(12)=4\), using a computational classification attributed to Bhavik Mehta. This attempt proves the values through \(n=11\), proves \(4\leq z(12)\leq5\), and isolates the classification step needed for the improvement. That last step remains unresolved within this attempt; the original problem is already solved in the literature.
+
+\paragraph{Two elementary observations.}
+A homogeneous set means a clique or an independent set. Every six-vertex graph has a homogeneous triple: a vertex has three neighbours or three nonneighbours; the three vertices in question either have a pair of the appropriate type, completing a triple with the first vertex, or form a homogeneous triple themselves.
+
+Further, the only five-vertex graph with no homogeneous triple is \(C_5\), up to isomorphism. Indeed, every vertex has degree at most two, since three neighbours either contain an edge, giving a triangle, or form an independent triple. Applying the same argument to the complement gives degree at least two. The graph is therefore a union of cycles, and on five vertices, with neither triangles nor loops, it must be \(C_5\). Thus a graph on five vertices has cochromatic number at most two unless it is \(C_5\): remove a homogeneous triple and use the remaining pair. The graph \(C_5\) itself has cochromatic number three because its largest homogeneous sets have size two.
+
+\paragraph{Every eight-vertex graph has cochromatic number at most three.}
+Choose a homogeneous triple \(A\). Taking the complement if necessary, assume \(A\) is independent; complementation preserves cochromatic number. If the remaining five vertices \(B\) do not induce \(C_5\), the preceding observation finishes the proof. Suppose therefore that \(B\) is a five-cycle. It suffices to find another homogeneous triple whose complement does not induce \(C_5\).
+
+First suppose that some \(a\in A\) is adjacent to two consecutive vertices \(u,v\) of the cycle. Then \(\{a,u,v\}\) is a clique. In the remaining five-vertex graph, \(A\setminus\{a\}\) is a nonadjacent pair and \(B\setminus\{u,v\}\) induces a three-vertex path. This graph cannot be \(C_5\), because deleting a nonadjacent pair from a five-cycle leaves one edge and an isolated vertex, not a three-vertex path.
+
+We can hence assume that the neighbourhood of every \(a\in A\) inside \(B\) is independent, and therefore has size at most two. There are at most six edges between \(A\) and \(B\), so some \(x\in B\) has at most one neighbour in \(A\). Let \(a,b\) be two nonneighbours of \(x\) in \(A\), and denote its third vertex by \(c\). Remove the independent triple \(\{a,b,x\}\). The remainder consists of \(c\) and the four-vertex path \(B\setminus\{x\}\). It is a five-cycle exactly when
+\[
+ N_B(c)\setminus\{x\}=N_B(x), \tag{1}
+\]
+where the right-hand side is the pair of neighbours of \(x\) in the original cycle.
+
+If \(x\) has exactly one neighbour \(c\) in \(A\), condition (1) is impossible: it would make \(N_B(c)\) contain \(x\) and both its cycle neighbours, whereas \(N_B(c)\) is independent. If \(x\) has no neighbour in \(A\), we may choose any of the three vertices as \(c\). Unless all three have \(N_B(c)=N_B(x)\), some choice violates (1), as required. In the remaining exceptional case choose \(y\in B\) at cycle distance two from \(x\). Then \(y\) also has no neighbour in \(A\), while \(N_B(y)\ne N_B(x)\). Repeating the deletion using \(y\) violates (1) for every choice of \(c\). This completes the eight-vertex proof.
+
+\paragraph{A nine-vertex graph requiring four classes.}
+Start with an inner five-cycle \(C\). Add four vertices \(u,v,w,z\) inducing the path \(u v w z\). Join each of \(u,z\) to every vertex of \(C\), and join neither \(v\) nor \(w\) to any vertex of \(C\).
+
+Suppose this graph admitted a partition into three homogeneous classes. Since \(C\) itself needs three classes, each class would contain an inner vertex. The vertices \(u,z\) could then belong only to clique classes, and they would need two different such classes because they are nonadjacent. Similarly \(v,w\) could belong only to independent classes, and they would need two different such classes because they are adjacent. A class containing an inner vertex cannot accommodate both types. Four classes would be necessary, a contradiction.
+
+Four classes suffice: take \(\{u\}\) together with an inner edge as one clique, \(\{z\}\) together with a disjoint inner edge as a second clique, the remaining inner vertex together with \(v\) as an independent class, and \(\{w\}\) as the last class. Hence this explicit graph has cochromatic number exactly four.
+
+\paragraph{The resulting small values and the precise remaining gap.}
+Every pair of vertices is homogeneous, so \(z(n)\leq\lceil n/2\rceil\). Nonhomogeneous three-vertex graphs give the lower bound two, and the five-cycle gives the lower bound three for \(n\geq5\). Removing a homogeneous triple from a seven-vertex graph leaves four vertices, proving \(z(7)\leq3\); the eight-vertex case was proved above. For nine, ten, or eleven vertices, remove a homogeneous triple and apply the bounds for six, seven, or eight vertices. The nine-vertex construction supplies the matching lower bounds. Thus
+\[
+ (z(1),\ldots,z(11))=(1,1,2,2,3,3,3,3,4,4,4).
+\]
+The monotonicity used for the lower bounds follows by adding vertices: any cocolouring restricts to a cocolouring of the original induced graph.
+
+For twelve vertices, deleting a homogeneous triple and applying \(z(9)=4\) gives \(z(12)\leq5\), while the construction gives \(z(12)\geq4\). If a twelve-vertex graph has a homogeneous four-set, deletion and \(z(8)=3\) already give four classes. If \(\chi(G)\leq4\) or \(\chi(\overline G)\leq4\), four independent or four clique classes also suffice. Thus only graphs satisfying
+\[
+ \omega(G),\alpha(G)\leq3,\qquad
+ \chi(G),\chi(\overline G)\geq5
+\]
+need further treatment. The reported computation classifies these up to complementation and checks that the exceptional graph has cochromatic number four. An independently reproduced exhaustive classification, or a proof replacing it, is not supplied here. In particular the plausible assertion that this exceptional class is empty is false and is not used.
+
+\paragraph{Attribution and assessment.}
+The question is due to Erd\H{o}s and Gimbel. The known answer, Mehta's computational contribution, and the values through nineteen vertices are documented at \url{https://www.erdosproblems.com/758}, checked 24 September 2026. The elementary small-case arguments and the explicit nine-vertex witness above are supplied as verifiable progress, with no novelty claim. Local exhaustive checks support the eight-vertex reduction and the witness, but do not certify the missing twelve-vertex classification. No local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 85\%.}

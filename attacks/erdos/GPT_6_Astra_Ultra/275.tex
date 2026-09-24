@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#275}
+\subsection{Statement and attribution}
+If $r$ residue classes $a_i\pmod{n_i}$ cover $2^r$ consecutive integers, must they cover all integers? The moduli may repeat. Yes, and $2^r$ is sharp. This known theorem was proved by Selfridge and by Crittenden--Vanden Eynden; Balister, Bollob\'as, Morris, Sahasrabudhe and Tiba gave a short algebraic proof. We reconstruct the algebraic mechanism using a Vandermonde matrix. No novelty is claimed.
+
+\subsection{Work: sparse exponential sums}
+For integer $m$, define
+\[
+ F(m)=\prod_{i=1}^r\left(1-\exp\left(\frac{2\pi\mathrm i(m-a_i)}{n_i}\right)\right).
+\]
+A factor vanishes exactly when $m\equiv a_i\pmod{n_i}$. Therefore $F(m)=0$ exactly at the covered integers. Expanding the product and combining equal frequencies yields
+\[
+ F(m)=\sum_{j=1}^t c_j\lambda_j^m,
+ \qquad t\le2^r,
+\]
+where the $\lambda_j$ are distinct nonzero complex numbers. Zero coefficients can be discarded; if none remain, the conclusion is already proved.
+
+Suppose the covered interval starts at $b$. Its first $t$ integers give
+\[
+ \sum_{j=1}^t(c_j\lambda_j^b)\lambda_j^\ell=0
+ \qquad(0\le\ell<t).
+\]
+The coefficient matrix has determinant $\prod_{i<j}(\lambda_j-\lambda_i)\ne0$. Hence every $c_j\lambda_j^b$ is zero, so every $c_j$ is zero. It follows that $F(m)=0$ for every integer $m$, including negative integers. This proves the theorem.
+
+\subsection{Sharpness and a consequence}
+For $1\le i\le r$, take $2^{i-1}\pmod{2^i}$. Each integer $1\le m<2^r$ has a unique exponent $0\le v_2(m)<r$ and lies in the class with $i=v_2(m)+1$. The system covers $2^r-1$ consecutive integers but misses every multiple of $2^r$, so the threshold cannot be decreased.
+
+The same theorem shows that in a minimal covering system with $r$ classes, each modulus is at most $2^{r-1}$. Remove a class of modulus $d$. The remaining $r-1$ classes still cover the $d-1$ integers strictly between consecutive members of the removed class, but do not cover all integers by minimality. Therefore $d-1<2^{r-1}$, or $d\le2^{r-1}$.
+
+\subsection{Verification and outcome}
+Repeated moduli or coincident subset frequencies cause no problem because frequencies are combined before applying the matrix argument. A modulus one makes $F$ identically zero and is also harmless. All ingredients of the proof and sharpness example have been supplied.
+
+\textbf{SOLVED.}
+\subsection{Sources}
+P. Balister et al., \emph{Covering intervals with arithmetic progressions}, Acta Math. Hungar. 161 (2020), 197--200, \url{https://par.nsf.gov/servlets/purl/10165575}; current statement and historical references: \url{https://www.erdosproblems.com/275}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

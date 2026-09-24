@@ -1,0 +1,29 @@
+\textbf{Erd\H{o}s problem 541.}
+Let $a_1,\ldots,a_p$ be residues modulo a prime $p$. If all nonempty zero-sum subsequences have one common length $r$, must there be at most two distinct residues?
+
+\textbf{Status and external theorem.}
+Yes. Theorem 1.1 of Gao, Hamidoune, and Wang,
+\emph{Distinct Lengths Modular Zero-sum Subsequences: A Proof of Graham's Conjecture},
+\texttt{https://arxiv.org/abs/0902.4758},
+proves this for a sequence of $n$ residues modulo any positive integer $n$, including zero residues. Applying it with $n=p$ gives the complete answer.
+The problem source is \texttt{https://www.erdosproblems.com/541}; sources checked 24 September 2026.
+The intermediate-length structural theorem is an explicit external dependency. We prove the endpoint cases and extremal examples below rather than implicitly excluding zero or treating repeated residues as distinct set elements.
+
+\textbf{A useful elementary rigidity lemma.}
+A zero-sum-free sequence of $n-1$ residues modulo $n\geq2$ consists of copies of one generator.
+For any ordering, its $n-1$ nonempty partial sums are distinct and nonzero; otherwise a consecutive block would sum to zero. Hence they are exactly all nonzero residues.
+Swap two adjacent entries. Only one partial sum changes, and the set of partial sums must remain exactly the nonzero residues; the changed partial sum must therefore stay the same. The two adjacent entries are equal. Any pair of entries can be made adjacent in an ordering, so all entries equal some $a$. If $a$ had order at most $n-1$, that many copies would give a zero sum. Thus $a$ generates the cyclic group.
+
+\textbf{Existence and the two endpoint lengths.}
+For any sequence of $n$ residues, two of its $n+1$ partial sums coincide. Thus a nonempty zero-sum subsequence exists, and the hypothesis on $r$ is not vacuous.
+
+If a zero residue occurs, its singleton forces $r=1$. There can be only one zero entry, since two zeros would give length two. The remaining $n-1$ entries are zero-sum-free, so by the lemma the full sequence has the form $0,a^{\,n-1}$, with $a$ a generator. This uses at most two values.
+
+If $r=n$, deleting any one entry leaves a zero-sum-free sequence of length $n-1$. For $n\geq3$, applying the lemma to deletions of different entries shows that all $n$ entries equal one generator. For the original prime case $p=2$, the assertion of at most two residues is automatic (and $r=2$ forces two copies of $1$).
+
+\textbf{Two values really can be necessary.}
+For a prime $p$, take $p-1$ copies of $1$ and one copy of $b\in\{0,2,\ldots,p-1\}$. A nonempty zero-sum subsequence must include $b$: fewer than $p$ copies of $1$ alone cannot sum to zero. Its number $t$ of ones is the unique integer in $[0,p-1]$ satisfying $t+b\equiv0\pmod p$. Thus all such subsequences have the same length $t+1$, while two distinct residues occur. This also checks the zero case $b=0$ directly.
+
+\textbf{Completion estimate.}
+The full assertion follows from the explicitly stated Gao--Hamidoune--Wang theorem; the endpoint classification and two-value sharpness are proved here.
+\textbf{COMPLETION: 100\%}

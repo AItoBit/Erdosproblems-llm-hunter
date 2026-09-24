@@ -1,0 +1,78 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#298; a detailed reduction to Bloom's extraction proposition, 2026-09-24.}
+If $A\subseteq\mathbb N$ has positive upper density
+\[
+\delta=\limsup_{N\to\infty}|A\cap[1,N]|/N>0,
+\]
+must a finite subset $S\subseteq A$ satisfy $\sum_{n\in S}1/n=1$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Bloom proved the affirmative result, including the upper-density formulation. Here his technical Proposition 1 is the declared external input. We give a complete reduction to it: fixed prime blocks enforce its two-small-divisors condition; prime-power and prime-factor estimates remove negligible exceptional sets; repeated extraction and a finite pigeonhole argument convert a reciprocal $1/d$ to $1$. The proof does not assume that $A$ has a natural density.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Keep the allowed denominators $d$ in a fixed finite interval independent of $N$. This is essential: after finitely many disjoint extractions, some one value occurs enough times for its reciprocals to sum to one.
+
+\section{WORK}
+Write $R(E)=\sum_{n\in E}1/n$ and $\omega(n)$ for the number of distinct prime divisors of $n$.
+
+\textbf{Declared external extraction theorem.} Bloom's Proposition 1 states that, for all sufficiently large $N$, if
+\[
+E\subseteq[N^{1-1/\log\log N},N],\qquad
+1\leq y\leq z\leq(\log N)^{1/500},
+\]
+and the following conditions hold,
+\begin{enumerate}
+\item $R(E)\geq2/y+(\log N)^{-1/200}$;
+\item each $n\in E$ has divisors $d_1,d_2$ with $y\leq d_1$ and $4d_1\leq d_2\leq z$;
+\item every prime power dividing any $n\in E$ is at most $N^{1-6/\log\log N}$;
+\item $0.99\log\log N\leq\omega(n)\leq2\log\log N$ for all $n\in E$,
+\end{enumerate}
+then $R(S)=1/d$ for some $S\subseteq E$ and some integer $d\in[y,z]$. Its Fourier-analytic and combinatorial proof is imported.
+
+The standard arithmetic inputs used below are the divergence of $\sum_p1/p$, Mertens' estimate $\sum_{p\leq u}1/p=\log\log u+C+O(1/\log u)$, and Tur\'an's variance bound
+\[
+\sum_{n\leq N}(\omega(n)-\log\log N)^2\ll N\log\log N.
+\tag{1}
+\]
+
+\textbf{Two fixed prime blocks.} Choose an integer $y\geq32/\delta$. The divergent prime reciprocal sum allows a finite set $P_1$ of primes at least $y$ such that
+\[
+\prod_{p\in P_1}(1-1/p)<\delta/32.
+\]
+Let $z_1=\max P_1$, and choose a finite set $P_2$ of primes greater than $4z_1$ with the same product bound. Set $z=\max P_2$, now a fixed integer depending only on $\delta$.
+
+By the Chinese remainder theorem, the set of integers divisible by no prime from $P_i$ is periodic and has density exactly $\prod_{p\in P_i}(1-1/p)$. Thus for sufficiently large $N$, fewer than $\delta N/16$ integers in $[1,N]$ miss $P_i$. Delete the integers missing either block. At most $\delta N/8$ are deleted. Every remaining integer has prime divisors $d_1\in P_1$, $d_2\in P_2$, and these satisfy the required inequalities $y\leq d_1$, $4d_1<d_2\leq z$.
+
+\textbf{The other exceptional sets have density zero.} Put $L=\log\log N$. The initial segment of length $N^{1-1/L}$ has size $o(N)$. Integers divisible by a prime power $q>N^{1-6/L}$ number at most
+\[
+N\sum_{\substack{N^{1-6/L}<q\leq N\\q\text{ a prime power}}}\frac1q=o(N).
+\tag{2}
+\]
+For prime $q$, Mertens' estimate makes the sum $-\log(1-6/L)+O(1/\log N)=O(1/L)$. Proper prime powers contribute $o(1)$: their count below $u$ is at most $\sqrt u\log_2u$, and a dyadic summation bounds their reciprocal tail above $v$ by $O(\log v/\sqrt v)$.
+
+Finally, a violation of $0.99L\leq\omega(n)\leq2L$ entails $|\omega(n)-L|\geq0.01L$. From (1) their number is $O(N/L)=o(N)$. Thus all three exceptional sets together have fewer than $\delta N/8$ elements for large $N$.
+
+\textbf{Extracting a reciprocal with bounded denominator.} There are arbitrarily large $N$ with $|A\cap[1,N]|\geq\delta N/2$. For any such sufficiently large $N$, delete the block exceptions and the three sets above. The remaining set $E\subseteq A$ satisfies
+\[
+|E|\geq\delta N/4,\qquad R(E)\geq |E|/N\geq\delta/4.
+\]
+Our choice of $y$ gives $2/y\leq\delta/16$. Also $(\log N)^{-1/200}\leq\delta/16$ and $z\leq(\log N)^{1/500}$ eventually, since $z$ is fixed. Hence every hypothesis of the extraction theorem is satisfied. We obtain a finite nonempty $S\subseteq A$ with $R(S)=1/d$ for an integer $1\leq d\leq z$.
+
+\textbf{Converting bounded reciprocals to one.} Deleting finitely many elements of $A$ does not change its upper density. Repeat the preceding extraction $z^2$ times, each time deleting the previously selected set. The resulting finite sets $S_1,\ldots,S_{z^2}$ are pairwise disjoint and satisfy $R(S_i)=1/d_i$ with $1\leq d_i\leq z$. If each value $d$ occurred at most $d-1$ times, there would be at most
+\[
+\sum_{d=1}^z(d-1)=z(z-1)/2<z^2
+\]
+sets, a contradiction. Some value $d$ occurs at least $d$ times; the union of any $d$ corresponding sets has reciprocal sum $d(1/d)=1$. This union is the required finite subset of $A$.
+
+\section{VERIFICATION AND SCOPE}
+The fixed prime blocks depend only on the positive upper density, so the bound $z$ persists under every finite deletion. The argument chooses arbitrarily large favorable endpoints afresh and never assumes a uniform lower density. Every hypothesis of the external extraction theorem is checked explicitly. Its proof and the stated standard number-theoretic estimates are the declared dependencies.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and upper-density interpretation: \url{https://www.erdosproblems.com/298}.
+\item T. F. Bloom, \emph{On a density conjecture about unit fractions}, Proposition 1 and its applications: \url{https://arxiv.org/html/2112.03726}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, relative to the explicitly stated extraction theorem and arithmetic estimates.}
+Every positive-upper-density set contains the required finite subset.
+\textbf{Completion rate estimate: 100\% of the deduction from those inputs.}

@@ -1,0 +1,37 @@
+\section{Erd\H{o}s Problem \#344: square-root growth and subcompleteness}
+\noindent Partial proof with an explicit coefficient audit, 24 September 2026.
+
+\subsection*{1) Statement and the constant quantifier}
+For a set $A\subseteq\mathbb N$, let $P(A)$ be the sums of finite subsets. The source asks whether $A(N)\gg\sqrt N$ forces $P(A)$ to contain an infinite arithmetic progression. The primary theorem makes the coefficient quantifier precise: there exists a sufficiently large absolute $C$ for which $A(N)\ge C\sqrt N$ is sufficient. It does not assert this for every positive coefficient. Below we prove bounded gaps when $C>\sqrt2$ and construct an obstruction at a small positive coefficient. The general infinite-progression conclusion at the published large threshold is not reconstructed.
+
+\subsection*{2) Bounded gaps for a coefficient larger than $\sqrt2$}
+Enumerate $A$ as $a_1<a_2<\cdots$. Assume $A(N)\ge C\sqrt N$ for all sufficiently large $N$, with $C>\sqrt2$. Choose $C'$ with $\sqrt2<C'<C$. For large $n$, applying the count bound at $\lceil((n+1)/C')^2\rceil$ gives
+\[a_{n+1}\le\left\lceil\frac{(n+1)^2}{(C')^2}\right\rceil<\frac{n(n+1)}2\le\sum_{i\le n}a_i.
+\]
+The strict middle inequality holds eventually because $1/(C')^2<1/2$; the last uses $a_i\ge i$.
+
+Write $S_n=\sum_{i\le n}a_i$ and choose $n_0$ after which $a_{n+1}\le S_n$. The finite subset-sum set $P_{n_0}$ has all gaps at most $L=S_{n_0}$. The recursion $P_{n+1}=P_n\cup(a_{n+1}+P_n)$ preserves this bound because the two spanning intervals overlap. Passing to the union proves that $P(A)$ has bounded gaps. This is a complete argument for that weaker conclusion; a bounded-gap set need not itself contain an infinite arithmetic progression.
+
+\subsection*{3) A counterexample to the arbitrary-small-coefficient reading}
+Start with $b_1=16$ and $V_0=0$. Define recursively
+\[m_j=\lfloor b_j/4\rfloor,\quad I_j=\{b_j,\ldots,b_j+m_j-1\},\quad
+V_j=V_{j-1}+\sum_{x\in I_j}x,\quad b_{j+1}=2V_j+1,
+\]
+and let $D=\bigcup_j I_j$. These blocks are disjoint and $b_j\to\infty$. As in the multiset obstruction, all subset sums using the first $j$ blocks are at most $V_j$, and any later element is at least $2V_j+1$. Thus
+\[P(D)\cap[V_j+1,2V_j]=\varnothing.
+\tag{1}\]
+The growing gaps exclude every infinite arithmetic progression.
+
+Nevertheless $D(N)\ge\sqrt{N/80}$ for all sufficiently large $N$. Here are bounds valid throughout each block and gap, rather than only at selected endpoints. Since $m_j\ge b_j/8$ and every member of $I_j$ is at most $2b_j$, we have
+\[b_{j+1}=2V_{j-1}+2\sum_{x\in I_j}x+1\le b_j+4m_jb_j\le5m_jb_j\le40m_j^2.
+\tag{2}\]
+For $j\ge2$ the first step uses $2V_{j-1}+1=b_j$; for $j=1$ it is also an upper bound. Hence $m_j\ge\sqrt{b_{j+1}/40}$. While $N$ is in $I_j$, the preceding block already supplies at least $m_{j-1}\ge\sqrt{b_j/40}\ge\sqrt{N/80}$ elements, since $N\le2b_j$. After $I_j$ ends and before $I_{j+1}$ begins, its own $m_j$ elements supply at least $\sqrt{b_{j+1}/40}\ge\sqrt{N/40}$. This proves the claimed uniform square-root lower bound, despite (1).
+
+\subsection*{4) Outcome and remaining gap}
+\textbf{UNRESOLVED as a reconstruction of the intended large-coefficient theorem.} The bounded-gap consequence for $C>\sqrt2$ and the full small-coefficient obstruction are proved. They explain why the displayed $\gg$ must not be interpreted as allowing an arbitrary positive implicit constant. The counterexample is consistent with the published affirmative theorem and makes no claim against it or against a conjectured sharp threshold.
+
+Primary source: Szemer\'edi--Vu, \emph{Finite and infinite arithmetic progressions in sumsets}, Corollary 1.4, \url{https://annals.math.princeton.edu/2006/163-1/p01}; the large-coefficient formulation and the existence of small-coefficient obstructions are explicit there. Problem source: \url{https://www.erdosproblems.com/344}, checked 24 September 2026. The proof of the full large-coefficient theorem is not an input to the partial arguments above. No novelty or formal verification is asserted.
+
+The estimate covers the intended theorem, not merely the easier coefficient correction.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

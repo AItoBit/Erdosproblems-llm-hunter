@@ -1,0 +1,34 @@
+\section{Erd\H{o}s Problem \#339: replacing repeated summands by distinct ones}
+\noindent Partial proof, including both order-two assertions, 24 September 2026.
+
+\subsection*{1) Statement}
+For $A\subseteq\mathbb N$ and a fixed positive integer $r$, write $rA$ for sums of exactly $r$ members, allowing repetitions, and $r^{\wedge}A$ for sums of exactly $r$ pairwise distinct members. If $A$ is a basis of order $r$, must $r^{\wedge}A$ have positive lower density? The companion question asks whether positive upper density of $rA$ implies positive upper density of $r^{\wedge}A$.
+
+\subsection*{2) A uniform finite inequality for order two}
+Assume $A$ is nonempty and fix $a\in A$. Put
+\[T(N)=|(A+A)\cap[1,N]|,\qquad D(N)=|2^{\wedge}A\cap[1,N]|,\qquad x=A(\lfloor N/2\rfloor).
+\]
+Every sum counted by $T(N)$ but not by $D(N)$ must be a diagonal $2b$, so
+\[T(N)\le D(N)+x.
+\]
+For $N\ge2a$, the distinct sums $a+b$, with $b\in A\cap[1,\lfloor N/2\rfloor]$ and $b\ne a$, are all counted by $D(N)$. Thus $D(N)\ge x-1$, and consequently
+\[D(N)\ge\frac{T(N)-1}{2}\qquad(N\ge2a).\tag{1}\]
+If $A$ is an asymptotic basis of order two, then $T(N)=N-O(1)$; (1) proves lower density at least $1/2$ for $2^{\wedge}A$. If $A+A$ has upper density $\delta>0$, (1) instead gives upper density at least $\delta/2$. This handles both order-two questions without any regularity assumption on the counting function of $A$. Order one is immediate.
+
+\subsection*{3) A sparse-set regime for arbitrary fixed order}
+For general $r\ge2$, a sum in $rA\setminus r^{\wedge}A$ has an ordered representation in which two of the $r$ positions agree. For a specified pair of positions, the number of such ordered tuples using elements of $A\cap[1,N]$ is at most $A(N)^{r-1}$. A union bound over the pairs gives
+\[|(rA\setminus r^{\wedge}A)\cap[1,N]|\le\binom r2 A(N)^{r-1}.\tag{2}\]
+The count deliberately allows several repeated pairs and representations of the same sum; overcounting is harmless for this upper bound.
+
+If $A(N)=o(N^{1/(r-1)})$, (2) is $o(N)$. In this regime the lower and upper densities of $rA$ and $r^{\wedge}A$ agree whenever interpreted through liminf and limsup. In particular a basis of order $r$ has $r^{\wedge}A$ of density one, and the positive-upper-density variant also follows.
+
+\subsection*{4) A dense-set regime and the remaining gap}
+If $A$ itself has positive upper density, choose $r-1$ fixed distinct anchors in $A$. Their sum plus every other member of $A$ belongs to $r^{\wedge}A$, so that restricted sumset has positive upper density. The identical argument gives positive lower density when $A$ has positive lower density. Translation and deletion of finitely many anchors do not change either density.
+
+\textbf{UNRESOLVED for general $r\ge3$ in this attempt.} Equations (1) and (2) prove the stated special cases, but an intermediate-size or irregular set need satisfy neither the sparse condition nor the density condition needed for the appropriate conclusion. Counting repeated tuples in (2) can then be of order $N$ or larger. The general theorem requires a different way to replace repeated summands, not simply the assertion that repeats are rare.
+
+Source: \url{https://www.erdosproblems.com/339}, checked 24 September 2026, which credits both full results to Hegyv\'ari, Hennecart and Plagne (2003). That general theorem is not adopted as an unproved resolution here. No novelty or formal verification is claimed.
+
+The estimate measures coverage of both questions over all orders, not a correctness probability.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

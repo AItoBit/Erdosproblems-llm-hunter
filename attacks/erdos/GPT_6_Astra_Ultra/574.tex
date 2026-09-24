@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 574}
+
+\paragraph{Statement and result.}
+Is it true that, for every fixed \(k\geq2\),
+\[
+ \operatorname{ex}(n,\{C_{2k-1},C_{2k}\})\sim(n/2)^{1+1/k}?
+\]
+The answer is no. The following explicit construction disproves the assertion for \(k=3\). All cycle exclusions and counts are proved here.
+
+\paragraph{A bipartite graph without four- or six-cycles.}
+Fix a prime \(q\). The two vertex classes are separate copies of \(\mathbb F_q^3\), called points \((x,y,z)\) and lines \((t,b,c)\). Join them when
+\[
+ y+b=tx,\qquad z+c=tx^2. \tag{1}
+\]
+A point has one neighbour for each \(t\), and a line has one neighbour for each \(x\). Hence the graph has \(2q^3\) vertices and \(q^4\) edges.
+
+Two distinct points on a common line have different first coordinates: (1) determines \(y,z\) once \(x\) and the line are given. For points with different first coordinates, the first equation uniquely determines the slope \(t\), and then \(b,c\) are determined. Thus two points have at most one common line, excluding \(C_4\).
+
+Suppose a six-cycle exists. Write its point vertices as \(P_1,P_2,P_3\), with first coordinates \(x_1,x_2,x_3\); these are pairwise distinct. Let \(t_i\) be the slope of the line joining \(P_i\) and \(P_{i+1}\), with indices cyclic. Subtracting (1) and summing gives
+\[
+ \sum_{i=1}^3 t_i(x_{i+1}-x_i)=0,
+ \qquad
+ \sum_{i=1}^3 t_i(x_{i+1}^2-x_i^2)=0. \tag{2}
+\]
+The two coefficient rows are independent: their coordinate ratios are \(x_i+x_{i+1}\), which are pairwise distinct. Their common kernel has dimension one and contains \((1,1,1)\). Therefore \(t_1=t_2=t_3\). At a fixed point, (1) determines a unique line of a given slope. The three line vertices must consequently be the same, contradicting a six-cycle. This proves both exclusions over every field used here.
+
+\paragraph{Duplicating just one class.}
+Replace each line vertex by two independent vertices with identical neighbours. Keep the point vertices unchanged. The new graph has
+\[
+ N=3q^3,\qquad M=2q^4. \tag{3}
+\]
+It is bipartite, hence contains no \(C_5\). We check carefully that the duplication has not created a \(C_6\).
+
+Such a cycle would use three distinct points and three distinct line copies. If the underlying line labels were all different, their projection would be a six-cycle in the original graph. If two labels were equal, that underlying line would contain all three point vertices: two of the three successive point pairs occur on it. The third underlying line would then share two distinct points with the first. The already proved absence of \(C_4\) forces it to have the same label as well. But this would require three distinct copies of one line, whereas only two were provided. Both possibilities are impossible.
+
+\paragraph{Strict violation of the proposed constant.}
+Equations (3) give, for infinitely many \(N\),
+\[
+ \operatorname{ex}(N,\{C_5,C_6\})
+ \geq\frac{2}{3^{4/3}}N^{4/3}.
+\]
+The proposed equivalent would have coefficient \(2^{-4/3}\). The ratio of the constructed lower bound to it is
+\[
+ \frac{2^{7/3}}{3^{4/3}}>1,
+\]
+because \(2^7=128>81=3^4\). A strict constant-factor violation on an unbounded subsequence disproves the claimed asymptotic.
+
+\paragraph{Attribution and scope.}
+This is a reconstruction using the classical finite-field incidence and vertex-duplication method, not a new disproof. Current statement and historical references: \url{https://www.erdosproblems.com/574}, checked 24 September 2026. For the algebraic construction tradition see Lazebnik, Ustimenko and Woldar, \emph{New constructions of bipartite graphs on m,n vertices with many edges and without small cycles}, \url{https://doi.org/10.1006/jctb.1994.1036}, and Wenger's cycle-free constructions cited there. No assertion is made here about the best constant or every value of \(k\); one counterexample value suffices. No formal verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

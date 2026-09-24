@@ -1,0 +1,56 @@
+\section{Erd\H{o}s Problem \#498: the sharp complex Littlewood--Offord bound}
+\noindent Complete reconstruction of the separated-family proof, 24 September 2026.
+
+\subsection*{1) Statement and boundary convention}
+Let $z_1,\ldots,z_n\in\mathbb C$ satisfy $|z_i|\ge1$. For an \emph{open} disc $D$ of radius one, we prove that at most $\binom n{\lfloor n/2\rfloor}$ sign choices satisfy $\sum_i\epsilon_i z_i\in D$. Sign choices are counted separately even when their sums coincide.
+
+Openness matters with the non-strict length assumption. For $n=1$, $z_1=1$, the closed unit disc centered at zero contains both $1$ and $-1$, exceeding $\binom10=1$. Thus the formulation with closed discs and $|z_i|\ge1$ would be false. The proof also works for closed discs if every $|z_i|>1$.
+
+\subsection*{2) A partition of the subset labels}
+For $A\subseteq[n]$, write $s_A=\sum_{i\in A}z_i$. Call a family of subset labels separated if $|s_A-s_B|\ge1$ whenever $A\ne B$ in that family. We prove by induction that all $2^n$ labels can be partitioned into separated families, with exactly
+\[b_{n,j}=\binom nj-\binom n{j-1}
+\]
+families of size $n+1-2j$ for each $0\le j\le\lfloor n/2\rfloor$. Here a binomial coefficient with negative lower index is zero. In particular the number of families is
+\[\sum_{j=0}^{\lfloor n/2\rfloor}b_{n,j}=\binom n{\lfloor n/2\rfloor}.\tag{1}\]
+
+The case $n=0$ consists of the single family $\{\varnothing\}$. Suppose the partition is constructed for $n-1$. Define the real linear functional
+\[f(w)=\frac{\operatorname{Re}(w\overline{z_n})}{|z_n|}.
+\]
+It satisfies $f(w)\le|w|$ and $f(z_n)=|z_n|\ge1$. For each old family $\mathcal C$, choose a label $A_*$ maximizing $f(s_A)$ on $\mathcal C$. Replace its two copies by
+\[
+\mathcal C^+=\mathcal C\cup\{A_*\cup\{n\}\},\qquad
+\mathcal C^-=\{A\cup\{n\}:A\in\mathcal C,\ A\ne A_*\},
+\tag{2}
+\]
+discarding an empty $\mathcal C^-$. This partitions all old labels and all their copies containing $n$, with no overlap.
+
+The minus family is separated because adding $z_n$ to all its sums preserves their differences. In the plus family, only the new label needs checking. For any old $B\in\mathcal C$,
+\[
+|s_{A_*}+z_n-s_B|\ge f(s_{A_*})-f(s_B)+f(z_n)\ge1.
+\]
+So both families are separated. This uses a maximum of a one-dimensional projection within each family, not a common sign choice making all complex vectors positive.
+
+\subsection*{3) Verify the family sizes}
+An old family of size $n-2j$ becomes families of sizes $n+1-2j$ and $n-1-2j$, omitting the latter when zero. Thus the number of new families of size $n+1-2j$ is
+\[
+b_{n-1,j}+b_{n-1,j-1}
+=\binom{n-1}j-\binom{n-1}{j-2}
+=\binom nj-\binom n{j-1}=b_{n,j}.
+\]
+At the middle boundary, a nonexistent term is zero; when $n$ is even, the nominal difference $\binom{n-1}{n/2}-\binom{n-1}{n/2-1}$ is itself zero. When a minus family is empty it contributes no family of positive size. This verifies the induction and (1).
+
+\subsection*{4) Apply the partition to the disc}
+The bijection between sign choices and subsets takes $\epsilon_i=1$ exactly on $A$, giving
+\[\sum_i\epsilon_i z_i=2s_A-\sum_i z_i.
+\]
+Consequently the desired subset sums lie in the open disc $(D+\sum_i z_i)/2$, of radius $1/2$. Any two of its points are at distance strictly less than one. Such a collection of labels meets each separated family in at most one label. Equation (1) proves the claimed upper bound, with multiplicities correctly counted.
+
+The bound is attained when all $z_i=1$: for even $n$, the open unit disc centered at zero contains exactly the sign choices with $n/2$ positive signs; for odd $n$, the open unit disc centered at one contains exactly those with $(n+1)/2$ positive signs. Both counts equal $\binom n{\lfloor n/2\rfloor}$.
+
+For the earlier closed-disc variant with $|z_i|>1$, the same construction has all within-family distances strictly greater than one, while the transformed closed disc has diameter one. This proves the stated variant as well.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED with the necessary disc-boundary convention stated explicitly.} Every step of the partition proof is given; no concentration theorem is imported. This is Kleitman's established method, not a new solution. Sources: \url{https://www.erdosproblems.com/498}, checked 24 September 2026; D. J. Kleitman, ``On a lemma of Littlewood and Offord on the distributions of linear combinations of vectors'', Advances in Mathematics 5 (1970), 155--157, \url{https://doi.org/10.1016/0001-8708(70)90038-1}. No independent Lean verification is claimed.
+
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

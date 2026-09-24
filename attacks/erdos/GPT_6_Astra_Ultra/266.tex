@@ -1,0 +1,91 @@
+\section{Erd\H{o}s Problem \#266}
+\subsection{Statement and attribution}
+If $(a_n)$ is an infinite sequence of positive integers with $\sum_n1/a_n<\infty$, must $\sum_n1/(a_n+t)$ be irrational for at least one integer $t\ge1$? No. We reconstruct Kova\v c--Tao's construction of a strictly increasing sequence for which every nonnegative integer shift has a rational sum. This already disproves the question. Their published theorem also handles all admissible rational shifts; that additional extension is not needed here. No novelty is claimed.
+
+\subsection{Work I: a finite-dimensional approximation lemma}
+For $i\ge1$ set
+\[
+ f_i(x)=\frac1{x(x+1)\cdots(x+i-1)}.
+\]
+Fix a dimension $d$. For all sufficiently large integers $N$ and integers $1\le M\le N/(4d)$, put $s_i=\sum_{j=1}^df_i(jN)$. There are constants $0<\varepsilon_d\le1\le D_d$ such that every vector satisfying
+$|y_i-s_i|\le\varepsilon_d M/N^{i+1}$ has an approximation
+\[
+ v_i=\sum_{j=1}^df_i(jN+u_j),\qquad |u_j|\le M,\quad u_j\in\mathbb Z,
+\]
+with
+\[
+ |y_i-v_i|\le D_d(N^{-i-1}+M^2N^{-i-2})\qquad(1\le i\le d).
+ \tag{1}
+\]
+To prove this, Taylor expansion gives
+\[
+ f_i(jN+u)=f_i(jN)-iu/(j^{i+1}N^{i+1})+O_d(u^2N^{-i-2}).
+\]
+Here integer $u\ne0$ allows $|u|\le u^2$ to absorb the first-derivative error; the zero shift has zero error. The matrix $W_{ij}=ij^{-i-1}$ is invertible by the Vandermonde determinant. Scale the target difference by $N^{i+1}$ and solve the resulting real linear system. Taking $\varepsilon_d$ small makes every real shift at most $M/2$ in absolute value. Rounding the shifts to integers changes the scaled linear image by $O_d(1)$ and leaves $|u_j|\le M$. Taylor's estimate now gives (1). By decreasing $\varepsilon_d$ and increasing $D_d$ as necessary, we may and do arrange that $\varepsilon_d$ is nonincreasing and $D_d$ is nondecreasing in $d$.
+
+\subsection{Work II: dimensions increase sufficiently slowly}
+Take, for all sufficiently large $k$,
+\[
+ N_k=\lceil\exp(\exp(\sqrt{k}))\rceil,
+ \qquad M_k=\min\{\lfloor N_k/(4k)\rfloor,\lfloor\sqrt{N_k}\rfloor\}.
+\]
+Then $M_k\sim\sqrt{N_k}$, $N_{k+1}/N_k>2k+2$ eventually, and
+\[
+ \frac{N_{k+1}^{i+1/2}}{N_k^{i+1}}\longrightarrow0
+ \quad\hbox{for each fixed }i.
+ \tag{2}
+\]
+For (2), take logarithms: $\log N_{k+1}/\log N_k\to1$, so the negative difference of the fixed exponents eventually dominates.
+
+Choose strictly increasing integer thresholds $T_d\ge d$, all sufficiently large, so that for every $k\ge T_d-1$ the lemma applies in each dimension at most $d$ and
+\[
+ D_d(N_k^{-i-1}+M_k^2N_k^{-i-2})
+ \le\varepsilon_d M_{k+1}/N_{k+1}^{i+1}
+ \qquad(1\le i\le d).
+ \tag{3}
+\]
+Such thresholds exist by (2). Define $d(k)=\max\{d:T_d\le k\}$ for $k\ge T_1$ and
+$\delta_{i,k}=\varepsilon_{d(k)}M_k/N_k^{i+1}$ for $i\le d(k)$. Also define the baseline block sums
+$s_{i,k}=\sum_{j=1}^{d(k)}f_i(jN_k)$, for every fixed $i$.
+
+The use of $T_d-1$ in (3) explicitly controls a transition to a new dimension. If $d=d(k)$ and $e=d(k+1)$, then $k\ge T_e-1$. Monotonicity of the constants makes the error in the dimension-$d$ approximation no larger than $\delta_{i,k+1}$ for each old coordinate $i\le d$. Thus introducing a new coordinate cannot invalidate an earlier approximation.
+
+\subsection{Work III: choose rational targets and integer blocks}
+We construct rational numbers $x_i$ and a block of $d(k)$ integers at each stage $k$. Suppose earlier blocks have already been fixed; let $P_{i,k}$ be the sum of $f_i$ over those blocks. For each active coordinate keep the invariant
+\[
+ \left|x_i-P_{i,k}-\sum_{l\ge k}s_{i,l}\right|\le\delta_{i,k}.
+ \tag{4}
+\]
+When coordinate $i$ first becomes active at $k=T_i$, choose $x_i\in\mathbb Q$ in the nondegenerate interval specified by (4). This is possible by density of the rationals. Previously active targets remain fixed.
+
+Subtracting $P_{i,k}+\sum_{l>k}s_{i,l}$ from (4) leaves a target within $\delta_{i,k}$ of $s_{i,k}$. Apply (1), followed by (3), to choose integers
+\[
+ a_{k,j}=jN_k+u_{k,j},\quad |u_{k,j}|\le M_k,
+ \quad 1\le j\le d(k),
+\]
+such that the new block error is at most $\delta_{i,k+1}$. This is exactly the invariant at stage $k+1$ for all old coordinates, and induction continues.
+
+Within each block the integers are positive and strictly increasing, since $M_k\le N_k/(4k)$ and $d(k)\le k$. Consecutive blocks are separated because $N_{k+1}/N_k>2k+2$ for the chosen starting range. Their union therefore enumerates a strictly increasing infinite sequence $(a_n)$. Moreover
+\[
+ \sum_n\frac1{a_n}\le\sum_{k\ge T_1}\frac{2k}{N_k}<\infty.
+\]
+For each fixed $i$, the baseline tail tends to zero and
+$0<\delta_{i,k}\le N_k^{-i-1/2}\to0$. Taking limits in (4) proves
+$\sum_n f_i(a_n)=x_i\in\mathbb Q$.
+
+Finally partial fractions express
+\[
+ f_i(x)=\sum_{j=0}^{i-1}\frac{c_{ij}}{x+j},
+ \qquad c_{ij}\in\mathbb Q,\qquad c_{i,i-1}\ne0.
+\]
+The coefficients are rational because all poles are distinct integers, and the final one is nonzero because that pole occurs on the left. Absolute convergence permits summation. This triangular system, solved successively in $i$, shows that every $\sum_n1/(a_n+t)$, $t\ge0$, is rational.
+
+\subsection{Verification and outcome}
+All terms have positive denominators; no pole convention is needed for the nonnegative shifts used here. A new rational target is chosen only when its coordinate is introduced, and every previously chosen target is preserved in the limit. Equations (2)--(3) supply the error margin uniformly across each dimension transition.
+
+\textbf{SOLVED: the proposed irrational shift need not exist.} The construction above proves the negative answer in full, without importing the final existence theorem as a black box.
+
+\subsection{Sources}
+V. Kova\v c and T. Tao, \emph{On several irrationality problems for Ahmes series}, Sections 7--8, \url{https://arxiv.org/abs/2406.17593}; current statement: \url{https://www.erdosproblems.com/266}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

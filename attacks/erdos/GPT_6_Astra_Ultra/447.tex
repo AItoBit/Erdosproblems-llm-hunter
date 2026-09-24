@@ -1,0 +1,78 @@
+\section*{Erd\H{o}s Problem 447}
+
+\paragraph{Statement and scope.}
+A family \(\mathcal F\subseteq2^{[n]}\) is union-free if no three
+distinct members satisfy \(A\cup B=C\). Must
+\(|\mathcal F|=o(2^n)\), and even
+\(|\mathcal F|\leq(1+o(1))\binom n{\lfloor n/2\rfloor}\)?
+We prove the first assertion and the correct order of magnitude, with
+upper constant \(2\sqrt2\) in place of \(1\). The sharp leading
+constant is unresolved in this attempt.
+
+\paragraph{Symmetric chains, with their construction.}
+The Boolean lattice \(2^{[m]}\) can be partitioned into inclusion chains
+whose endpoint ranks add to \(m\). Induct on \(m\).
+For a chain \(x_k\subset x_{k+1}\subset\cdots\subset x_{m-k}\),
+adjoining a new coordinate partitions its two copies into
+\[
+ x_k,\ldots,x_{m-k},x_{m-k}\cup\{m+1\}
+\]
+and, when nonempty,
+\[
+ x_k\cup\{m+1\},\ldots,x_{m-k-1}\cup\{m+1\}.
+\]
+The endpoint ranks in each new chain add to \(m+1\).
+This establishes the induction from the one-element lattice at \(m=0\).
+Each symmetric chain has exactly one member of rank \(\lfloor m/2\rfloor\),
+so their number is
+\[
+ c_m=\binom m{\lfloor m/2\rfloor}.
+ \tag{1}
+\]
+
+\paragraph{A union-free family on a product of two chains.}
+Split the ground set into disjoint parts of sizes
+\(m=\lfloor n/2\rfloor\) and \(\ell=\lceil n/2\rceil\), and use the
+chain partitions above on each part.
+The product of a chain of length \(r\) and one of length \(s\)
+is an \(r\)-by-\(s\) grid, with union given by coordinatewise maximum.
+If an occupied cell of \(\mathcal F\) is not the first occupied cell
+in its row or its column, there are occupied cells earlier in its row
+and earlier in its column. These are distinct from one another and
+their union is the given cell, a contradiction.
+Every occupied cell must therefore be first in its row or first in
+its column. There are at most \(r+s\) such cells.
+
+Summing over all products of chains gives the exact bound
+\[
+ |\mathcal F|\leq c_\ell 2^m+c_m2^\ell.
+ \tag{2}
+\]
+Here the sum of chain lengths in \(2^{[m]}\) is \(2^m\), and
+there are \(c_\ell\) choices of the other chain, and conversely.
+Stirling's formula applied to (1) yields
+\[
+ |\mathcal F|\leq
+ (2\sqrt2+o(1))\binom n{\lfloor n/2\rfloor}
+ =O(2^n/\sqrt n)=o(2^n).
+ \tag{3}
+\]
+
+\paragraph{A matching lower order and the remaining gap.}
+All subsets of cardinality \(\lfloor n/2\rfloor\) form a union-free
+family: the union of two distinct such sets is strictly larger.
+Thus the maximum size is \(\Theta(\binom n{\lfloor n/2\rfloor})\).
+The missing step is the improvement of the upper constant in (3)
+from \(2\sqrt2\) to \(1\).
+
+Kleitman's known sharp theorem and the earlier constant \(2\sqrt2\)
+are recorded in Balogh and Wagner, \emph{On the number of union-free
+families}, Introduction and Theorem 1.1,
+\url{https://arxiv.org/abs/1601.03659}.
+Current statement: \url{https://www.erdosproblems.com/447},
+checked 24 September 2026. The chain proof is supplied in full here;
+the sharper theorem is not assumed to fill the missing step.
+
+\paragraph{Completion estimate.}
+The first question and the correct order are proved; the sharp leading constant is missing.
+\textbf{COMPLETION: 65\%}

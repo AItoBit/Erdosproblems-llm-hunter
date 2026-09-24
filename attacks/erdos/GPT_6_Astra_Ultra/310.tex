@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#310: a bounded denominator from a dense set}
+\noindent Reconstruction with an explicit density theorem, 23 September 2026.
+
+\subsection*{1) Statement and the nonempty convention}
+For each fixed $\alpha>0$, if $A\subseteq[1,N]$ and $|A|\ge\alpha N$, must a nonempty $S\subseteq A$ satisfy
+\[
+ \sum_{n\in S}\frac1n=\frac ab,\qquad1\le a\le b\le B(\alpha)?
+\]
+We prove this using Liu--Sawhney's Proposition 1.4, checking the small-$N$ and high-density cases separately. We also give the denominator obstruction explaining why exponential dependence on $1/\alpha$ is natural. Empty $S$ is excluded, since otherwise the question would be trivial.
+
+\subsection*{2) Precise external input and all fixed densities}
+Liu--Sawhney prove that there is an absolute $C\ge1$ such that for each $\varepsilon>0$ and sufficiently large $N$ in terms of $\varepsilon$, if
+\[
+ (\log N)^{-1/7+\varepsilon}\le\beta\le1/2,
+ \qquad |A|\ge\beta N,
+\]
+then some subset has reciprocal sum $s/t$ with $1\le s\le t\le\exp(C/\beta)$. This Fourier-analytic proposition is the substantial external input; its proof is not reproduced here.
+
+For $0<\alpha\le1$ put $\beta=\min(\alpha,1/2)$ and choose $\varepsilon=1/14$. For sufficiently large $N=N_0(\alpha)$, the density condition $(\log N)^{-1/14}\le\beta$ holds. Applying the proposition then supplies the desired subset. Reducing $s/t$ to lowest terms cannot increase its denominator and preserves $1\le a\le b$.
+
+If $N<N_0(\alpha)$, the integer $|A|\ge\alpha N>0$ ensures $A\ne\varnothing$. Any singleton $S=\{d\}$ works with $a=1$ and $b=d\le N_0(\alpha)$. Consequently
+\[
+ B(\alpha)=\max\bigl(N_0(\alpha),\lceil e^{C/\beta}\rceil\bigr)
+\]
+works for every $N$. For $\alpha>1$ there is no admissible $A$, so the assertion is vacuous. This proves the original fixed-density question; an exponential bound for every small $N$ is not inferred from the asymptotic proposition.
+
+\subsection*{3) The lower-bound mechanism, with exact density counting}
+Fix $y\ge2$ and let $P_y$ be the product of the primes at most $y$. Consider
+\[
+ A_N=\{n:N/2<n\le N,\ \gcd(n,P_y)=1\}.
+\]
+For fixed $y$, periodicity modulo $P_y$ gives
+\[
+ |A_N|=\frac N2\prod_{p\le y}(1-1/p)+O(P_y).\tag{1}
+\]
+Indeed every complete block of $P_y$ consecutive integers contains exactly $\varphi(P_y)$ coprime residues; the two boundary blocks cost at most $2P_y$.
+
+For sufficiently large $N$, $\sum_{n\in A_N}1/n<1$, because it is bounded above by the harmonic sum over $(N/2,N]$, which tends to $\log2<1$. Any nonempty subset sum in lowest terms $a/b$ is therefore strictly between zero and one, so $b>1$. Its denominator divides the least common multiple of its denominators, all of which have no prime factor at most $y$. Thus $b$ also has no prime factor at most $y$ and necessarily $b>y$.
+
+To express this at the exponential scale, use the classical Mertens product estimate $\prod_{p\le y}(1-1/p)\sim e^{-\gamma}/\log y$. For any fixed $0<c<e^{-\gamma}/2$, take $y=\exp(c/\alpha)$ and let $\alpha\downarrow0$. The limiting density in (1) is then asymptotic to $e^{-\gamma}\alpha/(2c)>\alpha$. For each sufficiently small fixed $\alpha$, taking $N$ large makes $|A_N|\ge\alpha N$, yet every admissible nonempty subset sum has denominator greater than $\exp(c/\alpha)$. This is the sharpness mechanism recorded by Liu--Sawhney, with the elementary fixed-sieve counting made explicit. Mertens' theorem is an additional external input for this scale calculation.
+
+\subsection*{4) Outcome and sources}
+\textbf{SOLVED using Proposition 1.4.} The passage to every fixed density and every $N$, and the denominator obstruction, are justified above. The main proposition and Mertens' product theorem are not independently reproved. No novelty or independent Lean verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/310}, checked 23 September 2026; Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Proposition 1.4 and the following sharpness remark, \url{https://arxiv.org/html/2404.07113}.
+
+The estimate measures coverage with the declared external results, not a correctness probability.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

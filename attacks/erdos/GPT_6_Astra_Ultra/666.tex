@@ -1,0 +1,36 @@
+\section*{Erd\H{o}s Problem 666}
+
+\paragraph{Statement and result.}
+Must every subgraph of \(Q_n\) with at least \(\epsilon n2^{n-1}\) edges contain a six-cycle, for each fixed \(\epsilon>0\) and all sufficiently large \(n\)? No. We give an explicit four-colouring of the edges with no monochromatic four- or six-cycle. Its largest colour class has at least one quarter of all edges, supplying a counterexample for \(\epsilon=1/4\).
+
+\paragraph{The colouring.}
+View vertices as binary vectors \(x\in\{0,1\}^n\). An edge in coordinate \(i\) has endpoints differing only at \(i\). Give it the ordered pair of colours
+\[
+ \chi(e)=\left(\sum_{j<i}x_j\pmod2,\quad
+                    \sum_{j>i}x_j\pmod2\right)\in\{0,1\}^2. \tag{1}
+\]
+This is well defined because the two endpoints agree in every coordinate except \(i\). There are four possible colours.
+
+\paragraph{Four-cycles.}
+A four-cycle toggles two different coordinates alternately. For its two edges in one coordinate, the other coordinate has changed exactly once. Depending on its order relative to the edge coordinate, this changes the first or the second component of (1). Those two edges have different colours. Thus no four-cycle is monochromatic.
+
+\paragraph{The coordinate pattern of a six-cycle.}
+In any closed walk, every coordinate is toggled an even number of times. A simple six-cycle cannot use only one or two coordinates, because the corresponding subcube has at most four vertices. Hence it uses exactly three coordinates, each twice. Consecutive occurrences of the same coordinate, including across the cyclic endpoint, would immediately retrace an edge and are impossible.
+
+First suppose the two occurrences of some coordinate \(i\) are separated by one intervening edge in cyclic order. That intervening edge toggles a different coordinate \(j\). The common coordinates of the two \(i\)-edges therefore differ only in coordinate \(j\); the earlier toggle of \(i\) itself does not enter (1). As in the four-cycle argument, one component of their colours differs. The cycle is not monochromatic.
+
+Otherwise the two occurrences of each coordinate have cyclic separation exactly three. Indeed separation one was excluded by simplicity, and separation two or four is the case just handled. The six coordinate labels must therefore be
+\[
+ i,j,k,i,j,k
+\]
+up to their ordering and a cyclic rotation. Let \(j_*\) be the middle of these three distinct coordinate indices in their usual numerical order. Between the two \(j_*\)-edges, each of the other two coordinates is toggled exactly once. Precisely one is smaller than \(j_*\), so the first component of (1) changes. In fact the second component changes as well. Again these two edges have different colours. This exhausts every simple six-cycle.
+
+\paragraph{The density and its quantifiers.}
+The cube has \(n2^{n-1}\) edges. By the pigeonhole principle one of the four colour classes has at least \(n2^{n-1}/4\) edges. The spanning subgraph consisting of this class contains no \(C_6\), by the preceding proof. This works for every \(n\), and therefore contradicts the assertion with the single fixed value \(\epsilon=1/4\).
+
+It also rules out a bound \(cn^a2^n\) forcing a six-cycle when \(c\) is fixed and \(a<1\): the constructed edge count divided by that expression is \(n^{1-a}/(8c)\), which tends to infinity. No conclusion for the other even cycle lengths is needed.
+
+\paragraph{Attribution and assessment.}
+This reconstructs the classical four-colouring method of Chung and of Brouwer, Dejter and Thomassen. Primary source: \emph{Highly symmetric subgraphs of hypercubes}, Journal of Algebraic Combinatorics 2 (1993), 25--29, \url{https://doi.org/10.1023/A:1022472513494}. Current statement: \url{https://www.erdosproblems.com/666}, checked 24 September 2026. All steps needed for the counterexample are included; neither optimality of the fraction nor novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,57 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#387; reconstruction of the unconditional negative resolution, 2026-09-24.}
+Does some absolute $c>0$ guarantee that every $\binom nk$, $1\leq k<n$, has a positive divisor in $(cn,n]$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current unconditional version of Bui--Naprienko--Pratt--Zaharescu, \emph{Binomial coefficients with divisors avoiding an interval}, answers no. Its version 2, rather than an earlier conditional formulation, is used below. Schinzel's older example only refutes the narrower interval $(n-k,n]$; that example alone does not settle the absolute-constant question.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Prove the universal divisor $n/\gcd(n,k)$, independently certify Schinzel's finite example, and carefully apply the published avoidance theorem with $k$ large enough for any proposed constant $c$.
+
+\section{WORK}
+\textbf{What always divides the coefficient.} Put $g=\gcd(n,k)$, $n=ga$, $k=gb$, so $\gcd(a,b)=1$. From
+\[
+k\binom nk=n\binom{n-1}{k-1}
+\]
+we get $b\binom nk=a\binom{n-1}{k-1}$, whence
+\[
+\frac n{\gcd(n,k)}\mid\binom nk.                          \tag{1}
+\]
+This divisor lies in $[n/k,n]$. In particular $n$ itself divides the coefficient whenever $\gcd(n,k)=1$. Formula (1) deteriorates as $k$ grows and supplies no absolute positive fraction uniformly in $k$.
+
+\textbf{A complete finite counterexample to the narrower interval.} Let $n=99215$, $k=15$, and $B=\binom{99215}{15}$. Legendre's formula, or counting multiples of prime powers in the fifteen numerator terms and in $15!$, gives
+\[
+(v_2(B),v_3(B),v_5(B),v_7(B),v_{11}(B),v_{13}(B))=(0,0,0,0,0,1).
+\]
+The following prime witnesses show that no integer $d\in(99200,99215]$ divides $B$. Each listed prime occurs to a larger exponent in $d$ than in $B$:
+\[
+\begin{array}{c|rrrrrrrrrrrrrrr}
+d&99201&99202&99203&99204&99205&99206&99207&99208&99209&99210&99211&99212&99213&99214&99215\\
+p&3&2&13&2&5&2&3&2&11&2&7&2&3&2&5.
+\end{array}
+\]
+All witnesses other than $13$ have exponent at least one whereas their exponent in $B$ is zero; $99203=13^2\cdot587$ and $v_{13}(B)=1$. This certifies the finite claim without enumerating every divisor of $B$.
+
+\textbf{Declared external avoidance input.} Theorem 1.4 of the cited version 2 says that for any sufficiently large fixed $k_0$, and a sufficiently small fixed $\delta>0$, there are infinitely many pairs $(n,k)$ with
+\[
+k_0<k\leq\delta\sqrt{\log\log n}
+\]
+for which $\binom nk$ has no divisor in
+\[
+\left(n\frac{241\log\log k}{\log k},\ n\right].           \tag{2}
+\]
+Its covering and divisor-distribution arguments are imported as the principal external input. The numerical constant is retained exactly; no stronger interval with that constant deleted is needed.
+
+Now let $0<c<1$ be arbitrary. Since $241\log\log k/\log k\to0$, choose $k_0$ above the theorem's threshold and large enough that this ratio is less than $c$ for \emph{every} integer $k>k_0$. Apply (2). For every resulting pair,
+\[
+(cn,n]\subseteq\left(n\frac{241\log\log k}{\log k},n\right],
+\]
+so the smaller interval also contains no divisor. The infinitely many pairs have unbounded $n$, since bounded $n$ permits only finitely many $k$. Hence every proposed $0<c<1$ fails infinitely often. Constants $c\geq1$ already give an empty interval, so no positive constant works.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to the stated unconditional avoidance theorem.} The answer is negative. Formula (1) and the finite certificate are independently proved, while the existence of arbitrarily small relative divisor gaps in (2) is a published external dependency. No claim that the finite Schinzel example alone disproves all constants is made.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/387}; Bui, Naprienko, Pratt and Zaharescu, version 2, Theorem 1.4: \url{https://arxiv.org/html/2605.21221v2}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external theorem.}

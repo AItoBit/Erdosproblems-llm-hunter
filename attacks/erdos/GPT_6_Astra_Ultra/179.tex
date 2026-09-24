@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem 179: many short progressions without a long one}
+
+\subsection{1) Statement and conventions}
+For fixed $k<\ell$, let $F_k(N,\ell)$ be the least integer threshold
+such that every $N$-element set of positive integers with at least that
+many $k$-term arithmetic progressions contains an $\ell$-term progression.
+We count nonconstant progressions once, in increasing order. The main
+questions are whether $F_3(N,4)=o(N^2)$ and whether
+$\log F_3(N,\ell)/\log N\to2$ for each fixed $\ell>3$.
+Both answers are affirmative. This note deduces them from the precise
+Fox--Pohoata comparison theorem and standard progression bounds.
+
+\subsection{2) The threshold differs from a maximum by one}
+Let $M_{k,\ell}(N)$ be the largest number of $k$-term progressions in
+an $\ell$-progression-free set of $N$ integers. Such sets exist for every
+$N$ when $\ell\geq3$: distinct powers of $3$ contain no three-term
+progression. Indeed, $3^a+3^c=2\cdot3^b$ with $a<b<c$ is impossible
+after dividing by $3^a$ and reducing modulo $3$.
+
+For $k\geq2$, each progression is determined by its first two terms,
+so its count is at most $\binom N2$. Thus the nonempty set of attainable
+counts is a finite set of integers and has a maximum, even though the
+ambient integers are unbounded. The definition of the threshold gives
+\[
+ F_k(N,\ell)=M_{k,\ell}(N)+1.                         \tag{1}
+\]
+A translation shows that allowing arbitrary integers instead of positive
+integers makes no difference.
+
+\subsection{3) External inputs and the asymptotic deduction}
+Let $r_\ell(N)$ be the largest size of an $\ell$-progression-free subset
+of $[N]$. Fox--Pohoata's Theorem 1.2, with constants enlarged if the
+progression-count convention differs, gives for fixed $\ell>k\geq3$
+\[
+ c_k\left(\frac{r_\ell(N)}N\right)^{2(k-2)}N^2
+ \leq M_{k,\ell}(N)
+ \leq C_k\left(\frac{r_\ell(N)}N\right)^\gamma N^2,       \tag{2}
+\]
+for sufficiently large $N$, where $\gamma>0$. We use (2) as an
+external theorem. The other external inputs are Szemer\'edi's theorem
+$r_\ell(N)=o(N)$ and Behrend's lower bound
+$r_3(N)\geq N\exp(-C\sqrt{\log N})$ for large $N$.
+
+An $\ell$-term progression contains a three-term progression, so
+$r_\ell(N)\geq r_3(N)$ for $\ell\geq3$. Substitution in the lower
+bound of (2) gives
+\[
+ M_{k,\ell}(N)\geq N^2\exp(-C_{k,\ell}\sqrt{\log N}).
+\]
+Its upper bound, together with Szemer\'edi, gives
+$M_{k,\ell}(N)=o(N^2)$. Consequently (1) implies both
+\[
+ F_k(N,\ell)=o(N^2),\qquad
+ 2-\frac{C_{k,\ell}}{\sqrt{\log N}}
+ \leq\frac{\log F_k(N,\ell)}{\log N}\leq2+o(1).
+\]
+In particular the two explicitly asked assertions hold. There is no
+conflict between an exponent tending to two and density tending to
+zero relative to $N^2$.
+
+\subsection{4) The degenerate short-length cases}
+The restriction $k\geq3$ in (2) matters. Under the singleton convention
+for one-term progressions, every $N$-set has exactly $N$ of them, so
+$F_1(N,\ell)=N+1$ for $\ell\geq3$. Every pair is a two-term
+progression, hence $F_2(N,\ell)=\binom N2+1$ for $\ell\geq3$.
+Neither should be assigned the preceding little-$o$ conclusion.
+When $\ell=2$, every $N$-set with $N\geq2$ already contains the desired
+pair, independently of any counting threshold.
+
+\subsection{5) Outcome and sources}
+\textbf{Outcome: SOLVED using the three stated external inputs.}
+The threshold convention, range of parameters, and limit deductions
+are proved explicitly. The additive-combinatorial proof of (2) and
+the two classical progression theorems are not reproved here.
+\begin{itemize}
+\item J. Fox and C. Pohoata, \emph{Sets without $k$-term progressions
+can have many shorter progressions}, Theorem 1.2,
+\texttt{https://arxiv.org/abs/1908.09905}; its references include the
+classical bounds used above.
+\item T. F. Bloom, Problem 179,
+\texttt{https://www.erdosproblems.com/179}, checked 23 September 2026.
+\end{itemize}
+The percentage includes the external inputs and does not assert novelty.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

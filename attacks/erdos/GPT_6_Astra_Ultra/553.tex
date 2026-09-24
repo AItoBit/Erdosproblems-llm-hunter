@@ -1,0 +1,116 @@
+\section*{Erd\H{o}s Problem 553}
+
+\paragraph{Statement and result.}
+Let \(R(3,3,n)\) force either a triangle in one of the first two
+edge colours or a clique of order \(n\) in the third. Prove
+\(R(3,3,n)/R(3,n)\to\infty\).
+We reconstruct a random-permutation argument, using Kim's
+triangle-free graph theorem as an explicit external input, to obtain
+\[
+ R(3,3,n)\gg \frac{n^3}{(\log n)^4}. \tag{1}
+\]
+An elementary quadratic upper bound for \(R(3,n)\) then suffices.
+
+\paragraph{The one external graph-existence input.}
+Kim's theorem implies that some absolute \(c>0\) has the following
+property: for every sufficiently large integer \(f\), there is a
+triangle-free graph on at least \(cf^2/\log f\) vertices with
+independence number less than \(f\).
+Taking an induced subgraph and decreasing \(c\) if necessary, we may
+take its order to be \(q=\lfloor cf^2/\log f\rfloor\), with \(0<c\leq1\).
+The proof of this deep existence theorem is not supplied here.
+
+\paragraph{Count independent sets after replacing vertices by independent sets.}
+Replace each vertex of this graph by \(r\) independent vertices,
+and each edge by the complete bipartite graph between its two parts.
+The resulting graph \(F\) has \(N=qr\) vertices and is triangle-free:
+any triangle would have to use three different parts and project to
+a triangle in the original graph.
+
+An independent set of \(n\) vertices in \(F\) meets fewer than
+\(f\) parts. Extend those part labels to any \(f\)-subset of the
+\(q\) labels. Hence, writing \(I\) for the number of such independent
+sets, we have the overcounting bound
+\[
+ I\leq\binom qf\binom{fr}{n}. \tag{2}
+\]
+If \(fr<n\), there are no such sets and the desired construction
+already follows. We therefore use the following estimates when
+\(fr\geq n\).
+
+\paragraph{Two randomly relabelled copies.}
+Let \(F'\) be the image of \(F\) under a uniformly random permutation
+of its \(N\) vertices. Each fixed \(n\)-subset is independent in
+\(F'\) with probability \(I/\binom Nn\).
+Thus the expected number of sets independent in both graphs is
+\(I^2/\binom Nn\). If this is less than one, some permutation makes
+that number zero.
+Colour edges of \(F\) with colour 1, edges of \(F'\) not already
+coloured with colour 2, and all remaining edges with colour 3.
+The first two colour classes are triangle-free. A third-colour
+\(K_n\) would be independent in both graphs, a contradiction.
+Therefore
+\[
+ I^2<\binom Nn\quad\Longrightarrow\quad R(3,3,n)>N. \tag{3}
+\]
+Overlap between the two graphs causes no difficulty because the
+second colour is only a subgraph of \(F'\).
+
+\paragraph{Parameters and the first-moment inequality.}
+For every sufficiently large \(n\), take
+\[
+ f=\left\lfloor\frac{n}{4\log n}\right\rfloor,\qquad
+ q=\left\lfloor\frac{cf^2}{\log f}\right\rfloor,\qquad
+ r=\left\lfloor\frac{nq}{100f^2}\right\rfloor.
+\]
+These are positive and \(q\geq f\) eventually. Also
+\(\log(eq/f)\leq2\log n\) eventually.
+Using \(\binom ab\leq(ea/b)^b\) and
+\(\binom Nn\geq(N/n)^n\), (2) gives
+\[
+ \frac{I^2}{\binom Nn}
+ \leq\left[
+ \left(\frac{eq}{f}\right)^{2f/n}
+ \frac{e^2f^2r}{nq}\right]^n
+ \leq\left(\frac{e^3}{100}\right)^n<1. \tag{4}
+\]
+Here \((2f/n)\log(eq/f)\leq1\), and the bound on \(r\)
+handles the second factor. Since the quantity being rounded in
+\(r\) tends to infinity, the floor loses at most a factor two for
+large \(n\). Thus
+\[
+ N=qr\gg\frac{nq^2}{f^2}
+ \gg\frac{nf^2}{(\log f)^2}
+ \asymp\frac{n^3}{(\log n)^4},
+\]
+proving (1) for every sufficiently large \(n\), not just a subsequence.
+
+\paragraph{An elementary denominator bound.}
+The usual vertex-neighbourhood argument gives
+\(R(s,t)\leq R(s-1,t)+R(s,t-1)\): at a chosen vertex, either
+the first-colour neighbourhood is large enough to force the first
+term, or the other neighbourhood is large enough for the second.
+Induction with \(R(2,t)=t\) yields
+\(R(3,n)\leq\binom{n+1}{2}\).
+Consequently (1) implies
+\[
+ \frac{R(3,3,n)}{R(3,n)}
+ \gg\frac{n}{(\log n)^4}\longrightarrow\infty.
+\]
+
+\paragraph{Attribution and scope.}
+The random relabelling method is due to Alon and R\"odl;
+their concluding remarks credit Kim and Mubayi with the simplification
+using blow-ups of Ramsey graphs:
+\url{https://web.math.princeton.edu/~nalon/PDFS/arodl4.pdf},
+Lemma 3.1 and Section 4.
+The external input is J.~H.~Kim, \emph{The Ramsey number R(3,t) has
+order of magnitude t squared over log t} (1995),
+\url{https://doi.org/10.1002/rsa.3240070302}.
+Current problem: \url{https://www.erdosproblems.com/553},
+checked 24 September 2026. No novelty is claimed.
+
+\paragraph{Completion estimate.}
+The requested limit is proved relative to the explicitly stated Kim theorem;
+the counting, colouring, parameter selection and limit are supplied in full.
+\textbf{COMPLETION: 100\%}

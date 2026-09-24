@@ -1,0 +1,38 @@
+\textbf{Erd\H{o}s problem 547.}
+For every tree $T$ on $n\geq2$ vertices, is $R(T)\leq2n-2$?
+
+\textbf{Status and attribution.}
+Yes. We deduce the bound from the Erd\H{o}s--S\'os extremal theorem, whose marked-permutation proof is reconstructed in the accompanying problem 548 attempt. The source and its exposition were checked on 24 September 2026:
+\texttt{https://www.erdosproblems.com/547},
+\texttt{https://www.erdosproblems.com/548},
+\texttt{https://www.erdosproblems.com/static/548-exp.pdf}.
+The argument below also proves the exact star examples directly. It does not assert Burr's stronger conjecture for arbitrary trees.
+
+\textbf{The reduction, with the strict inequality checked.}
+The extremal theorem says that a graph on $N$ vertices avoiding a given $n$-vertex tree has at most $(n-2)N/2$ edges. Set $N=2n-2$ and colour the edges of $K_N$ red or blue. One colour has at least
+\[
+ \frac12\binom N2=\frac{N(2n-3)}4
+ =\frac{(n-2)N}{2}+\frac N4
+ >\frac{(n-2)N}{2}
+\]
+edges. Its graph therefore contains $T$, proving the bound. The extra $N/4$ is positive even for $n=2$; no rounding or parity case is omitted.
+
+\textbf{Sharpness and the exact star cases.}
+Write $s=n-1$ for the number of leaves. A monochromatic $K_{1,s}$ exists precisely when some vertex has at least $s$ incident edges of one colour.
+
+If $s$ is odd, on $2s-1$ vertices choose a regular graph of degree $s-1$ and colour its edges red. Such a graph is obtained on $\mathbb Z/(2s-1)\mathbb Z$ by joining cyclic distances $1,\ldots,(s-1)/2$. Its complement also has degree $s-1$. This colouring avoids a monochromatic star. In $K_{2s}$ every vertex has degree $2s-1$, so one of its colour degrees is at least $s$. Hence
+\[
+ R(K_{1,s})=2s\qquad(s\ \hbox{odd}).
+\]
+The case $s=1$ uses the one-vertex empty graph for the lower bound.
+
+If $s$ is even, a colouring of $K_{2s-1}$ avoiding the star would force every red and blue degree to equal $s-1$. But a regular graph of odd degree $s-1$ on the odd number $2s-1$ of vertices cannot exist: its total degree would be odd. Thus $R(K_{1,s})\leq2s-1$.
+For the reverse inequality take $2s-2$ cyclic vertices, join distances $1,\ldots,(s-2)/2$ and also join each vertex to its antipode. The resulting red graph has degree $s-1$, and its blue complement has degree $s-2$. Both degrees are below $s$, so
+\[
+ R(K_{1,s})=2s-1\qquad(s\ \hbox{even}).
+\]
+Thus the original $2n-2$ bound is attained by stars for every even $n$.
+
+\textbf{Completion estimate.}
+The full tree bound follows from the explicitly identified extremal theorem; the star sharpness calculation is self-contained.
+\textbf{COMPLETION: 100\%}

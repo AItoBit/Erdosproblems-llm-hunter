@@ -1,0 +1,90 @@
+\subsection*{Erd\H{o}s problem \#353}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+For every measurable planar set $S$ of infinite area, ask for vertices in $S$ of an area-one isosceles trapezoid, isosceles triangle, right triangle, cyclic quadrilateral, or convex polygon with all side lengths equal. These are five separate questions.
+
+\noindent\textbf{2) CONTEXT AND SCOPE.}
+Koizumi proved the first three positive assertions; an isosceles trapezoid is also cyclic. Kova\v{c} and Predojevi\'{c} proved the last assertion false. We reconstruct Koizumi's density-point argument in detail and explicitly use the latter authors' negative theorem for the fifth part. No novelty or local formal verification is claimed.
+
+\noindent\textbf{3) A DENSITY OVERLAP LEMMA.}
+Let $B=B(A,\varepsilon)$ and $B'=B(A,\varepsilon/2)$ be disks. Suppose an injective smooth map $F$ sends $B'$ into $B$ and has Jacobian determinant at least $\eta>0$. If
+\[
+ |B\setminus E|<\frac{\eta}{4(1+\eta)}|B|,
+\]
+there is a $p\in B'\cap E$ with $F(p)\in E$. Indeed, otherwise $F(B'\cap E)\subset B\setminus E$, giving
+\[
+ |B\setminus E|\ge\eta(|B'|-|B\setminus E|),
+\]
+contrary to the displayed hypothesis. This is just change of variables and the ratio $|B'|=|B|/4$.
+
+\noindent\textbf{4) THE TWO TRIANGLES.}
+In fact, an unbounded measurable set of positive area suffices. By the Lebesgue density theorem, choose $A\in S$ and $0<\varepsilon<1$ with $|B\setminus S|<|B|/100$. Choose $O\in S$ so distant that $d=|O-A|>1000/\varepsilon$, and use polar coordinates centered at $O$.
+
+For fixed $c\in\{2,4\}$ and large $r$, set
+\[
+ \phi(r)=\arcsin(c/r^2),\qquad
+ F(r,\theta)=(r,\theta+\phi(r)).
+\]
+This is an area-preserving smooth bijection outside a sufficiently large disk, since in polar coordinates its determinant is $1$. Moreover
+\[
+ |F(p)-p|\le r\phi(r)\le\frac{\pi c}{2r}<\varepsilon/2
+ \quad(p\in B').
+\]
+With $c=2$, the overlap lemma gives $p,F(p)\in S$ and
+\[
+ \operatorname{area}(O,p,F(p))=\tfrac12r^2\sin\phi(r)=1,
+\]
+an isosceles triangle.
+
+For the right triangle, use $c=4$ and $G(p)=(p+F(p))/2$. In polar form,
+\[
+ G(r,\theta)=\big(r\cos(\phi(r)/2),\theta+\phi(r)/2\big).
+\]
+Its radial coordinate is strictly increasing because $\phi'(r)<0$, so $G$ is injective. Its Jacobian is
+\[
+ J_G(r)=\cos^2(\phi(r)/2)-\frac r4\sin\phi(r)\phi'(r)>1/2.
+\]
+Also $|G(p)-p|<\varepsilon/4$. Apply the overlap lemma with $\eta=1/2$. Since $|p|=|F(p)|$, the vectors $G(p)$ and $p-G(p)$ are perpendicular. Thus $O,p,G(p)$ is a right triangle. Its area is half that of $O,p,F(p)$, namely $c/4=1$.
+
+\noindent\textbf{5) THE ISOSCELES TRAPEZOID.}
+Now use infinite area to choose the far point $O$ to be a density point of $S$ as well. Translate $O$ to $0$ and retain the disk $B$ above. For $R>1$, put
+\[
+ E_R=S\cap RS=\{p\in S:p/R\in S\}.
+\]
+Since $B\subset B(0,2d)$,
+\[
+ |(B\cap S)\setminus E_R|
+ \le R^2|B(0,2d/R)\setminus S|=o(1)
+ \quad(R\to\infty),
+\]
+by density at $0$. Fix a sufficiently large $R>2$ with
+$|B\setminus E_R|<|B|/50$. Set
+\[
+ \psi(r)=\arcsin\left(\frac{2}{(1-R^{-2})r^2}\right),
+ \qquad F_R(r,\theta)=(r,\theta+\psi(r)).
+\]
+The preceding displacement and Jacobian arguments apply, so the overlap lemma provides $p,F_R(p)\in E_R$. Consequently all four distinct points
+\[
+ p,\quad F_R(p),\quad R^{-1}F_R(p),\quad R^{-1}p
+\]
+belong to $S$. Their two chords are parallel and their two radial legs have equal length, so they form a convex isosceles trapezoid. Subtracting the inner triangle from the outer one gives area
+\[
+ (1-R^{-2})\frac{r^2}2\sin\psi(r)=1.
+\]
+An isosceles trapezoid is cyclic: its equal base angles make opposite angles supplementary, which is the elementary cyclic-quadrilateral criterion. This also resolves the cyclic part.
+
+\noindent\textbf{6) THE NEGATIVE PART AND EXACT DEPENDENCY.}
+We use Kova\v{c}--Predojevi\'{c}, \emph{Polygons of unit area with vertices in sets of infinite planar measure}, Theorem 2 and Section 3:
+\[
+ S_0=\{(x,y):x>1,\ 0<y<1/(4x)\}
+\]
+has the property that every convex polygon with equal side lengths and vertices in $S_0$ has area strictly less than $1$. Its infinite area is immediate from $\int_1^\infty(4x)^{-1}dx=\infty$. The geometric bound on equilateral convex polygons is an external theorem here, not inferred merely from the thinness of this region. Indeed thin infinite-area sets can still contain the other four configurations, as the preceding proof shows.
+
+\noindent\textbf{7) VERIFICATION AND FINAL.}
+The answers are yes for the first four configurations and no for the fifth. The positive arguments use only the density theorem, change of variables and the displayed geometric calculations. The negative theorem is explicitly cited and not reproved. \textbf{SOLVED relative to that stated external negative input.} Completion refers to all five questions with this dependency, not to a wholly self-contained proof of the negative geometry theorem.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/353}; \url{https://arxiv.org/pdf/2501.01914}; \url{https://arxiv.org/pdf/2412.11725}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

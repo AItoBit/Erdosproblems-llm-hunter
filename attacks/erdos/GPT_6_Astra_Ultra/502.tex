@@ -1,0 +1,44 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#502; a reconstruction of the quadratic bounds, 2026-09-24.}
+Let $m(n)$ be the largest cardinality of a set in $\mathbb R^n$ having exactly two distinct nonzero pairwise distances. Determine its size.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem page records the asymptotically matching bounds
+$\binom{n+1}{2}\leq m(n)\leq\binom{n+2}{2}$, with the upper bound due to Bannai--Bannai--Stanton. Petrov--Pohoata give a polynomial-method proof for sets with any fixed number of distances. Below is a direct positive-definite specialization for two distances. It proves the quadratic asymptotic, not an exact formula in every dimension.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Use a polynomial vanishing on every off-diagonal pair. If there are too many points, a nonzero signed measure annihilating all quadratic polynomials contradicts positivity on the diagonal. Construct the lower bound from edges of a simplex.
+
+\section{WORK}
+\textbf{The upper bound.} Suppose a finite set $A$ has distances $a,b>0$, and set
+\[
+ P(x,y)=(\|x-y\|^2-a^2)(\|x-y\|^2-b^2).
+\]
+The real vector space of polynomials in $n$ variables of total degree at most two has dimension $D=\binom{n+2}{2}$. If $|A|>D$, linear algebra supplies real numbers $c_x$, not all zero, such that
+\[
+ \sum_{x\in A}c_x x^\alpha=0\qquad (|\alpha|\leq2).
+\]
+Every monomial $x^\alpha y^\beta$ in $P$ has $|\alpha|+|\beta|\leq4$. At least one of $|\alpha|,|\beta|$ is therefore at most two, so
+\[
+ \sum_{x,y\in A}c_xc_yP(x,y)=0.
+\]
+But $P(x,y)=0$ when $x\ne y$ and $P(x,x)=a^2b^2$. The same sum equals $a^2b^2\sum_xc_x^2>0$, a contradiction. An infinite two-distance set would contain a finite subset of more than $D$ points, so the argument also excludes that possibility.
+
+\textbf{The lower bound.} In $\mathbb R^{n+1}$ take the vectors
+\[
+ A=\{e_i+e_j:1\leq i<j\leq n+1\}.
+\]
+They lie in the affine hyperplane $\sum x_i=2$, which is isometric to $\mathbb R^n$. Two such vectors have distance $\sqrt2$ when the corresponding pairs share one index, and distance $2$ when the pairs are disjoint. For $n\geq3$, both possibilities occur, giving exactly two distances and $\binom{n+1}{2}$ points. Hence
+\[
+ \frac{n(n+1)}2\leq m(n)\leq\frac{(n+1)(n+2)}2,
+ \qquad m(n)=\frac{n^2}{2}+O(n).
+\]
+For the small-dimensional boundary cases, $\{0,1,2\}$ gives $m(1)=3$ by the upper bound; a regular pentagon gives $m(2)\geq5$. No exact planar upper bound is needed for the asymptotic conclusion.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved in the literal exact-value formulation.} Both finite bounds and the asymptotic $m(n)\sim n^2/2$ are completely proved. An exact value of $m(n)$ for every $n$ is not supplied. The completion estimate reflects this distinction; the database's solved classification concerns the established quadratic bound. No external extremal theorem is needed in the proof above.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/502}; F. Petrov and C. Pohoata, \emph{A remark on sets with few distances in $\mathbb R^d$}, \url{https://arxiv.org/abs/1912.08181}.
+
+\textbf{Completion rate estimate: 85\%.}

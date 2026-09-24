@@ -1,0 +1,108 @@
+\section{Erd\H{o}s Problem 621: triangle-independent edges and triangle covers}
+\subsection*{Statement and stronger target}
+Let $\alpha_1(G)$ be the largest size of an edge set containing at most one edge from each triangle of an $n$-vertex graph $G$, and let $\tau_1(G)$ be the fewest edges meeting every triangle. We prove
+\[
+ \alpha_1(G)+\tau_1(G)\le n^2/4.
+\]
+The proof reconstructs Norin--Sun's stronger cut inequality. Fix a triangle-independent edge set $S$, put $C=E(G)\setminus S$, and construct a vertex bipartition with at most $n^2/4-|S|$ internal edges. Deleting those edges makes the graph bipartite, and therefore triangle-free.
+
+\subsection*{1. Four-vertex sums}
+Let $s_{uv}$ and $c_{uv}$ be the indicator functions of $S$ and $C$ on ordered pairs, and put $q_{uv}=1-s_{uv}-c_{uv}$, including $q_{uu}=1$. Two $S$-edges with a common endpoint force their other endpoints to be nonadjacent in $G$:
+\[
+ s_{uv}s_{uw}=s_{uv}s_{uw}q_{vw}. \tag{1}
+\]
+All sums below are over ordered vertices, with repetitions allowed. Define
+\begin{align*}
+ P&=\sum_{u,v,w,x}s_{uv}s_{vw}s_{wx}(1-s_{xu}),&
+ Q&=\sum_{u,v,w,x}s_{uv}s_{vw}s_{wx}s_{xu},\\
+ K&=\sum_{u,v,w,x}s_{uv}s_{uw}s_{ux},&
+ D&=\sum_{u,v,w,x}(1-s_{uv})s_{uw}s_{ux}q_{vw}q_{vx},\\
+ R&=\sum_{u,v,w,x}s_{uv}s_{uw}q_{wx}c_{vx}.
+\end{align*}
+Two inequalities will be used:
+\[
+ P+Q\le K,\qquad P\le D. \tag{2}
+\]
+For the first, with $d_u=\sum_ws_{uw}$,
+\[
+ 0\le\sum_{u,v}s_{uv}(d_u-d_v)^2=2K-2(P+Q).
+\]
+For the second put $a_{uv}=\sum_ws_{uw}q_{vw}$. Symmetry gives
+\[
+ D=\sum_{u,v}(1-s_{uv})a_{uv}^2
+ \ge\sum_{u,v}(1-s_{uv})a_{uv}a_{vu}.
+\]
+In the last sum retain only those terms with $s_{wx}=1$ after expanding the two factors. They total $P$: the path $u,w,x,v$ forces $q_{vw}=q_{ux}=1$ by (1). This proves (2).
+
+\subsection*{2. The required identity, with its expansion}
+In any sum carrying $s_{uv}$ set $A_w=s_{uw}+s_{vw}$. By (1), $A_w$ is either zero or one. Put
+\[
+ U=\sum s_{uv}A_w,\quad
+ X=\sum s_{uv}c_{wx}A_w(1-A_x),\quad
+ Y=\tfrac12\sum s_{uv}(1-A_w)(1-A_x),
+\]
+where each sum includes all four indices. Expanding $Y$ gives
+\[
+ Y=n^2|S|-U+P+Q+K. \tag{3}
+\]
+We also have
+\[
+ U-X=4P+2Q+2K+2D+2R. \tag{4}
+\]
+Here are details to make this algebra checkable. Substitute
+$1-c_{wx}(1-A_x)=q_{wx}+s_{wx}+c_{wx}A_x$ and use the symmetry between $u,v$. The part containing $s_{wx}$ is $2(P+Q)$. In the remaining part the product $s_{uw}c_{wx}s_{ux}$ vanishes by (1), leaving
+\[
+ 2\sum s_{uv}s_{uw}(q_{wx}+c_{wx}s_{vx}).
+\]
+Split this by $s_{vx}+q_{vx}+c_{vx}=1$. The three contributions are respectively $2P$, $2(K+D)$, and $2R$. For the middle contribution, split $\sum s_{uv}s_{uw}q_{vx}q_{wx}$ according as $s_{ux}=1$ or zero; these are $K$ and $D$, after relabelling indices. This proves (4). Equations (3)--(4) imply
+\[
+ X+Y=n^2|S|-3P-Q-K-2D-2R. \tag{5}
+\]
+
+\subsection*{3. Recursive random cut}
+If $S$ is empty, independently placing every vertex in either side gives expected internal-edge count $|C|/2\le n^2/4$. Otherwise choose a uniformly random ordered edge $uv$ of $S$. Place $A'=N_S(u)$ on one side and $B'=N_S(v)$ on the other. These are disjoint independent sets in $G$ by (1). On $Z=V(G)\setminus(A'\cup B')$, recursively apply the same procedure to the induced graph, independently reversing its two sides with probability one half. This extra reversal makes each remaining vertex's side unbiased.
+Inductively, if $I$ is the final number of internal edges, then conditionally on the first edge,
+\[
+ \mathbb E_{uv}I+|S|
+ \le\tfrac12e(A'\cup B',Z)+\tfrac14|Z|^2
+       +s(A',B')+s(A'\cup B',Z). \tag{6}
+\]
+Indeed, the recursion contributes at most $|Z|^2/4-s(Z)$, boundary edges contribute one half each, and there are no internal edges inside $A'$ or $B'$. Decomposing $|S|$ into its three possible locations gives (6).
+Twice the right side of (6) equals $\sum_{w,x}f(u,v,w,x)$, where
+\[
+ f=s_{uv}\left[(3s_{wx}+c_{wx})A_w(1-A_x)
+       +\tfrac12(1-A_w)(1-A_x)
+       +2s_{wx}s_{uw}s_{vx}\right].
+\]
+There are two further immediate path-count identities:
+\[
+ \sum s_{uv}s_{wx}A_w(1-A_x)=2P,
+ \qquad \sum s_{uv}s_{wx}s_{uw}s_{vx}=Q.
+\]
+For the first, its two terms describe an $S$-path whose endpoints are not joined by an $S$-edge; the other excluded adjacency is automatically zero by (1). The second counts an ordered $S$-four-cycle. Thus (5) gives
+\begin{align*}
+ F:=\sum f
+ &=n^2|S|+3P+Q-K-2D-2R\\
+ &\le n^2|S|+(P+Q-K)+2(P-D)
+ \le n^2|S|.
+\end{align*}
+Averaging (6) over the $2|S|$ ordered choices of $uv$ yields
+\[
+ \mathbb EI+|S|\le F/(4|S|)\le n^2/4.
+\]
+Some resulting cut achieves this bound. Take $|S|=\alpha_1(G)$ and delete its internal edges. Every triangle has an internal edge in any bipartition, so
+\[
+ \boxed{\alpha_1(G)+\tau_1(G)\le n^2/4.}
+\]
+
+\subsection*{Checks and sharpness}
+Balanced complete bipartite graphs attain equality: every edge can belong to $S$, there are no triangles to cover, and there are $n^2/4$ edges for even $n$. The ordered-pair convention accounts for the factor $4|S|$ in the averaging step. Repeated vertices were retained throughout the algebra; discarding them would spoil its exact form.
+
+\textbf{Status: solved.} This is a full proof reconstruction of the known Norin--Sun inequality; no computer algebra or unproved four-vertex inequality is required as an external input.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/621}, checked 24 September 2026.
+\item S. Norin and Y. R. Sun, \emph{Triangle-independent sets vs. cuts}, Sections 2.1--2.2, \url{https://arxiv.org/abs/1602.04370}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\%.}

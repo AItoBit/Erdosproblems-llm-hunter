@@ -1,0 +1,66 @@
+\textbf{Erd\H{o}s problem 542.}
+For $A\subseteq[1,n]$ with $\operatorname{lcm}(a,b)>n$ for distinct members, is $\sum_{a\in A}1/a\leq31/30$? Must linearly many integers at most $n$ fail to divide any member of $A$?
+
+\textbf{Status, sources, and a direction of divisibility.}
+The reciprocal bound is true. We use Theorem 1 of Schinzel and Szekeres, \emph{Sur un probl\`eme de M. Paul Erd\H{o}s}, Acta Sci. Math. 20 (1959), 221--229, as the external sharp upper-bound theorem:
+\texttt{https://acta.bibl.u-szeged.hu/13886/1/math\_020\_221-229.pdf}.
+The current statement is at \texttt{https://www.erdosproblems.com/542}, checked 24 September 2026.
+The web statement's second question asks whether $m$ divides some $a$. The primary paper's uncovered set, on page 228, instead concerns $m$ divisible by some $a$. Both linear-lower-bound assertions are false. We handle the literal direction directly, and reconstruct the nonmultiple construction for the historical direction.
+
+\textbf{The sharp upper bound and an elementary packing check.}
+The cited theorem applies exactly to distinct positive integers at most $n$ whose pairwise least common multiples exceed $n$. It gives the required $31/30$ bound. At $n=5$, the set $\{2,3,5\}$ is admissible and has reciprocal sum $31/30$, so the constant is optimal.
+
+For comparison, the sets of multiples of different $a\in A$ inside $[1,n]$ are disjoint: a common multiple would be at least their least common multiple. Thus
+\[
+ \sum_{a\in A}\lfloor n/a\rfloor\leq n.                 \tag{1}
+\]
+Also $A$ is primitive, since divisibility between two members would violate the lcm condition. Sending each $a$ to the largest $2^ja\leq n$ injects $A$ into $(n/2,n]$; a collision would put two members on one divisibility chain. Hence $|A|\leq\lceil n/2\rceil$, and (1) yields the elementary weaker estimate
+$\sum1/a\leq1+\lceil n/2\rceil/n$. The sharper constant uses the named external theorem.
+
+\textbf{The second question exactly as displayed.}
+Take $A=(n/2,n]\cap\mathbb N$. Distinct members have lcm greater than $n$: neither divides the other, so their lcm is at least twice the larger one. Every $m\leq n$ divides a member of $A$, namely the largest $2^jm\leq n$. Therefore the number of integers which fail to divide any member is exactly zero.
+
+\textbf{The historical direction: only $o(n)$ nonmultiples.}
+For $a>1$, let $P^-(a)$ be its smallest prime factor. Define
+\[
+ T_n=\{2\leq a\leq n:aP^-(a)>n\},
+\]
+and let $A_n$ be the elements of $T_n$ minimal under divisibility. Every element of $T_n$ is divisible by an element of $A_n$.
+To check admissibility, take $a_1<a_2$ in $A_n$, and write
+$a_1=dq_1$, $a_2=dq_2$ with $(q_1,q_2)=1$. Minimality excludes $q_1=1$, so $q_2>q_1\geq P^-(a_1)$, and
+\[
+ \operatorname{lcm}(a_1,a_2)=a_1q_2>a_1P^-(a_1)>n.
+\]
+
+Let $B_n$ contain the positive integers at most $n$ divisible by no $a\in A_n$. If $b\in B_n$, no divisor $d>1$ of $b$ lies in $T_n$. Write its prime factors with multiplicity in decreasing order as $p_1\geq\cdots\geq p_r$. Applying the last observation to $d_j=p_1\cdots p_j$ gives
+\[
+ p_j\leq\sqrt{\frac{n}{p_1\cdots p_{j-1}}}.             \tag{2}
+\]
+We use the classical Hardy--Ramanujan normal-order theorem for $\Omega(b)$ as a second explicit external input: all but $o(n)$ integers at most $n$ have at most $L=\lfloor1.1\log\log n\rfloor$ prime factors counted with multiplicity.
+
+Ignoring primality and decreasing order only enlarges the count in (2). Let $F_r(x)$ count positive integer tuples $(k_1,\ldots,k_r)$ obeying the same successive square-root restrictions. For real $x\geq1$,
+\[
+ F_r(x)\leq2^{r(r-1)/2}x^{1-2^{-r}}.                   \tag{3}
+\]
+For $r=1$ this is $\lfloor\sqrt x\rfloor\leq\sqrt x$. Inductively,
+$F_r(x)=\sum_{k\leq\sqrt x}F_{r-1}(x/k)$; for $0\leq\alpha<1$,
+$\sum_{k\leq y}k^{-\alpha}\leq y^{1-\alpha}/(1-\alpha)$, by integrating the decreasing function on intervals $[k-1,k]$. Apply this with $\alpha=1-2^{-(r-1)}$ to obtain (3).
+
+Every $b\in B_n$ with $1\leq\Omega(b)\leq L$ supplies one tuple counted in (3). Their total number is at most
+\[
+ L\,2^{L(L-1)/2}n^{1-2^{-L}}
+ \leq n\exp\!\left(O((\log\log n)^2)
+               -(\log n)^{\,1-1.1\log2}\right)=o(n).
+\]
+Here $1-1.1\log2>0$. Adding $b=1$ and the $o(n)$ exceptional integers from the normal-order theorem gives $|B_n|=o(n)$.
+This disproves a positive linear lower bound even in the historical direction. By the disjointness in (1),
+\[
+ \sum_{a\in A_n}\frac1a
+ \geq\frac1n\sum_{a\in A_n}\lfloor n/a\rfloor
+ =1-\frac{|B_n|}{n}=1-o(1),
+\]
+also reconstructing the near-one lower examples.
+
+\textbf{Completion estimate.}
+The sharp upper bound uses the stated Schinzel--Szekeres theorem; both negative divisibility conclusions are proved, with Hardy--Ramanujan explicitly used for the historical construction.
+\textbf{COMPLETION: 100\%}

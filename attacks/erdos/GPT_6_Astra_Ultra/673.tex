@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 673}
+
+\paragraph{Statement and scope.}
+For the ordered positive divisors \(1=d_1<\cdots<d_{\tau(n)}=n\), put
+\[
+ G(n)=\sum_{i=1}^{\tau(n)-1}\frac{d_i}{d_{i+1}}.
+\]
+Does \(G(n)\to\infty\) for almost all integers \(n\), and is there an asymptotic formula for \(\sum_{n\leq X}G(n)\)? We prove the first assertion and give matching order bounds \(\Theta(X\log X)\) for the sum. The asymptotic equivalent, including its leading constant, remains unresolved in this attempt.
+
+\paragraph{A divisor comparison with a necessary restriction.}
+For every divisor \(h\mid n\) with \(h>1\),
+\[
+ \frac{\tau(n/h)}h\leq G(n)<\tau(n). \tag{1}
+\]
+Indeed, for each divisor \(a\mid n/h\), both \(a\) and \(ha\) divide \(n\), with \(ha>a\). Thus \(a<n\), its next divisor \(a'\) exists, and \(a'\leq ha\). The summand starting at \(a\) is at least \(1/h\). Distinct \(a\)'s select distinct summands, proving the lower bound. Each summand is less than one, proving the upper bound, including the empty sum at \(n=1\).
+
+The condition \(h>1\) cannot be dropped: the asserted lower bound at \(h=1\) would incorrectly say \(\tau(n)\leq G(n)\). For a prime \(p\mid n\), prime factorization gives
+\[
+ \tau(n/p)\geq\tfrac12\tau(n),\qquad
+ G(n)\geq\frac{\tau(n)}{2p}. \tag{2}
+\]
+
+\paragraph{Two elementary density facts.}
+First, for every fixed \(T\), the inequality \(\tau(n)>T\) holds for a set of integers of natural density one. Here is a proof avoiding a normal-order theorem. For a finite set \(S\) of primes, let
+\[
+ Z_S(n)=\sum_{p\in S}1_{p\mid n},\qquad \mu_S=\sum_{p\in S}\frac1p.
+\]
+By the Chinese remainder theorem, in the limiting uniform distribution of integers, the indicators are independent Bernoulli variables of means \(1/p\). Consequently \(\operatorname{Var}(Z_S)\leq\mu_S\), and Chebyshev's inequality gives limiting density at most \(4/\mu_S\) for \(Z_S<\mu_S/2\). The reciprocal prime sum diverges, so \(\mu_S\) can be arbitrarily large. Since \(\tau(n)\geq2^{Z_S(n)}\), the upper density of \(\{n:\tau(n)\leq T\}\) is zero.
+
+Second, the density of integers having no prime divisor at most \(P\) is
+\[
+ \prod_{p\leq P}(1-1/p)\leq\exp\left(-\sum_{p\leq P}1/p\right), \tag{3}
+\]
+which tends to zero as \(P\to\infty\). These statements use only finite CRT distributions followed by a limit; they do not assume independent divisibility by infinitely many primes. The divergence of the prime reciprocal sum follows, for example, because otherwise the finite Euler products \(\prod_{p\leq P}(1-1/p)^{-1}\) would stay bounded although they dominate \(\sum_{j\leq P}1/j\).
+
+\paragraph{Almost-everywhere divergence.}
+Fix a target \(M>0\) and an error tolerance \(\eta>0\). Choose \(P\) so that (3) is less than \(\eta\). Apart from a set of density less than \(\eta\), the integer \(n\) has a prime divisor \(p\leq P\). Apart from a set of density zero, it also has \(\tau(n)>2PM\). On the intersection, (2) gives \(G(n)>M\). Thus the upper density of \(\{n:G(n)\leq M\}\) is at most \(\eta\). Since \(\eta\) was arbitrary, this density is zero, proving the first question.
+
+\paragraph{The average has logarithmic order.}
+Let \(D(Y)=\sum_{j\leq Y}\tau(j)\). Counting divisors in the opposite order gives
+\[
+ D(Y)=\sum_{a\leq Y}\left\lfloor\frac Ya\right\rfloor
+ =Y\log Y+O(Y). \tag{4}
+\]
+The error follows by bounding each floor error by one and using the elementary harmonic-sum estimate. Apply (1) with \(h=2\) to the even integers and the upper bound to all integers. Then
+\[
+ \frac12D(X/2)\leq\sum_{n\leq X}G(n)\leq D(X).
+\]
+In particular,
+\[
+ \frac X4\log X-O(X)
+ \leq\sum_{n\leq X}G(n)
+ \leq X\log X+O(X). \tag{5}
+\]
+Thus the average tends to infinity and is of order \(\log X\).
+
+\paragraph{Remaining gap and source.}
+Equation (5) is not an asymptotic equivalent: its two leading constants differ. Neither the almost-everywhere argument nor (1) controls the fine ordering of consecutive divisors enough to identify the leading coefficient. That part remains unresolved here. The basic divisor comparison is attributed to Terence Tao in the current discussion, and the first assertion was also recognized by Erd\H{o}s as elementary: \url{https://www.erdosproblems.com/673}, checked 24 September 2026. The full proofs above include the missing restriction \(h>1\). No novelty or local formal verification is claimed.
+
+\textbf{Completion rate estimate: 75\%.}

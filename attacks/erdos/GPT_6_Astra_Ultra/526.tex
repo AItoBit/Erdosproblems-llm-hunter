@@ -1,0 +1,45 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#526; the random-arc criterion with its normalization, 2026-09-24.}
+Independent uniform random arcs have prescribed lengths $a_n\geq0$, with $a_n\to0$ and $\sum a_n=\infty$. Determine when their union covers the entire circle with probability one.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Shepp's 1972 theorem gives the criterion. Its original statement uses a circle of circumference one and a nonincreasing sequence of arc lengths. Both conventions matter. We state this external theorem precisely and derive the criterion for the given sequence, together with explicit critical examples and a pointwise-coverage calculation.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Normalize and reorder the independent arcs, apply Shepp's criterion, and evaluate its series at the harmonic threshold. Distinguish coverage of every point from coverage of almost every point in arclength measure.
+
+\section{WORK}
+Let $L$ be the circumference of the circle. If the original unit circle means radius one and lengths are ordinary arclengths, then $L=2\pi$; if lengths are normalized fractions of the circumference, take $L=1$. We use open arcs. The closed-arc convention has the same complete-coverage event almost surely: conditional on any one random endpoint, the other arcs cover it with probability one because their total length is infinite, and there are only countably many endpoints. If some $a_n\geq L$, coverage is immediate for a closed full-circle arc. For an open arc of length $L$, the sole excluded endpoint is covered almost surely by the other arcs, since their total length remains infinite. Larger lengths also make the conclusion immediate. Hence assume $a_n<L$ for every $n$.
+Discard zero lengths and let $b_1\geq b_2\geq\cdots>0$ be the nonincreasing rearrangement of the positive numbers $a_n/L$. Such a rearrangement exists because the original sequence tends to zero, so only finitely many terms exceed any positive threshold. It lists every positive term. A deterministic permutation of independent uniform locations is still an independent uniform family, and the union is unchanged by reindexing.
+
+\textbf{Shepp's external criterion.} For $1>b_1\geq b_2\geq\cdots>0$, independent uniformly positioned arcs on a circumference-one circle cover the whole circle with probability one if and only if
+\[
+ \boxed{\displaystyle\sum_{n=1}^\infty\frac{\exp(B_n)}{n^2}=\infty,
+ \qquad B_n=\sum_{j=1}^n b_j.}                         \tag{1}
+\]
+This is the necessary and sufficient condition for the question after the preceding normalization and rearrangement. The proof of the general random-covering theorem is an explicit external dependency, not replaced by the elementary argument below.
+
+\textbf{Why divergence of the lengths alone is insufficient.} For a fixed point $x$, independence gives
+\[
+ \mathbb P(x\hbox{ is missed by arcs }r,\ldots,s)
+ =\prod_{j=r}^s(1-b_j)\leq\exp\left(-\sum_{j=r}^s b_j\right).
+\]
+As $s\to\infty$, this tends to zero. Taking the countable intersection over $r$ shows that this fixed point is covered infinitely often almost surely. Fubini's theorem then says that the set of points not covered infinitely often has arclength measure zero almost surely. It does not say that this exceptional set is empty, since the circle has uncountably many points.
+For a concrete distinction, choose a decreasing sequence with $b_n=c/n$ for all sufficiently large $n$, where $0<c<1$, adjusting initial terms to lie below one. Then $B_n=c\log n+O(1)$, and the series in (1) is comparable to $\sum n^{c-2}$, which converges. Thus complete coverage does not have probability one, despite infinite total length and almost-sure coverage of almost every point.
+
+\textbf{The sharp harmonic and logarithmic thresholds.} The same calculation for any $c>0$ shows that an eventual $c/n$ sequence gives complete coverage with probability one exactly when $c\geq1$. More finely, suppose, for all sufficiently large $n$,
+\[
+ b_n=\frac1n+\frac{\beta}{n\log n}.
+\]
+For every fixed real $\beta$ these terms are eventually positive and decreasing. Integral comparison yields
+$B_n=\log n+\beta\log\log n+O(1)$.
+The series in (1) is therefore comparable to
+$\sum 1/[n(\log n)^{-\beta}]$, which diverges exactly when $\beta\geq-1$. This includes the borderline case $\beta=-1$; treating the lower-order term as negligible would miss this transition. Altering finitely many initial lengths only multiplies the tail comparison by a fixed positive constant.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The necessary and sufficient condition is (1), with normalized, sorted positive lengths. Its application to the original indexing and the critical examples are proved. The general equivalence in (1) is Shepp's theorem, explicitly imported; the pointwise/Fubini argument alone is not a proof of it.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/526}; L. A. Shepp, \emph{Covering the circle with random arcs}, Israel Journal of Mathematics 11 (1972), 328--345, original theorem statement: \url{https://doi.org/10.1007/BF02789327}.
+
+\textbf{Completion rate estimate: 100\%.}

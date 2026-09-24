@@ -1,0 +1,61 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#296; a complete greedy-packing deduction, 2026-09-24.}
+Let $k(N)$ be the largest number of pairwise disjoint subsets $A_1,\ldots,A_k\subseteq[1,N]$ satisfying $\sum_{n\in A_i}1/n=1$ for each $i$. Estimate $k(N)$ and decide whether $k(N)=o(\log N)$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The proposed little-oh estimate is false: $k(N)\sim\log N$. The problem page credits Hunter and Sawhney's observation that Bloom's reciprocal-mass theorem implies this by a greedy argument. We reproduce that deduction, using the stronger reciprocal-mass threshold of Liu and Sawhney as an explicit external input. The conclusion is a known result.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Every selected set consumes exactly one unit of the total harmonic mass. Continue selecting sets until the unused denominators contain no further unit-sum subset. A theorem bounding the reciprocal mass of such a remainder controls the total loss.
+
+\section{WORK}
+Write $R(E)=\sum_{n\in E}1/n$ and $H_N=R([1,N])$. Disjointness immediately gives
+\[
+k(N)=\sum_{i=1}^{k(N)}R(A_i)
+=R\!\left(\bigcup_i A_i\right)\leq H_N.
+\tag{1}
+\]
+In particular $k(N)\leq\lfloor H_N\rfloor$.
+
+\textbf{Declared external input.} Liu and Sawhney's Theorem 1.1 says that for each fixed $\varepsilon>0$ and all sufficiently large $N$, every $E\subseteq[1,N]$ satisfying
+\[
+R(E)\geq(\log N)^{4/5+\varepsilon}
+\tag{2}
+\]
+contains a subset with reciprocal sum exactly $1$. Distinctness is built into the use of subsets. The Fourier-analytic proof of this theorem is not reconstructed here.
+
+Set $\varepsilon=1/10$. Starting with $[1,N]$, repeatedly remove a subset of reciprocal sum $1$ whenever one exists. Each removal deletes at least one integer, so the procedure stops after a finite number $q$ of steps. Its output consists of disjoint sets $A_1,\ldots,A_q$ and a remainder $U$ containing no unit-sum subset. By the contrapositive of (2),
+\[
+R(U)<(\log N)^{9/10}
+\]
+for sufficiently large $N$. The exact mass identity is
+\[
+H_N=q+R(U).
+\tag{3}
+\]
+Therefore
+\[
+H_N-(\log N)^{9/10}<q\leq k(N)\leq H_N.
+\tag{4}
+\]
+The procedure need not find an optimal packing: every maximal packing already satisfies the lower bound in (4). Using $H_N=\log N+\gamma+O(1/N)$ yields
+\[
+k(N)=\log N+O((\log N)^{9/10}),\qquad
+\frac{k(N)}{\log N}\longrightarrow1.
+\tag{5}
+\]
+More generally, any threshold $T(N)=o(\log N)$ in place of (2) would give $H_N-T(N)<k(N)\leq H_N$ by the same proof. This explains why Bloom's earlier estimate also suffices for the asymptotic.
+
+\section{VERIFICATION AND SCOPE}
+The remainder $U$ may be arbitrary and sparse; the external theorem is stated for arbitrary subsets of $[1,N]$, so it still applies after all the removals. Pairwise disjointness, rather than any independence assumption, gives the exact identity (3). The proof answers the main question about sums equal to $1$; the separate editorial question about many sets with an unspecified common sum is not asserted here.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and the Hunter--Sawhney deduction: \url{https://www.erdosproblems.com/296}.
+\item T. F. Bloom, \emph{On a density conjecture about unit fractions}, Theorem 3: \url{https://arxiv.org/html/2112.03726}.
+\item Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Theorem 1.1: \url{https://arxiv.org/html/2404.07113}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, using the stated reciprocal-mass theorem.}
+In fact $k(N)\sim\log N$, so the proposed $o(\log N)$ bound is false.
+\textbf{Completion rate estimate: 100\% of the main question, relative to the external input.}

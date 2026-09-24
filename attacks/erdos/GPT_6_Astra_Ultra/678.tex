@@ -1,0 +1,129 @@
+\section*{Erd\H{o}s Problem 678: reversing the order of interval LCMs}
+
+\paragraph{Statement and claim.}
+Write \(M(n,k)=\operatorname{lcm}(n+1,\ldots,n+k)\).
+There are infinitely many triples \(n,m,k\), with \(k\geq3\) and
+\(m\geq n+k\), for which \(M(n,k)>M(m,k+1)\).
+In fact, for every fixed \(C\geq1\) and all sufficiently large \(k\)
+we construct disjoint intervals beginning at \(x<y\) such that
+\[
+ \operatorname{lcm}(x,\ldots,x+k-1)>
+ C\operatorname{lcm}(y,\ldots,y+k).
+\]
+This reconstructs Cambie's theorem, with a simplified choice of \(y\):
+\url{https://arxiv.org/abs/2410.09138},
+\url{https://www.erdosproblems.com/678}.
+The only asymptotic external input is the prime number theorem, used
+to find primes in fixed relative intervals.
+
+\paragraph{The duplication identity.}
+Put
+\[
+ L=\operatorname{lcm}(1,\ldots,k),\qquad
+ s=\prod_{p\leq\sqrt{k}}p^{\lfloor\log_p k\rfloor}.
+\]
+For \(p>\sqrt{k}\), write \(r_p=k\bmod p\), and represent zero
+residues by \(p\). Choose positive integers \(x,y\) satisfying
+\[
+ x\equiv1\pmod s,\quad y\equiv0\pmod s,\qquad
+ 1\leq x\bmod p\leq p-r_p,\quad
+ p-r_p\leq y\bmod p\leq p
+ \quad(\sqrt{k}<p\leq k).
+                                                               \tag{1}
+\]
+Let \(D_x\) be the product of the \(k\) terms starting at \(x\),
+divided by their LCM, and define \(D_y\) similarly for the \(k+1\)
+terms starting at \(y\). Then
+\[
+ D_y=L D_x.                                                     \tag{2}
+\]
+Here is a prime-by-prime proof. For \(p\leq k\), set
+\(a=\lfloor\log_p k\rfloor\). Each interval contains a multiple
+of \(p^a\) and at most one multiple of \(p^{a+1}\). Consequently
+the valuation of its duplication factor is the sum of the
+valuations truncated at \(a\), minus \(a\).
+For \(p\leq\sqrt{k}\), the residues in the \(y\)-interval are
+\(0,1,\ldots,k\) modulo \(p^a\), whereas those in the \(x\)-interval
+are \(1,\ldots,k\). The difference of the truncated sums is \(a\).
+For \(p>\sqrt{k}\), condition (1) makes the \(x\)-interval contain
+\(\lfloor k/p\rfloor\) multiples of \(p\), and the \(y\)-interval
+one more. For \(p>k\) there is no duplication in either interval.
+This proves (2). It follows that
+\[
+ \frac{\operatorname{lcm}(x,\ldots,x+k-1)}
+      {\operatorname{lcm}(y,\ldots,y+k)}
+ =\frac L{y+k}\prod_{j=0}^{k-1}\frac{x+j}{y+j}
+ \geq \frac L{y+k}\left(\frac xy\right)^k.                       \tag{3}
+\]
+
+\paragraph{Choosing two nearby admissible intervals.}
+Fix \(\varepsilon=1/(1000C)\). For all sufficiently large \(k\),
+choose a prime
+\[
+ k/2<p_0<(1+\varepsilon)k/2
+\]
+and three different primes \(p_1,p_2,p_3\) in
+\(((1-\varepsilon)k,k)\).
+First choose \(y\) among the multiples of \(L/p_0\) in
+\[
+ \frac L{5C}(1+1/k)<y<\frac L{4C}-k.                            \tag{4}
+\]
+The number of candidates is
+\((1/(20C)+o(1))p_0\). They have distinct residues modulo \(p_0\),
+since the interval has length less than \(L\).
+The forbidden residues are precisely
+\(1,\ldots,2p_0-k-1\), at most \(\varepsilon k\) of them.
+There are therefore more candidates than forbidden residues.
+All other large-prime residues of \(y\) are zero, which are
+allowed in (1).
+
+Put \(P=p_1p_2p_3\), \(g=L/P\), and consider \(x=1+gz\).
+All the congruences for \(x\) except those at \(p_1,p_2,p_3\)
+are then automatic. At \(p_i\), exactly \(k-p_i\) residues
+are forbidden. Define
+\[
+ h=1+\sum_{i=1}^3(k-p_i)\leq3\varepsilon k+1<\min_i p_i.
+\]
+In any \(h\) consecutive values of \(z\), its induced residues
+modulo each \(p_i\) are distinct. At most \(\sum_i(k-p_i)=h-1\)
+of these values are forbidden by any of the three conditions.
+Thus every such block contains an admissible \(x\).
+The interval
+\[
+ y-\frac L{5Ck}<x<y                                             \tag{5}
+\]
+corresponds to a \(z\)-interval of length \(P/(5Ck)\), which is
+of order \(k^2\), and hence contains \(h\) consecutive integers.
+It therefore contains an admissible \(x\).
+
+Both \(2^{\lfloor\log_2 k\rfloor}>k/2\) and
+\(3^{\lfloor\log_3 k\rfloor}>k/3\) divide \(s\), so \(s>k^2/6\).
+As \(y-x\equiv-1\pmod s\) and \(y>x\), we have
+\(y-x\geq s-1>k\). In particular the intervals are disjoint.
+Equations (4)--(5) also give
+\[
+ x/y>k/(k+1),\qquad y+k<L/(4C).
+\]
+Substitution in (3) yields a ratio greater than
+\[
+ 4C\left(\frac{k}{k+1}\right)^k>4C/e>C.
+\]
+Taking \(n=x-1\), \(m=y-1\), and letting \(k\) increase proves
+the assertion.
+
+\paragraph{Why \(k\) cannot be held fixed in this conclusion.}
+For any interval of \(r\) consecutive positive integers,
+its product divided by its LCM is at most \((r-1)!\).
+Indeed, for each prime choose a term with maximal valuation.
+The valuations of the remaining terms are bounded by those of
+their nonzero differences from this term. Their product divides,
+prime by prime, \(j!(r-1-j)!\), which divides \((r-1)!\).
+If \(m\geq n+k\) and \(M(n,k)>M(m,k+1)\), it follows that
+\[
+ m^k\geq M(n,k)>M(m,k+1)\geq (m+1)^{k+1}/k!,
+\]
+so \(m<k!\). There are only finitely many examples for each fixed
+\(k\); the infinite family above correctly allows \(k\) to vary.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,78 @@
+\section{Erd\H{o}s Problem \#733: counting line occupancies with multiplicity}
+\noindent A complete incidence and dyadic-counting argument, 24 September 2026.
+
+\subsection*{Statement}
+For $n$ distinct points in the real plane, list in nondecreasing order the numbers of points on all lines containing at least two of them, including repetitions. Let $f(n)$ count the possible lists. We prove
+\[
+ \exp(c\sqrt n)\leq f(n)\leq\exp(C\sqrt n)
+\]
+for large $n$. In particular this proves the requested upper bound. The additional question in the historical discussion about a limiting leading constant is not asserted here.
+
+\subsection*{A rich-line bound with proof}
+Let $m$ lines each contain at least $k\geq2$ of the points. Connect consecutive points along each of these lines, giving a simple geometric graph with $e\geq m(k-1)$ edges on at most $n$ vertices. No vertex lies inside an edge. Adjacent edges have no interior intersection, and every two underlying lines cross at most once, so the number $X$ of crossing pairs of edges is at most $\binom m2$.
+
+For any such graph, $e\leq3n+X$: delete at most one edge per crossing pair to obtain a planar graph and use the elementary planar edge bound. If $e\geq4n$, retain each vertex independently with probability $p=4n/e$. Taking expectations of that inequality in the induced drawing gives
+\[
+ p^2e\leq3pn+p^4X,\qquad X\geq\frac{e^3}{64n^2}.
+\]
+The fourth power is valid because each crossing pair has four distinct endpoints. Consequently $m(k-1)^3\leq32n^2$ in this case. If $e<4n$, directly $m(k-1)<4n$. Combining and using $k-1\geq k/2$ gives, for the number $M_{\geq k}$ of lines with at least $k$ points,
+\[
+ M_{\geq k}\leq256n^2/k^3+8n/k. \tag{1}
+\]
+The only standard input is Euler's planar graph inequality.
+
+\subsection*{Small occupancies: count bins, not separate maxima}
+Choose $J$ with $2^J\leq\sqrt n<2^{J+1}$ and put $T=2^{J+1}$. For each $j=1,\ldots,J$, put $W=2^j$ and consider occupancies in the interval $[W,2W)$, ignoring size two. There are at most $W$ possible sizes in this interval.
+By (1), the sum of their multiplicities is at most
+\[
+ M_j=\left\lceil264n^2/W^3\right\rceil,
+\]
+because $W\leq\sqrt n$ makes $n/W\leq n^2/W^3$. The number of possible nonnegative multiplicity vectors is at most
+$\binom{M_j+W}{W}$, by adding a slack coordinate. Using
+$\binom ab\leq(ea/b)^b$, its logarithm is at most
+\[
+ W\left(1+\log\left(1+\frac{M_j}{W}\right)\right). \tag{2}
+\]
+
+Write $u=J-j$. Since $n<4(2^J)^2$, the ratio $n^2/W^4$ is at most $16^{u+1}$. Thus (2) is $O(2^J2^{-u}(u+1))$. Summing over the bins gives
+\[
+ O\left(2^J\sum_{u\geq0}(u+1)2^{-u}\right)=O(\sqrt n). \tag{3}
+\]
+This is the step needed to handle multiplicities: assigning a separate worst-case bound to every size would lose an unnecessary logarithmic factor.
+
+\subsection*{Large occupancies: total size and partitions}
+By (1) and $T>\sqrt n$, at most $264\sqrt n$ lines have occupancy at least $T$. Let their occupancies be $k_1,\ldots,k_m$. At a point lying on $d$ selected lines, $d\leq1+\binom d2$ for $d\geq1$. Summing, and using the fact that two distinct lines meet at most once, gives
+\[
+ \sum_{i=1}^m k_i\leq n+\binom m2=O(n). \tag{4}
+\]
+Hence the multiset of large occupancies is an integer partition with total at most $An$, for an absolute constant $A$.
+
+We include the elementary counting estimate. If $P(M)$ counts integer partitions of all nonnegative integers at most $M$, then for any $t>0$,
+\[
+ P(M)\leq e^{tM}\prod_{\ell\geq1}(1-e^{-t\ell})^{-1}.
+\]
+Indeed every partition of weight at most $M$ contributes at least $e^{-tM}$ to the product's power series. Expanding the logarithm and using $e^x-1\geq x$,
+\[
+ \log\prod_{\ell\geq1}(1-e^{-t\ell})^{-1}
+ =\sum_{a\geq1}\frac1{a(e^{ta}-1)}
+ \leq\frac1t\sum_{a\geq1}\frac1{a^2}\leq\frac2t.
+\]
+Taking $t=M^{-1/2}$ proves $P(M)\leq e^{3\sqrt M}$. Therefore (4) permits only $\exp(O(\sqrt n))$ large-occupancy multisets.
+
+\subsection*{The two-point lines and the upper bound}
+Every pair of points determines exactly one line, so the occupancies satisfy
+\[
+ \sum_{k\geq2}m_k\binom k2=\binom n2.
+\]
+Once all multiplicities for $k\geq3$ are known, this identity determines $m_2$ uniquely. There is no additional factor for the two-point lines. Multiplying the counts in (3)--(4) proves the desired upper bound.
+
+\subsection*{A matching exponential-order construction}
+Let $h=\lfloor\sqrt n\rfloor$, with $n\geq36$. For each subset $S\subseteq\{3,\ldots,h+2\}$, prescribe one group of $k$ collinear points for each $k\in S$, with no other collinear triples. Such a configuration can be built successively: choose each new group line avoiding all earlier points, and choose its points away from its finitely many intersections with lines determined by earlier pairs. Two points on the new line together with an earlier point cannot be collinear because the line avoids earlier points. Thus only the prescribed lines contain three or more points.
+The total number used is at most $h(h+5)/2\leq n-3$. Add generic points, avoiding all lines through existing pairs, until there are exactly $n$ points. The multiset of occupancies at least three is exactly $S$, each with multiplicity one. Different subsets give different lists, so $f(n)\geq2^h$.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved for the stated counting bound.} The crossing estimate, dyadic multiplicity count, partition estimate and construction are all proved. No limiting leading constant is claimed.
+Sources: \url{https://www.erdosproblems.com/733}; E. Szemer\'edi and W. T. Trotter, \emph{Extremal problems in discrete geometry}, \url{https://trotter.math.gatech.edu/papers/38.pdf}. This reconstructs the established incidence method; no novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

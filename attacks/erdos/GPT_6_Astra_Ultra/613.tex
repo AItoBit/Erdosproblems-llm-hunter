@@ -1,0 +1,38 @@
+\section{Erd\H{o}s Problem 613: a 44-edge counterexample}
+\subsection*{Statement}
+For $n\ge3$, must every graph with
+$\binom{2n+1}{2}-\binom n2-1$ edges be the union of a bipartite graph and a graph of maximum degree less than $n$? No. We reconstruct Pikhurko's counterexample for $n=5$ and give a direct proof using a vertex partition.
+
+\subsection*{The useful equivalent formulation}
+Such a decomposition exists if and only if the vertices can be coloured red and blue so that every vertex has at most $n-1$ neighbours of its own colour.
+In one direction, take a bipartition of the bipartite part. Every same-colour edge then belongs to the bounded-degree part. Conversely, put all edges crossing a proposed vertex partition into the bipartite part and all other edges into the bounded-degree part. The condition on same-colour degrees proves the equivalence, even if the original decomposition was allowed to have overlapping edge sets.
+
+\subsection*{Construction and proof}
+Take disjoint sets $A_1,B_1,A_2,B_2$ of sizes $2,5,3,5$. Make $A_1$ and $A_2$ cliques, make each $A_i$ complete to $B_i$, and place no other edges among these fifteen vertices. Add an apex $z$ adjacent to all fifteen vertices. The number of edges is
+\[
+ \binom22+2\cdot5+\binom32+3\cdot5+15
+ =1+10+3+15+15=44
+ =\binom{11}{2}-\binom52-1.
+\]
+Suppose a red-blue colouring had every same-colour degree at most four. Interchange the names of the colours so that $z$ is red. Therefore at most four of the other vertices are red.
+
+Consider a block $A\cup B$ with $|A|=p\in\{2,3\}$ and $|B|=5$. Let $a$ and $b$ be its numbers of red vertices in $A$ and $B$. If $A$ has no blue vertex then $a=p$, so $a+b\ge p$. Otherwise, a blue vertex in $A$ has exactly
+\[
+ (p-a-1)+(5-b)=p+4-a-b
+\]
+blue neighbours within the block; the red apex contributes none. Its same-colour degree being at most four implies $a+b\ge p$ again. Thus the first block contains at least two red vertices and the second at least three. The apex has at least five red neighbours, a contradiction.
+
+Hence this graph has no required decomposition, which disproves the universal assertion already at $n=5$.
+
+\subsection*{Verification and conclusion}
+There are sixteen vertices, not eleven: the problem fixes the number of edges and imposes no vertex bound. Confusing this with the separate $2n+1$-vertex result would invalidate the counterexample. The proof needs no exhaustive computer search; its two block inequalities can also be checked over all $2^{15}$ colourings with the apex fixed red.
+
+\textbf{Status: solved in the negative.} The graph is Pikhurko's known construction. Tao's linked formalization provides another certificate, but no local Lean kernel verification is claimed here.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/613}, checked 24 September 2026.
+\item O. Pikhurko, \emph{Size Ramsey numbers of stars versus 3-chromatic graphs}, Combinatorica 21 (2001), 403--412, \url{https://opikhurko.warwick.ac.uk/E/Pikhurko01c.pdf}.
+\item T. Tao, explicit certificate, \url{https://github.com/teorth/analysis/blob/main/Analysis/Misc/erdos_613.lean}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\%.}

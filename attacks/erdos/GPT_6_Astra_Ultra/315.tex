@@ -1,0 +1,96 @@
+\section{Erd\H{o}s Problem \#315: strict growth loss away from Sylvester's sequence}
+\noindent Reconstruction of Kamio's comparison proof, 23 September 2026.
+
+\subsection*{1) Statement and normalization}
+Let $u_1=1$, $u_{j+1}=u_j(u_j+1)$, and $c_0=\lim u_j^{2^{-j}}$. The reference denominator sequence is $u_j+1=2,3,7,43,\ldots$, whose reciprocals sum to one. We prove that every different increasing sequence of positive integers $(a_j)$ with $\sum_j1/a_j=1$ satisfies
+\[
+ \liminf_{j\to\infty}a_j^{2^{-j}}<c_0.
+\]
+We use the recurrence to define the reference sequence, avoiding any ambiguous shift in a floor formula. The proof follows Kamio's argument, with its finite comparison lemma proved in full. The strict inequality is the essential point.
+
+\subsection*{2) Generalized reference sequences}
+For an integer $r\ge1$, put $s_1(r)=r+1$ and $s_{j+1}(r)=s_j(r)^2-s_j(r)+1$. Telescoping gives
+\[
+ \sum_{i<j}\frac1{s_i(r)}+\frac1{s_j(r)-1}=\frac1r,
+ \qquad s_j(r)-1=r\prod_{i<j}s_i(r).\tag{1}
+\]
+In particular $\sum_i1/s_i(r)=1/r$. The quantities $s_j(r)^{2^{-j}}$ strictly decrease, and $(s_j(r)-1)^{2^{-j}}$ strictly increase. Their logarithmic difference tends to zero. Their common limit $c_r$ satisfies
+\[
+ \sqrt r<c_r<\sqrt{r+1}.
+\]
+Thus $c_r<c_t$ for integers $r<t$. The recurrence also gives
+\[
+ s_{i+j-1}(r)=s_i(s_j(r)-1),\qquad
+ c_r^{2^{j-1}}=c_{s_j(r)-1}.\tag{2}
+\]
+Here $s_j(1)=u_j+1$, so $c_1=c_0$ in the question's notation.
+
+\subsection*{3) Two finite comparison facts}
+First suppose $x_1\ge\cdots\ge x_n>0$ and $y_1\ge\cdots\ge y_n>0$ satisfy $\prod_{i\le j}x_i\ge\prod_{i\le j}y_i$ for every $j$. Put $S_j=\sum_{i\le j}(\log x_i-\log y_i)\ge0$. Convexity of the exponential and summation by parts give
+\[
+ \sum_i(x_i-y_i)\ge\sum_i y_i(\log x_i-\log y_i)
+ =y_nS_n+\sum_{j<n}(y_j-y_{j+1})S_j\ge0.\tag{3}
+\]
+Thus prefix product dominance implies total sum dominance.
+
+Second, let $U>0$ and let $(v_i),(w_i)$ be positive nonincreasing sequences satisfying, for every $n\ge t$,
+\[
+ \sum_{i\le n}w_i+U\prod_{i\le n}w_i=U,
+ \qquad \sum_{i\le n}v_i+U\prod_{i\le n}v_i\le U,\tag{4}
+\]
+and suppose $v_i\le w_i$ for $i<t$. Then $\sum_{i\le n}v_i\le\sum_{i\le n}w_i$ for every $n$. We prove this by induction. If $v_n\le w_n$, use the preceding prefix inequality. If $\prod_{i\le n}v_i\ge\prod_{i\le n}w_i$, use (4) directly. In the remaining case $v_n>w_n$ and the full product of $v$ is smaller. Let $m$ be the largest index with $\prod_{i=m}^n v_i<\prod_{i=m}^n w_i$. Then $m<n$, and for every $j\in[m,n]$,
+\[
+ \prod_{i=m}^j v_i<\prod_{i=m}^j w_i,
+\]
+because for $j<n$ the complementary suffix ratio is at least one by maximality of $m$. Apply (3) to this block and add the induction hypothesis up to $m-1$. This proves the second comparison fact, including the case $m=1$ with an empty preceding prefix.
+
+\subsection*{4) A first deviation when the target sum is $1/r$}
+Consider a positive nondecreasing integer sequence $(a_i)$ with sum of reciprocals $1/r$ and $a_1\ne r+1$. The infinite positive tail implies $a_1>r$, hence $a_1\ge r+2$. Set $v_i=1/a_i$ and $U=1/r$. Each remainder is positive and has denominator dividing $r\prod_{i\le n}a_i$, so
+\[
+ U-\sum_{i\le n}v_i\ge\frac1{r\prod_{i\le n}a_i}
+ =U\prod_{i\le n}v_i.\tag{5}
+\]
+
+For $r\ge2$, let $L=r(r+1)^2(r+2)/2$ and define
+\[
+ w_1=\frac1{r+2},\quad w_2=\frac2{(r+1)^2},\quad
+ w_i=\frac1{s_{i-2}(L)}\quad(i\ge3).
+\]
+This sequence is nonincreasing: the first inequality is $(r+1)^2\ge2(r+2)$, valid for $r\ge2$, and the later ones follow from the large value of $L$ and its increasing reference sequence. Direct calculation gives
+\[
+ U-w_1-w_2=Uw_1w_2=1/L.
+\]
+Together with (1), this verifies equality in (4) for every $n\ge2$. Also $v_1\le w_1$. Apply the second comparison fact with $t=2$ and (5).
+
+Both infinite sums equal $U$. If $v_i<w_i$ for all sufficiently large $i$, their tail sums would have that strict inequality, while prefix dominance forces the opposite tail inequality. Therefore $v_i\ge w_i$ infinitely often. Along those indices $a_i\le1/w_i$, yielding
+\[
+ \liminf_i a_i^{2^{-i}}\le c_L^{1/4}<c_r.\tag{6}
+\]
+For the strict step, (2) gives $c_r^4=c_M$ with $M=s_3(r)-1=r(r+1)(r^2+r+1)$, and
+\[
+ M-L=\frac{r^2(r+1)(r-1)}2>0.
+\]
+Integer monotonicity of $c_r$ proves (6).
+
+If $r=1$, use $w_1=w_2=1/3$, $w_3=3/10$ and $w_i=1/s_{i-3}(30)$ for $i\ge4$. This is nonincreasing, its first three entries have sum $29/30$ and product $1/30$, and (1) proves (4) for $t=3$. Since $a_1\ge3$ and $a_2\ge a_1$, the two initial comparisons hold. The same reasoning gives
+\[
+ \liminf_i a_i^{2^{-i}}\le c_{30}^{1/8}<c_{42}^{1/8}=c_1,
+\]
+where $42=s_4(1)-1$. This handles every first-term deviation.
+
+\subsection*{5) Moving a later deviation to the first position}
+For a sequence different from $s_i(1)$, let $j$ be its first differing index and put $r=s_j(1)-1$, $b_i=a_{i+j-1}$. By (1), the remaining reciprocal sum is $1/r$, and $b_1\ne r+1$. Section 4 gives $\liminf_i b_i^{2^{-i}}<c_r$. Raising this inequality to $2^{-(j-1)}$ and using (2) yields
+\[
+ \liminf_n a_n^{2^{-n}}
+ <c_r^{2^{-(j-1)}}=c_1=c_0.
+\]
+This is the required strict loss, even when the first deviation occurs arbitrarily late.
+
+\subsection*{6) Outcome and sources}
+\textbf{SOLVED by reconstruction.} All comparison and strictness steps are supplied. The argument even allows nondecreasing denominators, a stronger setting than the strictly increasing sequence asked for. It is attributed to Kamio, whose method builds on Soundararajan; the independent resolution by Li and Tang is also recorded on the problem page. No novelty or independent Lean verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/315}, checked 23 September 2026; Y. Kamio, \emph{Asymptotic analysis of infinite decompositions of a unit fraction into unit fractions}, Lemmas 6--7 and Theorem 8, \url{https://arxiv.org/pdf/2503.02317}; Z. Li and Q. Tang, \url{https://arxiv.org/abs/2503.12277}. The inequality directions and reciprocal/liminf conversion above are written explicitly rather than relying on typographical errors in the source exposition.
+
+The estimate measures complete coverage of the strict inequality, not a correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

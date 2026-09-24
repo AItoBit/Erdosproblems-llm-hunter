@@ -1,0 +1,149 @@
+\section*{Erd\H{o}s Problem 696: prime chains and divisor chains}
+
+\paragraph{Statement and claim.}
+Let \(h(n)\) be the longest increasing chain of prime divisors
+\(p_1,\ldots,p_h\) of \(n\) satisfying \(p_i\mid p_{i+1}-1\).
+Define \(H(n)\) in the same way with arbitrary positive divisors.
+We prove, for almost all \(n\),
+\[
+ h(n)\asymp H(n)\asymp\log_* n,\qquad H(n)/h(n)\leq18.
+                                                               \tag{1}
+\]
+In particular the proposed almost-everywhere divergence of the
+ratio is false. This is a reconstruction of the coarse resolution
+reported at \url{https://www.erdosproblems.com/696} and its forum,
+using the prime-successor method in the manuscript hosted at
+\url{https://github.com/davidturturean/erdos-696}.
+That manuscript attributes its stronger estimates to work with
+GPT-5.5. No new resolution or sharp normal-order constant is
+claimed here.
+
+\paragraph{External analytic inputs.}
+We use the classical Siegel--Walfisz theorem in the following
+fixed-exponent form: for coprime \(a,q\), uniformly for
+\(q\leq\log t\),
+\[
+ \pi(t;q,a)=\frac{\operatorname{Li}(t)}{\varphi(q)}
+             +O(t e^{-c\sqrt{\log t}}).                         \tag{2}
+\]
+See A. Walfisz, \emph{Zur additiven Zahlentheorie. II},
+Math. Z. 40 (1936), 592--607; the cited manuscript states
+and applies the same uniform input.
+We also use the elementary classical bounds
+\(\sum_{p\leq z}\log p=O(z)\) and
+\(\sum_p1/p=\infty\).
+All other probability, counting, and tower estimates are given below.
+
+\paragraph{Few short successor steps in a typical divisor chain.}
+Call a pair bad if \(d\geq Y\), \(d<e<\exp(\sqrt d)\), and
+\(e\equiv1\pmod d\). Then \(\gcd(d,e)=1\). For fixed \(d\),
+writing \(e=1+jd\) gives
+\[
+ \sum_{\substack{d<e<\exp(\sqrt d)\\e\equiv1\ (d)}}\frac1{de}
+ \leq\frac1{d^2}
+       \sum_{1\leq j\leq \exp(\sqrt d)/d}\frac1j
+ \ll d^{-3/2}.
+\]
+The number of \(n\leq x\) divisible by both members of any bad
+pair is therefore, by a union bound,
+\[
+ \leq x\sum_{d\geq Y}\sum_e\frac1{de}\ll xY^{-1/2}.             \tag{3}
+\]
+For every other \(n\), consecutive chain terms above \(Y\)
+satisfy \(d_{i+1}\geq f(d_i)\), where \(f(t)=\exp(\sqrt t)\).
+For all sufficiently large \(t\),
+\[
+ f(f(t))=\exp\bigl(\exp(\sqrt t/2)\bigr)\geq\exp(t).
+\]
+Define \(T_0=e\), \(T_{j+1}=\exp(T_j)\), and let
+\(L=\min\{j\geq0:x\leq T_j\}\).
+This differs from any usual convention for \(\log_*x\) by
+at most a fixed constant. Every two chain steps above \(Y\)
+raise the tower level by at least one. There are at most
+\(2L+O(1)\) such terms, and at most \(Y\) terms below \(Y\).
+Taking \(Y=\lfloor\sqrt L\rfloor\), we obtain
+\[
+ H(n)\leq3L
+ \quad\hbox{for all but }o(x)\hbox{ integers }n\leq x.            \tag{4}
+\]
+
+\paragraph{Enough prime successors in a very large window.}
+For large \(y\), put
+\[
+ Z(y)=\exp(\exp y),\qquad F(y)=\exp(\exp(y^2)).
+\]
+For every prime \(p\leq y\), partial summation in (2) gives,
+uniformly in \(p\),
+\[
+ \sum_{\substack{Z(y)<q\leq F(y)\\q\ {\rm prime}\\q\equiv1\ (p)}}
+       \frac1q
+ =\frac{y^2-y}{p-1}+O\bigl(e^{-c'\sqrt{\log Z(y)}}\bigr)
+ \geq y/3.                                                     \tag{5}
+\]
+Indeed, the modulus condition holds throughout the interval.
+The integrated error is bounded by a constant times
+\(\int_{\sqrt{\log Z(y)}}^\infty u e^{-cu}\,du\), and the
+main integral is
+\((\log\log F(y)-\log\log Z(y))/(p-1)\).
+Thus no constant in (5) depends on the chosen prime \(p\).
+
+\paragraph{Independent prime choices and transfer to integers.}
+Let \(y_0=L\), \(y_{j+1}=F(y_j)\), and
+\(K=\lfloor L/5\rfloor\). Consider independent Bernoulli
+variables indexed by primes \(q\leq y_K\), with success
+probability \(1/q\).
+With probability tending to one, there is a successful
+prime \(p_0\leq L\), since the probability of none is
+\(\prod_{p\leq L}(1-1/p)\longrightarrow0\).
+Having chosen \(p_j\leq y_j\), seek a successful prime
+\[
+ Z(y_j)<p_{j+1}\leq y_{j+1},\qquad p_{j+1}\equiv1\pmod{p_j}.
+\]
+The window is disjoint from every window previously inspected.
+Conditional on all previous choices, (5) shows that the
+probability of failure is at most
+\[
+ \prod_q(1-1/q)\leq\exp\left(-\sum_q1/q\right)
+ \leq e^{-y_j/3}\leq e^{-L/3}.
+\]
+A union bound over \(K\) stages now gives a prime chain of
+length \(K+1\geq L/6\), with probability \(1-o(1)\).
+
+The size of the prime cutoff matters for transferring this
+model to uniform integers \(n\leq x\).
+Let \(r_0=\min\{r:L\leq T_r\}=o(L)\).
+For large \(y\), \(y^2\leq e^y\), so \(F(y)\leq\exp(\exp(\exp y))\).
+Inductively,
+\[
+ y_K\leq T_{r_0+3K}\leq T_{L-3}<\log\log x
+\]
+for all sufficiently large \(x\); the last inequality uses
+\(x>T_{L-1}\).
+Set \(Q=\prod_{p\leq y_K}p\). The classical bound quoted above
+gives
+\[
+ Q\leq\exp(O(y_K))\leq(\log x)^{O(1)}=o(x).
+\]
+On a uniformly random residue modulo \(Q\), the divisibility
+events for its primes are exactly the independent model,
+by the Chinese remainder theorem.
+For every event depending on that residue, its probability
+on \(\{1,\ldots,\lfloor x\rfloor\}\) differs by \(O(Q/x)=o(1)\).
+Consequently
+\[
+ h(n)\geq L/6
+ \quad\hbox{for all but }o(x)\hbox{ integers }n\leq x.            \tag{6}
+\]
+
+\paragraph{Conclusion and scope.}
+Combining (4), (6), and \(h(n)\leq H(n)\) gives
+\(H(n)/h(n)\leq18\) outside \(o(x)\) exceptions up to \(x\).
+After discarding the \(O(\sqrt x)\) integers below \(\sqrt x\),
+the tower ranks of \(n\) and \(x\) differ by at most a constant.
+Thus (4)--(6) also prove the two order-of-growth assertions in (1).
+This settles the stated coarse estimation and ratio question,
+relative to (2). It does not reproduce the sharper constants
+discussed in the cited manuscript.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

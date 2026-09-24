@@ -1,0 +1,79 @@
+\section*{Erd\H{o}s Problem 557}
+
+\paragraph{Statement and result.}
+For fixed \(k\), must every tree \(T\) on \(n\) vertices satisfy
+\(R_k(T)\leq kn+O_k(1)\)? Yes. The dense Erd\H{o}s--S\'os
+theorem of Reed and Stein implies, for all sufficiently large
+\(n\) depending on \(k\),
+\[
+ R_k(T)\leq k(n-2)+3. \tag{1}
+\]
+We verify the exact reduction and its quantifiers, and give an
+elementary construction showing why the leading coefficient \(k\)
+cannot be decreased.
+
+\paragraph{The stated external input.}
+Reed and Stein, Theorem 2, prove that for every \(\gamma>0\)
+there is \(N_0(\gamma)\) such that, whenever \(N\geq N_0(\gamma)\)
+and \(n\geq\gamma N\), every \(N\)-vertex graph of average degree
+strictly greater than \(n-2\) contains every \(n\)-vertex tree.
+Its proof is an external dependency. The unrestricted Erd\H{o}s--S\'os
+conjecture is not needed for this deduction.
+
+\paragraph{Apply the density theorem to one colour.}
+For \(k\geq2\), set \(N=k(n-2)+3\), and consider any colouring
+of \(K_N\) with \(k\) colours. One colour has at least
+\(\binom N2/k\) edges, hence average degree at least
+\[
+ \frac{N-1}{k}=n-2+\frac2k>n-2. \tag{2}
+\]
+Also \(N\leq kn\), so \(n\geq N/k\).
+Choose \(\gamma=1/k\), and then choose \(n\) so large that
+\(N\geq N_0(1/k)\). The external theorem applies to the spanning
+graph of this colour and supplies \(T\). This proves (1), uniformly
+over all trees of the specified order.
+For \(k=1\), the exact value is \(R_1(T)=n\), so the original
+claim is immediate.
+
+\paragraph{Small orders and the meaning of the constant.}
+Only finitely many \(n\) lie below the threshold for fixed \(k\),
+and there are only finitely many trees of each such order.
+Their Ramsey numbers are finite: each is bounded by the ordinary
+\(k\)-colour Ramsey number of a clique of the same order.
+Increasing a constant \(C_k\) to cover these finitely many values
+therefore gives \(R_k(T)\leq kn+C_k\) for every \(n\).
+No uniformity in a growing number of colours is asserted.
+
+\paragraph{A star construction with the matching leading coefficient.}
+Let \(N\) be the largest positive even integer with
+\(N\leq k(n-2)+1\), for \(n\) sufficiently large.
+The complete graph on \(N\) vertices decomposes into \(N-1\)
+perfect matchings. Here is the usual explicit decomposition.
+Use vertices \(\{\infty\}\cup\mathbb Z_{N-1}\); for each
+\(a\in\mathbb Z_{N-1}\), pair \(\infty\) with \(a\), and pair
+\(a+j\) with \(a-j\) for \(1\leq j\leq(N-2)/2\).
+Each edge with two finite endpoints belongs to the unique matching
+whose index is their midpoint, because \(N-1\) is odd.
+
+Distribute these \(N-1\leq k(n-2)\) matchings among \(k\) colours,
+at most \(n-2\) matchings per colour. Every vertex then has degree
+at most \(n-2\) in each colour. No colour contains the star
+\(K_{1,n-1}\). Consequently
+\[
+ R_k(K_{1,n-1})>N\geq k(n-2),
+\]
+which is \(kn-O(k)\). This construction establishes the claimed
+sharpness of the leading coefficient.
+
+\paragraph{Sources and scope.}
+B.~Reed and M.~Stein, \emph{The Erd\H{o}s--S\'os conjecture in
+dense graphs}, Theorem 2:
+\url{https://arxiv.org/abs/2609.05417}.
+Current statement: \url{https://www.erdosproblems.com/557},
+checked 24 September 2026. This is a complete deduction relative to
+the stated embedding theorem. No local Lean verification was run.
+
+\paragraph{Completion estimate.}
+The full fixed-colour assertion and sharp leading coefficient follow,
+with the deep embedding theorem explicitly identified.
+\textbf{COMPLETION: 100\%}

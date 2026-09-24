@@ -1,0 +1,58 @@
+\section{Erd\H{o}s Problem \#607: counting line-occupancy sets}
+\noindent Crossing estimate and partition-count reconstruction, 24 September 2026.
+
+\subsection*{Statement}
+Given $n$ distinct plane points, record the set $A$ of all numbers of points on determined lines, each such line containing at least two points. If $F(n)$ counts the possible sets $A$, prove $F(n)\leq\exp(O(\sqrt n))$. We supply a complete proof, including the needed rich-line estimate, and a matching exponential-order construction. The result is attributed to Szemer\'edi--Trotter.
+
+\subsection*{An elementary crossing estimate}
+Consider a straight-line drawing of a simple graph with $v$ vertices and $e$ edges, with no vertex in an edge interior and no overlapping edge interiors. Let $X$ count unordered pairs of edges whose interiors cross; multiple concurrent crossings are counted pairwise. Deleting at most one edge per crossing pair leaves a planar simple graph, so
+\[e\leq3v+X.\tag{1}\]
+The looser $3v$ bound handles small and disconnected graphs as well.
+If $e\geq4v$, sample each vertex independently with probability $p=4v/e$, retaining induced edges. Crossing edges have four distinct endpoints. Applying (1) to each sampled graph and taking expectations gives
+\[p^2e\leq3pv+p^4X,\qquad
+X\geq\frac{e^3}{64v^2}.\tag{2}\]
+Indeed $p^2e-3pv=p^2e/4$. Thus the needed form of the crossing lemma follows directly from the planar edge bound and sampling.
+
+\subsection*{There are only $O(\sqrt n)$ very rich lines}
+Take any $m$ determined lines containing at least $K$ points each. Along each line join consecutive selected points by straight edges. The union is a simple graph on the original $n$ points: two different lines cannot give the same pair, and consecutive segments contain no selected point in their interior. It has
+\[e=\sum_{\ell}(r_\ell-1)\geq m(K-1),\qquad
+X\leq\binom m2.
+\]
+If $e<4n$, then $m<4n/(K-1)$. Otherwise (2) yields
+\[\frac{m^3(K-1)^3}{64n^2}\leq\frac{m^2}{2},\qquad
+m\leq\frac{32n^2}{(K-1)^3}.
+\]
+For $n\geq4$, choose $K=\lceil\sqrt n\rceil+1$. Both cases imply
+\[m\leq32\sqrt n.\tag{3}\]
+The argument counts crossings rather than geometric intersection locations, so coincident crossings do not invalidate it.
+
+\subsection*{Large distinct occupancy values have bounded total weight}
+For each value $k\in A$ with $k\geq K$, select one line having exactly $k$ points. There are $m\leq32\sqrt n$ such representatives by (3). Distinct lines intersect in at most one point. If a selected point lies on $t$ representative lines, its contribution to the incidence count exceeds its contribution to the union size by $t-1\leq\binom t2$. Summing this gives
+\[\sum_{\substack{k\in A\\k\geq K}}k
+\leq n+\binom m2\leq513n.\tag{4}\]
+This uses one representative per distinct occupancy value, not all rich lines, which is enough for counting the sets in the question.
+
+Let $B(M)$ count finite subsets $S\subseteq\mathbb N$ with $\sum_{s\in S}s\leq M$. For any $t>0$,
+\[
+B(M)\leq e^{tM}\prod_{j\geq1}(1+e^{-tj})
+\leq\exp\left(tM+\sum_{j\geq1}e^{-tj}\right)
+\leq\exp(tM+1/t).
+\]
+The last step uses $e^t-1\geq t$. With $t=M^{-1/2}$ this gives $B(M)\leq e^{2\sqrt M}$. There are at most $2^K$ possibilities for the values below $K$, while (4) gives at most $B(513n)$ possibilities for the remaining values. Therefore
+\[F(n)\leq2^{\lceil\sqrt n\rceil+1}e^{2\sqrt{513n}}
+=\exp(O(\sqrt n)).
+\]
+The finitely many smaller $n$ are absorbed by the absolute constant.
+
+\subsection*{Matching exponential-order lower bound}
+For $n\geq36$, let $m=\lfloor\sqrt n\rfloor$. For any subset $S\subseteq\{3,4,\ldots,m+2\}$, put one group of $k$ points on a separate line for every $k\in S$. The number used is at most $m(m+5)/2\leq n-2$ for all sufficiently large $n$; any finite exceptions may be omitted from this asymptotic construction. Add generic points to reach $n$.
+The groups can be chosen so that the only collinear triples belong to a prescribed group: at each stage take a new line avoiding all earlier points and choose its points away from its finitely many intersections with lines determined by earlier pairs. Add later generic points off every earlier determined line. No accidental rich line is then created. The two or more added generic points ensure that occupancy value two occurs. The resulting occupancy set is exactly $\{2\}\cup S$. Distinct $S$ give different sets, so
+\[F(n)\geq2^{\lfloor\sqrt n\rfloor}=\exp(\Omega(\sqrt n)).
+\]
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved.} Both the asked upper bound and its exponential order of sharpness are proved. The planar edge bound, elementary expectation and finite generic choices are the only standard ingredients; no unproved incidence theorem is substituted for the argument.
+Sources: \url{https://www.erdosproblems.com/607}; E. Szemer\'edi and W. T. Trotter, \emph{Extremal problems in discrete geometry}, \url{https://trotter.math.gatech.edu/papers/38.pdf}. The crossing proof is a standard reconstruction of the incidence mechanism, with no novelty or formal-verification claim.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

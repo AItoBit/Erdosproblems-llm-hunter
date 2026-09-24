@@ -1,0 +1,67 @@
+\section*{Erd\H{o}s Problem 651: convex configurations in higher dimensions}
+
+\paragraph{Statement.}
+Let \(f_k(n)\) be the least number of points in general position in
+\(\mathbb R^k\) that forces \(n\) points in convex position.
+Must \(f_k(n)>(1+c_k)^n\) hold for some \(c_k>0\)?
+
+\paragraph{Claim and source.}
+For every fixed \(k\geq3\), the answer is no.
+The external input is Pohoata and Zakharov,
+\emph{Convex polytopes from fewer points},
+\url{https://arxiv.org/abs/2208.04878}, Theorem 1.1:
+for every \(\varepsilon>0\), all sufficiently large \(n\) satisfy
+\[
+ f_3(n)\leq\lceil2^{\varepsilon n}\rceil.
+\]
+We spell out the projection and quantifier arguments that give the
+disproof in every higher dimension. The planar case is different;
+no disproof for \(k=2\) is claimed.
+See \url{https://www.erdosproblems.com/651}.
+
+\paragraph{Projection preserves the needed hypotheses.}
+Let \(X\subset\mathbb R^k\) be a finite general-position set of at least
+\(k+1\) points, with \(k\geq3\).
+Every four points of \(X\) are affinely independent: otherwise adding
+another \(k-3\) points would yield \(k+1\) points in an affine subspace
+of dimension at most \(k-1\), contrary to general position.
+
+Choose a linear map \(L:\mathbb R^k\to\mathbb R^3\) for which every
+four-point subset remains affinely independent. Such a map exists:
+for each fixed four-point subset, the determinant of its three
+image-difference vectors is a nonzero polynomial in the entries of
+\(L\), since those original difference vectors are independent.
+The zero sets of finitely many nonzero polynomials cannot cover
+the whole space of linear maps. The resulting image is a set of
+distinct points with no four coplanar.
+
+If \(Y\subseteq X\) projects to points in convex position, then \(Y\)
+itself is in convex position. Indeed, an expression
+\(y=\sum_{z\in Y\setminus\{y\}}\lambda_z z\), with nonnegative
+\(\lambda_z\) summing to one, would project to the same forbidden
+convex combination for \(L(y)\). Thus, in the asymptotic range
+relevant here,
+\[
+ f_k(n)\leq f_3(n).
+\]
+
+\paragraph{Excluding every positive exponential constant.}
+Fix any proposed \(c_k>0\), and take
+\(\varepsilon=\tfrac12\log_2(1+c_k)>0\).
+For all sufficiently large \(n\),
+\[
+ f_k(n)\leq\lceil2^{\varepsilon n}\rceil
+          <2^{2\varepsilon n}=(1+c_k)^n.
+\]
+This contradicts the proposed exponential lower bound, even if it
+was required only eventually. Consequently no such positive
+constant exists in dimension \(k\geq3\).
+
+\paragraph{Scope.}
+The disproof is complete relative to the stated Pohoata--Zakharov
+theorem. The generic projection and the comparison of growth rates
+are proved here; the deep three-dimensional theorem is not
+re-proved or presented as a new result.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

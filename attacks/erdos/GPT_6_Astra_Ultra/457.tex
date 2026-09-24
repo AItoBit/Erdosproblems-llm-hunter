@@ -1,0 +1,71 @@
+\section*{Erd\H{o}s Problem 457}
+
+\paragraph{Statement and result.}
+Are there \(\epsilon>0\) and infinitely many integers \(n\) for which
+every prime \(p\leq(2+\epsilon)\log n\) divides
+\(\prod_{i=1}^{\lfloor\log n\rfloor}(n+i)\)?
+Yes. In fact any fixed constant can replace \(2+\epsilon\).
+We reconstruct the simultaneous-approximation method described by
+Barreto and Tao in the current discussion.
+
+\paragraph{The elementary approximation lemma.}
+For real numbers \(\alpha_1,\ldots,\alpha_s\) and integer \(Q\geq2\),
+there exists \(1\leq t\leq Q^s\) such that
+\(\|t\alpha_j\|\leq1/Q\) for every \(j\).
+Partition \([0,1)^s\) into \(Q^s\) half-open cubes of side \(1/Q\);
+two of the \(Q^s+1\) points with coordinates
+\(\{r\alpha_j\}\), \(0\leq r\leq Q^s\), lie in the same cube.
+Subtracting their indices proves the lemma.
+
+\paragraph{Construct a long enough interval without making its start too large.}
+Fix \(A>2\), let \(k\) tend to infinity through integers, and set
+\[
+ B=\lceil e^k\rceil,\qquad Q=\lceil4A\rceil.
+\]
+Apply the lemma to the numbers \(B/p\), for primes \(k-1<p\leq Ak\).
+If \(s\) is the number of these primes, choose the resulting \(t\) and put
+\[
+ z=Bt,\qquad n=z-\lfloor k/2\rfloor.
+\]
+For each such \(p\) there is an integer multiple \(m_p p\) with
+\[
+ |z-m_pp|\leq p/Q\leq k/4.
+\]
+Therefore, for sufficiently large \(k\),
+\[
+ 1\leq m_pp-n\leq k-1.
+ \tag{1}
+\]
+Also \(n\geq e^k-k/2\), so \(\lfloor\log n\rfloor\geq k-1\)
+for large \(k\). Equation (1) puts a multiple of every prime in
+\((k-1,Ak]\) into the required interval. Every prime \(p\leq k-1\)
+already divides any product of \(k-1\) consecutive integers.
+Hence every prime \(p\leq Ak\) divides that product.
+
+\paragraph{The size comparison and infinitely many starts.}
+The standard Chebyshev bound \(\pi(x)=O(x/\log x)\), with \(A\)
+fixed, gives \(s=O_A(k/\log k)\). Since \(1\leq t\leq Q^s\),
+\[
+ \log n\leq\log B+s\log Q
+ =k+O_A(k/\log k),
+\]
+while the preceding lower bound gives \(\log n=k+O_A(k/\log k)\).
+For any fixed \(C<A\), eventually \(C\log n<Ak\).
+Thus all primes \(p\leq C\log n\) divide
+\(\prod_{i=1}^{\lfloor\log n\rfloor}(n+i)\).
+The starts \(n\geq e^k-k/2\) are unbounded, so infinitely many
+distinct starts occur. Taking, for example, \(C=3\) proves the question.
+
+\paragraph{Sources and scope.}
+\url{https://www.erdosproblems.com/457} and
+\url{https://www.erdosproblems.com/forum/thread/457},
+checked 24 September 2026, attribute the constructions to GPT-5.2 Pro
+prompted by Kevin Barreto, with a growing-constant refinement explained
+by Terence Tao and expanded by Nat Sothanaphan.
+Here the approximation lemma is proved; Chebyshev's prime-counting
+bound is external. The stronger growing-constant rate and the separate
+upper-bound Problem 1181 are outside this reconstruction.
+
+\paragraph{Completion estimate.}
+The literal question is proved, in the stronger form allowing any fixed constant.
+\textbf{COMPLETION: 100\%}

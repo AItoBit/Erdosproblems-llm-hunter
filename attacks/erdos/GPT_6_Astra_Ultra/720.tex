@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#720: linear size Ramsey number for paths}
+\noindent Complete elementary path argument; cycle part still missing, 24 September 2026.
+
+\subsection*{Statement and scope}
+Here $P_n$ has $n$ edges and $n+1$ vertices. We prove
+\[
+ n\leq\widehat R(P_n)\leq484(n+1)
+\]
+for all sufficiently large $n$. Thus the proposed divergence of $\widehat R(P_n)/n$ is false, while $\widehat R(P_n)/n^2\to0$ is true. The further question about $C_n$ is known to have a linear bound too, but its proof is not supplied here.
+
+\subsection*{A search separator}
+Put $s=n+1$. If a graph on $11s$ vertices has no path on $s$ vertices, depth-first search provides disjoint sets $U,W$ of size $5s$ with no edge between them.
+For completeness, maintain the current search stack, the unvisited set $U_0$, and the finished set $W_0$. The stack is a path and has at most $s-1$ vertices. There is never an edge from $W_0$ to $U_0$, since a vertex is finished only when it has no unvisited neighbor.
+Stop when $|W_0|=5s$. Then
+\[
+ |U_0|=11s-|W_0|-|\text{stack}|\geq5s+1.
+\]
+Taking $W=W_0$ and any $5s$ vertices of $U_0$ proves the claim.
+
+\subsection*{A graph with no large empty cut}
+There is a graph $G$ on $11s$ vertices with at most $484s$ edges such that every two disjoint $2s$-element sets have an edge between them. To see this, independently keep every possible edge with probability $4/s$, for $s\geq4$. For a fixed such pair of sets, the empty-cut probability is
+\[
+ (1-4/s)^{4s^2}\leq e^{-16s}.
+\]
+There are at most $3^{11s}$ ordered disjoint pairs of vertex subsets, since each vertex can be in the first, the second, or neither. The probability of any forbidden cut is at most
+\[
+ \exp((11\log3-16)s)=o(1).
+\]
+The expected edge count is at most $242s$, so Markov's inequality bounds the probability of exceeding $484s$ by $1/2$. The two desired properties therefore hold simultaneously with positive probability for sufficiently large $s$.
+
+\subsection*{Two separators cannot coexist}
+Color the edges of this $G$ red and blue, and suppose neither color contains a path on $s$ vertices. Apply the search separator separately in each color to obtain $U,W$ with no red edge between them, and $U',W'$ with no blue edge between them, all four sets of size $5s$. The unused set in each partition has size $s$.
+
+Write
+\[
+ X=U\cap U',\quad Y=U\cap W',\quad
+ Z=W\cap U',\quad T=W\cap W'.
+\]
+Each row and column sum in this two-by-two array has size at least $5s-s=4s$.
+Either $X,T$ both have size at least $2s$, or $Y,Z$ both do. Otherwise a set smaller than $2s$ could be chosen from each diagonal; those two sets share a row or a column and would have total size below $4s$, a contradiction.
+
+In the first case there is neither a red nor a blue edge from $X$ to $T$; the same conclusion holds between $Y,Z$ in the second case. Selecting $2s$ vertices from each contradicts the defining property of $G$. Hence every edge two-coloring contains the desired path.
+Finally any Ramsey host must have at least $n$ edges, since coloring all of them red must leave a copy of $P_n$.
+
+\subsection*{Outcome and remaining gap}
+\textbf{Attempt status: unresolved.} Both path-limit questions are settled by the proved linear bound. The separate assertion $\widehat R(C_n)=o(n^2)$ is not established by this argument: a long path alone does not give a cycle of a specified length. The known cycle result is context, not a proof supplied here.
+Sources: \url{https://www.erdosproblems.com/720}; A. Dudek and P. Pra\l at, \emph{An alternative proof of the linearity of the size-Ramsey number of paths}, \url{https://arxiv.org/abs/1405.1663}. The proof above reconstructs their two-separator method with convenient integer constants, not their optimized 137 bound. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 75\%}

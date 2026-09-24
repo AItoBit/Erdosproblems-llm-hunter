@@ -1,0 +1,64 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#523; an almost-sure upper bound, 2026-09-24.}
+Let $(\epsilon_j)_{j\geq0}$ be one sequence of independent symmetric signs, and put
+$F_n(z)=\sum_{j=0}^n\epsilon_jz^j$. Is there a constant $C>0$ such that almost surely
+$\max_{|z|=1}|F_n(z)|=(C+o(1))\sqrt{n\log n}$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem page attributes the sharp answer $C=1$ to Hal\'asz, following the order-of-magnitude work of Salem--Zygmund. This attempt proves an almost-sure upper estimate with an explicit larger constant and a deterministic lower bound. The sharp logarithmic lower bound and convergence to the constant one are not claimed.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Control the random polynomial at a fine deterministic grid using an exponential-moment bound, pass to the entire circle using a deterministic derivative estimate, and apply Borel--Cantelli on the single infinite sign probability space.
+
+\section{WORK}
+\textbf{A fixed-point tail bound.} If $S=\sum_{j=0}^n a_j\epsilon_j$ with real $|a_j|\leq1$, independence and $\cosh x\leq e^{x^2/2}$ give
+\[
+ \mathbb E e^{uS}=\prod_j\cosh(ua_j)
+ \leq e^{u^2(n+1)/2}.
+\]
+Markov's inequality, optimized at $u=v/(n+1)$ and applied to both signs, gives
+$\mathbb P(|S|\geq v)\leq2e^{-v^2/[2(n+1)]}$.
+At any fixed angle $\theta$, the real and imaginary parts of $F_n(e^{i\theta})$ have coefficients bounded by one. A complex number of modulus at least $v$ has one of these parts of modulus at least $v/\sqrt2$, so
+\[
+ \mathbb P\bigl(|F_n(e^{i\theta})|\geq v\bigr)
+ \leq4e^{-v^2/[4(n+1)]}.                              \tag{1}
+\]
+No independence of values at different angles is asserted or needed.
+
+\textbf{Discretizing the circle.} Take $L_n=\lceil n^3\rceil=n^3$ for $n\geq2$ and grid angles $2\pi j/L_n$, $0\leq j<L_n$. The derivative with respect to angle satisfies deterministically
+\[
+ \left|\frac d{d\theta}F_n(e^{i\theta})\right|
+ \leq\sum_{j=0}^n j=\frac{n(n+1)}2.
+\]
+Every angle is within $\pi/L_n$ of a grid angle, using circular distance. Hence
+\[
+ \max_{|z|=1}|F_n(z)|
+ \leq\max_{0\leq j<L_n}|F_n(e^{2\pi ij/L_n})|
+          +\frac{\pi n(n+1)}{2L_n}.                  \tag{2}
+\]
+Set $v_n=5\sqrt{(n+1)\log(n+1)}$. A union bound and (1) show
+\[
+ \mathbb P\left(\max_{j<L_n}|F_n(e^{2\pi ij/L_n})|\geq v_n\right)
+ \leq4n^3(n+1)^{-25/4}.
+\]
+The right side is summable over $n$, since it is $O(n^{-13/4})$. Borel--Cantelli implies that almost surely only finitely many of these grid events occur. Combining this with (2), whose additive error is $O(1/n)$, gives
+\[
+ \limsup_{n\to\infty}
+ \frac{\max_{|z|=1}|F_n(z)|}{\sqrt{n\log n}}\leq5
+ \qquad\hbox{almost surely}.                          \tag{3}
+\]
+This argument requires no independence between different degrees $n$, so it applies to the coupled sequence of partial sums in the question.
+
+\textbf{A lower bound and the remaining gap.} Orthogonality gives, for every sign choice,
+\[
+ \frac1{2\pi}\int_0^{2\pi}|F_n(e^{i\theta})|^2\,d\theta=n+1.
+\]
+Consequently the maximum modulus is at least $\sqrt{n+1}$. This lower bound lacks the factor $\sqrt{\log n}$ needed to match (3). Obtaining that factor involves controlling many correlated large values, and obtaining the exact constant requires still finer estimates. Neither follows from the union bound above.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved.} The almost-sure upper bound (3), including its probability-space quantifier, is completely proved, as is the deterministic square-root lower bound. The sharp asymptotic with $C=1$ is a known result but is not reconstructed here. In particular the completion estimate does not represent an independent proof of Hal\'asz's theorem.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/523}; G. Hal\'asz, \emph{On a result of Salem and Zygmund concerning random polynomials}, Studia Scientiarum Mathematicarum Hungarica 8 (1973), 369--377. The historical relationship of these maximum-modulus results is also recorded in Cook--Nguyen's primary paper, introduction: \url{https://arxiv.org/abs/2101.07203}.
+
+\textbf{Completion rate estimate: 35\%.}

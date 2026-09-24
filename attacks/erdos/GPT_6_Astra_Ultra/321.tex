@@ -1,0 +1,40 @@
+\section{Erd\H{o}s Problem \#321: reciprocal dissociated sets}
+\noindent Partial construction and upper bound, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $R(N)$ be the largest size of $A\subseteq\{1,\ldots,N\}$ for which all reciprocal sums $\sum_{a\in T}1/a$, $T\subseteq A$, are distinct. Estimate $R(N)$. Equivalently, there is no nonzero relation $\sum_{a\in A}\epsilon_a/a=0$ with $\epsilon_a\in\{-1,0,1\}$.
+
+\subsection*{2) All prime powers can be used together}
+Define
+\[A_N=\{1\}\cup\{p^j:p\text{ prime},\ j\ge1,\ p^j\le N\}.
+\]
+This entire set has distinct reciprocal subset sums, not just its prime subset. Suppose a nonzero signed relation exists. If a coefficient at a prime power is nonzero, choose a prime $p$ occurring and the largest $j$ such that $\epsilon_{p^j}\ne0$. Let $L$ be the least common multiple of all denominators with nonzero coefficient. Then $v_p(L)=j$. After multiplying the relation by $L$, all terms other than that for $p^j$ vanish modulo $p$: lower powers of $p$ leave a factor $p$, and powers of other primes, as well as denominator 1, also leave a factor $p$. The remaining term $\epsilon_{p^j}L/p^j$ is nonzero modulo $p$, a contradiction. If no prime-power coefficient is nonzero, the relation consists only of $\epsilon_1=0$, also impossible.
+
+For $N\ge2$ this proves the explicit lower bound
+\[R(N)\ge1+\sum_{1\le j\le\lfloor\log_2N\rfloor}\pi(N^{1/j})\ge1+\pi(N).
+\tag{1}\]
+Distinct pairs $(p,j)$ give distinct denominators. This construction is more informative than simply selecting the primes, even though its leading coarse order is the same.
+
+\subsection*{3) A rigorous counting upper bound}
+Let $S(N)$ count all distinct reciprocal subset sums from $\{1,\ldots,N\}$. Injectivity for a set of size $R(N)$ gives
+\[2^{R(N)}\le S(N).\tag{2}\]
+For completeness, the coarse bound needed here follows from a short denominator decomposition. Put $y=N/\log N>\sqrt N$. The denominators with all prime factors at most $y$ divide $L=\prod_{p\le y}p^{\lfloor\log N/\log p\rfloor}$; their sums lie on the lattice $L^{-1}\mathbb Z$ inside $[0,H_N]$. Chebyshev's bound gives $\log L\le\pi(y)\log N\ll N/\log N$. Every remaining denominator has a unique prime factor $p>y$ and is $pm$ with $m\le N/p$. The subset sums in this class number at most $2^{\lfloor N/p\rfloor}$. Multiplying the counts for all classes yields
+\[\log S(N)\le O(N/\log N)+(\log2)N\sum_{y<p\le N}\frac1p.
+\]
+Partial summation using $\pi(t)\ll t/\log t$ bounds the last prime sum by
+\[O(1/\log N)+O\!\left(\int_y^N\frac{dt}{t\log t}\right)
+=O\!\left(\frac{\log\log N}{\log N}\right).
+\]
+Thus (1), (2), and the two-sided Chebyshev estimates establish
+\[c\frac N{\log N}\le R(N)\le C\frac{N\log\log N}{\log N}
+\]
+with fixed positive constants. The full proof of the counting recursion is also recorded in the companion attempt for Problem 320.
+
+\subsection*{4) Outcome and remaining task}
+\textbf{UNRESOLVED at the sharp scale in this attempt.} The prime-power construction and the coarse upper bound are proved. The current source reports a much more precise order involving an iterated-logarithm product. Constructing sets with that additional factor and proving the matching upper estimate are the gaps here. Equation (2) transfers an upper bound from Problem 320, but cannot by itself transfer a lower bound: many distinct sums need not come from a single large set on which every subset sum is distinct.
+
+Source: \url{https://www.erdosproblems.com/321}, checked 23 September 2026, with the linked Problem 320 and Bettin--Greni\'e--Molteni--Sanna, \url{https://arxiv.org/abs/2509.10030}, for the sharper context. Classical Chebyshev prime-counting estimates are used as standard external input. No novelty or independent formal verification is asserted.
+
+The estimate measures mathematical coverage toward the sharp bound.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

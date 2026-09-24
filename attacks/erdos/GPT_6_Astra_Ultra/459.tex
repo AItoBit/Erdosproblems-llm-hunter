@@ -1,0 +1,90 @@
+\section*{Erd\H{o}s Problem 459}
+
+\paragraph{Statement.}
+For an integer \(u\geq2\), let \(f(u)\) be the largest integer \(v>u\)
+such that no integer in \((u,v)\) has all its prime factors among the
+prime factors of \(uv\). We reconstruct the extremal and typical
+estimates attributed to Stijn Cambie.
+
+\paragraph{An exact alternative definition.}
+Let \(w\) be the smallest integer greater than \(u\) composed only of
+prime factors of \(u\). It exists, since \(u^2\) is one candidate.
+Taking \(v=w\) introduces no new prime factors, and minimality of \(w\)
+excludes all intermediate integers of the required kind.
+For every \(v>w\), however, \(w\in(u,v)\) and its prime factors divide
+\(u\), hence \(uv\). Such a \(v\) is forbidden. Thus
+\[
+ f(u)=\min\{w>u:\text{every prime factor of }w\text{ divides }u\}.
+ \tag{1}
+\]
+Since \(u+1\) is coprime to \(u\) and exceeds one,
+\[
+ u+2\leq f(u)\leq u^2.
+ \tag{2}
+\]
+For a prime \(p\), (1) gives \(f(p)=p^2\). If \(u\) is even,
+the least power of two exceeding \(u\) is an admissible upper bound.
+In particular \(f(2^j-2)=2^j\) for \(j\geq2\).
+Both extremes in (2) therefore occur infinitely often.
+
+\paragraph{Two fixed primes give arbitrarily small relative gaps.}
+Fix distinct primes \(p,q\) and \(\epsilon>0\).
+The number \(\log q/\log p\) is irrational, by unique factorization.
+The elementary density theorem for an irrational rotation supplies a
+finite \(B\) such that the residues
+\[
+ b\log q\pmod{\log p},\qquad 0\leq b\leq B,
+\]
+have every circular gap smaller than \(\log(1+\epsilon)\).
+For each sufficiently large real \(x\), choose a residue immediately
+after \(\log x\pmod{\log p}\), using the next distinct residue if
+equality occurs. Some \(b\leq B\) and integer \(a\) then satisfy
+\[
+ \log x<a\log p+b\log q<\log x+\log(1+\epsilon).
+\]
+For \(x>q^B\), this \(a\) is nonnegative. Hence a number composed
+only of \(p,q\) lies in \((x,(1+\epsilon)x)\).
+In particular, if \(pq\mid n\) and \(n\) exceeds a fixed threshold
+depending on \(p,q,\epsilon\), then \(f(n)<(1+\epsilon)n\).
+
+\paragraph{Almost every integer has two suitable fixed small primes.}
+For a finite set \(\mathcal P\) of primes, the Chinese remainder
+theorem gives density
+\[
+ \prod_{p\in\mathcal P}(1-1/p)
+ \left(1+\sum_{p\in\mathcal P}\frac1{p-1}\right)
+ \tag{3}
+\]
+to the integers divisible by at most one member of \(\mathcal P\).
+Take all primes up to \(M\), and write \(S_M=\sum_{p\leq M}1/p\).
+The expression in (3) is at most
+\[
+ e^{-S_M}(1+S_M+C),
+\]
+where \(C\) is absolute because
+\(\sum_p(1/(p-1)-1/p)<\infty\).
+Euler's divergence \(S_M\to\infty\) makes this bound tend to zero.
+
+Given \(\eta>0\), choose \(M\) making (3) less than \(\eta\).
+There are only finitely many pairs of primes up to \(M\), so take
+the maximum of their thresholds in the preceding paragraph.
+Outside a set of density at most \(\eta\) and finitely many integers,
+\(f(n)<(1+\epsilon)n\). Since \(\eta\) was arbitrary, the exceptional
+set has density zero. This holds for every \(\epsilon>0\), proving
+\[
+ f(n)/n\longrightarrow1\quad\hbox{in natural density}.
+ \tag{4}
+\]
+
+\paragraph{Attribution and external inputs.}
+These estimates reconstruct Cambie's observations and discussion at
+\url{https://www.erdosproblems.com/459} and
+\url{https://www.erdosproblems.com/forum/thread/459},
+checked 24 September 2026. The standard irrational-rotation density
+theorem and divergence of prime reciprocals are explicit external inputs.
+Equation (4) describes typical behavior; (2) describes incompatible
+extremal subsequences, rather than a pointwise asymptotic formula.
+
+\paragraph{Completion estimate.}
+The exact description, both sharp extremes, and the typical asymptotic estimate are proved.
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,71 @@
+\section{Erd\H{o}s Problem 163: Ramsey numbers of degenerate graphs}
+
+\subsection{1) Statement and scope}
+For each fixed integer $d\geq1$, does every $d$-degenerate graph $H$
+on $n$ vertices satisfy $R(H)\ll_d n$? Here every nonempty subgraph
+of a $d$-degenerate graph has a vertex of degree at most $d$, and $R(H)$
+is the ordinary two-colour Ramsey number. The answer is affirmative.
+We deduce the full assertion from Lee's quantitative theorem, including
+the small-order cases and the equivalent formulation using forests.
+The substantial Ramsey embedding theorem is an explicit external input.
+
+\subsection{2) The external theorem and its application}
+Lee's theorem supplies an absolute constant $c>0$ such that, if $H$ is
+$d$-degenerate, has chromatic number $r$, and has
+$n\geq 2^{d^2 2^{cr}}$ vertices, then
+\[
+ R(H)\leq 2^{d2^{cr}}n.
+\]
+Repeatedly delete a vertex of degree at most $d$ and colour the vertices
+in reverse deletion order. At each step at most $d$ colours are forbidden,
+so $r\leq d+1$.
+
+Put
+\[
+ M=\left\lceil2^{d^2 2^{c(d+1)}}\right\rceil,
+ \qquad A=2^{d2^{c(d+1)}}.
+\]
+Adjoin isolated vertices to $H$ to obtain $H'$ on $N=\max(n,M)$
+vertices. This preserves degeneracy and keeps the chromatic number at
+most $d+1$. Lee's size hypothesis therefore holds for $H'$. Since $H$
+is a subgraph of $H'$ and $N\leq Mn$ for $n\geq1$,
+\[
+ R(H)\leq R(H')\leq AN\leq AMn.
+\]
+The constant $AM$ depends only on $d$, as required. An edgeless graph
+on $n$ vertices has Ramsey number $n$, so degeneracy zero also causes
+no exception.
+
+\subsection{3) Why the forest formulation is equivalent}
+Suppose the edges of a graph are the union of $a$ forests. Every subgraph
+on $v\geq1$ vertices has at most $a(v-1)$ edges. Its average degree is
+strictly less than $2a$, so it has a vertex of degree at most $2a-1$.
+Thus it is $(2a-1)$-degenerate, and the result just proved applies with
+this parameter.
+
+Conversely, choose an ordering of a $d$-degenerate graph in which each
+vertex has at most $d$ earlier neighbours. Assign different labels from
+$\{1,\ldots,d\}$ to the edges from a vertex to its earlier neighbours.
+This labels every edge once. Each label class is a forest: otherwise
+the last vertex on a cycle of that label would have two earlier incident
+edges with the same label. Hence bounded degeneracy also implies an
+edge partition into a bounded number of forests. These arguments explain
+the equivalence with constants depending on the fixed parameter; they
+do not assert equality of the two parameters.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED, conditional only on the cited established
+Ramsey theorem.} The padding argument, greedy colouring, and the forest
+reductions have been supplied explicitly. No new proof of Lee's theorem
+or new Ramsey bound is claimed.
+\begin{itemize}
+\item C. Lee, \emph{Ramsey numbers of degenerate graphs}, Annals of
+Mathematics 185 (2017), 791--829,
+\texttt{https://annals.math.princeton.edu/2017/185-3/p02} and
+\texttt{https://arxiv.org/abs/1505.04773}.
+\item T. F. Bloom, Problem 163,
+\texttt{https://www.erdosproblems.com/163}, checked 23 September 2026.
+\end{itemize}
+The percentage measures coverage with the stated external theorem.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,69 @@
+\section*{Erd\H{o}s Problem 465}
+
+\paragraph{Statement and scope.}
+Let \(N(X,\delta)\) be the largest number of points in a disc of radius
+\(X\) whose pairwise distances have distance at least \(\delta\)
+from every integer. For fixed \(0<\delta<1/2\), must
+\(N(X,\delta)=o(X)\), and even
+\(N(X,\delta)\leq X^{1/2+o(1)}\)?
+Both conclusions are known; Konyagin proved \(O_\delta(\sqrt X)\).
+The sublinear step is unresolved here. We prove a uniform linear
+bound and a sharper bound on the collinear special case.
+
+\paragraph{A strip and fractional-coordinate bound.}
+Translate the disc to the origin. Divide the vertical interval
+\([-X,X]\) into at most \(\lceil8X/\delta\rceil+1\) half-open strips
+of height at most \(\delta/4\).
+Divide the fractional-coordinate circle, represented by \([0,1)\),
+into \(\lceil4/\delta\rceil\) half-open intervals of length at most
+\(\delta/4\). Assign each point \((x,y)\) the strip containing \(y\)
+and the interval containing \(\{x\}\).
+
+Two different points with the same assignment would satisfy
+\[
+ |\Delta y|\leq\delta/4,\qquad
+ \bigl\||\Delta x|\bigr\|\leq\delta/4.
+\]
+The triangle inequality gives
+\[
+ 0\leq\sqrt{\Delta x^2+\Delta y^2}-|\Delta x|
+ \leq|\Delta y|.
+\]
+The distance-to-integers function is \(1\)-Lipschitz, so their
+Euclidean distance would have distance at most \(\delta/2<\delta\)
+from an integer. This contradicts the hypothesis.
+Thus every assignment contains at most one point, and
+\[
+ N(X,\delta)\leq
+ \bigl(\lceil8X/\delta\rceil+1\bigr)\lceil4/\delta\rceil
+ =O_\delta(X).
+ \tag{1}
+\]
+This improves the elementary area-packing bound of order \(X^2\).
+
+\paragraph{The collinear case.}
+For points on a line, choose signed coordinates \(t_i\) along it.
+Then
+\(\||P_i-P_j|\|=\|t_i-t_j\|\).
+Their residues modulo one are therefore pairwise separated by
+circular distance at least \(\delta\). Ordering these residues around
+the circle, every gap is at least \(\delta\), and their sum is one.
+There can be at most \(\lfloor1/\delta\rfloor\) points.
+In particular, unbounded constructions require variation in both
+coordinates.
+
+\paragraph{Remaining gap and sources.}
+The assignments in (1) impose no useful restriction between different
+vertical strips. Obtaining a vanishing fraction of occupied assignments,
+or the square-root bound, requires additional geometric information.
+The known result is S.~V.~Konyagin,
+\emph{On the distances between points on the plane},
+Mathematical Notes 69 (2001), 578--581,
+\url{https://www.mathnet.ru/eng/mzm691}.
+Current statement and S\'ark\"ozy's earlier sublinear estimate:
+\url{https://www.erdosproblems.com/465}, checked 24 September 2026.
+Neither external upper-bound theorem is used to fill the gap in this attempt.
+
+\paragraph{Completion estimate.}
+The linear bound and collinear case are proved; the main sublinear improvement is missing.
+\textbf{COMPLETION: 30\%}

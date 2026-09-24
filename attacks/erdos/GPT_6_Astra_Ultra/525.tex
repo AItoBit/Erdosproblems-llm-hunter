@@ -1,0 +1,56 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#525; the counting statement from minimum-modulus universality, 2026-09-24.}
+Among the $2^{n+1}$ polynomials $F_n(z)=\sum_{j=0}^n\epsilon_jz^j$, $\epsilon_j\in\{-1,1\}$, show that all but $o(2^n)$ have $\min_{|z|=1}|F_n(z)|<1$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Cook--Nguyen prove an exponential limiting distribution for the minimum modulus, extending Yakir--Zeitouni's Gaussian result. We use their stated universality theorem as the external input and derive the exact counting conclusion, keeping normalization and probability quantifiers explicit.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Translate the normalized trigonometric-polynomial theorem to ordinary sign polynomials, then use a fixed-threshold limit followed by a second limit. A distributional theorem alone should not be silently promoted to almost-sure eventual behavior for a coupled infinite sign sequence.
+
+\section{WORK}
+\textbf{The external theorem and normalization.} For independent symmetric signs $\xi_{-m},\ldots,\xi_m$, define
+\[
+ P_m(t)=\frac1{\sqrt{2m+1}}\sum_{j=-m}^m\xi_j e^{ijt},
+ \qquad \mu_m=\min_t|P_m(t)|.
+\]
+Cook--Nguyen, Corollary 1.5, gives, for every fixed $\tau>0$,
+\[
+ \lim_{m\to\infty}\mathbb P(m\mu_m>\tau)=e^{-\lambda\tau},
+ \qquad \lambda=2\sqrt{\pi/3}>0.                       \tag{1}
+\]
+Their discussion immediately following (1.4) explicitly extends the arguments to odd polynomial degrees as well. Symmetric signs have mean zero, variance one, and a sub-Gaussian tail, so they meet the hypotheses of the theorem.
+Multiplication by $e^{imt}$ does not affect modulus. Thus, for degree $n=2m$ and $M_n=\min_{|z|=1}|F_n(z)|$,
+\[
+ \sqrt n\,M_n
+ =\frac{\sqrt{2m(2m+1)}}{m}\,(m\mu_m).
+\]
+The multiplier tends to $2$. Equation (1), and its odd-degree extension, therefore yield the full-sequence limit
+\[
+ \lim_{n\to\infty}\mathbb P(\sqrt n\,M_n>T)
+   =e^{-\lambda T/2}\qquad(T>0).                       \tag{2}
+\]
+The continuous exponential limit justifies using either strict or non-strict inequalities at a fixed positive threshold.
+
+\textbf{The required counting estimate.} Fix $T>0$. Once $\sqrt n>T$,
+\[
+ \{M_n\geq1\}\subseteq\{\sqrt n\,M_n>T\}.
+\]
+Taking the upper limit in probability and using (2) gives
+$\limsup_n\mathbb P(M_n\geq1)\leq e^{-\lambda T/2}$.
+Now let $T\to\infty$. The right side tends to zero, so $\mathbb P(M_n\geq1)=o(1)$. Uniform independent signs assign probability $2^{-(n+1)}$ to each coefficient vector. Consequently
+\[
+ \#\{(\epsilon_0,\ldots,\epsilon_n):M_n\geq1\}
+ =2^{n+1}o(1)=o(2^n),
+\]
+exactly as required.
+
+\textbf{What the theorem additionally says.} For any fixed $0<a<b$, the limiting probability that $a<\sqrt n\,M_n\leq b$ is $e^{-\lambda a/2}-e^{-\lambda b/2}$. Thus the natural scale is $n^{-1/2}$. The argument also proves $M_n\to0$ in probability, by replacing $1$ with any fixed positive threshold. It supplies no summable upper bound on exceptional probabilities, so no almost-sure eventual assertion is inferred here.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The counting conclusion and all normalization and limiting steps are complete, conditional only on the explicitly stated Cook--Nguyen universality theorem and its odd-degree extension. The deep small-ball and local central-limit estimates proving that theorem are not reconstructed in this attempt.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/525}; N. Cook and H. Nguyen, \emph{Universality of the minimum modulus for random trigonometric polynomials}, Theorem 1.2 and Corollary 1.5, \url{https://arxiv.org/abs/2101.07203}, published in Discrete Analysis 2021:20.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#277}
+\subsection{Statement and attribution}
+For every real $c$, does some positive integer $n$ satisfy $\sigma(n)>cn$, while no covering system has pairwise distinct moduli drawn from the divisors $d>1$ of $n$? Yes. Haight originally proved this. We give the later short deduction from Hough's minimum-modulus theorem, as suggested in the current discussion. The proof below concerns the displayed original question; it does not assert the numerical leading constant in the editorial's additional extremal asymptotic. No novelty is claimed.
+
+\subsection{External input}
+Hough proved that an absolute constant $C$ bounds the smallest modulus in every finite covering system with distinct moduli greater than one. This is the substantial external input. We require only the existence of $C$, not its numerical value.
+
+\subsection{Work: remove all small prime factors}
+For $y>C$, set
+\[
+ n_y=\prod_{C<p\le y}p.
+\]
+Every divisor $d>1$ of $n_y$ has a prime divisor exceeding $C$, hence $d>C$. A covering system with distinct moduli among these divisors would have smallest modulus greater than $C$, contradicting Hough's theorem.
+
+Since $n_y$ is squarefree, multiplicativity gives
+\[
+ \frac{\sigma(n_y)}{n_y}=\prod_{C<p\le y}\left(1+\frac1p\right).
+\]
+This product is unbounded. Here is the needed elementary argument. If $\sum_p1/p$ converged, then the products $\prod_{p\le y}(1-1/p)^{-1}$ would be bounded, since
+$-\log(1-1/p)\le1/p+2/p^2$. But expansion of the finite Euler product includes all integers at most $y$, so it is at least $\sum_{m\le y}1/m$, which diverges. Thus $\sum_p1/p=\infty$.
+Removing the finitely many primes $p\le C$ preserves divergence, and
+\[
+ \log(1+1/p)\ge\frac1{2p}
+\]
+shows that the product for $\sigma(n_y)/n_y$ tends to infinity. Choose $y$ so that it exceeds $c$. Then $n=n_y$ has both required properties.
+
+\subsection{Verification and outcome}
+The obstruction applies to any subset of the allowable divisors, regardless of the chosen residues. Large $\sigma(n)/n$ is only a sum-of-reciprocals condition; it does not by itself supply a cover. Distinctness of moduli is essential to the cited Hough theorem and is present in the question.
+
+\textbf{SOLVED, with Hough's theorem as an explicit external input.} The construction and its unbounded divisor-sum ratio are proved here.
+
+\subsection{Sources}
+R. Hough, \emph{Solution of the minimum modulus problem for covering systems}, Ann. Math. 181 (2015), 361--382, \url{https://arxiv.org/abs/1307.0874}. Current problem, Haight attribution and van Doorn's observation: \url{https://www.erdosproblems.com/277}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#438: sets whose two-term sums avoid squares}
+\noindent Exact modular construction and asymptotic deduction, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $M(N)$ be the largest size of $A\subseteq\{1,\ldots,N\}$ such that $A+A$ contains no perfect square. Equal summands are included in $A+A$. We prove the lower construction explicitly and deduce
+\[M(N)=\left(\frac{11}{32}+o(1)\right)N
+\]
+from the stated Khalfalah--Lodha--Szemer\'edi upper theorem. This is an asymptotic determination, not an exact formula for each $N$.
+
+\subsection*{2) Verify the eleven residue classes}
+Take the residue set modulo 32
+\[R=\{1,5,9,13,14,17,21,25,26,29,30\}.
+\]
+Its eight odd members are precisely the classes congruent to 1 modulo 4, and its three even members are $14,26,30$, all congruent to 2 modulo 4. Two odd members sum to 2 modulo 4, and an odd and an even member sum to 3 modulo 4. Neither can be a square.
+
+For two even members, including repetitions, the possible sums modulo 32 are
+\[14+14\equiv28,\quad14+26\equiv8,\quad14+30\equiv12,
+\]
+\[26+26\equiv20,\quad26+30\equiv24,\quad30+30\equiv28.
+\]
+The square residues modulo 32 are $0,1,4,9,16,17,25$, disjoint from this list. Thus $R+R$ contains no square residue.
+
+It follows that $A_N=\{a\in[1,N]:a\bmod32\in R\}$ has no square in $A_N+A_N$. Every complete block of 32 contributes eleven elements, so
+\[M(N)\ge|A_N|=\frac{11}{32}N+O(1).\tag{1}\]
+The verification includes diagonal sums $2a$; no convention about distinct summands has been hidden.
+
+\subsection*{3) An elementary coarse upper bound}
+There is a useful direct comparison before importing the sharp theorem. Let $Q=\lfloor\sqrt N\rfloor^2$. In $[1,Q-1]$, the involution $a\mapsto Q-a$ pairs integers whose sum is the square $Q$. At most one member of each two-element pair belongs to $A$, and any fixed point $Q/2$ is itself forbidden because equal summands are allowed. Therefore
+\[|A\cap[1,Q-1]|\le\lfloor(Q-1)/2\rfloor.
+\]
+There are at most $N-Q+1=O(\sqrt N)$ additional elements in $[Q,N]$, proving $M(N)\le N/2+O(\sqrt N)$. This bound alone does not give the coefficient $11/32$.
+
+\subsection*{4) Declared sharp input and limiting conclusion}
+The Khalfalah--Lodha--Szemer\'edi theorem states that for every fixed $\delta>0$, all sufficiently large $N$, and every $A\subseteq[1,N]$ with $|A|\ge(11/32+\delta)N$, two elements of $A$ sum to a perfect square. The published result for distinct elements is already sufficient for the present, stronger avoidance condition. The proof of this theorem is external; modular optimality by itself would not justify its application to arbitrary integer sets.
+
+For each fixed $\delta>0$, an extremal avoiding set must therefore have size less than $(11/32+\delta)N$ once $N$ is sufficiently large. Letting $\delta$ decrease to zero gives $\limsup M(N)/N\le11/32$. Construction (1) supplies the reverse limit inferior, proving the stated asymptotic.
+
+\subsection*{5) Outcome and sources}
+\textbf{SOLVED at the asymptotic scale, relative to the stated sharp upper theorem.} The residue construction, count, treatment of repeated summands, elementary half-density bound and limit deduction are proved. The difficult upper theorem is clearly separated from these elementary arguments.
+
+Sources: \url{https://www.erdosproblems.com/438}, checked 24 September 2026; A. Khalfalah, S. Lodha and E. Szemer\'edi, \emph{Tight bound for the density of sequence of integers the sum of no two of which is a perfect square}, \url{https://doi.org/10.1016/S0012-365X(01)00435-6}; the author's statement of the quantitative theorem at \url{https://static.uni-graz.at/fileadmin/veranstaltungen/additive2016/Talks/szemeredi_e_slides.pdf}. The eleven-class example is attributed to Massias. No novelty or formal verification is claimed.
+
+The estimate refers to the complete asymptotic deduction with its external dependency.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

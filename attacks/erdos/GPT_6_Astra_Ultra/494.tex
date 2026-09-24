@@ -1,0 +1,58 @@
+\section{Erd\H{o}s Problem \#494: recovering a set from its restricted sums}
+\noindent Reconstruction with an explicit finite-exception theorem, 24 September 2026.
+
+\subsection*{1) Statement and necessary size qualification}
+For a set $A=\{a_1,\ldots,a_n\}\subset\mathbb C$, let $A_k$ be the multiset of sums over all $k$-element subsets of $A$. Repeated numerical sums retain their multiplicities. For fixed $k>2$, does $A_k$, together with $n$, determine $A$?
+
+The literal assertion for every size is false. The established assertion is that it holds for all sufficiently large $n$, with the threshold depending on $k$. We prove the moment reconstruction criterion and a broad unconditional size case, give explicit failures at $n=2k$, and invoke the precise published finite-exception theorem for the remaining eventual assertion.
+
+\subsection*{2) The triangular moment identity}
+Write $p_m=\sum_{i=1}^n a_i^m$ and $q_m=\sum_{s\in A_k}s^m$, counting multiplicities in the second sum. As a formal power series,
+\[
+\prod_{i=1}^n(1+u e^{ta_i})
+=(1+u)^n\exp\left(\sum_{m\ge1}\frac{p_m t^m}{m!}
+\sum_{j\ge1}(-1)^{j-1}j^{m-1}u^j\right).\tag{1}
+\]
+This follows by expanding $\log(1+u e^{ta_i})$ first in $u$ and then in $t$; the constant term in $t$ is $n\log(1+u)$. The coefficient of $u^k t^m/m!$ on the left is $q_m$. On the right, every term involving $p_m$ and another positive-order moment would have $t$-degree greater than $m$. Hence
+\[
+q_m=F_{k,m}(n)p_m+Q_{k,m,n}(p_1,\ldots,p_{m-1}),
+\quad
+F_{k,m}(n)=\sum_{j=1}^k(-1)^{j-1}j^{m-1}\binom n{k-j},\tag{2}
+\]
+where $Q$ is an explicitly determined polynomial, obtained by expanding (1).
+
+If $F_{k,m}(n)\ne0$ for $1\le m\le n$, equation (2) successively determines $p_1,\ldots,p_n$ from the known multiset. Newton's identities then determine the elementary symmetric functions through
+\[r e_r=\sum_{j=1}^r(-1)^{j-1}e_{r-j}p_j,\qquad e_0=1.\]
+Thus the monic polynomial $\prod_i(T-a_i)$, and its root multiset, are determined. In particular the original set is determined. This argument is over characteristic zero and also works when the original entries have multiplicities.
+
+\subsection*{3) An elementary sufficient condition on $n$}
+Suppose $n$ has a prime divisor $\ell>k$. If $F_{k,m}(n)=0$, multiply (2)'s formula for $F$ by $(k-1)!$. For $1\le r\le k-1$ the integer
+\[(k-1)!\binom nr=\frac{(k-1)!}{r!}\,n(n-1)\cdots(n-r+1)\]
+is divisible by $n$. All terms except $j=k$ therefore vanish modulo $n$, giving
+\[n\mid(k-1)!k^{m-1}.\]
+But the right-hand side has no prime divisor exceeding $k$, contradicting $\ell\mid n$. Consequently all coefficients in (2) are nonzero and recovery is proved for every such $n$.
+
+For comparison, when $k=2$, $F_{2,m}(n)=n-2^{m-1}$. The same method proves recovery whenever $n$ is not a power of two. A vanishing coefficient indicates failure of this particular triangular inversion step; on its own it does not construct two different sets.
+
+\subsection*{4) Actual counterexamples at the boundary $n=2k$}
+Let $A$ have $2k$ elements and total sum $S$, and define $B=S/k-A$. For each $k$-subset $I$ of the index set, the corresponding sum from $B$ equals
+\[\sum_{i\in I}(S/k-a_i)=S-\sum_{i\in I}a_i
+=\sum_{i\notin I}a_i.\]
+Complementation is a bijection on the $k$-subsets, so $B_k=A_k$ with all multiplicities preserved. Reflection is injective, so $|B|=|A|$.
+
+For an explicit choice ensuring $A\ne B$, take
+\[A=\{0,1,\ldots,2k-2,2k^2\}.
+\]
+Here $S=(k-1)(2k-1)+2k^2$, and $\min B=S/k-2k^2<0$ for $k\ge2$, whereas all members of $A$ are nonnegative. This disproves the unrestricted statement for every $k>2$.
+
+\subsection*{5) The eventual theorem and its exact dependency}
+The external input is Gordon--Fraenkel--Straus, Section 4: for each fixed integer $k>2$, there are only finitely many cardinalities $n$ for which two different multisets in a torsion-free abelian group can have the same multiset of restricted $k$-sums. Their convention allows repeated original entries, so the theorem applies in particular to sets in the additive group of $\mathbb C$. Choose $N_k$ beyond all exceptional cardinalities. Then every $A$ with $|A|\ge N_k$ is uniquely determined by $A_k$ and its size, as required in the intended formulation.
+
+The Diophantine finite-exception argument in that paper, including its use of Ridout's theorem, is not reconstructed here. The moment calculation and prime-divisor criterion do not alone dispose of all large $k$-smooth cardinalities; the named theorem is the additional input at that point.
+
+\subsection*{6) Outcome and sources}
+\textbf{SOLVED for the literal negative answer and, relative to the stated theorem, the intended eventual affirmative answer.} Both scopes are distinguished. Sources: \url{https://www.erdosproblems.com/494}, checked 24 September 2026; B. Gordon, A. S. Fraenkel and E. G. Straus, ``On the determination of sets by the sets of sums of a certain order'', Pacific Journal of Mathematics 12 (1962), 187--196, Sections 3--4, \url{https://msp.org/pjm/1962/12-1/pjm-v12-n1-p17-s.pdf}. This is a reconstruction, not a new theorem or a formal verification.
+
+The estimate is relative to the explicitly stated finite-exception theorem.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

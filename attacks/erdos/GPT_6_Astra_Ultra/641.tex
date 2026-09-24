@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 641: cycles on the same vertex set}
+
+\paragraph{Statement.}
+Does there exist, for every positive integer \(k\), a number \(f(k)\)
+such that every graph of chromatic number at least \(f(k)\) contains
+\(k\) pairwise edge-disjoint cycles on exactly the same vertex set?
+
+\paragraph{Claim and external input.}
+The answer is negative for every \(k\geq2\), and \(f(1)=3\).
+The decisive construction is external: Janzer, Steiner, and Sudakov,
+\emph{Chromatic number and regular subgraphs},
+\url{https://arxiv.org/abs/2410.02437}, Theorem 1.2, prove that for
+some absolute \(c>0\) and all sufficiently large \(n\) there is an
+\(n\)-vertex graph \(G_n\) with no \(4\)-regular subgraph and
+\[
+ \chi_f(G_n)\geq c\,\frac{\log\log n}{\log\log\log n}.
+\]
+We use that construction as a stated theorem, not as a construction
+proved anew in this attempt. The following reduction checks all the
+quantifiers needed for \url{https://www.erdosproblems.com/641}.
+
+\paragraph{Reduction.}
+An ordinary proper \(r\)-colouring partitions the vertices into \(r\)
+independent sets. Giving each of these sets weight \(1\) is a feasible
+fractional colouring of total weight \(r\). Hence
+\(\chi_f(G)\leq\chi(G)\).
+Since \(\log\log n/\log\log\log n\) tends to infinity, the graphs
+in the theorem have unbounded ordinary chromatic number.
+
+If two edge-disjoint cycles have the same vertex set \(S\), every
+vertex of their union has two incident edges from each cycle.
+The four edges are distinct, so their union is a \(4\)-regular
+subgraph on \(S\). Additional ambient edges are irrelevant: the
+subgraph is not required to be induced. Thus none of the graphs
+\(G_n\) contains such a pair.
+For any proposed finite \(f(k)\), \(k\geq2\), choose \(n\) large
+enough that \(\chi_f(G_n)\geq f(k)\). A family of \(k\) cycles would
+contain a forbidden pair. This disproves the proposed threshold.
+
+For \(k=1\), a graph with no cycle is a forest and is two-colourable
+by the parity of distance from a root in each component. Thus
+\(\chi(G)\geq3\) forces a cycle. A single edge shows that a threshold
+at most \(2\) would fail.
+
+\paragraph{Why a minimum-degree argument does not settle it.}
+If \(\chi(G)\geq r+1\), repeatedly removing vertices of degree at most
+\(r-1\) cannot remove the whole graph: otherwise colouring in reverse
+order would use at most \(r\) colours. Therefore such a graph has a
+subgraph of minimum degree at least \(r\).
+This observation does not produce a regular subgraph. The external
+construction shows precisely that even arbitrarily large chromatic
+number cannot force the required \(4\)-regular structure.
+
+\paragraph{Scope.}
+The disproof is complete relative to the explicitly stated
+Janzer--Steiner--Sudakov construction. Its probabilistic construction
+is not re-proved here.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

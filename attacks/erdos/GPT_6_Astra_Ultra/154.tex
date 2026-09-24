@@ -1,0 +1,69 @@
+\section{Erd\H{o}s Problem \#154: residue counts in the sumset of a dense Sidon set}
+\noindent Reconstruction with an explicit distribution theorem, 23 September 2026.
+
+\subsection*{1) Statement and quantitative objective}
+Suppose $A\subseteq[1,N]$ is Sidon and $k=|A|\sim\sqrt N$. Must $A+A$ be uniformly distributed over small moduli, in particular parity? We prove that for every sequence of positive moduli $m=o(\sqrt N)$,
+\[
+ \max_{t\bmod m}\left|
+ \frac{|\{s\in A+A:s\equiv t\pmod m\}|}{|A+A|/m}-1
+ \right|\longrightarrow0.\tag{1}
+\]
+The external input is Kolountzakis's square-mean residue estimate for $A$. The passage to distinct sums, including doubles, is proved here.
+
+\subsection*{2) Precise external estimate}
+Write $a_x=|\{a\in A:a\equiv x\pmod m\}|$ and $e_x=a_x-k/m$, so $\sum_x e_x=0$. Set $\lambda=\max(0,\sqrt N-k)=o(\sqrt N)$. Theorem 2 of M. N. Kolountzakis, \emph{On the uniform distribution in residue classes of dense sets of integers with distinct sums}, gives an absolute constant $C$ such that
+\[
+ E:=\left(\sum_{x\bmod m}e_x^2\right)^{1/2}
+ \le C\begin{cases}
+ N^{3/8}m^{-1/4},&\lambda\le N^{1/4}m^{1/2},\\
+ N^{1/4}\lambda^{1/2}m^{-1/2},&\lambda>N^{1/4}m^{1/2}.
+ \end{cases}\tag{2}
+\]
+Its assumptions are $k\ge\sqrt N-\lambda$ with $\lambda=o(\sqrt N)$ and $m=o(\sqrt N)$, as satisfied here. Primary source: \url{https://arxiv.org/html/math/9808061}. We do not reprove the cosine-polynomial estimate underlying (2). The modulus one case of (1) is immediate, so it can also be separated from this input.
+
+\subsection*{3) Ordered convolution and the diagonal correction}
+The number of ordered pairs $(a,b)\in A^2$ with $a+b\equiv t$ is
+\[
+ C_t=\sum_xa_xa_{t-x}=\frac{k^2}{m}+\sum_xe_xe_{t-x}.
+\]
+The mixed terms vanish because the errors have sum zero. By Cauchy--Schwarz,
+\[
+ |C_t-k^2/m|\le E^2\quad\text{uniformly in }t.\tag{3}
+\]
+Let $d_t=|\{a\in A:2a\equiv t\pmod m\}|$. Because $A$ is Sidon, each sum with unequal summands has exactly two ordered representations and each double exactly one. Thus the number $S_t$ of distinct sums in residue $t$ is exactly
+\[
+ S_t=\frac{C_t+d_t}{2},\qquad |A+A|=\frac{k(k+1)}2.
+\]
+In particular, writing $S_t=C_t/2$ would incorrectly drop the doubles, including all their even contributions. Since $0\le d_t\le k$,
+\[
+ \left|S_t-\frac{k(k+1)}{2m}\right|
+ \le\frac12E^2+\frac12(k+k/m).\tag{4}
+\]
+
+\subsection*{4) Uniform relative error}
+Divide (4) by $k(k+1)/(2m)$. The resulting error is at most
+\[
+ \frac{mE^2}{k(k+1)}+\frac{m+1}{k+1}.\tag{5}
+\]
+The second term tends to zero since $k\sim\sqrt N$ and $m=o(\sqrt N)$. In the first case of (2), the first term is
+\[
+ O\!\left(\frac{m^{1/2}N^{3/4}}{N}\right)
+ =O\!\left(\sqrt{\frac{m}{\sqrt N}}\right)=o(1).
+\]
+In the second case it is $O(\lambda/\sqrt N)=o(1)$. These bounds hold in every residue and also when the two cases alternate along a sequence of $N$. This proves (1).
+
+For parity there is an additional exact check. If $u$ elements of $A$ are even and $v$ are odd, then
+\[
+ S_0=\binom{u+1}{2}+\binom{v+1}{2},\qquad S_1=uv,
+ \qquad S_0-S_1=\frac{(u-v)^2+k}{2}.
+\]
+At $m=2$, $(u-v)^2=2E^2=o(N)$ by (2), while $k=o(N)$. Since $|A+A|\sim N/2$, both parities account for asymptotically half of the distinct sums. The exact even bias from doubles is consistent with this conclusion.
+
+\subsection*{5) Outcome and sources}
+\textbf{SOLVED, using the stated Kolountzakis estimate.} The convolution, diagonal correction and range of moduli are fully justified above. The primary distribution theorem remains an external dependency; no new theorem, independent proof of that input, or formal verification is claimed.
+
+\url{https://www.erdosproblems.com/154}, checked 23 September 2026; Kolountzakis, primary paper linked above, Theorem 2.
+
+The estimate measures complete coverage using the declared external result, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 754}
+
+\paragraph{Statement and result.}
+For an \(n\)-point set \(A\subset\mathbb R^4\), each point chooses its most frequent positive distance to the other points. Let \(f(n)\) be the largest possible minimum of these multiplicities. Then
+\[
+ f(n)\leq \frac n2+O(1).
+\]
+We reconstruct Swanepoel's reduction to the classical unit-distance bound, state that external input explicitly, and verify the matching leading-term construction.
+
+\paragraph{The external geometric input.}
+Let \(u_4(s)\) be the maximum number of unordered unit-distance pairs among \(s\) points in \(\mathbb R^4\). We use the known bound
+\[
+ u_4(s)\leq \frac{s^2}{4}+Cs\qquad(s\geq1), \tag{1}
+\]
+for an absolute constant \(C\). Theorem 2 of Swanepoel's paper records this result of Erd\H{o}s. A bound initially stated for sufficiently large \(s\) gives (1) for all \(s\) by increasing \(C\). Its geometric proof is an external dependency here.
+
+\paragraph{From unit distances to arbitrary favourite distances.}
+Assign an arbitrary positive radius \(r(x)\) to every \(x\in A\), and draw an arc \(x\to y\) when \(|x-y|=r(x)\). Form an undirected graph from the pairs having arcs in both directions. Its connected components have vertex sets \(A_1,\ldots,A_k\), of sizes \(n_1,\ldots,n_k\).
+
+Along any double edge, the two radii agree. Consequently \(r\) is constant throughout each \(A_i\), including the vacuous case of a singleton. Every arc within \(A_i\) is therefore accompanied by its reverse; after scaling, its underlying edge is a unit-distance pair. Thus there are at most \(2u_4(n_i)\) internal arcs. Between different components a pair supports at most one arc, since otherwise it would be a double edge joining the components. The total number of arcs is consequently at most
+\[
+ \begin{aligned}
+ \sum_i2u_4(n_i)+\sum_{i<j}n_i n_j
+ &\leq \frac12\sum_i n_i^2+2C\sum_i n_i
+           +\frac12\left(n^2-\sum_i n_i^2\right)\\
+ &=\frac{n^2}{2}+2Cn. \tag{2}
+ \end{aligned}
+\]
+Now choose at each point a radius attaining its maximum multiplicity. If every point has multiplicity at least \(f\), there are at least \(nf\) arcs. Dividing (2) by \(n\) proves \(f\leq n/2+2C\), uniformly in \(A\). The counts in this argument are directed in (2) and unordered in (1); the factor of two is essential.
+
+\paragraph{The lower-bound construction.}
+In two mutually orthogonal coordinate planes take circles of radius \(1/\sqrt2\) centred at the origin. Put \(\lfloor n/2\rfloor\) distinct points on one circle and \(\lceil n/2\rceil\) on the other. For points \(x,y\) on different circles,
+\[
+ |x-y|^2=|x|^2+|y|^2=1.
+\]
+Every point therefore has at least \(\lfloor n/2\rfloor\) unit-distance neighbours. In particular \(f(n)=n/2+O(1)\).
+
+There is a useful refinement when \(n=8t\). On each circle place \(t\) disjoint rotated inscribed squares. Every point has its \(4t\) neighbours on the other circle and two neighbours in its own square at distance one. This gives
+\[
+ f(8t)\geq4t+2.
+\]
+Distinct rotations modulo a quarter-turn ensure that all vertices are distinct. No assertion about an exact formula for every residue class of \(n\) is needed.
+
+\paragraph{Attribution and assessment.}
+The component argument is reconstructed from K. J. Swanepoel, \emph{Favourite distances in high dimensions}, Theorem A and its proof, \url{https://arxiv.org/abs/1108.4817}. The Lenz construction and the prior work of Avis, Erd\H{o}s, and Pach are recorded there and at \url{https://www.erdosproblems.com/754}, checked 24 September 2026. This is an exposition of known results, with (1) explicitly assumed. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

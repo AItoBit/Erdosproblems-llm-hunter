@@ -1,0 +1,159 @@
+\section*{Erd\H{o}s Problem 652: the \(k\)-th smallest pinned distance count}
+
+\paragraph{Statement and claim.}
+For \(n\) distinct planar points, let \(R(x)\) count the distinct
+positive distances from \(x\) to the other points, and order the
+points so that \(R(x_1)\leq\cdots\leq R(x_n)\).
+The problem asks whether the best constants \(\alpha_k\) permitting
+\(R(x_k)<\alpha_k\sqrt n\) for arbitrarily large configurations
+(or for every sufficiently large \(n\)) must tend to infinity.
+In fact, for \(k\geq2\),
+\[
+ \alpha_k=\Theta(\sqrt k).
+\]
+We reconstruct the pinned crossing-number argument and circle-grid
+construction in Surya Mathialagan,
+\emph{On Bipartite Distinct Distances in the Plane},
+\url{https://arxiv.org/abs/1912.01883}, Sections 2--3.
+In the arXiv version the pinned assertion is Theorem 3.6;
+its Theorem 1.4 only states the weaker unpinned consequence.
+See \url{https://www.erdosproblems.com/652}.
+
+\paragraph{External geometric inputs.}
+We use two standard theorems, in the forms stated in the cited paper.
+A topological multigraph with \(v\) vertices, \(e>5\mu v\) edges,
+and maximum edge multiplicity \(\mu\) has crossing number at least
+\(c e^3/(\mu v^2)\).
+Also, among \(m\) planar points the number of lines containing at
+least \(r\geq2\) of them is at most
+\[
+ C\left(\frac{m^2}{r^3}+\frac mr\right).
+\]
+The latter is the rich-line consequence of the
+Szemer\'edi--Trotter theorem. Absolute constants below may depend
+on these two absolute theorem constants, not on \(m,N\).
+
+\paragraph{The pinned estimate.}
+Let \(P,Q\) be disjoint planar point sets of sizes \(m,N\), with
+\(2\leq m\leq N^{1/3}\), and put
+\[
+ t=\max_{p\in P}\#\{|p-q|:q\in Q\}.
+\]
+We prove \(t\geq c\sqrt{mN}\).
+For bounded \(m\), this follows already from two centres:
+each ordered pair of distances from two distinct centres specifies
+the intersection of two circles, containing at most two points.
+Hence \(N\leq2t^2\).
+We may therefore assume \(m\) is larger than a sufficiently large
+absolute constant.
+
+Suppose for contradiction that \(t<\varepsilon\sqrt{mN}\),
+where the positive absolute \(\varepsilon\) will be small.
+Draw all circles about each \(p\in P\) passing through \(Q\);
+there are at most \(mt\) circles.
+On every circle containing at least three points of \(Q\),
+join consecutive points by the intervening circular arcs.
+This gives a multigraph on \(Q\) with
+\[
+ e\geq mN-2mt
+\]
+edges, since circles with one or two points discard at most \(2mt\)
+point--circle incidences.
+Distinct circles meet at most twice, and arcs from the same circle
+have disjoint interiors. After small local perturbations if needed,
+this drawing has \(O(m^2t^2)\) crossings.
+
+We bound the number of edges of high multiplicity.
+The centres of circles supplying arcs between a fixed pair \(u,v\)
+all lie on the perpendicular bisector \(\ell\) of that pair.
+Because circles with at most two points were discarded, any one
+circle supplies at most one arc with these endpoints.
+Thus multiplicity at least \(r\) forces \(\ell\) to contain at least
+\(r\) points of \(P\).
+
+A line containing \(s\) centres accounts for at most \(2st\) such
+arcs: each of the at most \(st\) circles has at most two consecutive
+arcs whose endpoints are exchanged by reflection in the line.
+Each such arc crosses one of the two intersection points of the
+circle with that line, which proves this count.
+Divide the possible \(s\)'s into dyadic ranges and apply the rich-line
+bound. The number of arcs whose bisector contains at least \(r\)
+centres is therefore
+\[
+ O\left(\frac{tm^2}{r^2}+tm\log(2m)\right).                      \tag{1}
+\]
+Indeed a dyadic range \(s\leq|\ell\cap P|<2s\) contributes
+\(O(t(m^2/s^2+m))\); summing proves (1).
+
+Fix a sufficiently large absolute integer \(K\), and remove every
+edge belonging to a pair of multiplicity at least \(K\).
+By (1), the number removed is at most
+\[
+ C'\left(\frac{tm^2}{K^2}+tm\log(2m)\right)
+ \leq C'\varepsilon mN
+       \left(\frac1{K^2}+\frac{\log(2m)}m\right),
+\]
+where \(m^3\leq N\) was used.
+Choosing \(\varepsilon\) sufficiently small leaves
+\(e'\geq mN/2\) edges, of multiplicity at most \(K\).
+For \(m>10K\), the crossing lemma applies and gives
+\[
+ m^2t^2\gg \operatorname{cr}(G')
+       \gg\frac{(mN)^3}{K N^2}
+       \gg m^3N.
+\]
+Thus \(t\gg\sqrt{mN}\), contradicting the choice of
+\(\varepsilon\) smaller than this absolute constant.
+The bounded range \(m\leq10K\) was covered by the two-circle argument.
+This proves the uniform pinned estimate.
+
+\paragraph{The lower bound for \(\alpha_k\).}
+Take \(P=\{x_1,\ldots,x_k\}\), the \(k\) points with smallest
+distance counts, and let \(Q\) consist of the other \(n-k\) points.
+For fixed \(k\) and \(n\geq k^3+k\), the estimate applies and gives
+some \(p\in P\) with at least \(c\sqrt{k(n-k)}\) distances to \(Q\).
+Every point of \(P\) has \(R(p)\leq R(x_k)\), so
+\[
+ R(x_k)\geq c\sqrt{k(n-k)}.
+\]
+As \(n\to\infty\), any admissible constant \(\alpha_k\) is therefore
+at least \(c\sqrt k\). This proves the requested divergence.
+
+\paragraph{A matching order of magnitude.}
+For integers \(s\geq k\), use centres
+\[
+ P=\{(a,0):1\leq a\leq k\}
+\]
+and the \(ks^2\) points
+\[
+ Q=\{(i,\sqrt j):1\leq i\leq s,\
+          s^2+1-i^2\leq j\leq s^2+ks-i^2,\ j\in\mathbb Z\}.
+\]
+All radicands are positive, and these points are distinct.
+The squared distance from \((a,0)\) to \((i,\sqrt j)\) is
+\(a^2-2ai+i^2+j\).
+For all \(1\leq a\leq k\leq s\), these integers lie between
+\[
+ k^2-2ks+s^2+1
+ \quad\hbox{and}\quad
+ k^2-2k+s^2+ks.
+\]
+There are at most \(3ks\) possible values. Adding the other centres
+contributes at most \(k-1\) further distances to each centre.
+
+For an arbitrary sufficiently large \(n\), choose
+\(s=\lceil\sqrt{(n-k)/k}\rceil\), and delete points of \(Q\)
+until exactly \(n-k\) remain. The \(k\) centres still have
+at most \(3ks+k=O(\sqrt{kn})\) distances each.
+Thus \(R(x_k)=O(\sqrt{kn})\), with an absolute implied constant,
+for every sufficiently large \(n\).
+Together with the lower bound this proves
+\(\alpha_k=\Theta(\sqrt k)\).
+
+\paragraph{Scope.}
+This is a reconstruction of the known resolution using the two
+explicit geometric theorems, including the required uniform
+constant and the order-statistic quantifiers.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

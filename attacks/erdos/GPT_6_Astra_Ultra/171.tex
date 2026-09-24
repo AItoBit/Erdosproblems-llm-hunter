@@ -1,0 +1,70 @@
+\section{Erd\H{o}s Problem 171: density Hales--Jewett}
+
+\subsection{1) Statement and scope}
+For each $t\geq1$ and $\epsilon>0$, must every
+$A\subseteq\{1,\ldots,t\}^N$ of size at least $\epsilon t^N$ contain
+a combinatorial line when $N$ is sufficiently large?
+A line has a nonempty set $S\subseteq\{1,\ldots,N\}$ of variable
+coordinates: its $i$th word has symbol $i$ in every coordinate of $S$
+and a fixed common symbol at each remaining coordinate.
+
+The general assertion is the established density Hales--Jewett theorem
+of Furstenberg and Katznelson, with a later combinatorial proof by the
+Polymath project. This attempt gives a complete elementary proof for
+$t\leq2$. It does not reconstruct the theorem for all alphabets.
+
+\subsection{2) Two symbols reduce to an antichain problem}
+Identify a word in $\{1,2\}^N$ with the set of positions containing $2$.
+Two different words form a combinatorial line precisely when their
+associated sets $B,C$ satisfy $B\subsetneq C$: the variable coordinates
+are $C\setminus B$, with the other coordinates fixed.
+Consequently a family without a line is an antichain of subsets of $[N]$.
+
+Choose a permutation of $[N]$ uniformly at random, and consider the chain
+consisting of its initial sets of lengths $0,1,\ldots,N$.
+For a fixed $k$-set $B$, the probability that this chain contains $B$
+is $1/\binom Nk$, since exactly $k!(N-k)!$ of the $N!$ permutations
+put its members first. A chain meets an antichain $\mathcal A$ at most
+once, so taking expectations gives
+\[
+ \sum_{B\in\mathcal A}\frac1{\binom N{|B|}}\leq1.
+\]
+Every binomial coefficient is at most $\binom N{\lfloor N/2\rfloor}$.
+Therefore
+\[
+ |\mathcal A|\leq\binom N{\lfloor N/2\rfloor}.
+\]
+The middle layer attains this bound. Stirling's formula now gives
+\[
+ 2^{-N}\binom N{\lfloor N/2\rfloor}
+ \sim\sqrt{\frac2{\pi N}}\longrightarrow0.
+\]
+For fixed $\epsilon>0$ this is smaller than $\epsilon$ for all large
+$N$. Thus any family of density at least $\epsilon$ has a line when
+$t=2$. This proof also gives a threshold of order $\epsilon^{-2}$,
+up to an absolute constant. For $t=1$ and $N\geq1$, the unique word
+itself is a line under the stated definition, so the assertion is immediate.
+
+\subsection{3) The missing general step}
+For $t\geq3$, an inclusion chain of sets no longer encodes all $t$
+words of a combinatorial line. The preceding antichain argument does
+not yield a density bound tending to zero for these alphabets.
+One needs the general density-increment or ergodic argument; none is
+provided here. The published theorem resolves the original problem,
+but citing its conclusion would not extend the proof just given.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome of this attempt: UNRESOLVED in full; the cases $t=1,2$
+are proved.} The estimate describes this attempt's mathematical coverage,
+not the current status of the already solved problem. No new result or
+local Lean verification is claimed.
+\begin{itemize}
+\item D. H. J. Polymath, \emph{A new proof of the density Hales--Jewett
+theorem}, Annals of Mathematics 175 (2012), 1283--1327,
+\texttt{https://annals.math.princeton.edu/2012/175-3/p06},
+\texttt{https://arxiv.org/abs/0910.3926}.
+\item T. F. Bloom, Problem 171,
+\texttt{https://www.erdosproblems.com/171}, checked 23 September 2026.
+\end{itemize}
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 20\%}

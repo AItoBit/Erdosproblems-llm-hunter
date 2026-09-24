@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 756}
+
+\paragraph{Statement and result.}
+Can \(n\) points in the plane determine \(\gg n\) distinct distances each occurring between more than \(n\) unordered pairs? Yes. We first give a grid proof of the qualitative statement and then reconstruct Bhowmick's stronger bound of \(\lfloor n/4\rfloor\) such distances.
+
+\paragraph{A direct three-row grid.}
+Write \(n=3L+r\), where \(0\leq r\leq2\), and use the \(3L\) points
+\[
+ A_0=\{1,\ldots,L\}\times\{0,1,2\}.
+\]
+Add \(r\) further distinct points outside \(A_0\). For each positive integer \(k<L\), the distance \(d_k=\sqrt{k^2+1}\) occurs between at least \(4(L-k)\) unordered pairs: choose one of the two adjacent row pairs, either horizontal orientation, and one of the \(L-k\) possible horizontal positions. These are distinct pairs; in particular the two orientations do not reverse the same pair, because its lower and upper rows are fixed.
+
+If
+\[
+ 1\leq k\leq\left\lfloor\frac{L-r-1}{4}\right\rfloor,
+\]
+then \(4(L-k)\geq3L+r+1=n+1\). The \(d_k\) are distinct. Thus there are at least \(n/12-O(1)\) distances of multiplicity greater than \(n\), proving the printed asymptotic assertion. Padding the set cannot decrease any pair count.
+
+\paragraph{Regular polygons give the stronger constant.}
+In a regular \(q\)-gon with circumradius \(R\), the chord lengths
+\[
+ d_j=2R\sin(\pi j/q),\qquad
+ 1\leq j\leq\left\lfloor\frac{q-1}{2}\right\rfloor,
+\]
+are strictly increasing. Each occurs on exactly \(q\) unordered pairs of polygon vertices: the pairs \(\{i,i+j\}\), with indices modulo \(q\), are all distinct when \(2j<q\). Other point pairs in a union of polygons will not affect these lower counts.
+
+For odd \(n=2m+1\geq5\), take two congruent regular \((m+1)\)-gons sharing exactly one vertex. This can be achieved by rotating one copy about that vertex through an angle avoiding a finite set: every additional coincidence imposes one of finitely many rotation angles. There are \(2(m+1)-1=n\) vertices. The two polygons have no common unordered pair, so each of their
+\[
+ \left\lfloor\frac m2\right\rfloor=\left\lfloor\frac n4\right\rfloor
+\]
+selected chord lengths has multiplicity at least \(2(m+1)=n+1\).
+
+For even \(n=2m\geq4\), reflect a regular \((m+1)\)-gon across the line containing one of its sides. Strict convexity puts all vertices other than the side endpoints in one open half-plane, and their reflected images in the opposite half-plane. Hence exactly the two endpoints are shared. The union has \(2(m+1)-2=n\) points. Only the shared side is counted as a pair in both polygons. Therefore every selected chord length occurs at least
+\[
+ 2(m+1)-1=n+1
+\]
+times, and there are \(\lfloor m/2\rfloor=\lfloor n/4\rfloor\) such lengths. For \(n\leq3\), the claimed number \(\lfloor n/4\rfloor\) is zero and any \(n\)-point set suffices.
+
+This proves, for every \(n\), the existence of an \(n\)-point planar set with at least \(\lfloor n/4\rfloor\) distances each realized by at least \(n+1\) unordered pairs.
+
+\paragraph{Scope, attribution, and assessment.}
+The polygon construction is Bhowmick's published solution, reconstructed with explicit overlap and unordered-pair counts: K. Bhowmick, \emph{A problem of Erd\H{o}s about rich distances}, Theorem 1.1, \url{https://arxiv.org/abs/2407.01174}. The preliminary grid is included as a direct weaker argument, without a novelty claim. The stronger question asking about every distance except the largest is a separate problem and is not settled by these constructions. Statement checked at \url{https://www.erdosproblems.com/756} on 24 September 2026. No external geometric theorem is needed for the proof above, and no local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,52 @@
+\section{Erd\H{o}s Problem \#191}
+\subsection*{1. FORMAL RESTATEMENT}
+Given $C>0$, does every red--blue colouring of the edges on $\{2,\ldots,n\}$, for all sufficiently large $n$, have a monochromatic clique $X$ with $\sum_{x\in X}1/\log x\ge C$?
+\subsection*{2. LITERATURE AND SCOPE}
+R\"odl proved the affirmative answer. Conlon, Fox and Sudakov proved the sharp order $\Theta(\log\log\log n)$ for the minimum, over colourings, of the maximum such weight. Their primary paper uses base-two logarithms. We likewise use $\log_2$ for the work below; changing to natural logarithms multiplies all vertex weights by $1/\log 2$ and does not change the question.
+
+This attempt reconstructs the matching-order upper construction and the three-colour obstruction in full, and proves a constant two-colour lower bound. The unbounded two-colour lower bound remains an explicitly external result, not a theorem proved by the elementary argument below.
+\subsection*{3. AN ELEMENTARY RANDOM-COLOURING FACT}
+For every integer $M\ge2$ there is an edge colouring of $K_M$ with no monochromatic clique of size
+$s=\lceil4\log_2 M\rceil+2$.
+If $s>M$, this is automatic. Otherwise the expected number of monochromatic $s$-cliques in a uniformly random edge colouring is at most
+\[
+ 2\binom Ms2^{-\binom s2}\le2^{1+s\log_2 M-s(s-1)/2}<1.
+\]
+Thus some colouring avoids them. In particular its largest monochromatic clique has size at most $4\log_2 M+2$. For $M=1$ the trivial one-vertex bound suffices.
+\subsection*{4. A TWO-COLOUR UPPER CONSTRUCTION}
+Partition the vertices into the nonempty blocks
+\[
+ B_i=[2^{2^{i-1}},2^{2^i})\cap\{2,\ldots,n\},\qquad 1\le i\le t,
+\]
+where $t\le1+\log_2\log_2 n$. Colour each block by the preceding random-colouring fact. Every monochromatic clique inside it has at most $4\cdot2^i+2$ vertices, each with weight at most $2^{1-i}$. Hence its total weight is at most $12$.
+
+Independently choose a red--blue colouring on the $t$ block indices with monochromatic cliques of size at most $4\log_2 t+2$ when $t\ge2$. Give every edge between $B_i$ and $B_j$ the colour of the index edge $ij$. If $X$ is monochromatic, its occupied block indices form a monochromatic clique of that same colour, and $X\cap B_i$ is monochromatic within its block. Thus
+\[
+ \sum_{x\in X}\frac1{\log_2 x}
+ \le12(4\log_2 t+2)=O(1+\log\log\log n).                \tag{1}
+\]
+This is R\"odl's construction as explained in the Conlon--Fox--Sudakov paper, with deliberately generous constants and every colour-compatibility step spelled out.
+\subsection*{5. WHY TWO COLOURS MATTER}
+Keep the red--blue colourings inside the blocks, but colour every between-block edge green. A red or blue clique lies in one block and has weight at most $12$. A green clique has at most one point from each block, so has weight at most
+\[
+ \sum_{i\ge1}2^{1-i}=2.
+\]
+This single block construction works on all integers $\ge2$ and disproves the analogous arbitrary-$C$ claim with three colours.
+\subsection*{6. A CONSTANT LOWER BOUND AND ITS LIMIT}
+The elementary Ramsey recurrence
+$R(a,b)\le R(a-1,b)+R(a,b-1)$ follows by considering the red and blue neighbours of one vertex. Its boundary values $R(1,b)=R(a,1)=1$ give
+\[
+ R(s,s)\le\binom{2s-2}{s-1}\le4^{s-1}.
+\]
+Choose $s=1+\lfloor\log_4(n-1)\rfloor$. Every edge colouring on $n-1$ vertices has a monochromatic $s$-clique, whose weight is at least
+\[
+ \frac{s}{\log_2 n}=\frac12-o(1).
+\]
+This cannot make the weight arbitrarily large. The missing argument must force sufficiently many suitably located vertices; a large clique with no control of its distribution only yields a constant in this calculation.
+\subsection*{7. FINAL}
+\textbf{UNRESOLVED in this reconstruction; the literature proves the answer is yes.}
+The sharp-order upper construction, the bounded three-colour example, and the constant lower bound are proved here. Conlon--Fox--Sudakov's Theorem 1.1 gives the missing two-colour lower bound $2^{-8}\log_2\log_2\log_2 n$, using dependent random choice and weighted Ramsey estimates. Those estimates are not reproved here, and no new resolution is claimed.
+\subsection*{8. SOURCES}
+\texttt{https://www.erdosproblems.com/191}; D. Conlon, J. Fox and B. Sudakov, \emph{Two extensions of Ramsey's theorem}, Duke Mathematical Journal 162 (2013), 2903--2927, \texttt{https://arxiv.org/abs/1112.1548}, Section 1.1 and Theorem 1.1.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

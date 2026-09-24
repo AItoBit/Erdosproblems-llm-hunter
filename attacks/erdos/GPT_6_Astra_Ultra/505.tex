@@ -1,0 +1,53 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#505; an explicit Borsuk counterexample, 2026-09-24.}
+Must every set of diameter one in $\mathbb R^n$ be partitionable into $n+1$ sets of diameter strictly smaller than one?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Kahn--Kalai disproved Borsuk's conjecture using a finite construction and a polynomial bound on forbidden intersections. The reconstruction below uses their geometry with deliberately loose numerical parameters. It includes the needed finite-field bound and gives a counterexample in dimension $2278$. No assertion about the smallest possible dimension is made.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Encode balanced sign vectors by their pairwise products. Diameter-one pairs correspond to subsets with intersection size $p$. Bound a family avoiding that intersection by linearly independent polynomials over $\mathbb F_p$.
+
+\section{WORK}
+Let $p=17$, $m=4p=68$, and let $\mathcal F$ consist of the $2p$-element subsets of $[m]$ containing $1$. For $S\in\mathcal F$ put $x_i(S)=1$ if $i\in S$ and $x_i(S)=-1$ otherwise, and define
+\[
+ v(S)=\big(x_i(S)x_j(S)/m\big)_{1\leq i<j\leq m}
+ \in\mathbb R^d,\qquad d=\binom m2=2278.
+\]
+Since $x_1(S)=1$, the coordinates with first index $1$ recover every other sign. Thus the $v(S)$ are distinct. Writing $t=x(S)\cdot x(T)$ and expanding its square gives
+\[
+ \|v(S)-v(T)\|^2
+ =\frac{m^2-t^2}{m^2},\qquad
+ t=4\bigl(|S\cap T|-p\bigr).
+\]
+All distances are at most one. There are pairs with $|S\cap T|=p$, so the diameter is exactly one. Any subset of these vectors of diameter less than one corresponds to a family $\mathcal H\subseteq\mathcal F$ with no two distinct members intersecting in exactly $p$ elements.
+
+\textbf{Bounding such a family.} For each $S\in\mathcal H$, over $\mathbb F_p$ consider
+\[
+ F_S(z)=\prod_{j=1}^{p-1}\left(\sum_{i\in S}z_i-j\right).
+\]
+Evaluate at the indicator vector $\mathbf1_T$ of $T\in\mathcal H$. If $T=S$, the sum is $2p=0$ in $\mathbb F_p$, so the product is nonzero. If $T\ne S$, then $1\leq |S\cap T|\leq2p-1$, and the forbidden-intersection condition excludes the only multiple $p$ in this range. One factor therefore vanishes. The evaluation matrix is diagonal with nonzero diagonal, proving linear independence of these functions on $\{\mathbf1_T:T\in\mathcal H\}$.
+Substitute $z_1=1$ and replace each positive power $z_i^k$ by $z_i$ in the other variables. This preserves all evaluations on the relevant indicator vectors and does not increase degree. The resulting polynomials belong to the space of multilinear polynomials of degree at most $p-1$ in $m-1$ variables. Consequently
+\[
+ |\mathcal H|\leq D:=\sum_{j=0}^{p-1}\binom{m-1}{j}.
+\]
+This proves the special forbidden-intersection estimate needed here without appealing to an unproved general version.
+
+\textbf{Exact numerical certificate.} The integers in this construction are
+\[
+ |\mathcal F|=\binom{67}{33}=14226520737620288370,
+ \qquad D=\sum_{j=0}^{16}\binom{67}{j}=1600383346290116.
+\]
+In particular
+\[
+ |\mathcal F|-2279D=10579247091425114006>0.
+\]
+A union of $d+1=2279$ subsets of diameter less than one can contain at most $2279D$ of our vectors. It cannot cover the whole set, and in particular cannot partition it. This disproves the proposed statement.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The finite counterexample, the polynomial independence argument, and the exact counting obstruction are all proved above. This is a reconstruction of the Kahn--Kalai mechanism with nonoptimal parameters, not a new disproof or a dimension record.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/505}; J. Kahn and G. Kalai, \emph{A counterexample to Borsuk's conjecture}, \url{https://arxiv.org/abs/math/9307229}.
+
+\textbf{Completion rate estimate: 100\%.}

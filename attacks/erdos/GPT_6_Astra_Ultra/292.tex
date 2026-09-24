@@ -1,0 +1,97 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#292; a reconstruction from Martin's denominator-clearing lemma, 2026-09-24.}
+Let $A$ be the positive integers that can occur as the largest denominator in a representation of $1$ as a sum of distinct positive unit fractions. Does $A$ have natural density $1$? Write $B(x)=|[1,x]\setminus A|$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Martin proved density one and the sharper estimate $B(x)\asymp x\log\log x/\log x$. We reconstruct both bounds from his uniform denominator-clearing lemma and standard prime estimates, stating those inputs precisely. The multiplicative closure and prime-power obstruction are also proved. This is an exposition of established results, not a novelty claim.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+To make $n$ the largest denominator, represent $1-1/n$ using smaller denominators. Martin's lemma does this whenever the largest prime power dividing $n$ is sufficiently small. Conversely, a sufficiently large prime divisor forces a modular obstruction to any representation with denominators at most $x$.
+
+\section{WORK}
+\textbf{Elementary structure.} We have $1\in A$. If $n=p^a$ for a prime $p$ and $a\geq1$, the term $1/n$ is the only possible term among denominators at most $n$ with $p$-adic valuation $-a$. It therefore cannot occur in a sum equal to the integer $1$. Thus no positive prime power belongs to $A$.
+
+If $m,n\in A$ and both exceed one, choose representations with maxima $m,n$. Replace $1/m$ in the first representation by the second representation divided by $m$. Every new denominator exceeds $m$, because a nontrivial representation of $1$ has no denominator $1$. The new terms are distinct, have maximum $mn$, and avoid all retained terms. Hence $mn\in A$; the cases involving $1$ are immediate. Also $n\in A$, $n>1$, implies $2n\in A$, since adjoining $1/2$ to the representation divided by two gives distinct denominators: all scaled denominators are at least four.
+
+\textbf{Explicit external inputs.} Set $P^*(b)$ equal to the largest prime power dividing $b$, with $P^*(1)=1$. Martin's Lemma 18 states that for every closed interval $I\subset(0,\infty)$ there is $X(I)$ such that
+\[
+r=a/b\in I,\quad z>X(I),\quad P^*(b)<z/(\log z)^{23}
+\quad\Longrightarrow\quad
+r=\sum_{d\in E}1/d\quad\text{for some }E\subset[1,z].
+\tag{1}
+\]
+The fractions use distinct positive integer denominators. The proof of (1) is imported. We also use the standard estimates
+\[
+\sum_{p\leq u}\frac1p=\log\log u+C_1+O(1/\log u),\quad
+\pi(u)\ll u/\log u,\quad
+\log\operatorname{lcm}(1,\ldots,m)\leq C_2m.
+\tag{2}
+\]
+The sums in (2) run over primes; the last inequality is the usual elementary Chebyshev estimate.
+
+\textbf{Upper bound on the exceptional set.} Let $x$ tend to infinity, and put
+\[
+z=x/\log x,\qquad y=z/(\log z)^{23}.
+\]
+If $z<n\leq x$ and $P^*(n)<y$, then $r=1-1/n$ belongs to $[1/2,1]$ for large $x$, and its reduced denominator divides $n$. Applying (1) gives a representation of $r$ using denominators at most $z<n$. Adjoin $1/n$ to obtain $n\in A$. Therefore
+\[
+B(x)\leq z+\sum_{\substack{q\geq y\\q\text{ a prime power}\leq x}}\left\lfloor\frac xq\right\rfloor
+\leq z+x\sum_{\substack{y\leq q\leq x\\q\text{ a prime power}}}\frac1q.
+\tag{3}
+\]
+By (2), the prime contribution is
+\[
+\log\log x-\log\log y+O(1/\log y)
+=O\!\left(\frac{\log\log x}{\log x}\right),
+\]
+since $\log y=\log x-24\log\log x+o(1)$. Proper prime powers contribute $O(\log y/\sqrt y)$: the number of proper powers below $T$ is at most $\sqrt T\log_2T$, and summing their reciprocal contributions over $[2^jy,2^{j+1}y)$ proves the estimate. This is smaller than the prime contribution. Hence
+\[
+B(x)\ll\frac{x\log\log x}{\log x}.
+\tag{4}
+\]
+In particular $A$ has density one.
+
+\textbf{Large-prime obstruction.} Fix a constant $C_0>4C_2+4$ and set $Y=C_0x/\log x$. For large $x$ we have $Y>\sqrt x$. We claim that no representation of $1$ with denominators at most $x$ can contain any multiple of a prime $p>Y$.
+
+Suppose it did. Since $p^2>x$, every such denominator is $pj$, where $1\leq j\leq m=\lfloor x/p\rfloor<p$. Let $J$ be the nonempty set of these $j$. Separating the terms whose denominators are divisible by $p$ from the others, and multiplying the identity by $p$, gives
+\[
+\sum_{j\in J}j^{-1}\equiv0\pmod p.
+\tag{5}
+\]
+Here the other denominators and the $j$ are units modulo $p$, so the reduction is legitimate. Put $Q=\operatorname{lcm}(1,\ldots,m)$. Equation (5) implies that $p$ divides the positive integer
+\[
+U=\sum_{j\in J}Q/j.
+\]
+But (2) and $m\leq\log x/C_0$ give
+\[
+0<U\leq QH_m\leq\exp(C_2m)(1+\log m)
+\leq x^{1/4}(1+\log\log x)<p
+\]
+for sufficiently large $x$, a contradiction. This proves the claim.
+
+Every integer at most $x$ divisible by such a prime is therefore outside $A$. No integer at most $x$ has two such prime factors, because $Y^2>x$. Consequently
+\[
+B(x)\geq\sum_{Y<p\leq x}\left\lfloor\frac xp\right\rfloor
+\geq x\sum_{Y<p\leq x}\frac1p-\pi(x).
+\tag{6}
+\]
+By (2),
+\[
+\sum_{Y<p\leq x}\frac1p
+=\log\frac{\log x}{\log Y}+O(1/\log x)
+=\frac{\log\log x+O(1)}{\log x}.
+\]
+The subtraction of $\pi(x)=O(x/\log x)$ is lower order. Thus (6) gives $B(x)\gg x\log\log x/\log x$, which with (4) proves the claimed order.
+
+\section{VERIFICATION AND SCOPE}
+All representations produced by (1) use denominators strictly smaller than the adjoined $n$; this verifies the largest-denominator condition, rather than merely membership somewhere in a representation. The lower bound excludes all representations using the offending prime, with no assumption on their other denominators. The only substantial imported construction is (1); the counting and modular deductions are complete here.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and structural observations: \url{https://www.erdosproblems.com/292}.
+\item G. Martin, \emph{Denser Egyptian Fractions}, Lemma 18 and Theorem 4: \url{https://arxiv.org/pdf/math/9811112}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, using the declared denominator-clearing lemma and standard prime estimates.}
+We obtain density one and $B(x)\asymp x\log\log x/\log x$.
+\textbf{Completion rate estimate: 100\% of these assertions, relative to the stated inputs.}

@@ -1,0 +1,122 @@
+\section{Erd\H{o}s Problem 253: a noncomplete sequence meeting every progression}
+
+\subsection{1) Statement and scope}
+Suppose $a_{i+1}/a_i\to1$, and every infinite arithmetic
+progression contains infinitely many sums of distinct $a_i$.
+Must all sufficiently large integers be such sums? No.
+We reconstruct the irrational-rotation mechanism of Cassels's
+counterexample, with weaker quantitative bounds sufficient for
+the full negative answer. Our sequence itself meets every
+progression infinitely often, while its subset sums have upper
+density at most $1/4$.
+
+\subsection{2) A rotation with quantitative covering}
+Write $\|t\|$ for distance to the nearest integer, and put
+$\alpha=\sqrt2$. For every positive integer $h$,
+\[
+ \|h\alpha\|\geq\frac1{4h}.
+\]
+Indeed, if $v$ is a nearest integer, the nonzero integer
+$|2h^2-v^2|$ is at least one, while $h\sqrt2+v<4h$.
+
+Fix a positive integer $u$ and let $\theta=u\alpha$.
+Then $\|q\theta\|\geq1/(4uq)$.
+We use the elementary continued-fraction fact that consecutive
+convergents $p/q,p'/q'$ satisfy
+$|\theta-p/q|<1/(qq')$ and $q'>q$ (after the initial terms).
+Our lower bound implies $q'<4uq$.
+For every sufficiently large integer $L$, choose consecutive
+denominators with $q\leq L<q'$. Thus $q>L/(4u)$.
+
+Since $p,q$ are coprime, the residues $jp/q$, $0\leq j<q$,
+are the complete $1/q$-grid on the circle.
+Their distances from $j\theta$ are less than $1/q'<1/q$.
+Every point of the circle is therefore within $2/q<8u/L$
+of some $j\theta$ with $0\leq j<L$.
+We will use the slightly weaker bound $12u/L$.
+
+\subsection{3) A thin set meeting every progression with short gaps}
+Fix $\gamma=3/4$ and define
+\[
+ D=\{n\geq1:\|\alpha n\|<n^{-\gamma}\}.
+\]
+Consider any progression $u\ell+v$, with $u\geq1$ and fixed
+integer $v$. For a large integer $X$, put
+$L=\lceil K_uX^\gamma\rceil$, where
+$K_u\geq24u(3u)^\gamma$.
+Apply the covering result to the target
+$-\alpha(uX+v)$ modulo one. Some $0\leq j<L$ satisfies
+\[
+ \|\alpha(u(X+j)+v)\|
+ \leq\frac{12u}{L}
+ \leq\frac12(3uX)^{-\gamma}.
+\]
+For large $X$, $L\leq X$ and
+$0<n=u(X+j)+v\leq3uX$. Hence the last quantity is strictly
+less than $n^{-\gamma}$, so $n\in D$.
+Letting $X\to\infty$ proves that every such progression contains
+infinitely many elements of $D$.
+
+With $u=1,v=0$, the same argument gives an element of $D$
+in every interval $[X,X+O(X^\gamma)]$ for large $X$.
+If $d_i$ are the increasing elements of $D$, applying it with
+$X=d_i+1$ gives
+$d_{i+1}-d_i=O(d_i^\gamma)$, and therefore
+$d_{i+1}/d_i\to1$.
+
+\subsection{4) The approximation errors are summable}
+For distinct $n,m\in D\cap[X,2X)$,
+\[
+ \frac1{4|n-m|}
+ \leq\|\alpha(n-m)\|
+ \leq\|\alpha n\|+\|\alpha m\|<2X^{-\gamma}.
+\]
+Thus these elements are separated by at least $X^\gamma/8$,
+and there are at most $1+8X^{1-\gamma}$ of them.
+Consequently
+\[
+ \sum_{n\in D\cap[X,2X)}\|\alpha n\|
+ \leq X^{-\gamma}+8X^{1-2\gamma}.
+\]
+Summing over dyadic $X$ converges because $\gamma>1/2$.
+Choose $N_0$ so that the tail sum is less than $1/8$, and
+put $A=D\cap[N_0,\infty)$.
+Deleting this finite prefix preserves the progression property
+and the consecutive-ratio limit.
+
+\subsection{5) An obstruction to completeness}
+For every finite subset $F\subseteq A$, the triangle inequality
+on the circle gives
+\[
+ \left\|\alpha\sum_{a\in F}a\right\|
+ \leq\sum_{a\in F}\|\alpha a\|
+ <\frac18.
+\]
+The set of positive subset sums is therefore contained in
+$T=\{n\geq1:\|\alpha n\|<1/8\}$.
+Irrational rotation is uniformly distributed, so $T$ has
+natural density $1/4$. One standard justification is that for
+each nonzero integer $h$, the geometric sum
+$\sum_{n\leq N}e^{2\pi ih\alpha n}$ is bounded independently
+of $N$; Weyl's criterion then gives uniform distribution,
+including the two intervals defining $T$.
+Thus the subset sums have upper density at most $1/4$ and
+cannot contain all sufficiently large integers.
+
+At the same time every progression contains infinitely many
+elements of $A$, each of which is already a one-term subset
+sum. All the hypotheses in the problem are satisfied.
+
+\subsection{6) Attribution and scope}
+Sources: \url{https://www.erdosproblems.com/253};
+J.~W.~S.~Cassels, \emph{On the representation of integers as
+the sums of distinct summands taken from a fixed set},
+Acta Sci. Math. (Szeged) 21 (1960), 111--124, Section 3,
+\url{https://acta.bibl.u-szeged.hu/13906/1/math_021_fasc_003_004_111-124.pdf}.
+Cassels proves stronger quantitative conclusions. This is a
+reconstruction of the known counterexample mechanism using the
+standard continued-fraction estimates and Weyl criterion stated
+above; it makes no novelty or formal-verification claim.
+The construction answers the full question in the negative.
+\subsection{7) Completion estimate}
+\textbf{COMPLETION: 100\%}

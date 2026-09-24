@@ -1,0 +1,50 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#516; an explicit class with the required minimum modulus, 2026-09-24.}
+For a nonconstant entire function of finite order,
+$f(z)=\sum_{k\geq1}a_kz^{n_k}$ with increasing integer exponents satisfying $n_k/k\to\infty$, let $M(r)=\max_{|z|=r}|f(z)|$ and $m(r)=\min_{|z|=r}|f(z)|$. Is $\limsup_{r\to\infty}\log m(r)/\log M(r)=1$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Fuchs proved the affirmative answer in 1963. The problem page records the stronger conclusion outside an exceptional set of logarithmic density zero. The proof below does not reconstruct that general theorem. Instead it treats an explicit nonpolynomial function for every prescribed exponent sequence, proving the minimum-modulus estimate directly by a dominant term.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose Gaussian-decaying coefficients. At a suitable radius for each exponent, completing the square separates the largest term from all others and gives a uniform positive lower bound, valid at every point of that circle.
+
+\section{WORK}
+Fix any strictly increasing sequence of positive integers $n_k$ with $n_k/k\to\infty$ and set
+\[
+ f(z)=\sum_{k\geq1}e^{-n_k^2}z^{n_k}.
+\]
+This series is entire: for each fixed $r$, its absolute sum is bounded by $\sum_{h\geq1}e^{-h^2}r^h<\infty$, locally uniformly in $r$. It is transcendental because infinitely many coefficients are nonzero.
+For $r\geq1$, put $t=(\log r)/2$. Completing the square gives
+\[
+ M(r)\leq e^{t^2}\sum_{h\geq1}e^{-(h-t)^2}\leq C e^{t^2},       \tag{1}
+\]
+where $C$ is absolute. For example, group integers according to $j\leq|h-t|<j+1$; at most four integers occur in each group, so the sum is at most $4\sum_{j\geq0}e^{-j^2}$. Equation (1) implies order zero, since
+$\log\log M(r)/\log r\to0$; the order cannot be negative because $M(r)$ dominates every fixed nonzero monomial by Cauchy's estimate.
+
+Now take $r_j=e^{2n_j}$. On $|z|=r_j$ the $j$th term has modulus $e^{n_j^2}$, while the $k$th has modulus
+\[
+ e^{-n_k^2}r_j^{n_k}
+ =e^{n_j^2}e^{-(n_k-n_j)^2}.
+\]
+For each positive integer $h$, at most two exponents differ from $n_j$ by $h$. The relative sum of all other terms is consequently at most
+\[
+ \rho=2\sum_{h\geq1}e^{-h^2}<1.
+\]
+For a simple rigorous estimate, $h^2\geq2h$ for $h\geq2$, and hence
+$\rho\leq2/e+2e^{-4}/(1-e^{-2})<4/5$.
+The triangle inequality and its reverse, uniformly in the argument of $z$, yield
+\[
+ (1-\rho)e^{n_j^2}\leq m(r_j)\leq M(r_j)
+ \leq(1+\rho)e^{n_j^2}.                                \tag{2}
+\]
+Thus both logarithms in the ratio equal $n_j^2+O(1)$, and their ratio tends to one. Since $m(r)\leq M(r)$ and $M(r)>1$ eventually, the limsup cannot exceed one. Equation (2) proves the exact requested limsup for this explicit class.
+The argument actually works for every infinite increasing integer exponent sequence, with these particular coefficients. Its limitation is coefficient dependence, not a hidden strengthening of the gap hypothesis.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved.} For every prescribed gap sequence, a transcendental order-zero example satisfying the conclusion is constructed and completely analyzed. Arbitrary finite-order coefficients are not handled. The missing step is the general control of cancellation on many circles, supplied by Fuchs's theorem but not proved in this attempt.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/516}; W. H. J. Fuchs, \emph{Proof of a conjecture of G. P\'olya concerning gap series}, Illinois Journal of Mathematics 7 (1963), 661--667, \url{https://doi.org/10.1215/ijm/1255645102}. The explicit Gaussian-coefficient calculation above is independent of that theorem.
+
+\textbf{Completion rate estimate: 40\%.}

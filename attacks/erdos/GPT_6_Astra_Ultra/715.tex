@@ -1,0 +1,33 @@
+\section{Erd\H{o}s Problem \#715: cubic subgraphs}
+\noindent Polynomial reconstruction and the unresolved boundary case, 24 September 2026.
+
+\subsection*{Statement and scope}
+Does every nonempty finite $4$-regular graph have a $3$-regular subgraph? Is some fixed regular degree sufficient? Tashkinov proved the first assertion. Here we prove the second with degree $5$, prove the $4$-regular-plus-one-edge result of Alon--Friedland--Kalai, and settle the bipartite $4$-regular case. The general degree-four theorem is not reconstructed.
+
+\subsection*{A polynomial zero-counting lemma, proved}
+Let $f_1,\ldots,f_s$ be polynomials over $\mathbb F_3$ in $m$ variables, with $\sum_i\deg f_i<m$. Their number of common zeros is divisible by three. Indeed its residue modulo three is
+\[
+ \sum_{x\in\mathbb F_3^m}\prod_{i=1}^s(1-f_i(x)^2).
+\]
+Each factor is one precisely when $f_i(x)=0$, and zero otherwise. The product has degree less than $2m$. On summing any monomial over all variable values, the result is zero unless every variable has a positive even exponent: exponent zero gives $1+1+1=0$, and odd exponents give zero as well. Such a monomial would have degree at least $2m$, which is impossible. Thus the entire sum is zero. This is the needed special case of Chevalley's theorem, with its proof included.
+
+\subsection*{More than twice as many edges as vertices}
+Let $G$ have $v$ vertices, $e>2v$ edges and maximum degree at most five. Introduce one variable $x_e$ per edge and, for each vertex $u$, put
+\[
+ f_u(x)=\sum_{e\ni u}x_e^2\quad\hbox{over }\mathbb F_3.
+\]
+The sum of the polynomial degrees is at most $2v<e$. The zero-counting lemma applies. The all-zero assignment is a common zero, so there are at least three common zeros, and in particular one with some $x_e\ne0$.
+
+Keep exactly those edges with $x_e\ne0$. Since every nonzero square in $\mathbb F_3$ equals one, each vertex has degree divisible by three in the retained graph. Its degree is at most five, so it is zero or three. Delete the isolated vertices. At least one edge remains, and the result is the required nonempty cubic subgraph.
+
+A $5$-regular graph has $e=5v/2>2v$, so degree five suffices. A $4$-regular graph with one extra edge has $2v+1$ edges and maximum degree five, so the same argument applies. The latter assertion can even allow the added edge to be parallel to an existing edge, although the original problem concerns simple graphs.
+
+\subsection*{The bipartite degree-four case}
+Suppose $G$ is $4$-regular and bipartite, with parts $L,R$. Degree counting gives $|L|=|R|$. For $S\subseteq L$, all $4|S|$ incident edges end in $N(S)$, which can receive at most $4|N(S)|$ of them. Thus $|N(S)|\geq|S|$. Hall's matching theorem supplies a perfect matching; deleting it leaves a spanning cubic graph. Hall's theorem is the explicit standard external input in this additional case.
+
+\subsection*{Remaining gap}
+\textbf{Attempt status: unresolved.} The existence of a sufficient regular degree is completely proved, as are the two stated boundary variants. In a general $4$-regular graph the polynomial degree sum equals, rather than is smaller than, the number of variables. The zero-count argument therefore does not establish a nonzero solution. Nor can the added edge simply be deleted from a cubic subgraph that uses it. The full Tashkinov theorem remains the missing part of this attempt.
+Sources: \url{https://www.erdosproblems.com/715}; N. Alon, S. Friedland and G. Kalai, \emph{Regular subgraphs of almost regular graphs}, \url{https://doi.org/10.1016/0095-8956(84)90047-9}, and their companion note on the extra-edge case. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 70\%}

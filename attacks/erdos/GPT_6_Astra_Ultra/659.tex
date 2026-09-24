@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 659}
+
+\paragraph{Statement and result.}
+Can \(n\) points in the plane determine only \(O(n/\sqrt{\log n})\) distinct distances while every four of them determine at least three distances? Yes. We prove the required four-point property for the rectangular lattice
+\[
+ \Lambda=\{(a,b\sqrt2):a,b\in\mathbb Z\},
+\]
+and use the explicitly stated quadratic-form counting theorem for the number of distances.
+
+\paragraph{No equilateral triangle and no square.}
+Every squared distance in \(\Lambda\) is a positive integer of the form \(a^2+2b^2\). The area of a lattice triangle is \(|h|\sqrt2/2\) for some integer \(h\), by the determinant formula. An equilateral triangle with squared side length \(s>0\) has area \(s\sqrt3/4\). Equality would imply \(\sqrt6=4|h|/s\), contradicting irrationality. Thus there is no nondegenerate equilateral triangle.
+
+If a square had adjacent side vector \((a,b\sqrt2)\), the other adjacent side vector would be \(\pm(-b\sqrt2,a)\). Belonging to the same lattice would require both \(b\sqrt2\in\mathbb Z\) and \(a/\sqrt2\in\mathbb Z\), hence \(a=b=0\). A nondegenerate square is therefore impossible as well.
+
+\paragraph{An elementary classification sufficient for four points.}
+Suppose four distinct lattice points determined at most two distances. One distance alone would already give an equilateral triangle. Otherwise write the two squared distances as distinct positive integers \(s,t\), and colour the edges of the complete graph on the four points according to these values. Neither colour contains a triangle, by the preceding paragraph.
+
+Each vertex has degree one or two in each colour. Indeed three edges of one colour at a vertex force the triangle among their other ends to have the other colour. A triangle-free graph on four vertices with all degrees one or two is either \(2K_2\), \(P_4\), or \(C_4\). This leaves two cases up to interchanging colours.
+
+If one colour is a four-cycle and the other its two diagonals, the four equal sides give a rhombus, and the equal diagonals make it a square. To justify the geometric step without assuming an ordering, two opposite vertices have the other two as distinct intersections of equal-radius circles. Those intersections are reflections across the line of the opposite vertices, with their common midpoint at the midpoint of the two circle centres. The diagonals therefore bisect each other and are perpendicular. Their equal lengths give a square. This has already been excluded.
+
+The remaining case has the \(s\)-edges forming a path \(P_0P_1P_2P_3\) and all three other edges of squared length \(t\). Translate \(P_0\) to the origin. The Gram matrix of \(P_1,P_2,P_3\) is
+\[
+ M=\begin{pmatrix}
+ s&t/2&s/2\\
+ t/2&t&t-s/2\\
+ s/2&t-s/2&t
+ \end{pmatrix}.
+\]
+Three vectors in the plane have Gram determinant zero, whereas direct expansion gives
+\[
+ \det M=-\frac14(s+t)(s^2-3st+t^2).
+\]
+It follows that \(t/s=(3\pm\sqrt5)/2\), which is irrational. This contradicts \(s,t\in\mathbb Z\). Every four distinct points of \(\Lambda\) therefore determine at least three distances.
+
+\paragraph{The external counting input and the finite point set.}
+We use the classical Bernays theorem in this one specific form:
+\[
+ \#\{r\leq X:r=a^2+2b^2>0\text{ for some }a,b\in\mathbb Z\}
+ =O\left(\frac X{\sqrt{\log X}}\right). \tag{1}
+\]
+The form is primitive and positive definite with discriminant \(-8\), so it satisfies the theorem's hypotheses. The analytic proof of (1) is an external dependency, not reconstructed here. Moree and Osburn state the general asymptotic in Section 2, equation (2.3), of the primary source below.
+
+Take the \(m^2\) lattice points with \(1\leq a,b\leq m\). Their squared distances are values of the form in (1) not exceeding \(3(m-1)^2\), hence their number of distinct distances is \(O(m^2/\sqrt{\log m})\). The squaring map is injective on positive distances, so counting squared values is sufficient.
+
+For any sufficiently large \(n\), set \(m=\lceil\sqrt n\rceil\) and choose any \(n\) of those \(m^2\) points. Removing points preserves the four-point property and cannot increase the number of distances. Since \(m^2=O(n)\) and \(\log m\asymp\log n\), this yields the requested bound for every large \(n\).
+
+\paragraph{Attribution and assessment.}
+The lattice construction and the distance-counting approach are known; see Moree and Osburn, \emph{Two-dimensional lattices with few distances}, \url{https://arxiv.org/abs/math/0604163}. Current statement and historical discussion: \url{https://www.erdosproblems.com/659}, checked 24 September 2026. The four-point argument above avoids relying on an unproved list of geometric configurations and explicitly excludes the pentagonal distance ratio. This is a complete answer relative to the stated Bernays input. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

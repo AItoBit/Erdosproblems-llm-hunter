@@ -1,0 +1,43 @@
+\section{Erd\H{o}s Problem \#330: positive-density private sums in a minimal basis}
+\noindent Partial finite-stage construction, 24 September 2026.
+
+\subsection*{1) Statement and density convention}
+The question asks for a minimal asymptotic additive basis of order two $A\subseteq\mathbb N$ having positive density, such that for every $a\in A$ the integers which cannot be represented without using $a$ have positive upper density. We interpret the density condition on $A$ as positive upper density, following the source's discussion. An asymptotic basis here means that every sufficiently large integer lies in $A+A$; repetitions in a two-term representation are allowed.
+
+For an anchor $a\in A$, a private sum is an integer in
+\[(A+A)\setminus((A\setminus\{a\})+(A\setminus\{a\})).
+\]
+Positive upper density of private sums would imply that deleting $a$ destroys the basis property. The difficulty is to achieve this for every anchor while still covering all sufficiently large integers.
+
+\subsection*{2) A finite private-sum block with a positive density ratio}
+Let $F$ be any finite nonempty subset of $\mathbb N$, put $M=\max F$, and fix $a\in F$. Choose a prime $p>2M$. For an integer $T>2M+a$, define
+\[B=\{b\in\mathbb N:T\le b\le2T-a-1,\quad b\equiv-a\pmod p\},\qquad W=a+B.
+\]
+Then $W\subseteq[T+a,2T-1]$, and each $w\in W$ has exactly one unordered representation in $(F\cup B)+(F\cup B)$, namely $w=a+(w-a)$.
+
+Indeed, $F+F\subseteq[2,2M]$ lies below $W$, whereas $B+B$ lies at or above $2T$, above $W$. Any other representation would therefore be $w=c+b'$ with $c\in F$, $b'\in B$. Since $w\equiv0\pmod p$ and $b'\equiv-a\pmod p$, it would force $c\equiv a\pmod p$. The elements of $F$ are between 1 and $M<p$, so $c=a$ and then $b'=w-a$. In particular no diagonal exception has been omitted.
+
+The interval defining $B$ has $T-a$ integers, so
+\[|W|=|B|\ge\frac{T-a}{p}-1.
+\]
+For fixed $F,a,p$, arbitrarily large choices of $T$ give
+\[\frac{|W|}{2T-1}\ge\frac1{2p}-o(1).
+\]
+The new basis elements themselves have the same finite-scale count. Any future elements strictly greater than $2T-1$ cannot occur in a representation of a member of $W$, so they preserve all of these witnesses.
+
+\subsection*{3) Why this lemma is not yet the infinite construction}
+The lemma works for every finite prefix and any selected old anchor, but it does not maintain a fixed positive density constant on repeated visits to that anchor. Its sufficient condition $p>2\max F$ forces the available lower bound $1/(2p)$ toward zero as the prefix grows. Reusing a fixed prime instead would require controlling all future elements congruent to the anchor; the finite lemma supplies no such invariant.
+
+There is a second independent issue: adding sparse distant blocks does not guarantee that every sufficiently large integer becomes a two-term sum. Filling those gaps can create alternative representations of the planned witnesses. Thus preserving finitely many witnesses by moving future elements beyond them is valid, but does not alone establish either positive upper density for every anchor's full witness set or the asymptotic basis property.
+
+\subsection*{4) A necessary restriction on lower density}
+A minimal basis of order two cannot have lower asymptotic density exceeding $1/2$. To see this, suppose $\underline d(A)>1/2$. Deleting any single element leaves that inequality unchanged. For $D=A\setminus\{a\}$ and every sufficiently large $n$, more than half of the integers $1,\ldots,n-1$ belong to $D$. The sets $D\cap[1,n-1]$ and $n-(D\cap[1,n-1])$ therefore intersect. An element in their intersection gives $n=d_1+d_2$ with $d_1,d_2\in D$. Hence every deletion still leaves an asymptotic basis, contrary to minimality. This does not prohibit the positive upper density asked for here.
+
+\subsection*{5) Outcome and sources}
+\textbf{UNRESOLVED in this attempt.} The finite private-block lemma, its exact density ratio, future-preservation assertion, and the lower-density restriction are proved. A compatible infinite construction achieving both universal coverage and positive upper density of private sums for every element is missing.
+
+Source: \url{https://www.erdosproblems.com/330} and its discussion, checked 23 September 2026. The current source reports a construction by GPT 5.5 Pro prompted by Turturean, and a formalized resolution. This text does not reproduce that construction or claim to have verified its Lean proof. Its modular witness calculation is partial progress, not a new solution.
+
+The estimate is a subjective assessment of the proved construction ingredients, not a probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 25\%}

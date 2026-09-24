@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#603: there is no universal coloring cardinal}
+\noindent Erd\H{o}s--Rado construction with its partition argument supplied, 24 September 2026.
+
+\subsection*{Statement and current context}
+For families of countably infinite sets with pairwise intersection size different from two, is there a cardinal $C$ that always permits a coloring without monochromatic members? There is no such cardinal. The current editorial attributes the observation below to a GPT-5.4-Pro attempt prompted by Chojecki. We check the construction independently and prove the particular Erd\H{o}s--Rado partition fact that it uses. The older local attempt's suggestion of a counterexample on a countable universe cannot defeat countably many colors: the injective coloring already prevents any infinite monochromatic set.
+
+\subsection*{The required partition fact}
+Let $\kappa$ be any infinite cardinal and $\lambda=(2^\kappa)^+$. Every coloring
+\[c:[\lambda]^2\longrightarrow\kappa
+\]
+has a homogeneous set of cardinality $\kappa^+$, and hence a countably infinite one. We work in ZFC, including its usual cardinal arithmetic and well-ordering principle.
+
+Here is a proof by the standard Erd\H{o}s--Rado tree. Start with the set $X_\varnothing=\lambda$. At every nonempty node set $X_\sigma$, select its least ordinal $x_\sigma$. Partition the remaining elements into the child sets
+\[X_{\sigma^\frown i}=\{y\in X_\sigma:y>x_\sigma, c(\{x_\sigma,y\})=i\},
+\qquad i<\kappa.
+\]
+At a limit code length take the intersection of the previously prescribed child sets. Empty sets have no selected node. Thus each code of ordinal length $\eta$ is a function $\eta\to\kappa$, and along a branch selected ordinals strictly increase.
+
+Every $y<\lambda$ is selected at some node. Follow the unique branch whose sets contain $y$ until it is selected; at every preceding stage the selected ordinal is strictly below $y$. This process cannot continue through $y+1$ stages with $y$ still unselected, since there is no strictly increasing sequence of that order type below $y$. At limit stages $y$ remains in the intersection. Hence the tree has at least $\lambda$ distinct selected nodes.
+
+If every selected node had code length less than $\kappa^+$, the number of possible codes would be at most
+\[
+\sum_{\eta<\kappa^+}\kappa^{|\eta|}
+\leq\kappa^+\cdot2^\kappa=2^\kappa.
+\tag{1}
+\]
+Indeed $|\eta|\leq\kappa$, $\kappa^\kappa\leq(2^\kappa)^\kappa=2^\kappa$, and $\kappa^+\leq2^\kappa$. This contradicts $\lambda>2^\kappa$. There is therefore a node with at least $\kappa^+$ predecessors on its branch. Take the first $\kappa^+$ selected ordinals $x_\eta$ on that branch.
+For every $\eta<\kappa^+$, all its later branch vertices have one common color $i_\eta$ to $x_\eta$, namely the color specifying the next child. Among $\kappa^+$ indices, one of the $\kappa$ values of $i_\eta$ occurs $\kappa^+$ times: otherwise each fiber has cardinal at most $\kappa$ and their union would too. The corresponding vertices are homogeneous. This proves the partition fact, without treating it as an unexpanded input.
+
+\subsection*{The family and its intersections}
+Given an arbitrary cardinal $C$, take $\kappa=\max(C,\aleph_0)$ and $\lambda=(2^\kappa)^+$. Use the edge set $U=[\lambda]^2$ as the ground set. For each countably infinite $X\subseteq\lambda$, define
+\[A_X=[X]^2\subseteq U.
+\]
+Each $A_X$ is countably infinite. Moreover
+\[A_X\cap A_Y=[X\cap Y]^2.
+\]
+If $|X\cap Y|=r<\omega$, this intersection has size $\binom r2$, which is never two: its initial values are $0,0,1,3,6,\ldots$. If $X\cap Y$ is infinite, the intersection is countably infinite. Thus distinct members never intersect in exactly two points. Distinct $X$ give distinct $A_X$, since the set of endpoints of the edges recovers $X$.
+
+A coloring of $U$ with at most $C$ colors is also a coloring with at most $\kappa$ colors. The partition fact gives a countably infinite $X$ whose pairs all have one color. The corresponding member $A_X$ is monochromatic. Since this works for every $C$, no uniform sufficient cardinal exists. If $C=0$, no coloring of this nonempty universe exists in the first place, so it cannot be sufficient either.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved.} The unbounded-cardinal obstruction, intersection calculation, and required partition theorem are fully proved. This is an independently checked reconstruction of the editorial construction and the classical Erd\H{o}s--Rado tree argument, not a novelty claim. Sources: \url{https://www.erdosproblems.com/603}; P. Erd\H{o}s and R. Rado, \emph{A partition calculus in set theory}, Bulletin of the AMS 62 (1956), 427--489, \url{https://doi.org/10.1090/S0002-9904-1956-10036-0}. No local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

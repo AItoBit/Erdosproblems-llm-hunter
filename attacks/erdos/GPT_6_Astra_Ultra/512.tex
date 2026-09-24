@@ -1,0 +1,76 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#512; reconstruction of the bounded test-function proof, 2026-09-24.}
+For a finite $A\subset\mathbb Z$ with $|A|=N$, prove
+\[
+ \int_0^1\left|\sum_{n\in A}e^{2\pi in\theta}\right|d\theta\geq c\log N
+\]
+with an absolute $c>0$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+This is Littlewood's conjecture, proved independently by Konyagin and by McGehee--Pigno--Smith. We reconstruct the latter test-function argument, following McGehee's 1993 exposition, with unoptimized constants and unit coefficients. Its analytic ingredients are Parseval's identity and the Poisson-kernel approximation, explained where used.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Divide the ordered frequencies into geometrically growing blocks. Add their normalized exponential sums while damping earlier blocks by functions having only nonpositive frequencies. This preserves a uniformly bounded test function and leaves a positive contribution from every block.
+
+\section{WORK}
+Write $e(t)=e^{2\pi it}$ and $F(\theta)=\sum_{n\in A}e(n\theta)$. Choose $m=\lfloor\log N/\log17\rfloor$. Since $\sum_{j=0}^m16^j\leq17^m\leq N$, the first $\sum_{j=0}^m16^j$ elements of $A$, in increasing order, can be divided into consecutive blocks $A_j$ of sizes $16^j$. Define
+\[
+ P_j(\theta)=16^{-j}\sum_{n\in A_j}e(n\theta).
+\]
+Then $\|P_j\|_\infty\leq1$ and $\|P_j\|_2=16^{-j/2}$, with all norms and integrals taken on $[0,1]$.
+
+Expand $|P_j|=\sum_{\ell\in\mathbb Z}c_{j,\ell}e(\ell\theta)$ in $L^2$, and put
+\[
+ h_j=c_{j,0}+2\sum_{\ell<0}c_{j,\ell}e(\ell\theta).
+\]
+Reality of $|P_j|$ and Parseval give
+\[
+ \operatorname{Re}h_j=|P_j|,\qquad
+ \|h_j\|_2\leq\sqrt2\,16^{-j/2}.                    \tag{1}
+\]
+For every sum $H$ of these $h_j$, the function $e^{-H}$ has only nonpositive Fourier frequencies and satisfies $|e^{-H}|\leq1$ almost everywhere. Here is the analytic justification. First replace each negative Fourier coefficient of $H$ by $r^{|\ell|}$ times itself, for $0<r<1$. The resulting $H_r$ is a smooth series of nonpositive frequencies; its real part is the Poisson average of the nonnegative function $\operatorname{Re}H$. Thus $\operatorname{Re}H_r\geq0$, and the convergent exponential series shows that $e^{-H_r}$ has no positive frequencies. As $r\uparrow1$, $H_r\to H$ in $L^2$. On the closed right half-plane,
+$|e^{-z}-e^{-w}|\leq|z-w|$, by integration along the segment between $z,w$. Hence $e^{-H_r}\to e^{-H}$ in $L^2$, proving the assertion. The same segment argument gives $|e^{-H}-1|\leq|H|$.
+
+Define $G_0=P_0$ and, successively,
+\[
+ G_j=P_j+G_{j-1}e^{-h_j},\qquad G=G_m.
+\]
+Let $K=(1-e^{-1})^{-1}$. For $0\leq t\leq1$, convexity in $t$ gives $t+Ke^{-t}\leq K$, since both endpoint values equal $K$. Induction using $t=|P_j|$ and (1) therefore proves $\|G\|_\infty\leq K$. Expanding the recursion,
+\[
+ G=\sum_{k=0}^m P_k\exp\left(-\sum_{\ell=k+1}^m h_\ell\right). \tag{2}
+\]
+
+\textbf{Every block retains a positive Fourier contribution.} Fix $n\in A_j$. Terms with $k<j$ in (2) have all frequencies at most $\max A_k<n$, so do not contribute at $n$. Terms $P_k$ without their damping factors have coefficient zero at $n$ for $k\ne j$. It follows that the coefficient of $G$ at $n$ differs from $16^{-j}$ by the coefficient at $n$ of
+\[
+ Q_j=\sum_{k=j}^mP_k\left[\exp\left(-\sum_{\ell=k+1}^m h_\ell\right)-1\right].
+\]
+Cauchy--Schwarz, (1), and the exponential estimate give
+\[
+ \begin{split}
+ \|Q_j\|_1
+ &\leq\sqrt2\sum_{k=j}^m16^{-k/2}
+                   \sum_{\ell=k+1}^m16^{-\ell/2}\\
+ &\leq\frac{\sqrt2}{3}\sum_{k=j}^\infty16^{-k}
+ =B16^{-j},\qquad B=\frac{16\sqrt2}{45}<1.
+ \end{split}                                                   \tag{3}
+\]
+Every Fourier coefficient is bounded in modulus by the $L^1$ norm, so
+$\operatorname{Re}\widehat G(n)\geq(1-B)16^{-j}$ on $A_j$. Frequencies of $A$ after $A_m$ make no contribution at all, since every summand in (2) has frequencies at most $\max A_m$. Therefore
+\[
+ \operatorname{Re}\int_0^1 F\overline G
+ =\sum_{n\in A}\operatorname{Re}\widehat G(n)
+ \geq(1-B)(m+1).
+\]
+On the other hand, the modulus of this integral is at most $K\|F\|_1$. Since $m+1>\log N/\log17$, we obtain the required bound with
+\[
+ c=\frac{(1-e^{-1})(1-16\sqrt2/45)}{\log17}>0.
+\]
+The case $N=1$ is immediate since the right side is zero.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The logarithmic lower bound is reconstructed in full for the coefficients in the question. The proof uses elementary Fourier Hilbert-space facts and the Poisson kernel, and does not import the Littlewood inequality itself. The constant is intentionally not optimized; no claim about the optimal leading constant is made.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/512}; O. C. McGehee, \emph{Remarks on the Littlewood Conjecture}, 1993, pages 5--8, \url{https://www.math.lsu.edu/~mcgehee/LittlewoodConj93.pdf}; O. C. McGehee, L. Pigno and B. Smith, \emph{Hardy's inequality and the $L^1$ norm of exponential sums}, Annals of Mathematics 113 (1981), 613--618, \url{https://annals.math.princeton.edu/1981/113-3/p09}.
+
+\textbf{Completion rate estimate: 100\%.}

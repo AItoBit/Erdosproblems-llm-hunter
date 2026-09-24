@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#476: the restricted two-fold sumset}
+\noindent Complete polynomial-method reconstruction, 24 September 2026.
+
+\subsection*{Statement}
+For $A\subseteq\mathbb F_p$, put $A\hat+ A=\{a+b:a,b\in A,\ a\ne b\}$. We prove
+\[|A\hat+ A|\ge\min(p,2|A|-3).\]
+The original theorem is due to Dias da Silva and Hamidoune. This proof reconstructs the elementary method of Alon, Nathanson and Ruzsa, including the coefficient identity it needs.
+
+\subsection*{A coefficient identity on a rectangular grid}
+Let $U,V$ be subsets of a field, with sizes $s+1,t+1$, and let $F(X,Y)$ have total degree at most $s+t$. Then
+\[[X^sY^t]F=\sum_{u\in U,v\in V}\frac{F(u,v)}{\prod_{u'\in U\setminus\{u\}}(u-u')\prod_{v'\in V\setminus\{v\}}(v-v')}.\tag{1}\]
+All denominators are nonzero. To prove (1), one-variable Lagrange interpolation shows that the functional
+\[L_U(X^j)=\sum_{u\in U}\frac{u^j}{\prod_{u'\ne u}(u-u')}\]
+is zero for $j<s$ and one for $j=s$. For a monomial $X^iY^j$ with $i+j\le s+t$, either $(i,j)=(s,t)$ or at least one exponent is below its respective threshold. Applying $L_U L_V$ proves (1) by linearity. In particular, a polynomial vanishing on $U\times V$ has zero coefficient on the left.
+
+\subsection*{The bound}
+Write $n=|A|$. The cases $n\le1$ are immediate, and $p=2$ is checked directly. Suppose henceforth $p$ is odd and $n\ge2$.
+
+If $2n-3\ge p$, then for any $c\in\mathbb F_p$,
+\[|A\cap(c-A)|\ge2n-p\ge3.\]
+At most one of these elements satisfies $a=c-a$. Any other gives distinct elements $a,c-a\in A$, so every $c$ belongs to the restricted sumset.
+
+Now suppose $2n-3<p$ and, for contradiction, $|A\hat+ A|\le2n-4$. Enlarge this sumset to a set $C\subseteq\mathbb F_p$ of size $2n-4$, and define
+\[F(X,Y)=(X-Y)\prod_{c\in C}(X+Y-c).\]
+This polynomial vanishes on $A\times A$: off the diagonal one product factor vanishes, and on the diagonal $X-Y$ vanishes. Choose any $(n-1)$-element subset $B\subset A$ and use (1) on $A\times B$, with $(s,t)=(n-1,n-2)$. Since $\deg F=2n-3=s+t$, its indicated coefficient must be zero. But that coefficient is
+\[\binom{2n-4}{n-2}-\binom{2n-4}{n-1}
+=\frac{(2n-4)!}{(n-1)!(n-2)!},\tag{2}\]
+where the second binomial is interpreted as zero when $n=2$. Every factorial argument in (2) is less than $p$, so (2) is nonzero in $\mathbb F_p$. This contradiction completes the proof.
+
+\subsection*{Sharpness and scope}
+For $A=\{0,1,\ldots,n-1\}$ with $2n-3\le p$, the distinct-element sums are precisely the residues of $1,2,\ldots,2n-3$, giving equality. Large sets give the other sharp regime, where every residue occurs. The broader many-summand statement mentioned in the editorial is not needed for this two-summand problem and is not claimed proved here.
+
+\textbf{SOLVED.} Source statement: \url{https://www.erdosproblems.com/476}. Primary proof source: N. Alon, M. B. Nathanson and I. Z. Ruzsa, \emph{Adding distinct congruence classes modulo a prime}, \url{https://www.math.tau.ac.il/~nogaa/PDFS/annr3.pdf}. The known argument is reproduced with attribution; the page's Lean label is not a claim that this text was formally checked.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

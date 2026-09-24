@@ -1,0 +1,109 @@
+\subsection*{Erd\H{o}s problem \#358}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Find an infinite strictly increasing sequence of positive integers for which the number $r_A(n)$ of representations of $n$ as a sum of consecutive terms tends to infinity for every sufficiently large integer $n$. The weaker alternative asks for at least two such representations eventually.
+
+\noindent\textbf{2) CONTEXT AND SCOPE.}
+Tao's February 2026 note proves the stronger lower bound $r_A(n)\gg\log n$ for all large $n$, using a random set followed by a carefully separated repair construction. We reconstruct the local probability calculation and prove the logarithmic lower bound outside a set of power-saving size. We do not reproduce the repair step for every exceptional integer. This is substantial partial progress within the attempt, not a new resolution or a claim that the published problem is open.
+
+\noindent\textbf{3) A SHARP AVERAGE OBSTRUCTION.}
+For any positive-integer set $A$, a consecutive sum starting at $a\in A$ increases by at least $a$ whenever its endpoint advances. There are therefore at most $\lfloor X/a\rfloor$ such sums at most $X$, and
+\[
+ \sum_{n\le X}r_A(n)\le\sum_{a\in A,\ a\le X}\frac Xa
+ \le X(1+\log X).
+\]
+Thus a uniform logarithmic lower bound is of the correct order on average.
+
+\noindent\textbf{4) THE LOCAL REPRESENTATION ESTIMATE.}
+Choose a random set $A_0\subset\mathbb N$ by independent inclusion with probability $1/2$. For large integers $q$ and $n$ with $n/q>3q$, put
+\[
+ I_{n,q}=\mathbb N\cap[n/q-2q,n/q+2q].
+\]
+We prove that the event $E_{n,q}$ that $n$ is a sum of $q$ consecutive members of $A_0\cap I_{n,q}$ has probability at least $c/q$, for one absolute $c>0$.
+
+For each integer $m\in[n/q-q-\sqrt q,n/q-q+\sqrt q]$, require $m\in A_0$. Conditional on this, the gaps $g_1,\ldots,g_{q-1}$ to its next $q-1$ members are independent with
+\[
+ \mathbb P(g_j=s)=2^{-s}\ (s\ge1),\qquad
+ \mathbb E g_j=2,\quad\operatorname{Var}(g_j)=2.
+\]
+The sum of these $q$ members equals $n$ precisely when
+\[
+ \sum_{j=1}^{q-1}(q-j)(g_j-2)=a,
+ \qquad a=n-qm-q(q-1),\quad |a|\le2q^{3/2}. \tag{1}
+\]
+Also require $\sum g_j\le3q-\sqrt q$. The probability that this fails is $O(e^{-c_1q})$, by the exponential-moment Markov inequality for geometric variables. When it holds, all $q$ members lie inside $I_{n,q}$.
+
+Here is the needed local limit calculation. If
+$f(\theta)=\mathbb E e^{2\pi i\theta(g_j-2)}$, then
+\[
+ f(\theta)=\frac{e^{-2\pi i\theta}}{2-e^{2\pi i\theta}},\quad
+ |f(\theta)|\le e^{-c_2\|\theta\|^2},\quad
+ f(\theta)=\exp(-4\pi^2\theta^2+O(|\theta|^3))
+ \quad(|\theta|\le1/10).
+\]
+The modulus estimate follows from
+$|2-e^{2\pi i\theta}|^2=1+8\sin^2(\pi\theta)$; the expansion follows from the mean and variance, with the third moment finite. Fourier inversion expresses the probability in (1) as
+\[
+ \int_{-1/2}^{1/2}e^{-2\pi ia\theta}
+       \prod_{j=1}^{q-1}f(j\theta)\,d\theta. \tag{2}
+\]
+For $10/q\le|\theta|\le1/2$, at least a fixed positive proportion of $1\le j<q$ have $\|j\theta\|\ge1/100$. To verify this elementary fact, when $|\theta|\ge1/10$ use adjacent pairs (both cannot be within $1/100$ of integers); when $|\theta|<1/10$, split the progression into complete passages across intervals of length one, each of which has a fixed proportion of points in $[1/4,3/4]$ modulo one. There are at least several complete passages because $q|\theta|\ge10$. This range contributes $O(e^{-c_3q})$.
+
+For $q^{-7/5}\le|\theta|\le10/q$, use $q/40\le j\le q/20$: then $|j\theta|\le1/2$ and $|j\theta|\gg q^{-2/5}$. The product in (2) is $O(e^{-c_4q^{1/5}})$. Finally, for $|\theta|\le q^{-7/5}$,
+\[
+ \prod_{j=1}^{q-1}f(j\theta)
+ =\exp\left(-\frac{4\pi^2q^3\theta^2}{3}+O(q^{-1/5})\right).
+\]
+Indeed $\sum j^2=q^3/3+O(q^2)$ and $\sum j^3|\theta|^3=O(q^{-1/5})$. Integrating the uniform error over this interval costs $O(q^{-8/5})$; the Gaussian tail outside it is exponentially small. Therefore (2) equals
+\[
+ \frac1{\sqrt{4\pi q^3/3}}
+       \exp\left(-\frac{3a^2}{4q^3}\right)+O(q^{-8/5})
+ \gg q^{-3/2}
+\]
+uniformly for $|a|\le2q^{3/2}$.
+
+There are $\gg\sqrt q$ possible starts $m$. The successful-start events are disjoint: sums of $q$ consecutive members of a strictly increasing sequence increase strictly with their start. Multiplying by $\mathbb P(m\in A_0)=1/2$, subtracting the exponentially small span error for each start, and summing proves
+\[
+ \mathbb P(E_{n,q})\ge c/q. \tag{3}
+\]
+
+\noindent\textbf{5) MANY INDEPENDENT CHANCES AND FEW EXCEPTIONS.}
+For a fixed large $n$, use every integer
+$n^{1/10}\le q\le n^{1/5}$. The intervals $I_{n,q}$ are pairwise disjoint: for different $q,q'$ their centers are separated by at least
+\[
+ \frac n{qq'}\ge n^{3/5},
+\]
+while the sum of their radii is at most $4n^{1/5}$. Each event $E_{n,q}$ depends only on the random subset inside its interval, so these events are jointly independent. Their count $Z_n$ satisfies
+\[
+ \mu_n=\mathbb E Z_n\ge c\sum_{n^{1/10}\le q\le n^{1/5}}\frac1q
+ \ge c_5\log n.
+\]
+Every successful interval supplies a valid consecutive-sum representation in the full set $A_0$: elements outside that interval cannot interrupt the terms between its endpoints. The usual exponential-moment proof of the Bernoulli lower-tail bound gives
+\[
+ \mathbb P(Z_n<\mu_n/2)\le e^{-\mu_n/8}\le n^{-c_6}.
+\]
+Decreasing constants, choose $0<c_6<1$. Thus, for a fixed absolute $c_7>0$,
+\[
+ \mathbb P(r_{A_0}(n)<c_7\log n)\le n^{-c_6}. \tag{4}
+\]
+The expected number of exceptions up to $X$ is $O(X^{1-c_6})$. Markov's inequality at $X=2^j$ gives
+\[
+ \mathbb P\big(\#\{n\le2^j:r_{A_0}(n)<c_7\log n\}
+                  >2^{j(1-c_6/2)}\big)=O(2^{-jc_6/2}).
+\]
+These probabilities are summable. Borel--Cantelli, followed by comparison with the next dyadic cutoff, proves that almost surely
+\[
+ \#\{n\le X:r_{A_0}(n)<c_7\log n\}=O(X^{1-c_6/2}).
+\]
+The random set is also almost surely infinite. Consequently there exists an infinite increasing sequence with the claimed logarithmic bound outside a density-zero set, quantitatively of power-saving size.
+
+\noindent\textbf{6) EXACT GAP AND FINAL.}
+The power-saving exceptional set can still be infinite. Estimate (4) is not summable over all integers, so it cannot establish either requested eventual assertion by Borel--Cantelli. Adding arbitrary representations can also interrupt previously consecutive representations. Tao's published repair construction solves exactly this remaining issue using separate red and blue blocks and prime-based collision exclusion; that step has not been reconstructed here.
+
+\textbf{UNRESOLVED within this attempt.} The local estimate, independent-window argument, sharp average bound and power-saving exceptional-count theorem are proved. Completion estimates progress toward the required all-large-integers statement, not confidence that the published theorem is true.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/358}; \url{https://terrytao.wordpress.com/wp-content/uploads/2026/02/erdos-358-2.pdf}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

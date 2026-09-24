@@ -1,0 +1,52 @@
+\section{Erd\H{o}s Problem \#440: small adjacent least common multiples}
+\noindent Partial reconstruction with a sharp universal upper coefficient, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$ be infinite, and write
+\[B(x)=\#\{i:\operatorname{lcm}(a_i,a_{i+1})\le x\}.\]
+The problem calls this count $A(x)$; the letter $B$ avoids confusing it with the counting function of the underlying set. Is $B(x)\ll\sqrt x$? How large can $\liminf_{x\to\infty}B(x)/\sqrt x$ be?
+
+We prove the first assertion, including the known upper coefficient
+\[c=\sum_{h\ge1}\frac1{\sqrt h(h+1)}.\]
+We also obtain the example with lower limit one. The missing direction is that every set has lower limit at most one.
+
+\subsection*{2) Telescoping the good edges}
+Call an index good when its least common multiple is at most $x$. If $a=a_i$, $b=a_{i+1}$ and $d=b-a$, then $\gcd(a,b)\mid d$, so
+\[\frac1x\le\frac1{\operatorname{lcm}(a,b)}
+=\frac{\gcd(a,b)}{ab}\le\frac d{ab}=\frac1a-\frac1b.\tag{1}\]
+For any $T>0$, sum (1) over good indices with $a_i>T$. All summands $1/a_i-1/a_{i+1}$ are nonnegative, and the sum over the entire tail is at most $1/T$. Consequently there are at most $x/T$ such good indices. There are at most $\lfloor T\rfloor$ indices starting at $a_i\le T$. Taking $T=\sqrt x$ proves
+\[B(x)\le2\sqrt x.\tag{2}\]
+All counts here are finite, since a good edge has both endpoints at most $x$.
+
+\subsection*{3) Refine by the integer spacing}
+Fix a positive integer $H$. For $1\le h\le H$, consider good edges with starting point in
+\[\big(\sqrt{(h-1)x},\sqrt{hx}\big].\]
+Their lengths obey $d\ge ab/x>a^2/x>h-1$, and hence $d\ge h$. Two consecutive good starting points in this interval are therefore separated by at least $h$: the later start is at least the endpoint of the earlier edge. The number of starts in this interval is at most
+\[\frac{\sqrt x(\sqrt h-\sqrt{h-1})}{h}+1.\]
+The tail with starts greater than $\sqrt{Hx}$ contributes at most $\sqrt x/\sqrt H$ by (1). Thus
+\[\frac{B(x)}{\sqrt x}\le
+\sum_{h=1}^H\frac{\sqrt h-\sqrt{h-1}}h+\frac H{\sqrt x}+\frac1{\sqrt H}.\]
+First take the upper limit in $x$, with $H$ fixed, and then let $H\to\infty$. Summation by parts gives
+\[
+\sum_{h=1}^H\frac{\sqrt h-\sqrt{h-1}}h
+=\sum_{h=1}^{H-1}\frac1{\sqrt h(h+1)}+\frac1{\sqrt H},
+\]
+and the series converges by comparison with $\sum h^{-3/2}$. Therefore
+\[\limsup_{x\to\infty}\frac{B(x)}{\sqrt x}\le c,
+\qquad B(x)\le(c+o(1))\sqrt x.\tag{3}\]
+The proof is uniform in the choice of the underlying sequence.
+
+\subsection*{4) Lower limit one is attainable}
+For $A=\mathbb N$, adjacent terms are coprime, so
+\[B(x)=\#\{i:i(i+1)\le x\}
+=\left\lfloor\frac{\sqrt{1+4x}-1}{2}\right\rfloor.\]
+It follows that $B(x)/\sqrt x\to1$. Thus the supremum of the possible lower limits is at least one. Estimate (3) bounds it above by $c$, but does not by itself give the required upper bound one: an upper-limit estimate and a sharp lower-limit estimate are different assertions.
+
+\subsection*{5) Outcome and attribution}
+\textbf{UNRESOLVED in this attempt.} \textbf{PARTIAL PROGRESS on the two-part problem.} The $O(\sqrt x)$ bound and the refined universal coefficient are fully proved. Erd\H{o}s and Szemer\'edi proved that the largest lower limit is exactly one and that $c$ is optimal for the universal upper coefficient. Neither the general lower-limit bound nor a construction attaining the upper coefficient is reproduced here.
+
+Sources: \url{https://www.erdosproblems.com/440} and the primary mathematical comments by T. Tao and W. van Doorn at \url{https://www.erdosproblems.com/forum/discuss/440}, checked 24 September 2026. The interval-spacing argument is a reconstruction of the method discussed there, not a claim of a new result. The telescoping estimate makes the treatment of the infinite tail explicit.
+
+The estimate concerns the two-part problem, with its missing lower-limit direction taken into account.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

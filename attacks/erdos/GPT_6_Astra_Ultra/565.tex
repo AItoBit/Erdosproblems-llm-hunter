@@ -1,0 +1,96 @@
+\section*{Erd\H{o}s Problem 565}
+
+\paragraph{Statement and scope.}
+The induced Ramsey number \(R^*(G)\) is the least order of a graph
+\(H\) whose every red-blue edge colouring contains a monochromatic
+copy of \(G\) induced in \(H\). Must \(R^*(G)\leq2^{O(n)}\)
+hold for every \(n\)-vertex graph \(G\)?
+The general affirmative theorem is known. This attempt proves the
+exponential scale is necessary, gives a full exponential upper bound
+for complete targets, and supplies small induced hosts for stars and
+edgeless targets. The general construction is unresolved here.
+
+\paragraph{Complete targets reduce exactly to ordinary Ramsey numbers.}
+Write \(R(n,n)\) for the ordinary two-colour clique Ramsey number.
+The complete host \(K_{R(n,n)}\) shows
+\(R^*(K_n)\leq R(n,n)\): any monochromatic clique is automatically
+induced as an uncoloured clique.
+
+Conversely, if \(N<R(n,n)\), choose a colouring of \(K_N\) with
+no monochromatic \(K_n\). Restrict it to the edge set of any
+\(N\)-vertex host \(H\). This restriction still has no monochromatic
+\(K_n\), so no such host is induced Ramsey for \(K_n\). Thus
+\[
+ R^*(K_n)=R(n,n). \tag{1}
+\]
+This argument checks the quantifier over all possible host graphs.
+
+The elementary recurrence
+\(R(a,b)\leq R(a-1,b)+R(a,b-1)\) follows by splitting the
+neighbours of one vertex according to edge colour.
+With the base cases \(R(1,b)=R(a,1)=1\), induction using Pascal's
+identity gives
+\[
+ R(a,b)\leq\binom{a+b-2}{a-1}.
+\]
+Consequently
+\[
+ R^*(K_n)\leq\binom{2n-2}{n-1}\leq4^{n-1}. \tag{2}
+\]
+
+\paragraph{A self-contained exponential lower bound.}
+Colour each edge of \(K_N\) independently red or blue with equal
+probability. A specified \(n\)-set is monochromatic with probability
+\(2^{1-\binom n2}\). Therefore the expected number of monochromatic
+\(K_n\)'s is
+\[
+ \binom Nn2^{1-\binom n2}.
+\]
+For \(N=\lfloor2^{n/2}\rfloor\) this is at most
+\(2^{1+n/2}/n!<1\) for every \(n\geq4\).
+The last inequality holds at \(n=4\), and its left-to-right ratio
+decreases when \(n\) is increased because the factorial gains a
+factor \(n+1>\sqrt2\).
+Some colouring therefore contains no monochromatic \(K_n\).
+By (1),
+\[
+ R^*(K_n)>\lfloor2^{n/2}\rfloor. \tag{3}
+\]
+Thus any bound valid for every \(n\)-vertex target must allow
+exponential growth. A polynomial general upper bound is impossible.
+
+\paragraph{Two other target families with induced hosts.}
+For the star on \(n\geq2\) vertices, use a host star with
+\(2n-3\) leaves. At least \(n-1\) edges at its centre have the
+same colour. Their endpoints induce exactly the desired star,
+because the host has no edges between leaves. Hence
+\[
+ R^*(K_{1,n-1})\leq2n-2. \tag{4}
+\]
+For the edgeless \(n\)-vertex graph, the edgeless host of the same
+order works, with monochromaticity vacuous; fewer than \(n\)
+vertices cannot contain the target. Its induced Ramsey number is
+therefore exactly \(n\).
+
+\paragraph{The obstruction to extending these arguments.}
+For a general non-complete target, the complete host used in (2)
+does not work: it contains no induced copy of any graph with a
+missing edge. The host must simultaneously retain the prescribed
+nonedges and force all its required edges into one colour.
+Equations (1)--(4) do not provide such a construction for arbitrary
+targets, and so do not prove the main assertion.
+
+The full theorem of Arag\~ao, Campos, Dahia, Filipe and Marciano
+gives \(R_{\mathrm{ind}}(G;r)\leq r^{Crn}\) with an absolute
+constant \(C\); setting \(r=2\) settles the question.
+Its general embedding argument is not reconstructed or used to
+fill this attempt's gap. Primary source:
+\url{https://arxiv.org/abs/2509.22629}.
+Current statement: \url{https://www.erdosproblems.com/565},
+checked 24 September 2026. The elementary results above are standard;
+no novelty is claimed.
+
+\paragraph{Completion estimate.}
+The necessary exponential scale and three target families are proved;
+the upper bound for arbitrary targets remains missing from this attempt.
+\textbf{COMPLETION: 30\%}

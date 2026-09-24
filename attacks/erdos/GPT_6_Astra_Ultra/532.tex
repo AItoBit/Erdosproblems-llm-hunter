@@ -1,0 +1,48 @@
+\textbf{Erd\H{o}s problem 532.}
+Does every two-colouring of the positive integers admit an infinite set whose nonempty finite subset sums all have one colour?
+
+\textbf{Status and attribution.}
+Yes: this is Hindman's theorem, valid for any finite number of colours. The following is the usual idempotent-ultrafilter proof, with its semigroup argument and recursive selection supplied. The set-theoretic input is the ultrafilter lemma and compactness of the Stone space of ultrafilters; it is not an effective procedure for arbitrary colourings.
+Source: \texttt{https://www.erdosproblems.com/532}, checked 24 September 2026; N. Hindman, \emph{Finite sums from sequences within cells of a partition of N}, J. Combinatorial Theory A 17 (1974), 1--11.
+
+\textbf{The compact semigroup.}
+For $A\subseteq\mathbb N$ put $-a+A=\{b:a+b\in A\}$. On ultrafilters define
+\[
+ A\in p+q\quad\Longleftrightarrow\quad
+ \{a:-a+A\in q\}\in p.
+\]
+This operation is associative: expanding membership in either $(p+q)+r$ or $p+(q+r)$ gives the same nested assertion
+$\{a:\{b:-(a+b)+A\in r\}\in q\}\in p$.
+For fixed $q$, the map $p\mapsto p+q$ is continuous, since inverse images of basic clopen sets have the form $\{p:D\in p\}$.
+
+The free ultrafilters form a nonempty compact subsemigroup $\mathbb N^*$. Indeed its complement consists of the open principal singleton ultrafilters, and finite sets belong to no sum of two free ultrafilters: every translate of a finite set is finite.
+
+For completeness, every nonempty compact semigroup with these continuous right translations has an idempotent. By the compact-intersection property and Zorn's lemma choose a minimal nonempty compact subsemigroup $S$. For $p\in S$, the set $S+p$ is compact and is a subsemigroup, because
+$(a+p)+(b+p)=(a+(p+b))+p$. Minimality gives $S+p=S$. Therefore
+$K=\{x\in S:x+p=p\}$ is nonempty; it is compact by continuity and is a subsemigroup by associativity. Again $K=S$. In particular $p+p=p$. Applying this to $\mathbb N^*$ gives a free idempotent ultrafilter.
+
+\textbf{The invariant used in the construction.}
+For $A\in p$ define
+\[
+ A^*=\{a\in A:-a+A\in p\}.
+\]
+Idempotence implies $A^*\in p$. Moreover, if $a\in A^*$, then $-a+A^*\in p$.
+To verify the latter statement, write
+\[
+ -a+A^*=(-a+A)\cap
+ \{b:-b+(-a+A)\in p\}.
+\]
+Both sets belong to $p$: the first does by definition, and membership of the second follows from $-a+A\in p+p$.
+
+One colour class $A$ of the given finite partition belongs to $p$. Choose $x_1\in A^*$. If $x_1,\ldots,x_j$ have been chosen with every nonempty subset sum in $A^*$, let $F_j$ be their finite set of nonempty subset sums. Choose
+\[
+ x_{j+1}\in A^*\cap\bigcap_{s\in F_j}(-s+A^*),
+ \qquad x_{j+1}>x_1+\cdots+x_j.
+\]
+The intersection belongs to $p$, hence is infinite because $p$ is free; the inequality can therefore be imposed. Every new subset sum is either $x_{j+1}$ or $s+x_{j+1}$ with $s\in F_j$, so the invariant persists.
+
+The resulting sequence is strictly increasing. Consequently its terms form an infinite set, and every nonempty finite subset of that set appears at a finite stage and has its sum in the one colour class $A$.
+
+\textbf{Completion estimate.}
+The full assertion, including any finite number of colours, is proved using the stated ultrafilter compactness input.
+\textbf{COMPLETION: 100\%}

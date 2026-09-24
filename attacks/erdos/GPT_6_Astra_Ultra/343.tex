@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#343: subcompleteness of a linearly growing multiset}
+\noindent Partial proof and a near-linear obstruction, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A$ be a multiset of positive integers, counting multiplicities in $A(N)=|A\cap[1,N]|$. The question asks whether $A(N)\gg N$ forces the set $P(A)$ of finite submultiset sums to contain an infinite arithmetic progression. Each occurrence may be used at most once. The published sufficient theorem uses an absolute sufficiently large constant in this density condition. The argument below establishes bounded gaps in $P(A)$ under any fixed positive linear lower bound, but does not upgrade bounded gaps to an infinite progression.
+
+\subsection*{2) A subset-sum gap lemma}
+Let $a_1\le a_2\le\cdots$ be positive integers, and $S_n=\sum_{i\le n}a_i$. Suppose $a_{n+1}\le S_n$ for every $n\ge n_0$. Then successive elements of $P(A)$ have gaps at most $L=S_{n_0}$, including the empty sum zero.
+
+To prove this, let $P_n$ be the subset sums of the first $n$ occurrences. The finite set $P_{n_0}$ lies in $[0,L]$ and contains both endpoints, so all of its gaps are at most $L$. Inductively,
+\[P_{n+1}=P_n\cup(a_{n+1}+P_n).
+\]
+Each of these two sets has gaps at most $L$ between its own endpoints. Their spanning intervals $[0,S_n]$ and $[a_{n+1},a_{n+1}+S_n]$ overlap. Their union therefore also has gaps at most $L$: a gap within either spanning interval is no larger than a gap of that set, and a gap crossing from one interval to the other cannot exceed this bound because the intervals overlap. Induction proves the assertion for $P_n$. Since $S_n\to\infty$, any two consecutive elements of the infinite union lie in some sufficiently long finite spanning interval and obey the same bound.
+
+\subsection*{3) Linear multiset growth implies the lemma's hypothesis}
+If one value occurs infinitely often, its multiples already give an infinite arithmetic progression in $P(A)$. Otherwise every bounded interval contains finitely many occurrences, and $A$ can be enumerated as above with $a_n\to\infty$.
+
+Assume $A(N)\ge cN$ for all sufficiently large integers $N$, with fixed $c>0$. Taking $N=\lceil2n/c\rceil$ gives $a_n\le Kn$ for some fixed $K$ and all sufficiently large $n$. On the other hand,
+\[S_n/n\longrightarrow\infty,
+\]
+because the nondecreasing sequence $a_n$ tends to infinity: for any fixed $M$, all but finitely many terms are at least $M$. Hence eventually $S_n\ge2Kn\ge a_{n+1}$. The gap lemma applies. This proves a uniform finite upper bound on gaps in $P(A)$ for every locally finite multiset satisfying the linear count condition.
+
+Bounded gaps alone do not assert the existence of one fixed residue class which is eventually completely present. That is precisely the stronger structure still needed for the problem.
+
+\subsection*{4) Why an exponent below one permits genuine gaps}
+Fix $0<\epsilon<1$ and put $\alpha=1-\epsilon$. We construct a locally finite multiset $D$ with $D(N)\ge N^\alpha$ for all $N\ge1$, but whose subset sums have arbitrarily long gaps.
+
+Start with $b_1=1$, $V_0=0$. At stage $j$, choose an integer multiplicity $m_j\ge1$ so large that
+\[m_j\ge\bigl(2(V_{j-1}+m_jb_j)+1\bigr)^\alpha.
+\]
+Such a choice exists because the left side grows linearly in $m_j$, whereas the right side grows as a constant times $m_j^\alpha$ with $\alpha<1$. Put $V_j=V_{j-1}+m_jb_j$, set $b_{j+1}=2V_j+1$, and place $m_j$ copies of $b_j$ in $D$.
+
+For $b_j\le N<b_{j+1}$,
+\[D(N)\ge m_j\ge b_{j+1}^\alpha>N^\alpha.
+\]
+But any submultiset using only the first $j$ levels has sum at most $V_j$, and one using a later level has sum at least $2V_j+1$. Thus none of $V_j+1,\ldots,2V_j$ belongs to $P(D)$. These gaps have lengths $V_j\to\infty$. An infinite arithmetic progression of step $d$ would meet every sufficiently far interval of $d$ consecutive integers, so no such progression lies in $P(D)$.
+
+\subsection*{5) Outcome and sources}
+\textbf{UNRESOLVED at the infinite-progression step in this attempt.} Bounded gaps under the full linear hypothesis, the infinite-multiplicity case, and explicit obstructions below the linear exponent are proved. A proof using the special additive structure of $P(A)$ to obtain an infinite arithmetic progression is missing.
+
+Sources: \url{https://www.erdosproblems.com/343}, checked 24 September 2026; Szemer\'edi--Vu, \emph{Long arithmetic progressions in sumsets: Thresholds and bounds}, \url{https://arxiv.org/abs/math/0507539}. The set-sum gap criterion is associated with Graham and also discussed in Section 6 of their Annals paper, \url{https://annals.math.princeton.edu/2006/163-1/p01}. The above finite-union induction supplies its proof here. The source attributes the near-linear obstruction to Folkman. No novelty or formal verification is claimed.
+
+The estimate describes coverage of the main structural steps, not a probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

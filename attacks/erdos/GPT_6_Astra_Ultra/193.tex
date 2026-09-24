@@ -1,0 +1,58 @@
+\section{Erd\H{o}s Problem \#193}
+\subsection*{1. FORMAL RESTATEMENT}
+Must every infinite set of lattice points visited by a walk in $\mathbb Z^3$, with increments from a fixed finite set, contain three distinct collinear points?
+\subsection*{2. LITERATURE AND SCOPE}
+The answer is negative. We reconstruct the short Gaussian-lattice construction in Cambie and Kalviainen, \emph{An infinite small-step $\mathbb Z^3$-walk with no collinear triple} (2026). The previous local attempt predates this resolution. All the needed identities and the collinearity obstruction are proved below. This is a known counterexample, not a new discovery or a claim that this document itself has been formally verified.
+\subsection*{3. CONSTRUCTION AND A VALUATION IDENTITY}
+Let $s_2(n)$ count binary ones, and put
+\[
+ u_n=i^{s_2(n)},\qquad z_n=\sum_{r=0}^{n-1}u_r,\qquad
+ \alpha_n\in\{0,1,2,3\},\quad u_n=i^{\alpha_n}.
+\]
+For $\epsilon\in\{0,1\}$,
+\[
+ u_{2n+\epsilon}=i^\epsilon u_n,\qquad
+ z_{2n+\epsilon}=(1+i)z_n+\epsilon u_n.                 \tag{1}
+\]
+Write $v_2$ for the exponent of two in a nonzero integer. If $m<n$ and $u_m=u_n$, then
+\[
+ v_2(|z_n-z_m|^2)=v_2(n-m).                           \tag{2}
+\]
+Indeed, when $n-m$ is even, write $m=2a+\epsilon,n=2b+\epsilon$. Equation (1) gives $u_a=u_b$ and $z_n-z_m=(1+i)(z_b-z_a)$. Repeat exactly $v_2(n-m)$ times. The remaining chord is a sum of an odd number of Gaussian units, so the sum of its two integer coordinates is odd. Its squared norm is therefore odd. Each removed factor $1+i$ multiplies the squared norm by two, proving (2) and also showing the chord is nonzero.
+
+Set
+\[
+ c_0=0,\quad c_1=i,\quad c_2=-1+i,\quad c_3=-1,
+ \qquad w_n=2z_n+c_{\alpha_n},\qquad h_n=4n+\alpha_n,
+ \qquad P_n=(\Re w_n,\Im w_n,h_n).
+\]
+For every $m<n$ we claim
+\[
+ v_2(|w_n-w_m|^2)=v_2(h_n-h_m).                      \tag{3}
+\]
+Put $a=\alpha_m,b=\alpha_n,d=n-m$. If $a=b$, the two sides of (3) equal $2+v_2(d)$ by (2). If $b-a$ is odd, the corner difference has exactly one odd coordinate, so both $|w_n-w_m|^2$ and $4d+b-a$ are odd. If $b-a=\pm2$, both planar coordinates are odd, whose squared sum is $2\pmod4$, and $4d+b-a$ also has valuation one. These cases exhaust all possibilities, and ensure all squared norms in (3) are positive.
+\subsection*{4. FINITELY MANY BOUNDED STEPS}
+For $a=\alpha_n,b=\alpha_{n+1}$,
+\[
+ P_{n+1}-P_n=
+ \bigl(\Re(2i^a+c_b-c_a),\Im(2i^a+c_b-c_a),4+b-a\bigr). \tag{4}
+\]
+There are at most sixteen possibilities. The last coordinate is between one and seven, so the vertices are distinct. To check the planar bound, $i^a$ points outwards from corner $c_a$ of the unit square. The component of $c_b-c_a$ along that direction is $0$ or $-1$, and the perpendicular component is $0$ or $\pm1$. Thus both planar step coordinates lie in $\{-2,-1,0,1,2\}$. In particular (4) defines a fixed finite allowed step set.
+\subsection*{5. EXCLUDING ALL COLLINEAR TRIPLES}
+Suppose $P_a,P_b,P_c$ were collinear with $a<b<c$. Write
+\[
+ A=h_b-h_a>0,\quad B=h_c-h_b>0,\quad
+ X=w_b-w_a,\quad Y=w_c-w_b.
+\]
+The strict increase of height and collinearity give
+\[
+ X/A=Y/B=(X+Y)/(A+B).
+\]
+Their common squared norm is a positive rational number. Extending $v_2$ to nonzero rationals, (3) gives respectively $-v_2(A),-v_2(B),-v_2(A+B)$ for the valuations of these equal squared norms. Thus all three integer valuations are equal. But if $v_2(A)=v_2(B)=t$, then $(A+B)/2^t$ is even, so $v_2(A+B)>t$, a contradiction.
+\subsection*{6. VERIFICATION AND FINAL}
+\textbf{SOLVED: negative answer, by a fully proved known construction.}
+The argument handles arbitrary collinearity ratios, not only equally spaced triples. Exact checks of the sixteen step formulas and many chord identities supplement the proof; finite prefixes alone are not used to infer the infinite result. No mathematical input beyond binary arithmetic, parity and rational valuations remains external.
+\subsection*{7. SOURCES}
+Current statement: \texttt{https://www.erdosproblems.com/193}. S. Cambie and E. Kalviainen, \texttt{https://arxiv.org/abs/2609.01766}, Theorem 1 and its proof; author material: \texttt{https://github.com/ekalvi/erdos-193}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

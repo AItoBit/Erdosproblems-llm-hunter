@@ -1,0 +1,116 @@
+\section*{Erd\H{o}s Problem 469}
+
+\paragraph{Statement and scope.}
+A positive integer is semiperfect, or pseudoperfect, if it is a sum of
+distinct proper divisors. It is primitive semiperfect if none of its
+proper divisors is semiperfect. Does the reciprocal sum over all
+primitive semiperfect integers converge?
+The current page records an affirmative solution by Zachary J.~Lewis
+using GPT 5.6 and Claude Fable 5. This attempt reconstructs useful
+exact transition formulas from that preprint, but the global
+convergence estimate is unresolved here.
+
+\paragraph{Subset-sum notation.}
+For an integer \(n\), let \(\Sigma=\sigma(n)\), \(A=\Sigma-2n\),
+and let \(X(n)\), \(Y(n)\) be the subset sums of all divisors and
+of proper divisors, respectively, including the empty sum.
+Complementing a proper-divisor subset shows
+\[
+ n\in Y(n)\quad\Longleftrightarrow\quad A\in Y(n),
+ \tag{1}
+\]
+since the total proper-divisor sum is \(n+A\).
+Call \(n\) weird if it is abundant and not semiperfect.
+For such \(n\), define
+\[
+ C_n=\{t\geq1:A+t\in Y(n)\},\quad
+ g(n)=\min C_n,\quad T(n)=\Sigma/g(n).
+\]
+The set is nonempty because \(n+A\in Y(n)\); hence \(g(n)\leq n\)
+and \(T(n)>2\).
+
+\paragraph{Exact extension by a new prime.}
+Let \(p\nmid n\) be prime and \(n\) weird. Coprimality gives
+\[
+ Y(np)=X(n)+pY(n),\qquad A(np)=pA+\Sigma.
+ \tag{2}
+\]
+Also \(X(n)\) is symmetric under \(x\mapsto\Sigma-x\).
+By (1)--(2), \(np\) is semiperfect exactly when
+\[
+ pt\in X(n)\quad\hbox{for some }t\in C_n.
+ \tag{3}
+\]
+Indeed, \(pA+\Sigma=x+py\) with \(x\in X(n)\), \(y\in Y(n)\)
+forces \(y>A\): \(y<A\) would give \(x>\Sigma\), while \(y=A\)
+is excluded by weirdness. Write \(y=A+t\); then \(x=\Sigma-pt\),
+which belongs to \(X(n)\) exactly when \(pt\) does.
+
+If \(np\) is weird, the same calculation with a positive offset
+\(s\) from \(A(np)\) gives the exact gap formula
+\[
+ g(np)=\min_{\substack{t\in C_n,\ x\in X(n)\\x<pt}}(pt-x).
+ \tag{4}
+\]
+The exclusion of \(y\leq A\) remains valid with positive \(s\).
+In particular, if \(p>T(n)\), then \(pg(n)>\Sigma\), so (3)
+is impossible. The child is still abundant, by multiplicativity
+of \(\sigma(n)/n\), and therefore is weird. Formula (4) then gives
+\[
+ g(np)=pg(n)-\Sigma,\qquad
+ T(np)=\frac{T(n)(p+1)}{p-T(n)}.
+ \tag{5}
+\]
+The minimum is attained at \(t=g(n)\), \(x=\Sigma\).
+If instead \(p\leq T(n)\) and the child remains weird, take
+\(t=g(n)\), \(x=0\) in (4) to obtain
+\[
+ g(np)\leq pg(n),\qquad
+ T(np)\geq T(n)(1+1/p)>p.
+ \tag{6}
+\]
+Thus a first semiperfect extension at a new prime must use
+\(p\leq T(n)\), but missed candidates can increase the next threshold.
+
+\paragraph{A fully checked primitive example beyond deficient parents.}
+For \(n=70\), \(\Sigma=144\), \(A=4\), and the proper divisors are
+\(1,2,5,7,10,14,35\). They cannot sum to \(4\): using only
+\(1,2\) gives at most three, while every other divisor is at least five.
+Thus \(70\) is weird, and \(g(70)=1\), since \(5\) is a proper divisor.
+Consequently every coprime prime \(p>144\) gives a weird number \(70p\).
+For \(p=11\), however, \(11=1+10\in X(70)\), so (3) predicts
+semiperfectness, witnessed explicitly by
+\[
+ 770=1+10+11+22+77+110+154+385.
+\]
+All displayed summands are distinct proper divisors.
+The maximal proper divisors of \(770\) are \(385,154,110,70\).
+Their divisor sums are \(576,288,216,144\), respectively, so the
+first three are deficient and the fourth is weird.
+Every divisor of a deficient number is deficient, since
+\(\sigma(d)/d\) increases under divisibility.
+Every divisor of a non-semiperfect number is non-semiperfect:
+semiperfectness passes to multiples by scaling its divisor representation.
+It follows that no proper divisor of \(770\) is semiperfect.
+Thus \(770\) is primitive semiperfect.
+
+\paragraph{Remaining gap and attribution.}
+Equations (3)--(6) give exact local information, not a bound on the
+total reciprocal mass of all first semiperfect hits over all prime
+extension trees. Finitely many candidate primes at each fixed state
+does not imply summability of the entire tree; the varying threshold
+and the treatment of roots and repeated prime factors remain essential.
+The global mass estimate is not proved here.
+
+Source: Z.~J.~Lewis, \emph{Convergence of the reciprocal sum of primitive
+semiperfect numbers}, version 1.2.1, Lemma 2.1,
+\url{https://github.com/ZachL111/erdos469-preprint/blob/main/paper/output/pdf/erdos469_v1_2_1_preprint.pdf}.
+That version explicitly describes independent human review as pending.
+The transition arguments are supplied above and are not taken on
+faith from its global claim.
+Current problem: \url{https://www.erdosproblems.com/469},
+checked 24 September 2026. No local formal-verification claim is made.
+
+\paragraph{Completion estimate.}
+Exact prime-extension dynamics and a primitive example are proved; reciprocal-mass control is missing.
+\textbf{COMPLETION: 45\%}

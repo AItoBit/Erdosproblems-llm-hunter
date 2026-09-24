@@ -1,0 +1,58 @@
+\section*{Erd\H{o}s Problem 471}
+
+\paragraph{Statement.}
+Starting with a finite set \(Q_0\) of primes, repeatedly adjoin every
+prime expressible as the sum of three distinct primes already present.
+Can the sets \(Q_i\) have unbounded size?
+
+\paragraph{External input and distinctness.}
+The quantitative form of Vinogradov's three-primes theorem gives,
+for every sufficiently large odd integer \(N\), at least
+\(cN^2/(\log N)^3\) ordered representations \(N=p_1+p_2+p_3\),
+where \(c>0\) is absolute. This standard analytic theorem is the
+external dependency.
+For a primary modern statement of the classical weighted formula, see
+Frei, Koymans and Sofos, Section 1.2,
+\url{https://arxiv.org/abs/1804.00573}.
+Its singular series for odd \(N\) is bounded below by
+\(2\prod_{p\geq3}(1-(p-1)^{-2})>0\).
+Dividing the weighted lower bound by \((\log N)^3\), an upper bound
+for each representation's weight, gives the unweighted bound used here.
+
+Representations having two equal entries number at most \(3N\):
+choose one of the three pairs of equal positions and their common
+prime; the third entry is then determined. This overcounts triples
+with all entries equal, which is harmless.
+Since \(N^2/(\log N)^3\) grows faster than \(N\), every sufficiently
+large odd integer is therefore a sum of three \emph{distinct} primes.
+Every summand is smaller than \(N\).
+
+\paragraph{Choose the seed and check the iteration.}
+Choose an integer \(N_0\) past the threshold just obtained, and let
+\(Q_0\) contain every prime at most \(N_0\).
+We prove by induction through the ordered primes that each prime
+eventually belongs to some \(Q_i\).
+The assertion holds for the seed. If \(p>N_0\), write \(p=a+b+c\)
+with three distinct smaller primes. By induction, they belong to
+stages \(Q_{i_a},Q_{i_b},Q_{i_c}\).
+Since the stages are nested, all three belong to
+\(Q_{\max(i_a,i_b,i_c)}\), and the next stage contains \(p\).
+This completes the induction.
+
+Every stage is finite, because only finitely many triples can be
+formed from a finite set. Their union contains all primes and is
+infinite, so their cardinalities are unbounded. This is exactly the
+requested existence conclusion.
+
+\paragraph{Attribution and scope.}
+The deduction from Vinogradov's theorem is credited to
+Mrazovi\'c and Kova\v{c}, and independently Alon, at
+\url{https://www.erdosproblems.com/471}, checked 24 September 2026.
+The analytic representation bound is explicitly assumed above.
+This proves existence of a finite seed; it does not settle the
+additional suggested seed \(\{3,5,7,11\}\), whose success is not
+needed for the existence question.
+
+\paragraph{Completion estimate.}
+The full finite-seed existence claim follows from Vinogradov's theorem.
+\textbf{COMPLETION: 100\%}

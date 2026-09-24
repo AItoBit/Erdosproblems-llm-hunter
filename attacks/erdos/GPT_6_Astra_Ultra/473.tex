@@ -1,0 +1,29 @@
+\section{Erd\H{o}s Problem \#473: a permutation with prime adjacent sums}
+\noindent Known-solution reconstruction, 24 September 2026.
+
+\subsection*{Statement and inputs}
+Does there exist a permutation $(a_j)_{j\ge1}$ of the positive integers for which every $a_j+a_{j+1}$ is prime? Yes. The page attributes the original result to Odlyzko without a reference. The proof below uses the later bounded-prime-gap theorem; it is not a reconstruction of Odlyzko's historical argument, nor a proof of the greedy-algorithm conjecture mentioned in the comments.
+
+The external number-theoretic inputs are Zhang's bounded-gap theorem and Dirichlet's theorem on primes in a reduced residue class. The former, by the infinite pigeonhole principle, supplies an even integer $h>0$ for which infinitely many pairs $p,p+h$ are prime. We do not assume any prescribed gap, such as $h=2$.
+
+\subsection*{The prime-sum graph stays connected after finite deletions}
+Join distinct positive integers when their sum is prime. Fix a threshold $M$. For every $n>M$, the vertices $n$ and $n+h$ are connected inside the vertices greater than $M$: choose a prime pair $p,p+h$ so large that $p-n>M$ and $p-n>n+h$. The path is
+\[n,\ p-n,\ n+h.\]
+Its sums are $p,p+h$, and its three vertices are distinct. Consequently all sufficiently large integers in any fixed residue class modulo $h$ lie in one connected component of this tail graph.
+
+Residue classes $r,s$ lie in the same component whenever $(r+s,h)=1$. Indeed fix an integer $u>M$ in class $r$, then use Dirichlet to choose $p\equiv r+s\pmod h$ with $p>2u+M$. Now $v=p-u>M$ is in class $s$ and $u,v$ are joined. The finite graph of residue classes is connected: the allowed moves $r\mapsto1-r$ and $r\mapsto-1-r$ have sums $1$ and $-1$. Their composition changes $r$ to $r-2$. Since $h$ is even, these two-step moves reach every class of the same parity, and either one-step move changes parity. Thus the whole tail graph is connected.
+
+Let $F$ be any finite set of forbidden vertices and take $M>\max F$ (with any $M$ if $F$ is empty). A surviving vertex $u\le M$ has a neighbour greater than $M$, by choosing a prime $p>M+2u$ and taking $p-u$. The connected tail therefore connects every vertex outside $F$. This proves the finite-deletion assertion.
+
+\subsection*{Construct a spanning one-way path}
+Start with the path consisting of $1$. Suppose a finite simple path has been constructed, with last vertex $v$, and let $b$ be the least positive integer absent from it. Delete all its vertices except $v$. The preceding assertion gives a finite path from $v$ to $b$ in the remaining graph; erase loops if necessary and append this path, omitting its first vertex $v$.
+
+No old vertex is repeated, and every newly adjacent sum is prime. At each stage the least omitted integer is included. Hence every positive integer eventually occurs. The increasing union of the finite paths is the required permutation. The assertion concerns a one-way enumeration; merely taking half of a two-way Hamilton path would not have established it.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED relative to the two explicit classical prime theorems.} The graph and enumeration arguments are fully supplied. Nothing is asserted about whether the least-unused-neighbour greedy algorithm is surjective, or about a prime-sum ordering of $[1,n]$ for every $n$.
+
+Sources: \url{https://www.erdosproblems.com/473}; Y. Zhang, \emph{Bounded gaps between primes}, \url{https://annals.math.princeton.edu/2014/179-3/p07}; W. Shang, B. Li and S. Zhang, \emph{An infinite version of prime circles}, \url{https://doi.org/10.1007/s00373-025-02976-9}, whose abstract describes the related bounded-gap approach to a two-way rearrangement. This is an attributed reconstruction, with no novelty or formal-verification claim.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

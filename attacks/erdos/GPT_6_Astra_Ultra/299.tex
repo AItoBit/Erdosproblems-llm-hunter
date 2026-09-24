@@ -1,0 +1,52 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#299; a density deduction with all quantifiers checked, 2026-09-24.}
+Can there be an infinite increasing sequence of positive integers $a_1<a_2<\cdots$ with bounded successive gaps, but with no finite subset of its terms whose reciprocals sum to $1$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The answer is no, as a consequence of Bloom's positive-density theorem for unit fractions. We state that theorem as an external input and prove the bounded-gap reduction, including the case where the gap bound holds only eventually. The same argument gives infinitely many pairwise disjoint finite unit-sum subsets.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Convert the bound on consecutive terms into a positive lower density bound. Apply the density theorem after any finite deletion, obtaining both the requested contradiction and the strengthened disjointness assertion.
+
+\section{WORK}
+Suppose that for some positive integer $D$ and index $i_0$,
+\[
+a_{i+1}-a_i\leq D\qquad(i\geq i_0).
+\tag{1}
+\]
+The hypothesis $a_{i+1}-a_i=O(1)$ has exactly this consequence after increasing $D$ to an integer. Summing (1),
+\[
+a_{i_0+j}\leq a_{i_0}+Dj\qquad(j\geq0).
+\tag{2}
+\]
+For every $N\geq a_{i_0}$, all indices $j$ with $0\leq j\leq\lfloor(N-a_{i_0})/D\rfloor$ yield terms at most $N$. Thus, writing $A=\{a_i:i\geq1\}$,
+\[
+|A\cap[1,N]|\geq1+\left\lfloor\frac{N-a_{i_0}}D\right\rfloor,
+\qquad
+\liminf_{N\to\infty}\frac{|A\cap[1,N]|}{N}\geq\frac1D>0.
+\tag{3}
+\]
+
+\textbf{Declared external input.} Bloom's theorem states that every subset $E\subseteq\mathbb N$ with positive upper density contains a finite subset $S$ satisfying $\sum_{n\in S}1/n=1$. Its stronger upper-density formulation certainly applies under (3). The technical proof is external; the companion attempt for problem 298 gives a detailed reduction to Bloom's Proposition 1.
+
+Applying the theorem to $A$ gives a finite unit-sum subset, contradicting the proposed avoidance property. This answers the question in the negative.
+
+For the strengthened assertion, apply the theorem repeatedly. After finite sets $S_1,\ldots,S_r$ have been chosen, their union is finite, so
+\[
+\liminf_{N\to\infty}\frac{|(A\setminus\bigcup_{j\leq r}S_j)\cap[1,N]|}{N}
+=\liminf_{N\to\infty}\frac{|A\cap[1,N]|}{N}\geq1/D.
+\]
+The theorem therefore supplies a further finite unit-sum subset disjoint from all predecessors. Induction constructs infinitely many pairwise disjoint such subsets. Alternatively, it gives a unit-sum subset beyond any prescribed cutoff by deleting the corresponding finite initial segment.
+
+\section{VERIFICATION AND SCOPE}
+No natural-density assumption is needed, and no restriction on the finitely many early gaps is required. The selected denominators are distinct because they form a subset of an increasing integer sequence. This proof does not give an effective bound for the largest denominator of the first selected subset; that is not required by the problem.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and the reduction to problem 298: \url{https://www.erdosproblems.com/299}.
+\item T. F. Bloom, \emph{On a density conjecture about unit fractions}, positive-density theorem: \url{https://arxiv.org/html/2112.03726}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, using Bloom's stated density theorem.}
+No such bounded-gap sequence exists; every one contains infinitely many disjoint finite unit-sum subsets.
+\textbf{Completion rate estimate: 100\% of the problem, relative to the external theorem.}

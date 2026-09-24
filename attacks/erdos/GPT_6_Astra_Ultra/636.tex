@@ -1,0 +1,66 @@
+\section*{Erd\H{o}s Problem 636: orders and sizes of induced subgraphs}
+
+\paragraph{Statement.}
+For every fixed \(C>0\), does an \(n\)-vertex graph with no clique or
+independent set larger than \(C\log n\) have
+\(\Omega_C(n^{5/2})\) distinct pairs
+\[
+ \Psi(G)=\{(|S|,e(G[S])):S\subseteq V(G)\}?
+\]
+
+\paragraph{Known resolution and external dependency.}
+Yes. Theorem 1.1 of Kwan and Sudakov,
+\emph{Proof of a conjecture on induced subgraphs of Ramsey graphs},
+\url{https://arxiv.org/abs/1712.05656}, gives precisely a constant
+\(\gamma(C)>0\) with
+\[
+ |\Psi(G)|\geq\gamma(C)n^{5/2}
+\]
+for \(C\)-Ramsey graphs. Changing the logarithm base, or replacing
+the strict homogeneous-set threshold by a non-strict one, only changes
+\(C\). This is the full positive answer recorded at
+\url{https://www.erdosproblems.com/636}.
+The substantial lower-bound theorem is an explicit external input;
+the present attempt does not claim to reproduce its technical proof.
+We give a separate complete proof that its exponent is optimal.
+
+\paragraph{Sharpness by a random construction.}
+Let \(G\) be the random graph on \(n\) labelled vertices with each edge
+present independently with probability \(1/2\).
+For a fixed \(k\)-element set \(S\), the variable \(e(G[S])\) is a sum
+of \(\binom{k}{2}\) fair Bernoulli variables. Hoeffding's inequality
+gives, for \(k\geq2\),
+\[
+ \Pr\left(\left|e(G[S])-\tfrac12\binom{k}{2}\right|>n^{3/2}\right)
+ \leq2\exp\left(-\frac{2n^3}{\binom{k}{2}}\right)
+ \leq2e^{-4n}.
+\]
+For \(k=0,1\) the deviation is identically zero.
+Taking a union bound over all \(2^n\) subsets shows that, with
+probability tending to one, every \(S\) satisfies that bound.
+For a fixed order \(k\), there are consequently at most
+\(2n^{3/2}+2\) integer edge counts. Hence
+\[
+ |\Psi(G)|\leq(n+1)(2n^{3/2}+2)=O(n^{5/2}).
+\]
+
+The same graph is Ramsey with high probability. Set
+\(L=\lceil3\log_2 n\rceil\). A fixed \(L\)-set is homogeneous with
+probability \(2^{1-\binom L2}\), so the probability of any such set is
+at most
+\[
+ 2\binom nL2^{-\binom L2}
+ \leq2^{\,1+L\log_2 n-L(L-1)/2}=o(1).
+\]
+Thus the two properties hold simultaneously for all sufficiently
+large \(n\). This proves that no universally larger exponent can
+replace \(5/2\).
+
+\paragraph{Scope.}
+This is a complete answer relative to the stated
+Kwan--Sudakov lower-bound theorem, with the matching upper example
+proved here. It is an attributed use of an established resolution,
+not an independent new proof of that theorem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,48 @@
+\section{Erd\H{o}s Problem \#443: intersections of quadratic product sets}
+\noindent Complete elementary treatment of the stated qualitative questions, 24 September 2026.
+
+\subsection*{1) Statement and the diagonal exception}
+Put $P_m=\{k(m-k):1\le k\le\lfloor m/2\rfloor\}$. Can $|P_m\cap P_n|$ be arbitrarily large? Is it at most $(mn)^{o(1)}$?
+
+For the latter question one must impose $m\ne n$, as the explanation on the source page does: when $m=n$, the function $k(m-k)$ is strictly increasing on the listed integer range, and $|P_m\cap P_m|=\lfloor m/2\rfloor$. We prove the subpower bound for distinct parameters, and construct infinitely many pairs giving exactly any prescribed nonnegative intersection size.
+
+\subsection*{2) Factor pairs control every intersection}
+Assume $m>n$ and let $w=k(m-k)=l(n-l)$ be in the intersection. Set
+\[X=m-2k\ge0,\qquad Y=n-2l\ge0,\qquad D=m^2-n^2>0.\]
+Then $X^2=m^2-4w$, $Y^2=n^2-4w$, and hence
+\[(X-Y)(X+Y)=D.\tag{1}\]
+In particular $X>Y$. Define $u=X-Y>0$, $v=X+Y\ge u$; these are positive integers with $uv=D$. The factor pair determines $X=(u+v)/2$ and then $w=(m^2-X^2)/4$. Distinct common values therefore give distinct factor pairs. Some factor pairs may fail parity or range restrictions, but that can only lower the count. Thus
+\[|P_m\cap P_n|\le\tau(D),\tag{2}\]
+where $\tau$ is the divisor function.
+
+For completeness, $\tau(d)\le C_\epsilon d^\epsilon$ for every fixed $\epsilon>0$. Indeed, if $p\ge2^{1/\epsilon}$ and $a\ge1$, then $a+1\le2^a\le p^{\epsilon a}$. For each of the finitely many smaller primes, $\sup_{a\ge0}(a+1)/p^{\epsilon a}$ is finite. Multiplying these bounds over the prime factorization of $d$ proves the assertion. Since $D<m^2$, (2) is at most $C_\epsilon m^{2\epsilon}$. As $m\le mn$ and $\epsilon$ is arbitrary, this proves
+\[|P_m\cap P_n|\le(mn)^{o(1)}\quad(m\ne n),\tag{3}\]
+uniformly as the larger parameter tends to infinity. For example, for any target exponent $\delta>0$, use $\epsilon=\delta/4$ and absorb $C_\epsilon$ into $(mn)^{\delta/2}$ for sufficiently large $mn$.
+
+\subsection*{3) Exactly $s$ common values, infinitely often}
+Fix $s\ge0$ and any odd prime $p$. Let
+\[M=p^{2s+1},\qquad m=M+1,\qquad n=M-1.\]
+Here $m,n$ are positive even integers. Thus $X$ and $Y$ in (1) are even, and $u=2d$, $v=2e$ for positive integers $d\le e$. Since $D=4M$, they satisfy $de=M$. Conversely such a factor pair gives
+\[X=d+e,\quad Y=e-d,\quad
+k=\frac{M+1-d-e}{2},\quad l=\frac{M-1-e+d}{2}.\tag{4}\]
+The pair $d=1,e=M$ gives $k=0$ and is inadmissible. All the other factor pairs are precisely
+\[d=p^a,\quad e=p^{2s+1-a},\qquad 1\le a\le s.\]
+Both factors are odd, so (4) is integral. Also
+\[M+1-d-e=(d-1)(e-1)>0,\]
+which is a positive even integer. Thus $k\ge1$ and $X\ge0$ implies $k\le m/2$. Moreover
+\[M-1-e+d=(d-1)(e+1)>0,
+\]
+so $l\ge1$, and $Y=e-d\ge0$ implies $l\le n/2$. Hence every one of these $s$ factor pairs supplies a common value.
+
+They give distinct values: on $1\le d<\sqrt M$, the quantity $d+M/d$ is strictly decreasing, so $X$ and hence $(m^2-X^2)/4$ differ. There are no other factor pairs available. Therefore
+\[|P_{p^{2s+1}+1}\cap P_{p^{2s+1}-1}|=s.\tag{5}\]
+This includes $s=0$, when only the inadmissible pair exists. Infinitely many odd primes give infinitely many parameter pairs for each $s$; letting $s$ grow proves unboundedness.
+
+\subsection*{4) Outcome and attribution}
+\textbf{SOLVED for distinct parameters, with the literal diagonal exception identified.} The proof establishes both requested qualitative properties and exact realization of every nonnegative size. It does not reproduce the sharper explicit divisor estimate $m^{O(1/\log\log m)}$, which would require a quantitative strengthening of the elementary divisor argument.
+
+Source: \url{https://www.erdosproblems.com/443}, checked 24 September 2026, which attributes the resolution independently to Hegyv\'ari and Cambie. The factorization and constructions used here are fully proved above; no novelty or formal verification is claimed. The site's Lean status describes existing work, not a verification performed on this text.
+
+The estimate concerns the qualitative questions and the correction necessary when $m=n$.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

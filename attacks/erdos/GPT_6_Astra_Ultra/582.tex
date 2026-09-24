@@ -1,0 +1,37 @@
+\section{Erd\H{o}s Problem \#582: a $K_4$-free graph forcing a monochromatic triangle}
+\noindent Reconstruction of Folkman's finite construction, 24 September 2026.
+
+\subsection*{Statement and approach}
+We construct a finite graph with no $K_4$ such that every red/blue edge coloring contains a monochromatic triangle. The construction specializes Folkman's proof, first establishing its vertex-coloring lemma and then using a Cartesian product and additional vertices. Its size is enormous; no small Folkman-number bound or novelty is claimed.
+
+\subsection*{Vertex-coloring lemma, proved here}
+For every finite nonempty graph $F$ and positive integer $q$, there is a finite graph $H(q,F)$ with clique number $\omega(F)$ such that every $q$-coloring of its vertices contains an induced monochromatic copy of $F$.
+
+First prove the assertion for $q=2$ by induction on $r=|V(F)|$. A one-vertex graph is immediate. Delete a vertex $v_0$ and write $F'=F-v_0$, $F''=F[N_F(v_0)]$. By induction take $W=V(H(2,F'))$. Let $\mathcal S$ be the subsets of $W$ inducing a copy of $F''$; the empty set is permitted if $v_0$ is isolated. This collection is nonempty because $H(2,F')$ contains $F'$.
+
+Take an index set $I$ of size $r2^{|W|}$. For every $r$-subset $T$ of $I$, fix a bijection $f_T:T\to V(F)$. The new graph consists of disjoint copies $W_i$ of $H(2,F')$, $i\in I$, and disjoint copies $F_{S,T}$ of $F$, one for every $S\in\mathcal S$ and every $r$-subset $T$. A vertex labeled $v$ in $F_{S,T}$ is additionally joined precisely to the vertices of $S$ in $W_{f_T^{-1}(v)}$. These are the only additional edges.
+
+In a two-coloring, some $r$ of the $W_i$ have identical color patterns; let their index set be $T$. Their common pattern has a monochromatic induced $F'$, with embedding $\phi:F'\to W$ and color $c$. Put $S=\phi(N_F(v_0))$. If any vertex $v$ of $F_{S,T}$ has color $c$, attach that vertex to $\phi(F')$ in the copy $W_{f_T^{-1}(v)}$. Its adjacencies are exactly those of $v_0$, so this is a monochromatic induced $F$. If no vertex has color $c$, the entire copy $F_{S,T}$ is monochromatic in the other color.
+
+The construction does not increase clique number. A clique with two vertices in an attached $F_{S,T}$ has no vertex in any $W_i$, since distinct attached vertices connect to distinct $W_i$. A clique with exactly one attached vertex has its other vertices in a copy of $F''$, so its size is at most $1+\omega(F'')\leq\omega(F)$. A clique with no attached vertex lies in one $W_i$. The opposite inequality follows from an attached copy of $F$. This proves the two-color lemma. For general $q$, use $H(1,F)=F$ and recursively
+\[H(q,F)=H(2,H(q-1,F)).\]
+Merge the first $q-1$ colors into one color, find the indicated induced copy, and then apply the $(q-1)$-color property if necessary. Clique number is preserved at every step.
+
+\subsection*{The edge-coloring construction}
+Let $B=H(36,K_2)$, so $B$ is triangle-free. Put $N=2^{|E(B)|}$ and let $A=H(N,K_3)$, so $A$ is $K_4$-free. Start with the Cartesian product graph on $V(A)\times V(B)$: two vertices are adjacent when exactly one coordinate changes along an edge of its graph. For every two-element subset $S\subseteq V(A)$, add a vertex $z_S$ joined to all of $S\times V(B)$. All the $z_S$ are mutually nonadjacent.
+
+Every clique in the Cartesian product lies in one row or one column. Indeed, if two adjacent vertices differ in their first coordinate, a vertex adjacent to both must have their common second coordinate; the other case is symmetric. Thus product cliques have size at most three. A clique containing $z_S$ has its product vertices in one row, where at most the two first coordinates in $S$ occur, or in one column, where $B$ supplies at most two mutually adjacent vertices. It too has size at most three. The entire graph is $K_4$-free.
+
+Suppose its edges have been colored without a monochromatic triangle. Color each vertex $a$ of $A$ by the complete red/blue pattern on the copy $\{a\}\times B$. There are at most $N$ patterns, so the vertex lemma gives a triangle $U\subseteq A$ on whose three columns these patterns are identical.
+
+For each $b\in B$, the triangle $U\times\{b\}$ has both a red edge $S_R(b)$ and a blue edge $S_B(b)$, with endpoints regarded as two-subsets of $U$. The two edges from $z_{S_R(b)}$ to the endpoints of the red edge cannot both be red. Choose an endpoint $a_R(b)$ with a blue such edge. Similarly choose $a_B(b)\in S_B(b)$ with a red edge to $z_{S_B(b)}$.
+
+The tuple $(S_R(b),a_R(b),S_B(b),a_B(b))$ has at most $(3\cdot2)^2=36$ values. Apply the vertex property of $B$ to obtain adjacent vertices $b,b'$ with the same tuple. The edge joining $(a,b)$ to $(a,b')$ has one common color for all $a\in U$, by the identical column patterns. If this color is red, the vertices
+\[z_{S_B},\quad(a_B,b),\quad(a_B,b')\]
+form a red triangle. If it is blue, use $z_{S_R},(a_R,b),(a_R,b')$. Both contradict the assumption. This proves the required Ramsey property.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved.} All finite construction and coloring arguments are supplied. This is a specialization of Folkman's established proof, not a new resolution or a claimed efficient construction. Source: \url{https://www.erdosproblems.com/582}; J. Folkman, \emph{Graphs with Monochromatic Complete Subgraphs in Every Edge Coloring}, Theorems 1--2, \url{https://www.cs.umd.edu/~gasarch/TOPICS/grt/Folkman.pdf}. No local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,71 @@
+\section{Erd\H{o}s Problem \#259}
+\subsection{Statement and attribution}
+Is $\sum_{n\ge1}\mu(n)^2n/2^n$ irrational? Yes. Chen and Ruzsa proved the stronger assertion that $\sum_{n\in A}n/2^n$ is irrational for every infinite set $A$ of squarefree positive integers. We reconstruct that stronger assertion, using the two-gap integer-tail mechanism in their proof. Dirichlet's theorem on primes in a reduced residue class is the sole substantial external theorem. No novelty is claimed.
+
+\subsection{Work I: constructing two linked squarefree-free intervals}
+Fix an integer $K\ge1$. Choose distinct odd primes $q_1,\ldots,q_K$. The Chinese remainder theorem gives a positive $h$ with
+$h\equiv-j\pmod{q_j^2}$ for $1\le j\le K$. Put
+$M=\operatorname{lcm}_{j\le K}\varphi(q_j^2)$. Whenever $M\mid m$, Euler's theorem gives
+\[
+ q_j^2\mid h2^m+j\qquad(1\le j\le K).
+ \tag{1}
+\]
+We next arrange a second interval of length $K+h$ immediately after $h2^m+m$.
+
+Choose distinct odd primes $r_1<\cdots<r_{K+h}$, all exceeding $M$, such that
+\[
+ \gcd(r_i,r_j-1)=1\quad\hbox{for all }i,j.
+ \tag{2}
+\]
+To construct them, begin with an odd prime greater than $M$ and repeatedly use Dirichlet's theorem to choose the next prime larger than the preceding ones and congruent to $-1$ modulo their product. Earlier odd primes cannot divide the new prime minus one, since that difference is $-2$ modulo each; a new larger prime cannot divide an earlier prime minus one. This proves (2).
+Let $L=\operatorname{lcm}(M,r_1-1,\ldots,r_{K+h}-1)$. Then $r_j\nmid L$ for each $j$.
+
+For each $j$, consider
+$G_j(z)=h2^{Lz}+Lz+j$. Modulo $r_j$, it equals $h+Lz+j$, so choose $z_0\ge0$ with $G_j(z_0)\equiv0\pmod{r_j}$. If $z=z_0+tr_j$, then
+\[
+ 2^{Ltr_j}\equiv1\pmod{r_j^2},\qquad
+ G_j(z)\equiv G_j(z_0)+Ltr_j\pmod{r_j^2}.
+\]
+The first congruence follows from $\varphi(r_j^2)=r_j(r_j-1)\mid Ltr_j$. Since $L$ is invertible modulo $r_j$, some $0\le t<r_j$ makes the second expression zero modulo $r_j^2$. Thus there is a residue $z_j\pmod{r_j^2}$ with $G_j(z_j)\equiv0\pmod{r_j^2}$. This congruence persists throughout that residue class because $r_j-1\mid L$.
+
+Choose a sufficiently large positive $z$ satisfying all $z\equiv z_j\pmod{r_j^2}$, and set $m=Lz$ and $c=h2^m$. We have now proved that every integer in both intervals
+\[
+ (c,c+K]\quad\hbox{and}\quad(c+m,c+m+K+h]
+ \tag{3}
+\]
+is divisible by a prime square. The first interval follows from (1), since $M\mid m$, and the second from the construction of $G_j$.
+
+\subsection{Work II: cancelling the large coefficient in the tail}
+Let $A$ be any infinite set of squarefree positive integers and suppose
+$S_A=\sum_{a\in A}a2^{-a}=u/v$, where $v\ge1$. Convergence follows by comparison with $\sum_{a\ge1}a2^{-a}$. For the parameters above define
+\[
+ E_K=\sum_{\substack{a\in A\\a>c}}\frac{a-c}{2^{a-c}}
+       +h\sum_{\substack{a\in A\\a>c+m}}\frac1{2^{a-c-m}}.
+\]
+It is strictly positive because $A$ is infinite. Multiplication of $S_A$ by $2^c$ shows that
+$v\sum_{a\in A,a>c}a2^{-(a-c)}$ is an integer. Moreover
+\[
+ \sum_{\substack{a\in A\\a>c}}\frac{a}{2^{a-c}}-E_K
+ =h\sum_{\substack{a\in A\\c<a\le c+m}}2^{m-(a-c)}\in\mathbb Z.
+ \tag{4}
+\]
+Indeed $c=h2^m$, and the terms with $a>c+m$ cancel exactly. Hence $vE_K$ is a positive integer.
+
+The two gaps in (3) exclude all corresponding elements of $A$. Therefore
+\[
+ 0<E_K\le\sum_{j>K}\frac{j}{2^j}
+          +h\sum_{j>K+h}2^{-j}
+ =\frac{K+2}{2^K}+\frac{h}{2^{K+h}}
+ \le\frac{K+3}{2^K}\longrightarrow0.
+\]
+This contradicts $vE_K\ge1$ for large $K$. The proof of the stronger assertion is complete. Taking $A$ to be all squarefree positive integers yields the required irrationality, since $\mu(n)^2$ is their indicator.
+
+\subsection{Verification and outcome}
+Neither gap length alone needs to exceed $\log c$: equation (4) removes the large coefficient $c$ that would spoil an ordinary tail estimate. The second gap is allowed to depend on $h$, and the uniform inequality $h2^{-h}\le1$ makes that dependence harmless. The CRT construction also permits arbitrarily large positive $m$.
+
+\textbf{SOLVED, with Dirichlet's theorem explicitly used.} The gap construction, cancellation identity and limiting contradiction are proved here. The cited Lean source was read as a proof reference; no local kernel verification is claimed.
+
+\subsection{Sources}
+Y.-G. Chen and I. Z. Ruzsa, \emph{On the irrationality of certain series}, Period. Math. Hungar. (1999), 31--37. Their argument and attribution are recorded in the Rocca/Aristotle formalization, \url{https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos259.lean}. Current statement: \url{https://www.erdosproblems.com/259}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

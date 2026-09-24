@@ -1,0 +1,56 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#391; prime-forced upper bound and reconstruction of the limit, 2026-09-24.}
+Let $t(n)$ be the largest possible smallest factor in a factorization $n!=a_1\cdots a_n$ into $n$ positive integers. Prove $t(n)/n\to1/e$, and determine whether $t(n)/n\leq1/e-c/\log n$ for some fixed $c>0$ and infinitely many $n$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Alexeev, Conway, Rosenfeld, Sutherland, Tao, Uhr and Ventullo established a sharper asymptotic with explicit second-order constant. The proof below independently establishes a positive logarithmic deficit for all sufficiently large $n$. For the matching limit it explicitly imports only the lower-bound consequence of their construction.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+A product bound gives $1/e$ as the limiting upper bound. A positive density of primes in $(3n/4,n]$ forces extra logarithmic mass in the factors containing them, creating a definite deficit below $n/e$.
+
+\section{WORK}
+Write $t=t(n)$ and choose an optimizing factorization, so $a_i\geq t$. From $t^n\leq n!$ and Stirling's formula,
+\[
+\frac tn\leq\frac{(n!)^{1/n}}n\longrightarrow e^{-1}.
+\]
+In particular $t\leq n/2$ for all sufficiently large $n$.
+
+Let $\mathcal P=\{p:3n/4<p\leq n,\ p\text{ prime}\}$. Each such prime has exponent exactly one in $n!$, so occurs in exactly one factor $a_i$. If that factor contains $r_i\geq1$ primes from $\mathcal P$, then
+\[
+\log(a_i/t)\geq\sum_{\substack{p\in\mathcal P\\p\mid a_i}}\log p-\log t
+\geq\sum_{\substack{p\in\mathcal P\\p\mid a_i}}\log(p/t),
+\]
+since the difference is $(r_i-1)\log t\geq0$. Factors containing none contribute nonnegatively. Summing therefore gives the exact inequality
+\[
+\log(n!)-n\log t\geq\sum_{p\in\mathcal P}\log(p/t)
+\geq\#\mathcal P\log(3/2).                              \tag{1}
+\]
+This remains valid when several large primes occur in the same factor; counting such a factor multiple times without the displayed inequality would be unjustified.
+
+The prime number theorem gives $\#\mathcal P\sim n/(4\log n)$, and hence $\#\mathcal P\geq n/(5\log n)$ eventually. Put $a=\log(3/2)/5$. Stirling's upper estimate and (1) imply
+\[
+n\log(n/t)-n+O(\log n)\geq a n/\log n.
+\]
+For all sufficiently large $n$, absorbing the $O(\log n)$ term yields
+\[
+\log(n/t)\geq1+\frac a{2\log n},\qquad
+\frac tn\leq\frac1e\exp\!\left(-\frac a{2\log n}\right)
+\leq\frac1e-\frac{\log(3/2)}{20e\log n}.                 \tag{2}
+\]
+The last inequality uses $e^{-u}\leq1-u/2$ for $0\leq u\leq1$. Thus the second requested assertion holds for every sufficiently large $n$, with the explicit nonoptimal constant $c=\log(3/2)/(20e)$.
+
+\textbf{Declared external input for the lower bound.} The lower-bound part of Theorem 1.3(iv) of Alexeev et al. implies that for some absolute $C$ and all sufficiently large $n$,
+\[
+t(n)\geq n/e-Cn/\log n.                                 \tag{3}
+\]
+The prime-allocation and small-prime rebalancing construction proving (3) is not reconstructed here. Combining (3) with the elementary product upper bound proves $t(n)/n\to1/e$.
+
+For comparison, the same published theorem identifies the sharper expansion $t(n)/n=1/e-c_0/\log n+O((\log n)^{-1-\gamma})$ with $c_0=0.30441901\ldots$ and some $\gamma>0$. Inequality (2) does not claim that optimal constant.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to the stated lower-bound construction.} The affirmative answers to both questions follow. The logarithmic deficit is proved here using Stirling and the prime number theorem; the matching lower bound is the explicit published dependency. This is a reconstruction of known results, without a claim of novelty.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/391}; Alexeev et al., Theorem 1.3(iv): \url{https://arxiv.org/html/2503.20170}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external lower bound.}

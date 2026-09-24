@@ -1,0 +1,88 @@
+\section{Erd\H{o}s Problem 239: mean values of real multiplicative functions}
+
+\subsection{1) Statement and scope}
+Every multiplicative function $f:\mathbb N\to\{-1,1\}$ has a
+Cesaro mean. This result was proved by Wirsing and generalized
+by Hal\'asz. We give the deduction from a standard form of
+Hal\'asz's theorem, together with a direct treatment of the
+absolutely convergent case.
+
+\subsection{2) An absolutely convergent convolution}
+Suppose first that $\sum_p(1-f(p))/p<\infty$. Put $g=f*\mu$,
+so $f=1*g$, $g$ is multiplicative, and
+\[
+ g(p^j)=f(p^j)-f(p^{j-1})\quad(j\geq1).
+\]
+Here $f(1)=1$ follows from multiplicativity and the nonzero
+range. For $j=1$, $|g(p)|=1-f(p)$; for $j\geq2$, $|g(p^j)|\leq2$.
+It follows that
+\[
+ \sum_p\sum_{j\geq1}\frac{|g(p^j)|}{p^j}
+ \leq\sum_p\frac{1-f(p)}p+
+       2\sum_p\frac1{p(p-1)}<\infty.
+\]
+The Euler product with nonnegative coefficients now shows that
+$\sum_d|g(d)|/d<\infty$. Hence
+\[
+ \frac1N\sum_{n\leq N}f(n)
+   =\sum_{d\leq N}g(d)\frac{\lfloor N/d\rfloor}{N}
+   \longrightarrow\sum_{d\geq1}\frac{g(d)}d
+   =\prod_p\left[\left(1-\frac1p\right)
+      \sum_{j\geq0}\frac{f(p^j)}{p^j}\right].
+\]
+Dominated convergence is justified by $|g(d)|/d$. A local
+Euler factor is allowed to vanish; this presents no difficulty.
+
+\subsection{3) The divergent case}
+We use the following external consequence of Hal\'asz's theorem:
+if $|f(n)|\leq1$ and
+\[
+ \sum_p\frac{1-\operatorname{Re}(f(p)p^{-it})}{p}=\infty
+       \quad\hbox{for every fixed }t\in\mathbb R,
+\]
+then $\sum_{n\leq N}f(n)=o(N)$.
+Suppose $\sum_p(1-f(p))/p=\infty$. This verifies the criterion
+for $t=0$. For $t\ne0$ and $u=t\log p$,
+\[
+ 1-f(p)\cos u\geq1-|\cos u|
+       \geq\frac{1-\cos(2u)}4.
+\]
+We next verify the divergence of the resulting nonnegative series.
+For $\sigma>1$, the Euler product for $\zeta$ gives
+\[
+ \sum_p p^{-\sigma}\cos(2t\log p)
+       =\log|\zeta(\sigma+2it)|+O(1).
+\]
+The error from prime powers of exponent at least two is bounded
+uniformly as $\sigma\downarrow1$. Since $\zeta$ is holomorphic
+near $1+2it$, the right side is bounded above there.
+On the other hand $\sum_p p^{-\sigma}\to\infty$. Therefore
+\[
+ \sum_p p^{-\sigma}\bigl(1-\cos(2t\log p)\bigr)\longrightarrow\infty.
+\]
+If the corresponding sum with weight $1/p$ were finite, it
+would dominate these sums, a contradiction. Hal\'asz's criterion
+applies, and the mean is zero.
+
+\subsection{4) Why the real-valued hypothesis matters}
+For comparison, $f(n)=n^i$ is completely multiplicative and has
+modulus one. Comparison with its integral, using
+$|(x^i)'|=1/x$, yields
+\[
+ \frac1N\sum_{n\leq N}n^i
+       =\frac{N^i}{1+i}+O\left(\frac{\log N}{N}\right),
+\]
+which has no limit. Thus an analogous assertion for arbitrary
+complex values on the unit circle would be false.
+
+\subsection{5) Sources and scope}
+Sources: \url{https://www.erdosproblems.com/239};
+A.~Granville, A.~J.~Harper and K.~Soundararajan,
+\emph{A new proof of Hal\'asz's Theorem, and its consequences},
+\url{https://arxiv.org/abs/1706.03749}.
+Hal\'asz's theorem and the standard analytic continuation and
+Euler product of $\zeta$ are external dependencies. The two-case
+deduction above proves the full assertion from them; no original
+resolution or local formal verification is claimed.
+\subsection{6) Completion estimate}
+\textbf{COMPLETION: 100\%}

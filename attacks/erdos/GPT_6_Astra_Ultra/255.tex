@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem 255: one fixed interval with unbounded discrepancy}
+
+\subsection{1) Statement and scope}
+Given any sequence $z_1,z_2,\ldots\in[0,1]$, must some fixed
+interval $I$ satisfy
+\[
+ \limsup_{N\to\infty}
+ \left|\#\{n\leq N:z_n\in I\}-N|I|\right|=\infty?
+\]
+Yes. We give the localization argument that passes from a
+uniform discrepancy lower bound to a single fixed interval.
+The established uniform lower bound is an explicit external
+theorem; the quantifier change is proved below.
+
+\subsection{2) The uniform discrepancy input}
+We use the following weaker consequence of Schmidt's discrepancy
+theorem: for every infinite sequence $y_j\in[0,1)$,
+\[
+ \sup_{N\geq1,\ 0\leq t\leq1}
+  \left|\#\{j\leq N:y_j<t\}-Nt\right|=\infty.
+\]
+Schmidt's 1972 Theorem 1 supplies a quantitative logarithmic
+lower bound and hence this assertion. By itself, a statement
+with the supremum over $t$ does not select a fixed interval.
+
+\subsection{3) Baire localization}
+Suppose, to obtain a contradiction, that every anchored interval
+$[0,x)$ has bounded discrepancy as $N$ varies. Put
+\[
+ D_N(x)=\#\{n\leq N:z_n<x\}-Nx,\qquad
+ X=(0,1)\setminus\{z_n:n\geq1\}.
+\]
+The space $X$ is a dense $G_\delta$ subset of $(0,1)$ and is
+a Baire space. For each $N$, the function $D_N$ is continuous
+on $X$. For an integer $m\geq1$, let
+\[
+ E_m=\{x\in X:|D_N(x)|\leq m\text{ for all }N\}.
+\]
+These sets are closed in $X$ and cover $X$ by the supposition.
+The Baire category theorem implies that some $E_m$ contains
+$J\cap X$, for a nonempty open interval $J\subset(0,1)$.
+
+For fixed $N$ and $x\in J$, approach $x$ from the left by
+points of $X\cap J$. The count with the strict inequality
+$z_n<x$ is left-continuous. Passing to the limit gives
+$|D_N(x)|\leq m$. This holds for every $N$ and every $x\in J$,
+including points repeated in the sequence. Removing the
+countable jump set before applying Baire avoids a continuity
+assumption at those points.
+
+\subsection{4) Extracting and rescaling the visits}
+Choose $a<b$ in $J\cap X$, and put $\ell=b-a$.
+The number of visits to $[a,b)$ up to time $N$ is
+\[
+ N\ell+D_N(b)-D_N(a)=N\ell+O(m),
+\]
+so there are infinitely many such visits. Let their indices
+be $n_1<n_2<\cdots$, and define
+$y_j=(z_{n_j}-a)/\ell\in[0,1)$.
+At time $n_j$, there have been exactly $j$ visits.
+For $0\leq t\leq1$, setting $x=a+t\ell$ gives the exact identity
+\[
+ \#\{i\leq j:y_i<t\}-jt
+   =D_{n_j}(x)-(1-t)D_{n_j}(a)-tD_{n_j}(b).
+\]
+Every point on the right lies in $J$, so the absolute value
+is at most $2m$, uniformly in $j,t$.
+This contradicts the external uniform discrepancy theorem.
+Therefore some fixed $x$ has unbounded $|D_N(x)|$.
+An unbounded sequence of these values has limsup infinity,
+because each finite initial segment is bounded. The interval
+$I=[0,x)$ answers the question.
+
+\subsection{5) Sources and scope}
+Sources: \url{https://www.erdosproblems.com/255}, which records
+Schmidt's original 1968 fixed-interval result;
+W.~M.~Schmidt, \emph{Irregularities of distribution, VII},
+Acta Arith. 21 (1972), 45--50, Theorem 1,
+\url{https://doi.org/10.4064/aa-21-1-45-50}.
+The external inputs are Schmidt's uniform lower bound and
+the standard Baire category theorem. The reduction above
+establishes the full fixed-interval assertion from them,
+without claiming a new resolution or local formal verification.
+\subsection{6) Completion estimate}
+\textbf{COMPLETION: 100\%}

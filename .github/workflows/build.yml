@@ -40,13 +40,24 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Test status synchronization
+      - name: Test data build and review validation
         run: python -m unittest discover -s tests
+
+      - name: Test frontend
+        run: |
+          for test_file in tests/test_*.js; do
+            node "$test_file"
+          done
 
       - name: Refresh Erdos problem statuses
         run: python scripts/sync_erdos_status.py
@@ -58,6 +69,7 @@ jobs:
         run: |
           test -f docs/data/erdos_data.js
           test -f docs/data/mo_data.js
+          test -f docs/data/open_problems_data.js
           test -f docs/data/stats.js
           
       - name: Setup Pages

@@ -2,7 +2,7 @@
 1) FORMAL RESTATEMENT
 
 Given a prime p, let ord_p(a) denote the multiplicative order of a modulo p, i.e.
-ord_p(a) is the least positive integer t such that a^t \equiv 1 (mod p), assuming p \nmid a.
+ord_p(a) is the least positive integer t such that \(a^t \equiv 1 (mod p)\), assuming p \nmid a.
 An integer a is a primitive root modulo p if ord_p(a)=p-1.
 
 Literal statement (as written in the problem file):
@@ -44,7 +44,7 @@ FAST REALITY CHECK (explicit computation)
 
 I checked (S) for all odd primes p <= 200000 by brute force:
 - For each odd prime p, factor p-1 and then test primes q<p in increasing order using the
-  standard criterion q^{(p-1)/r} \not\equiv 1 (mod p) for each prime divisor r of p-1.
+  standard criterion \(q^{(p-1)/r} \not\equiv 1 (mod p)\) for each prime divisor r of p-1.
 
 Outcome:
 - No counterexample to (S) was found for 3 <= p <= 200000.
@@ -64,19 +64,19 @@ Let p be an odd prime and let a be an integer with p \nmid a. Let p-1 = \prod_{i
 be the prime factorization, with distinct primes r_i. Then the following are equivalent:
 
   (i) ord_p(a) = p-1.
-  (ii) For every i, we have a^{(p-1)/r_i} \not\equiv 1 (mod p).
+  (ii) For every i, we have \(a^{(p-1)/r_i} \not\equiv 1 (mod p)\).
 
 Proof.
 The multiplicative group G=(Z/pZ)^* is cyclic of order |G|=p-1.
 Let d=ord_p(a). Then d divides p-1. Condition (ii) says that for each prime r_i | (p-1),
-we do not have a^{(p-1)/r_i} \equiv 1.
+we do not have \(a^{(p-1)/r_i} \equiv 1\).
 
 ( i => ii ) If ord_p(a)=p-1 then the order is not a proper divisor, so in particular it is not
-contained in the subgroup of index r_i. Equivalently, if a^{(p-1)/r_i}\equiv 1 then ord_p(a)
+contained in the subgroup of index r_i. Equivalently, if \(a^{(p-1)/r_i}\equiv 1\) then ord_p(a)
 would divide (p-1)/r_i < p-1, contradiction.
 
 ( ii => i ) Suppose (ii) holds but ord_p(a)=d < p-1. Then p-1 = d*m for some integer m>1.
-Pick any prime r dividing m. Then d divides (p-1)/r. Hence a^{(p-1)/r} \equiv 1 (mod p).
+Pick any prime r dividing m. Then d divides (p-1)/r. Hence \(a^{(p-1)/r} \equiv 1 (mod p)\).
 But r is a prime divisor of p-1, so this contradicts (ii).
 Therefore d cannot be < p-1, so d=p-1.
 
@@ -89,7 +89,7 @@ Assume p is a safe prime, i.e. p=2r+1 where r is an odd prime.
 For an integer a with p \nmid a, the following are equivalent:
 
   (i) a is a primitive root modulo p.
-  (ii) a is a quadratic nonresidue modulo p and a \not\equiv -1 (mod p).
+  (ii) a is a quadratic nonresidue modulo p and \(a \not\equiv -1 (mod p)\).
 
 Proof.
 Since (Z/pZ)^* is cyclic of order 2r, its subgroup of squares has index 2 and hence has
@@ -99,7 +99,7 @@ order r. Thus:
 
 In a cyclic group of order 2r with r prime, the only possible orders are 1,2,r,2r.
 Among nonsquares, the only element of order 2 is -1 (since the unique element of order 2
-in (Z/pZ)^* is -1). Therefore any nonsquare a \not\equiv -1 must have order 2r, i.e. is a
+in (Z/pZ)^* is -1). Therefore any nonsquare \(a \not\equiv -1\) must have order 2r, i.e. is a
 primitive root.
 Conversely, any primitive root has order 2r, hence is not a square and is not -1.
 
@@ -150,5 +150,5 @@ p-1 iff gcd(t,p-1)=1. The number of residues t mod (p-1) coprime to (p-1) is \va
 (iv) Minimal counterexample structure (what a disproof would look like):
     An odd prime p such that every prime q<p lies in the union of proper subgroups of
     (Z/pZ)^*. Equivalently, letting r run over prime divisors of p-1,
-      for every prime q<p there exists r|p-1 with q^{(p-1)/r} \equiv 1 (mod p).
+      for every prime q<p there exists r|p-1 with \(q^{(p-1)/r} \equiv 1 (mod p)\).
 

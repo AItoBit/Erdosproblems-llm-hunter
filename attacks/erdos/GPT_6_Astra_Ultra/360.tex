@@ -1,0 +1,67 @@
+\subsection*{Erd\H{o}s problem \#360}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Let $f(n)$ be the fewest colors needed to color $\{1,\ldots,n-1\}$ so that no subset of distinct integers of a single color sums to $n$. Determine its growth.
+
+\noindent\textbf{2) LITERATURE AND SCOPE.}
+Conlon--Fox--Pham, Theorem 1.5 of \emph{Subset sums, completeness and colorings}, prove
+\[
+ f(n)\asymp
+ \frac{n^{1/3}(n/\phi(n))}{(\log n)^{1/3}(\log\log n)^{2/3}}.
+\]
+This is reported as the known answer, not asserted to follow from the elementary argument below. We prove a constructive upper bound with the correct power $n^{1/3}$, explain an additional residue-class refinement, and specify the missing logarithmic and lower-bound analysis. No novelty is claimed.
+
+\noindent\textbf{3) AN ELEMENTARY PARTITION INTO $O(n^{1/3})$ CLASSES.}
+Fix an integer $r\ge1$. For $1\le j\le r$, use the class
+\[
+ C_j=\{a\in\mathbb N:n/(j+1)\le a<n/j\}.
+\]
+No subset of $C_j$ sums to $n$. A subset of at most $j$ terms has sum strictly less than $n$. A subset of at least $j+1$ terms has sum strictly greater than $n$: its smallest possible sum is at least $(j+1)n/(j+1)$, with strict inequality because the terms are distinct and $j+1\ge2$.
+
+The uncolored elements form $[1,m]$, where
+\[
+ m=\lceil n/(r+1)\rceil-1<n/(r+1).
+\]
+Place these elements successively into bins, closing a bin as soon as adding the next element would make its sum at least $n$. Each bin has sum at most $n-1$, so all of its subsets avoid $n$. Every closed bin has sum at least $n-m$, since the next element is at most $m$. If there are $b$ bins,
+\[
+ (b-1)(n-m)\le\frac{m(m+1)}2,
+ \qquad b\le1+\frac{m(m+1)}{2(n-m)}.
+\]
+Together with the $r$ interval classes this proves the explicit bound
+\[
+ f(n)\le r+1+\frac{m(m+1)}{2(n-m)}. \tag{1}
+\]
+Take $r=\lfloor n^{1/3}\rfloor$. Then $m\sim n^{2/3}$, and (1) yields
+\[
+ f(n)\le(3/2+o(1))n^{1/3}.
+\]
+The construction never uses repeated summands, and its half-open interval endpoints prevent a boundary sum from being overlooked.
+
+\noindent\textbf{4) A PRECISE ARITHMETIC REFINEMENT.}
+If $p\nmid n$ is prime, any remaining multiples of $p$ can be given one color, because all their subset sums are divisible by $p$. There is a further useful refinement, underlying the sharper published coloring. Choose $d$ coprime to $n$. For each unit residue $t\pmod d$, let $x_t\in\{1,\ldots,d\}$ satisfy
+\[
+ x_t\equiv nt^{-1}\pmod d.
+\]
+If a sum of $k$ terms from this residue class equals $n$, then necessarily $k\equiv x_t\pmod d$.
+
+Partition the remaining terms in that residue into
+\[
+ U_t=\{a:a\equiv t\pmod d,\ n/x_t\le a<n\},
+\]
+\[
+ V_t=\{a:a\equiv t\pmod d,\ n/(d+x_t)\le a<n/x_t\}.
+\]
+Neither class can contain a subset summing to $n$. For $U_t$, the only possible positive cardinalities are $x_t,d+x_t,\ldots$; at $x_t$ terms the sum is already at least $n$, strictly greater unless $x_t=1$. In that latter case the class is empty because $a\ge n$. For $V_t$, at most $x_t$ terms sum to less than $n$, while the next allowed cardinality $d+x_t$ gives a sum strictly greater than $n$ by distinctness. Thus $2\phi(d)$ extra colors cover all remaining unit-residue elements above $n/d$.
+
+This proves the coloring mechanism itself. Choosing prime colors and $d$ efficiently, bounding the residual total weight, and obtaining the matching lower bound require further arguments; merely writing the residue classes does not prove the displayed optimal estimate.
+
+\noindent\textbf{5) VERIFICATION AND FINAL.}
+For $n\ge3$, at least two colors are needed because $1+(n-1)=n$. The upper construction is much stronger than this trivial lower bound and is completely explicit. Finite exact checks verify the no-monochromatic-sum property, but do not establish asymptotic lower bounds.
+
+\textbf{UNRESOLVED within this attempt.} We prove the $n^{1/3}$ upper scale and the additional modular coloring lemma. The logarithmic savings, the totient dependence and a matching lower bound in the known formula remain external literature results, rather than proved conclusions of this attempt.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/360}; \url{https://www.its.caltech.edu/~dconlon/subset_sums.pdf}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

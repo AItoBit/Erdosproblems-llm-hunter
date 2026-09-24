@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MVZPMS7X5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6MVZPMS7X5');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Open Problems - Problem Hunting with LLMs (beta)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                tags: 'ams',
+                macros: {
+                    'R': '{\\mathbb{R}}',
+                    'C': '{\\mathbb{C}}',
+                    'N': '{\\mathbb{N}}',
+                    'Z': '{\\mathbb{Z}}',
+                    'Q': '{\\mathbb{Q}}'
+                }
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="list-page open-problems-page" data-collection="all">
+    <header>
+        <h1>Top Open Problems</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="erdos.html">Erdos Problems</a>
+            <a href="open_problems.html" class="active">Top Open Problems</a>
+            <a href="about.html">About</a>
+            <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">Light</button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="description">
+            <p>
+                A catalogue of 500 ranked open mathematical problems, alongside the
+                <a href="mo.html">100-entry MathOverflow subset</a>.
+                Browse exact problem statements, source references and LLM attempts across mathematical domains.
+            </p>
+            <p class="status-note">
+                <span id="catalogue-edition"></span>
+                <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/lists/top500-v22.json">Catalogue snapshot</a>.
+                Ranks and source statuses come from the published catalogue; MathOverflow questions have no catalogue rank.
+                Source status is separate from an LLM's claim and community review. Completion is an LLM estimate.
+                Statement-only entries do not count as attempts.
+            </p>
+        </section>
+
+        <section class="filters" aria-label="Filter problems">
+            <label for="search">Search:
+                <input type="search" id="search" placeholder="Title, statement, rank, ID or source…">
+            </label>
+            <label for="filter-domain">Domain:
+                <select id="filter-domain"><option value="">All domains</option></select>
+            </label>
+            <label for="filter-source">Collection:
+                <select id="filter-source">
+                    <option value="">All open problems</option>
+                    <option value="ranked">Ranked catalogue</option>
+                    <option value="mo">MathOverflow subset</option>
+                </select>
+            </label>
+            <label for="filter-attacks">
+                <input type="checkbox" id="filter-attacks">
+                With LLM attempts only
+            </label>
+            <label for="sort-by">Sort:
+                <select id="sort-by">
+                    <option value="rank">Catalogue rank first</option>
+                    <option value="title">Title A–Z</option>
+                    <option value="attempts">Most attempts</option>
+                    <option value="score">MathOverflow score</option>
+                    <option value="review">Community review</option>
+                    <option value="claim">LLM claim</option>
+                    <option value="completion">Completion estimate</option>
+                </select>
+            </label>
+            <button type="button" id="reset-filters" class="filter-reset">Reset filters</button>
+        </section>
+        <p id="results-count" class="status-note" role="status" aria-live="polite">Loading catalogue…</p>
+
+        <section class="problems-list" aria-label="Problem catalogue" tabindex="0">
+            <table id="open-problems-table">
+                <caption class="visually-hidden">Problems, source status and LLM attempts</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Problem</th>
+                        <th scope="col">Source status</th>
+                        <th scope="col">Community<br>review</th>
+                        <th scope="col">LLM claim</th>
+                        <th scope="col">Completion<br>estimate</th>
+                        <th scope="col">Models</th>
+                        <th scope="col">Source</th>
+                    </tr>
+                </thead>
+                <tbody id="open-problems-tbody">
+                    <tr><td colspan="8">Loading…</td></tr>
+                </tbody>
+            </table>
+        </section>
+        <noscript><p>Enable JavaScript to browse the catalogue, or download the <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/lists/top500-v22.json">ranked catalogue JSON</a>.</p></noscript>
+
+        <section class="contribute-cta">
+            <h3>Contribute</h3>
+            <p>
+                Share a mathematical definition and a substantive attempt, with citations to the sources used.
+                See our <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guidelines</a>.
+            </p>
+        </section>
+    </main>
+    <footer>
+        <p>
+            <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter">GitHub Repository</a> |
+            <a href="about.html">About</a> |
+            <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/LICENSE">Apache License 2.0</a>
+        </p>
+    </footer>
+
+    <script src="data/open_problems_data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

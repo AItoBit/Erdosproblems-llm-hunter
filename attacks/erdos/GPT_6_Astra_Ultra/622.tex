@@ -1,0 +1,55 @@
+\section{Erd\H{o}s Problem 622: a positive fraction of subsets are cyclic}
+\subsection*{Statement and declared input}
+A vertex set is cyclic if some cycle uses precisely its vertices. Does every $(n+1)$-regular graph on $2n$ vertices have at least $c2^{2n}$ cyclic sets, for an absolute $c>0$? Yes. The proof below uses the extremal-structure theorem of Dragani\'c--Keevash--M\"uyesser, then supplies a direct probabilistic count in their extremal models.
+
+\textbf{External theorem (their Theorem 1.2).} For all sufficiently large $n$, the minimum number of cyclic subsets among $(n+1)$-regular graphs on $2n$ vertices is attained by a graph obtained from $K_{n-1,n+1}$ by adding a spanning 2-factor within its larger part.
+The substantial proof of this structure theorem is not reproduced here. We do not import their separate exact enumeration of the models.
+
+\subsection*{1. Counting in an extremal model}
+Let $A$ be the independent part of size $n-1$ and $B$ the part of size $n+1$ carrying a 2-factor $F$. Select a uniformly random subset of the $2n$ vertices, independently with probability $1/2$. Write $a,b$ for its numbers of vertices in $A,B$, and $X$ for the number of edges of $F$ with both endpoints selected.
+There are $n+1$ edges in $F$, so
+\[
+ \mathbb EX=(n+1)/4,\qquad \operatorname{Var}X=O(n).
+\]
+The variance bound is uniform over all 2-factors: edge indicators are independent unless their edges share an endpoint, and each edge has only two such neighbours. Chebyshev's inequality therefore gives $X\ge n/8$ with probability $1-O(1/n)$.
+Every graph of maximum degree two with $X$ edges has a matching of size at least $X/3$: greedily selecting one edge removes at most three edges. Thus the selected vertices of $B$ contain a matching of size at least $n/24$ with probability tending to one.
+Also, with probability $1-o(1)$,
+\[
+ a,b\in[n/3,2n/3],\qquad |b-a|\le n^{2/3},
+ \tag{1}
+\]
+again by Chebyshev, since these are binomial variables and $\mathbb E(b-a)=1$.
+
+On these events, if $b\ge a$, select a matching of exactly $b-a$ edges within the selected $B$ vertices. This is possible for large $n$ because $n^{2/3}<n/24$. Regard each matched pair as an ordered two-vertex path and every unmatched vertex as a one-vertex path. There are
+\[
+ (b-a)+(b-2(b-a))=a
+\]
+such disjoint paths, covering all selected vertices of $B$. Alternate these paths with the $a$ selected vertices of $A$ around a cycle. All connecting edges exist because the bipartite graph between $A,B$ is complete; the internal edges of the two-vertex paths are the chosen matching. Since $a\ge2$, this constructs a cycle using precisely the selected set.
+Consequently the probability of a cyclic subset is at least $\Pr(b\ge a)-o(1)$, uniformly in $F$.
+
+\subsection*{2. The half-probability and sharpness}
+Write $b=b_0+Z$, where $b_0,a$ are independent $\operatorname{Bin}(n-1,1/2)$ variables and $Z\sim\operatorname{Bin}(2,1/2)$ is independent. The difference $b_0-a$ is symmetric. For each fixed integer $j$,
+\[
+ \Pr(b_0-a=j)=4^{-(n-1)}\binom{2n-2}{n-1+j}=O(n^{-1/2}),
+\]
+by Vandermonde's identity and the central binomial estimate. Shifting a symmetric variable by $Z\in\{0,1,2\}$ changes its nonnegative probability by at most the mass of three values. Hence
+\[
+ \Pr(b\ge a)=1/2+O(n^{-1/2}).
+\]
+Conversely, every cycle in the model has at least as many $B$ vertices as $A$ vertices, because $A$ is independent: assign each $A$ vertex its next vertex on the cycle, a distinct vertex of $B$. Thus the cyclic proportion is at most $\Pr(b\ge a)$. Together with the construction,
+\[
+ \frac{\operatorname{Cyc}(G_F)}{2^{2n}}=\frac12+o(1),
+ \tag{2}
+\]
+uniformly over the model's 2-factors.
+
+The external structure theorem now implies that every graph in the question has cyclic proportion at least $1/2-o(1)$, in particular at least $1/4$ for all sufficiently large $n$. This proves the requested existence of an absolute positive constant asymptotically. If all orders are included, Dirac's classical Hamiltonicity theorem supplies at least one cyclic set for each remaining possible order: the minimum degree is $n+1\ge(2n)/2$. Taking the minimum of $1/4$ and the finitely many bounds $2^{-2n}$ handles these orders as well.
+Equation (2) also shows why no asymptotic constant larger than $1/2$ is possible. The published theorem and its sharper count actually give $c=1/2$ for sufficiently large $n$; our deduction proves the requested positive-constant assertion without that sharper finite-order enumeration.
+
+\subsection*{Conclusion and sources}
+\textbf{Status: solved relative to the stated extremal-structure theorem.} The counting, cycle assembly and sharp asymptotic obstruction are proved above; the structural reduction is the declared major external dependency.
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/622}, checked 24 September 2026.
+\item N. Dragani\'c, P. Keevash and A. M\"uyesser, Theorem 1.2, \url{https://arxiv.org/abs/2503.01826}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% of the stated problem, with the external structural input explicit.}

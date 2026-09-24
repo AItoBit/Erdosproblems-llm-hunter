@@ -1,0 +1,45 @@
+\subsection*{Erd\H{o}s problem \#351}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Let $p\in\mathbb Q[x]$ have positive leading coefficient, including a positive constant polynomial. Show that finite sums of distinct values from $\{p(n)+1/n:n\ge1\}$ contain every sufficiently large integer after any finite deletion.
+
+\noindent\textbf{2) CONTEXT AND THE PRECISE INPUT.}
+The current statement includes the positive-leading-coefficient hypothesis. The negative-polynomial example in the older local file does not answer it. We use the known solution of problem 283, reconstructed with proof in the accompanying \texttt{283.tex}, in the following strengthened form:
+
+For any integer-valued $q\in\mathbb Q[x]$ on $\mathbb Z$, with positive leading coefficient and
+$\gcd\{q(n):n\in\mathbb Z\}=1$, any rational $\alpha>0$, and any cutoff $L$, every sufficiently large integer $m$ admits distinct integers $n_i>L$ such that
+\[
+ \sum_i q(n_i)=m,\qquad \sum_i\frac1{n_i}=\alpha. \tag{*}
+\]
+That writeup proves $(*)$ using the explicitly cited Roth--Szekeres--Graham polynomial completeness theorem; the constant case $q=1$ follows from the Egyptian-fraction length-extension argument there. Here we give the complete reduction, including nonprimitive rational polynomials. This is a known-solution reconstruction, not a new theorem or a claim of a local Lean run.
+
+\noindent\textbf{3) REMOVING FINITELY MANY VALUES.}
+Put $a(x)=p(x)+1/x$. If $p$ is nonconstant, $a'(x)>0$ for all sufficiently large $x$; if $p$ is positive constant, $a'(x)=-x^{-2}<0$. In either case, $a$ is eventually injective. Also, for each fixed value $b$, the equation $p(n)+1/n=b$ becomes the nonzero polynomial equation $n(p(n)-b)+1=0$, so it has only finitely many positive integer solutions. Hence, for any prescribed finite set $B$, there is a cutoff $L$ such that all $a(n)$ with $n>L$ are distinct and avoid $B$.
+
+\noindent\textbf{4) NORMALIZATION AND ALL RESIDUE CLASSES.}
+Choose an integer $D\ge1$ for which $P=Dp\in\mathbb Z[x]$, and let
+\[
+ g=\gcd\{|P(n)|:n\in\mathbb Z\}>0,\qquad q=P/g.
+\]
+Then $q$ is integer-valued on $\mathbb Z$, has positive leading coefficient, and has no fixed divisor greater than $1$. To see the last assertion, any common divisor of the $q(n)$ would, after multiplication by $g$, contradict the definition of $g$.
+
+For each residue $r\in\{0,\ldots,g-1\}$, fix the positive integer $\alpha_r=r+g$. If an integer $M$ satisfies $M\equiv r\pmod g$, then
+\[
+ m=\frac{D(M-\alpha_r)}g
+\]
+is an integer tending to infinity with $M$. Apply $(*)$ with $q$, $\alpha_r$ and the above cutoff $L$. Its resulting indices satisfy
+\[
+ \sum_i\left(p(n_i)+\frac1{n_i}\right)
+ =\frac gD\sum_iq(n_i)+\alpha_r
+ =\frac gD\frac{D(M-\alpha_r)}g+\alpha_r=M.
+\]
+There are only $g$ residue classes, so the maximum of their finitely many thresholds gives one threshold valid for every sufficiently large $M$. The values are distinct and avoid $B$ by the choice of $L$. This proves strong completeness.
+
+\noindent\textbf{5) VERIFICATION AND FINAL.}
+The fixed divisor cannot simply be discarded: the choice of $\alpha_r$ supplies the needed residue corrections. The same argument handles positive constants, and arbitrary finite deletions are of values rather than indices. \textbf{SOLVED, relative to the explicitly stated and separately reconstructed input $(*)$.} No remaining reduction gap is present; the polynomial-completeness theorem used inside the proof of 283 remains an external standard input.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/351}; \url{https://www.erdosproblems.com/283}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,51 @@
+\section{Erd\H{o}s Problem \#594: odd cycles in uncountably chromatic graphs}
+\noindent Reconstruction of the eventual-odd-cycle theorem, 24 September 2026.
+
+\subsection*{Statement and context}
+Must a graph of chromatic number at least $\aleph_1$ contain every sufficiently large odd cycle? Erd\H{o}s--Hajnal--Shelah proved that it does. We reconstruct their full level-set proof, using the established Erd\H{o}s--Hajnal finite-bipartite-subgraph theorem as an explicit external input. Additional elementary arguments explain the difference between infinite and uncountable chromatic number.
+
+\subsection*{The exact external input}
+We use the Erd\H{o}s--Hajnal theorem that every graph of uncountable chromatic number contains every finite bipartite graph as a subgraph. In particular it contains a cycle of length $2j$ for every integer $j\geq2$. This is a nontrivial infinite-graph theorem, not a consequence of finite-color compactness. It is stated immediately before Theorem 3 in the cited primary paper; its proof is the unexpanded dependency below. The subgraphs need not be induced.
+
+\subsection*{One level and one fixed return length}
+Let $G$ have uncountable chromatic number. Some connected component also does: otherwise countable colorings of the components, using the same palette, would color the whole graph. Work in such a component and fix a root $x$. Let $V_i$ consist of the vertices at graph distance $i$ from $x$. If every induced $G[V_i]$ were countably colorable, the pairs $(i,\text{color})$ would give a countable coloring of $G$. Thus $H=G[V_i]$ is uncountably chromatic for some positive integer $i$.
+
+Choose for each vertex outside the root a neighbor one distance-level closer to the root. These parent edges form a rooted tree: distances strictly decrease on parent paths, and every vertex reaches $x$ in finitely many steps. For distinct $u,v\in V_i$, their tree paths to $x$ have a last common vertex at some depth $h<i$. The tree path between them has even length $2(i-h)$ and all its internal vertices lie outside $V_i$.
+Partition the edges of $H$ into $i$ classes according to the integer $\ell=i-h\in\{1,\ldots,i\}$. Let $H_\ell$ be the graph on $V_i$ consisting of one class. If all $H_\ell$ were countably colorable, the tuple of their finitely many colors would be a countable proper coloring of $H$. Fix an $\ell$ for which $H_\ell$ is uncountably chromatic.
+
+\subsection*{Producing every sufficiently large odd length}
+For any $j\geq2$, apply the external bipartite theorem to obtain a simple cycle of length $2j$ in $H_\ell$. Choose one of its edges $uv$. Delete that edge and replace it by the tree path between $u,v$ described above. That tree path has length exactly $2\ell$, and its internal vertices lie outside $V_i$, whereas all vertices of the original cycle lie in $V_i$. Consequently the replacement is a simple cycle, not merely an odd closed walk. Its length is
+\[(2j-1)+2\ell=2(j+\ell)-1.
+\]
+The integer $\ell$ is fixed before $j$ varies. These lengths are every odd integer at least $2\ell+3$. This proves the requested eventual containment.
+
+\subsection*{An independent finite depth-first-search bound}
+Suppose a finite graph has no odd cycle of length greater than $2k+1$, where $k\geq1$. Run depth-first search in each connected component and assign each vertex its depth in the resulting rooted tree. Every graph edge joins an ancestor to a descendant: if two vertices were in separate search branches, the earlier branch would have explored the later vertex along their edge before it closed.
+Color a vertex by its depth modulo $2k+2$. For an edge, let $d\geq1$ be the depth difference. If $d$ is odd, the endpoint colors differ because the modulus is even. If $d$ is even, the edge together with the tree path forms a simple odd cycle of length $d+1$. The hypothesis forces $d\leq2k$, so again the colors differ. Thus
+\[\chi(G)\leq2k+2.\tag{1}\]
+Tree edges have $d=1$ and cause no exceptional case.
+
+\subsection*{Passing from finite graphs to arbitrary cardinality}
+If every finite subgraph of an arbitrary graph is $q$-colorable, the whole graph is $q$-colorable. One proof uses compactness of the product $\{1,\ldots,q\}^{V(G)}$. For each edge, its proper-coloring constraint is a closed subset of this compact product. Any finite collection of constraints is satisfiable because it involves a finite subgraph. The finite-intersection property gives a coloring satisfying all of them.
+Apply this with $q=2k+2$. If an arbitrary graph has no odd cycle longer than $2k+1$, all finite subgraphs satisfy (1), hence so does the graph. Consequently every graph of infinite chromatic number, in particular every graph in the question, contains arbitrarily long odd cycles. The compactness theorem is the explicit standard set-theoretic input in this deduction.
+
+\subsection*{Why arbitrarily long is weaker than every sufficiently large}
+We give a construction with chromatic number $\aleph_0$ and infinitely many missing odd lengths. First recall, with proof, the finite probabilistic fact that for any integers $g\geq3$ and $r\geq2$ there is a finite graph of girth at least $g$ and chromatic number at least $r$.
+On $N$ vertices take independent edges with probability $p=N^{-1+1/(2g)}$. The expected number of cycles of lengths less than $g$ is at most
+\[\sum_{\ell=3}^{g-1}\frac{N^\ell p^\ell}{2\ell}=O_g(N^{1/2})=o(N).
+\]
+For $t=\lceil N/(2r)\rceil$, the probability of an independent $t$-set is at most
+\[\binom Nt(1-p)^{\binom t2}
+\leq 2^N\exp(-p\tbinom t2)=o(1).
+\]
+Markov's inequality therefore allows a graph with fewer than $N/4$ short cycles and no independent $t$-set. Remove one vertex from every short cycle. At least $3N/4$ vertices remain, the girth is at least $g$, and their independence number is below $t$. For sufficiently large $N$, the chromatic number exceeds $r$, as required.
+
+Now choose finite graphs $H_j$ with $\chi(H_j)\geq j$. Before choosing $H_j$, require its girth to exceed by at least four the maximum of the vertex counts of all earlier $H_i$ and the previous girth requirements. Take their disjoint union $H$. Its chromatic number is $\aleph_0$: no finite bound works, but the vertex set is countable. Between the largest earlier vertex count and the next girth threshold there is an odd integer which is not a cycle length in any component. Earlier components have too few vertices, and later ones have too large a girth. These missing odd integers tend to infinity.
+This is not a counterexample to the original question, because $\aleph_0<\aleph_1$. It shows exactly why the finite-search and compactness argument cannot replace the uncountable-chromatic part of the known theorem.
+
+\subsection*{Outcome and explicit dependency}
+\textbf{Attempt status: solved relative to the stated finite-bipartite-subgraph theorem.} The uncountably chromatic level, finite edge partition, fixed return length and simple-cycle replacement are all proved. The Erd\H{o}s--Hajnal theorem supplying even cycles inside each uncountably chromatic graph is the substantive external input. The subsequent elementary bounds and probabilistic construction further explain why countable chromatic number does not suffice.
+Sources: \url{https://www.erdosproblems.com/594}; P. Erd\H{o}s, A. Hajnal and S. Shelah, \emph{On some general properties of chromatic numbers}, Section 4, old result and Theorem 3, primary scan \url{https://shelah.logic.at/files/203571/Sh-32.pdf}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

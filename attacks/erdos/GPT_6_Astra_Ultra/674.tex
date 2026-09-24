@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 674}
+
+\paragraph{Statement and result.}
+Are there integers \(x,y,z>1\) with \(x^xy^y=z^z\)? Yes. We verify explicitly the classical infinite family, explain how its scaling factor is obtained, and check nontriviality and infinitude.
+
+\paragraph{A scaling calculation.}
+Suppose we seek a solution of the form
+\[
+ x=t u^2,\qquad y=t v^2,\qquad z=2tuv,
+\]
+where \(u=v+1>v>0\). Taking natural logarithms, the desired equality is equivalent, after division by \(t\), to
+\[
+ (u^2+v^2-2uv)\log t
+ +u^2\log(u^2)+v^2\log(v^2)-2uv\log(2uv)=0.
+\]
+Since \((u-v)^2=1\), this simplifies exactly to
+\[
+ \log t=2uv\log2-2u\log u+2v\log v. \tag{1}
+\]
+Thus the positive real scaling factor is
+\[
+ t=2^{2uv}\frac{v^{2v}}{u^{2u}}. \tag{2}
+\]
+The remaining issue is to choose \(u,v\) so that this is an integer.
+
+\paragraph{An integral infinite family.}
+For each integer \(r\geq2\), choose
+\[
+ u=2^r,\qquad v=2^r-1,\qquad
+ t=2^{2u(v-r)}v^{2v}. \tag{3}
+\]
+Substituting \(u=2^r\) into (2) gives precisely (3). Also \(v-r\geq0\): it holds at \(r=2\), and the difference increases with \(r\). Thus \(t\) is a positive integer, and
+\[
+ \boxed{\quad x=t2^{2r},\qquad y=t(2^r-1)^2,
+ \qquad z=t2^{r+1}(2^r-1)\quad} \tag{4}
+\]
+are integers. Equation (1) shows \(x\log x+y\log y=z\log z\); exponentiating proves \(x^xy^y=z^z\).
+
+The logarithmic verification is exact, not numerical: it consists only of the laws of logarithms for positive integers and the identity \(u-v=1\). Equivalently one can compare prime valuations in (4).
+
+\paragraph{The smallest displayed member.}
+For \(r=2\), we have \(u=4\), \(v=3\), and \(t=2^83^6\). Formula (4) gives
+\[
+ x=2^{12}3^6,\qquad y=2^83^8,\qquad z=2^{11}3^7.
+\]
+A direct prime-valuation check reduces the identity to
+\[
+ 12x+8y=11z,\qquad 6x+8y=7z,
+\]
+and these follow at once from \(x=16t,y=9t,z=24t\). No other primes occur.
+
+\paragraph{Nontriviality, infinitude, and scope.}
+For \(r\geq2\), one has \(v\geq3\) and \(u<2v\). Therefore \(1<y<x<z\); none of the solutions is trivial. The ratios
+\[
+ \frac xy=\left(1+\frac1{2^r-1}\right)^2
+\]
+are strictly decreasing as \(r\) increases. Hence the triples are distinct, proving infinitude without relying on an estimate of their enormous sizes. They satisfy \(z^2=4xy\) exactly and \(x+y-z=t>0\).
+
+This answers the printed existence question completely. It does not assert that every solution belongs to this family, which is a separate classification question discussed in the historical notes.
+
+\paragraph{Attribution and assessment.}
+The family is due to Ko and is recorded with the subsequent classification results at \url{https://www.erdosproblems.com/674}, checked 24 September 2026. The construction is reconstructed and verified above, not claimed as new. No local Lean verification or broader classification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

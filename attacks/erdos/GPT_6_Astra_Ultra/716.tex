@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#716: the $(6,3)$ hypergraph problem}
+\noindent Complete reduction to triangle removal, 24 September 2026.
+
+\subsection*{Statement}
+A $3$-uniform hypergraph on $n$ vertices has no three distinct edges whose union has at most six vertices. We prove that it has $o(n^2)$ edges. This is equivalent, for $n\geq6$, to avoiding the stated family of all six-vertex three-edge $3$-graphs: an unused vertex may be added to pad a smaller union. The substantial external input is the triangle removal lemma, stated below.
+
+\subsection*{First make the hypergraph linear}
+No pair of vertices belongs to three hyperedges, because those three edges would have union of size at most five. Hence every pair has codegree at most two.
+Make a conflict graph whose vertices are the hyperedges, with adjacency when two hyperedges share a pair. Each hyperedge has three pairs, and each pair belongs to at most one other edge, so the conflict graph has maximum degree at most three. Greedily select an edge and discard it and its at most three neighbors, then repeat. This leaves a subfamily $\mathcal H'$ of at least $|\mathcal H|/4$ hyperedges in which every pair belongs to at most one hyperedge.
+
+Form an ordinary graph $G$ by replacing each hyperedge of $\mathcal H'$ by its three constituent pairs. The designated triangles are pairwise edge-disjoint.
+
+\subsection*{There are no additional triangles}
+Suppose $xyz$ is a triangle of $G$. Each of $xy,yz,zx$ lies in a unique hyperedge of $\mathcal H'$. If two of those hyperedges coincide, that edge must be $\{x,y,z\}$, and uniqueness forces the third one to coincide too.
+Otherwise the three hyperedges are distinct. Each consists of one of these three pairs and at most one further vertex. Their union has size at most six, a forbidden configuration. Thus every triangle of $G$ is one of the designated triangles. In particular
+\[
+ t(G)=|\mathcal H'|,\qquad
+ 3|\mathcal H'|\leq\binom n2.
+\]
+
+\subsection*{The external theorem and the limiting deduction}
+The triangle removal lemma says: for every $\varepsilon>0$ there is $\delta>0$ such that a graph on $n$ vertices with at most $\delta n^3$ triangles can be made triangle-free by deleting at most $\varepsilon n^2$ edges. Its proof, through regularity or an entropy-increment argument, is not reproduced here.
+
+Fix $\varepsilon>0$ and the corresponding $\delta$. For all sufficiently large $n$,
+$t(G)\leq n^2/6\leq\delta n^3$. Thus at most $\varepsilon n^2$ edges suffice to remove every triangle. But the $|\mathcal H'|$ designated triangles have disjoint edge sets, so any such deletion set has size at least $|\mathcal H'|$. Therefore
+\[
+ |\mathcal H|\leq4|\mathcal H'|\leq4\varepsilon n^2.
+\]
+Since $\varepsilon$ is arbitrary, the asserted $o(n^2)$ bound follows.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved relative to the triangle removal lemma.} The codegree bound, linear extraction, exact triangle correspondence and limiting argument are all supplied. This reconstructs the Ruzsa--Szemer\'edi mechanism, rather than claiming a new theorem or a local Lean check.
+Sources: \url{https://www.erdosproblems.com/716}; J. Fox, \emph{A new proof of the graph removal lemma}, Theorem 1, \url{https://arxiv.org/abs/1006.1300}.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,32 @@
+\section*{Erd\H{o}s Problem 753: complementary list-chromatic numbers}
+\subsection*{1. Statement and outcome}
+Does some absolute $c>0$ ensure
+\[
+ \chi_L(G)+\chi_L(\overline G)>n^{1/2+c}
+\]
+for every sufficiently large $n$-vertex graph $G$? Here $\chi_L$ is the list chromatic number. The answer is no. We prove a sufficient counterexample bound $O(\sqrt n\log n)$ by a direct palette-partition argument. Alon's known stronger $O(\sqrt{n\log n})$ bound is not needed and is not claimed as proved here.
+\subsection*{2. A general list-coloring bound}
+Let $H$ be a complete $q$-partite graph on $n\ge2$ vertices. Then
+\[
+ \chi_L(H)\le \left\lceil q(\log n+1)\right\rceil. \tag{1}
+\]
+To prove this, give each vertex an arbitrary list of $t=\lceil q(\log n+1)\rceil$ distinct colors. The union of the lists is finite. Independently assign each color in this union a label chosen uniformly from $\{1,\ldots,q\}$. A vertex in part $i$ has no color labeled $i$ with probability
+\[
+ (1-1/q)^t\le e^{-t/q}\le (en)^{-1};
+\]
+for $q=1$ the failure probability is simply zero. The union bound over the $n$ vertices is at most $e^{-1}<1$. There is therefore an assignment of labels for which every vertex has an available color labeled by its own part. Choose such a color at each vertex. Distinct parts use disjoint sets of colors, and vertices within a part are nonadjacent. This is a proper list coloring and proves (1).
+\subsection*{3. Complementary graphs}
+Put $q=\lceil\sqrt n\rceil$ and partition the vertices into $q$ nonempty classes of sizes at most $q$. Let $G$ be the disjoint union of cliques on these classes. Any lists of size $q$ can be colored greedily inside each clique: at the time a vertex is colored, at most $q-1$ colors have been forbidden. The different cliques impose no mutual restrictions. Thus $\chi_L(G)\le q$.
+The complement is complete $q$-partite, so (1) gives
+\[
+ \chi_L(G)+\chi_L(\overline G)
+ \le q+\lceil q(\log n+1)\rceil
+ \le (\sqrt n+1)(\log n+2)+1. \tag{2}
+\]
+For every fixed $c>0$, dividing (2) by $n^{1/2+c}$ gives a quantity tending to zero, since $\log n/n^c\to0$. Consequently these graphs violate the proposed inequality for every sufficiently large $n$.
+\subsection*{4. Verification and attribution}
+The random assignment is to colors, not vertices; this is what makes colors used in different parts automatically disjoint. The argument works for arbitrary overlapping lists and does not require a common prescribed palette. It gives counterexamples for all large orders, not only perfect squares.
+Sources: \url{https://www.erdosproblems.com/753}; N. Alon, \emph{Choice numbers of graphs: a probabilistic approach}, Combin. Probab. Comput. 1 (1992), 107--114. The elementary estimate proved above is a reconstruction of the standard probabilistic method, not a claim to Alon's sharper estimate or a new result.
+\subsection*{5. Final assessment}
+\textbf{SOLVED:} no such positive constant $c$ exists. The counterexamples and their list-coloring bounds are proved in full.
+\noindent COMPLETION: 100\%

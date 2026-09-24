@@ -1,0 +1,41 @@
+\section{Erd\H{o}s Problem \#480: fixed-lag closeness in the unit interval}
+\noindent Partial reconstruction, 24 September 2026.
+
+\subsection*{Statement and scope}
+For any sequence $x_m\in[0,1]$, must
+\[C(x):=\inf_{n\ge1}\liminf_{m\to\infty}n|x_{m+n}-x_m|\le1/\sqrt5?\]
+Chung and Graham proved the stronger sharp constant $(1+\sum_{j\ge1}1/F_{2j})^{-1}\approx0.39442$. We prove the universal bound $C(x)\le1/2$ and a strictly positive lower example. This does not reach $1/\sqrt5$. The order of the infimum and lower limit is retained throughout.
+
+\subsection*{A compactness reduction that preserves fixed lags}
+Suppose $C(x)>c$. For every positive integer $n$ there is a threshold beyond which $n|x_{m+n}-x_m|\ge c$. Choose starting indices $M_j\to\infty$ exceeding these thresholds simultaneously for $1\le n\le j$. By repeated subsequence extraction and a diagonal choice, all coordinates $x_{M_j+r}$, $r=0,1,\ldots$, converge along one subsequence, to numbers $y_r\in[0,1]$.
+For each fixed $r,n$, passing to the limit gives
+\[n|y_{r+n}-y_r|\ge c.\tag{1}\]
+This converts the assumed strict lower bound on $C(x)$ into a uniform pairwise separation property for a new infinite sequence. It does not interchange the original infimum and lower limit without justification.
+
+\subsection*{A renormalization obstruction above one half}
+Assume (1) holds with $1/2<c\le1$. The $n=1$ inequalities imply that every $y_r$ lies in
+\[L=[0,1-c]\quad\text{or}\quad H=[c,1].\]
+A point in the omitted interval has distance less than $c$ from every point of $[0,1]$. Also, two points in the same one of $L,H$ are at distance at most $1-c<c$. Thus the sequence alternates between the two intervals. Its even-indexed subsequence lies in an interval of length $1-c$.
+If $c=1$, that interval is a singleton, immediately contradicting the lag-two condition. Otherwise rescale that subsequence to $[0,1]$. The resulting sequence satisfies (1), with constant
+\[c_1=\frac{c}{2(1-c)}>c.\]
+The same operation may be repeated as long as the current constant is at most one. Writing $r_j=1/c_j$ gives $r_{j+1}=2r_j-2$, hence
+\[r_j=2+2^j(r_0-2).\]
+Because $r_0<2$, a finite number of steps forces $c_j\ge1$; equality has already been ruled out, while $c_j>1$ contradicts the unit-interval diameter. Therefore (1) is impossible for any $c>1/2$. Apply the compactness reduction with $1/2<c<C(x)$ to conclude $C(x)\le1/2$.
+
+\subsection*{A positive lower example}
+Let $\theta=(\sqrt5-1)/2$ and $x_m=\{m\theta\}$. For each fixed $n$, the density of the irrational rotation gives
+\[\liminf_m|x_{m+n}-x_m|=\|n\theta\|,\]
+where $\|\cdot\|$ denotes distance to the nearest integer. Indeed, with $t=\{n\theta\}$ the difference takes the two values $t$ and $1-t$, both infinitely often. The elementary irrational-rotation density theorem is the only external input in this example.
+Choose a nearest integer $p$ to $n\theta$, and put $e=n\theta-p$. The algebraic conjugate is $\theta'=-(1+\sqrt5)/2$, so
+\[(n\theta-p)(n\theta'-p)=p^2+np-n^2\]
+is a nonzero integer. Since $|e|\le1/2$ and $|n\theta'-p|\le\sqrt5 n+1/2$, it follows that
+\[n\|n\theta\|\ge\frac1{\sqrt5+1/2}>0.\]
+Thus the universal constant cannot be zero. This lower example does not claim to attain the Chung--Graham optimum.
+
+\subsection*{Outcome and remaining gap}
+\textbf{UNRESOLVED in this attempt; partial progress.} The half-bound and the quantifier-preserving compactness step are proved. Improving the bound from $1/2$ to $1/\sqrt5$, or to the sharp Fibonacci constant, remains missing here.
+Sources: \url{https://www.erdosproblems.com/480}; F. R. K. Chung and R. L. Graham, \emph{On irregularities of distribution}, Theorem 1, primary scan \url{https://mathweb.ucsd.edu/~ronspubs/81_12_irregularities.pdf}. Their theorem was checked for the precise order of quantifiers; its full proof is not reproduced. No novelty or formal verification is claimed.
+
+The estimate is subjective proof coverage, not confidence in the known theorem.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

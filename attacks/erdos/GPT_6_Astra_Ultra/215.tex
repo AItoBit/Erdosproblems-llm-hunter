@@ -1,0 +1,78 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#215; structural and analytic partial attempt, 2026-09-23.}
+Does there exist a set $S\subset\mathbb R^2$ such that every translate and rotation of $S$ meets $\mathbb Z^2$ in exactly one point? Equivalently, every translate of every rotated integer lattice meets $S$ in exactly one point. Such a set is called a Steinhaus set.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Jackson and Mauldin proved existence in ZFC, using the axiom of choice. Their construction is not reproduced here. The attempt instead derives necessary conditions and a complete obstruction to any bounded measurable construction. This obstruction is compatible with the published existence theorem; no claim against arbitrary sets is made.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Express the condition as simultaneous lattice tilings. For a measurable candidate, integrate the tiling equations and extract their Fourier coefficients. If the candidate were also bounded, the resulting entire function would have too many zeros for its exponential growth bound.
+
+\section{WORK}
+\textbf{Tiling and separation.} For every rotation $R$ and every $x\in\mathbb R^2$, the condition is
+\[
+\sum_{z\in\mathbb Z^2}1_S(x+Rz)=1.
+\tag{1}
+\]
+If two distinct points of $S$ differed by a rotated nonzero integer vector, some translated rotated lattice would meet $S$ twice. Conversely every repeated intersection gives such a difference. Thus distinct points of $S$ cannot have any distance $\sqrt{a^2+b^2}$ with integers $(a,b)\ne(0,0)$. This separation condition alone does not ensure the existence of an intersection in (1).
+
+Also $S$ is uncountable. For if it were countable, the set $S-\mathbb Z^2$ would be countable and could not equal $\mathbb R^2$, contrary to (1) with $R$ the identity.
+
+\textbf{Consequences of measurability.} Suppose $S$ is Lebesgue measurable. Integrate (1) over a fundamental square of $R\mathbb Z^2$. Tonelli's theorem and the partition of the plane by translates of this square give
+\[
+\operatorname{area}(S)=1.
+\tag{2}
+\]
+Consequently $1_S\in L^1$. With Fourier convention
+\[
+\widehat{1_S}(\xi)=\int_S e^{-2\pi i x\cdot\xi}\,dx,
+\]
+the nonconstant Fourier coefficients of (1) give
+\[
+\widehat{1_S}(Rz)=0\qquad(z\in\mathbb Z^2\setminus\{0\}).
+\tag{3}
+\]
+Indeed the exponential of frequency $Rz$ is periodic for this lattice, so the sum of the integrals over translated fundamental squares is exactly the Fourier integral; the same coefficient of the constant one is zero.
+
+\textbf{No bounded measurable candidate.} Suppose additionally that $S$ is contained in a disk of radius $B$ centred at zero, enlarging $B$ if necessary. For complex $t$ define
+\[
+F(t)=\frac1{2\pi}\int_0^{2\pi}\int_S
+ e^{-2\pi i t x\cdot(\cos\theta,\sin\theta)}\,dx\,d\theta.
+\tag{4}
+\]
+Compact support permits differentiation under the integrals on every compact subset of the complex plane. Thus $F$ is entire, $F(0)=1$, and
+\[
+|F(t)|\leq e^{2\pi B|t|}.
+\tag{5}
+\]
+By (3), $F(\sqrt m)=0$ for every positive integer $m$ representable as a sum of two squares: each vector of that length is a rotation of a nonzero integer vector.
+
+We use two standard inputs explicitly: Jensen's formula for zeros of an entire function, and the elementary sum-of-two-squares representation bound
+\[
+r_2(m)\leq4\tau(m).
+\tag{6}
+\]
+The latter follows, for example, from $r_2(m)=4\sum_{d\mid m}\chi_4(d)$. Neither of these standard theorems is reproved here. The divisor bound $\tau(m)\leq C m^{1/4}$ needed next is elementary: for primes $p\geq16$ and $a\geq0$, $a+1\leq2^a\leq p^{a/4}$, and for each of the finitely many smaller primes the ratio $(a+1)/p^{a/4}$ is bounded independently of $a$. Multiplying these bounds proves the assertion.
+
+There are $\gg T^2$ nonzero integer pairs $(a,b)$ with $0\leq a,b\leq\lfloor T/\sqrt2\rfloor$. Their sums of squares are at most $T^2$. Equations (6) and the divisor bound show that each such value is represented at most $O(T^{1/2})$ times, so at least $\gg T^{3/2}$ distinct positive values occur. It follows that $F$ has at least that many distinct zeros in $|t|\leq T$.
+
+On the other hand, Jensen's formula at radius $2T$, together with $F(0)=1$ and (5), bounds the number $n_F(T)$ of zeros in $|t|\leq T$, counted with multiplicity, by
+\[
+n_F(T)\log2
+\leq\frac1{2\pi}\int_0^{2\pi}\log|F(2Te^{i\theta})|\,d\theta
+\leq4\pi BT.
+\tag{7}
+\]
+One can perturb the outer radius if it contains a zero and then pass to a limit. The lower bound $\gg T^{3/2}$ contradicts (7) for large $T$. Hence no bounded measurable Steinhaus set exists.
+
+\section{VERIFICATION AND SCOPE}
+The analytic obstruction uses both boundedness and measurability. It neither constructs a Steinhaus set nor rules out unbounded measurable candidates. In particular it cannot replace Jackson--Mauldin's choice-based existence proof. The remaining gap for this attempt is precisely a simultaneous transversal meeting every rotated translated lattice once; avoiding all the forbidden distances supplies only the uniqueness half of that requirement. The published proof explicitly distinguishes the bounded-measurable obstruction from its arbitrary-set existence theorem.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current existence question and known resolution: \url{https://www.erdosproblems.com/215}.
+\item S. Jackson and R. D. Mauldin, \emph{On a lattice problem of H. Steinhaus}, Journal of the American Mathematical Society 15 (2002), 817--856, Theorem 1.1 and introductory discussion: \url{https://sites.itservices.cas.unt.edu/~mauldin/papers/no122.pdf}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved by this partial reconstruction.} The tiling, cardinality, Fourier restrictions, and bounded-measurable impossibility are established, but the known unrestricted existence construction is not reconstructed. No novelty is claimed.
+\textbf{Completion rate estimate: 40\%.}

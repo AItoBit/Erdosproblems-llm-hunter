@@ -1,0 +1,97 @@
+\section*{Erd\H{o}s Problem 697: a threshold for congruent divisors}
+
+\paragraph{Statement and status.}
+Let \(\delta(m,\alpha)\) be the density of integers divisible by
+some \(d\equiv1\pmod m\) with \(1<d<\exp(m^\alpha)\).
+The question asks for a constant \(\beta>1\) separating limits
+zero and one as \(m\longrightarrow\infty\).
+Hall's published resolution gives \(\beta=1/\log2\), as recorded
+at \url{https://www.erdosproblems.com/697};
+the primary reference is R. R. Hall,
+\emph{On some conjectures of Erd\H{o}s in Ast\'erisque, I},
+\url{https://doi.org/10.1016/0022-314X(92)90096-8}.
+This attempt proves the elementary subcritical range,
+an exact finite formula, and a fixed-modulus limiting result.
+The sharp threshold argument remains unresolved in this
+reconstruction; the known value is attributed rather than
+presented as a new proof.
+
+\paragraph{Existence and exact computation of the density.}
+For fixed \(m,\alpha\), the admissible divisor set
+\[
+ D=\{1+jm:j\geq1,\ 1+jm<\exp(m^\alpha)\}
+\]
+is finite. If it is empty the density is zero.
+Otherwise divisibility by a member of \(D\) is periodic modulo
+\(L=\operatorname{lcm}(D)\), and
+\[
+ \delta(m,\alpha)=
+ \sum_{\varnothing\ne S\subseteq D}
+       \frac{(-1)^{|S|+1}}{\operatorname{lcm}(S)}.               \tag{1}
+\]
+This follows from inclusion--exclusion and the density
+\(1/\operatorname{lcm}(S)\) of common multiples.
+In particular there is no question about the existence of
+the density before taking the outer limit in \(m\).
+
+\paragraph{A rigorous subcritical bound.}
+Let \(J=|D|\). If \(J\geq1\), the union bound gives
+\[
+ \delta(m,\alpha)\leq\sum_{j=1}^J\frac1{1+jm}
+ <\frac1m\sum_{j=1}^J\frac1j
+ \leq\frac{1+\log J}{m}
+ <\frac{1+m^\alpha}{m}.                                       \tag{2}
+\]
+The same final bound holds when \(J=0\).
+For every fixed \(\alpha<1\), (2) tends to zero.
+This proves a genuine part of the requested phase transition,
+but leaves the interval \(1\leq\alpha<1/\log2\) untreated.
+
+\paragraph{What can be proved when the modulus is fixed.}
+For each fixed \(m\geq2\), the sum of reciprocals of primes
+\(q\equiv1\pmod m\) diverges. This is a classical consequence
+of the prime number theorem in the fixed progression:
+partial summation gives
+\(\sum_{q\leq z,\ q\equiv1\ (m)}1/q
+  =(\log\log z)/\varphi(m)+O_m(1)\).
+Using only such primes as admissible divisors and applying
+the Chinese remainder theorem yields
+\[
+ \delta(m,\alpha)\geq
+ 1-\prod_{\substack{q<\exp(m^\alpha)\\q\ {\rm prime}\\q\equiv1\ (m)}}
+       \left(1-\frac1q\right).
+\]
+Therefore, for each fixed \(m\geq2\),
+\[
+ \lim_{\alpha\to\infty}\delta(m,\alpha)=1.                       \tag{3}
+\]
+The proof uses the fixed-progression prime number theorem
+as an explicit external input.
+It does not give a bound uniform in \(m\), and so does not
+justify exchanging the two limits in (3).
+
+\paragraph{Finite upper and lower certificates.}
+For completeness, let
+\(\mu=\sum_{d\in D}1/d\) and
+\[
+ V=\mu+2\sum_{\substack{d,e\in D\\d<e}}\frac1{\operatorname{lcm}(d,e)}.
+\]
+On residues modulo \(L\), put \(X=\sum_{d\in D}{\bf1}_{d\mid n}\).
+Then \(\mathbb EX=\mu\), \(\mathbb EX^2=V\), and Cauchy--Schwarz
+applied to \(X{\bf1}_{X>0}\) gives
+\[
+ \frac{\mu^2}{V}\leq\delta(m,\alpha)\leq\min(1,\mu)
+ \quad(D\ne\varnothing).                                      \tag{4}
+\]
+Both (1) and (4) are exact finite certificates that do not
+assume independence of composite-divisor events.
+
+\paragraph{Remaining gap.}
+The uniform distribution of these highly dependent composite
+divisors is the missing step. Neither (2), (3), nor the
+second-moment bound (4) proves Hall's threshold or the limit
+one for any fixed \(\alpha>1/\log2\) as \(m\) grows.
+This attempt remains unresolved beyond the partial results stated.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 40\%}

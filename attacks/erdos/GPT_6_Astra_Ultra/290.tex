@@ -1,0 +1,62 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#290; reconstruction of the elementary linear bound, 2026-09-24.}
+For $a\geq1$, write $H_{a,b}=\sum_{n=a}^b1/n$ in lowest terms and let $s(a,b)$ be its positive denominator. Must some $b>a$ satisfy $s(a,b+1)<s(a,b)$? Give a quantitative upper bound for the first such $b$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Wouter van Doorn answered this affirmatively and established a linear bound, with sharper constants and further refinements. The following proof reconstructs the simple power-of-three construction recorded on the problem page. It proves existence and $b(a)<6a$ for $a>1$, without importing van Doorn's deeper refinements. His paper indexes a drop by the newly added denominator; here $b$ is the preceding endpoint, as in the problem statement.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose an endpoint immediately before $2\cdot3^j$. The old reduced denominator contains $3^j$ and is even. Consequently the added term introduces no new denominator factor, while it cancels at least one factor of three.
+
+\section{WORK}
+We use the elementary valuation rule: if exactly one rational summand has the smallest $p$-adic valuation, the sum has that valuation. To verify it, multiply by a power of $p$ so that the exceptional summand is a unit and all other summands are divisible by $p$, then reduce modulo $p$.
+
+\textbf{An even-denominator lemma.} In any interval of consecutive positive integers, the largest exponent of $2$ dividing an integer occurs at a unique integer. Indeed, if two different integers have maximal exponent $h$, they are $2^h$ times odd integers. Between them lies a multiple of $2^{h+1}$, contradicting maximality. Therefore a reciprocal sum over an interval containing an even integer has an even reduced denominator: the term corresponding to that unique integer has strictly smallest $2$-adic valuation.
+
+Let $a>1$ and choose the unique integer $j\geq1$ with
+\[
+3^{j-1}<a\leq3^j.
+\]
+Put $P=3^j$ and $b=2P-1$. Then $b>a$. Among the integers in $[a,2P-1]$, the only multiple of $P$ is $P$ itself, and none is divisible by $3P$. It follows that
+\[
+v_3(H_{a,b})=-j.
+\tag{1}
+\]
+Writing $H_{a,b}=r/s$ in lowest terms, (1) says $3^j\mid s$ and $3^{j+1}\nmid s$.
+
+The interval also contains $P+1$, which is even and at most $2P-1$ because $P\geq3$. By the lemma $2\mid s$. Since $P$ is odd, $2P\mid s$, so
+\[
+H_{a,b+1}=\frac rs+\frac1{2P}
+=\frac{r+s/(2P)}s.
+\tag{2}
+\]
+Thus its reduced denominator divides $s$; no prime exponent can increase.
+
+It remains to check that some exponent actually decreases. Work in the ring of rationals whose reduced denominators are coprime to $3$. Every summand $P/n$ with $a\leq n\leq2P-1$, $n\neq P$, is divisible by $3$ in this ring, whereas $P/P=1$. Hence
+\[
+P H_{a,b}\equiv1\pmod3,\qquad
+P H_{a,b+1}\equiv1+\frac12\equiv0\pmod3.
+\tag{3}
+\]
+Equation (3) gives $v_3(H_{a,b+1})\geq-j+1$, so the new reduced denominator has at most $3^{j-1}$ as its power of three. Together with (2), this proves
+\[
+s(a,b+1)\mid s(a,b)/3,
+\qquad s(a,b+1)<s(a,b).
+\tag{4}
+\]
+Since $P<3a$, our endpoint satisfies $b=2P-1<6a$.
+
+For $a=1$, take $b=5$: $H_{1,5}=137/60$ and $H_{1,6}=49/20$, so the denominator also drops. This covers every positive starting point.
+
+\section{VERIFICATION AND SCOPE}
+The argument proves an explicit witness for every $a>1$, and a separate exact witness for $a=1$. It proves the linear upper growth bound requested in the question, not an asymptotic formula for the smallest witness. The published improvements below $4.374a$ and the logarithmic lower estimates require additional arguments and are not claimed as reproduced here. The existence proof itself uses only the valuation facts proved above.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and power-of-three construction: \url{https://www.erdosproblems.com/290}.
+\item W. van Doorn, \emph{On the non-monotonicity of the denominator of generalized harmonic sums}: \url{https://arxiv.org/html/2411.03073}; compare its endpoint convention and Section 2.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved for existence and a linear upper bound.}
+A fully proved choice is $b=2\cdot3^j-1<6a$, where $3^{j-1}<a\leq3^j$, together with $b=5$ for $a=1$.
+\textbf{Completion rate estimate: 100\% of the existence and $O(a)$ growth assertion.}

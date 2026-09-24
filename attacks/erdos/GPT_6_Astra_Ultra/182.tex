@@ -1,0 +1,78 @@
+\section{Erd\H{o}s Problem 182: the number of edges forcing a regular subgraph}
+
+\subsection{1) Statement and scope}
+Fix $k\geq3$, and let $E_k(n)$ be the largest number of edges in an
+$n$-vertex graph with no nonempty $k$-regular subgraph. The subgraph
+need not be induced or spanning. Is $E_k(n)=n^{1+o(1)}$?
+The known answer is the more precise order
+\[
+ E_k(n)=\Theta_k(n\log\log n).
+\]
+We deduce this from two explicitly stated external results and give a
+self-contained common-neighbour bound explaining an elementary baseline.
+
+\subsection{2) The matching external results}
+Janzer--Sudakov prove that, for each fixed $k$, some $C_k$ has the
+following property: every sufficiently large $n$-vertex graph of average
+degree at least $C_k\log\log n$ contains a nonempty $k$-regular subgraph.
+Changing the base of the logarithms only changes the constants and a
+bounded lower-order term. The handshake identity therefore gives
+\[
+ E_k(n)<\tfrac12 C_kn\log\log n.                       \tag{1}
+\]
+For the reverse direction, the construction of Pyber--R\"odl--Szemer\'edi,
+stated as Theorem 1.1 in the same paper, supplies for all sufficiently
+large $n$ a graph with at least $cn\log\log n$ edges and no regular
+subgraph of any degree at least three. In particular it has no
+$k$-regular subgraph. Thus
+\[
+ E_k(n)\geq cn\log\log n.                              \tag{2}
+\]
+Both the construction and the regular-subgraph theorem are external
+inputs; the assertion for every degree at least three in the lower
+construction is essential and is part of its stated conclusion.
+
+Equations (1)--(2) prove the claimed order. For each $\epsilon>0$,
+$\log\log n=o(n^\epsilon)$, and also
+$\log(n\log\log n)/\log n\to1$. This verifies both the requested
+upper bound $n^{1+o(1)}$ and the exponent-one interpretation of the
+answer, with $k$ fixed before $n$ tends to infinity.
+
+\subsection{3) A direct, weaker bound from common neighbours}
+A $K_{k,k}$ is itself $k$-regular, so a graph counted by $E_k(n)$ must
+be $K_{k,k}$-free. Every $k$-set of vertices has at most $k-1$ common
+neighbours, all outside that set. Double counting gives
+\[
+ \sum_{v}\binom{d(v)}k\leq(k-1)\binom nk.
+\]
+For an integer $d\geq0$,
+$\binom dk\geq(d-k+1)_+^k/k!$, where $u_+=\max(u,0)$.
+The function $u\mapsto(u-k+1)_+^k$ is convex. Writing
+$\bar d=2e/n$ and applying Jensen's inequality, we obtain
+\[
+ \frac n{k!}(\bar d-k+1)_+^k
+ \leq(k-1)\frac{n^k}{k!}.
+\]
+Hence
+\[
+ e\leq\frac12(k-1)n+\frac12(k-1)^{1/k}n^{2-1/k}.
+\]
+This argument is complete, but its exponent is too large to replace
+the external theorem in Section 2. It identifies precisely the loss
+in restricting attention to complete bipartite regular subgraphs.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED using the stated established upper and lower
+theorems.} The degree conversion, asymptotic quantifiers, and elementary
+comparison are supplied here. Neither deep theorem is independently
+reproved, and no new bound is claimed.
+\begin{itemize}
+\item O. Janzer and B. Sudakov, \emph{Resolution of the Erd\H{o}s--Sauer
+problem on regular subgraphs}, Theorems 1.1 and 1.2,
+\texttt{https://arxiv.org/abs/2204.12455}.
+\item T. F. Bloom, Problem 182,
+\texttt{https://www.erdosproblems.com/182}, checked 23 September 2026.
+\end{itemize}
+The percentage includes the two explicitly identified external inputs.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

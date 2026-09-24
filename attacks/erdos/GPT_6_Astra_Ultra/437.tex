@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#437: many square partial products}
+\noindent Complete proof of the requested power-scale lower bound, 24 September 2026.
+
+\subsection*{1) Statement}
+For a strictly increasing sequence $1\le a_1<\cdots<a_k\le x$, count the indices $j$ for which $a_1\cdots a_j$ is a square, and let $L(x)$ be the largest possible count. Is $L(x)>x^{1-\epsilon}$ possible for every fixed $\epsilon>0$ and all sufficiently large $x$? We prove this using products of a fixed number of small primes. More precise subexponential estimates are outside this proof.
+
+\subsection*{2) A finite parity lemma}
+If a collection of $m+1$ positive integers uses only $m$ different primes, some nonempty subcollection has square product. Map each integer to the vector of its prime-factor exponents modulo two in $\mathbb F_2^m$. The $m+1$ vectors are linearly dependent, so a nonzero choice of coefficients in $\{0,1\}$ has sum zero. Multiplying exactly the selected integers gives even exponent at every prime, hence a square.
+
+The order of the selected integers does not matter for their product. When the original collection is arranged increasingly, its selected subcollection can therefore be kept in increasing order as well.
+
+\subsection*{3) Supply many distinct integers from a controlled prime pool}
+Fix an integer $K\ge2$ and put $y=\lfloor x^{1/K}\rfloor$, $m=\pi(y)$. Take every product of exactly $K$ distinct primes at most $y$. Unique prime factorization makes these $\binom mK$ integers distinct, and all are at most $y^K\le x$. They use just the $m$ primes in the chosen pool.
+
+Arrange these products increasingly and divide the list into consecutive groups of $m+1$ entries, discarding an incomplete final group. From each full group, the parity lemma selects a nonempty subcollection with square product. Concatenate the selected subcollections in the order of the groups. Every selected number in an earlier group is smaller than every selected number in a later group, so this gives a strictly increasing sequence. At the endpoint of each selected subcollection, the cumulative product is a product of squares and is therefore a square. Consequently
+\[L(x)\ge\left\lfloor\frac{\binom mK}{m+1}\right\rfloor.\tag{1}\]
+The number of terms within a selected group may vary, but each group produces a different prefix endpoint, which is all that is required.
+
+\subsection*{4) The exponent approaches one}
+For fixed $K$ and sufficiently large $m$, $\binom mK\ge(m/2)^K/K!$ and $m+1\le2m$. The elementary Chebyshev lower estimate $\pi(y)\ge c y/\log y$ for sufficiently large $y$ now gives
+\[L(x)\ge c_K\frac{x^{1-1/K}}{(\log x)^{K-1}}\tag{2}\]
+for a constant $c_K>0$ and all sufficiently large $x$, absorbing the floor in (1). Chebyshev's estimate is the standard external prime-counting input; no smooth-number asymptotic is needed for this weaker power-scale assertion.
+
+Given $\epsilon>0$, choose $K$ so large that $1/K<\epsilon$. Dividing (2) by $x^{1-\epsilon}$ gives a positive constant times
+\[\frac{x^{\epsilon-1/K}}{(\log x)^{K-1}}\longrightarrow\infty.
+\]
+Thus $L(x)>x^{1-\epsilon}$ for all sufficiently large $x$. The trivial bound $L(x)\le\lfloor x\rfloor$ also yields $\log L(x)/\log x\to1$.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED for the stated power-scale question.} The construction proves the required number of square prefixes, with strict increasing order and distinctness verified. It does not reproduce the much finer published lower and upper subexponential factors or the separate $o(x)$ upper bound.
+
+Sources: \url{https://www.erdosproblems.com/437}, checked 24 September 2026; T. Tao's exposition of the Bui--Pratt--Zaharescu method, \url{https://terrytao.wordpress.com/2024/08/09/a-result-of-bui-pratt-zaharescu-and-erdos-problem-437/}. The parity-vector and ordered-block method is established there; the fixed-$K$ prime-product count above gives a simpler sufficient supply for the less precise assertion required here. No novelty or formal verification is claimed.
+
+The estimate applies to the displayed yes-or-no assertion for every $\epsilon>0$.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

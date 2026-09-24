@@ -1,0 +1,78 @@
+\section*{Erd\H{o}s Problem 760}
+
+\paragraph{Statement and result.}
+Let \(\zeta(G)\) be the least number of parts in a partition of \(V(G)\) into cliques or independent sets. If \(\chi(G)=m\), does some subgraph \(H\) satisfy \(\zeta(H)\gg m/\log m\)? Yes. We reconstruct the probabilistic proof of Alon, Krivelevich, and Sudakov, using explicit constants. A subgraph here can be obtained by deleting edges as well as vertices; it need not be induced.
+
+\paragraph{A preliminary Ramsey construction.}
+For large \(m\), a random graph on \(m\) vertices with edge probability \(1/2\) has no clique or independent set of size \(s=\lceil3\log_2 m\rceil\) with positive probability. The union bound is
+\[
+ 2\binom ms2^{-\binom s2}
+ \leq2m^s2^{-s(s-1)/2}=o(1).
+\]
+Such a graph requires at least \(m/(s-1)\) homogeneous classes. Consequently, if \(G\) contains \(K_m\), delete suitable edges inside that clique to obtain the desired \(H\).
+
+\paragraph{Reduction to at most \(m^2\) vertices.}
+We may now suppose that \(G\) contains no \(K_m\). If \(\zeta(G)\geq m/(2\log_2 m)\), simply take \(H=G\). Otherwise partition \(V(G)\) into \(a\) independent sets and \(b\) cliques, with
+\[
+ a+b<\frac{m}{2\log_2m}.
+\]
+Let \(V_1\) be the union of the clique classes, and put \(G_1=G[V_1]\). Every clique class has fewer than \(m\) vertices, so \(N=|V_1|<m^2\). Moreover, combining a colouring of \(G_1\) with one colour for each of the \(a\) removed independent sets gives
+\[
+ \chi(G_1)\geq m-a\geq m-\frac{m}{2\log_2m}. \tag{1}
+\]
+This reduction is essential: the original graph can have arbitrarily many vertices compared with its chromatic number.
+
+\paragraph{Randomly thin the edges.}
+Retain each edge of \(G_1\) independently with probability \(1/2\), obtaining a spanning subgraph \(H\). Set
+\[
+ L=\lceil6\log_2m\rceil.
+\]
+The probability that \(H\) has a clique of size \(L\) is at most
+\[
+ \binom NL2^{-\binom L2}
+ \leq m^{2L}2^{-L(L-1)/2}=o(1). \tag{2}
+\]
+
+Consider also a vertex set \(S\) for which the induced graph \(G_1[S]\) has minimum degree at least \(L\). If \(|S|=k\), it contains at least \(kL/2\) edges. The probability that \(S\) becomes independent in \(H\) is at most \(2^{-kL/2}\). Summing over all possible sizes and sets bounds the probability of any such event by
+\[
+ \begin{aligned}
+ \sum_{k=L+1}^{N}\binom Nk2^{-kL/2}
+ &\leq\sum_{k=L+1}^{N}
+       \left(\frac{e m^2}{k}\,2^{-L/2}\right)^k\\
+ &\leq\sum_{k=L+1}^{\infty}\left(\frac{e}{km}\right)^k=o(1), \tag{3}
+ \end{aligned}
+\]
+since \(2^{-L/2}\leq m^{-3}\). No independence between the events indexed by \(S\) is needed.
+
+Choose an outcome avoiding both bad events. Then every clique of \(H\) has fewer than \(L\) vertices. Also, every independent set \(U\) of \(H\) satisfies
+\[
+ \chi(G_1[U])\leq L. \tag{4}
+\]
+Indeed, if (4) failed, repeatedly remove a vertex of degree less than \(L\) from \(G_1[U]\). If all vertices were removed, the reverse greedy ordering would give an \(L\)-colouring. Hence a nonempty induced subgraph of minimum degree at least \(L\) would remain. Its vertex set is still independent in \(H\), contradicting the avoided event in (3).
+
+\paragraph{Convert a cocolouring into a colouring.}
+Take a partition witnessing \(\zeta(H)\). Each independent class can be coloured in \(G_1\) with at most \(L\) colours by (4), and each clique class can be coloured with fewer than \(L\) colours because it has fewer than \(L\) vertices. Use disjoint palettes for the classes. This proves
+\[
+ \chi(G_1)\leq L\zeta(H).
+\]
+Together with (1), it gives
+\[
+ \zeta(H)\geq
+ \frac{m-m/(2\log_2m)}{\lceil6\log_2m\rceil}
+ =\left(\frac16-o(1)\right)\frac{m}{\log_2m}.
+\]
+This suffices for the stated \(\gg\) bound. Adjusting its absolute constant covers the finitely many small \(m\geq2\); the case \(m=1\) is interpreted separately because \(\log1=0\).
+
+\paragraph{Why the order cannot be improved.}
+Every graph on at most \(m\) vertices has cochromatic number \(O(m/\log m)\). Here is the elementary Ramsey argument. The recurrence
+\[
+ R(a,b)\leq R(a-1,b)+R(a,b-1)
+\]
+follows by splitting the neighbours and nonneighbours of a vertex; with the trivial boundary values it gives \(R(k,k)\leq\binom{2k-2}{k-1}\leq4^{k-1}\). Thus every graph on \(s\) vertices contains a homogeneous set of size at least \(\lfloor\tfrac12\log_2s\rfloor\).
+
+Greedily remove such sets while at least \(\sqrt m\) vertices remain. For sufficiently large \(m\), each removed set has at least \(\tfrac18\log_2m\) vertices, so at most \(8m/\log_2m\) classes are used. Give each remaining vertex its own class, adding at most \(\sqrt m\) classes. Applying this to every subgraph of \(K_m\) proves the claimed sharpness in order.
+
+\paragraph{Attribution and assessment.}
+The reduction and random thinning argument are due to N. Alon, M. Krivelevich, and B. Sudakov, \emph{Subgraphs with a large cochromatic number}, Journal of Graph Theory 25 (1997), 295--297, \url{https://people.math.ethz.ch/~sudakovb/cochrom.pdf}. Their optimized argument gives the stronger constant \(1/4+o(1)\); the explicit \(1/6-o(1)\) reconstruction above proves the same requested order. Statement checked at \url{https://www.erdosproblems.com/760} on 24 September 2026. The proof uses elementary union bounds and greedy colouring, all supplied above. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,76 @@
+\section{Erd\H{o}s Problem 615: dense $K_4$-free counterexamples}
+\subsection*{Statement and scope}
+Does some constant $c>0$ guarantee a $K_4$ in every sufficiently large $n$-vertex graph with at least $(1/8-c)n^2$ edges and independence number less than $n/\log n$? The answer is no. We reconstruct the quantitative Bollob\'as--Erd\H{o}s construction as developed by Fox--Loh--Zhao. Two precise geometric existence/measure estimates are used as external inputs; the graph construction, forbidden-subgraph proof and parameter choice are supplied below.
+
+\subsection*{Geometric inputs}
+Write $S^{h-1}$ for the unit sphere in $\mathbb R^h$ with normalized surface measure $\lambda$.
+\begin{enumerate}
+\item There is an absolute $C$ such that, for $0<\mu<1$ and even $n\ge(C/\mu)^h$, the sphere can be partitioned into $n/2$ measurable pieces of equal measure and diameter at most $\mu/4$. This is the Feige--Schechtman partition result in the form used in Section 8 of Fox--Loh--Zhao.
+\item A measurable subset of $S^{h-1}$ of diameter at most $2-\delta$, where $0<\delta<1$, has measure at most $2e^{-\delta h/2}$. This is their Corollary 8.7, from spherical isodiametry and cap concentration.
+\end{enumerate}
+These are the only substantial external inputs. In particular we do not assume the Ramsey--Tur\'an conclusion being proved.
+
+\subsection*{Construction and exclusion of $K_4$}
+Choose $0<\varepsilon<1/100$, an integer $h\ge16$, and put $\mu=\varepsilon/\sqrt h$. Take a partition $D_1,\ldots,D_{n/2}$ from the first input and points $x_i,y_i\in D_i$. Regard $X=\{x_i\}$ and $Y=\{y_i\}$ as disjoint labelled vertex sets, even if some coordinates coincide. Join two vertices in the same part when their Euclidean distance exceeds $2-\mu$, and join $x\in X$ to $y\in Y$ when $|x-y|<\sqrt2-\mu$.
+
+Three unit vectors $x,x',x''$ in one part cannot form a triangle, since that would give
+\[
+ 0\le|x+x'+x''|^2
+ =9-|x-x'|^2-|x-x''|^2-|x'-x''|^2
+ <9-3(2-\mu)^2<0.
+\]
+A $K_4$ must therefore use two vertices from each part. Such vertices would satisfy
+\begin{align*}
+0&\le|x+x'-y-y'|^2\\
+ &=|x-y|^2+|x-y'|^2+|x'-y|^2+|x'-y'|^2
+   -|x-x'|^2-|y-y'|^2\\
+ &<4(\sqrt2-\mu)^2-2(2-\mu)^2
+ =\mu(2\mu+8-8\sqrt2)<0.
+\end{align*}
+Thus the graph is $K_4$-free.
+
+\subsection*{Independence and density estimates}
+If $I\subseteq X$ is independent, its representative points have diameter at most $2-\mu$. The union of the corresponding partition pieces has diameter at most $2-\mu/2$. The second input yields
+\[
+ \frac{|I|}{n/2}\le2e^{-\mu h/4}.
+\]
+Apply this also to $Y$ to obtain
+\[
+ \alpha(G)\le2n e^{-\varepsilon\sqrt h/4}. \tag{1}
+\]
+
+For completeness, a rough cap estimate suffices for the density. The first coordinate of a uniform point of $S^{h-1}$ has density proportional to $(1-t^2)^{(h-3)/2}$ on $[-1,1]$. For $h\ge16$ its normalizing integral is at least
+\[
+ \int_{-1/\sqrt h}^{1/\sqrt h}(1-t^2)^{(h-3)/2}\,dt
+ \ge\frac{2e^{-1}}{\sqrt h}>rac{1}{2\sqrt h}.
+\]
+Here $\log(1-u)\ge-2u$ for $0\le u\le1/2$ justifies the lower bound. Thus the normalized density is at most $2\sqrt h$.
+For a fixed unit vector $x$, the cap $|x-y|\le\sqrt2-2\mu$ corresponds, after rotation, to
+\[
+ y_1\ge 2\sqrt2\mu-2\mu^2\le3\varepsilon/\sqrt h.
+\]
+Symmetry and the density bound show that this cap has measure at least $1/2-6\varepsilon$. It meets at least $(1/2-6\varepsilon)n/2$ partition pieces. The chosen representative of every piece it meets lies within $\mu/4$ of a cap point, hence has distance strictly less than $\sqrt2-\mu$ from $x$. Every vertex therefore has at least $(1/4-3\varepsilon)n$ neighbours in the opposite part, and
+\[
+ e(G)\ge(1/8-3\varepsilon/2)n^2. \tag{2}
+\]
+
+\subsection*{Parameters and the quantifiers}
+Given any proposed $c>0$, choose a fixed $\varepsilon<\min\{c/3,1/100\}$. Along sufficiently large even integers $n$, put
+\[
+ h=\left\lfloor\frac{\log n}{\log\log n}\right\rfloor.
+\]
+The partition hypothesis holds because
+\[
+ \log (C\sqrt h/\varepsilon)^h
+ =h\bigl(\tfrac12\log h+\log(C/\varepsilon)\bigr)
+ =(1/2+o(1))\log n<\log n.
+\]
+Also $\sqrt h/\log\log n\to\infty$, so (1) is $o(n/\log n)$, in particular strictly smaller than $n/\log n$. Formula (2) exceeds $(1/8-c)n^2$. These arbitrarily large even orders already refute the proposed universal eventual bound. No parity extension is needed for that conclusion.
+
+\subsection*{Conclusion and sources}
+\textbf{Status: solved in the negative, using the two identified geometric inputs.} This is a reconstruction of the known counterexample. The estimates are deliberately weaker than the sharp critical-window theorem, but prove every quantifier in the question.
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/615}, checked 24 September 2026.
+\item J. Fox, P.-S. Loh and Y. Zhao, \emph{The critical window for the classical Ramsey--Tur\'an problem}, Section 8, \url{https://arxiv.org/abs/1208.3276}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% relative to the stated geometric inputs.}

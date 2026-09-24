@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#442: a semiprime counterexample}
+\noindent Complete disproof of the stated implication, 24 September 2026.
+
+\subsection*{1) Statement and construction}
+For $A\subseteq\mathbb N$, write
+\[R_<(x)=\sum_{a\in A\cap[1,x)}\frac1a,\qquad
+Q(x)=\sum_{\substack{a,b\in A\cap(1,x]\\a<b}}\frac1{\operatorname{lcm}(a,b)}.\]
+Does $R_<(x)/\log\log x\to\infty$ force $Q(x)/R_<(x)^2\to\infty$?
+
+Take $A=\{pq:p<q\text{ are primes}\}$, the squarefree integers with exactly two prime factors. We prove instead that
+\[R_<(x)\sim\tfrac12(\log\log x)^2,
+\qquad \frac{Q(x)}{R_<(x)^2}\longrightarrow\tfrac12.\tag{1}\]
+This fixed-almost-prime counterexample is a known observation discussed in Tao's paper, with credit there to earlier work of Bergelson and Richter. The much faster reciprocal growth achieved by Tao is not needed to disprove the original implication.
+
+\subsection*{2) Reciprocal mass}
+Put $T(y)=\sum_{p\le y}1/p$ and $R(x)=\sum_{a\in A,\,a\le x}1/a$. The standard Mertens estimate for reciprocal primes is
+\[T(y)=\log\log y+O(1).\tag{2}\]
+This is the external classical input used below. Products of two different primes at most $\sqrt x$ all belong to $A\cap[1,x]$, whereas every prime in a product at most $x$ is at most $x$. Therefore
+\[\frac12\left(T(\sqrt x)^2-\sum_{p\le\sqrt x}\frac1{p^2}\right)
+\le R(x)\le\frac12T(x)^2.\]
+Since $\sum_p1/p^2$ converges and $\log\log\sqrt x=\log\log x-\log2$, (2) implies
+\[R(x)=\tfrac12(\log\log x)^2+O(\log\log x).\tag{3}\]
+The two endpoint conventions differ by at most $1/x$, so (3) holds for $R_<(x)$ as well. In particular $R_<(x)/\log\log x\to\infty$.
+
+\subsection*{3) Separate disjoint and shared prime factors}
+For distinct squarefree semiprimes $a,b$, their greatest common divisor is either $1$ or a single prime. Consequently the identity $1/\operatorname{lcm}(a,b)=\gcd(a,b)/(ab)$ gives
+\[
+Q(x)=\frac12\left(R(x)^2-\sum_{\substack{a\in A\\a\le x}}\frac1{a^2}\right)+E(x),\tag{4}
+\]
+where the extra contribution from pairs sharing a prime is exactly
+\[
+E(x)=\sum_{p\le x}\frac{p-1}{p^2}
+\sum_{\substack{q<r\text{ primes},\ q,r\ne p\\pq\le x,\ pr\le x}}\frac1{qr}.\tag{5}
+\]
+No pair is counted twice in (5), because distinct squarefree semiprimes cannot share both prime factors. All summands are nonnegative. Discarding the product restrictions only enlarges the inner sum, so
+\[0\le E(x)\le\frac12\sum_{p\le x}\frac1p\,T(x)^2
+=\frac12T(x)^3=O((\log\log x)^3).\tag{6}\]
+Also $\sum_{a\in A}1/a^2\le\sum_{n\ge1}1/n^2<\infty$. Dividing (4) by $R(x)^2\asymp(\log\log x)^4$ now yields
+\[\frac{Q(x)}{R(x)^2}=\frac12+O\!\left(\frac1{\log\log x}\right).\]
+Replacing $R(x)$ by $R_<(x)$ changes this by a quantity tending to zero, and proves (1).
+
+\subsection*{4) Outcome and attribution}
+\textbf{SOLVED in the negative for the displayed implication.} The same set simultaneously has reciprocal mass much greater than $\log\log x$ and bounded normalized least-common-multiple energy, with its exact limiting value computed. This proof does not establish Tao's optimal transition scale for how fast the reciprocal mass can grow.
+
+Sources: \url{https://www.erdosproblems.com/442}, checked 24 September 2026; T. Tao, ``Dense sets of natural numbers with unusually large least common multiples'', especially the introductory discussion of squarefree almost primes, \url{https://arxiv.org/abs/2407.04226}. The Mertens estimate (2) is used as an explicit standard theorem. No new solution or Lean verification is claimed for this document.
+
+The estimate concerns the original yes-or-no implication, not the stronger optimal-growth theorem.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

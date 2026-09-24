@@ -1,0 +1,104 @@
+\section*{Erd\H{o}s Problem 656: a shifted restricted sumset}
+
+\paragraph{Statement.}
+If \(A\subseteq\mathbb N\) has positive upper density, must there
+exist an infinite \(B\subseteq A\) and an integer \(t\) such that
+\[
+ \{b+b':b,b'\in B,\ b\ne b'\}+t\subseteq A?
+\]
+
+\paragraph{Claim and attribution.}
+Yes. We reconstruct the passage from the established dynamical
+recurrence theorem to the infinite sumset, retaining its external
+inputs explicitly. The source is Kra, Moreira, Richter, and Robertson,
+\emph{A proof of Erd\H{o}s's \(B+B+t\) conjecture},
+\url{https://arxiv.org/abs/2206.12377}, published in
+Communications of the AMS (2024).
+The relevant inputs are Proposition 2.3 and Theorem 1.4(i) in
+the cited version; the extraction below is its Theorem 2.2.
+See also \url{https://www.erdosproblems.com/656}.
+
+\paragraph{The two external inputs.}
+Positive upper density implies positive upper Banach density:
+choose intervals \([1,N_j]\), with \(N_j\to\infty\), on which the
+density converges to a positive limit. These intervals form a
+F{\o}lner sequence, meaning that their relative symmetric
+difference with any fixed translate tends to zero.
+
+The correspondence principle in Proposition 2.3 provides an
+ergodic measure-preserving homeomorphism \(T\) of a compact metric
+space \(X\), a point \(a\), a clopen set \(E\) of positive measure,
+and a F{\o}lner sequence along which \(a\) is generic, with the
+exact identity
+\[
+ A=\{n\in\mathbb N:T^na\in E\}.
+\]
+This particular ergodic correspondence principle is an external
+input; genericity along the required sequence is not inferred
+merely from compactness.
+
+Theorem 1.4(i) then supplies \(x_1,x_2\in X\), \(t\in\mathbb N\),
+and strictly increasing integers \(n_j\) such that
+\[
+ x_1\in E,\qquad T^tx_2\in E,\qquad
+ (T^{n_j}a,T^{n_j}x_1)\longrightarrow(x_1,x_2).
+                                                               \tag{1}
+\]
+This recurrence theorem contains the substantial ergodic part
+of the known solution. It is used here without claiming a
+new proof of that part.
+
+\paragraph{Extracting infinitely many compatible integers.}
+Set \(U=E\) and \(V=T^{-t}E\), both open. Then
+\(x_1\in U\), \(x_2\in V\).
+Pass to a tail of the sequence in (1) so that \(T^{n_j}a\in U\)
+for all its terms.
+We choose \(b_1<b_2<\cdots\) from this sequence, maintaining
+\[
+ T^{b_i}x_1\in V\quad\hbox{for every chosen }i,
+ \qquad T^{b_i+b_j}a\in V\quad(i<j).
+                                                               \tag{2}
+\]
+For the first choice, (1) gives a sufficiently late \(b_1\)
+with \(T^{b_1}x_1\in V\).
+Suppose \(b_1,\ldots,b_r\) have been chosen. The open set
+\[
+ W=U\cap\bigcap_{i=1}^r T^{-b_i}V
+\]
+contains \(x_1\), by the induction hypothesis.
+The convergence in (1) lets us choose \(b_{r+1}>b_r\) with
+\[
+ T^{b_{r+1}}a\in W,\qquad T^{b_{r+1}}x_1\in V.
+\]
+This preserves all conditions in (2).
+Every selected integer is in \(A\), and for \(i<j\),
+\[
+ T^{b_i+b_j+t}a\in E,
+ \qquad\text{so}\qquad b_i+b_j+t\in A.
+\]
+Thus \(B=\{b_1,b_2,\ldots\}\) is the required infinite set.
+The argument constructs one infinite set, rather than merely
+arbitrarily large finite sets with incompatible shifts.
+
+\paragraph{Two elementary checks on the statement.}
+If \(A\) has density one, no dynamical theorem is needed and
+one can take \(t=0\). Given finitely many chosen \(b_i\in A\),
+the finite intersection
+\[
+ A\cap\bigcap_i(A-b_i)
+\]
+still has density one, since its complement is contained in a
+finite union of sets of density zero. Choose the next, larger
+element from this intersection and continue.
+In contrast, the shift cannot always be omitted: if \(A\)
+is the positive odd integers, the sum of two of its elements
+is even, so no infinite \(B\subseteq A\) works with \(t=0\).
+Taking an odd shift removes this parity obstruction.
+
+\paragraph{Scope.}
+The full answer is proved relative to the two specified established
+dynamical inputs. The infinite extraction, the density-one case,
+and the need for a shift are proved explicitly.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

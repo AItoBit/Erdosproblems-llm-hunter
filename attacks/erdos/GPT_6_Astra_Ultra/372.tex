@@ -1,0 +1,57 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#372; reconstruction using a separated-prime-factor theorem, 2026-09-24.}
+For $m>1$, let $P(m)$ be its largest prime factor. Prove that there are infinitely many $m$ with
+\[
+P(m)>P(m+1)>P(m+2).
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Balog proved the assertion in \emph{On triplets with descending largest prime factors} (2001). Tao and Ter\"av\"ainen subsequently obtained positive lower natural density, in \emph{Value patterns of multiplicative functions and related sequences} (2019). The proof below uses their more precise threshold-separation theorem as an explicit external input. It does not claim to reprove the deep correlation argument behind that theorem.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose two concrete exponents for which the theorem's Dickman-function nondegeneracy condition can be checked exactly. Track the translation from the paper's $n+1,n+2,n+3$ to the problem's $m,m+1,m+2$, and retain a quantitative separation of the prime factors.
+
+\section{WORK}
+\textbf{Declared external input.} Theorem 1.2 of Tao--Ter\"av\"ainen states that if $0<\alpha<\beta<1$ and
+\[
+\rho(1/\alpha)+\rho(1/\beta)\ne1,                            \tag{1}
+\]
+then the set
+\[
+E_{\alpha,\beta}=\{n:\ P(n+3)<n^\alpha<P(n+2)<n^\beta<P(n+1)\}
+\]
+has positive lower natural density. Here $\rho$ is the Dickman function, defined by $\rho(u)=1$ on $[0,1]$ and $u\rho'(u)=-\rho(u-1)$ for $u>1$. The analogous increasing pattern is also in the theorem but is not needed here. The input is unconditional; no assertion of independence of adjacent integers' prime factors is made.
+
+\textbf{Checking the hypothesis without numerical approximation.} For $1\leq u\leq2$, the defining differential equation gives $\rho'(u)=-1/u$ and hence
+\[
+\rho(u)=1-\log u.
+\]
+Take $\alpha=3/4$ and $\beta=4/5$. Then
+\[
+\rho(4/3)+\rho(5/4)=2-\log(5/3)>1,
+\]
+because $5/3<e$. Thus (1) holds. There are constants $\delta>0$ and $X_0$ such that for every $X\geq X_0$,
+\[
+\#(E_{3/4,4/5}\cap[1,X])\geq\delta X.                    \tag{2}
+\]
+Indeed, choose $\delta$ below the positive lower density; this ensures the inequality for all sufficiently large $X$, not merely a subsequence.
+
+\textbf{The required triples.} For each $n\in E_{3/4,4/5}$ set $m=n+1$. Then
+\[
+P(m)>n^{4/5}>P(m+1)>n^{3/4}>P(m+2).                       \tag{3}
+\]
+Translation is injective and changes a counting cutoff by at most one. Thus (2) implies that at least $(\delta/2)X$ valid $m\leq X$ occur for every sufficiently large $X$. In particular the set is infinite. The outer prime factors in these triples obey the additional quantitative separation
+\[
+\frac{P(m)}{P(m+2)}>(m-1)^{1/20}.
+\]
+The middle prime factor remains between the two explicit powers; no lower bound for either individual adjacent ratio follows just from (3).
+
+\textbf{A finite sanity check and its scope.} The triple $m=13$ gives $P(13)=13>P(14)=7>P(15)=5$, and $m=34$ gives $17>7>3$. Such examples verify the direction of the requested ordering, but cannot replace the density input establishing infinitely many triples. Likewise, prescribing divisibility by decreasing primes via the Chinese remainder theorem would not control additional, larger prime factors.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to Tao--Ter\"av\"ainen's Theorem 1.2.} The explicit parameter choice, its nondegeneracy check, and the positive-density conclusion are fully proved. The theorem about correlations of smoothness ranges is the substantive imported input; this is a reconstruction of an existing solution, not a new elementary proof.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/372}; Balog: \url{https://doi.org/10.1556/SScMath.38.2001.1-4.3}; Tao and Ter\"av\"ainen, Theorem 1.2, printed pages 5--6: \url{https://doi.org/10.1017/fms.2019.28}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external theorem.}

@@ -1,0 +1,86 @@
+\section*{Erd\H{o}s Problem 707: a Sidon set that cannot be extended}
+
+\paragraph{Statement and claim.}
+Can every finite Sidon set of positive integers be extended to a
+perfect difference set modulo \(p^2+p+1\) for some prime \(p\)?
+No: \(\{1,2,4,8\}\) is a counterexample.
+We reconstruct the direct elementary proof in Section 3 of
+Alexeev and Mixon, \emph{Forbidden Sidon subsets of perfect
+difference sets, featuring a human-assisted proof},
+\url{https://arxiv.org/abs/2510.19804}, Theorem 8.
+See \url{https://www.erdosproblems.com/707}.
+The argument below addresses prime \(p\), as requested, not the
+stronger variant allowing arbitrary orders.
+
+\paragraph{Definitions and initial checks.}
+A perfect difference set \(B\subseteq\mathbb Z/v\mathbb Z\)
+represents each nonzero residue exactly once as \(b-b'\) with
+distinct \(b,b'\in B\).
+An integer extension requires all its elements to remain distinct
+modulo \(v\).
+The six positive differences of \(\{1,2,4,8\}\) are
+\(1,2,3,4,6,7\), all distinct, so it is Sidon.
+
+Suppose a perfect difference set \(B\) modulo \(v=p^2+p+1\)
+contains these four residues distinctly.
+Counting nonzero differences gives \(|B|(|B|-1)=p(p+1)\), hence
+\(|B|=p+1\geq4\).
+Thus \(p\geq3\) is odd, \(|B|\) is even, and \(v\) is odd.
+All subsequent equalities are in \(\mathbb Z/v\mathbb Z\).
+
+\paragraph{An involution.}
+For any \(a\notin B\), define \(f_a:B\to B\) as follows.
+Write the nonzero residue \(a-b\) uniquely as \(c-d\) with
+\(c,d\in B\), and put \(f_a(b)=c\).
+Then \(a-c=b-d\), so uniqueness gives \(f_a(c)=b\).
+This is an involution. Its fixed points \(b\) satisfy
+\[
+ 2b=a+d\quad\hbox{for some }d\in B.
+\]
+Because \(|B|\) is even and nonfixed points occur in pairs,
+the number of fixed points is even.
+
+\paragraph{A permutation forced by the involutions.}
+For each \(x\in B\), we choose \(b_x,d_x\in B\) satisfying
+\[
+ 2b_x=2(x-1)+d_x.                                               \tag{1}
+\]
+For \(x=2\), choose \(b_2=d_2=2\).
+For \(x\ne2\), put \(a=2(x-1)\). This \(a\) cannot lie in \(B\):
+otherwise \(x-2=a-x\) would give two representations of the
+same nonzero difference, forcing \(x=a\) and \(2=x\), a
+contradiction. The involution \(f_a\) has \(x\) as a fixed point,
+since \(a-x=x-2\).
+It therefore has another fixed point \(b_x\ne x\), which supplies
+\(d_x\) and proves (1).
+
+The map \(x\mapsto d_x\) is injective.
+Indeed, if \(d_x=d_{x'}\) with \(x\ne x'\), subtract (1) and
+cancel \(2\), which is invertible modulo odd \(v\), to obtain
+\[
+ b_x-b_{x'}=x-x'\ne0.
+\]
+Uniqueness of the nonzero difference implies
+\(b_x=x\) and \(b_{x'}=x'\).
+Our choices allow that equality only when the argument is \(2\),
+which cannot hold for two distinct arguments.
+Hence the \(d_x\)'s form a permutation of the finite set \(B\).
+
+\paragraph{The contradiction.}
+Some \(x\) has \(d_x=4\). Equation (1) then gives \(b_x-x=1\).
+The representation \(1=2-1\) is unique in \(B\), so \(x=1\)
+and consequently \(d_1=4\).
+Likewise some \(x'\) has \(d_{x'}=8\), giving \(b_{x'}-x'=3\).
+The representation \(3=4-1\) is unique, so \(x'=1\) and
+\(d_1=8\). But \(4\ne8\pmod v\), since \(v\geq13\).
+This contradiction proves the disproof.
+
+\paragraph{Scope.}
+The requested prime-order assertion is completely disproved.
+The even cardinality step explains the role of prime order:
+this four-element obstruction is not asserted for every prime
+power or every integer order. No independent formal verification
+of this write-up is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

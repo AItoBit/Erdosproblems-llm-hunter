@@ -1,0 +1,83 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#115; normalization audit and partial sharp-bound reconstruction, 2026-09-23.}
+The intended question concerns a \emph{monic} degree-$n$ polynomial $p$ whose filled lemniscate $E_p=\{z:|p(z)|\leq1\}$ is connected: is $\max_{E_p}|p'|\leq(1/2+o(1))n^2$? The displayed webpage statement omits ``monic'', but the primary theorem requires it. We distinguish that necessary correction from the intended known result, prove a uniform $2n^2$ upper bound, and exhibit the exact sharp Chebyshev lower example.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Eremenko and Lempert proved the sharp monic bound
+\[
+\max_{E_p}|p'|\leq 2^{1/n-1}n^2,
+\tag{1}
+\]
+with normalized Chebyshev polynomials as extremizers. The primary paper states the monic hypothesis explicitly. We do not reconstruct its sharp extremal-perturbation step below. The independent partial proof retains its useful reduction to negative real roots, then uses the classical Markov inequality at the cost of a weaker constant.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Check scaling before using the statement. For a monic polynomial, move a boundary point of maximum derivative to the origin and replace each root by the negative of its modulus. Connectedness guarantees a real interval on which the resulting polynomial is bounded by one. Markov's inequality gives a quadratic upper bound, while a scaled Chebyshev polynomial shows the required leading constant cannot be below $1/2$.
+
+\section{WORK}
+\subsection{Why a normalization is essential}
+For $p(z)=Cz^n$, $C>0$, the set $E_p$ is the disc of radius $C^{-1/n}$ and is connected, while
+\[
+\max_{E_p}|p'|=nC^{1/n}.
+\]
+Choosing $C=(Kn)^n$ makes this $Kn^2$, with $K$ arbitrarily large. Thus there is no universal bound of the displayed form for arbitrary leading coefficient, and the literal unnormalized statement is false. The rest of this file addresses the intended monic problem; it does not silently impose a hypothesis on the webpage assertion.
+
+\subsection{Reduction to a polynomial with negative real roots}
+Let $p$ be monic and $E_p$ connected. The maximum of $|p'|$ on $E_p$ may be taken at a boundary point: apply the maximum modulus principle to its interior components, or note that $p'$ is constant when $n=1$. Translate that point to zero and write
+\[
+f(z)=\prod_{j=1}^n(z-a_j),\qquad |f(0)|=1.
+\]
+Translation preserves monicity, connectedness, and the derivative maximum. In particular $a_j\ne0$ and $\prod_j|a_j|=1$. Put
+\[
+R=\max_j|a_j|\geq1,\qquad F(z)=\prod_{j=1}^n(z+|a_j|).
+\]
+The continuous image of the connected set $E_f$ under $z\mapsto|z|$ is an interval containing $0$ and $R$, since $0\in E_f$ and a root of modulus $R$ lies in $E_f$. For each $0\leq r\leq R$, choose $w\in E_f$ with $|w|=r$. The reverse triangle inequality gives
+\[
+|F(-r)|=\prod_j\bigl||a_j|-r\bigr|
+\leq\prod_j|a_j-w|=|f(w)|\leq1.
+\tag{2}
+\]
+Also $F(0)=1$, and logarithmic differentiation at zero yields
+\[
+|f'(0)|=\left|f(0)\sum_j\frac{-1}{a_j}\right|
+\leq\sum_j\frac1{|a_j|}=F'(0).
+\tag{3}
+\]
+Thus the replacement cannot decrease the derivative value that we wish to bound, and $F$ is a real polynomial bounded by one on $[-R,0]$.
+
+\subsection{A proved quadratic upper bound}
+We use the classical Markov inequality: if a real polynomial $G$ of degree at most $n$ satisfies $|G(x)|\leq1$ on $[-1,1]$, then $|G'(x)|\leq n^2$ there. After the affine change of variable from $[-1,1]$ to $[-R,0]$, (2) implies $F'(0)\leq2n^2/R$. Combining with (3) and $R\geq1$, we obtain the complete bound
+\[
+\max_{E_p}|p'|\leq2n^2.
+\tag{4}
+\]
+The Markov inequality is an explicit standard external input. The replacement and all the deductions in (2)--(4) are proved here. The constant $2$ is weaker than both the target $1/2+o(1)$ and the sharper previously known estimates; (4) is a reconstruction milestone, not a new improvement in the literature.
+
+\subsection{The sharp lower example}
+Let $T_n$ be the Chebyshev polynomial, defined by $T_n(\cos\theta)=\cos(n\theta)$. Its leading coefficient is $2^{n-1}$ for $n\geq1$, so with
+\[
+a=2^{1-1/n},\qquad P_n(z)=T_n(z/a),
+\]
+the polynomial $P_n$ is monic. Its roots lie in $[-a,a]$, and $|P_n(x)|\leq1$ throughout that interval.
+
+The filled lemniscate $E_{P_n}$ is connected. Indeed every component of a polynomial's open lemniscate $|P|<1$ contains a root: otherwise $1/P$ would be analytic there, continuous on its compact closure with boundary modulus one, and have modulus greater than one inside, contradicting the maximum principle. There are therefore finitely many such components, and their closures cover the filled lemniscate (the local form of a nonconstant polynomial at a boundary point supplies adjacent points with smaller modulus). Every component of the filled set consequently contains a root. In our example all roots are joined by the interval $[-a,a]\subset E_{P_n}$, so the components must form one connected set.
+
+Differentiating $T_n(\cos\theta)=\cos(n\theta)$ and taking $\theta\to0$ gives $T_n'(1)=n^2$. At the boundary point $z=a$ we therefore have
+\[
+|P_n'(a)|=n^2/a=2^{1/n-1}n^2
+=\left(\frac12+O(1/n)\right)n^2.
+\tag{5}
+\]
+This proves that $1/2$ is the smallest possible asymptotic constant, and also that the bound $n^2/2$ without any correction fails for every finite $n$.
+
+\section{VERIFICATION AND SCOPE}
+The literal unnormalized assertion is explicitly disproved. For the intended monic version we have proved (4) and the extremal lower example (5). The sharp upper bound (1) is a verified statement of the cited theorem, but its proof is not supplied here: replacing $R\geq1$ by an unjustified larger lower bound in the Markov step would not close the gap. The unresolved part of this attempt is the sharp extremal argument, not the known status of the problem.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current displayed statement: \url{https://www.erdosproblems.com/115}.
+\item A. Eremenko and L. Lempert, \emph{An extremal problem for polynomials}, Proceedings of the American Mathematical Society 122 (1994), 191--193: \url{https://www.math.purdue.edu/~eremenko/dvi/lempert.pdf}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved as a reconstruction of the sharp intended monic theorem.} Scaling disproves the unnormalized wording; the monic upper bound $2n^2$ and the exact Chebyshev lower example are established, while the sharp upper constant remains external. No novelty is claimed.
+\textbf{Completion rate estimate: 50\%.}

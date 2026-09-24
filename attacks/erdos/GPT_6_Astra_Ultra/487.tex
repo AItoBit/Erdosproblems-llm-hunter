@@ -1,0 +1,53 @@
+\section{Erd\H{o}s Problem \#487: three distinct elements with an lcm relation}
+\noindent Complete density-transfer reconstruction, 24 September 2026.
+
+\subsection*{Statement and a stronger target}
+If $A\subseteq\mathbb N$ has positive density, must it contain three distinct elements $a,b,c$ with $\operatorname{lcm}(a,b)=c$? Yes. We prove that an infinite set avoiding such triples has upper logarithmic density zero:
+\[\limsup_{X\to\infty}\frac1{\log X}\sum_{n\le X,\ n\in A}\frac1n=0.\tag{1}\]
+Positive natural density, and even positive lower natural density, implies positive lower logarithmic density by partial summation, so (1) suffices for the stated problem.
+
+\subsection*{A union-free family occupies a vanishing fraction of a cube}
+A family $\mathcal F\subseteq2^{[r]}$ is union-free here if it has no three distinct members $U,V,W$ with $U\cup V=W$. We need only
+\[|\mathcal F|\le C\frac{2^r}{\sqrt r}\quad(r\ge1)\tag{2}\]
+for an absolute constant; the sharper Kleitman estimate is unnecessary.
+
+We give the elementary proof. The Boolean lattice on $m$ elements partitions into symmetric inclusion chains, each starting at size $j$ and ending at size $m-j$. Inductively, from a chain $S_j\subset\cdots\subset S_{m-j}$, after adding a new coordinate, take the chain consisting of all old members followed by $S_{m-j}$ with the new coordinate; the remaining members with the new coordinate form the second chain. Omit the second chain when empty. This proves the decomposition, starting from the empty ground set. Each chain meets rank $\lfloor m/2\rfloor$ exactly once, so there are $\binom m{\lfloor m/2\rfloor}$ chains.
+
+Split $[r]$ into ground sets of sizes $m=\lfloor r/2\rfloor$ and $\ell=\lceil r/2\rceil$, and take products of their chain decompositions. On such a rectangular grid union is coordinatewise maximum. Each occupied cell of $\mathcal F$ must be first in its row or first in its column: otherwise an earlier occupied cell in each gives two distinct sets whose union is the cell under consideration. A grid with row and column lengths $u,v$ thus contains at most $u+v$ occupied cells. Summing over grids gives
+\[|\mathcal F|\le2^m\binom\ell{\lfloor\ell/2\rfloor}
++2^\ell\binom m{\lfloor m/2\rfloor}.
+\]
+The standard elementary central-binomial estimate $\binom s{\lfloor s/2\rfloor}\ll2^s/\sqrt{s+1}$ yields (2), including the finitely many small $r$ after enlarging $C$.
+
+\subsection*{A biased version by randomly enabling fair coordinates}
+Let $p_1,\ldots,p_k$ be the first $k$ primes and put $q_i=1/(p_i+1)$. Let a random subset $E$ include coordinate $i$ independently with probability $q_i$. Generate it in two stages: independently enable coordinate $i$ with probability $2q_i$, then include each enabled coordinate by a fair independent coin. This gives exactly the required law.
+
+Conditional on the enabled set $J$, the permitted family on $J$ is still union-free. Equation (2) bounds its conditional probability by $C/\sqrt{|J|}$ when $|J|\ge1$, and trivially by one otherwise. Write $\mu_k=2\sum_{i\le k}q_i$. Independence gives $\operatorname{Var}|J|\le\mu_k$, so Chebyshev's inequality gives
+\[\mathbb P(|J|<\mu_k/2)\le4/\mu_k.
+\]
+Consequently every union-free family satisfies
+\[\mathbb P(E\in\mathcal F)\le\eta_k,
+\quad \eta_k:=\min\left(1,\frac4{\mu_k}+C\sqrt{\frac2{\mu_k}}\right)\longrightarrow0.\tag{3}\]
+Here $\sum_p1/p=\infty$ implies $\mu_k\to\infty$. This classical divergence follows, for example, by expanding finite Euler products: convergence would bound $\prod_p(1-1/p)^{-1}$ while those products dominate arbitrarily long harmonic sums. No independence assertion about membership in $A$ is used.
+
+\subsection*{Decompose integers into finite multiplicative cubes}
+Put $P=\prod_{i\le k}p_i$. Every positive integer has a unique expression
+\[n=b\prod_{i\in E}p_i,\tag{4}\]
+where the valuation of each $p_i$ in $b$ is even and $E\subseteq[k]$. Fix such a base $b$. The sets $E$ for which the integer in (4) belongs to $A$ form a union-free family: the lcm of two fiber elements is the fiber element indexed by their union, and distinct subsets give distinct integers.
+
+The reciprocal weights within a fiber are $b^{-1}\prod_{i\in E}p_i^{-1}$. After normalization by $\prod_{i\le k}(1+1/p_i)$, these are exactly the probabilities in (3). Thus the reciprocal mass of $A$ in every complete fiber is at most $\eta_k$ times the full fiber mass.
+
+Every $n\le X$ has base $b\le X$. Complete all fibers with such bases. Their elements are distinct and are at most $PX$. Therefore, for each fixed $k$,
+\[\sum_{n\le X,\ n\in A}\frac1n
+\le\eta_k\sum_{\substack{b\le X\\v_{p_i}(b)\text{ even}}}\frac1b\prod_{i\le k}(1+1/p_i)
+\le\eta_k H_{\lfloor PX\rfloor}.\tag{5}\]
+First let $X\to\infty$ in (5), keeping $k$ fixed, to bound the upper logarithmic density by $\eta_k$. Then let $k\to\infty$. This proves (1); in particular, the possibly very large factor $P$ is harmless because the limits are taken in this order.
+
+If $|A\cap[1,t]|\ge\delta t$ eventually, partial summation gives $\sum_{n\le X,n\in A}1/n\ge\delta\log X-O(1)$, contradicting (1). Hence the required distinct lcm triple exists.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED.} The cube estimate and its weighted number-theoretic transfer are given in full. The only standard auxiliary estimate used without its usual short proof is the central-binomial coefficient bound. This does not assert a conclusion from positive upper natural density alone; positive density as in the statement is sufficient.
+Sources: \url{https://www.erdosproblems.com/487}, which attributes the result to Kleitman's resolution of \#447; the companion reconstruction of \#447 supplies the symmetric-chain/grid argument, reproduced here so the proof is standalone. For the historical union-free theorem see J. Balogh and A. Z. Wagner, Theorem 1.1, \url{https://arxiv.org/abs/1601.03659}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,49 @@
+\section{Erd\H{o}s Problem \#190}
+\subsection*{1. FORMAL RESTATEMENT}
+Let $H(k)$ be the least $N$ such that every colouring of $[N]$ with any number of colours contains a monochromatic or rainbow $k$-term arithmetic progression. Both alternatives have length $k$, and common differences are positive. Estimate $H(k)$; in particular, does $H(k)^{1/k}/k\to\infty$?
+\subsection*{2. CURRENT STATUS AND ATTEMPT SCOPE}
+The question is now settled affirmatively. Fox and Hunter's Theorem 3 gives $H(k)\ge k^{(1-o(1))k\log k}$; their Theorem 2 supplies the stronger multicolour van der Waerden input. Bae independently obtained $k^{(2-o(1))k}$. The old local attempt's open-status discussion is therefore superseded. We prove an exponential-scale lower bound, the canonical existence reduction, and explain exactly where our independent reconstruction falls short of the new lower bound.
+\subsection*{3. LOWER BOUND BY LOCAL AVOIDANCE}
+Use $r=k-1$ colours independently and uniformly on $[N]$. A fixed $k$-term progression is monochromatic with probability $p=r^{1-k}$. It cannot be rainbow, since fewer than $k$ colours are available.
+
+A vertex belongs to at most $k\lfloor(N-1)/(k-1)\rfloor\le2N$ progressions: choose its position and the common difference. A bad monochromatic-progression event is independent of all events on disjoint vertex sets, so it has at most $2kN$ neighbours in a dependency graph. The symmetric Lov\'asz local lemma states that if $ep(D+1)\le1$, events of probability at most $p$ with dependency degree at most $D$ can all be avoided.
+
+For $k\ge4$ take
+\[
+ N=\left\lfloor\frac{(k-1)^{k-1}}{8ek}\right\rfloor.
+\]
+Whenever $N\ge1$, the local-lemma condition holds, since
+$ep(2kN+1)\le1/4+e(k-1)^{1-k}<1$.
+For $N=0$ the lower bound is trivial. Hence
+\[
+ H(k)>\left\lfloor\frac{(k-1)^{k-1}}{8ek}\right\rfloor,
+ \qquad \liminf_{k\to\infty}\frac{H(k)^{1/k}}k\ge1.       \tag{1}
+\]
+The local lemma is a declared standard external input here, not an independence assertion for overlapping progressions.
+\subsection*{4. WHY AN ARBITRARY NUMBER OF COLOURS STILL GIVES FINITE $H(k)$}
+Fix $k\ge3$ and $\delta=1/(4k^3)$. By the finite density form of Szemer\'edi's theorem, a colour class of size at least $\delta N$ contains a $k$-term progression once $N$ is sufficiently large. Otherwise every colour class has fewer than $\delta N$ points, and the number of equal-colour unordered pairs is at most $\delta N^2/2$.
+
+A pair of positions in a $k$-term progression, together with two distinct specified integers, determines at most one progression. Therefore the number of progressions that have any repeated colour is at most
+\[
+ \binom{k}{2}\frac{\delta N^2}{2}<\frac{N^2}{16k}.
+\]
+For $N\ge4(k-1)$, the progressions with
+$1\le d\le\lfloor N/(2(k-1))\rfloor$ and
+$1\le a\le N-(k-1)d$ number at least
+\[
+ \frac{N^2}{8(k-1)}.
+\]
+Since the latter bound is larger, at least one of them is rainbow. This proves finiteness of $H(k)$ using the explicitly stated density theorem, uniformly over the number of colours.
+\subsection*{5. COMPARISON WITH THE KNOWN RESOLUTION}
+If $w(k;r)$ denotes the usual multicolour van der Waerden number, then $H(k)\ge w(k;k-1)$: a counterexample using $k-1$ colours has no rainbow $k$-progression. Fox--Hunter prove that for every fixed $\epsilon>0$ and all sufficiently large $k$, whenever $r\ge(\log k)^{3/\epsilon}$,
+\[
+ w(k;r)\ge r^{(1-\epsilon)k\log k}.
+\]
+Putting $r=k-1$ makes the threshold condition valid and yields their recorded affirmative resolution. This theorem is substantially stronger than (1); its random shifted product construction is not reproved in this attempt. Merely citing it does not turn our local-lemma calculation into a new proof of that construction.
+\subsection*{6. FINAL}
+\textbf{UNRESOLVED in this independent reconstruction; known affirmative resolution recorded.}
+The proved work upgrades the previous elementary quadratic lower bound to nearly $k^k$, and supplies a complete reduction for existence using Szemer\'edi's theorem. The missing growth factor in $H(k)^{1/k}/k$ is precisely the part not established by these arguments. The completion estimate describes this proof attempt rather than the database status.
+\subsection*{7. SOURCES}
+\texttt{https://www.erdosproblems.com/190}; J. Fox and Z. Hunter, \emph{Three-color van der Waerden numbers grow super-exponentially}, \texttt{https://arxiv.org/abs/2606.02541}, Theorems 2--3 and Section 1.1; J. H. Bae, \texttt{https://arxiv.org/abs/2604.20588}. The former primary source also records the classical local-lemma lower bound and the canonical existence argument's dependence on Szemer\'edi's theorem.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

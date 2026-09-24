@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#309: how many integers are Egyptian sums?}
+\noindent Reconstruction using a short-interval representation theorem, 23 September 2026.
+
+\subsection*{1) Statement and answer}
+Let $F(N)$ count positive integers representable as sums of distinct unit fractions with denominators in $[1,N]$. We prove
+\[
+ F(N)\sim\log N,
+\]
+which disproves the proposed $o(\log N)$ estimate. Counting the empty sum zero instead would add one and would not change the conclusion. Our only substantial external input is Croot's short-interval theorem for the rational number one; the packing argument is supplied here.
+
+\subsection*{2) External input and disjoint blocks}
+Croot's \emph{On unit fractions with denominators in short intervals} proves that for every $b>e$ there is $T_0=T_0(b)$ such that for every integer $T\ge T_0$ a finite set
+\[
+ S\subset (T,bT)\cap\mathbb N
+ \quad\text{satisfies}\quad \sum_{d\in S}\frac1d=1.\tag{1}
+\]
+This is the $r=1$ case of the theorem with upper endpoint $(e^r+o_r(1))T$. Its analytic proof is an explicit external dependency.
+
+Choose an integer $T_0$ large enough for (1), and recursively set $T_{j+1}=\lceil bT_j\rceil$. Apply (1) at each $T_j$ to obtain $S_j\subset(T_j,bT_j)$. Since $bT_j\le T_{j+1}$, these sets are pairwise disjoint. For every $k\le t$, the union of the first $k$ sets has reciprocal sum exactly $k$ and all its denominators are at most $T_t$. Thus
+\[
+ T_t\le N\quad\Longrightarrow\quad F(N)\ge t.\tag{2}
+\]
+Distinctness is preserved because the denominator intervals do not overlap.
+
+\subsection*{3) Counting blocks, including the rounding error}
+The recurrence $T_{j+1}\le bT_j+1$ gives by induction
+\[
+ T_t\le b^tT_0+\frac{b^t-1}{b-1}
+ \le C_b b^t,\qquad C_b=T_0+\frac1{b-1}.
+\]
+For all sufficiently large $N$ take $t=\lfloor\log(N/C_b)/\log b\rfloor$. Then $T_t\le N$, and (2) yields
+\[
+ F(N)\ge\frac{\log N}{\log b}-O_b(1).
+\]
+Keeping $b>e$ fixed while $N\to\infty$ gives
+\[
+ \liminf_{N\to\infty}\frac{F(N)}{\log N}\ge\frac1{\log b}.
+\]
+This holds for every such $b$, so letting $b\downarrow e$ makes the right side tend to one.
+
+For the matching upper bound, every represented positive integer is at most $H_N=\sum_{d\le N}1/d\le1+\log N$. Hence $F(N)\le\lfloor H_N\rfloor\le1+\log N$. The limsup of the same ratio is at most one. Together these bounds prove the asserted asymptotic.
+
+\subsection*{4) Outcome and sources}
+\textbf{SOLVED using the stated short-interval theorem.} The logarithmic asymptotic, the disjointness required for distinct denominators, and the quantifiers in the limit are proved above. The sharper near-harmonic error estimates on the problem page are not claimed from this argument. This is an exposition of consequences of established results, not a new disproof.
+
+Sources: \url{https://www.erdosproblems.com/309}, checked 23 September 2026; E. S. Croot III, \emph{On unit fractions with denominators in short intervals}, Acta Arith. 99 (2001), 99--114, \url{https://arxiv.org/abs/math/9904181} and the author's manuscript \url{https://ecroot.math.gatech.edu/fractions_intervals.pdf}.
+
+The estimate describes resolution of the requested asymptotic order using the declared input, not independent discovery or a correctness probability.
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,73 @@
+\subsection*{Erd\H{o}s problem \#356}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Show that an absolute $c>0$ exists such that, for every sufficiently large $n$, some strictly increasing positive integers $a_1<\cdots<a_k\le n$ have at least $cn^2$ distinct consecutive sums.
+
+\noindent\textbf{2) CONTEXT AND PLAN.}
+We reconstruct Beker's probabilistic proof, Theorems 1.3 and 2.1 of \emph{On a problem of Erd\H{o}s and Graham about consecutive sums in strictly increasing sequences}. Random bounded perturbations of $3i$ give small expected collision energy. The argument below proves the original assertion, without claiming an optimal constant or the additional consecutive-integer interval question in the editorial.
+
+\noindent\textbf{3) A BINOMIAL RESIDUE ESTIMATE.}
+For $X\sim\operatorname{Bin}(m,1/2)$ and any positive integer $d$,
+\[
+ \mathbb P(X\equiv0\pmod d)\le d^{-1}+2m^{-1/2}. \tag{1}
+\]
+Indeed the binomial mass function is increasing up to its center and decreasing afterward, and its maximum is at most $m^{-1/2}$. Outside the interval $(m/2-d,m/2+d)$, each sampled multiple of $d$ can be bounded by the average of the next $d$ masses towards the center. Those averaging blocks are disjoint. Their total contributes at most $1/d$; the central interval contains at most two multiples of $d$, contributing at most $2/\sqrt m$. The standard maximum estimate follows directly from the central binomial coefficient bound.
+
+\noindent\textbf{4) RANDOM SEQUENCE AND COLLISIONS.}
+Take independent signs $\epsilon_i\in\{-1,1\}$ with equal probabilities, and put
+\[
+ a_i=3i+\epsilon_i\quad(1\le i\le N),\qquad
+ P=\{0,a_1,a_1+a_2,\ldots,a_1+\cdots+a_N\}.
+\]
+Always $a_{i+1}-a_i\ge1$. Define
+\[
+ E(P)=\#\{(x,y,z,w)\in P^4:x-y=z-w\}.
+\]
+We show $\mathbb E E(P)=O(N^2)$.
+
+Equal intervals contribute $O(N^2)$, and strictly nested unequal intervals cannot have equal sums because every $a_i>0$. A crossing pair $[i+1,j],[k+1,l]$ with $i<k<j<l$ has equal sums exactly when the disjoint pair $[i+1,k],[j+1,l]$ does. This cancellation is an injective correspondence of endpoint quadruples. It is therefore enough, up to an absolute factor, to bound equal-sum probabilities over disjoint interval pairs.
+
+For disjoint intervals of lengths $k,l$ beginning at $i,j$, the difference of their random parts is a sum of $k+l$ independent signs. Its probability of cancelling the deterministic difference is consequently a binomial mass
+\[
+ \mathbb P(X=x),\qquad X\sim\operatorname{Bin}(k+l,1/2),
+\]
+where the relevant linear equation is, with one immaterial choice of sign,
+\[
+ ki-lj=\frac{2x-k-l}{3}-\frac{k(k-1)}2+\frac{l(l-1)}2. \tag{2}
+\]
+We may upper bound the sum of these nonnegative masses by allowing all interval starting positions, even overlapping ones: this is a bound on a numerical sum, not an assertion that their random parts remain independent.
+
+Let $q=\gcd(k,l)$ and $q'=q/\gcd(q,4)$. Multiplying (2) by $6$ shows that $q\mid4x$, so $q'\mid x$. For a fixed $x$, the number of possible starting pairs is at most
+\[
+ \frac{qN}{l}+1,
+\]
+since $i$ lies in a single residue class modulo $l/q$. Separate the additional $1$ in this bound and apply (1) only to the other term. The total for lengths $k,l$ is at most
+\[
+ 1+\frac Nl\left(4+\frac{2q}{\sqrt{k+l}}\right). \tag{3}
+\]
+By symmetry, sum over $1\le k\le l\le N$. The sums of $1$ and $N/l$ are $O(N^2)$. For the remaining term, the elementary gcd identity gives
+\[
+ \sum_{l\le N}\frac1{l^{3/2}}\sum_{k=1}^l\gcd(k,l)
+ =\sum_{l\le N}\frac1{\sqrt l}\sum_{d\mid l}\frac{\phi(d)}d
+ \le2\sqrt N\sum_{d\le N}\frac{\phi(d)}{d^2}
+ \le2\sqrt N(1+\log N).
+\]
+Here $\sum_{k=1}^l\gcd(k,l)=\sum_{d\mid l}(l/d)\phi(d)$, and $\sum_{h\le L}h^{-1/2}\le2\sqrt L$. Multiplication by $N$ gives $O(N^{3/2}\log N)=O(N^2)$. This proves the expected-energy bound.
+
+\noindent\textbf{5) MANY DISTINCT SUMS AND THE ORIGINAL SCALE.}
+There is a choice of signs with $E(P)\le C N^2$ for one absolute $C$. If $r(t)$ counts ordered differences from $P$, Cauchy--Schwarz gives
+\[
+ |P-P|\ge\frac{(\sum_t r(t))^2}{\sum_t r(t)^2}
+ =\frac{(N+1)^4}{E(P)}\gg N^2.
+\]
+Positive differences of prefix sums are precisely consecutive sums, so their number is $(|P-P|-1)/2\gg N^2$. Finally choose
+$N=\lfloor(n-1)/3\rfloor$; then $a_N\le3N+1\le n$ and $N\asymp n$. This proves the desired lower bound $cn^2$.
+
+\noindent\textbf{6) VERIFICATION AND FINAL.}
+The only independence assertion is for disjoint intervals; cancellation handles crossing pairs before probabilities are evaluated. The gcd restriction and the contribution of the rounding term in the number of starting positions are both retained. \textbf{SOLVED.} This is a full reconstruction of the known affirmative solution, not a novelty claim.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/356}; \url{https://arxiv.org/pdf/2311.10087}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

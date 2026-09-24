@@ -1,0 +1,88 @@
+\section*{Erd\H{o}s Problem 698: a growing common divisor of binomial coefficients}
+
+\paragraph{Statement and claim.}
+For \(2\leq i<j\leq n/2\), is
+\(\gcd(\binom ni,\binom nj)\) uniformly bounded below by a
+function tending to infinity with \(n\)?
+Yes: one may take \(h(n)=\sqrt n/6\).
+We reconstruct Bergman's argument, including its stronger bound
+\[
+ \gcd\left(\binom ni,\binom nj\right)
+ \geq\sqrt n\,\frac{2^{i-7/2}}{i\sqrt{i-1}}.
+\]
+Source: George M. Bergman, \emph{On common divisors of multinomial
+coefficients}, Section 2, Theorem 2,
+\url{https://math.berkeley.edu/~gbergman/papers/nomial.pdf}.
+See \url{https://www.erdosproblems.com/698}.
+
+\paragraph{Common multiples with controlled variation.}
+Write \(A=\binom ni\), \(B=\binom nj\), and \(L=\operatorname{lcm}(A,B)\).
+For \(0\leq h\leq i\), define
+\[
+ Q_h=A\binom ih\binom{n-i}{j-i+h}
+     =B\binom j{i-h}\binom{n-j}h.
+\]
+The equality follows by expanding factorials; equivalently, it
+counts ordered pairs of subsets of sizes \(i,j\) with exactly
+\(h\) elements of the first outside the second.
+Both expressions are integer multiples of \(A,B\), so \(L\mid Q_h\).
+Since \(i\geq2\), all of \(Q_0,Q_1,Q_2\) are available.
+It follows that \(L^2\) divides the integer
+\[
+ D=(i-1)Q_1^2-2iQ_0Q_2.
+\]
+An explicit cancellation gives
+\[
+ D=B^2\binom j{i-2}^{\!2}
+       \frac{(j-i+2)(n-j)(n-i+1)}{i-1}>0.                      \tag{1}
+\]
+For clarity, after factoring
+\(B^2\binom j{i-2}^2(j-i+2)(n-j)/(i-1)\),
+the remaining expression is
+\[
+ (j-i+2)(n-j)-(j-i+1)(n-j-1)=n-i+1,
+\]
+which proves (1). Positivity is crucial: divisibility now yields
+\(L^2\leq D\).
+
+\paragraph{Estimating the positive common multiple.}
+Since \(j\leq n/2\), for every \(0\leq r<i-2\),
+\((j-r)/(n-r)\leq1/2\). Thus
+\[
+ \binom j{i-2}\leq2^{-(i-2)}\binom n{i-2}.
+\]
+Also \(j-i+2\leq n/2\), \(n-j<n\), and \(n-i+1<n\).
+Substitution in (1) gives
+\[
+ L^2<
+ \frac{n^3}{2^{2i-3}(i-1)}
+ B^2\binom n{i-2}^{\!2}.
+\]
+Using \(\gcd(A,B)=AB/L\), we obtain
+\[
+ \gcd(A,B)>
+ \frac{(n-i+2)(n-i+1)}{i(i-1)}
+ \sqrt{\frac{2^{2i-3}(i-1)}{n^3}}
+ \geq\sqrt n\,\frac{2^{i-7/2}}{i\sqrt{i-1}}.
+\]
+The last step uses \(n-i+1,n-i+2\geq n/2\).
+
+\paragraph{A bound independent of \(i\).}
+For \(i=2\) the coefficient is \(1/(4\sqrt2)>1/6\);
+for \(i=3\) it is \(1/6\).
+For \(i\geq3\), the ratio of the coefficient at \(i+1\) to that
+at \(i\) is
+\[
+ \frac{2\sqrt{i(i-1)}}{i+1}>1,
+\]
+because \(4i(i-1)>(i+1)^2\).
+The minimum is therefore \(1/6\), proving the stated choice of
+\(h(n)\). For the small \(n\) admitting no pair of indices, the
+assertion is vacuous.
+
+\paragraph{Scope.}
+This is a full elementary reconstruction of the established
+positive solution; it uses no asymptotic number-theoretic theorem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

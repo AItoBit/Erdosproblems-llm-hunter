@@ -1,0 +1,91 @@
+\section*{Erd\H{o}s Problem 690: densities of the \(k\)-th prime factor}
+
+\paragraph{Statement and claim.}
+Let \(d_k(p)\) be the density of integers whose \(k\)-th smallest
+distinct prime factor is \(p\). The universal unimodality assertion
+is false: it fails for \(k=4\). We also prove it for \(k=1,2,3\).
+This reconstructs results of Cambie,
+\emph{Resolution of Erd\H{o}s' problems about unimodularity},
+\url{https://arxiv.org/abs/2501.10333}, with a direct monotonicity
+argument for the first three cases.
+The existing GPT-5.2 attempt contains the same \(k=4\) witness;
+the rational computations are re-derived here.
+See \url{https://www.erdosproblems.com/690}.
+
+\paragraph{Exact density formula.}
+Divisibility by distinct primes is independent on a complete
+residue system modulo their product. Thus the relevant density
+exists, and
+\[
+ d_k(p)=\frac1p[z^{k-1}]
+       \prod_{q<p}\left(1-\frac1q+\frac zq\right)
+       =\frac{C_p}{p}e_{k-1}(p),
+\]
+where
+\[
+ C_p=\prod_{q<p}(1-1/q),\qquad
+ \prod_{q<p}\left(1+\frac z{q-1}\right)
+   =\sum_{r\geq0}e_r(p)z^r.
+\]
+All products here are finite. If \(p<q\) are consecutive primes,
+then
+\[
+ C_q=C_p\frac{p-1}{p},\qquad
+ e_r(q)=e_r(p)+\frac{e_{r-1}(p)}{p-1}.
+\]
+Whenever \(e_{k-1}(p)>0\), it follows that
+\[
+ \frac{d_k(q)}{d_k(p)}
+   =\frac{p-1+e_{k-2}(p)/e_{k-1}(p)}q.                         \tag{1}
+\]
+
+\paragraph{The first three cases.}
+For \(k=1\), directly \(d_1(q)/d_1(p)=(p-1)/q<1\).
+For \(k=2\), \(d_2(2)=0\), and for \(p\geq3\) we have
+\(e_1(p)=\sum_{\ell<p}1/(\ell-1)\geq1\).
+Equation (1) is then at most \(p/q<1\), so the unique peak
+occurs at \(p=3\).
+
+For \(k=3\), the initial nonzero term is at \(p=5\).
+At that point \(e_1=3/2\), \(e_2=1/2\), so \(3e_2=e_1\).
+Adding another variable \(a=1/(\ell-1)>0\) changes these to
+\(e'_1=e_1+a\), \(e'_2=e_2+ae_1\), and
+\[
+ 3e'_2-e'_1=(3e_2-e_1)+a(3e_1-1)\geq0.
+\]
+Hence \(e_1(p)/e_2(p)\leq3\) for every \(p\geq5\).
+Consecutive odd primes have \(q\geq p+2\), so (1) is at most
+\((p+2)/q\leq1\). The two equal peaks at \(5,7\) have value
+\(1/30\); all subsequent terms decrease. This proves unimodality
+for \(k=1,2,3\).
+
+\paragraph{A complete counterexample for \(k=4\).}
+Expanding the finite products gives
+\[
+ d_4(13)=\frac{31}{5005},\qquad
+ d_4(17)=\frac{206}{36465},\qquad
+ d_4(19)=\frac{1308}{230945}.
+\]
+These can also be computed without fractions until the final step:
+the coefficient of \(z^3\) in
+\(\prod_{q<p}(q-1+z)\), divided by \(p\prod_{q<p}q\),
+is exactly \(d_4(p)\).
+The strict comparisons reduce to
+\[
+ 31\cdot36465=1130415>1031030=206\cdot5005,
+\]
+\[
+ 206\cdot230945=47574670<47696220=1308\cdot36465.
+\]
+Thus the sequence decreases from \(13\) to \(17\) and increases
+from \(17\) to \(19\), which no unimodal sequence can do.
+
+\paragraph{Scope.}
+This completely disproves the assertion for arbitrary fixed \(k\)
+and independently proves the positive cases \(1\leq k\leq3\).
+It does not purport to classify every individual \(k\geq5\);
+the additional computational cases in Cambie's paper are not needed
+for the disproof.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

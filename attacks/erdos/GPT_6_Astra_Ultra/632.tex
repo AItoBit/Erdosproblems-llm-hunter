@@ -1,0 +1,60 @@
+\section{Erd\H{o}s Problem 632: list-colouring ratios do not scale}
+\subsection*{Statement and scope}
+A graph is $(a,b)$-choosable if, from arbitrary lists of $a$ colours at its vertices, one can choose $b$ colours per vertex so that adjacent choices are disjoint. Must $(a,b)$-choosability imply $(am,bm)$-choosability? No: Dvo\v r\'ak--Hu--Sereni construct a 4-choosable graph that is not $(8,2)$-choosable.
+This reconstruction proves the small obstruction, terminal gluing and uniform-list construction. One precisely stated extension property of their finite auxiliary gadget is used as an external lemma. Thus the complete counterexample follows from a named finite input, not from assuming their final theorem.
+
+\subsection*{1. A five-cycle obstruction}
+Let $C=v_1v_2v_3v_4v_5v_1$, with lists
+\[
+ L_0(v_1)=1256,\quad L_0(v_2)=1456,\quad
+ L_0(v_3)=L_0(v_4)=3456,\quad L_0(v_5)=2456,
+\]
+where a string denotes its set of colour labels. In a two-colours-per-vertex colouring, each colour occurs on at most two vertices of $C$. Colours $1,2,3$ can each occur at most once, since their available vertices are respectively the adjacent pairs $(v_1,v_2),(v_1,v_5),(v_3,v_4)$. The total number of colour occurrences is at most $1+1+1+2+2+2=9$, whereas ten are needed. This is impossible.
+
+Add a path $v_1xyv_3$ to $C$, obtaining $B$. Give $v_1,v_3$ lists $123456$, retain the other three cycle lists, and give $x$ list $1234$ and $y$ list $12$. Call this assignment $L_B$. A two-colour selection forces $y=12$, then $x=34$, reducing the cycle lists to exactly the obstruction above. Thus $B$ has no $(L_B,2)$-colouring.
+
+However, $B$ is colourable from every assignment of lists of half these sizes for which the three-element lists at $v_1,v_3$ coincide. Colour $y$, then $x$ differently. Their distinct colours permit distinct two-element subsets of the common list at $v_1,v_3$, avoiding the respective neighbour colours. The remaining cycle lists have size two. A cycle with two-element lists which are not all identical is colourable: find adjacent vertices with different lists, colour one with a colour absent from the other, and greedily go around the cycle in the opposite direction, leaving that other vertex until last. It has only one forbidden list colour at the last step. This proves the claimed half-list property of $B$.
+
+\subsection*{2. The auxiliary gadget and the exact external property}
+Here is an explicit description of the auxiliary graph $R$ and its even-sized lists $L_R$.
+Start with a cycle $v_1u_2v_3u_4u_5v_1$, a vertex $y_1$ joined to its five vertices, a triangle $y_2y_3y_4$, and an edge $y_1y_2$. Cycle vertices have list $123456$, $y_1$ list $12345678$, $y_2,y_4$ list $123478$, and $y_3$ list $1234$.
+For each $i=1,2$, add vertices $z_{i,1},\ldots,z_{i,7}$. Join $y_4$ to $z_{i,1},z_{i,2}$; put all edges on $z_{i,1},\ldots,z_{i,4}$ except $z_{i,1}z_{i,2}$; add triangle $z_{i,5}z_{i,6}z_{i,7}$ and edge $z_{i,4}z_{i,5}$. Their lists, in order, are
+\[
+ \{1,2,3,6+i\},\ \{4,5,6,6+i\},\ 123456,\ 12345678,
+ \ 123478,\ 1234,\ 123478.
+\]
+Finally add triangles $w_1w_2w_3$ and $w_{i,1}w_{i,2}w_{i,3}$ for $i=1,2$, edges $z_{1,7}w_1,z_{2,7}w_1$, and edges $w_3w_{1,1},w_3w_{2,1}$. In each new triangle the middle-index vertex has list $1234$ and the other two have list $123478$. Put $p=w_{1,3}$ and $q=w_{2,3}$. The graph $R$ has 32 vertices. Its four terminals $v_1,v_3,p,q$ are pairwise nonadjacent.
+
+\textbf{External finite-gadget lemma.} Lemma 7 of Dvo\v r\'ak--Hu--Sereni, applied to this graph $R$, states that for every list assignment $L$ with $|L(v)|=|L_R(v)|/2$, at least one of the following holds:
+\begin{enumerate}
+\item Some choice of colours for $v_1,v_3$ extends to a colouring of $R$ for every choice of colours for $p,q$.
+\item $L(v_1)=L(v_3)$, and some choice of colours for $p,q$ extends to a colouring of $R$ for every choice of colours for $v_1,v_3$.
+\end{enumerate}
+The universal extension assertion, proved through the paper's Lemmas 5--7, is the part not reproved here. The graph, list sizes and terminal roles have all been specified so that the input can be checked independently.
+
+We do prove its other needed property: every $(L_R,2)$-colouring forces both $p$ and $q$ to receive $78$. If $y_4$ avoided $78$, its pair and the pair at $y_3$ would partition $1234$, forcing $y_2=78$. Then $y_1$ would use two colours of $123456$, leaving only four colours for the surrounding five-cycle. Each of those four colours can be used at most twice, insufficient for ten occurrences. Therefore $y_4$ contains $6+i$ for some $i\in\{1,2\}$. The pairs on $z_{i,1},z_{i,2}$ then lie in disjoint triples $123$ and $456$. Together with the pair on their common neighbour $z_{i,3}$ they use all six colours, forcing $z_{i,4}=78$. The triangle beyond it forces $z_{i,7}=78$. Hence $w_1$ avoids $78$, the triangle $w_1w_2w_3$ forces $w_3=78$, and each of the final two triangles forces its terminal $w_{i,3}=78$, as claimed.
+
+\subsection*{3. Glue the obstruction to the gadget}
+Identify the vertices $v_1,v_3$ of $B$ with those of $R$, otherwise keeping the graphs disjoint. Add edges $pv_2,pv_4,qx,qy$. Enlarge the lists on $v_2,v_4,x,y$ by $78$, leaving all other lists unchanged. Denote this 37-vertex graph by $H$ and the resulting lists by $L_H$; every list has size four, six or eight.
+There is no $(L_H,2)$-colouring: the forced pairs at $p,q$ remove the added colours from their neighbours in $B$, leaving the impossible assignment $L_B$.
+
+We next prove that $H$ is colourable from every half-size list assignment $L$. In case 1 of the external lemma, fix its colours at $v_1,v_3$. Extend over $B$ using the enlarged half-size lists: colour $v_2$ avoiding these two colours, colour $v_5$ avoiding $v_1$ and then $v_4$ avoiding $v_3,v_5$, and colour $y$ avoiding $v_3$ and then $x$ avoiding $v_1,y$. The respective list sizes are sufficient. Choose the colour of $p$ avoiding $v_2,v_4$, and that of $q$ avoiding $x,y$; each terminal has three available colours. Case 1 extends these choices over $R$.
+In case 2, first fix the guaranteed terminal colours at $p,q$, remove them from the lists of their neighbours in $B$, and truncate if necessary. This leaves exactly the half-list sizes for $B$, with equal lists at $v_1,v_3$. Section 1 colours $B$, and case 2 extends its two shared colours over $R$. Thus every half-size assignment on $H$ is colourable.
+
+\subsection*{4. Make every list size uniform}
+Take a clique $K$ on four labelled vertices $r_1,\ldots,r_4$, all with list $\{9,\ldots,16\}$. There are
+\[
+ 8!/(2!)^4=2520
+\]
+ways $\psi$ of assigning disjoint pairs from this palette to these four vertices. For every such $\psi$, take a fresh copy $H_\psi$ of $H$. If $|L_H(v)|=2k$, join its copy of $v$ to $r_1,\ldots,r_{4-k}$ and enlarge its list by $\bigcup_{j\le4-k}\psi(r_j)$. All resulting lists have size eight.
+Any two-colour selection on the whole graph restricts to some $\psi$ on $K$. In the matching copy $H_\psi$, all added colours are forbidden by the adjacent roots, producing the impossible $(L_H,2)$-colouring. Thus the final graph is not $(8,2)$-choosable.
+
+On the other hand, give its vertices arbitrary four-element lists. Colour $K$ greedily. In $H_\psi$, a vertex with original list size $2k$ has at most $4-k$ neighbours in $K$, so at least $k$ of its four colours remain. Truncate to $k$ colours and apply the half-list property of $H$. Copies have no edges between them, so all these colourings combine. The final graph is 4-choosable, proving the counterexample for $(a,b,m)=(4,1,2)$.
+
+\subsection*{Conclusion and sources}
+\textbf{Status: solved in the negative relative to the explicit finite extension lemma.} The construction has $4+2520\cdot37=93244$ vertices. The obstruction, gluing, uniformization and all quantifiers are proved above; the universal half-list extension property of the 32-vertex auxiliary gadget remains the declared external ingredient.
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/632}, checked 24 September 2026.
+\item Z. Dvo\v r\'ak, X. Hu and J.-S. Sereni, \emph{A 4-choosable graph that is not $(8:2)$-choosable}, Advances in Combinatorics 2019:5, Lemmas 3--8, \url{https://arxiv.org/abs/1806.03880}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% relative to the specified auxiliary extension lemma.}

@@ -1,0 +1,66 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#395; pairing reconstruction with a declared critical-radius gap, 2026-09-24.}
+For unit vectors $z_1,\ldots,z_n\in\mathbb C\simeq\mathbb R^2$ and independent uniform signs $\epsilon_i$, prove
+\[
+\mathbb P\!\left(\left|\sum_i\epsilon_i z_i\right|\leq\sqrt2\right)\gg1/n.
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem is known to be solved. He, Ju\v skevi\v cius, Narayanan and Spiro give an elementary pairing proof; their current paper also credits Beck's earlier 1983 theorem. This attempt reconstructs the pairing mechanism and proves the $1/n$ lower bound for every radius $R>\sqrt2$ when $n$ is even, and every $R>\sqrt3$ for arbitrary $n$. It does not complete their stability analysis at the exact requested radius.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Pair unit vectors with total squared differences at most $2$. Use a collision estimate for two independent midpoint sums, then an independent random difference sum. Track precisely why the resulting argument loses the boundary radius.
+
+\section{WORK}
+\textbf{A geometric pairing lemma.} Suppose $n=2m$. Changing an individual vector's sign does not change the distribution of the signed sum, so represent its unoriented line by an angle in $[0,\pi)$ and sort the angles. Let $\theta_1,\ldots,\theta_{2m}\geq0$ be the circular gaps, including the gap from the last angle to the first plus $\pi$. Their sum is $\pi$. The two alternating matchings around this circle pair every vector once. For the wrap-around edge use the negative of the first representative. The squared length of the difference on an edge of gap $\theta$ is $4\sin^2(\theta/2)$.
+
+If $a,b\geq0$ and $a+b\leq\pi/2$, then
+\[
+\sin^2(a+b)-\sin^2a-\sin^2b=2\sin a\sin b\cos(a+b)\geq0.
+\]
+Iteration gives $\sum_j\sin^2(\theta_j/2)\leq1$. The combined difference energy of the two matchings is therefore at most $4$, so one matching, written $(v_i,w_i)_{i=1}^m$, satisfies
+\[
+\sum_{i=1}^m|v_i-w_i|^2\leq2.                            \tag{1}
+\]
+Any sign change used on its wrap-around edge is harmless for the original distribution.
+
+\textbf{A collision estimate.} Put $a_i=(v_i+w_i)/2$, so $|a_i|\leq1$, and let $X=\sum_i\eta_i a_i$ with independent signs $\eta_i$. Then $\mathbb E|X|^2\leq m$. Markov's inequality gives at least half its mass inside the disk of radius $\sqrt{2m}$. Cover the enclosing square by at most $C_hm$ disjoint square cells of diameter at most $h$, for any fixed $h>0$. If $q_j$ denotes the mass in each cell restricted to that disk, then $\sum q_j\geq1/2$. For an independent copy $X'$,
+\[
+\mathbb P(|X-X'|\leq h)\geq\sum_jq_j^2\geq\frac1{4C_hm}. \tag{2}
+\]
+For instance a square grid of side $h/\sqrt2$ has the required $O_h(m)$ cells. Boundary points can be assigned to half-open cells.
+
+\textbf{Coupling back to the original signed sum.} Generate independent signs $\eta_i,\eta_i',\sigma_i$. At indices where $\eta_i\ne\eta_i'$, use the vector contribution $\eta_i(v_i+w_i)$; at the remaining indices use $\sigma_i(v_i-w_i)$. Each of the four choices of signs on the ordered pair $(v_i,w_i)$ has probability $1/4$, independently across pairs. Thus the resulting vector has the original signed-sum distribution, and can be written
+\[
+Y=X-X'+Z,\qquad
+Z=\sum_{\{i:\eta_i=\eta_i'\}}\sigma_i(v_i-w_i).
+\]
+Conditional on $\eta,\eta'$, (1) implies $\mathbb E_\sigma|Z|^2\leq2$. For any $b>\sqrt2$, Markov gives the uniform conditional lower bound
+\[
+\mathbb P_\sigma(|Z|\leq b)\geq1-2/b^2>0.
+\]
+Intersecting with the event in (2) and using the triangle inequality proves
+\[
+\mathbb P(|Y|\leq h+b)\geq\frac{1-2/b^2}{4C_hm}.         \tag{3}
+\]
+For any prescribed $R>\sqrt2$, choose $\sqrt2<b<R$ and $h=R-b>0$. This proves $\mathbb P(|Y|\leq R)\gg_R1/n$ for all even $n$.
+
+\textbf{An odd-length consequence.} For odd $n\geq3$, remove one vector $z$ and use the even result for the remaining sum $S$. For every fixed $S$, at least one of $S+z,S-z$ has squared norm at most $|S|^2+1$, since one of the two cross terms is nonpositive. Hence, for any $R>\sqrt3$, choose $r=\sqrt{R^2-1}>\sqrt2$ to obtain
+\[
+\mathbb P(|S+\epsilon z|\leq R)\geq\tfrac12\mathbb P(|S|\leq r)
+\gg_R1/n.
+\]
+The case $n=1$ is immediate.
+
+\textbf{Sharpness checks at the requested radius.} No smaller universal radius can work: for even $n$, take $z_1=1$ and all other $z_i=i$. The real part of every signed sum has absolute value $1$, and the imaginary part is an odd integer, so its norm is at least $\sqrt2$. Also the order $1/n$ is best possible. For $n=4m$ take $2m$ copies each of $1$ and $i$. Both coordinates are even integers, so the closed disk of radius $\sqrt2$ contains only the origin from this lattice, with probability
+\[
+\left(\frac{\binom{2m}{m}}{2^{2m}}\right)^2\sim\frac1{\pi m}=\frac4{\pi n}.
+\]
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved by this reconstruction.} The relaxed-radius bounds (3), the odd-length consequence, and both sharpness examples are proved. At $b=\sqrt2$, the Markov lower bound becomes zero, and (2) still requires $h>0$; taking a limit in $R$ does not preserve a positive uniform constant. The missing work is the geometric stability and near-extremal analysis needed for the exact closed disk of radius $\sqrt2$, together with the sharper odd-length argument. The published solution establishes these steps; this partial attempt does not claim them.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/395}; He, Ju\v skevi\v cius, Narayanan and Spiro, \emph{On the reverse Littlewood--Offord problem of Erd\H{o}s}, pairing and stability arguments: \url{https://arxiv.org/html/2408.11034}.
+
+\textbf{Completion rate estimate: 75\%.}

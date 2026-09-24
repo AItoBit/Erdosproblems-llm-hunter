@@ -1,0 +1,31 @@
+\section{Erd\H{o}s Problem \#586: covering systems with divisibility-incomparable moduli}
+\noindent Restricted-case proof and structural reductions, 24 September 2026.
+
+\subsection*{Statement and known answer}
+Can finitely many residue classes $a_i\pmod {d_i}$, with $d_i>1$ and no distinct moduli dividing one another, cover all integers? The known answer is no, by Balister--Bollob\'as--Morris--Sahasrabudhe--Tiba. We do not reproduce their full distortion-sieve proof. We prove the assertion when the moduli together involve at most two primes, and a prime-power exclusion for any putative counterexample.
+
+\subsection*{Periodic density and a first obstruction}
+Let $L=\operatorname{lcm}(d_1,\ldots,d_s)$. The union covers the integers exactly when it covers every residue modulo $L$. A class modulo $d_i$ covers $L/d_i$ of these residues. Consequently covering requires
+\[\sum_i\frac1{d_i}\geq1.\tag{1}\]
+This is only a necessary condition: overlaps can make the inequality very wasteful.
+If all the $d_i$ are pairwise coprime, choose $b_i\not\equiv a_i\pmod {d_i}$ and apply the Chinese remainder theorem. The resulting integer avoids every class, regardless of whether (1) holds.
+
+\subsection*{The complete two-prime case}
+Suppose every modulus is $p^{u_i}q^{v_i}$ for two distinct primes $p,q$, allowing zero exponents. In a divisibility antichain, the exponents $u_i$ are distinct: equal $u$ values would leave two powers of $q$, one dividing the other. For those indices with $u_i>0$, their forbidden congruences modulo $p^{u_i}$ have union of density at most
+\[\sum_{u_i>0}p^{-u_i}\leq\sum_{j=1}^{M}2^{-j}<1,
+\qquad M=\max_i u_i,
+\]
+where omitted exponents can only decrease the sum. Thus some residue $b$ modulo $p^M$ avoids all these $p$-part congruences. The assertion is vacuous if there are no positive $u_i$.
+There is at most one remaining modulus with $u_i=0$. If present it is $q^v$ with $v\geq1$; choose a residue $c\not\equiv a_i\pmod {q^v}$. The Chinese remainder theorem combines $b$ with $c$. This integer avoids the exceptional $q$-power class and every other class by its $p$ coordinate. If the exceptional class is absent, any integer congruent to $b$ suffices. Hence two primes never support the proposed covering. One-prime antichains contain at most one modulus and are immediate.
+
+\subsection*{Prime powers cannot occur in any minimal counterexample}
+Suppose a covering with antichain moduli exists, and discard classes until it is inclusion-minimal. Assume one modulus is $d=p^a$. Antichainhood implies that every other modulus has $p$-adic exponent at most $a-1$. Thus, with $L$ the least common multiple of all moduli, every other modulus divides $L/p$, while $p^a$ does not.
+By minimality, deleting the class modulo $p^a$ leaves an integer $x$ uncovered. Since all remaining moduli divide $L/p$, the entire progression $x+(L/p)\mathbb Z$ is uncovered by those classes. Its residues modulo $p^a$ run through $p$ distinct values, because the $p$-adic exponent of $L/p$ is $a-1$. One residue class modulo $p^a$ cannot contain this entire progression. An integer remains uncovered even after restoring that class, a contradiction.
+Thus a minimal counterexample would have no prime-power modulus, would involve at least three primes, and would satisfy (1). These are simultaneous, proved restrictions, not a proof that such a counterexample exists.
+
+\subsection*{Outcome and remaining gap}
+\textbf{Attempt status: unresolved.} The restricted theorem and reductions are complete. Handling arbitrarily many prime coordinates is the missing step. The known general disproof uses distortion measures and quantitative antichain moment bounds; citing its final theorem would not supply that missing argument here.
+Sources: \url{https://www.erdosproblems.com/586}; P. Balister et al., \emph{On the Erd\H{o}s covering problem: the density of the uncovered set}, Theorem 9.1 and its prime-power reduction, \url{https://arxiv.org/abs/1811.03547}. The two-prime argument is independently supplied above. No novelty or formal-verification claim is made.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

@@ -1,0 +1,43 @@
+\section{Erd\H{o}s Problem \#146: the forest case and the four-cycle benchmark}
+\noindent Independent partial reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known negative resolution}
+The proposed bound is $\operatorname{ex}(n,H)=O_H(n^{2-1/r})$ for every bipartite $r$-degenerate graph $H$. Here degeneracy means that every nonempty induced subgraph has a vertex of degree at most $r$. The current problem page records a connected, bipartite, 2-degenerate counterexample with extremal exponent strictly greater than $3/2$, attributed to an internal OpenAI model. This note does not reconstruct that counterexample. It proves the forest case and checks the sharp exponent for the particular graph $C_4$.
+
+\subsection*{2) The complete $r=1$ argument}
+A graph is 1-degenerate precisely when it is a forest. A cycle supplies a subgraph of minimum degree two, so cannot occur in a 1-degenerate graph. Conversely, every nonempty forest has a vertex of degree at most one.
+
+Let $H$ be a forest on $h\ge2$ vertices. Any graph of minimum degree at least $h-1$ contains a copy of $H$: embed each tree from a root, adding a vertex next to its already embedded parent. Before adding the last vertex, at most $h-2$ other used vertices can be neighbours of the parent, so an unused neighbour exists. At the start of a new component there is an unused vertex, since the host has at least $h$ vertices.
+
+Consequently an $H$-free graph has, in every nonempty induced subgraph, a vertex of degree at most $h-2$. Delete vertices successively and count each edge when its first endpoint is deleted. This gives
+\[
+ \operatorname{ex}(n,H)\le(h-2)n,
+\]
+which is the required exponent one. The case of a one-vertex forbidden graph has no nonempty admissible host and is immaterial to the asymptotic assertion.
+
+\subsection*{3) An exact counting bound for $C_4$}
+In a $C_4$-free graph, two distinct vertices have at most one common neighbour. If the degrees are $d_1,\ldots,d_n$ and the edge count is $e$, then
+\[
+ \sum_{i=1}^n\binom{d_i}{2}\le\binom n2.
+\]
+By Cauchy--Schwarz, $\sum d_i^2\ge4e^2/n$ and $\sum d_i=2e$. Hence
+\[
+ \frac{4e^2}{n}-2e\le n(n-1),\qquad
+ e\le\frac n4\bigl(1+\sqrt{4n-3}\bigr)=O(n^{3/2}).\tag{1}
+\]
+
+For a matching lower exponent, fix a prime $q$. Take one part to be the $q^2$ points $(x,y)\in\mathbb F_q^2$, the other the $q^2$ lines $y=ax+b$ with $(a,b)\in\mathbb F_q^2$, and join incident pairs. There are $2q^2$ vertices and $q^3$ edges. Two points with different first coordinates determine at most one such line, while two points with equal first coordinates lie on no common such line. Thus there is no four-cycle. Infinitely many primes give infinitely many orders at which the lower bound is a fixed positive multiple of $n^{3/2}$. Since $C_4$ is bipartite and 2-degenerate, the proposed exponent is attained for this particular forbidden graph.
+
+\subsection*{4) Why this does not settle the general assertion}
+Degeneracy is not a bound on the maximum degree of either bipartition class. Even a tree formed from two adjacent degree-three vertices, each with two leaf neighbours, has a degree-three vertex in both classes. Thus a theorem assuming maximum degree at most $r$ on one side cannot be applied to every $r$-degenerate bipartite graph.
+
+There is a separate logical distinction from Problem 147: a 3-regular graph with a small extremal number disproves a proposed minimum-degree lower bound, but is not 2-degenerate and does not disprove the present upper-bound assertion. Neither that example nor the special case (1) supplies the required counterexample here.
+
+\textbf{ATTEMPT UNRESOLVED for reconstruction of the general disproof.} The forest proof and the $C_4$ benchmark are complete, elementary, known arguments. No new result or independent formal verification is claimed.
+
+\subsection*{5) Sources}
+\url{https://www.erdosproblems.com/146}, checked 23 September 2026, for the statement and current resolution. The proofs above use only greedy embedding, degree counting, and elementary arithmetic over a prime field; they do not rely on the cited counterexample.
+
+The estimate credits the complete special cases and distinguishes the two degree conditions; the actual negative construction remains absent. It is subjective, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

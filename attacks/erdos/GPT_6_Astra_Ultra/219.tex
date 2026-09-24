@@ -1,0 +1,89 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#219; reconstruction of the Green--Tao reduction, 2026-09-23.}
+Do the primes contain arithmetic progressions of every finite length, with positive common difference? The related demand that the progression consist of consecutive primes is a different, stronger question and is not established here.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Green and Tao proved the assertion. This file gives a complete deduction using two explicitly declared inputs from their proof: the relative Szemer\'edi theorem and the pseudorandomness of a truncated-divisor-sum majorant. It proves the majorization calculation, the positive weighted density, removal of constant progressions, and the passage from cyclic progressions to ordinary integer progressions. It is not a self-contained replacement for their two deep inputs.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Remove small-prime congruence obstructions by the $W$-trick, dominate the resulting prime weight by a measure to which relative Szemer\'edi applies, and then check the integer and nondegeneracy issues explicitly.
+
+\section{WORK}
+Fix $k\geq3$; the shorter cases follow by taking subprogressions. Let $N$ tend to infinity through primes, choose $w=w(N)\to\infty$ sufficiently slowly, and set
+\[
+W=\prod_{p\leq w}p,\quad
+\varepsilon=\frac1{2^k(k+4)!},\quad
+\alpha=\frac1{k2^{k+4}},\quad R=N^\alpha,
+\quad I=[\varepsilon N,2\varepsilon N]\cap\mathbb Z.
+\]
+For integer $n$, define
+\[
+\widetilde\Lambda(n)=
+\begin{cases}
+\dfrac{\varphi(W)}W\log(Wn+1),&Wn+1\text{ prime},\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{1}
+\]
+The prime number theorem in a fixed arithmetic progression, followed by a diagonal choice of the slowly growing $w$, gives
+\[
+\sum_{n\in I}\widetilde\Lambda(n)=(\varepsilon+o(1))N,
+\qquad \log W=o(\log N).
+\tag{2}
+\]
+This standard analytic number-theory input is used explicitly. The diagonal choice means each fixed $W$ is retained until its prime-number-theorem error is small enough; a uniform theorem for arbitrary growing moduli is not being assumed.
+
+Put $\Lambda_R(m)=\sum_{d\mid m,\ d\leq R}\mu(d)\log(R/d)$, and identify $\mathbb Z/N\mathbb Z$ with $\{0,\ldots,N-1\}$. Define
+\[
+\nu(n)=\begin{cases}
+\dfrac{\varphi(W)}W\dfrac{\Lambda_R(Wn+1)^2}{\log R},&n\in I,\\
+1,&n\notin I.
+\end{cases}
+\tag{3}
+\]
+
+\textbf{Declared input A (Green--Tao, Section 9).} For this choice of parameters and sufficiently slowly growing $w$, (3) is $k$-pseudorandom in their Definition 3.3. Precisely, it has mean $1+o(1)$, satisfies their $(k2^{k-1},3k-4,k)$ linear-forms condition, and satisfies their $2^{k-1}$-correlation condition. The former says averages of products along at most $k2^{k-1}$ nonproportional affine linear forms in at most $3k-4$ variables, with bounded rational coefficients, are $1+o(1)$ uniformly in translations. The latter bounds shifted-product averages by sums of difference weights whose every fixed finite moment is bounded. These are the exact hypotheses of the following input, not an informal assertion of randomness. Their verification uses Goldston--Y\i ld\i r\i m estimates and is not reproduced here.
+
+\textbf{Declared input B (Green--Tao, Theorem 3.5).} If $0\leq f\leq\nu$, $\mathbb E f\geq\delta>0$, and $\nu$ is $k$-pseudorandom as above, then
+\[
+\mathbb E_{x,r\in\mathbb Z/N\mathbb Z}
+\prod_{j=0}^{k-1}f(x+jr)\geq c(k,\delta)-o(1),
+\tag{4}
+\]
+where $c(k,\delta)>0$. This is relative Szemer\'edi, not a prime-progression assumption.
+
+\textbf{Checking the domination.} Set $f=(\alpha/2)\widetilde\Lambda\,1_I$. If $Wn+1$ is not prime, $f(n)=0\leq\nu(n)$. If it is prime and $n\in I$, then $Wn+1>R$ for large $N$. Its only divisor at most $R$ is one, so $\Lambda_R(Wn+1)=\log R$ and
+\[
+\nu(n)=\frac{\varphi(W)}W\alpha\log N.
+\]
+By $\log W=o(\log N)$ and $n<N$, we have $\log(Wn+1)\leq2\log N$ for large $N$. Hence $f(n)\leq\nu(n)$ also in this case. Outside $I$, $f=0$. Equation (2) gives
+\[
+\mathbb E f=\alpha\varepsilon/2+o(1)\geq\delta,
+\qquad \delta=\alpha\varepsilon/4>0,
+\tag{5}
+\]
+for large $N$. Thus all hypotheses of (4) have been checked.
+
+\textbf{Removing constant progressions.} Since $0\leq f(n)\ll_k\log N$, the contribution of $r=0$ to the normalized average in (4) is at most
+\[
+N^{-2}\sum_x f(x)^k\ll_k (\log N)^k/N=o(1).
+\]
+For sufficiently large $N$, some pair $(x,r)$ with $r\ne0$ consequently has every factor positive.
+
+\textbf{Removing wraparound.} Let $n_j\in I$ be the integer representative of $x+jr$ for $0\leq j<k$. Each second difference $n_{j+2}-2n_{j+1}+n_j$ is divisible by $N$. Its absolute value is at most $2\varepsilon N<N$, because all the $n_j$ lie in an interval of length at most $\varepsilon N$. Therefore every second difference is zero as an integer. The $n_j$ form a genuine integer arithmetic progression of common difference $d=n_1-n_0\ne0$. Reversing the order if necessary makes the difference positive. By (1), the numbers
+\[
+Wn_0+1,\ Wn_1+1,\ldots, Wn_{k-1}+1
+\]
+are primes in an arithmetic progression with nonzero difference $Wd$. Their minimum tends to infinity as $N\to\infty$, so there are infinitely many such progressions, not just one fixed example.
+
+\section{VERIFICATION AND SCOPE}
+Prime powers were excluded in (1), so every counted term is genuinely prime. Positive weighted density does not by itself imply a nonconstant progression; the explicit $r=0$ bound addresses that issue. The second-difference argument proves integer progression without assuming that a cyclic common difference is a small positive integer. The full original conclusion follows from the declared inputs. The proof does not establish consecutiveness of the primes, effective small numerical thresholds, or a new proof of the transference and sieve estimates.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and distinction from consecutive prime progressions: \url{https://www.erdosproblems.com/219}.
+\item B. Green and T. Tao, \emph{The primes contain arbitrarily long arithmetic progressions}, especially Definitions 3.1--3.3, Theorem 3.5, Proposition 9.1, Definition 9.3, and Section 9: \url{https://arxiv.org/abs/math/0404188}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved using explicitly stated external inputs.} Primes contain nonconstant arithmetic progressions of every finite length. This reconstructs the cited reduction and claims no novelty.
+\textbf{Completion rate estimate: 100\%.}

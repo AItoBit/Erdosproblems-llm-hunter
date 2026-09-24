@@ -1,0 +1,57 @@
+\section{Erd\H{o}s Problem \#227: maximum term versus maximum modulus}
+\noindent Partial reconstruction, 23 September 2026.
+
+\subsection*{1) Statement and known resolution}
+For a transcendental entire function $f(z)=\sum_{n\ge0}a_nz^n$, put
+\[
+ \mu(r)=\max_{n\ge0}|a_n|r^n,\qquad
+ M(r)=\max_{|z|=r}|f(z)|.
+\]
+The question asks whether existence of $\lim_{r\to\infty}\mu(r)/M(r)$ forces that limit to be zero. The current problem page records a negative answer by Clunie and Hayman, with every limit in $[0,1/2]$ achievable. This attempt establishes necessary restrictions and the zero-limit example, without reconstructing their positive-limit construction.
+
+\subsection*{2) Coefficient energy and changes of the largest term}
+Parseval's identity, valid by uniform convergence on each circle, gives
+\[
+ M(r)^2\ge\frac1{2\pi}\int_0^{2\pi}|f(re^{i\theta})|^2\,d\theta
+ =\sum_{n\ge0}|a_n|^2r^{2n}\ge\mu(r)^2.\tag{1}
+\]
+On any compact radius interval $[u,v]\subset(0,\infty)$, only finitely many indices can attain the maximum defining $\mu$. Indeed, a fixed nonzero coefficient gives a positive lower bound for $\mu$ there, while the uniform tail estimate $|a_n|r^n\le |a_n|v^n\to0$ excludes all sufficiently large indices. Thus the maximum is attained, and locally it is the maximum of finitely many continuous monomials.
+
+The indices attaining the maximum tend beyond every fixed bound as $r\to\infty$. To see this, fix $K$ and choose a nonzero coefficient $a_j$ with $j>K$, possible because $f$ is not a polynomial. For every $n\le K$, $|a_n|r^n/(|a_j|r^j)\to0$.
+
+It follows that there are arbitrarily large transition radii where two different terms attain $\mu$. Otherwise there would eventually be a unique maximizing index; local finiteness makes that index locally constant, hence constant on the connected remaining interval, contradicting the preceding paragraph. At every transition radius, (1) contains at least two terms equal to $\mu(r)^2$, so
+\[
+ \frac{\mu(r)}{M(r)}\le\frac1{\sqrt2}.
+\]
+Therefore
+\[
+ \liminf_{r\to\infty}\frac{\mu(r)}{M(r)}\le\frac1{\sqrt2},
+ \qquad \text{and any existing limit lies in }[0,1/\sqrt2].\tag{2}
+\]
+This restriction does not rule out a positive limit.
+
+\subsection*{3) An explicit zero-limit example}
+Take $f(z)=e^z$. Then $M(r)=e^r$. Since the ratio of consecutive terms is $r/(n+1)$, the largest term is $r^k/k!$ with $k=\lfloor r\rfloor$ (with the usual adjacent tie at integer $r$). Write $r=k+s$, $0\le s<1$. Stirling's formula yields
+\[
+ \frac{r^k}{k!e^r}
+ =\frac{1+o(1)}{\sqrt{2\pi k}}
+   \exp\bigl(k\log(1+s/k)-s\bigr)
+ \sim\frac1{\sqrt{2\pi r}}\longrightarrow0.
+\]
+The error in the exponent is $O(1/k)$ uniformly in $s\in[0,1)$. Replacing $z$ by $z^m$ gives the same conclusion for $e^{z^m}$, with asymptotic $(2\pi r^m)^{-1/2}$.
+
+\subsection*{4) A necessary sparsity condition for a positive limit}
+For $0<\eta\le1$, let $N_\eta(r)$ count indices with $|a_n|r^n\ge\eta\mu(r)$. Equation (1) gives
+\[
+ N_\eta(r)\le\frac{M(r)^2}{\eta^2\mu(r)^2}.
+\]
+If the ratio has positive limit $L$, then eventually $N_\eta(r)\le4/(\eta^2L^2)$. Thus a positive-limit example must have a uniformly bounded number of terms of any fixed relative size, even though the dominant index escapes to infinity. This energy condition alone does not control the phases of the terms or the maximum over the circle.
+
+\subsection*{5) Remaining gap and source}
+\textbf{UNRESOLVED in this attempt.} The construction realizing a positive limit is absent. The transition argument proves only (2), and no implication from that bound to a zero limit is claimed. The known negative resolution remains distinct from this partial reconstruction.
+
+Source: \url{https://www.erdosproblems.com/227}, checked 23 September 2026, including its attribution to Clunie and Hayman (1964). The elementary estimates and the $e^z$ example are proved above; no unproved counterexample is presented as constructed here.
+
+The estimate measures progress toward reconstructing a counterexample, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 20\%}

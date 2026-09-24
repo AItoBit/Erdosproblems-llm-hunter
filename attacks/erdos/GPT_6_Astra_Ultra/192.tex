@@ -1,0 +1,42 @@
+\section{Erd\H{o}s Problem \#192}
+\subsection*{1. FORMAL RESTATEMENT}
+Let $a_0,a_1,\ldots\in\mathbb R^d$ satisfy $a_{n+1}-a_n\in\{e_1,\ldots,e_d\}$. For which positive integers $d$ must its vertex set contain a nonconstant three-term arithmetic progression?
+\subsection*{2. LITERATURE AND SCOPE}
+The classification is $d\le3$. We prove the exact correspondence with abelian squares and the small-alphabet obstruction in full. For $d\ge4$ we explicitly use Ker\"anen's 1992 theorem that an infinite abelian-square-free word exists on four letters. Its morphism verification is an external theorem, not a computation claimed here.
+\subsection*{3. WALK--WORD EQUIVALENCE}
+Encode step $e_j$ by letter $j$. The displacement along a finite block is its vector of letter counts. If $i<j<k$, then
+\[
+ a_i+a_k=2a_j
+ \quad\Longleftrightarrow\quad
+ (\text{counts in steps }i,\ldots,j-1)
+ =(\text{counts in steps }j,\ldots,k-1).
+\]
+Equality of counts also gives $j-i=k-j$. Hence these consecutive blocks are permutations of each other: an abelian square. Conversely every such square gives the displayed progression. Any three-term progression in the vertex set is caught by this argument, since the sum of the coordinates of $a_n-a_0$ is $n$: its midpoint has the middle index.
+\subsection*{4. THE SHARP TERNARY BOUND}
+Every ternary word of length eight contains an abelian square. For completeness the entire finite proof is given below. Rename letters in order of first occurrence as $0,1,2$. Starting with the empty word, append an allowed letter and discard a word whenever its last $2t$ letters split into two blocks with equal count vectors. This tests precisely the new factors created by appending a letter. The surviving canonical words are
+\[
+\begin{array}{c|l}
+1&0\\
+2&01\\
+3&010,\ 012\\
+4&0102,\ 0120,\ 0121\\
+5&01020,\ 01021,\ 01201,\ 01202,\ 01210\\
+6&010201,\ 010210,\ 010212,\ 012010,\ 012101\\
+7&0102010,\ 0102101,\ 0121012\\
+8&\varnothing.
+\end{array}
+\]
+Each row follows by at most three extensions of each word in the preceding row and comparison of count vectors for $1\le t\le\lfloor n/2\rfloor$. This is a finite exhaustion with its full state list, not an assumption based on random sampling. A separate exact script checks all $3^8$ words as well.
+
+In particular nine consecutive vertices of a three-dimensional positive-unit walk already contain a progression. Dimensions one and two embed into dimension three.
+
+The threshold is eight letters, not seven: $0102010$ avoids abelian squares. The current problem-page sentence asserting a seven-letter threshold is off by one; this does not affect its dimension classification.
+\subsection*{5. FOUR AND MORE DIMENSIONS}
+By Ker\"anen's theorem choose an infinite word $w_0w_1\cdots$ on four letters with no abelian square. Define $a_0=0$ and $a_{n+1}=a_n+e_{w_n}$. The equivalence proved above excludes every three-term progression. Appending zero coordinates gives a counterexample for every $d>4$.
+\subsection*{6. FINAL AND DEPENDENCY}
+\textbf{SOLVED: the forced dimensions are exactly $d\le3$, relative to the explicitly cited Ker\"anen theorem.}
+The finite obstruction and both geometric reductions are proved here; the infinite four-letter word theorem is not reproved. This is an attributed reconstruction, with no novelty claim. The completion estimate refers to the classification with this standard external input.
+\subsection*{7. SOURCES}
+Current statement, \texttt{https://www.erdosproblems.com/192}. V. Ker\"anen, \emph{Abelian squares are avoidable on 4 letters}, ICALP 1992, LNCS 623, 41--52, \texttt{https://doi.org/10.1007/3-540-55719-9\_62}; the publisher's abstract explicitly states the infinite-word theorem and its 85-uniform morphism construction.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

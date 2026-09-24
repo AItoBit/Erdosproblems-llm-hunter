@@ -1,0 +1,157 @@
+\section*{Erd\H{o}s Problem 426}
+
+\paragraph{Statement and result.}
+Can an \(n\)-vertex graph have a positive constant multiple of
+\(2^{\binom n2}/n!\) nonisomorphic subgraphs which each occur exactly
+once? The answer is no. We reconstruct the qualitative argument of
+Brada\v{c} and Christoph. A subgraph here need not be induced.
+Put \(N=\binom n2\) and let \(f(H)\) denote the number in question,
+divided by \(2^N/n!\). We prove uniformly that \(f(H)=o(1)\).
+
+\paragraph{Standard external inputs.}
+We use the graph-enumeration theorem \(U_n\sim2^N/n!\), where \(U_n\)
+counts unlabelled \(n\)-vertex graphs (P\'olya--Wright), elementary
+binomial concentration and the bound
+\(\max_m\mathbb P(\operatorname{Bin}(N,1/2)=m)=O(1/n)\),
+and the bounded-differences inequality
+\[
+ \mathbb P(Z\leq\mathbb EZ-t)
+ \leq\exp\left(-\frac{2t^2}{\sum_i c_i^2}\right)
+ \tag{1}
+\]
+for a function of independent variables with coordinate influences
+at most \(c_i\). These inputs are not reproved here.
+
+\paragraph{1. Passing from isomorphism types to random embeddings.}
+The identity
+\[
+ 2^N=\sum_{F\text{ unlabelled},\,|V(F)|=n}
+       \frac{n!}{|\operatorname{Aut}(F)|}
+\]
+and the enumeration theorem imply that the number of types with a
+nontrivial automorphism is \(o(2^N/n!)\): each such type accounts for
+a deficit at least \(n!/2\) in comparison with \(n!U_n\).
+Also \(\sum_{k<n}U_k=o(2^N/n!)\). To see this last assertion, for
+\(k\geq n/2\) use \(U_k\leq C2^{\binom k2}/k!\); consecutive terms
+have ratio \(k2^{-(k-1)}\), so the sum is dominated by its last term.
+For \(k<n/2\), the crude bound \(U_k\leq2^{\binom k2}\) suffices.
+
+An asymmetric spanning subgraph has one copy in \(H\) exactly when
+there is one vertex bijection embedding it into \(H\). Each asymmetric
+type has \(n!\) labellings. It follows, uniformly in \(H\), that
+\[
+ f(H)=\mathbb P_{G\sim G(n,1/2)}
+       (G\text{ has exactly one embedding into }H)+o(1).
+ \tag{2}
+\]
+
+\paragraph{2. Positive probability forces only \(O(n)\) missing edges.}
+Suppose the probability in (2) is at least a fixed \(\delta>0\).
+Choose \(L=L(\delta)\) so that the binomial edge count lies in
+\(I=[N/2-Ln,N/2+Ln]\) except with probability at most \(\delta/2\).
+Consider the random graph process \(G_0\subset\cdots\subset G_N\),
+adding a uniformly random unused edge each time.
+Let \(X\) count the integers \(m\in I\) at which \(G_m\) has exactly
+one embedding into \(H\). Conditional on its edge count, \(G(n,1/2)\)
+has the distribution of \(G_m\). The binomial point-mass bound gives
+\(\mathbb EX\geq c_\delta n\). Since \(X\leq2Ln+2\), there are
+constants \(\alpha,\beta>0\), depending only on \(\delta\), such that
+\[
+ \mathbb P(X\geq\alpha n)\geq\beta.
+ \tag{3}
+\]
+
+The number of embeddings is nonincreasing as edges are added, so the
+indices with exactly one embedding form an interval. Stop at the first
+such index in \(I\), when one exists. By conditioning on the stopped
+history, (3) supplies a history for which the conditional probability
+of \(X\geq\alpha n\) is at least \(\beta\).
+Write \(m\) for that index and \(\pi\) for its unique embedding.
+For \(h=\lfloor\alpha n\rfloor-1\), the event in (3) requires that
+\(\pi\) survive the next \(h\) edges. The random process after the
+stopping time still adds edges uniformly, so this probability is
+\[
+ \frac{\binom{e(H)-m}{h}}{\binom{N-m}{h}}
+ \leq\left(\frac{e(H)}N\right)^h.
+ \tag{4}
+\]
+If the numerator has too few available edges, its value is zero.
+Writing \(t=N-e(H)\), (4) is at most \(\exp(-th/N)\).
+Thus \(\beta\leq\exp(-th/N)\), which implies \(t\leq C_\delta n\).
+
+\paragraph{3. A sparse complement supplies many possible switches.}
+Fix \(C\geq1\), assume the complement \(K=\overline H\) has at most
+\(Cn\) edges, and let \(J\sim G(n,1/2)\).
+An embedding \(G\to H\) corresponds, by inversion, to an embedding
+\(K\to\overline G\); thus it suffices to exclude a unique embedding
+\(K\to J\) with probability \(1-o(1)\).
+
+At least \(n/2\) vertices of \(K\) have degree less than \(4C\).
+The graph on these vertices has an independent set \(B\) of size at
+least \(n/[2(4C+1)]\), by the greedy independent-set bound.
+For large \(n\), start with \(T=B\), \(D=1\), so
+\(|T|\geq n/(\log n)^D\).
+If an outside vertex has a neighborhood in \(T\) which is not all of
+\(T\), but has size at least \(n/(\log n)^{6D}\), replace \(T\) by
+that neighborhood and replace \(D\) by \(6D\).
+Each chosen outside vertex becomes adjacent to all later members of
+\(T\); chosen vertices are distinct. Since every member of \(T\)
+has degree less than \(4C\), fewer than \(4C\) refinements are possible.
+The final \(D\) is bounded in terms of \(C\), \(T\) is independent,
+and, writing \(d_w=|N_K(w)\cap T|\), every \(w\notin T\) has either
+\[
+ d_w=|T|\quad\hbox{or}\quad d_w<n/(\log n)^{6D}.
+ \tag{5}
+\]
+
+Fix any bijection \(\pi:V(K)\to V(J)\). For \(u,v\in T\), call the
+pair switchable if \(J\) contains all edges from \(\pi(u)\) to
+\(\pi(N_K(v)\setminus N_K(u))\) and from \(\pi(v)\) to
+\(\pi(N_K(u)\setminus N_K(v))\).
+If \(\pi\) is already an embedding, switching its values at \(u,v\)
+then gives a different embedding. Common neighbors need no new edges,
+and \(u,v\) are nonadjacent in \(K\).
+
+Let \(Z\) count switchable unordered pairs from \(T\).
+Each event requires at most \(8C\) independent edges, so
+\[
+ \mathbb EZ\geq2^{-8C}\binom{|T|}{2}.
+ \tag{6}
+\]
+Only edges of \(J\) corresponding to pairs \(uw\), \(u\in T,w\notin T\),
+can influence \(Z\). When \(w\) is adjacent to all of \(T\), such an
+edge has no influence. Otherwise its influence is at most \(d_w\).
+Using (5) and \(\sum_wd_w\leq2Cn\),
+\[
+ \sum_i c_i^2
+ \leq |T|\sum_{\substack{w\notin T\\d_w<|T|}}d_w^2
+ \leq\frac{2Cn^3}{(\log n)^{6D}}.
+ \tag{7}
+\]
+Equations (1), (6), (7), and \(|T|\geq n/(\log n)^D\) give
+\[
+ \mathbb P(Z=0)
+ \leq\exp\bigl(-c_C n(\log n)^{2D}\bigr)
+ =o(1/n!),
+ \tag{8}
+\]
+uniformly over \(\pi\). A union bound over all \(n!\) bijections says
+that, with probability \(1-o(1)\), every embedding of \(K\) into \(J\)
+can be switched to a second one. There is therefore no unique embedding.
+If every influence in (7) is zero, \(Z\) is deterministic and positive
+by (6), so the same conclusion holds without dividing by zero in (1).
+
+\paragraph{Conclusion and attribution.}
+If \(f(H)\) failed to tend to zero uniformly, some fixed positive
+\(\delta\) and graphs on an unbounded sequence of orders would
+contradict (2), Step 2, and Step 3. Thus the answer is negative.
+This reconstructs the qualitative proof of D.~Brada\v{c} and
+M.~Christoph, \emph{Unique subgraphs are rare},
+\url{https://arxiv.org/abs/2410.16233}.
+Their stronger quantitative rate is not asserted here.
+Statement checked at \url{https://www.erdosproblems.com/426}
+on 24 September 2026. The explicit standard inputs above remain external.
+
+\paragraph{Completion estimate.}
+The qualitative disproof is complete using the stated enumeration and concentration theorems.
+\textbf{COMPLETION: 100\%}

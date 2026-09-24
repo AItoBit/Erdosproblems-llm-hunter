@@ -1,0 +1,65 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#303; a self-contained finite Ramsey reconstruction, 2026-09-24.}
+Prove that every finite coloring of the positive integers has three distinct same-colored positive integers $a,b,c$ with
+\[
+\frac1a=\frac1b+\frac1c.
+\]
+This also answers the formulation with a coloring of all integers, by restricting it to the positive integers.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Brown and R\"odl proved the affirmative result as part of a general transfer principle for homogeneous equations and their reciprocal forms. The following direct proof uses the same reciprocal-transfer idea but supplies the needed finite Ramsey argument explicitly. Powers of two ensure distinctness, an issue not settled by the usual Schur equation alone.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Color the edges between powers of two by the color of a reciprocal denominator associated with their difference. A monochromatic triangle gives three differences satisfying $x+y=z$. Clearing their reciprocals by a common multiple turns this into the desired equation.
+
+\section{WORK}
+\textbf{A finite monochromatic-triangle lemma.} If the edges of a complete graph are colored with $r\geq1$ colors, then a graph on
+\[
+M=1+r+r^2+\cdots+r^{r+1}
+\tag{1}
+\]
+vertices contains a monochromatic triangle. Here is a direct proof, including the finite bound. Define $T_1=1$ and $T_{j+1}=1+rT_j$, so $T_{r+2}=M$. From a set of at least $T_j$ vertices, choose one vertex. Its edges to the others have some color occurring at least $T_{j-1}$ times, because there are at least $rT_{j-1}$ remaining vertices. Retain that color class of neighbors.
+
+Iterating produces distinct vertices $v_1,\ldots,v_{r+2}$ such that, for each $i\leq r+1$, all edges from $v_i$ to the later chosen vertices have one color $c_i$. Two of $c_1,\ldots,c_{r+1}$ coincide, say $c_i=c_j$ with $i<j$. Choose any $k>j$. Then the three edges $v_iv_j$, $v_iv_k$, and $v_jv_k$ all have that color, proving the lemma.
+
+\textbf{Transfer to unit fractions.} Given an $r$-coloring $\chi$ of the positive integers, use the $M$ integer labels $0,1,\ldots,M-1$ as vertices. Let
+\[
+L=\operatorname{lcm}(1,2,\ldots,2^M).
+\]
+For $i<j$, the positive difference $2^j-2^i$ is below $2^M$ and hence divides $L$. Color the edge $\{i,j\}$ by
+\[
+\chi\!\left(\frac L{2^j-2^i}\right).
+\tag{2}
+\]
+By the lemma there are indices $i<j<k$ whose three edges have the same color. Set
+\[
+x=2^j-2^i,\qquad y=2^k-2^j,\qquad z=2^k-2^i=x+y.
+\]
+All three numbers divide $L$. Thus
+\[
+a=L/z,\qquad b=L/x,\qquad c=L/y
+\tag{3}
+\]
+are positive integers and, by (2), have the same color. Furthermore
+\[
+\frac1a=\frac zL=\frac{x+y}L=\frac1b+\frac1c.
+\]
+
+Finally, $z>x,y$ implies $a<b,c$. Also
+\[
+v_2(x)=i,\qquad v_2(y)=j,
+\]
+because the factors $2^{j-i}-1$ and $2^{k-j}-1$ are odd. Since $i<j$, we have $x\neq y$, and therefore $b\neq c$. This verifies pairwise distinctness in full.
+
+\section{VERIFICATION AND SCOPE}
+All arguments are finite and supply an explicit, though extremely large, interval bound: every denominator in (3) is at most $L$. The proof imports no Ramsey theorem without proof. The powers of two eliminate the degenerate possibility $b=c$, and the common multiple ensures that reciprocal transfer yields integers. The result and transfer method are attributed to the established literature.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem: \url{https://www.erdosproblems.com/303}.
+\item T. C. Brown and V. R\"odl, \emph{Monochromatic solutions to equations with unit fractions}, Bulletin of the Australian Mathematical Society 43 (1991), 387--392: \url{https://doi.org/10.1017/S0004972700029221}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved.}
+The finite Ramsey construction gives three distinct same-colored positive integers satisfying the required reciprocal equation.
+\textbf{Completion rate estimate: 100\%; the proof is self-contained.}

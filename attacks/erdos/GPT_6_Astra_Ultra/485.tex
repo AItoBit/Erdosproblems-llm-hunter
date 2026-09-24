@@ -1,0 +1,53 @@
+\section{Erd\H{o}s Problem \#485: how sparse can a polynomial square be?}
+\noindent Degree-descent reconstruction with a stated structural input, 24 September 2026.
+
+\subsection*{Statement}
+Let $f(k)$ be the minimum number of nonzero terms in $P(x)^2$ among $P\in\mathbb Q[x]$ with exactly $k$ nonzero terms. Does $f(k)\to\infty$? We reconstruct the bound
+\[f(k)\ge2+\frac{\log(k-1)}{\log8}\qquad(k\ge2).\tag{1}\]
+The proof is a specialization of Schinzel--Zannier's degree-descent argument. Its bivariate lifting lemma is an explicit external input; we do not present that substantial lemma as elementary or as proved here.
+
+\subsection*{The structural input, in the exact square case used}
+Suppose
+\[Q(x)=a_0+\sum_{j=1}^{t-1}a_jx^{n_j}=P(x)^2,
+\quad a_j\ne0,\quad0<n_1<\cdots<n_{t-1}=N,
+\]
+and $P$ has $k$ terms. Choose integers $q,p_1,\ldots,p_{t-2}$ satisfying
+\[1\le q\le8^{t-2},\qquad |qn_j-Np_j|<N/8.
+\]
+Set $p_0=n_0=0$, $p_{t-1}=q$, $r_j=qn_j-Np_j$, and $r=\min_j r_j$. Schinzel's lifting lemma, as restated in Lemma 2 of Schinzel--Zannier, says that either
+\[k\le1+8^{t-2}/2,
+\]
+or
+\[F(y,z):=z^{-r}\sum_{j=0}^{t-1}a_jy^{p_j}z^{r_j}
+=cH(y,z)^2,\tag{2}\]
+where $c\in\mathbb Q^*$ and $H\in\mathbb Q[y,z]$ has at least $k$ terms. The approximation also gives $0\le p_j\le q$ for the interior indices. Notice that $r\le0$, $r_0=r_{t-1}=0$, and $\deg_zF<N/4$.
+
+The required simultaneous approximation exists by a direct pigeonhole argument. Partition $[0,1)^{t-2}$ into $8^{t-2}$ half-open cubes of side $1/8$, and compare the $8^{t-2}+1$ fractional-part vectors of $\ell(n_1/N,\ldots,n_{t-2}/N)$. Two in the same cube supply $q$ and the strict errors above. When $t=2$, take $q=1$ with no interior coordinates.
+
+\subsection*{A support observation}
+If a polynomial $R$ in characteristic zero has nonzero constant term and $R(x)^2\in\mathbb Q[x^q]$, then $R\in\mathbb Q[x^q]$. Over a field containing a primitive $q$th root $\zeta$, the equality $R(\zeta x)^2=R(x)^2$ gives $R(\zeta x)=\pm R(x)$ in an integral domain. Their common nonzero constant term forces the plus sign. Every exponent with nonzero coefficient is consequently divisible by $q$. The case $q=1$ is immediate.
+
+\subsection*{Minimal-degree descent}
+Suppose (1) fails. Among all counterexamples choose $P$ of least degree, first removing its initial monomial factor so $P(0)\ne0$. Put $L=8^{t-2}$, so failure means $k>1+L$. In particular
+\[N=2\deg P\ge2(k-1)>2L.\tag{3}\]
+The lifting lemma must give (2). Since $\deg_zH<N/8$, choose the smallest positive integer $h>N/8$ satisfying $h\equiv N\pmod q$. Then $h\le N/8+q$. The substitution $H(x^h,x)$ preserves its number of terms: an equality $h\alpha+\beta=h\alpha'+\beta'$ between exponents, with $0\le\beta,\beta'<N/8<h$, forces both coordinate exponents to agree.
+
+For every $j$, $hp_j+r_j$ is divisible by $q$. It is positive for $j>0$: if $p_j=0$ then $r_j=qn_j>0$, while otherwise $hp_j+r_j>h-N/8>0$. Thus
+\[x^rF(x^h,x)=Q_1(x^q)
+\]
+for a polynomial $Q_1$ with nonzero constant term and at most $t$ terms. Equation (2) implies that $r$ is even: the order at zero of $cH(x^h,x)^2$ equals $-r$. After removing that initial monomial,
+\[Q_1(x^q)=cR(x)^2,\qquad R(x)=x^{r/2}H(x^h,x)\in\mathbb Q[x],\quad R(0)\ne0.
+\]
+The support observation gives $R(x)=G(x^q)$, and hence $Q_1=cG^2$. The polynomial $G$ has at least $k$ terms and its square at most $t$ terms. It is another counterexample, so minimality requires $2\deg G\ge N$.
+
+On the other hand, the exponent bounds give
+\[2\deg G=\deg Q_1\le\frac N8+q+\frac N{8q}.
+\]
+The convex function $q+N/(8q)$ on $[1,L]$ is at most the larger of its endpoint values. At $q=1$ the displayed bound is $N/4+1<N$ by (3). At $q=L$ it is at most $N/4+L<N$ by (3). Every allowed $q$ therefore gives $2\deg G<N$, a contradiction. This proves (1), and in particular $f(k)\to\infty$.
+
+\subsection*{Outcome, dependency and attribution}
+\textbf{SOLVED relative to the stated bivariate lifting lemma.} The simultaneous approximation, support lemma, injective specialization, normalization and degree contradiction are proved here. The lifting lemma is the unexpanded established input, not a newly proved step. The result is Schinzel--Zannier's known logarithmic lower bound specialized to squares.
+Sources: \url{https://www.erdosproblems.com/485}; A. Schinzel and U. Zannier, \emph{On the number of terms of a power of a polynomial}, Lemma 2 and Theorem 1, \url{https://ems.press/journals/rlm/articles/1990}. No novelty or formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

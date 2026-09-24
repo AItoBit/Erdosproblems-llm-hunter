@@ -1,0 +1,44 @@
+\section{Erd\H{o}s Problem \#608: a rational-parameter counterexample for $C_5$ edges}
+\noindent Exact construction and edge counts, 24 September 2026.
+
+\subsection*{Statement and source}
+Must every graph with $n$ vertices and more than $n^2/4$ edges have at least $2n^2/9$ edges lying in a $5$-cycle? No. We use a rational choice of parameters in the F\"uredi--Maleki construction recorded as Construction 2 by Grzesik--Hu--Volec. This avoids rounding issues and supplies an explicit $168$-vertex counterexample. It is a reconstruction, not a new extremal result.
+
+\subsection*{The graph}
+For a positive integer $t$, take four disjoint vertex sets with sizes
+\[|A|=4t,\quad |B|=7t,\quad |C|=7t,\quad |D|=10t.
+\]
+Put in every edge between $A,B$, every edge between $B,C$, every edge between $C,D$, and every edge within $D$. There are no other edges. Thus $n=28t$ and
+\[
+e(G)=28t^2+49t^2+70t^2+\binom{10t}{2}
+=197t^2-5t.
+\]
+Since $n^2/4=196t^2$, the edge hypothesis holds whenever $t\geq6$.
+
+\subsection*{Exactly which edges lie in a pentagon}
+Removing the edges internal to $D$ leaves a bipartite graph, with parts $A\cup C$ and $B\cup D$. Consequently every odd cycle must use an internal $D$ edge.
+No $5$-cycle contains a vertex of $A$. Otherwise choose an internal $D$ edge on that cycle and remove it. The remaining four-edge path joins two vertices of $D$ and passes through a vertex of $A$. But the distance between $A$ and $D$ in the graph is three: every such route must pass through $B$ and $C$. A path from $D$ through $A$ back to $D$ therefore has at least six edges, a contradiction. In particular none of the $28t^2$ edges between $A$ and $B$ lies in a $C_5$.
+
+Every other edge does lie in a $C_5$. For an edge $bc$ with $b\in B,c\in C$, choose $c'\in C\setminus\{c\}$ and distinct $d,d'\in D$; then
+\[b,c,d,d',c',b
+\]
+is a pentagon. For a prescribed edge $cd$ between $C,D$, the same pattern works after choosing $b,c',d'$ distinct as indicated. Finally every internal $D$ edge lies in a pentagon entirely within the clique $D$, since $|D|\geq5$. All cycles just listed have five distinct vertices.
+The exact number of edges lying in a pentagon is therefore
+\[e_{C_5}(G)=49t^2+70t^2+\binom{10t}{2}=169t^2-5t.
+\]
+This is strictly smaller than
+\[\frac29n^2=\frac{1568}{9}t^2,
+\]
+because $1568/9-169=47/9>0$.
+
+\subsection*{One concrete counterexample}
+Take $t=6$. The graph has $168$ vertices, $7062$ edges, and exactly $6054$ edges in pentagons. The thresholds are
+\[168^2/4=7056<7062,\qquad 2\cdot168^2/9=6272>6054.
+\]
+This proves failure of the literal inequality and, by letting $t\to\infty$, also refutes the proposed leading constant $2/9$ even with an $O(n)$ error. The asymptotic pentagonal-edge density here is $169/784<2/9$. We do not claim it is the optimum: the irrational proportions in the source give the sharper constant $(2+\sqrt2)/16$.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved.} The negative answer follows from the fully specified graph, exact counts and complete classification of its pentagonal edges. Sources: \url{https://www.erdosproblems.com/608}; A. Grzesik, P. Hu and J. Volec, \emph{Minimum number of edges that occur in odd cycles}, Construction 2 and its attribution to F\"uredi--Maleki, \url{https://arxiv.org/abs/1605.09055}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

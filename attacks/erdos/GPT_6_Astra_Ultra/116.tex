@@ -1,0 +1,85 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#116; reconstruction with an explicit harmonic-analysis input, 2026-09-23.}
+Let $p(z)=\prod_{j=1}^n(z-w_j)$ be monic, with $|w_j|\leq1$. Must the planar area of $\Lambda_p=\{z:|p(z)|<1\}$ be bounded below by a constant times $1/\log n$? We prove
+\[
+\operatorname{Area}(\Lambda_p)\geq\frac{c}{\log(2n)}\qquad(n\geq1)
+\tag{1}
+\]
+for an absolute $c>0$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Krishnapur, Lundberg, and Ramachandran proved this in 2025 by combining a zero-pushing construction with the Nazarov--Polterovich--Sodin theorem for harmonic functions. We reconstruct that route. For this lower bound alone, pushing zeros while working on the half-disc suffices; it gives an explicit degree-$4n$ auxiliary polynomial. The harmonic sign-area theorem is the sole deep external input. This is a reconstruction of the known method, not a novelty claim.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First dominate $|p|^4$ on $|z|\leq1/2$ by the modulus of a monic polynomial $Q$ all of whose roots lie on the unit circle. Then $\log|Q|$ is harmonic and vanishes at the origin. Its number of boundary sign changes is controlled by its degree, allowing a harmonic sign-area estimate.
+
+\section{WORK}
+\subsection{The stated external theorem}
+We use Theorem 1.8 of Nazarov--Polterovich--Sodin: there is $c_0>0$ such that any nonzero real harmonic function $h$, harmonic in a neighborhood of the closed unit disc, with $h(0)=0$ and at most $d\geq2$ sign changes on the unit circle, satisfies
+\[
+\operatorname{Area}(\{h<0\}\cap\mathbb D)\geq c_0/\log d.
+\tag{2}
+\]
+Their theorem is usually written for $h>0$; applying it to $-h$ gives (2). Its proof is not reproduced here.
+
+\subsection{An explicit replacement for each root}
+Fix $w$ with $|w|\leq1$. If $|w|>1/2$, put $\zeta=w/|w|$ and $q_w(z)=(z-\zeta)^4$. For $|z|\leq1/2$, writing $w=r\zeta$ gives
+\[
+|z-\zeta|^2-|z-w|^2
+=(1-r)(1+r-2\operatorname{Re}(z\overline\zeta))\geq0.
+\]
+Thus $|q_w(z)|\geq|z-w|^4$.
+
+If $|w|\leq1/2$, define
+\[
+q_w(z)=\frac{(z-w)^4-(1-\overline wz)^4}{1-(\overline w)^4}.
+\tag{3}
+\]
+Its denominator is nonzero, and the leading coefficient is one. Its four zeros solve $B_w(z)^4=1$, where $B_w(z)=(z-w)/(1-\overline wz)$. The inverse transformation $z=(w+\eta)/(1+\overline w\eta)$ sends each fourth root of unity $\eta$ to a distinct point of the unit circle. Hence all zeros of (3) lie on that circle.
+
+For $|z|,|w|\leq1/2$ the identity
+\[
+|1-\overline wz|^2-|z-w|^2=(1-|w|^2)(1-|z|^2)
+\]
+and the estimates $|1-\overline wz|^2\leq25/16$, $(1-|w|^2)(1-|z|^2)\geq9/16$ imply $|B_w(z)|\leq4/5$. When $z\ne w$, the reverse triangle inequality in (3) consequently gives
+\[
+\frac{|q_w(z)|}{|z-w|^4}
+\geq\frac{(5/4)^4-1}{1+(1/2)^4}
+=\frac{369}{272}>1.
+\tag{4}
+\]
+When $z=w$ the desired inequality has right-hand side zero and holds directly. Thus in both root cases $q_w$ is monic of degree four, has all roots on the unit circle, and satisfies $|q_w(z)|\geq|z-w|^4$ throughout the half-disc.
+
+\subsection{Area comparison and sign changes}
+Set $Q=\prod_{j=1}^nq_{w_j}$. Then $Q$ is monic of degree $m=4n$, all its roots have modulus one, and
+\[
+|Q(z)|\geq|p(z)|^4\quad(|z|\leq1/2).
+\tag{5}
+\]
+Define $h(\xi)=\log|Q(\xi/2)|$. The polynomial $Q$ is zero-free on a neighborhood of the closed half-disc, so $h$ is harmonic on a neighborhood of $\overline{\mathbb D}$. Also $|Q(0)|=1$, because it is monic with unit-modulus roots, and therefore $h(0)=0$. It is not identically zero: otherwise the analytic function $Q$ would have constant modulus on an open disc and hence would be constant, contrary to $\deg Q=4n$.
+
+On the unit circle the sign of $h(e^{it})$ is the sign of
+\[
+|Q(e^{it}/2)|^2-1.
+\]
+This is a real trigonometric polynomial of degree at most $m$. It is not identically zero, since the maximum principle for the harmonic function $h$ would otherwise give $h\equiv0$. Multiplication by $e^{imt}$ turns it into a nonzero polynomial in $e^{it}$ of degree at most $2m$. Hence it has at most $2m=8n$ zeros, and in particular at most $8n$ sign changes. Apply (2) with $d=8n$ and then scale by $z=\xi/2$:
+\[
+\operatorname{Area}\{z:|z|<1/2,\ |Q(z)|<1\}
+\geq\frac{c_0}{4\log(8n)}.
+\tag{6}
+\]
+By (5), every point counted on the left has $|p(z)|<1$. Since $\log(8n)\leq3\log(2n)$ for $n\geq1$, (6) proves (1) with $c=c_0/12$.
+
+\section{VERIFICATION AND SCOPE}
+The root replacement, degree bound, domination direction, sign-change count, and area scaling are proved explicitly. The offline exact checker verifies the rational constants $16/25$ and $369/272$ in the replacement estimate. No inference from sampled polynomial values is used. The input (2) is a known theorem with all relevant hypotheses checked here. The result does not assert that the exact minimum area has order $1/\log n$: the current upper and lower bounds need not match.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem: \url{https://www.erdosproblems.com/116}.
+\item M. Krishnapur, E. Lundberg, and K. Ramachandran, \emph{On the area of polynomial lemniscates}, particularly Section 6.1 and Lemma 21: \url{https://arxiv.org/html/2503.18270v1}.
+\item F. Nazarov, L. Polterovich, and M. Sodin, \emph{Sign and area in nodal geometry of Laplace eigenfunctions}, Theorem 1.8: \url{https://arxiv.org/html/math/0402412}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved using the explicit harmonic sign-area theorem.} The complete deduction above gives the requested universal logarithmic lower bound. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

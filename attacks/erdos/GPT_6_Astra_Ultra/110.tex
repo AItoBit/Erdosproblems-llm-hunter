@@ -1,0 +1,53 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#110; partial reconstruction and quantifier audit, 2026-09-23.}
+Does there exist $F:\mathbb N\to\mathbb N$ such that every graph of chromatic number $\aleph_1$ has, for all sufficiently large $k$, a finite subgraph of chromatic number exactly $k$ on at most $F(k)$ vertices? The eventual threshold may depend on the graph, but $F$ must be universal. The known answer is no. We independently prove the full corresponding obstruction for chromatic number $\aleph_0$ and specify the uncountable construction still missing from this reconstruction.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Lambie-Hanson's Theorem A establishes the negative answer in ZFC. Precisely, for every $f:\mathbb N\to\mathbb N$ there is a graph with $|G|=2^{\aleph_1}$ and $\chi(G)=\aleph_1$ such that every subgraph with fewer than $f(k)$ vertices has chromatic number less than $k$, for every $k\geq3$. Taking $f(k)=F(k)+1$ contradicts the proposed bound for every $k\geq3$, not just finitely many exceptions. This exact external theorem records the known resolution; its club-guessing construction is not proved in this file.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Construct finite graphs of arbitrarily high chromatic number and prescribed large girth by a probabilistic deletion argument. Assemble them into a countable graph whose finite chromatic witnesses exceed any prescribed function. This proves a substantive part of the surrounding problem and identifies precisely why merely repeating finite constructions does not reach $\aleph_1$.
+
+\section{WORK}
+\subsection{Finite graphs with large girth and large chromatic number}
+Fix integers $g\geq3$ and $m\geq3$. For large $N$, form a random graph on $N$ vertices, retaining edges independently with probability $p=N^{-1+1/(2g)}$. For each $3\leq\ell\leq g$, the expected number of cycles of length $\ell$ is at most $N^\ell p^\ell\leq N^{1/2}$. Thus the expected total number $X$ of such cycles is at most $gN^{1/2}$, and Markov's inequality gives $\mathbb P(X>N/4)\leq4gN^{-1/2}\to0$.
+
+Let $t=\lceil N/(2m)\rceil$. The expected number of independent sets of size $t$ is at most
+\[
+\binom Nt(1-p)^{\binom t2}
+\leq \exp\left(N\log2-\frac12p\,t(t-1)\right)\longrightarrow0,
+\]
+because the negative term has order $N^{1+1/(2g)}$, which dominates $N$. Therefore for sufficiently large $N$ there is an outcome with at most $N/4$ short cycles and no independent set of size $t$.
+
+Delete one vertex from each remaining cycle of length at most $g$. At most $N/4$ vertices are deleted, and deletion cannot create a cycle. The resulting graph has at least $3N/4$ vertices, girth greater than $g$, and independence number at most $t-1<N/(2m)$. Hence its chromatic number is at least its order divided by its independence number, and is greater than $3m/2$. In particular it is at least $m$.
+
+If necessary, delete vertices further until the chromatic number first becomes exactly $m$. Removing one vertex lowers chromatic number by at most one: a coloring after removal extends using one new color. Thus exact value $m$ must be attained. Girth cannot decrease under these deletions. We have proved the existence of a finite graph $H$ with $\chi(H)=m$ and girth greater than $g$.
+
+\subsection{Arbitrarily slow growth for a countably chromatic graph}
+Now fix any proposed function $F$. For every $m\geq3$, put
+\[
+g_m=\max\{3,F(3),F(4),\ldots,F(m)\},
+\]
+and choose a finite graph $H_m$ of chromatic number exactly $m$ and girth greater than $g_m$, as just proved. Let $G$ be the disjoint union of the $H_m$.
+
+The graph is countable and has unbounded finite chromatic numbers, so $\chi(G)=\aleph_0$. Fix $k\geq3$, and suppose a finite subgraph $J\subseteq G$ has at most $F(k)$ vertices. If its part in $H_m$ has $m<k$, that part is $(k-1)$-colorable. If $m\geq k$, then that part has at most $F(k)\leq g_m$ vertices and cannot contain a cycle: such a cycle would have length at most $g_m$, contrary to the girth of $H_m$. It is therefore a forest and is $2$-colorable. Since the parts lie in disjoint components, their colorings can reuse the same palette; $\chi(J)<k$.
+
+Consequently every finite subgraph of $G$ having chromatic number at least $k$ has more than $F(k)$ vertices, simultaneously for all $k\geq3$. In particular no subgraph of exactly chromatic number $k$ satisfies the proposed size bound. This proves the countable analogue with all quantifiers in the required order.
+
+\subsection{Why this does not settle the stated uncountable case}
+Even taking uncountably many disjoint copies of these finite graphs leaves the chromatic number at most $\aleph_0$: use the same countable palette on every component. Increasing the cardinality of the vertex set does not force uncountable chromatic number. The passage from this construction to $\chi(G)=\aleph_1$ requires additional structure, supplied in Lambie-Hanson's theorem by an uncountable combinatorial construction. That construction is the missing component of the present attempt.
+
+For clarity, ``at least $k$'' versus ``exactly $k$'' is not the obstacle. Any finite graph of chromatic number at least $k$ has an induced subgraph of chromatic number exactly $k$, by the one-vertex deletion argument above. The real issue is controlling the chromatic number of the whole infinite graph while imposing all finite size restrictions.
+
+\section{VERIFICATION AND SCOPE}
+The probabilistic bounds tend to zero for fixed $g,m$ as $N\to\infty$, so their simultaneous use is justified by the union bound. The assembly uses graphs with chromatic number exactly $m$, which is essential when $m<k$. No independence or consistency hypothesis is needed for the proved countable result. The ZFC uncountable theorem is cited accurately but not independently reconstructed.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem: \url{https://www.erdosproblems.com/110}.
+\item C. Lambie-Hanson, \emph{On the growth rate of chromatic numbers of finite subgraphs}, Theorem A and Sections 2--4: \url{https://arxiv.org/html/1902.08177}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved as an independent reconstruction of the uncountable counterexample.} The full arbitrary-function obstruction at chromatic number $\aleph_0$ is proved; the necessary $\aleph_1$ construction remains external. The known answer to the original question is negative; no novelty is claimed.
+\textbf{Completion rate estimate: 35\%.}

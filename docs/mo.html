@@ -12,7 +12,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathOverflow Problems - Problem Hunting with LLMs (beta)</title>
+    <title>MathOverflow Subset - Problem Hunting with LLMs (beta)</title>
     <link rel="stylesheet" href="styles.css">
     <script>
         window.MathJax = {
@@ -37,13 +37,13 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body class="list-page">
+<body class="list-page open-problems-page" data-collection="mo">
     <header>
-        <h1>MathOverflow Problems</h1>
+        <h1>MathOverflow Subset</h1>
         <nav>
             <a href="index.html">Home</a>
             <a href="erdos.html">Erdos Problems</a>
-            <a href="mo.html" class="active">MathOverflow</a>
+            <a href="open_problems.html" class="active">Top Open Problems</a>
             <a href="about.html">About</a>
             <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">Light</button>
         </nav>
@@ -52,238 +52,88 @@
     <main>
         <section class="description">
             <p>
-                Open problems from <a href="https://mathoverflow.net/">MathOverflow</a>,
-                a question and answer site for professional mathematicians.
+                The historical <a href="https://mathoverflow.net/">MathOverflow</a> collection is a subset of
+                <a href="open_problems.html">Top Open Problems</a>. Its original question links and attempts remain available.
+                MathOverflow questions are not assigned ranks in the Top 500 catalogue.
+            </p>
+            <p class="status-note">
+                Source status is unreviewed for this historical subset. An LLM claim is the attempt's own assessment;
+                community review and completion estimates are shown separately.
             </p>
         </section>
 
-        <section class="filters">
+        <section class="filters" aria-label="Filter problems">
+            <label for="search">Search:
+                <input type="search" id="search" placeholder="Title, statement, rank, ID or source…">
+            </label>
+            <label for="filter-domain">Domain:
+                <select id="filter-domain"><option value="">All domains</option></select>
+            </label>
+            <label for="filter-source">Collection:
+                <select id="filter-source" disabled>
+                    <option value="">All open problems</option>
+                    <option value="ranked">Ranked catalogue</option>
+                    <option value="mo" selected>MathOverflow subset</option>
+                </select>
+            </label>
             <label for="filter-attacks">
-                <input type="checkbox" id="filter-attacks" checked>
-                Only show problems with LLM attempts
+                <input type="checkbox" id="filter-attacks">
+                With LLM attempts only
             </label>
-            <label for="search">
-                Search: <input type="text" id="search" placeholder="Title or ID...">
+            <label for="sort-by">Sort:
+                <select id="sort-by">
+                    <option value="rank">Catalogue rank first</option>
+                    <option value="title">Title A–Z</option>
+                    <option value="attempts">Most attempts</option>
+                    <option value="score">MathOverflow score</option>
+                    <option value="review">Community review</option>
+                    <option value="claim">LLM claim</option>
+                    <option value="completion">Completion estimate</option>
+                </select>
             </label>
+            <button type="button" id="reset-filters" class="filter-reset">Reset filters</button>
         </section>
+        <p id="results-count" class="status-note" role="status" aria-live="polite">Loading catalogue…</p>
 
-        <section class="problems-list">
-            <table id="mo-table">
+        <section class="problems-list" aria-label="Problem catalogue" tabindex="0">
+            <table id="open-problems-table">
+                <caption class="visually-hidden">Problems, source status and LLM attempts</caption>
                 <thead>
                     <tr>
-                        <th>Question</th>
-                        <th>Score</th>
-                        <th id="review-header" style="cursor: pointer;" title="Click to sort by review">Community<br>Review ⇅</th>
-                        <th id="claim-header" style="cursor: pointer;" title="Click to sort by status">LLM<br>Claim ⇅</th>
-                        <th id="completion-header" style="cursor: pointer;" title="Click to sort by completion">Completion ⇅</th>
-                        <th>Models</th>
-                        <th>Link</th>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Problem</th>
+                        <th scope="col">Source status</th>
+                        <th scope="col">Community<br>review</th>
+                        <th scope="col">LLM claim</th>
+                        <th scope="col">Completion<br>estimate</th>
+                        <th scope="col">Models</th>
+                        <th scope="col">Source</th>
                     </tr>
                 </thead>
-                <tbody id="mo-tbody">
-                    <tr><td colspan="7">Loading...</td></tr>
+                <tbody id="open-problems-tbody">
+                    <tr><td colspan="8">Loading…</td></tr>
                 </tbody>
             </table>
         </section>
+        <noscript><p>Enable JavaScript to browse the catalogue, or download the <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/lists/top500-v22.json">ranked catalogue JSON</a>.</p></noscript>
 
         <section class="contribute-cta">
             <h3>Contribute</h3>
             <p>
-                Have an LLM attempt to share for a MathOverflow problem?
-                See our <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/CONTRIBUTING.md" target="_blank">Contributing Guidelines</a>
-                to submit your contribution.
+                Share a mathematical definition and a substantive attempt, with citations to the sources used.
+                See our <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guidelines</a>.
             </p>
         </section>
     </main>
-
     <footer>
         <p>
             <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter">GitHub Repository</a> |
             <a href="about.html">About</a> |
-            <a href="LICENSE">Apache License 2.0</a>
+            <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/LICENSE">Apache License 2.0</a>
         </p>
     </footer>
 
-    <script src="data/mo_data.js"></script>
+    <script src="data/open_problems_data.js"></script>
     <script src="app.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tbody = document.getElementById('mo-tbody');
-            const filterCheckbox = document.getElementById('filter-attacks');
-            const searchInput = document.getElementById('search');
-            const claimHeader = document.getElementById('claim-header');
-            const reviewHeader = document.getElementById('review-header');
-            const completionHeader = document.getElementById('completion-header');
-            let sortByStatus = 0; // 0 = by score, 1 = status A-Z, -1 = status Z-A
-            let sortByReview = 0; // 0 = by score, 1 = review A-Z, -1 = review Z-A
-            let sortByCompletion = 0; // 0 = by score, 1 = completion asc, -1 = completion desc
-            
-            const hasUnresolved = (attack) => /unresolved/i.test(attack.raw || '');
-
-            // Helper to determine overall status
-            const getOverallStatus = (attacks) => {
-                if (!attacks || attacks.length === 0) return 'zzz-none'; // Sort last
-                return attacks.some(hasUnresolved) ? 'unresolved' : 'solved';
-            };
-
-            function renderTable() {
-                if (typeof moProblems === 'undefined') {
-                    tbody.innerHTML = '<tr><td colspan="7">Error loading data</td></tr>';
-                    return;
-                }
-
-                const filterAttacks = filterCheckbox.checked;
-                const searchTerm = searchInput.value.trim().toLowerCase();
-
-                let problems = Object.values(moProblems);
-
-                // Sort by score descending, completion, review, or status
-                if (sortByCompletion !== 0) {
-                    problems.sort((a, b) => {
-                        const completionA = Number.isFinite(a.completion) ? a.completion : -1;
-                        const completionB = Number.isFinite(b.completion) ? b.completion : -1;
-                        return sortByCompletion * (completionA - completionB);
-                    });
-                } else if (sortByReview !== 0) {
-                    problems.sort((a, b) => {
-                        const reviewA = window.ProblemHunting.getReviewLabel(a.review);
-                        const reviewB = window.ProblemHunting.getReviewLabel(b.review);
-                        return sortByReview * reviewA.localeCompare(reviewB);
-                    });
-                } else if (sortByStatus !== 0) {
-                    problems.sort((a, b) => {
-                        const statusA = getOverallStatus(a.attacks);
-                        const statusB = getOverallStatus(b.attacks);
-                        return sortByStatus * statusA.localeCompare(statusB);
-                    });
-                } else {
-                    problems.sort((a, b) => b.score - a.score);
-                }
-
-                // Filter
-                if (filterAttacks) {
-                    problems = problems.filter(p => p.attacks && p.attacks.length > 0);
-                }
-                if (searchTerm) {
-                    problems = problems.filter(p =>
-                        p.id.includes(searchTerm) ||
-                        (p.title && p.title.toLowerCase().includes(searchTerm))
-                    );
-                }
-
-                if (problems.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7">No problems found</td></tr>';
-                    return;
-                }
-
-                tbody.innerHTML = problems.map(p => {
-                    // Shorten model names and limit to 2, prioritizing GPT Pro
-                    const shortenModel = (name) => {
-                        if (name.toLowerCase().includes('gpt pro')) return 'GPT Pro';
-                        if (name.toLowerCase().includes('gpt 5.2') || name.toLowerCase().includes('gpt_5.2')) return 'GPT 5.2';
-                        if (name.toLowerCase().includes('codex')) return 'Codex';
-                        if (name.toLowerCase().includes('claude') || name.toLowerCase().includes('opus')) return 'Opus 4.5';
-                        if (name.toLowerCase().includes('gemini')) return 'Gemini';
-                        return name.split(' ').slice(0, 2).join(' ');
-                    };
-                    let uniqueModels = [...new Set(p.attacks.map(a => shortenModel(a.model)))];
-                    // Prioritize GPT Pro - if present, put it first
-                    if (uniqueModels.includes('GPT Pro')) {
-                        uniqueModels = ['GPT Pro', ...uniqueModels.filter(m => m !== 'GPT Pro')];
-                    }
-                    const models = uniqueModels.slice(0, 2).join(', ') || '-';
-                    const modelsLabel = models === '-' ? models : models.toLowerCase();
-                    // Decode HTML entities in title
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = p.title || `Question ${p.id}`;
-                    const title = tempDiv.textContent || tempDiv.innerText || `Question ${p.id}`;
-                    
-                    // Determine overall status based on the source content.
-                    const determineStatus = (attacks) => {
-                        if (!attacks || attacks.length === 0) return 'none';
-                        return attacks.some(hasUnresolved) ? 'unresolved' : 'solved';
-                    };
-                    
-                    const status = determineStatus(p.attacks);
-                    const statusClass = status === 'solved' ? 'table-status-solved' :
-                                       status === 'unresolved' ? 'table-status-unresolved' :
-                                       '';
-                    const reviewLabel = window.ProblemHunting.getReviewLabel(p.review);
-                    const reviewClass = window.ProblemHunting.getReviewClass(p.review);
-                    const reviewHandles = window.ProblemHunting.getReviewHandles(p.review);
-                    const reviewTitle = reviewHandles.length
-                        ? `Reviewed by ${reviewHandles.map(handle => `@${handle}`).join(', ')}`
-                        : '';
-                    const reviewLabelHtml = reviewTitle
-                        ? `<span title="${reviewTitle}">${reviewLabel}</span>`
-                        : reviewLabel;
-                    const completionLabel = window.ProblemHunting.formatCompletion(p.completion);
-
-                    return `
-                        <tr>
-                            <td><a href="problem.html?type=mo&id=${p.id}">${title}</a></td>
-                            <td>${p.score}</td>
-                            <td class="${reviewClass}">${reviewLabelHtml}</td>
-                            <td class="${statusClass} claim-status">${status}</td>
-                            <td>${completionLabel}</td>
-                            <td>${modelsLabel}</td>
-                            <td><a href="${p.link}" target="_blank">MO</a></td>
-                        </tr>
-                    `;
-                }).join('');
-                
-                // Trigger MathJax to render any TeX in titles
-                if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
-                    MathJax.typesetPromise([tbody]).catch(err => console.warn('MathJax error:', err));
-                }
-            }
-
-            // Use debounce from app.js for search input
-            const debouncedRender = window.ProblemHunting.debounce(renderTable, 200);
-
-            filterCheckbox.addEventListener('change', renderTable);
-            searchInput.addEventListener('input', debouncedRender);
-            claimHeader.addEventListener('click', () => {
-                // Cycle: default (0) -> A-Z (1) -> Z-A (-1) -> default (0)
-                if (sortByStatus === 0) {
-                    sortByStatus = 1;
-                } else if (sortByStatus === 1) {
-                    sortByStatus = -1;
-                } else {
-                    sortByStatus = 0;
-                }
-                sortByCompletion = 0;
-                sortByReview = 0;
-                renderTable();
-            });
-            reviewHeader.addEventListener('click', () => {
-                // Cycle: default (0) -> A-Z (1) -> Z-A (-1) -> default (0)
-                if (sortByReview === 0) {
-                    sortByReview = 1;
-                } else if (sortByReview === 1) {
-                    sortByReview = -1;
-                } else {
-                    sortByReview = 0;
-                }
-                sortByStatus = 0;
-                sortByCompletion = 0;
-                renderTable();
-            });
-            completionHeader.addEventListener('click', () => {
-                // Cycle: default (0) -> asc (1) -> desc (-1) -> default (0)
-                if (sortByCompletion === 0) {
-                    sortByCompletion = 1;
-                } else if (sortByCompletion === 1) {
-                    sortByCompletion = -1;
-                } else {
-                    sortByCompletion = 0;
-                }
-                sortByStatus = 0;
-                sortByReview = 0;
-                renderTable();
-            });
-            renderTable();
-        });
-    </script>
 </body>
 </html>

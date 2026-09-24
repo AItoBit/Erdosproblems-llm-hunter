@@ -1,0 +1,52 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#378; reconstruction with endpoint correction, 2026-09-24.}
+Let
+\[
+S(n)=\#\{1\leq j\leq n-1:\ \binom nj\text{ is squarefree}\}.
+\]
+For each fixed positive integer $r$, establish existence of a positive natural density for $\{n:S(n)\geq r\}$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Granville and Ramar\'e proved this in \emph{Explicit bounds on exponential sums and the scarcity of squarefree binomial coefficients}. Their Theorem 5 counts the whole Pascal row, including $\binom n0=\binom nn=1$. Thus their $2m+2$ squarefree entries correspond to $2m$ \emph{internal} entries. Applying $2m+2$ directly to the problem's internal count would give an incorrect index shift.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Use the published distribution theorem with its exact endpoint convention. Prove the parity reduction, derive a finite complementary sum for each requested density, and give an elementary positive lower bound for the first two thresholds.
+
+\section{WORK}
+\textbf{External inputs, stated precisely.} Theorem 5 of Granville--Ramar\'e gives a natural density $\eta_m$ for the integers $n$ whose whole Pascal row has exactly $2m+2$ squarefree entries, for every integer $m\geq0$. Moreover $\eta_m>0$ for every $m\geq1$. Their Theorem 1 states that $\binom{2a}{a}$ is not squarefree for $a>4$. These two results are used as published inputs; the exponential-sum and sieve estimates establishing them are not reproduced here.
+
+\textbf{Why the number of internal entries is even.} The involution $j\mapsto n-j$ preserves $\binom nj$ and pairs all internal indices except possibly $j=n/2$. For odd $n$ there is no fixed index. For even $n>8$ the fixed central coefficient is not squarefree by the second input. Hence $S(n)$ is even for every $n>8$.
+
+Since the two endpoints always contribute two squarefree entries, the set
+\[
+E_m=\{n:S(n)=2m\}
+\]
+has density $\eta_m$. For $n>8$, failure of $S(n)\geq r$ is exactly membership in one of the finitely many disjoint sets $E_m$ with $2m<r$. Therefore the desired density exists and is
+\[
+\boxed{\ \delta_r=1-\sum_{m=0}^{\lceil r/2\rceil-1}\eta_m\ }.       \tag{1}
+\]
+Only a finite union is involved in this deduction, so no interchange of an infinite sum and a density limit is being assumed. If $m\geq\max(1,\lceil r/2\rceil)$, then $E_m\subseteq\{n:S(n)\geq r\}$ and $\eta_m>0$; hence $\delta_r>0$. Also (1) gives $\delta_{2h-1}=\delta_{2h}$ for $h\geq1$, reflecting the parity pairing.
+
+\textbf{An elementary check on the first thresholds.} For squarefree $n\geq3$, the two distinct entries at $j=1,n-1$ both equal $n$, so $S(n)\geq2$. The identity
+\[
+\mathbf1_{\text{squarefree}}(n)=\sum_{d^2\mid n}\mu(d)
+\]
+gives
+\[
+\#\{n\leq x:n\text{ squarefree}\}
+=\sum_{d\leq\sqrt x}\mu(d)\lfloor x/d^2\rfloor
+=\frac{x}{\zeta(2)}+O(\sqrt x).
+\]
+Here the rounding errors total $O(\sqrt x)$ and the omitted absolutely convergent series tail contributes $O(\sqrt x)$. Thus
+\[
+\delta_1=\delta_2\geq\frac6{\pi^2}.
+\]
+This independently verifies positivity at the first two thresholds, but does not identify their exact density.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to the two explicitly stated Granville--Ramar\'e theorems.} Formula (1), positivity for every fixed $r$, and the endpoint and parity conventions are fully justified. The deep published distribution theorem remains an external dependency; no new distribution theorem or numerical values of $\eta_m$ are claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/378}; Granville and Ramar\'e, Theorems 1 and 5 (printed pages 1 and 3): \url{https://dms.umontreal.ca/~andrew/PDF/ramare.pdf}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external inputs.}

@@ -1,0 +1,169 @@
+\section*{Erd\H{o}s Problem 650: matching integers to distinct multiples}
+
+\paragraph{Statement and answer.}
+Let \(f(m)\) be the largest universally guaranteed number of distinct
+elements of an \(m\)-element set \(A\subseteq\{1,\ldots,N\}\) that
+can be matched to distinct divisible integers in any interval of
+length \(2N\). Then
+\[
+ \boxed{f(m)=\min\{m,\lceil2\sqrt m\rceil\}.}
+\]
+We prove the lower bound even for open intervals, and give a matching
+upper construction whose endpoints are not multiples of any member
+of \(A\). Thus endpoint conventions do not affect the answer.
+In particular the displayed question \(f(m)\leq\sqrt m\) on the
+problem page is not the correct exact bound.
+
+\paragraph{Attribution.}
+This reconstructs the corrected proof of van Doorn, Li, and Tang,
+\emph{Optimal bounds for an Erd\H{o}s problem on matching integers
+to distinct multiples}, \url{https://arxiv.org/abs/2603.28636},
+Theorems 3.1 and 4.1. That paper attributes the original strategy to
+GPT-5.4 Pro and the repair of the exceptional injection to Aristotle.
+The present argument is an attributed reconstruction, not a new
+discovery or a claim of a new Lean verification.
+See \url{https://www.erdosproblems.com/650}.
+
+\paragraph{The matching reduction.}
+Let the right vertices be the integers in an open interval
+\(I=(x,x+2N)\), and join \(a\in A\) to its multiples in \(I\).
+For \(S\subseteq A\), write \(\Gamma(S)\) for its neighbourhood.
+If every nonempty \(S\) satisfies
+\[
+ |\Gamma(S)|\geq2\sqrt{|S|},                                      \tag{1}
+\]
+Hall's theorem supplies a matching of size at least
+\(\min(m,\lceil2\sqrt m\rceil)\).
+Indeed, set
+\(\delta=\max_{S\subseteq A}(|S|-|\Gamma(S)|)\geq0\).
+Adding \(\delta\) universal right vertices gives Hall's condition,
+and a matching of all \(m\) left vertices loses at most \(\delta\)
+edges when the added vertices are deleted.
+Since \(s-2\sqrt s\) increases for integer \(s\geq1\), (1) yields
+\(\delta\leq\max(0,m-2\sqrt m)\), proving the assertion.
+
+It suffices to treat \(N=\max A\): any longer interval contains
+an open subinterval of the required smaller length.
+If \(x\notin N\mathbb Z\), split the interval at \(b_0=x+N\), with
+the midpoint in the left half. For each \(a\in S\), let \(u_a\)
+be the largest multiple of \(a\) at most \(b_0\). Then
+\[
+ x<u_a\leq b_0<u_a+a<x+2N.
+\]
+The final inequality is strict: equality would require \(a=N\)
+and \(x\in N\mathbb Z\).
+The map \(a\mapsto(u_a,u_a+a)\) into the two halves of \(\Gamma(S)\)
+is injective because the difference recovers \(a\).
+Their sizes therefore have product at least \(|S|\), and the
+arithmetic--geometric mean inequality proves (1).
+
+\paragraph{The exceptional endpoint case.}
+Suppose \(x\in N\mathbb Z\), so \(b_0=x+N\) is an integer.
+Match \(N\) to \(b_0\), and delete these two vertices.
+Let \(A'=A\setminus\{N\}\). For a subset \(S\subseteq A'\) we
+construct an injection into its remaining left-half and right-half
+neighbours. Define \(u_a\) as before, and set
+\[
+ \phi(a)=
+ \begin{cases}
+ (u_a,u_a+a),&
+   a\nmid b_0 \quad\text{(type 1)},\\
+ (b_0-2a,b_0+2a),&
+   a\mid b_0,\ 2a<N,\ 2a\nmid b_0 \quad\text{(type 2)},\\
+ (b_0-a,b_0+a),&
+   a\mid b_0,\ [\,2a\geq N\ \text{or}\ 2a\mid b_0\,]
+          \quad\text{(type 3)}.
+ \end{cases}                                                     \tag{2}
+\]
+Every coordinate is a multiple of \(a\), belongs to the correct
+open half, and differs from \(b_0\).
+Within each type, the coordinate difference recovers \(a\).
+For mixed types, suppose two images coincide.
+Their midpoint is then \(b_0\).
+For types 1 and 2, with arguments \(a,a'\), the difference gives
+\(a=4a'\), whence \(b_0=u_a+2a'\) is divisible by \(2a'\),
+a contradiction.
+For types 1 and 3, the difference gives \(a=2a'<N\).
+Type 3 therefore requires \(2a'\mid b_0\), whereas
+\(b_0=u_a+a'\) is an odd multiple of \(a'\), again impossible.
+For types 2 and 3 the difference gives \(a'=2a\);
+type 3 implies \(a'\mid b_0\), contradicting the type 2 condition.
+Thus (2) is injective.
+
+It follows that (1) holds in the reduced graph.
+For \(m\geq2\), adding back the reserved edge gives at least
+\[
+ 1+\min(m-1,2\sqrt{m-1})\geq\min(m,2\sqrt m)
+\]
+matched vertices; integrality gives the desired ceiling.
+The case \(m=1\) is immediate. This completes the lower bound,
+including the endpoint case where the simpler injection fails.
+
+\paragraph{A rectangular upper construction.}
+We show that a set of \(st\) integers can have all its multiples
+in an interval confined to just \(s+t\) integers.
+Cases with \(\min(s,t)=1\) satisfy the upper bound trivially,
+so assume \(2\leq s\leq t\).
+Let \(D=\operatorname{lcm}(1,\ldots,st)\), and let \(\mathcal P\)
+consist of the primes \(p>st\) dividing at least one nonzero integer
+\[
+ q+rD,\qquad 0<|q|<s,\quad |r|<t.
+\]
+This is a finite set. For each \(p\in\mathcal P\), avoid the at most
+\(st<p\) residue classes \(-i-jD\), \(1\leq i\leq s\),
+\(1\leq j\leq t\). The ordinary Chinese remainder theorem lets us
+choose \(M>2s+2tD\) avoiding all of them simultaneously. Set
+\[
+ a_{ij}=M+i+jD,\qquad
+ A=\{a_{ij}:1\leq i\leq s,\ 1\leq j\leq t\}.
+\]
+These \(st\) integers are distinct because \(D>s\).
+
+We claim
+\[
+ \gcd(a_{ij},a_{k\ell})\mid i-k.                                \tag{3}
+\]
+There is nothing to prove if \(i=k\). Otherwise put
+\(q=i-k\ne0\), \(r=j-\ell\).
+Any common prime divisor larger than \(st\) belongs to
+\(\mathcal P\), contrary to the choice of \(M\).
+For a common prime \(p\leq st\), we have \(v_p(D)>v_p(q)\):
+if \(p\nmid q\), this follows from \(p\mid D\); otherwise
+\(q^2<s^2\leq st\) implies \(q^2\mid D\).
+Thus \(v_p(q+rD)=v_p(q)\).
+Since the gcd divides \(q+rD\), (3) follows prime by prime.
+
+The generalized Chinese remainder theorem now supplies \(x_0\)
+with \(x_0\equiv i\pmod{a_{ij}}\) for every \(i,j\).
+Adding a large common multiple makes \(x=x_0-M>1\).
+Put \(N=\max A=M+s+tD\) and \(I=(x,x+2N)\).
+For each \(a_{ij}\), \(x_0-i\) is a multiple, and the preceding
+and second following multiples satisfy
+\[
+ (x_0-i)-a_{ij}=x-2i-jD<x,
+\]
+\[
+ (x_0-i)+2a_{ij}=x+3M+i+2jD>x+2N.
+\]
+Consequently the only possible multiples in \(I\) are
+\[
+ x_0-i\quad\hbox{and}\quad x_0+M+jD.
+\]
+Both lie strictly inside \(I\); the strict preceding and following
+inequalities also exclude multiples at its endpoints.
+There are at most \(s+t\) integers in this union, so no divisibility
+matching can be larger.
+
+\paragraph{All values of \(m\).}
+Set \(q=\lceil2\sqrt m\rceil\),
+\(s=\lfloor q/2\rfloor\), \(t=\lceil q/2\rceil\).
+Then \(st=\lfloor q^2/4\rfloor\geq m\) and \(s+t=q\).
+If \(q\geq m\), the trivial upper bound \(f(m)\leq m\) suffices.
+Otherwise \(s,t\geq2\), and the rectangular construction applies.
+Keep any \(m\) members of its set, including its largest member.
+The interval retains length \(2\max A\), while its union of
+available multiples cannot grow. Hence \(f(m)\leq q\).
+Together with the lower bound, this proves the exact formula.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

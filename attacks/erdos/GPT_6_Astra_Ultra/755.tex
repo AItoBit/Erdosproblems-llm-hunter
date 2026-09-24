@@ -1,0 +1,69 @@
+\section*{Erd\H{o}s Problem 755}
+
+\paragraph{Statement and result.}
+The number of unordered equilateral triangles of side length one determined by \(n\) points of \(\mathbb R^6\) is at most
+\[
+ \left(\frac1{27}+o(1)\right)n^3.
+\]
+Here is a reduction to the graph removal lemma, with the geometric obstruction and the remaining graph inequalities proved below. The leading constant is attained by three orthogonal circles. This concerns the printed fixed-side-length question; the stronger theorem counting all side lengths is not reconstructed here.
+
+\paragraph{A forbidden geometric configuration.}
+Join two points when their distance is one, obtaining the unit-distance graph \(G\). It contains no complete four-partite graph with three vertices in each part, denoted \(K_4(3)\).
+
+Indeed, suppose \(A_1,\ldots,A_4\) were its four parts. Each \(A_i\) is noncollinear: three distinct points on a line cannot all lie on a sphere of radius one centred at a point in another part, since a line meets that sphere in at most two points. Thus the linear space
+\[
+ V_i=\operatorname{span}\{a-a':a,a'\in A_i\}
+\]
+has dimension at least two. For distinct \(i,j\) and \(a,a'\in A_i\), \(b,b'\in A_j\), subtracting the four cross squared-distance equations gives
+\[
+ 0=|a-b|^2-|a'-b|^2-|a-b'|^2+|a'-b'|^2
+   =-2(a-a')\cdot(b-b').
+\]
+Hence the four spaces \(V_i\) are mutually orthogonal. Their direct sum has dimension at least eight, impossible inside \(\mathbb R^6\).
+
+\paragraph{Few four-cliques: an explicit blow-up argument.}
+For a fixed graph \(F\), write \(t(F,G)\) for the probability that a uniformly random map from \(V(F)\) to \(V(G)\) preserves all edges; injectivity is not required. Replacing one vertex of \(F\) by three nonadjacent twins gives a graph \(F'\) satisfying
+\[
+ t(F',G)\geq t(F,G)^3. \tag{1}
+\]
+To see this, expose the images of all other vertices. Let \(W\in\{0,1\}\) indicate that the edges among them are preserved, and let \(Z\in[0,1]\) be the fraction of possible images for the remaining vertex preserving its incident edges. Then the two densities are \(\mathbb E(WZ)\) and \(\mathbb E(WZ^3)\). Jensen's inequality under the probability measure conditioned on \(W=1\) gives
+\[
+ \mathbb E(WZ^3)\geq\frac{\mathbb E(WZ)^3}{\mathbb E(W)^2}
+ \geq\mathbb E(WZ)^3;
+\]
+the zero-measure case is immediate.
+
+Apply (1) successively to the four original vertices of \(K_4\). If \(t(K_4,G)\geq\delta>0\), then
+\[
+ t(K_4(3),G)\geq\delta^{81}.
+\]
+Among all maps of its twelve vertices, at most \(\binom{12}{2}n^{11}\) identify a pair of vertices. Thus, for \(n>\binom{12}{2}\delta^{-81}\), a homomorphism must be injective. The geometric obstruction excludes this. Consequently \(G\) has \(o(n^4)\) copies of \(K_4\), uniformly over all the point sets under consideration.
+
+\paragraph{The one external combinatorial input.}
+The graph removal lemma says that a graph with \(o(n^{|V(F)|})\) copies of a fixed graph \(F\) can be made \(F\)-free by deleting \(o(n^2)\) edges. Apply it with \(F=K_4\), obtaining a \(K_4\)-free graph \(G'\). Each deleted edge belongs to at most \(n-2\) triangles, so
+\[
+ \#K_3(G)\leq\#K_3(G')+o(n^3). \tag{2}
+\]
+The removal lemma itself is assumed, not reproved.
+
+\paragraph{The triangle bound for a four-clique-free graph.}
+For completeness, let \(J\) be any \(K_4\)-free graph and consider
+\[
+ P(x)=\sum_{\{i,j,k\}\text{ a triangle of }J}x_i x_j x_k,
+ \qquad x_i\geq0,\quad\sum_i x_i=1.
+\]
+Choose a maximizer of this continuous function with the fewest positive coordinates. If two positive coordinates \(x_u,x_v\) correspond to nonadjacent vertices, no monomial contains both. Holding all other coordinates and \(x_u+x_v\) fixed, \(P\) is affine in \(x_u\). Moving all their mass to the endpoint with the larger coefficient does not decrease \(P\) and reduces the support, a contradiction. Thus the support is a clique and has at most three vertices. On such a support \(P\) is either zero or the product of three nonnegative numbers of sum one, hence at most \(1/27\).
+
+Taking all \(x_i=1/n\) proves \(\#K_3(J)\leq n^3/27\). Together with (2), this establishes the desired upper bound, because triangles in \(G\) are exactly the unit equilateral triangles.
+
+\paragraph{Sharpness.}
+Split the six coordinate directions into three orthogonal planes, and in each plane take a circle of radius \(1/\sqrt2\) centred at the origin. Distribute the \(n\) points as equally as possible among the circles. Every choice of one point from each circle gives a unit equilateral triangle. If the three class sizes are \(n_1,n_2,n_3\), this gives
+\[
+ n_1n_2n_3=\frac{n^3}{27}-O(n)
+\]
+triangles. Additional triangles within or across two circles can only increase this lower bound.
+
+\paragraph{Attribution and assessment.}
+The stronger result for equilateral triangles of arbitrary side length is due to F. C. Clemen, A. Dumitrescu, and D. Liu, \emph{The number of regular simplices in higher dimensions}, \url{https://arxiv.org/abs/2507.19841}. The lower construction is the classical Lenz construction. The removal input is stated and proved in J. Fox, \emph{A new proof of the graph removal lemma}, \url{https://annals.math.princeton.edu/2011/174-1/p17}. The weighted clique argument is the standard symmetrization principle, proved explicitly above. The problem statement was checked at \url{https://www.erdosproblems.com/755} on 24 September 2026. The fixed-length conclusion is complete relative to the removal lemma. No new theorem or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

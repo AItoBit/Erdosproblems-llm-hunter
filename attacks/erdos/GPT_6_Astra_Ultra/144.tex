@@ -1,0 +1,107 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#144; partial reconstruction, 2026-09-23.}
+Prove that the positive integers $n$ having divisors $d_1,d_2$ with
+$d_1<d_2<2d_1$ have natural density one. The stronger version replaces
+$2$ by any fixed $c>1$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Maier--Tenenbaum proved the assertion, including its stronger version.
+Their primary paper concerns the distribution and concentration of
+divisors. We give an exact reduction to a set of multiples, a quantitative
+sufficient condition, and a proved positive-density family. These do
+not establish density one; the missing analytic step is identified
+explicitly. No new resolution is claimed.
+
+\section{WORK}
+Fix $c>1$. Define
+\[
+ \mathcal M_c=\{ab:1\le a<b<ca,\ (a,b)=1\}.
+\]
+Then $n$ has the desired close divisors if and only if it is divisible
+by a member of $\mathcal M_c$. For the forward implication, write
+$d_1=ga,d_2=gb$ after cancelling their gcd. Since
+$\operatorname{lcm}(d_1,d_2)=gab$ divides $n$, so does $ab$.
+Conversely, if $ab\mid n$ with the stated inequalities, $a,b$ themselves
+are suitable divisors. This proves the exact identity
+\[
+ \{n:\exists d_1\mid n,\ d_2\mid n,\ d_1<d_2<cd_1\}
+ =\bigcup_{m\in\mathcal M_c}m\mathbb N.                 \tag{1}
+\]
+
+For any finite $F\subset\mathcal M_c$ the union of its multiples is
+periodic of period $L=\operatorname{lcm}(F)$ and has density
+\[
+ \delta_F=\sum_{\varnothing\ne J\subseteq F}
+          \frac{(-1)^{|J|+1}}{\operatorname{lcm}(J)}.      \tag{2}
+\]
+This is inclusion--exclusion, since the intersection of the sets of
+multiples for $J$ is exactly the multiples of its least common multiple.
+Thus the lower density in (1) is at least every $\delta_F$.
+In particular, it would suffice to find finite sets $F$ with
+$\delta_F\to1$. Large overlapping collections cannot be counted by
+adding their reciprocal densities; (2) displays the overlaps that
+must be controlled.
+
+For $c=2$, take the four coprime pairs $(2,3),(3,5),(4,5),(5,7)$,
+so $F=\{6,15,20,35\}$. Among residues modulo $420$, their individual
+counts are $70,28,21,12$. Pairwise intersection counts sum to
+$14+7+2+7+4+3=37$; triple intersection counts sum to
+$7+2+1+1=11$; the fourfold count is $1$. Consequently
+\[
+ \delta_F=(131-37+11-1)/420=26/105.                       \tag{3}
+\]
+This proves a concrete positive lower density. For every $c>1$, choose
+an integer $a>1/(c-1)$; then $a<a+1<ca$, so all multiples of
+$a(a+1)$ supply a positive-density family in the stronger version too.
+
+\subsection*{A logarithmic pigeonhole criterion}
+Suppose $m\mid n$ and list the divisors of $m$ as
+$1=t_1<t_2<\cdots<t_s=m$. If every consecutive ratio is at least $c$,
+then multiplying them gives $m\ge c^{s-1}$. Therefore
+\[
+ \tau(m)>1+\frac{\log m}{\log c}
+ \quad\Longrightarrow\quad
+ \text{$n$ has two divisors of ratio strictly between $1$ and $c$}.
+                                                               \tag{4}
+\]
+More quantitatively, since
+$\sum_{i=1}^{s-1}\log(t_{i+1}/t_i)=\log m$, at most
+$\log m/\log c$ of the consecutive ratios can be at least $c$.
+Thus at least $s-1-\lfloor\log m/\log c\rfloor$ are less than $c$
+whenever that number is positive. Taking $m=n$ is allowed, but no
+argument here proves that (4) holds for almost all $n$ or for a
+suitable divisor of almost all $n$.
+
+The distinction between $d_2<2d_1$ and $d_2\le2d_1$ matters. Every
+power of two has no pair of divisors with ratio strictly between $1$
+and $2$, so there are infinitely many exceptions. They have density
+zero, and therefore do not contradict the theorem. The witness pairs
+used in (3) satisfy the strict inequality.
+
+\section{VERIFICATION}
+The batch script verifies (3) both by direct residue enumeration and
+inclusion--exclusion, and checks (1) on finite ranges. Such finite
+checks establish the advertised positive-density subfamily only.
+A general increasing union of periodic sets need not have a natural
+density equal to a naive interchange of limits, so no such interchange
+is used to assert the density-one conclusion.
+
+\section{FINAL STATUS}
+\textbf{UNRESOLVED within this partial reconstruction; the density-one
+theorem is known.}
+The exact multiples reduction, density $26/105$ subfamily, and criterion
+(4) are proved. The gap is showing that the exceptional set in (1)
+is $o(X)$ up to $X$, or an equivalent sufficiently strong divisor-
+concentration estimate. A citation to the Maier--Tenenbaum theorem
+is not counted as filling that gap in our own argument.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/144}.
+H.~Maier and G.~Tenenbaum, \emph{On the set of divisors of an integer},
+Inventiones Mathematicae 76 (1984), 121--128,
+\url{https://tenenb.perso.math.cnrs.fr/PPP/Conj-Erdos.pdf}.
+Checked 2026-09-23. Completion assesses the limited proof above, not
+the established literature status.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 15\%}

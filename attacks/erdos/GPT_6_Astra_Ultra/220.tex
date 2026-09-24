@@ -1,0 +1,102 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#220; reconstruction from a fourth-moment estimate, 2026-09-23.}
+For $n\geq2$, list its reduced residues as $1=a_1<a_2<\cdots<a_{\varphi(n)}=n-1$. Is
+\[
+\sum_{i=1}^{\varphi(n)-1}(a_{i+1}-a_i)^2\ll n^2/\varphi(n)
+\]
+with an absolute implied constant?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Montgomery and Vaughan proved the desired uniform bound, as part of more general reduced-residue moment estimates. The proof below first establishes elementary special cases and an exact empty-interval identity, then deduces the full uniform bound from their fourth-moment theorem, stated explicitly as an external input. The deep proof of that moment theorem is not reproduced.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Include the cyclic wraparound gap, making the total gap length exactly $n$. This gives a lower bound at once and converts the square moment into a count of empty intervals. Inclusion--exclusion gives a preliminary bound; the fourth moment supplies the stronger average control needed to obtain an absolute constant.
+
+\section{WORK}
+Let $q=\varphi(n)$, put $a_{q+1}=a_1+n$, and define $g_i=a_{i+1}-a_i$ for $1\leq i\leq q$. The wraparound gap is $g_q=2$, including $n=2$, when it is the only gap. Thus
+\[
+\sum_{i=1}^qg_i=n,\qquad
+\sum_{i=1}^{q-1}(a_{i+1}-a_i)^2=\sum_{i=1}^qg_i^2-4.
+\tag{1}
+\]
+Cauchy--Schwarz gives $\sum_i g_i^2\geq n^2/q$, explaining the natural scale of the problem.
+
+\textbf{Prime powers.} Suppose $n=p^a$ with $a\geq1$. The nonunits in $[1,n-1]$ are precisely the $p^{a-1}-1$ positive multiples of $p$. Each produces one internal gap of size two, and all other internal gaps have size one. There are $p^{a-1}(p-2)$ gaps of size one. Hence
+\[
+\sum_{i=1}^{q-1}(a_{i+1}-a_i)^2
+=p^{a-1}(p+2)-4.
+\tag{2}
+\]
+For $p=2$ the asserted number of size-one gaps is zero, as it should be. Since
+\[
+\frac{p^{a-1}(p+2)}{n^2/\varphi(n)}
+=\frac{(p+2)(p-1)}{p^2}\leq\frac98
+\]
+(the inequality is equivalent to $(p-4)^2\geq0$), the required bound holds for all prime powers with constant $9/8$.
+
+\textbf{A bound for a fixed number of prime factors.} Set $\delta=\varphi(n)/n$ and $r=\omega(n)$. For any interval of $h$ consecutive integers, inclusion--exclusion gives
+\[
+\#\{t\text{ in the interval}:(t,n)=1\}
+=\delta h+E,\qquad |E|\leq2^r.
+\tag{3}
+\]
+To verify the error, write the indicator of coprimality as $\sum_{d\mid(t,n)}\mu(d)$. For each squarefree divisor $d\mid n$, the number of multiples in an interval differs from $h/d$ by at most one, and there are $2^r$ such divisors. The $g_i-1$ integers strictly between consecutive cyclic units contain no unit, so (3), also for the periodically extended interval, implies
+\[
+g_i\leq1+2^r/\delta\leq(2^r+1)/\delta.
+\]
+Using (1),
+\[
+\sum_i g_i^2\leq(\max_i g_i)\sum_i g_i
+\leq(2^r+1)n^2/\varphi(n).
+\tag{4}
+\]
+This is uniform over all $n$ with at most a fixed number of distinct prime divisors, but its constant is not absolute over all $n$.
+
+\textbf{An exact empty-interval identity.} Let $E(h)$ count starting residues $x\pmod n$ for which $x,x+1,\ldots,x+h-1$ contain no unit modulo $n$. A cyclic gap of length $g$ contains $g-1$ consecutive nonunits and contributes exactly $\max(g-h,0)$ such starts. Therefore
+\[
+E(h)=\sum_i\max(g_i-h,0),\qquad
+\sum_i g_i^2=n+2\sum_{h\geq1}E(h).
+\tag{5}
+\]
+The sums are finite, and the second equality follows from $\sum_{h=1}^{g-1}(g-h)=g(g-1)/2$. Thus the desired cyclic estimate is equivalent, up to absolute constants, to $\sum_hE(h)\ll n/\delta$. Formula (3) controls a longest empty interval but is too wasteful to establish this average uniformly when $r$ grows.
+
+\textbf{Declared external input and the uniform conclusion.} The $K=4$ case of the Montgomery--Vaughan moment theorem says that there is an absolute $C$ such that, for $\delta^{-1}\leq h\leq n$,
+\[
+\frac1n\sum_{x\bmod n}\left(U_h(x)-\delta h\right)^4
+\leq C(\delta h)^2,
+\qquad U_h(x)=\sum_{j=0}^{h-1}1_{(x+j,n)=1}.
+\tag{6}
+\]
+This is equation (16), with the normalization of equation (15), in Montgomery's author exposition cited below. The sum in (6) is over all starting residues and the constant is independent of $n$ and $h$. The theorem's proof, which handles small and large prime divisors separately, is the substantial external dependency.
+
+At each of the $E(h)$ starts with $U_h(x)=0$, the fourth power in (6) is exactly $(\delta h)^4$. Nonnegativity of all other summands gives
+\[
+E(h)\leq Cn/(\delta h)^2\qquad(\delta^{-1}\leq h\leq n).
+\tag{7}
+\]
+Put $H=\lceil\delta^{-1}\rceil$. For $h<H$, use $E(h)\leq n$, giving a total below $n/\delta$. For $h\geq H$, use (7); also $E(h)=0$ for $h\geq n$, because every full period contains a unit. Since $0<\delta<1$ for $n\geq2$, we have $H\geq2$. Writing $x=1/\delta>1$, the elementary inequality $\lceil x\rceil-1\geq x/2$ (separating $1<x\leq2$ and $x\geq2$) gives $H-1\geq(2\delta)^{-1}$. Consequently
+\[
+\sum_{h\geq H}E(h)
+\leq\frac{Cn}{\delta^2}\sum_{h\geq H}h^{-2}
+\leq\frac{Cn}{\delta^2(H-1)}
+\leq\frac{2Cn}{\delta}.
+\]
+Combining this with (5) proves
+\[
+\sum_i g_i^2\leq n+(2+4C)n/\delta
+\ll n/\delta=n^2/\varphi(n),
+\]
+and (1) gives the required original sum.
+
+\section{VERIFICATION AND SCOPE}
+The proof includes the exact prime-power formula and a factor-dependent elementary bound, then removes that dependence by a complete deduction from (6). The fourth moment, rather than the variance alone, is what makes the empty-interval tail summable without a logarithmic loss. The deep moment theorem is explicitly imported; the combinatorial identities, normalization, cutoff, and summation converting it to the required gap bound are proved here.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and known resolution: \url{https://www.erdosproblems.com/220}.
+\item H. L. Montgomery and R. C. Vaughan, \emph{On the distribution of reduced residues}, Annals of Mathematics 123 (1986), 311--333: \url{https://annals.math.princeton.edu/1986/123-2/p04}.
+\item H. L. Montgomery, \emph{The combinatorics of moment calculations}, Section 3, equations (15)--(16), author exposition of the precise external moment estimate: \url{https://hrj.episciences.org/168/pdf}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved using a named external moment theorem.} The desired square-gap estimate follows with an absolute constant for every $n\geq2$. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,62 @@
+\section*{Erd\H{o}s Problem 646: even prime exponents in factorials}
+
+\paragraph{Statement.}
+For any finite list of distinct primes \(p_1,\ldots,p_k\), are there
+infinitely many positive integers \(n\) for which all
+\(v_{p_i}(n!)\) are even?
+
+\paragraph{Known theorem and reduction.}
+The answer is yes. The external input is Daniel Berend's theorem:
+for every \(r\geq1\), infinitely many \(n\) have even factorial
+valuations at each of the first \(r\) primes.
+See \emph{On the parity of exponents in the factorization of \(n!\)},
+Journal of Number Theory 64 (1997), 13--19,
+\url{https://doi.org/10.1006/jnth.1997.2106}.
+The author's university publication record states this theorem explicitly:
+\url{https://cris.bgu.ac.il/en/publications/on-the-parity-of-exponents-in-the-factorization-of-n-4/}.
+This is the established resolution of
+\url{https://www.erdosproblems.com/646}.
+
+To check that the theorem covers arbitrary finite prime lists, take
+\(r=\pi(\max_i p_i)\). Every prescribed \(p_i\) lies among the first
+\(r\) primes. Each of the infinitely many integers supplied by
+Berend therefore meets every requested parity condition.
+No independence assumption between different primes is being made.
+Berend's simultaneous recurrence theorem is used externally, rather
+than claimed as proved by this reduction.
+
+\paragraph{Elementary verification and a complete one-prime construction.}
+Counting the multiples of \(p,p^2,\ldots\) in a factorial gives
+Legendre's identity
+\[
+ v_p(n!)=\sum_{j\geq1}\left\lfloor\frac n{p^j}\right\rfloor
+        =\frac{n-s_p(n)}{p-1},
+\]
+where \(s_p(n)\) is the sum of the base-\(p\) digits.
+The second equality follows by expanding
+\(n=\sum_i d_ip^i\) and summing the resulting geometric series.
+For \(n=p^a-1\), all \(a\) digits equal \(p-1\), and hence
+\[
+ v_p((p^a-1)!)=\frac{p^a-1}{p-1}-a
+              =\sum_{j=0}^{a-1}p^j-a.
+\]
+If \(p\) is odd, every summand is odd, so this valuation is even
+for every \(a\geq1\). If \(p=2\), it equals \(2^a-1-a\), which
+is even whenever \(a\) is odd. These give explicit infinite
+families for the one-prime case.
+
+There is also a useful reformulation of the simultaneous problem.
+Let \(S=\{p_1,\ldots,p_k\}\), and remove from \(n!\) all prime powers
+whose primes do not belong to \(S\). The resulting \(S\)-part is
+\(\prod_{p\in S}p^{v_p(n!)}\), and unique factorisation says that it
+is a square exactly when all the required valuations are even.
+The one-prime families above do not establish that simultaneous
+condition; this is precisely the role of Berend's theorem.
+
+\paragraph{Scope.}
+The full affirmative answer is complete conditional only on the
+explicitly cited established theorem. The elementary supplementary
+constructions and valuation formulas are proved above.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,11 +1,12 @@
 var siteStats = {
   "erdos": {
     "total_problems": 1221,
-    "with_attacks": 786,
+    "with_attacks": 1042,
     "solved_problems": 579,
     "models": [
       "GPT 6 Astra Ultra",
       "claude opus 4.5",
+      "claude opus 4.8",
       "codex 5.2 extra high",
       "gpt 5.2",
       "gpt pro 5.2",
@@ -15,6 +16,16 @@ var siteStats = {
   "mo": {
     "total_problems": 100,
     "with_attacks": 93,
+    "models": [
+      "gpt pro 5.2"
+    ]
+  },
+  "open_problems": {
+    "total_problems": 600,
+    "ranked_total": 500,
+    "mo_total": 100,
+    "with_attacks": 93,
+    "ranked_with_attacks": 0,
     "models": [
       "gpt pro 5.2"
     ]

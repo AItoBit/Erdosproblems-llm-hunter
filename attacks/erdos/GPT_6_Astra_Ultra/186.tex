@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem 186: the growth of non-averaging sets}
+
+\subsection{1) Statement and scope}
+A set $A$ of integers is non-averaging if no member is the average
+of a subset of at least two other, distinct members. Let $F(N)$ be the
+maximum size of such a subset of $[N]$. The known exponent is
+\[
+ F(N)=N^{1/4+o(1)}.
+\]
+We reconstruct the elementary lower construction and combine it with
+the sharp exponent upper bound of Pham and Zakharov, used as an external
+theorem. This does not assert the stronger estimate $F(N)=\Theta(N^{1/4})$.
+
+\subsection{2) A quadratic construction with a large linear term}
+Fix an integer $q\geq2$ and put
+\[
+ a_i=iq^3+\frac{i(i+1)}2\quad(1\leq i\leq q-1),
+ \qquad A_q=\{a_1,\ldots,a_{q-1}\}.
+\]
+These are positive, distinct integers, and
+\[
+ a_{q-1}=(q-1)q^3+q(q-1)/2<q^4.
+\]
+Suppose $a_i$ is the average of a subset indexed by
+$S\subseteq\{1,\ldots,q-1\}\setminus\{i\}$, where $k=|S|\geq2$.
+Multiplying the average equation by $k$ gives
+\[
+ q^3\left(\sum_{j\in S}j-ki\right)
+ +\sum_{j\in S}\frac{j(j+1)}2-k\frac{i(i+1)}2=0.        \tag{1}
+\]
+Every quadratic term lies between zero and $q(q-1)/2$. The absolute
+value of the second part of (1) is at most
+$kq(q-1)/2<q^3$, because $k\leq q-1$. The first part is an integer
+multiple of $q^3$. Both parts must therefore be zero. It follows that
+\[
+ \sum_{j\in S}j=ki,\qquad \sum_{j\in S}j^2=ki^2.
+\]
+Consequently
+\[
+ \sum_{j\in S}(j-i)^2
+ =ki^2-2i(ki)+ki^2=0.
+\]
+Each summand is nonnegative, so every $j$ in $S$ equals $i$, contrary
+to the choice of $S$. Thus $A_q$ is non-averaging.
+
+For arbitrary large $N$, take $q=\lfloor N^{1/4}\rfloor$.
+Then $A_q\subseteq[N]$ and
+\[
+ F(N)\geq q-1\gg N^{1/4}.                              \tag{2}
+\]
+This proves the lower bound for all large $N$, not just fourth powers.
+The construction is of the classical Bosznay type; no novelty is claimed.
+
+\subsection{3) The external upper theorem and the exponent}
+Pham--Zakharov prove that, for every $\epsilon>0$, there is an
+$N_0(\epsilon)$ such that every non-averaging subset of $[N]$ has size
+at most $N^{1/4+\epsilon}$ when $N\geq N_0(\epsilon)$.
+This structure-theoretic upper bound is the external input.
+Combining it with (2), taking logarithms, and then letting
+$\epsilon\downarrow0$ yields
+\[
+ \lim_{N\to\infty}\frac{\log F(N)}{\log N}=\frac14,
+\]
+which is the displayed exponent asymptotic. The definition using a
+subset not containing its average agrees with the stated one: a singleton
+of a different element cannot have that average, while a subset containing
+the average can have it removed without changing the equality.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED at the known exponent precision, using the
+explicit external upper theorem.} The lower construction and limiting
+deduction are proved here. The Pham--Zakharov structural argument is
+not independently reproved.
+\begin{itemize}
+\item H. T. Pham and D. Zakharov, \emph{Sharp bound for the
+Erd\H{o}s--Straus non-averaging set problem},
+\texttt{https://arxiv.org/abs/2410.14624}.
+\item T. F. Bloom, Problem 186, including the attribution of the
+lower bound to Bosznay,
+\texttt{https://www.erdosproblems.com/186}, checked 23 September 2026.
+\end{itemize}
+The percentage includes the stated upper theorem and refers to the
+exponent asymptotic rather than a constant-factor estimate.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

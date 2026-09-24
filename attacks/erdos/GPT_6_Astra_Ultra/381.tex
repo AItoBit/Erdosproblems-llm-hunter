@@ -1,0 +1,53 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#381; structural counting and Nicolas's disproof, 2026-09-24.}
+A positive integer $n$ is highly composite when $\tau(m)<\tau(n)$ for every $m<n$. Let $Q(x)$ count these integers up to $x$. Is $Q(x)\gg_k(\log x)^k$ true for every fixed $k\geq1$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Nicolas answered negatively in \emph{R\'epartition des nombres hautement compos\'es de Ramanujan} (1971). His Theorem 4 supplies a fixed power of $\log x$ as an upper bound. The proof below explicitly uses that theorem, proves the elementary exponent structure and a separate partition bound, and explains the quantifier contradiction. The weaker elementary bound is not presented as sufficient for the disproof.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First control the form of a highly composite integer without analytic inputs. Then state the precise extra estimate needed to distinguish a fixed logarithmic power from the much larger partition bound.
+
+\section{WORK}
+\textbf{Prime factors and exponent order.} If $n>1$ is highly composite, its prime divisors form an initial segment $p_1=2,\ldots,p_s$ of the primes. Otherwise replacing an occurring prime $q$ by a missing smaller prime $p$, with the entire exponent of $q$, would produce a smaller integer with the same divisor count. Write $n=\prod_{j=1}^s p_j^{a_j}$. Its positive exponents satisfy
+\[
+a_1\geq a_2\geq\cdots\geq a_s\geq1.                     \tag{1}
+\]
+Indeed, if $p<q$ have exponents $a<b$, swapping these exponents multiplies the integer by $(p/q)^{b-a}<1$ and preserves $\tau$. Both contradictions use the strict record condition in the definition.
+
+For $n\leq x$, we also have $\sum a_j\leq L=\lfloor\log_2x\rfloor$. Thus these exponent lists inject into integer partitions of numbers at most $L$. If $p(j)$ is the partition function, for any $h>0$,
+\[
+p(j)e^{-hj}\leq\prod_{r\geq1}(1-e^{-hr})^{-1}.
+\]
+Expanding the logarithm and using $e^{h\ell}-1\geq h\ell$ gives
+\[
+\log\prod_{r\geq1}(1-e^{-hr})^{-1}
+=\sum_{\ell\geq1}\frac1{\ell(e^{h\ell}-1)}
+\leq\frac{\pi^2}{6h}.
+\]
+Choosing $h=L^{-1/2}$ for $L\geq1$ yields the entirely elementary bound
+\[
+Q(x)\leq\sum_{j=0}^{L}p(j)
+\leq(L+1)\exp\!\big((1+\pi^2/6)\sqrt L\big).             \tag{2}
+\]
+This is subpolynomial in $x$, but it still grows faster than every fixed power of $\log x$ and therefore cannot answer the question.
+
+\textbf{The decisive external estimate.} Nicolas's Theorem 4 states that there is a fixed finite exponent $A$ and constant $C$ such that
+\[
+Q(x)\leq C(\log x)^A                                      \tag{3}
+\]
+for all sufficiently large $x$. The paper writes $A=1+c$ with the constant from its Theorem 3. Its proof controls how many ordinary highly composite numbers lie between successive superior highly composite numbers. The estimates underlying (3) are imported, not inferred from (1) or (2).
+
+Choose an integer $k>A$. If the proposed assertion held for this $k$, some $c_k>0$ would satisfy $Q(x)\geq c_k(\log x)^k$ for all sufficiently large $x$. Combining with (3) would give
+\[
+0<c_k\leq C(\log x)^{A-k}\longrightarrow0,
+\]
+an impossibility. Equivalently, (3) shows $Q(x)/(\log x)^k\to0$ for every $k>A$. This directly negates the universal quantifier over $k$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved relative to Nicolas's Theorem 4.} The answer is no. The exponent normal form, partition estimate, and quantifier argument are proved in full; the logarithmic-power bound is the named external dependency. No explicit best exponent or asymptotic formula for $Q(x)$ is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/381}; Nicolas, Canadian Journal of Mathematics 23 (1971), 116--130, Theorem 4 on printed page 127: \url{https://doi.org/10.4153/CJM-1971-012-6}.
+
+\textbf{Completion rate estimate: 100\% relative to the stated external theorem.}

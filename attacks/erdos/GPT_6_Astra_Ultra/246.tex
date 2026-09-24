@@ -1,0 +1,129 @@
+\section{Erd\H{o}s Problem 246: completeness of two coprime multiplicative generators}
+
+\subsection{1) Statement and scope}
+Let $a,b>1$ be coprime integers. Every sufficiently large integer
+is a sum of distinct elements of
+$G=\{a^u b^v:u,v\geq0\}$. We reconstruct Birch's proof through
+bounded gaps, disjoint signed identities, and residue adjustment.
+The intended nontrivial-base assumption matters: if one base is
+one, the set consists of powers of the other base and is complete
+only when that other base is two. For a base $c\geq3$, numbers
+$2c^m$ cannot be sums of distinct powers of $c$.
+
+\subsection{2) Bounded gaps between subset sums}
+The ratio $\log b/\log a$ is irrational, since a rational ratio
+would give $a^r=b^s$ for some positive $r,s$, contrary to
+coprimality. Density of an irrational rotation implies that,
+for every sufficiently large real $X$, some $g\in G$ satisfies
+\[
+ \frac23X<g\leq X.
+\]
+For completeness, take finitely many nonnegative integers $v$
+whose residues $v\log b$ modulo $\log a$ meet every circular
+interval of length $\log(3/2)$. For large $\log X$, one can
+choose such a $v$ and a nonnegative integer $u$ with
+$\log X-\log(3/2)<u\log a+v\log b\leq\log X$.
+
+Choose an integer $H$ past this threshold. Given any integer
+$N>H$, subtract such a $g$ and repeat on the remainder until
+the remainder $y$ lies in $[0,H]$. Each remainder is less than
+one third of its predecessor, so the selected terms are strictly
+decreasing and distinct. If $N\leq H$, select no terms.
+We have proved that for every integer $N\geq0$,
+\[
+ N-y=\Phi(E),\qquad 0\leq y\leq H,\quad
+ E\subseteq\mathbb N_0^2\text{ finite},
+ \qquad \Phi(E)=\sum_{(u,v)\in E}a^u b^v.
+\]
+
+\subsection{3) Many disjoint signed identities for one}
+We also use $\Phi$ on finite subsets of $\mathbb Z^2$, where
+its values are positive rationals. Fix positive integers $L,M$.
+The grid
+$\{0,L,\ldots,rL\}\times\{0,M,\ldots,rM\}$
+has $2^{(r+1)^2}$ subsets, but its subset sums are integers
+between zero and $(r+1)^2a^{rL}b^{rM}$.
+For large $r$, two distinct subsets have the same sum.
+Cancel their intersection to obtain disjoint nonempty sets
+$F,G$ with $\Phi(F)=\Phi(G)$.
+
+Choose $w\in F\cup G$ with maximal coordinate sum, and interchange
+$F,G$ if necessary so that $w\in G$. Translating all exponent
+pairs by $-w$ gives
+\[
+ 1=\Phi(U)-\Phi(V),\qquad
+ U=F-w,\quad V=(G\setminus\{w\})-w.
+\]
+The sets $U,V$ are disjoint, avoid $(0,0)$, lie in
+$L\mathbb Z\times M\mathbb Z$, and all their points have
+coordinate sum at most zero. They are therefore disjoint
+from the nonnegative quadrant.
+
+Repeat this construction $H$ times. At each stage choose $L,M$
+larger than the absolute values of all coordinates previously
+used. Every new nonzero grid point then differs from all
+previous points. We obtain identities
+\[
+ 1=\Phi(U_i)-\Phi(V_i)\quad(1\leq i\leq H)
+\]
+whose $2H$ supports are pairwise disjoint and all avoid
+$\mathbb N_0^2$.
+
+\subsection{4) A representable arithmetic progression}
+Put $r_0=\sum_{i=1}^H\Phi(V_i)$. If $N-y=\Phi(E)$ as above,
+then
+\[
+ N+r_0=\Phi(E)+\sum_{i\leq y}\Phi(U_i)
+                       +\sum_{i>y}\Phi(V_i).
+\]
+All supports on the right are disjoint. Choose integers $A,B\geq0$
+so large that translation by $(A,B)$ puts every $U_i,V_i$
+inside the nonnegative quadrant. Multiplying by $D=a^A b^B$
+shows that every integer
+\[
+ R+DN,\qquad N\geq0,\qquad R=Dr_0,
+\]
+is a sum of distinct members of $G$. The number $R$ is a
+nonnegative integer. Distinct exponent pairs give distinct
+values because $a,b$ are coprime.
+
+\subsection{5) Filling every residue class}
+Multiply these representations by $ab$. Their terms now have
+both exponents positive. Write
+\[
+ M_0=abD=a^{A+1}b^{B+1},\quad
+ P=a^{(A+1)\phi(b^{B+1})},\quad
+ Q=b^{(B+1)\phi(a^{A+1})}.
+\]
+Euler's theorem gives
+\[
+ P\equiv(0,1),\qquad Q\equiv(1,0)
+       \pmod{(a^{A+1},b^{B+1})}.
+\]
+The same congruences hold for every positive power of $P$ or $Q$.
+Thus, by choosing between zero and $b^{B+1}-1$ distinct positive
+powers of $P$, and between zero and $a^{A+1}-1$ distinct positive
+powers of $Q$, we obtain a fixed finite sum $E_c$ for every
+residue class $c$ modulo $M_0$.
+All these terms are on the two coordinate axes; they are
+distinct from each other and from the terms in the representations
+of $abR+M_0N$.
+
+For a sufficiently large integer $n$, choose
+$c\equiv n-abR\pmod{M_0}$. Then
+$n-E_c-abR$ is a nonnegative multiple of $M_0$.
+Combining its interior representation with the axis terms of
+$E_c$ represents $n$ as required. There are only finitely many
+$E_c$, so one common lower threshold works for every residue.
+
+\subsection{6) Sources and scope}
+Sources: \url{https://www.erdosproblems.com/246};
+B.~J.~Birch, \emph{Note on a problem of Erd\H{o}s},
+Proc. Cambridge Philos. Soc. 55 (1959), 370--373,
+\url{https://doi.org/10.1017/S0305004100034150}.
+This is a reconstruction of Birch's known proof. Apart from
+the elementary density theorem for irrational rotations and
+Euler's theorem, the construction is supplied above. No local
+Lean verification or new resolution is claimed.
+\subsection{7) Completion estimate}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,42 @@
+\section{Erd\H{o}s Problem \#318: signed reciprocal sums}
+\noindent Partial reconstruction and reductions, 24 September 2026.
+
+\subsection*{1) Statement and scope}
+Let $A\subseteq\mathbb N$ be an infinite arithmetic progression, and let $f:A\to\{-1,1\}$ be nonconstant. Must a finite nonempty $S\subseteq A$ satisfy
+\[\sum_{n\in S}\frac{f(n)}n=0?\]
+The source also asks about arbitrary positive-density sets and about $A=\{k^2:k\ge2\}$. Below the progression question is proved using an explicitly stated density theorem, and the arbitrary-density question is disproved. The general square-denominator question is not reconstructed.
+
+\subsection*{2) External input}
+We use Bloom's positive-density unit-fraction theorem: if $D\subseteq\mathbb N$ has positive upper asymptotic density, some finite nonempty $T\subseteq D$ satisfies $\sum_{t\in T}1/t=1$. This is Theorem 2 of \emph{On a density conjecture about unit fractions}, \url{https://arxiv.org/abs/2112.03726}. Its proof is an external dependency; the progression reduction below supplies all additional steps.
+
+\subsection*{3) Every progression: a common-multiple reduction}
+Write $A=\{a+dk:k\ge0\}$, with $a,d\ge1$. Choose $x,y\in A$ with $f(x)=1$ and $f(y)=-1$, and put $L=\operatorname{lcm}(x,y)$. Since
+\[\gcd(x,d)=\gcd(y,d)=\gcd(a,d),\]
+comparison of prime valuations gives $\gcd(L,d)=\gcd(a,d)$ as well. Thus the congruences $z\equiv a\pmod d$, $z\equiv0\pmod L$ are compatible. After omitting a finite initial segment, their intersection $C=A\cap L\mathbb N$ is an arithmetic progression of positive density.
+
+At least one sign class $C_\sigma=\{z\in C:f(z)=\sigma\}$ has positive upper density: otherwise their union would have upper density zero. Choose $n\in\{x,y\}$ with $f(n)=-\sigma$. Every member of $C_\sigma$ is divisible by $n$, so
+\[D=\{z/n:z\in C_\sigma\}\subseteq\mathbb N\]
+has positive upper density. Explicitly $D(X)=C_\sigma(nX)$, which gives this assertion along a subsequence witnessing the positive upper density of $C_\sigma$.
+
+Apply the external theorem to $D$, obtaining $T$ with reciprocal sum one. The set $S=\{n\}\cup\{nt:t\in T\}$ is a disjoint union because all $nt$ have sign $\sigma$, whereas $n$ has sign $-\sigma$. It is a subset of $A$, and
+\[\sum_{z\in S}\frac{f(z)}z=-\frac\sigma n+\frac\sigma n\sum_{t\in T}\frac1t=0.\]
+This proves the full progression assertion, including nonprimitive progressions and arbitrary finite starting points.
+
+\subsection*{4) Positive density alone is insufficient}
+Take $A=\{1,3,5,\ldots\}\cup\{2\}$, assigning sign $-1$ to 2 and $+1$ to every odd integer. A zero sum would have to contain 2 and satisfy $\sum_{n\in S\setminus\{2\}}1/n=1/2$. The left side has odd denominator after reduction, since the least common multiple of its denominators is odd. It cannot equal $1/2$. Thus $A$ has density $1/2$ and gives a counterexample.
+
+More generally, if a set has one element whose $p$-adic valuation strictly exceeds that of every other element, the same denominator argument prevents a zero sum when that element is the only negative term. This observation is used only for finite candidate sums, so no convergence assumption is involved.
+
+\subsection*{5) What can be checked for squares}
+Excluding 1 is necessary: $\sum_{k\ge2}1/k^2\le1/4+\int_2^\infty x^{-2}\,dx=3/4<1$. Therefore sign $-1$ at 1 and sign $+1$ at all other squares cannot give a zero sum. With 1 excluded, at least the analogous coloring with only 4 negative does admit one, by the exact identity
+\[\frac14=\frac1{3^2}+\frac1{4^2}+\frac1{5^2}+\frac1{7^2}+\frac1{12^2}+\frac1{15^2}+\frac1{20^2}+\frac1{28^2}+\frac1{35^2}.\]
+Here the $1/4^2$ term has denominator 16, distinct from the negative term with denominator 4. Multiplication by $420^2$ verifies the identity in integers. This single coloring is not a proof for arbitrary assignments of signs to the squares. The density theorem cannot be applied directly to the squares, which have density zero.
+
+\subsection*{6) Outcome and attribution}
+\textbf{UNRESOLVED in this attempt for the full three-part problem.} The progression part is complete conditional on the stated published density theorem; the positive-density variant has a complete elementary counterexample. The remaining gap is the affirmative assertion for every nonconstant coloring of squares excluding 1. The source reports a proof by Larsen, which is not reproduced here. No new theorem or independent formal verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/318} and its discussion, checked 23 September 2026; Bloom's paper above. The progression result is historically due to Sattler, and the density counterexample is credited to Erd\H{o}s. The common-multiple reduction is also suggested in the source discussion.
+
+The estimate measures coverage of the full multipart question, not correctness probability.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 70\%}

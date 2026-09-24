@@ -44,18 +44,45 @@ def extract_field(body, label):
 
 
 def load_problem_ids(problem_type):
+    if problem_type == "open_problems":
+        with open(LISTS_DIR / "top500-v22.json", "r", encoding="utf-8") as f:
+            catalog = json.load(f)
+        return {record["problemId"] for record in catalog["records"]}
     if problem_type == "erdos":
         path = LISTS_DIR / "erdos_problems.csv"
         key = "number"
-    else:
+    elif problem_type == "mo":
         path = LISTS_DIR / "mo_problems.csv"
         key = "question_id"
+    else:
+        raise SystemExit(f"Unknown problem type: {problem_type}")
     ids = set()
     with open(path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             ids.add(row.get(key, "").strip())
     return ids
+
+
+def validate_problem(problem_type_raw, problem_id):
+    """Return a supported collection and catalog ID safe to use as a filename."""
+    aliases = {"erdos": "erdos", "mo": "mo", "open problems": "open_problems",
+               "open_problems": "open_problems"}
+    problem_type = aliases.get(problem_type_raw.strip().lower())
+    if problem_type is None:
+        raise SystemExit(f"Unknown problem type: {problem_type_raw}")
+
+    problem_id = problem_id.strip()
+    # The combined listing namespaces MathOverflow IDs; retain its review storage.
+    if problem_type == "open_problems" and problem_id.startswith("mo:"):
+        problem_type, problem_id = "mo", problem_id[3:]
+
+    pattern = r"problem\.[a-z0-9]+(?:[.-][a-z0-9]+)*" if problem_type == "open_problems" else r"[0-9]+"
+    if not re.fullmatch(pattern, problem_id):
+        raise SystemExit(f"Invalid problem id: {problem_id}")
+    if problem_id not in load_problem_ids(problem_type):
+        raise SystemExit(f"Problem id not found in lists: {problem_type} {problem_id}")
+    return problem_type, problem_id
 
 
 def parse_links(value):
@@ -87,17 +114,7 @@ def main():
     if not problem_type_raw or not problem_id or not verdict:
         raise SystemExit("Missing required fields: problem type, problem id, or verdict.")
 
-    problem_type = problem_type_raw.strip().lower()
-    if problem_type not in ("erdos", "mo"):
-        raise SystemExit(f"Unknown problem type: {problem_type_raw}")
-
-    problem_id = problem_id.strip()
-    if not re.match(r"^\d+$", problem_id):
-        raise SystemExit(f"Invalid problem id: {problem_id}")
-
-    valid_ids = load_problem_ids(problem_type)
-    if problem_id not in valid_ids:
-        raise SystemExit(f"Problem id not found in lists: {problem_type} {problem_id}")
+    problem_type, problem_id = validate_problem(problem_type_raw, problem_id)
 
     if verdict not in VERDICT_MAP:
         raise SystemExit(f"Unknown verdict: {verdict}")

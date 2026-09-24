@@ -1,0 +1,107 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#121; partial reconstruction, 2026-09-23.}
+Let $F_k(N)$ be the maximum size of $A\subseteq[N]$ for which no $k$
+distinct elements have square product. Is $F_5(N)=(1-o(1))N$, and more
+generally does this hold for odd $k\ge5$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The assertion is known to be false: Tao's primary paper proves
+$F_k(N)\le(1-c_k)N$ for sufficiently large $N$ and fixed $k\ge4$, with
+$c_k>0$. We prove elementary comparison results and the precise
+probabilistic transfer step, while isolating the analytic construction
+needed for the full negative answer. The latter is cited, not claimed
+as independently proved here. No novelty is claimed.
+
+\section{WORK}
+\subsection*{The two-element case}
+Write uniquely $n=s(n)t^2$ with $s(n)$ squarefree. Then $uv$ is a
+square if and only if $s(u)=s(v)$. An admissible set for $F_2$ contains
+at most one number per kernel, and the squarefree numbers themselves
+achieve this bound. Thus
+\[
+ F_2(N)=\sum_{n\le N}\mu(n)^2
+ =\sum_{d\le\sqrt N}\mu(d)\lfloor N/d^2\rfloor
+ =\frac{6}{\pi^2}N+O(\sqrt N).
+\]
+The final equality uses the absolutely convergent Euler product
+$\sum_d\mu(d)/d^2=1/\zeta(2)$; its tail and the floor errors are each
+$O(\sqrt N)$.
+
+\subsection*{A large set avoiding every odd square product}
+Let $A_N$ consist of integers at most $N$ with a prime divisor
+$p>\sqrt N$. Each has exactly one such prime, appearing to exponent
+one. In a product of an odd number of members, the total number of
+these large-prime occurrences is odd, so at least one prime occurs an
+odd number of times. The product cannot be a square, whether or not
+the selected elements are distinct. Consequently
+\[
+ F_k(N)\ge |A_N|\quad\hbox{for every odd }k.
+\]
+Distinct primes above $\sqrt N$ cannot divide the same integer at most
+$N$, so, by the prime number theorem and Mertens' prime reciprocal sum,
+\[
+ |A_N|=\sum_{\sqrt N<p\le N}\lfloor N/p\rfloor
+ =N\sum_{\sqrt N<p\le N}\frac1p+O(\pi(N))
+ =(\log2+o(1))N.                                         \tag{1}
+\]
+This is a genuine positive-density lower construction, but does not
+approach density one.
+
+\subsection*{A transfer lemma isolating the upper-bound difficulty}
+Suppose a random tuple $(X_1,\ldots,X_k)$ has square product always,
+and there is an event $E$ such that $X_i\in[N]$ on $E$ and
+\[
+ \Pr(E)\ge aL^{-k},\qquad
+ \Pr(E\cap\{X_i=x\})\le b/(NL^k),\qquad
+ \Pr(\exists i<j:X_i=X_j)=o(L^{-k}),                       \tag{2}
+\]
+where $L=\log N$ and $a,b>0$ depend only on $k$.
+If $A\subseteq[N]$ omits at most $aN/(4kb)$ elements, the union bound
+shows that the probability of $E$ together with some $X_i\notin A$
+is at most $a/(4L^k)$. For sufficiently large $N$, the collision
+probability is also at most $a/(4L^k)$. Thus with positive probability
+all the $X_i$ are distinct members of $A$ and have square product.
+This proves
+\[
+ F_k(N)\le (1-a/(4kb))N                                  \tag{3}
+\]
+under (2).
+
+The algebraic source of such tuples is particularly simple. Give the
+edges of a complete graph on $k$ vertices independent positive integer
+labels $D_{ij}=D_{ji}$ and put $X_i=\prod_{j\ne i}D_{ij}$.
+Then $\prod_iX_i=\prod_{i<j}D_{ij}^2$ automatically. What is difficult
+is choosing the distributions so the tuple has the uniform marginal
+bounds in (2) after conditioning on its size. Uniform edge labels
+alone do not establish those bounds.
+Tao's Proposition 2.1 constructs precisely (2), using small squarefree
+factors, larger prime factors, and prime-distribution estimates. Thus
+(3), together with that external proposition, reproduces the known
+negative answer. Its uniform probability estimate has not been proved
+in this attempt.
+
+\section{VERIFICATION}
+All products in the question require distinct elements; the transfer
+lemma explicitly removes collisions. The lower construction (1) works
+simultaneously for every odd length, whereas the upper-bound constants
+are for fixed $k$. Small exact subset searches in the batch checks
+confirm the squarefree-kernel rule and the odd-product construction.
+They do not verify Tao's asymptotic probabilistic estimates.
+
+\section{FINAL STATUS}
+\textbf{UNRESOLVED within this partial reconstruction; the problem is
+already disproved in the literature.}
+The elementary bounds and transfer implication are proved. Completing
+an independent reconstruction requires the distributional estimates
+in (2), particularly uniformity in $x$; simply restating Proposition 2.1
+is not counted as proving that missing part.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/121}.
+T.~Tao, \emph{On product representations of squares}, Proposition 2.1,
+\url{https://arxiv.org/abs/2405.11610}.
+Checked 2026-09-23. The estimate below assesses the proof reproduced
+here, not the established literature status.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

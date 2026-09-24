@@ -1,0 +1,35 @@
+\section{Erd\H{o}s Problem \#587: sets with no square subset sum}
+\noindent Explicit construction and an elementary upper obstruction, 24 September 2026.
+
+\subsection*{Statement and context}
+Let $\operatorname{SF}(N)$ be the largest size of $A\subseteq[1,N]$ for which no nonempty subset has a square sum. Nguyen--Vu proved $\operatorname{SF}(N)\leq N^{1/3}(\log N)^C$ for an absolute $C$, matching Erd\H{o}s's construction up to logarithmic factors. Here the lower construction is proved with explicit parameters, along with a general upper bound from two-element subsets. The deep upper bound is acknowledged but not reproduced.
+
+\subsection*{A cube-root construction with all subset sums checked}
+Take $m=\lfloor(N/2)^{1/3}\rfloor\geq2$. Bertrand's postulate supplies a prime $p$ with $m^2<p<2m^2$. Put
+\[A=\{p,2p,\ldots,mp\}.\]
+Every element is at most $mp<2m^3\leq N$. A nonempty subset sum has the form $pt$, where
+\[1\leq t\leq1+2+\cdots+m=\frac{m(m+1)}2<p.
+\]
+If $pt=z^2$, primality gives $p\mid z$, hence $p^2\mid pt$ and $p\mid t$, contradicting $0<t<p$. This checks every nonempty subset, including the full set, and yields
+\[\operatorname{SF}(N)\geq\lfloor(N/2)^{1/3}\rfloor
+\]
+for the indicated large $N$. The only external input is Bertrand's elementary prime-existence theorem. Primality can also be replaced by squarefreeness: if $d$ is squarefree and $dt$ is a square, then every prime of $d$ divides $t$, so $d\mid t$; the same proof works whenever $m(m+1)/2<d\leq N/m$.
+
+\subsection*{A general two-sum upper bound}
+Let $s=\lceil\sqrt{N+1}\rceil^2$. For sufficiently large $N$, $N+1\leq s\leq2N$. Inside the interval
+\[I=[s-N,N]\cap\mathbb Z
+\]
+the map $a\mapsto s-a$ is an involution. Its two-element orbits are forbidden pairs for $A$, since their sum is the square $s$. Each such pair contributes at most one element of $A$; a possible fixed point contributes at most one. The $s-N-1$ integers outside $I$ contribute at most that many. Therefore
+\[
+|A|\leq(s-N-1)+\left\lceil\frac{2N-s+1}{2}\right\rceil
+=\left\lfloor\frac s2\right\rfloor
+\leq\frac N2+\sqrt{N+1}+1.\tag{1}
+\]
+The potential fixed point $s/2$ is treated as a singleton: using it twice would not be a subset sum. This distinction is necessary for the inequality's validity. Also, every individual square is excluded from $A$ by the one-element condition, though combining that observation with (1) alone does not reach cube-root size.
+
+\subsection*{What remains}
+\textbf{Attempt status: unresolved.} The all-subsets lower bound and general upper obstruction are proved. Their exponents do not match. In particular no argument here proves Nguyen--Vu's $N^{1/3}(\log N)^C$ upper bound, which requires considerably stronger structure for subset sums. The known exponent $1/3+o(1)$ is not being presented as derived from (1).
+Sources: \url{https://www.erdosproblems.com/587}; H. H. Nguyen and V. H. Vu, \emph{Squares in sumsets}, Example 1.2, Remark 1.3 and Theorem 1.4, \url{https://math.osu.edu/~nguyen.1261/cikk/Squaresumset-revised.pdf}. No novelty or formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

@@ -1,0 +1,51 @@
+\section{Erd\H{o}s Problem \#320: counting reciprocal subset sums}
+\noindent Partial proof with explicit structural recursion, 24 September 2026.
+
+\subsection*{1) Statement}
+Let
+\[S(N)=\left|\left\{\sum_{n\in A}\frac1n:A\subseteq\{1,\ldots,N\}\right\}\right|,\qquad s(N)=\log S(N).
+\]
+Estimate $S(N)$. The empty sum is included. This attempt proves
+\[c\frac N{\log N}\le s(N)\le C\frac{N\log\log N}{\log N}\]
+for all sufficiently large $N$, with absolute positive constants. The sharper iterated-logarithm order reported by the current source is not derived.
+
+\subsection*{2) Prime denominators give distinct sums}
+All subsets of the primes at most $N$ have distinct reciprocal sums. Indeed, a collision would give $\sum_{p\le N}\epsilon_p/p=0$, with $\epsilon_p\in\{-1,0,1\}$ not all zero. Multiply by $P=\prod_{p\le N}p$ and reduce modulo a prime $q$ with $\epsilon_q\ne0$. Every term except $\epsilon_qP/q$ vanishes modulo $q$, and that remaining term is nonzero, a contradiction. Consequently
+\[S(N)\ge2^{\pi(N)}.\]
+The classical Chebyshev estimates $c_0x/\log x\le\pi(x)\le C_0x/\log x$, for sufficiently large $x$, imply the claimed lower bound. These standard prime-counting estimates are the only analytic number-theoretic input below.
+
+\subsection*{3) Separate smooth denominators from large-prime denominators}
+Set $y=N/\log N$, taking $N$ large enough that $y>\sqrt N$. An integer $d\le N$ either has all prime factors at most $y$, or has exactly one prime factor $p>y$, with exponent one. In the latter case $d=pm$, with $m\le N/p<\log N<y$.
+
+Every smooth denominator divides
+\[L_y=\prod_{p\le y}p^{\lfloor\log N/\log p\rfloor}.
+\]
+Thus its reciprocal subset sums lie on the lattice $L_y^{-1}\mathbb Z$ and in $[0,H_N]$, where $H_N=\sum_{j\le N}1/j\le1+\log N$. Their number is at most $\lfloor L_yH_N\rfloor+1$. Chebyshev's upper bound gives
+\[\log L_y\le\pi(y)\log N\ll\frac{N}{\log N}.
+\]
+The logarithm of the number of smooth subset sums is therefore $O(N/\log N)$.
+
+For a fixed $p>y$, sums using denominators $pm$ are precisely $1/p$ times subset sums from $1,\ldots,\lfloor N/p\rfloor$, and number $S(\lfloor N/p\rfloor)$. Adding one choice from each denominator class can only identify choices, not create more than their product. We obtain the exact-form upper recursion
+\[s(N)\le C_1\frac N{\log N}+\sum_{y<p\le N}s(\lfloor N/p\rfloor).\tag{1}\]
+
+\subsection*{4) A complete first bound from the recursion}
+Use $s(m)\le m\log2$. Partial summation and Chebyshev's upper bound yield
+\begin{align*}
+\sum_{y<p\le N}\frac1p
+&=\frac{\pi(N)}N-\frac{\pi(y)}y+\int_y^N\frac{\pi(t)}{t^2}\,dt\\
+&\le\frac{C_2}{\log N}+C_2\log\!\left(\frac{\log N}{\log y}\right)
+\ll\frac{\log\log N}{\log N}.
+\end{align*}
+For the last step, $\log y=\log N-\log\log N$ and $-\log(1-u)\le2u$ when $0\le u\le1/2$. Substitution into (1) proves
+\[s(N)\ll\frac{N\log\log N}{\log N}.
+\]
+All constants here are fixed; no iteration depth depending on $N$ has been absorbed into one of them.
+
+\subsection*{5) Gap, sources and outcome}
+\textbf{UNRESOLVED at the sharp scale in this attempt.} The prime construction, the smooth-denominator counting lemma, recursion (1), and the displayed coarse bounds are proved. Obtaining the current iterated-logarithm product requires a stronger lower construction and quantitative control through a number of recursive steps which itself grows with $N$. Iterating an unspecified constant in an $\ll$ estimate would not establish a uniform constant in that sharper result.
+
+The decomposition follows the Bleicher--Erd\H{o}s method explained at \url{https://www.erdosproblems.com/320}, checked 23 September 2026. That source credits a sharper lower bound to Bettin, Greni\'e, Molteni and Sanna, \url{https://arxiv.org/abs/2509.10030}, and the matching upper analysis to Young, Zhu, Luo and GPT 5.6 Sol. Their sharp results are context, not substituted for a proof in this partial attempt. No novelty or formal verification is claimed.
+
+The estimate describes progress toward the sharp size estimate, not a probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

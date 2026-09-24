@@ -1,0 +1,109 @@
+\section{Erd\H{o}s Problem \#202}
+\subsection*{1. FORMAL RESTATEMENT}
+Let $f(x)$ be the maximum number of pairwise disjoint residue classes $a_q\pmod q$ with distinct positive integer moduli $q\le x$. Determine the asymptotic size of $f(x)$.
+\subsection*{2. LITERATURE AND DECLARED INPUTS}
+The current resolution, recorded on the problem page and written up by Boon Suan Ho with disclosed GPT-5.4 Pro assistance, is
+\[
+ f(x)=x\exp\bigl(-(1+o(1))\sqrt{\log x\log\log x}\bigr).
+\]
+We reconstruct the spread-core improvement of the de la Bret\`eche--Ford--Vandehey (BFV) descending-chain proof. The older local versions contain elementary lower bounds, not this resolution. This document makes no novelty claim.
+
+The following established inputs remain external: (i) BFV's matching lower bound, (ii) BFV Lemma 3.2 controlling large prime-power exponent products, and (iii) Park--Pham's expectation-threshold theorem. All reductions from these inputs, including the uniform error calculation, are supplied below.
+
+Put $X=\log x$, $Y=\log\log x$, $M=\sqrt{X/Y}$, $Z=\sqrt{XY}$, and $L(\alpha,x)=e^{\alpha Z}$. Write $h(n)=\prod_{p^\nu\parallel n}\nu$ and $\omega(n)=\#\{p:p\mid n\}$. The BFV inputs have the precise forms
+\[
+ f(x)\ge x e^{-(1+o(1))Z},\qquad
+ \#\{n\le x:h(n)>e^{\sqrt X}\}\le x\exp(-\tfrac15\sqrt X\,Y)
+                                                                  \tag{1}
+\]
+for sufficiently large $x$. In the second exponent $Y$ is outside the square root; this makes the discarded set negligible on the $e^{-Z}$ scale.
+\subsection*{3. UNIFORM COUNTING AND PRUNING}
+Uniformly for $0\le\alpha\le3$ and $2\le y\le x$,
+\[
+ \#\{n\le y:\omega(n)\ge\alpha M\}
+ \le y\exp\bigl((-\alpha/2+o(1))Z\bigr).               \tag{2}
+\]
+Here is the Rankin argument. With $s=1+1/X$ and $z=\sqrt X/Y\ge1$,
+\[
+ \#\{n\le y:\omega(n)\ge\alpha M\}
+ \le ey z^{-\alpha M}\sum_{n\ge1}\frac{z^{\omega(n)}}{n^s}
+ \le ey z^{-\alpha M}\zeta(s)^z
+ \le ey z^{-\alpha M}(2X)^z.
+\]
+The Euler-factor inequality used is $1+z/(p^s-1)\le(1-p^{-s})^{-z}$ for $z\ge1$. Since $\log z=Y/2-\log Y$, the exponent after $y$ is $-\alpha Z/2+O(M\log Y+\sqrt X)=(-\alpha/2+o(1))Z$, uniformly as stated.
+
+Start with an extremal family $Q$ of size $S=f(x)$. Discard $q<xe^{-2Z}$, then those with $\omega(q)>3M$, and those with $h(q)>e^{\sqrt X}$. Equations (1)--(2) show that each discarded number is $o(S)$. Pigeonhole a common value $\omega(q)=K$, $1\le K\le3M$. Finally retain one modulus for each squarefree kernel. For any given kernel with $K$ primes, the number of exponent choices with product at most $H=e^{\sqrt X}$ is at most
+\[
+ \sum_{\nu_1,\ldots,\nu_K\ge1}
+       \frac{H^2}{(\nu_1\cdots\nu_K)^2}
+ =H^2\zeta(2)^K=e^{o(Z)}.
+\]
+We obtain $Q'$ of size $S'\ge S e^{-o(Z)}$, with distinct kernels, all $q\ge xe^{-2Z}$, all $h(q)\le e^{\sqrt X}$, and all $\omega(q)=K$. Write $K=dM$, $0<d\le3$.
+
+One consequence of (2), uniform for integers $0\le W\le K$ and $1\le y\le x$, is
+\[
+ \#\{m\le y:\omega(m)=K-W\}
+ \le y e^{(-d/2+o(1))Z}X^{W/2}.                      \tag{3}
+\]
+For $K>W$ apply (2) with $\alpha=(K-W)/M$; for $K=W$, only $m=1$ is possible and the right side is at least $y$ if the error term is chosen nonnegative. Cases $y<2$ are immediate. This verifies the uniformity needed in the chain rather than assuming a pointwise estimate can be multiplied many times.
+\subsection*{4. THE SPREAD-CORE LEMMA}
+For a family $\mathcal F$ of distinct $k$-element subsets of a finite ground set, write $\mathcal F_T=\{F\in\mathcal F:T\subseteq F\}$. Call it $\kappa$-spread if $|\mathcal F_T|\le|\mathcal F|\kappa^{-|T|}$ for every nonempty $T$.
+
+Park--Pham's theorem says that for a nontrivial increasing family $\mathcal U$, its probability-$1/2$ threshold obeys $p_c(\mathcal U)\le C q(\mathcal U)\log\ell$, where $\ell$ is the maximum of two and the largest minimal-set size. The expectation threshold $q(\mathcal U)$ is the largest $p$ admitting a cover $\mathcal G$ with $\sum_{G\in\mathcal G}p^{|G|}\le1/2$.
+
+For the upward closure of a $\kappa$-spread family, any such cover satisfies
+\[
+ |\mathcal F|\le\sum_{G\in\mathcal G}|\mathcal F_G|
+ \le|\mathcal F|\sum_{G\in\mathcal G}\kappa^{-|G|}.
+\]
+An empty cover set already has cost one. Hence $q(\mathcal U)\le1/\kappa$, and $p_c(\mathcal U)\le C\log(ek)/\kappa$.
+If $\kappa=C_0\log(eK)$ with $C_0$ sufficiently large and $k\le K$, a random four-way partition of the ground set has each part containing a member with probability at least $1/2$. The expected number of successful parts is at least two, so some partition contains two disjoint members.
+
+Consequently every nonempty intersecting $k$-uniform family, $1\le k\le K$, has a nonempty set $T$ with
+\[
+ |\mathcal F_T|>|\mathcal F|(C_0\log(eK))^{-|T|}.       \tag{4}
+\]
+Otherwise it would be spread and could not be intersecting.
+\subsection*{5. THE EXACT PRIME-POWER CHAIN}
+Initially let $D_0=1$, $Q'_0=Q'$. At a stage we have a nonempty subfamily $Q'_{r-1}$ whose moduli contain the same exact prime-power product $D_{r-1}$, no prime of $D_{r-1}$ divides their quotients, and their residues agree modulo $D_{r-1}$.
+
+If primes remain in the quotients, their supports form a uniform family of distinct nonempty sets, because the original squarefree kernels were distinct. They are intersecting: disjoint remaining supports would make the gcd of two moduli divide $D_{r-1}$; their equal residues there would force their residue classes to intersect by CRT.
+
+Choose a core of $w_r\ge1$ primes by (4). Group the surviving moduli by their exact prime-power product on this core. Weight a possible product $P$ by $h(P)^{-2}$. The sum of all these weights is $\zeta(2)^{w_r}$. Weighted pigeonholing therefore yields an attained product $P_r$ and a family $Q_r$ with
+\[
+ |Q_r|>\frac{|Q'_{r-1}|}{\Lambda^{w_r}h(P_r)^2},\qquad
+ \Lambda=\zeta(2)C_0\log(eK).
+\]
+Keep a most frequent residue modulo $P_r$ to obtain $Q'_r$ of size at least $|Q_r|/P_r$, and set $D_r=D_{r-1}P_r$. The products $P_r$ are pairwise coprime, with their complete prime powers removed at each stage, so all invariants persist. Writing $W_r=\sum_{j\le r}w_j$, after $R\le K$ stages we have $W_R=K$ and a single surviving modulus $D_R\ge xe^{-2Z}$.
+
+Iterating the losses, and using $h(D_r)\le e^{\sqrt X}$, gives
+\[
+ |Q_r|>\frac{S'}{D_{r-1}\Lambda^{W_r}h(D_r)^2}.
+\]
+On the other hand each modulus in $Q_r$ equals $D_rm$ with $\omega(m)=K-W_r$ and $m\le x/D_r$. Equation (3) gives
+\[
+ |Q_r|\le\frac{x}{D_r}e^{(-d/2+o(1))Z}X^{W_r/2}.
+\]
+Comparison yields, uniformly in $r$,
+\[
+ P_r\le\frac{x}{S'}e^{(-d/2+o(1))Z}
+            X^{W_r/2}\Lambda^{W_r}e^{2\sqrt X}.        \tag{5}
+\]
+\subsection*{6. OPTIMISATION}
+Write $S'=xe^{-\sigma Z}$ with $\sigma\ge0$, and $R=cM$ with $0<c\le d\le3$. Set $T=\sum_{r=1}^R W_r$. Since each $w_r\ge1$ and their total is $K$,
+\[
+ T=\sum_{j=1}^R(R-j+1)w_j\le RK-\frac{R^2}2+\frac R2. \tag{6}
+\]
+Multiply (5), use $D_R\ge xe^{-2Z}$, take logarithms and divide by $X=MZ=M^2Y$. The cumulative errors are $Ro(Z)=o(X)$ by uniformity. Also $T=O(M^2)$, $\log\Lambda=O(\log Y)=o(Y)$, and $R\sqrt X=o(X)$. Therefore (6) gives
+\[
+ 1+o(1)\le c(\sigma-d/2)+cd/2-c^2/4+o(1)
+ =c\sigma-c^2/4+o(1)\le\sigma^2+o(1).
+\]
+Thus $\sigma\ge1-o(1)$, so $S'\le xe^{-(1-o(1))Z}$, and the pruning loss gives the same upper bound for $f(x)$. Combining with (1) proves the claimed asymptotic.
+\subsection*{7. FINAL AND VERIFICATION}
+\textbf{SOLVED: reconstruction of the known asymptotic, relative to the three declared external inputs.}
+The prime-power weights, distinct-kernel condition, residue losses and repeated uniform errors are all retained. The proof does not assume squarefree moduli and does not substitute a fixed-parameter sunflower assertion for a growing-parameter estimate. BFV's lower construction and exceptional-exponent estimate, and Park--Pham's theorem, remain cited inputs rather than proofs supplied here.
+\subsection*{8. SOURCES}
+Current statement: \texttt{https://www.erdosproblems.com/202}. B. S. Ho, \emph{Non-intersecting arithmetic progressions via spread cores}, \texttt{https://boonsuan.github.io/erdos202.pdf}. R. de la Bret\`eche, K. Ford and J. Vandehey, \emph{On non-intersecting arithmetic progressions}, Acta Arithmetica 157 (2013), 381--392, \texttt{https://www.ford126.web.illinois.edu/wwwpapers/NAP.pdf}, Theorem 1, Lemmas 3.1--3.3 and Section 4.1. J. Park and H. T. Pham, \emph{A proof of the Kahn--Kalai conjecture}, \texttt{https://arxiv.org/abs/2203.17207}, Theorem 1.1.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

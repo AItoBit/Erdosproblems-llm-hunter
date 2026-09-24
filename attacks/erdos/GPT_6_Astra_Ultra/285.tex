@@ -1,0 +1,70 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#285; reconstruction using Martin's exact-length construction, 2026-09-24.}
+For positive integers $k$ for which a representation exists, let
+\[
+f(k)=\min\{\max E: E\subset\mathbb N,\ |E|=k,\ \sum_{n\in E}1/n=1\}.
+\]
+Prove that $f(k)\sim ek/(e-1)$ as $k\to\infty$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Greg Martin proved the assertion in \emph{Denser Egyptian Fractions}. The exact number of summands matters: an existence theorem with an unspecified number of denominators would not establish this statement. Below, Martin's uniform exact-length construction is the declared external input; the lower bound and all deductions are supplied. There is a harmless finite exception: $k=2$ admits no representation with distinct positive denominators.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First settle which lengths are feasible. Then compare any $k$ denominators with the $k$ largest integers below their maximum. Finally specialize Martin's construction to the rational target $1$ and verify its smoothness hypothesis.
+
+\section{WORK}
+\textbf{Feasible lengths.} The singleton $\{1\}$ represents $1$. If $1/u+1/v=1$ with $u<v$, then $(u-1)(v-1)=1$, forcing $u=v=2$, a contradiction. For three terms use $\{2,3,6\}$. From any representation with largest denominator $m\geq2$, replace $1/m$ by
+\[
+\frac1{m+1}+\frac1{m(m+1)}.
+\tag{1}
+\]
+Both new denominators exceed $m$ and are distinct. Thus (1) increases the number of distinct terms by exactly one, proving existence for every $k\geq3$. We may set $f(2)=+\infty$ without affecting the limit.
+
+\textbf{A sharp elementary lower bound.} Suppose $E=\{n_1<\cdots<n_k=M\}$ represents $1$. Since $n_i\leq M-k+i$,
+\[
+1\geq\sum_{j=M-k+1}^{M}\frac1j
+\geq\int_{M-k+1}^{M+1}\frac{dt}{t}
+=\log\frac{M+1}{M-k+1}.
+\]
+Exponentiating and rearranging gives
+\[
+f(k)\geq\frac{e}{e-1}k-1.
+\tag{2}
+\]
+The direction of the comparison is essential: among $k$ distinct denominators at most $M$, the last $k$ have the smallest reciprocal sum.
+
+\textbf{Declared external construction.} Write $P^*(b)$ for the largest prime power dividing $b$, with $P^*(1)=1$. Martin's Proposition 5 states: for each closed interval $I\subset(0,\infty)$, all sufficiently large integers $t$, and every rational $r=a/b\in I$ in lowest terms satisfying
+\[
+P^*(b)<t(\log t)^{-22},
+\]
+there is a set $E$ of exactly $t$ distinct positive integers such that
+\[
+\sum_{n\in E}\frac1n=r,\qquad
+\max E\leq\frac{t}{1-e^{-r}}+O_I\!\left(\frac{t\log\log t}{\log t}\right).
+\tag{3}
+\]
+The construction proving (3), including its prime-power denominator clearing and control of the exact number of terms, is imported from Martin; it is not re-proved here.
+
+Take the fixed interval $I=[1/2,3/2]$, $r=1$, $b=1$, and $t=k$. Its hypothesis becomes $1<k/(\log k)^{22}$, which holds for every sufficiently large $k$. Thus
+\[
+f(k)\leq\frac{k}{1-e^{-1}}
++O\!\left(\frac{k\log\log k}{\log k}\right).
+\tag{4}
+\]
+Since $\log\log k/\log k\to0$, (2) and (4) imply
+\[
+\frac{f(k)}k\longrightarrow\frac1{1-e^{-1}}=\frac e{e-1}.
+\]
+
+\section{VERIFICATION AND SCOPE}
+The exact-length input applies for every sufficiently large integer $k$, not merely a subsequence. Formula (1) handles all other feasible lengths but does not supply the optimal asymptotic bound. The proof is complete relative to the explicitly stated Martin construction. No new mathematical discovery is claimed.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and attribution: \url{https://www.erdosproblems.com/285}.
+\item G. Martin, \emph{Denser Egyptian Fractions}, Proposition 5 and Theorem 2: \url{https://arxiv.org/pdf/math/9811112}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, using the stated external construction.}
+The asymptotic follows with an explicit elementary lower bound and an exact-length upper-bound input.
+\textbf{Completion rate estimate: 100\% of the stated asymptotic, relative to Martin's Proposition 5.}

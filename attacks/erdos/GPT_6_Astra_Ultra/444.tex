@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#444: many divisors from an infinite set}
+\noindent Partial reconstruction, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$ be infinite. Define
+\[d_A(n)=\#\{a\in A:a\mid n\},\quad
+S(x)=\sum_{a\in A\cap[1,x)}\frac1a,\quad
+M(x)=\max_{1\le n<x}d_A(n).\]
+Is it true for every fixed positive integer $k$ that
+\[\limsup_{x\to\infty}\frac{M(x)}{S(x)^k}=\infty?\tag{1}\]
+The full statement is known by Erd\H{o}s and S\'ark\H{o}zy. We prove it for every $A$ whose reciprocal mass grows more slowly than every positive power of $\log x$, including every convergent reciprocal series. We also verify the contrasting dense example $A=\mathbb N$.
+
+\subsection*{2) A general least-common-multiple witness}
+For $r\ge1$, put $L_r=\operatorname{lcm}(a_1,\ldots,a_r)$ and $X_r=L_r+1$. All the first $r$ elements of $A$ divide $L_r<X_r$, so
+\[M(X_r)\ge r,\qquad
+X_r\le1+\prod_{j=1}^r a_j\le1+a_r^r.\tag{2}\]
+Also $X_r\to\infty$, since $L_r\ge a_r\to\infty$.
+
+If $\sum_{a\in A}1/a=C<\infty$, then $S(X_r)\le C$ and (2) gives $M(X_r)/S(X_r)^k\ge r/C^k\to\infty$. In fact $M(x)\to\infty$ by monotonicity, so in this case the full limit, rather than just the upper limit, is infinite.
+
+\subsection*{3) Divergent reciprocal mass with subpower logarithmic growth}
+Now assume $\sum_{a\in A}1/a=\infty$ and
+\[\text{for every }\epsilon>0,\quad S(x)\le(\log x)^\epsilon
+\quad\text{for all sufficiently large }x.\tag{3}\]
+There are infinitely many indices $r$ with $a_r\le r^2$. Otherwise $a_r>r^2$ eventually, and comparison with $\sum r^{-2}$ would make the reciprocal series converge. Along these infinitely many indices, (2) gives
+\[\log X_r\le\log(1+r^{2r})\le\log2+2r\log r.\tag{4}\]
+Fix $k\ge1$ and use (3) with $\epsilon=1/(2k)$. For all sufficiently large selected indices,
+\[\frac{M(X_r)}{S(X_r)^k}
+\ge\frac r{(\log X_r)^{1/2}}
+\ge\frac r{(\log2+2r\log r)^{1/2}}
+\longrightarrow\infty.\]
+This proves (1) under (3). In particular it covers reciprocal masses bounded by any fixed power of $\log\log x$, and much faster functions as long as (3) holds. It requires the eventual bound in (3), not merely that this bound happens at some unrelated subsequence of cutoffs.
+
+\subsection*{4) The dense example $A=\mathbb N$}
+This set has $S(x)\asymp\log x$, so it is outside (3). It nevertheless satisfies (1) very strongly. Let $P_y=\prod_{p\le y}p$ and $X=P_y+1$. Every divisor of this squarefree primorial lies in $A$, and hence
+\[M(X)\ge2^{\pi(y)}.\]
+The harmonic-sum bound gives $S(X)\le1+\log X$. The classical Chebyshev estimates $\pi(y)\ge c y/\log y$ and $\sum_{p\le y}\log p\le C y$, used here as explicit external inputs, imply
+\[\frac{M(X)}{S(X)^k}
+\ge\frac{\exp(c(\log2)y/\log y)}{(1+Cy+\log2)^k}
+\longrightarrow\infty.\]
+This example uses the availability of every divisor in $A$. The same argument cannot be transferred to an arbitrary set by assuming its divisors also belong to that set.
+
+\subsection*{5) Outcome and missing step}
+\textbf{UNRESOLVED in this attempt.} \textbf{PARTIAL PROGRESS.} The entire assertion is established for convergent reciprocal series and, more generally, under (3), as well as for $A=\mathbb N$. The missing case is an arbitrary infinite set whose reciprocal mass violates (3). The simple least-common-multiple witness can be too large to control $S(X_r)$ there; no argument closing that gap is supplied.
+
+Source: \url{https://www.erdosproblems.com/444}, checked 24 September 2026, citing the full theorem of Erd\H{o}s and S\'ark\H{o}zy (1980). The general theorem is not invoked to label the partial argument complete. All auxiliary reasoning apart from the explicitly stated classical prime estimates is supplied above. No novelty or formal verification is claimed.
+
+The estimate measures the proof coverage for arbitrary infinite $A$, not confidence in the already established theorem.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

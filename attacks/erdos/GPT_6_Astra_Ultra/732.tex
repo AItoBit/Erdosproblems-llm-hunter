@@ -1,0 +1,63 @@
+\section{Erd\H{o}s Problem \#732: counting block-compatible sequences}
+\noindent Projective-plane construction and matching exponential order, 24 September 2026.
+
+\subsection*{Statement and scope}
+A nondecreasing sequence of integers at least two is block-compatible for $n$ if it lists the block sizes of a pairwise balanced design on $n$ points: every pair of points occurs in exactly one block. We prove that the number $F(n)$ of such sequences satisfies
+\[
+ \exp(c\sqrt n\log n)\leq F(n)\leq\exp(C\sqrt n\log n)
+\]
+for all large $n$, with absolute positive constants. We also prove necessary tests and show why the simplest one is insufficient. A useful general structural characterization is not obtained.
+
+\subsection*{Necessary restrictions}
+Every design satisfies
+\[
+ \sum_i\binom{X_i}{2}=\binom n2, \tag{1}
+\]
+because its blocks partition all pairs. Distinct blocks intersect in at most one point. Thus for any selection of $t$ blocks,
+\[
+ n\geq\left|\bigcup_{i\in I}A_i\right|
+ \geq\sum_{i\in I}X_i-\binom t2. \tag{2}
+\]
+The second inequality follows pointwise: a point occurring $d$ times contributes $d-\binom d2\leq1$ to the right-hand union lower bound.
+Condition (1) alone is not sufficient. For $n=4$, the sequence $(3,3)$ has pair sum six, but two three-subsets of a four-set intersect in at least two points and hence cannot be blocks of a design.
+
+\subsection*{A projective plane and arbitrary shortened line sizes}
+Let $q$ be a prime power, put $v=q^2+q+1$, and take the projective plane over $\mathbb F_q$. Its $v$ lines have $q+1$ points each, and every pair of points belongs to exactly one line.
+Assign to its lines any multiset of $v$ integers
+\[
+ x_1,\ldots,x_v\in\{3,\ldots,q+1\}.
+\]
+On line $i$ keep a subset $B_i$ of size $x_i$. Use $B_1,\ldots,B_v$ as blocks, and add as two-element blocks every pair of points not already contained in one of these subsets.
+
+No pair is covered by two of the larger blocks, because different projective lines meet in one point. The added pair blocks cover each remaining pair exactly once. This is a design, with the prescribed multiset of larger sizes. Different multisets give different full size sequences, since the sizes at least three can be read from the sequence independently of how many pairs were added.
+
+There are $q-1$ available larger sizes. By the elementary stars-and-bars count, the number of their multiplicity vectors, of total multiplicity $v$, is
+\[
+ \binom{v+q-2}{q-2}\geq\left(\frac v{q-2}\right)^{q-2}
+ \geq q^{q-2}. \tag{3}
+\]
+The first inequality follows by writing the binomial coefficient as a product of $q-2$ factors $(v+j)/j$, each at least $v/(q-2)$.
+
+\subsection*{Every sufficiently large $n$}
+Choose the largest power of two $q$ with $q^2+q+1\leq n$. The next power does not fit, so
+\[
+ n<4q^2+2q+1\leq7q^2,
+\]
+while $q^2\leq n$. Hence $q\asymp\sqrt n$.
+Build the design on its $v$ points, add $n-v$ new points, and add every pair involving a new point as its own block. The larger block-size multiset is unchanged, so this extension preserves the injection in (3). Since $(q-2)\log q\gg\sqrt n\log n$, the requested all-$n$ lower bound follows. The existence of finite fields, and the usual vector-space construction of their projective planes, are the standard external ingredients.
+
+\subsection*{A matching-order upper bound}
+Put $h=\lceil\sqrt n\rceil$. There are fewer than $h$ blocks of size greater than $2h$. Otherwise (2), applied to $h$ such blocks, would imply
+\[
+ n>2h^2-\binom h2>h^2\geq n,
+\]
+a contradiction (the strict inequality comes from each chosen size exceeding $2h$).
+There are at most $\binom n2$ blocks in total, by (1). The multiplicity of each possible size $2,\ldots,2h$ can therefore take at most $n^2+1$ values. These small sizes have at most
+$(n^2+1)^{2h}$ multiplicity vectors. The fewer than $h$ larger sizes have at most $(n+1)^h$ possible lists, even allowing arbitrary ordering and padding. Multiplying proves $F(n)\leq\exp(O(\sqrt n\log n))$.
+
+\subsection*{Outcome and remaining gap}
+\textbf{Attempt status: unresolved.} The quantitative counting question is completely proved, with matching exponential order and an explicit all-$n$ extension of Alon's construction. Conditions (1)--(2) are only necessary tests, not asserted to characterize every compatible sequence. A general useful necessary-and-sufficient structural criterion is the remaining part of the broader question.
+Sources: \url{https://www.erdosproblems.com/732}; N. Alon, \emph{Blocking partial designs and block-compatible sequences}, Theorem 2.3 and concluding remarks, \url{https://web.math.princeton.edu/~nalon/PDFS/remark191.pdf}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 85\%}

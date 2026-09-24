@@ -1,0 +1,76 @@
+\section{Erd\H{o}s Problem 619: the diameter-four conjecture fails}
+\subsection*{Statement and current resolution}
+For a connected triangle-free graph $G$ on $n$ vertices, let $h_4(G)$ be the minimum number of edges that must be added, preserving triangle-freeness, to obtain diameter at most four. The proposed bound was $h_4(G)\le(1-\varepsilon)n$ for some absolute $\varepsilon>0$.
+The answer is negative. This attempt reconstructs the pendant-vertex counterexample described by Nick Kuhn in the problem's discussion and associated proof repository. The proof below supplies an elementary random construction of the required core and proves the qualitative counterexample for every fixed $\varepsilon$. It does not claim the sharper error term reported in that work.
+
+\subsection*{1. Sparse cores with small independence ratio}
+For every sufficiently large fixed integer $d$, there are arbitrarily large connected triangle-free graphs $H$ with $m$ vertices satisfying
+\[
+ \Delta(H)\le D:=2d+2,\qquad
+ \alpha(H)\le\rho m,\quad \rho:=8\log d/d.
+ \tag{1}
+\]
+Here is a proof. In a random graph on $M$ vertices with edge probability $d/M$, the exponential Markov inequality gives
+\[
+ \Pr(\deg(v)\ge2d)\le\frac{\mathbb E2^{\deg(v)}}{2^{2d}}
+ \le(e/4)^d.
+\]
+Thus with probability at least $1-10(e/4)^d$, at most $M/10$ vertices have degree at least $2d$. The expected number of triangles is at most $d^3/6$, so the probability of more than $10d^3$ triangles is at most $1/60$.
+For $k=\lceil4M\log d/d\rceil$, the expected number of independent $k$-sets is at most
+\[
+ \binom Mk(1-d/M)^{\binom k2}
+ \le\exp\{k\log(eM/k)-dk(k-1)/(2M)\}=o(1)
+\]
+as $M\to\infty$ with $d$ fixed and sufficiently large: the exponent is at most $-\tfrac12k\log d$ for large $M$.
+Consequently all three desired events occur simultaneously with positive probability.
+Delete the high-degree vertices and one vertex from each remaining triangle. For $M$ sufficiently large, the surviving graph has $m\ge0.8M$ vertices, maximum degree at most $2d$, and independence number less than $k\le5M\log d/d\le\rho m$. Join its components in a chain by bridges, using a fixed representative of each component for its at most two incident bridges. This preserves triangle-freeness, increases maximum degree by at most two, and cannot increase independence number. This proves (1).
+
+\subsection*{2. Attach many leaves}
+Fix $0<\eta<1$ and choose an integer $s\ge4/\eta$. Attach exactly $s$ new leaves to every vertex of a core $H$ satisfying (1). Call the resulting graph $G$, its core vertex set $C$, and its pendant vertex set $P$. Then
+\[
+ |C|=m,\quad |P|=sm,\quad n=(s+1)m.
+\]
+Consider any triangle-free supergraph $G'$ of $G$ on the same vertices with diameter at most four, formed by adding $t$ edges. We will show $t>(1-\eta)n$. The case $t\ge n$ already suffices, so assume $t<n$.
+Let the graph induced by $P$ in $G'$ have $k$ connected components. Call such a component untouched if no \emph{added} edge joins any of its vertices to $C$, and let $r$ be the number of untouched components. The edges within $P$, all of which are new, number at least $sm-k$. Every other component has at least one new edge to $C$, giving at least $k-r$ further edges. Hence
+\[
+ t\ge sm-r=n-m-r. \tag{2}
+\]
+
+\subsection*{3. Bound the number of untouched components}
+Let $K$ count ordered pairs $(a,b)\in C^2$ whose distance in $G'$ is at most two, including the pairs $(a,a)$. Crucially, their short paths may use pendant vertices.
+Initially the number of such pairs is at most $m(D+1)^2$. Every vertex of $G'$ has at most $\alpha(H)$ neighbours in $C$: those neighbours must form an independent set in $H$, since $G'$ is triangle-free.
+Expose the $t$ new edges one at a time. A new ordered core pair at distance at most two must use the newly exposed edge in a path of length one or two. For an edge $xy$, the possible length-two paths have a core endpoint at $x$ or $y$ and their other core endpoint among the core neighbours of the other end. Counting both orientations gives at most $4\alpha(H)$ pairs, and the edge itself adds at most two. Thus the convenient bound
+\[
+ K\le m(D+1)^2+6t(\alpha(H)+1)
+ \le m(D+1)^2+6n(\rho m+1) \tag{3}
+\]
+holds.
+
+For two distinct untouched components $A,B$, take a path of length at most four between a chosen vertex of $A$ and one of $B$. A path leaving a component of $G'[P]$ must enter the core. Because $A$ and $B$ are untouched, the first entry edge and last exit edge are original leaf-parent edges. Let their core endpoints be $a,b$. At least one edge occurs before $a$ and after $b$, so $a,b$ have distance at most two in $G'$. Also $A$ contains an original child of $a$, and $B$ an original child of $b$. For a diagonal pair $(A,A)$, choose any original parent $a$ of one of its vertices and use $(a,a)$.
+Assign one such ordered core pair to every ordered pair of untouched components. A fixed $(a,b)$ can be assigned at most $s^2$ times: there are at most $s$ pendant components containing a child of each of $a,b$. Therefore
+\[
+ r^2\le s^2K. \tag{4}
+\]
+Combining (3)--(4),
+\[
+ \frac rn\le\frac{s}{s+1}
+ \sqrt{\frac{(D+1)^2}{m}+6(s+1)\left(\rho+\frac1m\right)}.
+ \tag{5}
+\]
+Choose $d$ large enough that $6(s+1)\rho<\eta^2/64$, and then choose the core order $m$ large enough that the remaining terms inside the square root total less than $\eta^2/64$. Formula (5) gives $r/n<\eta/4$, while $m/n=1/(s+1)<\eta/4$. Formula (2) now yields
+\[
+ \boxed{t>(1-\eta/2)n>(1-\eta)n.}
+\]
+The construction permits arbitrarily large $m$, so this disproves the existence of any fixed positive saving in the conjecture.
+
+\subsection*{Verification and conclusion}
+The core is connected before leaves are attached. All intermediate subgraphs of $G'$ remain triangle-free, so the bound on core neighbours applies at every edge-exposure step. The argument counts distance two in the whole extension, which is necessary because a newly added pendant vertex path can shorten distances between core vertices. Finally, $d$ is fixed before $m$ tends to infinity; no uniform random-graph estimate in a growing $d$ is being assumed.
+
+\textbf{Status: solved in the negative.} The displayed proof establishes the qualitative counterexample completely. Its source is the known pendant construction; no novelty or local Lean verification is claimed.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/619} and \url{https://www.erdosproblems.com/forum/thread/619}, checked 24 September 2026; the discussion specifies the diameter-at-most-four convention and the counterexample mechanism.
+\item N. Kuhn, associated proof materials, \url{https://github.com/nick-kuhn/erdos-619/}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% for the qualitative disproof requested.}

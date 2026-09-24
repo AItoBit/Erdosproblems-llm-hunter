@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         window.MathJax = {
+            loader: { load: ['[tex]/mathtools'] },
             tex: {
+                packages: { '[+]': ['mathtools'] },
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
                 processEscapes: true,
@@ -41,6 +43,22 @@
                     'Qbar': '{\\overline{\\mathbb{Q}}}',
                     'GQ': '{\\mathrm{Gal}(\\Qbar/\\mathbb{Q})}',
                     'Mgn': ['{\\mathcal{M}_{#1,#2}}', 2],
+                    'Mg': ['{\\mathcal{M}_{#1}}', 1],
+                    'poly': '{\\operatorname{poly}}',
+                    'coloneqq': '{\\mathrel{:=}}',
+                    'diam': '{\\operatorname{diam}}',
+                    'Sha': '{\\unicode{x0428}}',
+                    'ex': '{\\operatorname{ex}}',
+                    'binomc': ['{\\binom{#1}{#2}}', 2],
+                    'sp': '^',
+                    'sb': '_',
+                    '*': '{\\ast}',
+                    'ensuremath': ['{#1}', 1],
+                    'cL': '{\\mathcal{L}}',
+                    'Ga': '{\\mathbb{G}_a}',
+                    'Gm': '{\\mathbb{G}_m}',
+                    'Aone': '{\\mathbb{A}^1}',
+                    'Fp': '{\\mathbb{F}_p}',
                     'Bbb': ['{\\mathbb{#1}}', 1],
                     'normp': ['{\\|#1\\|_{#2}}', 2],
                     'norm': ['{\\|#1\\|}', 1],
@@ -60,7 +78,7 @@
                 }
             },
             options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
             }
         };
     </script>
@@ -72,7 +90,7 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="erdos.html">Erdos Problems</a>
-            <a href="mo.html">MathOverflow</a>
+            <a href="open_problems.html">Top Open Problems</a>
             <a href="about.html">About</a>
             <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">Light</button>
         </nav>
@@ -132,21 +150,30 @@
         <p>
             <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter">GitHub Repository</a> |
             <a href="about.html">About</a> |
-            <a href="LICENSE">Apache License 2.0</a>
+            <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/LICENSE">Apache License 2.0</a>
         </p>
     </footer>
 
     <script src="data/erdos_data.js"></script>
     <script src="data/mo_data.js"></script>
+    <script src="data/open_problems_data.js"></script>
     <script src="app.js"></script>
+    <script src="attempt-previews.js"></script>
+    <script src="tex-references.js"></script>
+    <script src="tex-bare-math.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
-            const type = params.get('type');
-            const id = params.get('id');
+            let type = params.get('type');
+            let id = params.get('id');
+            // Share historical MO discussions and reviews across both routes.
+            if (type === 'open_problems' && id && id.startsWith('mo:')) {
+                type = 'mo';
+                id = id.slice(3);
+            }
 
             if (!type || !id) {
-                document.getElementById('problem-meta').innerHTML = '<p>Error: Missing problem type or ID. Please use ?type=erdos&id=X or ?type=mo&id=X</p>';
+                document.getElementById('problem-meta').innerHTML = '<p>Error: Missing problem type or ID. Browse <a href="erdos.html">Erdos Problems</a> or <a href="open_problems.html">Top Open Problems</a>.</p>';
                 return;
             }
 
@@ -168,12 +195,23 @@
                 problem = moProblems[id];
                 allProblems = moProblems;
                 problemNumbers = Object.keys(moProblems).map(n => parseInt(n)).sort((a, b) => a - b);
+            } else if (type === 'open_problems') {
+                allProblems = window.OPEN_PROBLEMS_DATA;
+                if (!allProblems) {
+                    document.getElementById('problem-meta').innerHTML = '<p>Error loading Top Open Problems data</p>';
+                    return;
+                }
+                problem = allProblems[id];
+                problemNumbers = Object.values(allProblems)
+                    .filter(p => p.collection !== 'mo')
+                    .sort((a, b) => a.rank - b.rank)
+                    .map(p => p.id);
             } else {
                 document.getElementById('problem-meta').innerHTML = '<p>Unknown problem type</p>';
                 return;
             }
 
-            if (!problem) {
+            if (!problem || !Object.prototype.hasOwnProperty.call(allProblems, id)) {
                 document.getElementById('problem-meta').innerHTML = '<p>Problem not found</p>';
                 return;
             }
@@ -185,6 +223,9 @@
             if (type === 'erdos') {
                 document.getElementById('page-title').textContent = `Erdos Problem #${id}`;
                 document.title = `Erdos Problem #${id} - Erdos Problems LLM Hunter`;
+            } else if (type === 'open_problems') {
+                document.getElementById('page-title').textContent = problem.title;
+                document.title = `${problem.title} - Top Open Problems`;
             } else {
                 // Decode HTML entities in title
                 const tempDiv = document.createElement('div');
@@ -236,9 +277,24 @@
                     <p><strong>Completion:</strong> ${completionLabel}${completionSource ? ` (${completionSource})` : ''}</p>
                     <p><strong>Community Review:</strong> ${reviewDisplay}</p>
                 `;
+            } else if (type === 'open_problems') {
+                const escapeHtml = window.ProblemHunting.escapeHtml;
+                const claim = problem.llm_status || determineOverallStatus(problem.attacks);
+                metaDiv.innerHTML = `
+                    <p><a href="open_problems.html">Top Open Problems</a> · <strong>Rank:</strong> ${escapeHtml(problem.rank)}</p>
+                    <p><strong>Problem ID:</strong> ${escapeHtml(problem.id)}</p>
+                    <p><strong>Field:</strong> ${escapeHtml(problem.domain_label)}</p>
+                    <p><strong>Catalog status:</strong> ${escapeHtml(window.ProblemHunting.getOpenProblemStatusLabel(problem))}</p>
+                    ${problem.status_reviewed_at ? `<p><strong>Status reviewed in catalog:</strong> ${escapeHtml(problem.status_reviewed_at)}</p>` : ''}
+                    ${problem.status_qualification ? `<p class="status-note">${escapeHtml(problem.status_qualification)}</p>` : ''}
+                    <p><strong>LLM Claim:</strong> ${claim === 'none' ? 'No attempts yet' : escapeHtml(claim)}</p>
+                    ${completionLabel ? `<p><strong>LLM completion estimate:</strong> ${completionLabel}</p>` : ''}
+                    <p><strong>Community Review:</strong> ${reviewDisplay}</p>
+                `;
             } else {
                 const overallStatus = determineOverallStatus(problem.attacks);
                 metaDiv.innerHTML = `
+                    <p><a href="open_problems.html?source=mo">Top Open Problems · MathOverflow subset</a></p>
                     <p><strong>Question ID:</strong> ${problem.id}</p>
                     <p><strong>Score:</strong> ${problem.score}</p>
                     <p><strong>LLM Claims:</strong> ${overallStatus}</p>
@@ -247,7 +303,7 @@
                 `;
             }
 
-            // External links (problem statements are on external sites only)
+            // Ranked definitions and their source qualifications travel with the catalog.
             const linksDiv = document.getElementById('problem-links');
             if (type === 'erdos') {
                 const formalizations = window.ProblemHunting.formatFormalization(problem.statement_formalization, 'Statement') +
@@ -259,6 +315,23 @@
                         <li><a href="${problem.database_url}" target="_blank" rel="noopener">Latest status and formalization links in Terry Tao's Erdos Problems Database</a></li>
                         ${formalizations}
                     </ul>
+                `;
+            } else if (type === 'open_problems') {
+                const escapeHtml = window.ProblemHunting.escapeHtml;
+                const sourceLinks = (problem.sources || []).map(source => {
+                    const label = escapeHtml(source.citation || source.url || 'Source');
+                    const role = source.role ? ` (${escapeHtml(source.role.replace(/_/g, ' '))})` : '';
+                    return /^https?:\/\//i.test(source.url || '')
+                        ? `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${label}</a>${role}</li>`
+                        : `<li>${label}${role}</li>`;
+                }).join('');
+                const catalog = window.OPEN_PROBLEMS_CATALOG || {};
+                linksDiv.innerHTML = `
+                    <p>${escapeHtml(problem.exact_target)}</p>
+                    <h3>Definition and context sources</h3>
+                    <ul>${sourceLinks}</ul>
+                    <p class="status-note">Catalog edition: ${escapeHtml(catalog.edition_date || '')}.
+                        The statement, rank, status and source notes come from the supplied catalog.</p>
                 `;
             } else {
                 linksDiv.innerHTML = `
@@ -322,7 +395,7 @@
                         `<div class="attack-date">Posted: ${attack.date_posted}</div>` : '';
 
                     return `
-                        <div class="attempt">
+                        <div class="attempt" data-statement-only="${isStatement}">
                             <div class="attempt-header">
                                 <h3>${title}</h3>
                                 <span class="status-text">${statusLabel}</span>${sourceLink}${commentsLink}${reviewLink}
@@ -335,7 +408,9 @@
                         </div>
                     `;
                 }).join('');
-            } else if (type === 'erdos') {
+                window.ProblemHunting.initAttemptPreviews(attemptsDiv, type === 'open_problems' ? null : linksDiv);
+                window.ProblemHunting.initTeXReferences(attemptsDiv);
+            } else if (type === 'erdos' || type === 'open_problems') {
                 attemptsDiv.innerHTML = '<p>No LLM attempts yet.</p>';
             } else {
                 // Hide the entire LLM attempts section when there are no attempts
@@ -343,18 +418,18 @@
             }
 
             // Navigation
-            const currentIdx = problemNumbers.indexOf(parseInt(id));
+            const currentIdx = problemNumbers.indexOf(type === 'open_problems' ? id : parseInt(id));
             const prevBtn = document.getElementById('prev-problem');
             const nextBtn = document.getElementById('next-problem');
 
             if (currentIdx > 0) {
-                prevBtn.href = `problem.html?type=${type}&id=${problemNumbers[currentIdx - 1]}`;
+                prevBtn.href = `problem.html?type=${type}&id=${encodeURIComponent(problemNumbers[currentIdx - 1])}`;
             } else {
                 prevBtn.style.visibility = 'hidden';
             }
 
             if (currentIdx < problemNumbers.length - 1) {
-                nextBtn.href = `problem.html?type=${type}&id=${problemNumbers[currentIdx + 1]}`;
+                nextBtn.href = `problem.html?type=${type}&id=${encodeURIComponent(problemNumbers[currentIdx + 1])}`;
             } else {
                 nextBtn.style.visibility = 'hidden';
             }
@@ -387,8 +462,62 @@
                     return `<${tag}>${title}</${tag}>`;
                 });
                 text = text.replace(/^[ \t]*\\small[ \t]*(?:\r?\n|$)/gm, '');
-                text = text.replace(/\\#/g, '#');
             }
+
+            // Keep mathematical notation and literal source/code text out of the
+            // prose formatter. In particular, a TeX star is not Markdown emphasis.
+            const protectedFragments = [];
+            function protectHTML(html) {
+                const token = `\uE000TEX${protectedFragments.length}\uE001`;
+                protectedFragments.push(html);
+                return token;
+            }
+            function escapeHTML(value) {
+                return value.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+            function proseEscapes(value, preserveSpacing = false) {
+                const unescaped = value.replace(/\\([#%&_{}$])/g, '$1');
+                return preserveSpacing ? unescaped : unescaped.replace(/\\ /g, ' ').replace(/\\,/g, '\u2009');
+            }
+            function normalizeSourceURL(url) {
+                return proseEscapes(url, true).replace(/\\~(?:\{\})?/g, '~').trim();
+            }
+            function sourceLink(url, label) {
+                const destination = normalizeSourceURL(url);
+                if (label === url || label === proseEscapes(url)) label = destination;
+                if (!/^https?:\/\//i.test(destination)) return escapeHTML(label);
+                return `<a href="${escapeHTML(destination)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`;
+            }
+            function referenceScope(input, offset) {
+                return (input.slice(0, offset).match(/% BEGIN REUSED SOURCE:/g) || []).length;
+            }
+            function referenceLabel(key, scope, kind = 'prose') {
+                return `<span class="tex-label" data-tex-label="${escapeHTML(key)}" data-tex-scope="${scope}" data-tex-label-kind="${kind}"></span>`;
+            }
+            function linkPlainURLs(input) {
+                return input.replace(/https?:\/\/[^\s<>"{}|\\^\[\]`]+/g, function(candidate) {
+                    let url = candidate.replace(/[.,;:!?]+$/, '');
+                    // A sentence's closing parenthesis is not part of its URL;
+                    // balanced parentheses inside a URL (e.g. Wikipedia) are.
+                    while (url.endsWith(')') && (url.match(/\)/g) || []).length > (url.match(/\(/g) || []).length) {
+                        url = url.slice(0, -1);
+                    }
+                    return protectHTML(sourceLink(url, url)) + candidate.slice(url.length);
+                });
+            }
+            text = text.replace(/\\begin\{verbatim\}([\s\S]*?)\\end\{verbatim\}/g,
+                (match, content) => protectHTML(`<pre>${escapeHTML(content)}</pre>`));
+            text = text.replace(/\\verb\*?([^\w\s])([^\n]*?)\1/g,
+                (match, delimiter, content) => protectHTML(`<code>${escapeHTML(content)}</code>`));
+            // This fallback only defines the already-supported end-of-proof mark;
+            // its definition is metadata, while later \qed uses remain visible.
+            text = replaceTwoArgCommand(text, 'providecommand', (command, body) =>
+                command.trim() === '\\qed' ? '' : `\\providecommand{${command}}{${body}}`);
+            // Some fragments put an HTML-style text table inside display math.
+            // Unwrap only a display consisting entirely of that tabular block.
+            text = text.replace(/\\\[\s*(\\begin\{tabular\}[\s\S]*?\\end\{tabular\})\s*\\\]/g, '$1');
+            text = text.replace(/(?<!\\)\$\$\s*(\\begin\{tabular\}[\s\S]*?\\end\{tabular\})\s*\$\$/g, '$1');
 
             function normalizeBlockquotes(input) {
                 const lines = input.split('\n');
@@ -419,6 +548,11 @@
                 return out.join('\n');
             }
 
+            // A displayed inequality can have a continuation line beginning >.
+            // Protect those expressions before interpreting Markdown quote lines.
+            text = text.replace(/(^|\n)[ \t]*\[(?=\n|$)/g, '$1\\[');
+            text = text.replace(/(^|\n)[ \t]*\](?=\n|$)/g, '$1\\]');
+            text = protectMath(text, true);
             text = normalizeBlockquotes(text);
 
             // First, convert alternate LaTeX delimiters to MathJax-compatible ones
@@ -437,6 +571,9 @@
                 const mathCommandRe = /\\[a-zA-Z]+/;
 
                 function isMathSegment(segment) {
+                    if (segment.trim() === '\\*') return false;
+                    if (/^\s*\\(?:emph|textbf|textit|texttt|underline|textrm|textsf|textsc|url|href|cite[pt]?)(?:\{|\[)/.test(segment)) return false;
+                    if (/^\s*(?:\*\*)?#\d+\s*(?:⇒|→|=>|->)\s*#\d+(?:\*\*)?\s*$/.test(segment)) return false;
                     const hasCommand = mathCommandRe.test(segment);
                     const hasMathOps = /[_^=<>+\-*/]/.test(segment) || /\d/.test(segment);
                     let cleaned = segment;
@@ -532,7 +669,91 @@
                 return /\\(left|right|bigl|bigr|Bigl|Bigr|big|Big|bigg|Bigg|biggl|Biggl|biggr|Biggr)\s*$/.test(lookback);
             }
 
+            function normalizeMath(math) {
+                // Fixed-size delimiters may intentionally span alignment rows.
+                // Converting them to left/right makes otherwise valid TeX fail.
+                const spansRows = /\\[Bb]igg?l[\s\S]*?\\\\[\s\S]*?\\[Bb]igg?r/.test(math);
+                let normalized = math
+                    .replace(/\\label\{[^}]+\}/g, '')
+                    .replace(/\\(eqref|ref)\{([^}]+)\}/g, (match, kind, key) => {
+                        const visible = key.replace(/[\\{}%#_$&]/g, '\\$&');
+                        return kind === 'eqref' ? `\\text{(${visible})}` : `\\text{${visible}}`;
+                    })
+                    .replace(/\\qedhere\b|\\qed\b/g, '\\square')
+                    .replace(/\\(begin|end)\{psmallmatrix\}/g, '\\$1{pmatrix}');
+                if (!spansRows) normalized = normalized
+                    .replace(/\\[Bb]igg?l\s*([(\[{|])/g, '\\left$1')
+                    .replace(/\\[Bb]igg?r\s*([)\]}|])/g, '\\right$1')
+                    .replace(/\\[Bb]igg?l\s*\\\{/g, '\\left\\{')
+                    .replace(/\\[Bb]igg?r\s*\\\}/g, '\\right\\}')
+                    .replace(/\\[Bb]igg?[lr]/g, '');
+                return normalized
+                    .replace(/\\left\{/g, '\\left\\{')
+                    .replace(/\\right\}/g, '\\right\\}')
+                    .replace(/\\\(|\\\)/g, '$');
+            }
+            // Environments may be used without surrounding dollar delimiters.
+            // Match them together with explicit delimiters so nesting stays intact.
+            function protectMath(input, beforeQuotes = false) {
+                return input.replace(/\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|(?<!\\)\$\$[\s\S]*?(?<!\\)\$\$|(?<!\\)\$(?!\$)(?:(?!\n\s*\n|\\(?:item\b|(?:sub)*section\b|paragraph\b|(?:begin|end)\{(?:itemize|enumerate|quote|theorem|lemma|proof|document)\}))(?:\\[\s\S]|[^$\\]))*?\$|\\begin\{((?:equation|align|alignat|gather|multline|flalign|eqnarray|math|displaymath)\*?)\}[\s\S]*?\\end\{\1\}/g,
+                    function(math, environment, offset) {
+                        // Markdown's > prefixes must be removed from quoted math
+                        // first; all other math can be shielded immediately.
+                        const lineStart = input.lastIndexOf('\n', offset - 1) + 1;
+                        if (beforeQuotes && /^\s*>\s*$/.test(input.slice(lineStart, offset))) return math;
+                        const scope = referenceScope(input, offset);
+                        const labels = [...math.matchAll(/\\label\{([^}]+)\}/g)]
+                            .map(match => referenceLabel(match[1], scope, 'math')).join('');
+                        return protectHTML(labels + escapeHTML(normalizeMath(math)));
+                    });
+            }
+            text = protectMath(text);
+            text = replaceLatexCommand(text, 'texttt', function(content) {
+                content = proseEscapes(content);
+                const markdownLink = content.match(/^\[([^\]]+)\]\((https?:\/\/[^\s]+)\)$/);
+                if (markdownLink) return protectHTML(`<code>${sourceLink(markdownLink[2], markdownLink[1])}</code>`);
+                if (/^https?:\/\/[^\s]+$/.test(content)) return protectHTML(`<code>${sourceLink(content, content)}</code>`);
+                return protectHTML(`<code>${escapeHTML(content)}</code>`);
+            });
+            text = replaceLatexCommand(text, 'url', url => protectHTML(sourceLink(url, proseEscapes(url))));
+            text = replaceTwoArgCommand(text, 'href', function(url, label) {
+                const destination = normalizeSourceURL(url);
+                // The nested formatter has its own fragment indices. Keep any
+                // already-protected label math separate until it returns.
+                const labelInput = label.replace(/\uE000TEX(\d+)\uE001/g, '\uE002REF$1\uE003');
+                const caption = formatTeX(labelInput).replace(/^<p>|<\/p>$/g, '')
+                    .replace(/<\/?a(?:\s[^>]*)?>/g, '')
+                    .replace(/\uE002REF(\d+)\uE003/g, '\uE000TEX$1\uE001');
+                if (!/^https?:\/\//i.test(destination)) return protectHTML(caption);
+                return protectHTML(`<a href="${escapeHTML(destination)}" target="_blank" rel="noopener noreferrer">${caption}</a>`);
+            });
+
+            // Keep explicit source references visible, even when a target is
+            // absent. Their links are scoped to this writeup after DOM rendering.
+            text = text.replace(/\\(label|ref|eqref)\{([^}]+)\}/g, (match, kind, key, offset, input) => {
+                const scope = referenceScope(input, offset);
+                if (kind === 'label') return protectHTML(referenceLabel(key, scope));
+                const caption = kind === 'eqref' ? `(${key})` : key;
+                return protectHTML(`<a class="tex-reference" data-tex-reference="${escapeHTML(key)}" data-tex-reference-kind="${kind}" data-tex-scope="${scope}">${escapeHTML(caption)}</a>`);
+            });
             text = convertInlineMath(text);
+            text = window.wrapBareTeXMath ? window.wrapBareTeXMath(text) : text;
+            text = protectMath(text);
+
+            // These escapes belong to prose; retain their mathematical meanings
+            // in the protected expressions above.
+            text = text.replace(/\\\*/g, () => protectHTML('*'));
+            // MathJax handles escaped prose dollars through processEscapes.
+            // Unescaping them here would turn currency into math delimiters and
+            // consume correctly delimited formulas between two prize amounts.
+            text = text.replace(/\\\$/g, () => protectHTML('\\$'));
+            // A literal ampersand inside a table cell must not become a column.
+            text = text.replace(/\\&/g, () => protectHTML('&amp;'));
+            // A table row ending "\\ " is a row break followed by whitespace,
+            // not a prose control space. Keep both slashes for the table parser.
+            text = text.replace(/\\begin\{tabular\}[\s\S]*?\\end\{tabular\}/g,
+                block => block.replace(/(\\\\)[ \t]+/g, '$1\n'));
+            text = proseEscapes(text);
 
             function parseBracedArg(input, startIdx) {
                 if (input[startIdx] !== '{') return null;
@@ -560,6 +781,10 @@
             }
 
             function replaceTwoArgCommand(input, command, replacer) {
+                return replaceCommandArguments(input, command, 2, replacer);
+            }
+
+            function replaceCommandArguments(input, command, count, replacer) {
                 const needle = '\\' + command + '{';
                 let out = '';
                 let i = 0;
@@ -571,23 +796,26 @@
                         break;
                     }
                     out += input.slice(i, idx);
-                    const startArg1 = idx + needle.length - 1;
-                    const arg1 = parseBracedArg(input, startArg1);
-                    if (!arg1) {
-                        out += input.slice(idx);
-                        return out;
+                    const args = [];
+                    let cursor = idx + needle.length - 1;
+                    for (let argIndex = 0; argIndex < count; argIndex += 1) {
+                        while (/\s/.test(input[cursor] || '') && cursor < input.length) cursor += 1;
+                        const arg = parseBracedArg(input, cursor);
+                        if (!arg) return out + input.slice(idx);
+                        args.push(arg.value);
+                        cursor = arg.end;
                     }
-                    const arg2 = parseBracedArg(input, arg1.end);
-                    if (!arg2) {
-                        out += input.slice(idx);
-                        return out;
-                    }
-                    out += replacer(arg1.value, arg2.value);
-                    i = arg2.end;
+                    out += replacer(...args);
+                    i = cursor;
                 }
 
                 return out;
             }
+
+            // PDF/contents metadata has a separate purpose from the visible TeX
+            // title. Keep the title and omit only the table-of-contents entry.
+            text = replaceTwoArgCommand(text, 'texorpdfstring', title => title);
+            text = replaceCommandArguments(text, 'addcontentsline', 3, () => '');
             
             // Handle LaTeX comments (lines starting with %) only in the first ~10 lines
             const lines = text.split('\n');
@@ -607,6 +835,8 @@
             
             // Convert \begin{center}...\end{center} to <div style="text-align: center;">...</div>
             text = text.replace(/\\begin\{center\}([\s\S]*?)\\end\{center\}/g, '<div style="text-align: center;">$1</div>');
+            text = replaceLatexCommand(text, 'centerline', '<div style="text-align: center;">', '</div>');
+            text = replaceTwoArgCommand(text, 'MO', (id, title) => `<h3>MathOverflow #${id}: ${title}</h3>`);
 
             text = replaceTwoArgCommand(text, 'parbox', (width, content) => {
                 let cssWidth = '';
@@ -624,11 +854,25 @@
 
             text = replaceLatexCommand(text, 'fbox', '<div class="latex-fbox">', '</div>');
 
-            text = text.replace(/\\begin\{tabular\}\{([^}]*)\}([\s\S]*?)\\end\{tabular\}/g, function(match, colSpec, content) {
-                const alignments = colSpec.replace(/[^lcr]/g, '').split('');
-                const rows = content.split(/\\\\/).map(row => row.trim()).filter(Boolean);
+            text = text.replace(/\\begin\{tabular\}([\s\S]*?)\\end\{tabular\}/g, function(match, body) {
+                const input = body.trimStart();
+                const spec = parseBracedArg(input, 0);
+                if (!spec) return match;
+                // Column modifiers such as @{} contain their own braces.
+                // Skip their arguments rather than displaying the rest of the spec.
+                const alignments = [];
+                for (let i = 0; i < spec.value.length; i += 1) {
+                    const arg = parseBracedArg(spec.value, i);
+                    if (arg) { i = arg.end - 1; continue; }
+                    if (spec.value[i] === '\\') {
+                        const command = spec.value.slice(i).match(/^\\[A-Za-z]+/);
+                        if (command) i += command[0].length - 1;
+                    } else if (/[lcr]/.test(spec.value[i])) alignments.push(spec.value[i]);
+                    else if (/[pmb]/.test(spec.value[i])) alignments.push('l');
+                }
+                const rows = input.slice(spec.end).split(/\\\\(?:\[[^\]]*\])?/).map(row => row.trim()).filter(Boolean);
                 const htmlRows = rows.map(row => {
-                    const cleanRow = row.replace(/\\hline/g, '').trim();
+                    const cleanRow = row.replace(/\\(?:hline|toprule|midrule|bottomrule)\b(?:\[[^\]]*\])?/g, '').trim();
                     if (!cleanRow) return '';
                     const cells = cleanRow.split('&').map(cell => cell.trim());
                     const cellHtml = cells.map((cell, idx) => {
@@ -645,21 +889,29 @@
                 return `<table class="latex-table"><tbody>${htmlRows}</tbody></table>`;
             });
             
-            // Convert \begin{itemize}...\end{itemize} to <ul>...</ul>
-            text = text.replace(/\\begin\{itemize\}(?:\[.*?\])?([\s\S]*?)\\end\{itemize\}/g, function(match, content) {
-                // Extract \item entries
-                let items = content.split(/\\item\s+/).filter(item => item.trim());
-                let listItems = items.map(item => '<li>' + item.trim() + '</li>').join('');
-                return '<ul>' + listItems + '</ul>';
-            });
-            
-            // Convert \begin{enumerate}...\end{enumerate} to <ol>...</ol>
-            text = text.replace(/\\begin\{enumerate\}(?:\[.*?\])?([\s\S]*?)\\end\{enumerate\}/g, function(match, content) {
-                // Extract \item entries
-                let items = content.split(/\\item\s+/).filter(item => item.trim());
-                let listItems = items.map(item => '<li>' + item.trim() + '</li>').join('');
-                return '<ol>' + listItems + '</ol>';
-            });
+            // Keep nested lists attached to their parent item and show optional
+            // item labels such as \item[(i)] without exposing TeX commands.
+            const listStack = [];
+            text = text.replace(/\\begin\{(itemize|enumerate|description)\}(?:\[[^\]]*\])?|\\end\{(itemize|enumerate|description)\}|\\item\b(?:\[([^\]]*)\])?\s*/g,
+                function(match, start, end, label) {
+                    if (start) {
+                        const tag = start === 'enumerate' ? 'ol' : 'ul';
+                        listStack.push({ environment: start, tag, hasItem: false });
+                        return `<${tag}>`;
+                    }
+                    const current = listStack[listStack.length - 1];
+                    // Imported fragments occasionally begin with a lone item.
+                    // Preserve its label and text as a paragraph.
+                    if (!current) return end ? match : `\n\n${label ? label + ' ' : ''}`;
+                    if (end && current.environment !== end) return match;
+                    if (end) {
+                        listStack.pop();
+                        return `${current.hasItem ? '</li>' : ''}</${current.tag}>`;
+                    }
+                    const closeItem = current.hasItem ? '</li>' : '';
+                    current.hasItem = true;
+                    return `${closeItem}<li>${label ? label + ' ' : ''}`;
+                });
             
             // Convert \begin{quote}...\end{quote} to <blockquote>...</blockquote>
             text = text.replace(/\\begin\{quote\}([\s\S]*?)\\end\{quote\}/g, '<blockquote>$1</blockquote>');
@@ -670,10 +922,12 @@
             // Convert theorem-like environments (theorem, lemma, definition, proof, etc.)
             text = text.replace(/\\begin\{theorem\}(\[.*?\])?([\s\S]*?)\\end\{theorem\}/g, '<div class="theorem"><strong>Theorem$1:</strong> $2</div>');
             text = text.replace(/\\begin\{lemma\}(\[.*?\])?([\s\S]*?)\\end\{lemma\}/g, '<div class="lemma"><strong>Lemma$1:</strong> $2</div>');
+            text = text.replace(/\\begin\{claim\}(\[.*?\])?([\s\S]*?)\\end\{claim\}/g, '<div class="lemma"><strong>Claim$1:</strong> $2</div>');
             text = text.replace(/\\begin\{proposition\}(\[.*?\])?([\s\S]*?)\\end\{proposition\}/g, '<div class="proposition"><strong>Proposition$1:</strong> $2</div>');
             text = text.replace(/\\begin\{corollary\}(\[.*?\])?([\s\S]*?)\\end\{corollary\}/g, '<div class="corollary"><strong>Corollary$1:</strong> $2</div>');
             text = text.replace(/\\begin\{remark\}(\[.*?\])?([\s\S]*?)\\end\{remark\}/g, '<div class="remark"><strong>Remark$1:</strong> $2</div>');
             text = text.replace(/\\begin\{definition\}(\[.*?\])?([\s\S]*?)\\end\{definition\}/g, '<div class="definition"><strong>Definition$1:</strong> $2</div>');
+            text = text.replace(/\\begin\{construction\}(\[.*?\])?([\s\S]*?)\\end\{construction\}/g, '<div class="definition"><strong>Construction$1:</strong> $2</div>');
             text = text.replace(/\\begin\{inputthm\}(\[.*?\])?([\s\S]*?)\\end\{inputthm\}/g, '<div class="theorem"><strong>Input$1:</strong> $2</div>');
             // Separate markers also support a lemma proof nested inside a longer proof.
             text = text.replace(/\\begin\{proof\}(\[.*?\])?/g, '<div class="proof"><em>Proof$1:</em> ');
@@ -732,22 +986,31 @@
                     }
 
                     const content = input.slice(idx + needle.length, j);
-                    out += openTag + content + closeTag;
+                    out += typeof openTag === 'function' ? openTag(content)
+                        : openTag + replaceLatexCommand(content, command, openTag, closeTag) + closeTag;
                     i = j + 1;
                 }
 
                 return out;
             }
 
+            // Resolve spacing before unwrapping text, so adjacent commands such
+            // as \\qquad\\text{and} cannot merge into a new control word.
+            text = text.replace(/\\qquad\b/g, '\u2003\u2003').replace(/\\quad\b/g, '\u2003');
             text = replaceLatexCommand(text, 'emph', '<em>', '</em>');
             text = replaceLatexCommand(text, 'textbf', '<strong>', '</strong>');
             text = replaceLatexCommand(text, 'textit', '<em>', '</em>');
             text = replaceLatexCommand(text, 'underline', '<u>', '</u>');
+            text = replaceLatexCommand(text, 'footnote', '(', ')');
+            text = replaceLatexCommand(text, 'textnormal', '', '');
+            text = replaceLatexCommand(text, 'textup', '', '');
+            text = replaceLatexCommand(text, 'text', '', '');
+            text = text.replace(/\{\s*\\em\s+([^{}]*)\}/g, '<em>$1</em>');
             // Markdown-style emphasis
             text = text.replace(/\\qedhere\b/g, '\\(\\square\\)');
             text = text.replace(/\\qed\b/g, '\\(\\square\\)');
-            text = text.replace(/\*\*([^\n*]+)\*\*/g, '<strong>$1</strong>');
-            text = text.replace(/\*([A-Za-z0-9][^*\n]*?)\*/g, '<em>$1</em>');
+            text = text.replace(/\*\*((?:(?!\n\s*\n)[^*])+?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/(^|[\s>(])\*(?=\S)((?:(?!\n\s*\n)[^*])*?\S)\*(?=$|[\s<.,;:!?)])/g, '$1<em>$2</em>');
             // Markdown headings (##, ###, ####, ...)
             text = text.replace(/^\s*(#{2,6})\s+(.+)$/gm, function(match, hashes, heading) {
                 const level = Math.min(6, hashes.length);
@@ -765,6 +1028,16 @@
             text = text.replace(/\\bigskip/g, '');
             text = text.replace(/\\smallskip/g, '');
             text = text.replace(/\\hfill/g, '');
+            text = text.replace(/\\newblock\b/g, ' ');
+            text = text.replace(/\\S(?![A-Za-z])(?:\{\})?/g, '§');
+            text = text.replace(/\\par\b/g, '\n\n');
+            text = text.replace(/\\hrule\b/g, '<hr>');
+            text = text.replace(/\\newline\b|\\\\(?:\[[^\]]*\])?/g, '<br>');
+            text = text.replace(/\\LaTeX\b(?:\{\})?/g, 'LaTeX');
+            text = text.replace(/\\(?:small|normalsize|newpage)\b[ \t]*/g, '');
+            text = text.replace(/\\date\{\s*\}/g, '');
+            text = text.replace(/\\allowbreak\b/g, '<wbr>');
+            text = text.replace(/\\dots\b/g, '…');
             
             // Replace delimiter sizing commands with \left and \right equivalents
             // These work better in MathJax than the explicit sizing commands
@@ -780,49 +1053,50 @@
             text = text.replace(/\\[Bb]igg?[lr]/g, '');
 
             // Handle \cite{...} - convert to [ref] format
-            text = text.replace(/\\cite\{([^}]+)\}/g, '[$1]');
+            const citationPattern = /\\cite[pt]?(?:\[([^\]]*)\])?(?:\[([^\]]*)\])?\{([^}]+)\}/g;
+            // Citation notes can themselves contain a citation.
+            for (let pass = 0; pass < 3; pass += 1) text = text.replace(citationPattern,
+                (match, first, second, keys) => second === undefined
+                    ? `[${keys}${first ? ', ' + first : ''}]`
+                    : `[${first ? first + ' ' : ''}${keys}${second ? ', ' + second : ''}]`);
 
-            // Handle \url{...} - convert to clickable link
-            text = text.replace(/\\url\{([^}]+)\}/g, '<a href="$1" target="_blank">$1</a>');
-
-            // Handle \href{url}{text}
-            text = text.replace(/\\href\{([^}]+)\}\{([^}]+)\}/g, '<a href="$1" target="_blank">$2</a>');
-
-            // Convert plain URLs to clickable links (but not if already in an <a> tag)
-            text = text.replace(/(?<!href=")(https?:\/\/[^\s<>"{}|\\^\[\]`]+)/g, '<a href="$1" target="_blank">$1</a>');
+            // Protect each generated link, including its label, from autolinking.
+            text = text.replace(/\[([^\]\n]+)\]\((https?:\/\/(?:[^\s()]|\([^()\s]*\))+)\)/g,
+                (match, label, url) => protectHTML(sourceLink(url, label)));
+            text = linkPlainURLs(text);
 
             // Replace LaTeX quotes with proper HTML entities
             text = text.replace(/``/g, '"');
             text = text.replace(/''/g, '"');
+            text = text.replace(/\\textquotesingle\b(?:\{\}|[ \t]+)?/g, "'");
 
-            // Replace ~ (non-breaking space) with &nbsp; for proper rendering
-            text = text.replace(/([a-zA-Z0-9])~([a-zA-Z0-9])/g, '$1&nbsp;$2');
-
-            // Handle common LaTeX accents
-            text = text.replace(/\\'\{?e\}?/g, 'é');
-            text = text.replace(/\\'\{?a\}?/g, 'á');
-            text = text.replace(/\\'\{?o\}?/g, 'ó');
-            text = text.replace(/\\'\{?u\}?/g, 'ú');
-            text = text.replace(/\\'\{?i\}?/g, 'í');
-            text = text.replace(/\\"\{?o\}?/g, 'ö');
-            text = text.replace(/\\"\{?u\}?/g, 'ü');
-            text = text.replace(/\\"\{?a\}?/g, 'ä');
-            text = text.replace(/\\`\{?e\}?/g, 'è');
-            text = text.replace(/\\`\{?a\}?/g, 'à');
-            text = text.replace(/\\H\{o\}/g, 'ő');
-            text = text.replace(/Erd\\H\{o\}s/g, 'Erdős');
-            text = text.replace(/Szemer\\'edi/g, 'Szemerédi');
-            text = text.replace(/Dieudonn\\'e/g, 'Dieudonné');
-            text = text.replace(/G\\"ohde/g, 'Göhde');
-            text = text.replace(/Akad\\'emiai/g, 'Akadémiai');
-            text = text.replace(/Kiad\\'o/g, 'Kiadó');
-            text = text.replace(/Th\\'eorie/g, 'Théorie');
+            // Decode prose accents generally, including authors' names. Math and
+            // code have already been protected, so their commands stay literal.
+            const textLetters = { o: 'ø', O: 'Ø', l: 'ł', L: 'Ł', i: 'ı', j: 'ȷ' };
+            text = text.replace(/\{\\([oOlLij])\}/g, (match, letter) => textLetters[letter]);
+            text = text.replace(/\\([oOlLij])(?![A-Za-z])(?:\{\}|[ \t]+)?/g,
+                (match, letter) => textLetters[letter]);
+            const accents = { "'": '\u0301', '`': '\u0300', '"': '\u0308',
+                '^': '\u0302', '~': '\u0303', '=': '\u0304', '.': '\u0307',
+                H: '\u030b', v: '\u030c', u: '\u0306', c: '\u0327', k: '\u0328', r: '\u030a' };
+            for (const [command, accent] of Object.entries(accents)) {
+                const escaped = command.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const boundary = /[A-Za-z]/.test(command) ? '(?![A-Za-z])' : '';
+                const pattern = new RegExp('\\\\' + escaped + boundary + '[ \\t]*(?:\\{([\\p{L}])\\}|([\\p{L}]))', 'gu');
+                text = text.replace(pattern, (match, braced, plain) => {
+                    const letter = (braced || plain).replace('ı', 'i').replace('ȷ', 'j');
+                    return (letter + accent).normalize('NFC');
+                });
+            }
+            // Use the character itself so later HTML escaping cannot double-escape it.
+            text = text.replace(/~|&nbsp;/g, '\u00a0');
             
             // Convert LaTeX sectioning commands to HTML headings
-            text = text.replace(/\\section\*?\{([^}]+)\}/g, '<h2>$1</h2>');
-            text = text.replace(/\\subsection\*?\{([^}]+)\}/g, '<h3>$1</h3>');
-            text = text.replace(/\\subsubsection\*?\{([^}]+)\}/g, '<h4>$1</h4>');
-            text = text.replace(/\\paragraph\{([^}]+)\}/g, '<h5>$1</h5>');
+            for (const [command, tag] of [['section', 'h2'], ['subsection', 'h3'],
+                ['subsubsection', 'h4'], ['paragraph', 'h5'], ['subparagraph', 'h6']]) {
+                text = replaceLatexCommand(text, command, `<${tag}>`, `</${tag}>`);
+                text = replaceLatexCommand(text, command + '*', `<${tag}>`, `</${tag}>`);
+            }
 
             // Escape HTML but preserve LaTeX
             let formatted = text
@@ -851,6 +1125,9 @@
                 .replace(/&lt;\/span&gt;/g, '</span>')
                 .replace(/&lt;blockquote&gt;/g, '<blockquote>')
                 .replace(/&lt;\/blockquote&gt;/g, '</blockquote>')
+                .replace(/&lt;br&gt;/g, '<br>')
+                .replace(/&lt;hr&gt;/g, '<hr>')
+                .replace(/&lt;wbr&gt;/g, '<wbr>')
                 .replace(/&lt;pre&gt;/g, '<pre>')
                 .replace(/&lt;\/pre&gt;/g, '</pre>')
                 .replace(/&lt;div class="theorem"&gt;/g, '<div class="theorem">')
@@ -871,6 +1148,8 @@
                 .replace(/&lt;\/h4&gt;/g, '</h4>')
                 .replace(/&lt;h5&gt;/g, '<h5>')
                 .replace(/&lt;\/h5&gt;/g, '</h5>')
+                .replace(/&lt;h6&gt;/g, '<h6>')
+                .replace(/&lt;\/h6&gt;/g, '</h6>')
                 .replace(/&lt;strong&gt;/g, '<strong>')
                 .replace(/&lt;\/strong&gt;/g, '</strong>')
                 .replace(/&lt;em&gt;/g, '<em>')
@@ -907,10 +1186,22 @@
                     if (/^<(h[1-6]|ul|ol|div|blockquote|pre|hr)\b/i.test(para)) {
                         return para;
                     }
+                    const literalBlock = para.match(/^\uE000TEX(\d+)\uE001$/);
+                    if (literalBlock && protectedFragments[Number(literalBlock[1])].startsWith('<pre>')) return para;
                     return '<p>' + para + '</p>';
                 })
                 .join('');
 
+            // Restore after paragraph processing: blank lines inside equations or
+            // literal blocks must not insert HTML into their content. A link label
+            // may itself contain a protected mathematical expression.
+            function restoreFragments(value) {
+                return value.replace(/\uE000TEX(\d+)\uE001/g, (match, index) => {
+                    const fragment = protectedFragments[Number(index)];
+                    return fragment === undefined ? match : restoreFragments(fragment);
+                });
+            }
+            formatted = restoreFragments(formatted);
             return formatted;
         }
 
@@ -918,7 +1209,7 @@
             const container = document.querySelector('.giscus');
             if (!container) return;
 
-            const prefix = type === 'mo' ? 'MO' : 'Erdos';
+            const prefix = type === 'mo' ? 'MO' : type === 'open_problems' ? 'OpenProblem' : 'Erdos';
             const term = `${prefix}-${id}`;
             const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 
@@ -944,11 +1235,13 @@
 
         function getReviewIssueUrl(type, id) {
             if (!type || !id) return '';
-            const prefix = type === 'mo' ? 'MO' : 'Erdos';
+            const prefix = type === 'mo' ? 'MO' : type === 'open_problems' ? 'OpenProblem' : 'Erdos';
             const title = `Review: ${prefix}-${id}`;
             const params = new URLSearchParams({
                 template: 'review.yml',
-                title: title
+                title: title,
+                problem_type: type === 'mo' ? 'MO' : type === 'open_problems' ? 'Open Problems' : 'Erdos',
+                problem_id: id
             });
             return `https://github.com/mehmetmars7/Erdosproblems-llm-hunter/issues/new?${params.toString()}`;
         }

@@ -20,7 +20,7 @@ Most current attempts are by GPT Pro 5.2.
 
 ### For Erdos Problem Attempts
 
-1. **File Location**: Place your TeX file in an appropriate folder e.g. `Attacks/Erdos_problems/<MODEL_NAME>/`
+1. **File Location**: Place your TeX file in `attacks/erdos/<MODEL_NAME>/`.
 2. **File Naming**: Use the problem number as the filename (e.g., `x.tex`). If it already exists, use `x_v2.tex`.
 3. **Recommended Content Format**: If possible, follow the structure used in existing attempts:
    - Formal statement
@@ -30,25 +30,38 @@ Most current attempts are by GPT Pro 5.2.
    - Verification
    - Final status (SOLVED, UNRESOLVED, or PARTIAL)
 
-### For MathOverflow Problem Attempts
+### For Top Open Problems Attempts
 
-1. **File Location**: Place your TeX file in `Attacks/MO_problems/<MODEL_NAME>/`
-2. **File Naming**: Use the format `<question_id>-<title-slug>.tex`
-3. **Add to List**: If it's a new problem, add an entry to `Lists/MO_problems.csv`
+1. **Choose the Target**: Use an active record from `lists/top500-v22.json`, preserving its exact mathematical target and stable `problemId`.
+2. **File Location**: Place your TeX file in `attacks/open_problems/<MODEL_NAME>/`.
+3. **File Naming**: Use `<problemId>.tex`, for example `problem.p-versus-np.tex`. Further versions use `<problemId>_v2.tex`, `<problemId>_v3.tex`, and so on.
+4. **Mathematical Content**: Include a precise statement, definitions and conventions, a literature check, the actual mathematical attempt, verification, and a final status. Cite relevant sources for the definition and concepts as well as theorems, reductions, or prior work used during the attempt. Use identifiable bibliographic references and source URLs; do not invent citations.
+5. **Honest Scope**: Identify what is proved, what is known, and the first remaining gap. An unresolved attempt is welcome. Do not present a statement, generic plan, untested idea, or restatement of known results as a new solution.
+
+### For the MathOverflow Subset
+
+1. **File Location**: Place your TeX file in `attacks/open_problems/mo/<MODEL_NAME>/`.
+2. **File Naming**: Preserve the existing convention `<question_id>-<title-slug>.tex` (and version suffixes where used).
+3. **Add to List**: If it is a new problem, add an entry to `lists/mo_problems.csv`.
+4. **Content**: Follow the same statement, definition, citation, mathematical work, and verification requirements as ranked open-problem attempts.
+
+The website groups ranked problems and MathOverflow records under **Top Open Problems**.
+Ranked stable IDs are independent of their rank, which may change between editions.
+MathOverflow entries retain their numeric source IDs and existing links.
 
 ## Pull Request Process
 
 1. **Fork the Repository**: Create your own fork of the project
 2. **Create a Branch**: Use a descriptive branch name (e.g., `add-opus45-erdos-352`)
 3. **Add Your Files**: Place the attempt files in the correct directories
-4. **Update CSV Lists**: If adding new problems, update the relevant CSV file
+4. **Check the Build**: Run `python3 build_site.py`, `python3 -m unittest discover -s tests`, and `for test_file in tests/test_*.js; do node "$test_file"; done`. Confirm the problem statement, references, and actual attempt render on the detail page.
 5. **Submit PR**: Create a pull request with a clear description
 
 ### PR Description Template
 
 ```markdown
 ## Summary
-- Problem Type: [Erdos/MathOverflow]
+- Problem Type: [Erdos/Top Open Problems/MathOverflow subset]
 - Problem Number/ID:
 - LLM Model Used:
 - Claimed Status: [Solved/Partial/Unresolved]
@@ -62,6 +75,17 @@ Most current attempts are by GPT Pro 5.2.
 - **Reproducibility**: Include information about the prompt strategy used and if possible a public link
 - **Completeness**: Include the full LLM output, not just excerpts
 - **Formatting**: Use proper LaTeX formatting for mathematical content
+- **Sources**: Cite primary sources for the target and definitions, and cite the results used in the mathematical argument. Check cited statements and explain how their hypotheses apply.
+- **Substance**: Include actual mathematical reasoning or a checked construction. Keep catalogs and statement-only records separate from attempts.
+- **Status**: State unresolved gaps plainly. Completion estimates are the author's estimates, not external verification.
+
+## Community Reviews
+
+Use the repository's **Review an LLM claim** issue form. Select **Open Problems**
+for a ranked record and copy its stable ID (such as `problem.p-versus-np`) from the
+detail page. Select **MO** and its numeric question ID for the MathOverflow subset,
+or **Erdos** and its numeric problem number. An accepted review requires a citation
+and an explanation. Review changes pass through a pull request before publication.
 
 ## Important Reminders
 
@@ -83,10 +107,10 @@ ROLE
 You are in “research mathematician + adversarial proof checker mode.
 
 MISSION
-Given the open problem below, you must do ONE of the following:
+Given the open problem below, work toward one of the following:
 (A) produce a COMPLETE, gap-free PROOF of the statement as written, or
 (B) produce an EXPLICIT COUNTEREXAMPLE and a rigorous DISPROOF.
-No handwaving. No unstated assumptions. No “it is clear”. Every nontrivial step must be justified.
+If neither is achieved, report UNRESOLVED with checked partial results and exact remaining gaps. No handwaving. No unstated assumptions. No “it is clear”. Every nontrivial step must be justified.
 
 If the statement is ambiguous/misstated, do not ask me questions: instead
 1) identify the ambiguity/misstatement precisely,
@@ -106,11 +130,12 @@ OUTPUT FORMAT (you must follow)
 3) “ATTACK PLAN” (1–3 proof strategies + 1–3 disproof/construction strategies; pick the best path)
 4) “WORK” (lemmas + proofs or explicit counterexample + verification)
 5) “VERIFICATION” (attempt to break your own proof/counterexample; boundary cases; quantifier checks)
-6) FINAL (exactly ONE label and ONE sub-label):
+6) FINAL (select the label supported by the work):
   LABEL: **FULL SOLUTION**
    SUBLABEL:
    - **FULL PROOF** (clean theorem statement + complete proof)
    - **COUNTEREXAMPLE/DISPROOF** (explicit object(s) + step-by-step verification + conclusion)
+  Or LABEL: **UNRESOLVED**, followed by the strongest checked partial result and exact remaining gap.
 
 WORKFLOW (do this, tightly and efficiently)
 PHASE 0 — HYGIENE (must do)
@@ -169,4 +194,3 @@ and include:
 (iv) what a minimal counterexample would likely look like (structure/parameters).
 
 BEGIN NOW.
-

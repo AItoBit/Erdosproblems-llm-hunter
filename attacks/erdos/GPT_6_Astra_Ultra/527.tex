@@ -1,0 +1,44 @@
+\textbf{Erd\H{o}s problem 527.}
+Suppose $\sum_n a_n^2=\infty$ and $\sqrt n\,|a_n|\to0$. For independent fair signs $\epsilon_n$, does $\sum_n\epsilon_na_nz^n$ almost surely converge at some $|z|=1$?
+
+\textbf{Status and the external input.}
+Yes. Michelen and Sawhney prove the stronger statement that for every deterministic complex sequence satisfying $\sqrt n\,|a_n|\to0$, almost surely the convergence set on the circle has Hausdorff dimension $1$. No monotonicity is assumed. This is Theorem 1.2 of \emph{Convergent points for random power series on the unit circle},
+\texttt{https://arxiv.org/abs/2509.02729}.
+The problem source is \texttt{https://www.erdosproblems.com/527}; both were checked on 24 September 2026.
+That theorem is an explicit external dependency here; its multiscale construction is not reproved. Below we apply it and prove directly why the resulting convergence points must nevertheless be exceptional for arc length.
+
+\textbf{Applying the theorem.}
+Real coefficients are allowed by the complex version. A set of Hausdorff dimension $1$ is nonempty, so the theorem gives the requested point for almost every sign sequence, with the point allowed to depend on that sequence. In fact it gives uncountably many such points, since countable subsets of the circle have Hausdorff dimension zero.
+
+\textbf{Independent verification of divergence at every prescribed point.}
+Fix $z$ on the unit circle. Split the indices into consecutive disjoint finite blocks $I_j$ with
+\[
+ 1\leq V_j:=\sum_{n\in I_j}a_n^2\leq2.
+\]
+This can be done after a finite initial segment because $a_n\to0$ and the squared sum diverges: end each block when its sum first reaches $1$. Put
+$X_j=\sum_{n\in I_j}\epsilon_na_nz^n$.
+Independence and expansion of moments give
+\[
+ \mathbb E|X_j|^2=V_j,\qquad
+ \mathbb E|X_j|^4\leq3V_j^2.                            \tag{1}
+\]
+For the second inequality, only terms with each sign index appearing an even number of times survive; the three pairings each contribute in absolute value at most $V_j^2$. Alternatively the exact fourth moment is
+$2V_j^2+|\sum_{n\in I_j}a_n^2z^{2n}|^2-2\sum_{n\in I_j}a_n^4$.
+
+For any nonnegative $Y$, Cauchy--Schwarz applied on $\{Y>\theta\mathbb EY\}$ proves
+\[
+ \mathbb P(Y>\theta\mathbb EY)
+ \geq(1-\theta)^2(\mathbb EY)^2/\mathbb E(Y^2).
+\]
+Using $Y=|X_j|^2$, $\theta=1/2$, and (1), we obtain
+$\mathbb P(|X_j|>1/\sqrt2)\geq1/12$.
+The block events are independent. The probability that none occurs after any fixed block is at most $\lim_{r\to\infty}(11/12)^r=0$. Hence they occur infinitely often almost surely, and the partial sums fail the Cauchy criterion at this fixed $z$.
+
+The convergence set is jointly measurable in the signs and the circle parameter: express the Cauchy condition using countably many rational tolerances and pairs of partial sums. Integrating the just-proved zero convergence probability over normalized arc length and applying Tonelli gives expected convergence-set measure zero. Thus almost surely that set has arc length zero. A countable union also excludes every point of any predetermined countable set simultaneously.
+
+\textbf{What the result says.}
+Combining the external theorem with the direct argument, almost surely the convergence set has full Hausdorff dimension but zero arc length. Searching only a fixed countable collection of angles cannot find it with positive probability. This resolves the apparent conflict between pointwise divergence and the existence question.
+
+\textbf{Completion estimate.}
+The requested existence is fully deduced from the stated Michelen--Sawhney theorem; the divergence and measure-zero conclusions are proved above.
+\textbf{COMPLETION: 100\%}

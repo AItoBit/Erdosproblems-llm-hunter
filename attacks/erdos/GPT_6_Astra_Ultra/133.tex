@@ -1,0 +1,98 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#133; reconstruction, 2026-09-23.}
+Let $f(n)$ denote the smallest possible maximum degree of an $n$-vertex
+triangle-free graph of diameter $2$. Determine its order of growth;
+must $f(n)/\sqrt n\to\infty$? We establish $f(n)=\Theta(\sqrt n)$
+using an explicitly stated theorem on complete sum-free sets.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The literal word ``minimal'' in the webpage's universal-threshold
+phrasing would give a trivial value; the extremal interpretation above
+is the one used in its bounds and references. The negative answer and
+order of growth are established results. We prove the degree lower
+bound, the Cayley-graph translation, and a further explicit construction.
+For the sharp order upper bound for every large $n$, we use Haviv--Levy's
+Theorem 1.5 as an external input. Its combinatorial construction is not
+claimed as proved here.
+
+\section{WORK}
+\subsection*{The unavoidable degree scale}
+If a graph has maximum degree $d$ and diameter $2$, choose a vertex $v$.
+There are at most $d$ vertices at distance one, and each has at most
+$d-1$ other neighbors. Therefore
+\[
+ n\le1+d+d(d-1)=d^2+1,\qquad f(n)\ge\sqrt{n-1}.           \tag{1}
+\]
+No assumption that the second neighborhoods are disjoint is needed:
+overcounting is in the correct direction.
+
+\subsection*{An explicit intermediate construction}
+For $m\ge2$, take the $m$-subsets of $[3m-1]$ as vertices and join
+disjoint sets. Three pairwise disjoint $m$-sets would require $3m$
+ground elements, so the graph is triangle-free. Any two different
+intersecting vertices have union of size at most $2m-1$, leaving at
+least $m$ elements for a common disjoint neighbor. Disjoint vertices
+are already adjacent. The diameter is therefore $2$, and the graph is
+regular with
+\[
+ n_m=\binom{3m-1}{m},\qquad d_m=\binom{2m-1}{m}.
+\]
+Stirling's formula gives
+$\log n_m=(3\log3-2\log2)m+O(\log m)$ and
+$\log d_m=2m\log2+O(\log m)$, whence
+\[
+ d_m=n_m^{\,2\log2/(3\log3-2\log2)+o(1)}.
+\]
+This verifies the historical exponent approximately $0.726$, rather
+than assuming that this construction already has square-root degree.
+
+\subsection*{The full order bound from a sum-free input}
+We now use Haviv--Levy's theorem: there is an absolute $C$ such that,
+for every sufficiently large $n$, a set $S\subseteq\mathbb Z/n\mathbb Z$
+exists with
+\[
+ S=-S,\quad S\cap(S+S)=\varnothing,\quad
+ S\cup(S+S)=\mathbb Z/n\mathbb Z,\quad |S|\le C\sqrt n.   \tag{2}
+\]
+The word ``complete'' in this theorem means exactly the third
+condition, not that $S$ is a complete interval or a complete graph.
+Define a graph on the group by joining $x$ and $y$ when $y-x\in S$.
+Condition (2) forces $0\notin S$: otherwise $0\in S+S$. Symmetry makes
+the graph undirected, and every vertex has exactly $|S|$ neighbors.
+A triangle $x,y,z$ would give $y-x,z-y\in S$ and
+$z-x=(y-x)+(z-y)\in S$, contradicting sum-freeness.
+If $x\ne y$ are not adjacent, their difference belongs to $S+S$.
+Write $y-x=s+t$ with $s,t\in S$; then $x,x+s,y$ is a two-edge path,
+with distinct intermediate vertex because $s,t\ne0$. Thus the graph
+has diameter at most two, and for large $n$ it is not complete, so
+its diameter is two. Hence
+\[
+ f(n)\le|S|\le C\sqrt n.                                \tag{3}
+\]
+Together (1) and (3) prove the claimed order and disprove divergence.
+
+\section{VERIFICATION}
+The intermediate subset graph is checked directly for small $m$.
+As a small Cayley example, $S=\{1,4\}\subseteq\mathbb Z/5\mathbb Z$
+satisfies (2) and gives the cycle $C_5$, of degree two and diameter two.
+These examples illustrate the translation; they do not replace the
+all-$n$ existence theorem. The numerical exponent follows the displayed
+exact logarithmic expression, independently of decimal transcription
+in a secondary source.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known order of growth deduced from an explicit external theorem).}
+The graph-theoretic deduction is complete. Haviv--Levy Theorem 1.5 is
+an essential omitted proof dependency. Precise asymptotics for
+$f(n)/\sqrt n$ are not asserted; no new result is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/133}.
+I.~Haviv and D.~Levy, \emph{Symmetric complete sum-free sets in cyclic
+groups}, Theorem 1.5 and Section 1.2,
+\url{https://arxiv.org/abs/1703.04118}.
+Checked 2026-09-23. Completion is relative to (2), not a claim to
+reproduce its proof or settle the optimal leading constant.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

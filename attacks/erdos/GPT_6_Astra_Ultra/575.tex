@@ -1,0 +1,36 @@
+\section*{Erd\H{o}s Problem 575}
+
+\paragraph{Statement and scope.}
+Let \(\mathcal F\) be a finite family of graphs containing a bipartite graph. Must some bipartite \(F\in\mathcal F\) satisfy
+\[
+ \operatorname{ex}(n,F)\ll\operatorname{ex}(n,\mathcal F)?
+\]
+As literally written, the answer has an elementary negative example using forests. We prove it exactly. The more substantial version in which all forbidden graphs contain cycles remains unresolved in this attempt; its known negative solution is not reconstructed here.
+
+\paragraph{A two-member forest family.}
+Take \(\mathcal F=\{P_3,2K_2\}\), where \(P_3\) is a two-edge path and \(2K_2\) consists of two disjoint edges. Both are bipartite. Any two distinct edges either meet at a vertex, giving a \(P_3\), or are disjoint, giving a \(2K_2\). Hence for \(n\geq2\),
+\[
+ \operatorname{ex}(n,\mathcal F)=1. \tag{1}
+\]
+On the other hand, avoidance of \(P_3\) means maximum degree at most one, so
+\[
+ \operatorname{ex}(n,P_3)=\lfloor n/2\rfloor. \tag{2}
+\]
+We next establish the other individual extremal number without an asymptotic assumption.
+
+\paragraph{Pairwise intersecting edges.}
+In a \(2K_2\)-free graph every two edges intersect. If there are two edges \(ab,ac\), then either every edge contains \(a\), giving a star, or there is an edge avoiding \(a\). That edge must meet both \(ab\) and \(ac\), so it is \(bc\). Any further edge must intersect all three edges of this triangle, forcing it to be one of the same three edges. Thus every such graph with at least two edges is either a star or a triangle, together with isolated vertices. Consequently
+\[
+ \operatorname{ex}(n,2K_2)=n-1\quad(n\geq4), \tag{3}
+\]
+attained by the spanning star. Equations (1)--(3) show that neither family member has extremal number bounded by a constant multiple of the family extremal number.
+
+\paragraph{Why this does not reconstruct the cyclic counterexample.}
+The example exploits the different ways two edges can intersect. Its simultaneous forbidden family has bounded extremal number, whereas each forest individually permits linearly many edges. Requiring every forbidden graph to contain a cycle removes both members of this example. For that strengthened question one needs a different construction and estimates separating two superlinear orders; (1)--(3) supply neither.
+
+The current problem page reports a counterexample even with connected bipartite cyclic members. The primary treatment also explicitly distinguishes the elementary forest issue from this stronger result: Chapter 10 of \emph{Ten Advances in Mathematics and Theoretical Computer Science}, \url{https://cdn.openai.com/pdf/ten-proofs-oai.pdf}. That construction and its estimates are not assumed as proved steps in this attempt.
+
+\paragraph{Assessment.}
+The literal printed statement is completely disproved above. The intended stronger cyclic version remains unresolved here, and the completion estimate reflects that missing part. The forest observation is already recorded in the primary discussion; no novelty or Lean verification is claimed. Statement checked 24 September 2026: \url{https://www.erdosproblems.com/575}.
+
+\textbf{Completion rate estimate: 60\%.}

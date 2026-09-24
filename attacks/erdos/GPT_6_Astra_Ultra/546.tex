@@ -1,0 +1,41 @@
+\textbf{Erd\H{o}s problem 546.}
+For a graph $G$ with $m$ edges and no isolated vertices, must its two-colour Ramsey number satisfy $R(G)\leq2^{O(\sqrt m)}$?
+
+\textbf{Status and exact external theorem.}
+Yes. Sudakov's Theorem 1.1 in \emph{A conjecture of Erd\H{o}s on graph Ramsey numbers} states
+\[
+ R(G)\leq2^{250\sqrt m}.
+\]
+The hypothesis is precisely that $G$ has $m$ edges and no isolated vertices; no bounded-degree, connectedness, or bipartiteness assumption is needed. Source:
+\texttt{https://arxiv.org/abs/1002.0095}; problem:
+\texttt{https://www.erdosproblems.com/546}, checked 24 September 2026.
+This theorem is the external input for the full upper bound. Its sparse-colouring machinery is not reproduced here. We independently prove the dense special case, the necessity of the square-root scale, and the role of the no-isolates assumption.
+
+\textbf{An elementary bound and the dense special case.}
+Let $r(s,t)$ force either a red $K_s$ or a blue $K_t$. Looking at the two colour neighbourhoods of one vertex proves
+\[
+ r(s,t)\leq r(s-1,t)+r(s,t-1).
+\]
+Indeed, in a complete graph on the number of vertices on the right, some vertex has at least $r(s-1,t)$ red neighbours or at least $r(s,t-1)$ blue neighbours, since its total degree is one less than that number. Add the vertex to the appropriate smaller monochromatic clique. With $r(1,t)=r(s,1)=1$, Pascal's identity yields
+\[
+ r(s,t)\leq\binom{s+t-2}{s-1}.
+\]
+Consequently, for a graph on $v$ vertices,
+$R(G)\leq r(v,v)\leq 2^{2v-2}$.
+The degree sum gives $v\leq2m$ when there are no isolated vertices. This proves a general elementary upper bound $2^{4m-2}$ for $m\geq1$, and already proves the required $2^{O(\sqrt m)}$ bound in every family with $v=O(\sqrt m)$. It is the sparse graphs with many vertices relative to $\sqrt m$ that this elementary argument does not settle.
+
+\textbf{Why a smaller order of exponent cannot hold universally.}
+Take $G=K_t$, so $m=t(t-1)/2$, and set $N=\lfloor2^{t/4}\rfloor$. Independently colour every edge of $K_N$ red or blue with equal probability. A fixed $t$-set is monochromatic with probability $2^{1-\binom t2}$. Hence the expected number of monochromatic $K_t$ copies is at most
+\[
+ \binom Nt2^{1-\binom t2}
+ \leq2^{\,t^2/4+1-t(t-1)/2}
+ =2^{-t^2/4+t/2+1}<1
+\]
+for $t\geq4$. Some colouring therefore has no monochromatic $K_t$, and $R(K_t)>N$. Since $t>\sqrt{2m}$, this gives $R(K_t)\geq2^{c\sqrt m}$ for an absolute $c>0$ and all sufficiently large $t$. Thus an exponent $o(\sqrt m)$ cannot replace the one in the problem.
+
+\textbf{Boundary conditions.}
+If isolated vertices were allowed without restriction, adjoining arbitrarily many of them would leave $m$ fixed while $R(G)\geq|V(G)|$ grew without bound. Their exclusion is essential. With $m=0$ and no isolated vertices, the only graph is empty, handled separately by the convention for its Ramsey number. No conclusion for three or more colours is inferred from the two-colour theorem.
+
+\textbf{Completion estimate.}
+The full upper bound follows from the explicitly cited Sudakov theorem; the scale, dense case, and necessary hypothesis are independently justified above.
+\textbf{COMPLETION: 100\%}

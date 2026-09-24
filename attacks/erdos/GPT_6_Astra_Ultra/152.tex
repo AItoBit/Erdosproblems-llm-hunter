@@ -1,0 +1,77 @@
+\section{Erd\H{o}s Problem \#152: a quadratic supply of isolated sums}
+\noindent Elementary reconstruction of the known counting argument, 23 September 2026.
+
+\subsection*{1) Statement and target}
+For a finite Sidon set $A\subset\mathbb N$, a sum $s\in A+A$ is isolated if neither $s-1$ nor $s+1$ belongs to $A+A$. Prove that the number of such sums tends to infinity with $|A|$. We reconstruct the sumset--difference-set counting method reported with DeepMind's resolution and prove a quantitative bound. All combinatorial inequalities used below are justified here; we have not run a Lean checker.
+
+\subsection*{2) Three elementary identities for a finite integer set}
+For finite $X\subset\mathbb Z$, write
+\[
+ N_j(X)=|\{x\in X:x+j\in X\}|,\quad
+ V(X)=|\{x\in X:x-1,x+1\in X\}|,
+\]
+and let $I(X)$ count its isolated elements. Partitioning points by whether they have zero, one or two neighbours gives
+\[
+ I(X)+2N_1(X)=|X|+V(X).\tag{1}
+\]
+We will also use
+\[
+ 4N_1(X)+N_3(X)\le3|X|+2N_2(X),\tag{2}
+\]
+\[
+ 2N_2(X)\le N_3(X)+2V(X)+2I(X).\tag{3}
+\]
+For (2), the triangle inequality for symmetric difference gives
+$|X\mathbin\triangle(X+2)|\le2|X\mathbin\triangle(X+1)|$.
+Since $|X\mathbin\triangle(X+j)|=2(|X|-N_j(X))$, this implies $2N_1(X)\le|X|+N_2(X)$. Double it and add $N_3(X)\le|X|$.
+
+For (3), partition $X$ into maximal consecutive runs. A distance-two pair is either bridged by its middle point, giving one of the $V(X)$ points, or joins two runs separated by exactly one missing integer. Let $g$ count these latter gaps, so $N_2(X)=V(X)+g$. Each such gap has two adjacent runs. If its left run has length at least two, the last two elements of that run and the first element of the right run yield a distance-three pair of pattern $1101$. If its right run has length at least two, it yields a pair of pattern $1011$. All produced pairs are distinct: their endpoints determine the four positions, and the two patterns differ. Hence the number of long-run incidences is at most $N_3(X)$. The remaining incidences involve singleton runs; there are $I(X)$ such runs, each incident to at most two gaps. Thus $2g\le N_3(X)+2I(X)$, proving (3).
+
+\subsection*{3) Transferring correlations from sums to differences}
+Put $n=|A|\ge1$, $S=A+A$, $D=A-A$. The Sidon property gives
+\[
+ |S|=\frac{n(n+1)}2,\qquad |D|=n(n-1)+1.\tag{4}
+\]
+Every nonzero difference has exactly one ordered representation; zero has $n$. Each sum has two ordered representations except a double $2a$, which has one.
+
+For $j>0$, let $Q_j$ count ordered quadruples $(a,b,c,d)\in A^4$ with $a+b+j=c+d$. Counting by $s=a+b$, every pair $s,s+j\in S$ contributes at most four. Unless one of these two sums is a double, it contributes exactly four. At most $2n$ such pairs involve a double, and each loses at most four, so
+\[
+ 4N_j(S)-8n\le Q_j\le4N_j(S).\tag{5}
+\]
+Alternatively set $t=a-c$, so $t+j=d-b$. All nonzero differences have multiplicity one. Thus counting pairs $t,t+j\in D$ gives exactly $N_j(D)$ contributions except possibly at $t=0$ or $t=-j$. Each exceptional contribution differs by at most $n-1$. It follows that
+\[
+ N_j(D)\le Q_j\le N_j(D)+2n.
+\]
+Together with (5),
+\[
+ 4N_j(S)-10n\le N_j(D)\le4N_j(S).\tag{6}
+\]
+This holds for all positive shifts, including $1,2,3$; coincidences involving doubles have been included in the error term.
+
+\subsection*{4) Cancellation and the quadratic bound}
+Apply (2) to $D$. Substitute the lower bounds (6) for its shifts one and three, and the upper bound for shift two:
+\[
+ 16N_1(S)+4N_3(S)\le3|D|+8N_2(S)+50n.
+\]
+By (3), $8N_2(S)\le4N_3(S)+8V(S)+8I(S)$. Cancel the distance-three terms, then use (1), multiplied by eight. This yields
+\[
+ 8|S|\le3|D|+16I(S)+50n.
+\]
+With (4),
+\[
+ 16I(S)\ge n^2-43n-3.
+\]
+In particular the conservative bound reported with the known resolution follows:
+\[
+ \boxed{\ I(A+A)\ge\frac{n^2-100n-16}{16}.\ }\tag{7}
+\]
+For example, if $n\ge202$, then $n^2-100n-16\ge n^2/2$, so $I(A+A)\ge n^2/32$. Taking $n\ge\max(202,\lceil\sqrt{32M}\rceil)$ gives at least $M$ isolated sums. It also proves the stronger quadratic assertion. Negative right sides at small $n$ cause no difficulty.
+
+\subsection*{5) Verification, outcome and sources}
+The finite checks exhaust all subsets of a small integer interval for (1)--(3), and all its Sidon subsets for the exact quadruple counts, transfer inequalities and final bound. These checks support the derivation; the proofs above establish it for arbitrary finite sets.
+
+\textbf{SOLVED, reconstructing the known quadratic bound by the stated elementary method.} Attribution: the sumset--difference transfer and cancellation method accompanies DeepMind's resolution in \url{https://www.erdosproblems.com/forum/thread/152}. Problem and current status: \url{https://www.erdosproblems.com/152}, checked 23 September 2026. The run argument and symmetric-difference calculation above spell out the required elementary inequalities. No novel resolution or independent verification of the linked Lean code is claimed.
+
+The estimate refers to complete coverage of the statement by this written proof and is not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

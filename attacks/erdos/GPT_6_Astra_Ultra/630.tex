@@ -1,0 +1,48 @@
+\section{Erd\H{o}s Problem 630: planar bipartite graphs are 3-choosable}
+\subsection*{Statement and method}
+A graph is $k$-choosable if every assignment of a list of $k$ available colours to each vertex admits a proper colouring from those lists. Every planar bipartite graph is 3-choosable. We reconstruct the Alon--Tarsi argument, including the coefficient identity that produces the colouring.
+
+\subsection*{1. An orientation with small outdegrees}
+Every planar bipartite graph $F$ satisfies $e(F)\le2|V(F)|$. For components with at least three vertices this follows from Euler's formula and the absence of odd facial walks; trees and components of one or two vertices satisfy the bound directly. The same estimate holds for every subgraph of our graph $G$.
+Make a bipartite incidence graph whose left vertices are the edges of $G$, and whose right vertices are two slots for each vertex of $G$. An edge-vertex is adjacent to both slots of each endpoint. For any collection $Q$ of edges, with endpoint set $U$, its right neighbourhood has size $2|U|\ge e(G[U])\ge|Q|$. Hall's marriage theorem supplies a matching covering all edge-vertices. Orient each edge away from the vertex whose slot it receives. Every outdegree $d_v$ is at most two.
+
+\subsection*{2. A nonzero polynomial coefficient}
+For this orientation form
+\[
+ P(\boldsymbol x)=\prod_{u\to v}(x_u-x_v).
+\]
+The coefficient of $\prod_vx_v^{d_v}$ is
+\[
+ \sum_{F:\ d_F^+(v)=d_F^-(v)\ \forall v}(-1)^{|F|}. \tag{1}
+\]
+Indeed, choose the head term $-x_v$ on precisely the edges of $F$, and the tail term on the other edges. The exponent at a vertex becomes $d_v-d_F^+(v)+d_F^-(v)$, which equals $d_v$ exactly under the displayed balance condition.
+Every finite balanced directed edge set decomposes into directed cycles: follow unused edges until a vertex repeats, remove the resulting cycle, and continue; balance guarantees that this procedure exhausts the edges. Since $G$ is bipartite all such cycles have even length. Thus every summand in (1) is $+1$. The empty set occurs, so the coefficient is positive.
+
+\subsection*{3. Why this coefficient gives a list colouring}
+Represent the finitely many colour names by distinct real numbers. At each vertex choose a subset $L_v$ of its three-element list with $|L_v|=d_v+1$. For any polynomial $Q$ of total degree at most $\sum_vd_v$, the coefficient of $\prod_vx_v^{d_v}$ equals
+\[
+ \sum_{(a_v)\in\prod_vL_v}
+ \frac{Q((a_v))}
+ {\displaystyle\prod_v\prod_{b\in L_v\setminus\{a_v\}}(a_v-b)}.
+ \tag{2}
+\]
+To prove this, use linearity and check a monomial $\prod_vx_v^{e_v}$. Univariate Lagrange interpolation says
+\[
+ \sum_{a\in L_v}\frac{a^j}{\prod_{b\in L_v\setminus\{a\}}(a-b)}
+ =0\quad(j<d_v),\qquad =1\quad(j=d_v).
+\]
+If $(e_v)\ne(d_v)$ and $\sum e_v\le\sum d_v$, some exponent is below $d_v$, so the corresponding factor vanishes. The target monomial gives one. This proves (2).
+Apply (2) to $P$, whose total degree is $\sum_vd_v=e(G)$. Its coefficient is nonzero by (1), so $P((a_v))\ne0$ for some choice $a_v\in L_v$. Every factor then says $a_u\ne a_v$ for an edge $uv$. These selected list colours form the desired proper colouring.
+
+\subsection*{4. The constant cannot be reduced}
+The planar bipartite graph $K_{2,4}$ is not 2-choosable. Give its two vertices on the small side the lists $\{1,2\}$ and $\{3,4\}$. Index the other four vertices by pairs $(i,j)\in\{1,2\}\times\{3,4\}$, and give the corresponding vertex list $\{i,j\}$. Whatever colours $i,j$ are chosen on the small side, their common neighbour with list $\{i,j\}$ has no available colour. This is a complete obstruction.
+
+\subsection*{Conclusion and attribution}
+\textbf{Status: solved.} The polynomial proof and sharpness example are fully supplied. Euler's formula, Hall's theorem, and elementary interpolation are the standard background inputs. The orientation and parity method are due to Alon and Tarsi, not a new solution claimed here.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/630} (statement, checked 24 September 2026).
+\item N. Alon and M. Tarsi, \emph{Colorings and orientations of graphs}, \url{https://www.cs.tau.ac.il/~nogaa/PDFS/chrom3.pdf}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\%.}

@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 419}
+
+\paragraph{Statement.}
+Determine the limit points of \(R(n)=d((n+1)!)/d(n!)\), where \(d\)
+counts positive divisors. They are exactly
+\[
+ \{1\}\ \cup\ \{1+1/k:k=1,2,\ldots\}.
+ \tag{1}
+\]
+The result is known from Erd\H{o}s, Graham, Ivi\'c and Pomerance.
+The following elementary reconstruction follows the prime-factor approach
+recorded on the problem page.
+
+\paragraph{Small prime factors contribute a factor tending to one.}
+The divisor formula gives
+\[
+ R(n)=\prod_{p\mid n+1}
+ \left(1+\frac{v_p(n+1)}{v_p(n!)+1}\right).
+\]
+For \(p\leq n^{2/3}\),
+\[
+ v_p(n!)+1\geq\lfloor n/p\rfloor+1>n/p,\qquad
+ v_p(n+1)\leq\log_2(n+1).
+\]
+There are at most \(\log_2(n+1)\) distinct prime factors. Hence the
+product over these small primes lies between \(1\) and
+\[
+ \exp\left(O\left(\frac{(\log n)^2}{n^{1/3}}\right)\right)=1+o(1),
+ \tag{2}
+\]
+uniformly in \(n\).
+
+\paragraph{There is at most one remaining factor.}
+For sufficiently large \(n\), two prime factors exceeding \(n^{2/3}\),
+or the square of one such prime, would exceed \(n+1\).
+If there is no such prime, (2) gives \(R(n)=1+o(1)\).
+Otherwise write \(n+1=kp\), with \(p>n^{2/3}\).
+Its exponent in \(n+1\) is one, and \(p^2>n\), so
+\[
+ v_p(n!)=\lfloor n/p\rfloor=k-1.
+\]
+The remaining factor is exactly \(1+1/k\). Thus \(R(n)\) has distance
+tending to zero from the set in (1). That set is closed; all limit
+points of \(R(n)\) belong to it.
+
+\paragraph{Every proposed limit point occurs.}
+Fix \(k\geq1\), let \(p\) run through sufficiently large primes, and put
+\(n=kp-1\). Then \(p>n^{2/3}\), so (2) yields \(R(n)\to1+1/k\).
+For \(1\), take \(n=2^j-1\). Legendre's formula gives
+\(v_2(n!)=2^j-1-j\), whence
+\[
+ R(2^j-1)=1+\frac{j}{2^j-j}\longrightarrow1.
+\]
+This proves both directions of (1).
+
+\paragraph{Source and scope.}
+\url{https://www.erdosproblems.com/419}, checked 24 September 2026,
+records the known answer and an exposition attributed to Mehtaab Sawhney.
+The proof here uses only prime factorization, Legendre's formula, and
+infinitude of primes. No new result or formal verification is claimed.
+
+\paragraph{Completion estimate.}
+The complete limit-point classification is proved.
+\textbf{COMPLETION: 100\%}

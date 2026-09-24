@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#333: a zero-density set without an extremely thin additive cover}
+\noindent Complete counting construction, 24 September 2026.
+
+\subsection*{1) Statement}
+If $A\subseteq\mathbb N$ has asymptotic density zero, must there be $B\subseteq\mathbb N$ with $A\subseteq B+B$ and $B(N)=|B\cap[1,N]|=o(\sqrt N)$? The answer is no. The construction uses only nonnegative summands; allowing arbitrary negative summands would be a different question.
+
+\subsection*{2) A finite set which no small basis covers}
+For a large integer $N$, set $k=\lfloor\sqrt N\rfloor$, $m=\lceil N/\log N\rceil$, and $I_N=\{N,\ldots,2N-1\}$. We claim there is an $m$-element $A_N\subseteq I_N$ not contained in $D+D$ for any $D\subseteq\{0,\ldots,2N\}$ with $|D|\le k$.
+
+Choose $A_N$ uniformly among the $m$-element subsets of $I_N$. For fixed $D$, the number of its unordered pairs with repetition is at most $k(k+1)/2$, so for sufficiently large $N$,
+\[|(D+D)\cap I_N|\le k(k+1)/2\le3N/5.
+\]
+The probability that $A_N\subseteq D+D$ is at most $(3/5)^m$: if the intersection has size $u\ge m$, the exact probability is $\binom um/\binom Nm$, and each factor $(u-i)/(N-i)$ is at most $u/N\le3/5$; if $u<m$ the probability is zero.
+
+There are at most $(k+1)(2N+1)^k$ possibilities for $D$. The union bound shows that the probability some such $D$ covers $A_N$ is at most
+\[(k+1)(2N+1)^k(3/5)^m.
+\]
+Its logarithm tends to $-\infty$, because the positive part is $O(\sqrt N\log N)$ whereas the negative part has magnitude at least $\log(5/3)N/\log N$, and $\sqrt N/(\log N)^2\to\infty$. The probability is therefore less than one for every sufficiently large $N$, proving the claim. One may choose the lexicographically first qualifying subset, so no infinite probabilistic assertion is needed.
+
+\subsection*{3) Assemble a zero-density infinite set}
+For every sufficiently large integer $j$, apply the lemma with $N_j=4^j$, and put
+\[A=\bigcup_j A_{N_j}.
+\]
+The blocks occupy disjoint intervals $[4^j,2\cdot4^j)$. Their sizes are $m_j=\lceil4^j/(j\log4)\rceil$. We have
+\[\sum_{i\le j}m_i=o(4^j).
+\tag{1}\]
+For example, the terms with $i\le j/2$ contribute $O(4^{j/2}+j)$, while those with $j/2<i\le j$ contribute $O(4^j/j+j)$. If $4^j\le X<4^{j+1}$, then $A(X)\le\sum_{i\le j}m_i=o(4^j)=o(X)$. This proves density zero for all cutoffs, including cutoffs inside a block.
+
+\subsection*{4) Every additive cover violates the desired thinness}
+Suppose $A\subseteq B+B$. Every representation of an element of $A_{N_j}\subseteq[0,2N_j]$ uses two nonnegative elements of $B$ at most $2N_j$. Thus $D_j=B\cap[0,2N_j]$ covers $A_{N_j}$ by two-term sums. The finite lemma forces
+\[|D_j|>\lfloor\sqrt{N_j}\rfloor.
+\]
+Consequently
+\[\limsup_{X\to\infty}\frac{|B\cap[0,X]|}{\sqrt X}\ge\frac1{\sqrt2}.
+\]
+Including or excluding zero changes this count by at most one. In particular no covering $B$ has $B(X)=o(\sqrt X)$.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED in the negative.} The finite obstruction, its uniform existence for large scales, density-zero assembly, and obstruction to every proposed thin cover are proved. This is a counting-method treatment of the known negative result; no novelty or independent Lean verification is asserted.
+
+Source: \url{https://www.erdosproblems.com/333}, checked 24 September 2026. The source attributes the negative implication to Theorem 2 of Erd\H{o}s--Newman (1977). That theorem is not taken as an unproved input here; the argument above supplies its own finite obstruction. The special affirmative result for squares is outside the assertion disproved here.
+
+The estimate refers to complete disproof of the stated universal implication.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

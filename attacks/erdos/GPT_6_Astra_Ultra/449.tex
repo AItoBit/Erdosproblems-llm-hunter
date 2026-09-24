@@ -1,0 +1,74 @@
+\section*{Erd\H{o}s Problem 449}
+
+\paragraph{Statement and result.}
+Let \(r(n)\) count pairs of divisors \(d_1<d_2<2d_1\) of \(n\).
+Must \(r(n)<\epsilon\tau(n)\) hold for almost every integer, for
+every \(\epsilon>0\)?
+No. For every fixed \(K>0\), we construct a set of positive natural
+density on which \(r(n)>K\tau(n)\).
+
+\paragraph{Build a finite collection of tightly grouped divisors.}
+Choose a large integer \(s\), and set \(\lambda=2^{1/s}\).
+There is an interval \([X,\lambda X)\) containing at least \(s\)
+distinct primes. Indeed, if every interval
+\([\lambda^j,\lambda^{j+1})\), \(j\geq0\), contained at most \(s-1\)
+primes, their reciprocal sum would be bounded by
+\((s-1)\sum_{j\geq0}\lambda^{-j}<\infty\), contradicting Euler's
+divergence of the prime reciprocal sum.
+Choose \(s\) such primes \(p_1,\ldots,p_s\) and let \(M=p_1\cdots p_s\).
+
+Divisors formed from exactly \(j\) of these primes lie in
+\([X^j,\lambda^jX^j)\). Any two distinct such divisors have ratio
+less than \(2\), because \(\lambda^j\leq2\).
+Thus, using \(\tau(M)=2^s\) and Vandermonde's identity,
+\[
+ \frac{r(M)}{\tau(M)}
+ \geq\frac1{2^s}\sum_{j=0}^{s}\binom{\binom sj}{2}
+ =\frac{\binom{2s}{s}-2^s}{2^{s+1}}.
+ \tag{1}
+\]
+The right side tends to infinity. For example,
+\(\binom{2s}{s}\geq4^s/(2s+1)\), since it is the largest of the
+\(2s+1\) binomial coefficients with total \(4^s\).
+Choose \(s\) so that (1) exceeds the prescribed \(K\).
+
+\paragraph{Transfer to a positive-density set of integers.}
+Consider
+\[
+ \mathcal A_M=\{Mv:v\geq1,\ \gcd(v,M)=1\}.
+\]
+It has natural density
+\[
+ \frac1M\prod_{p\mid M}(1-1/p)>0
+ \tag{2}
+\]
+by periodicity or the Chinese remainder theorem.
+For each divisor \(d\mid v\) and each close pair \(a<b<2a\)
+of divisors of \(M\), the pair \(ad<bd<2ad\) is counted by \(r(Mv)\).
+All these pairs are distinct, since coprimality makes the
+\(M\)-part and \(v\)-part of every divisor unique. Hence
+\[
+ r(Mv)\geq r(M)\tau(v),\qquad
+ \tau(Mv)=\tau(M)\tau(v).
+\]
+Therefore \(r(n)/\tau(n)\geq r(M)/\tau(M)>K\) throughout
+\(\mathcal A_M\), proving the stronger claimed disproof.
+
+\paragraph{Counting convention and attribution.}
+The pairs here are counted once, with \(d_1<d_2\).
+If divisors are grouped into dyadic bins of sizes \(a_j\), the safe
+second-moment inequality is
+\[
+ 2r(n)+\tau(n)\geq\sum_j a_j^2
+ \geq\frac{\tau(n)^2}{\tau^+(n)}.
+\]
+The factor two comes from unordered pairs. The proof above does not
+need a distributional theorem about \(\tau^+\).
+The known negative answer and a deduction credited to Kevin Ford are
+recorded at \url{https://www.erdosproblems.com/449},
+checked 24 September 2026. No novelty is claimed.
+The only external input above is Euler's divergence theorem.
+
+\paragraph{Completion estimate.}
+A positive-density counterexample set is proved for every prescribed ratio \(K\).
+\textbf{COMPLETION: 100\%}

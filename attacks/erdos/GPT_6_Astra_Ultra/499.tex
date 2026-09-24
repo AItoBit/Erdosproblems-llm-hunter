@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#499: a large permutation product}
+\noindent Complete reconstruction by a matching decomposition and entropy, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A=(a_{ij})$ be an $n\times n$ matrix with nonnegative entries and every row and column summing to one. We prove that some permutation $\sigma$ satisfies
+\[\prod_{i=1}^n a_{i,\sigma(i)}\ge n^{-n}.\tag{1}\]
+The proof also gives the weaker positive-diagonal sum assertion and identifies equality for the maximum product. It does not require the stronger van der Waerden permanent theorem.
+
+\subsection*{2) Decompose the matrix into positive permutation diagonals}
+Form a bipartite graph on rows and columns, joining $i$ to $j$ when $a_{ij}>0$. For a set $S$ of rows, its neighboring columns $N(S)$ satisfy
+\[|S|=\sum_{i\in S}\sum_{j\in N(S)}a_{ij}
+\le\sum_{j\in N(S)}\sum_i a_{ij}=|N(S)|.
+\]
+These inequalities give a perfect matching. To recall the short matching argument, if a maximum matching left a row unmatched, explore alternating paths from that row. No reached column can be unmatched, or the path would enlarge the matching. Every reached column is matched to a reached row, and all neighbors of reached rows are reached columns. There is one more reached row than reached columns, contradicting the displayed neighbor inequality. Thus a matching saturating all rows exists.
+
+Let $P$ be its permutation matrix and $\lambda$ the smallest selected entry. Then $\lambda>0$. If $\lambda=1$, the row sums force $A=P$. Otherwise
+\[A'=\frac{A-\lambda P}{1-\lambda}
+\]
+is again doubly stochastic, has no new positive positions, and has at least one fewer positive position. Induction on that finite number yields a finite convex decomposition
+\[A=\sum_r\lambda_r P_{\sigma_r},\qquad
+\lambda_r>0,\quad\sum_r\lambda_r=1.\tag{2}\]
+Every selected permutation uses only positive entries of the original matrix. This establishes the required form of the Birkhoff decomposition directly, including matrices with zero entries.
+
+\subsection*{3) Average logarithms over the decomposition}
+Choose $\sigma_r$ with probability $\lambda_r$. Formula (2) says that $\mathbb P(\sigma(i)=j)=a_{ij}$. Because selected entries are positive, the random logarithmic product is finite and
+\[\mathbb E\log\prod_i a_{i,\sigma(i)}
+=\sum_{i,j:a_{ij}>0}a_{ij}\log a_{ij}.\tag{3}\]
+The function $h(t)=t\log t$, extended by $h(0)=0$, is strictly convex on $[0,\infty)$. Applying Jensen's inequality to the $n$ entries of each row, whose average is $1/n$, gives
+\[\sum_j a_{ij}\log a_{ij}\ge n h(1/n)=-\log n.
+\]
+Summing over rows, (3) is at least $-n\log n$. At least one value in this finite probability distribution is at least its average. Exponentiating that value proves (1).
+
+Equivalently, the row entropy bound controls the average logarithmic loss of a permutation drawn from a decomposition with the correct entry marginals. A uniform random permutation would not have those marginals and is not being substituted for it.
+
+\subsection*{4) Equality and the weaker sum assertion}
+If every entry is $1/n$, every permutation product equals $n^{-n}$. Conversely, if any row is nonuniform, strict convexity makes the sum of its $h$-values strictly greater than $-\log n$. Equations (2)--(3) then produce a permutation product strictly greater than $n^{-n}$. Thus the maximum permutation product equals $n^{-n}$ exactly for the uniform matrix (including the trivial $n=1$ case).
+
+For the permutation supplied by (1), all selected entries are positive, and arithmetic--geometric mean gives
+\[\sum_i a_{i,\sigma(i)}
+\ge n\left(\prod_i a_{i,\sigma(i)}\right)^{1/n}\ge1.
+\]
+This proves the weaker assertion as a direct consequence.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED.} The matching decomposition and entropy calculation prove the full requested product bound, its sharpness, and the additional sum statement. The stronger lower bound for the sum of all permutation products is a different theorem and is not inferred from a single large product.
+
+Source: \url{https://www.erdosproblems.com/499}, checked 24 September 2026, which attributes the product result to Marcus--Minc and the earlier sum result to Marcus--Ree. The argument uses the classical matching and convexity methods, reconstructed above; no novelty or independent formal verification is claimed.
+
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,48 @@
+\section{Erd\H{o}s Problem \#491: additive functions with bounded increments}
+\noindent Partial structural analysis, 24 September 2026.
+
+\subsection*{Statement and the unresolved step in this attempt}
+Let $f:\mathbb N\to\mathbb R$ be additive on coprime factors and suppose $|f(n+1)-f(n)|<C$ for all $n$. Must $f(n)=c\log n+O(1)$ for some real $c$? Wirsing proved that the answer is yes. This document proves an exact characterization of the possible bounded additive remainders, verifies that they give the required bounded increments, and shows why the remainder cannot be omitted. It does not derive the existence of $c$ from the increment hypothesis alone.
+
+\subsection*{Classify bounded additive functions by their prime-power values}
+For an additive function $g$, put
+\[M_p^+=\max\left(0,\sup_{j\ge1}g(p^j)\right),\qquad
+M_p^-=\max\left(0,\sup_{j\ge1}(-g(p^j))\right).
+\]
+Then $g$ is bounded on $\mathbb N$ if and only if
+\[\sum_p(M_p^++M_p^-)<\infty.\tag{1}\]
+More precisely, if $|g(n)|\le K$ for all $n$, each of the two sums is at most $K$.
+
+To prove necessity, take any finite set of primes and, at each one with positive supremum, choose a power attaining its supremum to within an arbitrarily small prescribed error. The chosen powers are pairwise coprime. Additivity makes their sum of $g$-values the value of $g$ at their product, and that is at most $K$. Let the errors tend to zero, then exhaust the primes. The same argument applied to $-g$ proves the negative assertion. No simultaneous attainment of infinitely many suprema is assumed.
+
+Conversely, unique prime factorization and coprime additivity give
+\[g(n)=\sum_{p^j\parallel n}g(p^j),
+\]
+so (1) bounds $|g(n)|$ uniformly by its finite total sum. In particular, writing $M_p=\sup_{j\ge1}|g(p^j)|$, an equivalent condition is $\sum_p M_p<\infty$, since
+\[M_p\le M_p^++M_p^-\le2M_p.
+\]
+
+\subsection*{What a logarithmic approximation would imply}
+For any real $c$, the remainder $g(n)=f(n)-c\log n$ is additive. Thus the desired conclusion is equivalent to the existence of $c$ with
+\[\sum_p\sup_{j\ge1}|f(p^j)-cj\log p|<\infty.\tag{2}\]
+The forward implication is the necessity just proved, and the reverse implication follows by summing over the prime powers dividing $n$. This is a concrete prime-power form of the missing step, rather than an assumption that bounded increments already control the separate prime contributions.
+
+Such a $c$, if it exists, is unique: two bounded logarithmic approximations imply $(c-c')\log n=O(1)$, forcing $c=c'$. Conversely any $f=c\log n+g$ satisfying (1) has
+\[|f(n+1)-f(n)|\le |c|\log2+2\sum_p M_p,
+\]
+so all functions of this form satisfy a bounded-increment hypothesis.
+
+\subsection*{The bounded remainder is necessary}
+The nonzero function $g(n)=\mathbf1_{2\mid n}$ is additive on coprime factors: at most one factor of a coprime pair is even. Its increments have absolute value one. It cannot equal $c\log n$ identically, since its value at $3$ is zero but at $2$ is one. A less localized example is
+\[g(n)=\sum_{p\mid n}\frac1{p^2},
+\]
+which is additive and bounded by $\sum_{m\ge2}m^{-2}$. These examples show why coprime additivity should not be silently replaced by complete additivity.
+
+If $f$ is completely additive and its logarithmic approximation is known, the bounded remainder $g$ is also completely additive. Then $g(n^j)=jg(n)$ is bounded in $j$, forcing $g(n)=0$ for every $n$. Hence in that stronger setting the conclusion, once established, becomes exact. This deduction still does not prove existence of the logarithmic approximation.
+
+\subsection*{Outcome and gap}
+\textbf{PARTIAL PROGRESS.} The characterization (1), the equivalent target (2), uniqueness and the examples are fully proved. The essential remaining task is to deduce (2) from $\sup_n|f(n+1)-f(n)|<\infty$; no argument for that implication is supplied here.
+Source: \url{https://www.erdosproblems.com/491}, checked 24 September 2026, citing E. Wirsing, \emph{A characterization of $\log n$ as an additive arithmetic function}, Symposia Mathematica 4 (1970), 45--57. The known theorem is attributed as context and is not counted as a proof reproduced here. No novelty or formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

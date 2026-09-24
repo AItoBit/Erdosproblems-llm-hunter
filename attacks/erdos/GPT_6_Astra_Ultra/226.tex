@@ -1,0 +1,62 @@
+\section{Erd\H{o}s Problem \#226: an entire rationality-preserving function}
+\noindent Complete reconstruction by analytic back-and-forth, 23 September 2026.
+
+\subsection*{1) Statement and result}
+We construct a transcendental entire function $f$, real-valued and strictly increasing on $\mathbb R$, such that for every real $x$,
+\[
+ f(x)\in\mathbb Q\quad\Longleftrightarrow\quad x\in\mathbb Q.\tag{1}
+\]
+The equivalence is asserted for real inputs, as in the question. This is a classical existence result; Barth and Schneider proved a general countable-dense-set version. The rational-input case had already been treated by Neumann and Rado (1963), as noted in the introduction of Sato and Rankin's paper cited below. The small perturbation argument gives a reconstruction of the requested case; it claims no new existence theorem.
+
+\subsection*{2) A nonlinear starting function and admissible corrections}
+Set $\epsilon=1/10$ and
+\[
+ f_0(z)=z+\epsilon e^{-z^2}.
+\]
+Then $f_0(0)=\epsilon$, $f_0''(0)=-1/5$, and on the real axis $9/10\le f_0'(x)\le11/10$, since $2|x|e^{-x^2}\le1$. Initially record the rational assignment $0\mapsto\epsilon$.
+
+At correction step $m\ge1$, let $D$ be the finite set of rational inputs already assigned and let $B=f_{m-1}(D)\subset\mathbb Q$ be their images. The assignments are distinct and $0\in D$. Use the real entire function
+\[
+ \phi_m(z)=z^3e^{-z^2}\prod_{a\in D}(z-a).
+\]
+It vanishes at every old input, has second derivative zero at zero, and is nonzero at every real point outside $D$ (because $0\in D$). Its derivative is bounded on $\mathbb R$: it is a polynomial times a Gaussian. For arbitrarily small real $t$ the correction $h_m=t\phi_m$ satisfies
+\[
+ \sup_{x\in\mathbb R}|h_m'(x)|\le2^{-m-3},
+ \qquad \sup_{|z|\le m}|h_m(z)|\le2^{-m}.\tag{2}
+\]
+Both quantities before multiplication by $|t|$ are finite, so (2) imposes only a positive upper bound on $|t|$. A zero correction is also allowed.
+
+\subsection*{3) Two directions of the construction}
+Fix enumerations of $\mathbb Q$ for inputs and outputs. Alternate the following two steps, always using the next unused member of the corresponding enumeration.
+
+\emph{Forward step.} Take the next $a\in\mathbb Q\setminus D$. Since $\phi_m(a)\ne0$, choose $b\in\mathbb Q\setminus B$ sufficiently close to $f_{m-1}(a)$ that
+\[
+ t=\frac{b-f_{m-1}(a)}{\phi_m(a)}
+\]
+satisfies (2). Rational density and finiteness of $B$ permit this choice. Set $f_m=f_{m-1}+t\phi_m$ and record $a\mapsto b$.
+
+\emph{Backward step.} Take the next $b\in\mathbb Q\setminus B$. The derivative estimates give, for every finite stage,
+\[
+ \frac9{10}-\sum_{j\ge1}2^{-j-3}
+ \le f_{m-1}'(x)\le
+ \frac{11}{10}+\sum_{j\ge1}2^{-j-3}.
+\]
+In particular $1/2<f_{m-1}'(x)<3/2$. Thus $f_{m-1}$ is strictly increasing and tends to the two corresponding infinities at the ends of the real line. There is a unique real $x_0$ with $f_{m-1}(x_0)=b$. It is outside $D$, since $b\notin B$. Choose a rational $a\notin D$ arbitrarily close to $x_0$ and set $t=(b-f_{m-1}(a))/\phi_m(a)$. As $a\to x_0$, this quotient tends to zero, because its numerator tends to zero and its denominator to the nonzero number $\phi_m(x_0)$. Hence (2) can again be met. Record $a\mapsto b$ after adding the correction.
+
+In both directions every previous assignment remains fixed. The derivative estimate also ensures injectivity at the new finite stage, consistent with choosing unused inputs and images.
+
+\subsection*{4) Entire convergence and both implications}
+For any fixed disk $|z|\le R$, all corrections with $m\ge R$ have supremum at most $2^{-m}$ there. Thus $f_m=f_0+\sum_{j\le m}h_j$ converges uniformly on compact sets to an entire function $f$. The standard local uniform convergence theorem for holomorphic functions also gives convergence of derivatives. Real coefficients make $f$ real on $\mathbb R$, and the derivative bounds persist in the limit. Therefore $f$ is injective on $\mathbb R$.
+
+Every rational input is eventually assigned: at each forward step the first remaining rational input is included, and other steps can only include additional ones. Once assigned, its rational value is unchanged by all later corrections. The analogous backward argument includes every rational output. Consequently $f(\mathbb Q)=\mathbb Q$. If $x\in\mathbb R$ has $f(x)=b\in\mathbb Q$, some rational $a$ was assigned the same value $b$. Injectivity gives $x=a\in\mathbb Q$. This proves both directions of (1), including the direction that is not implied just by mapping rationals to rationals.
+
+\subsection*{5) Transcendence and provenance}
+Every correction has second derivative zero at zero, so $f''(0)=f_0''(0)=-1/5$. Hence $f$ is nonlinear. Moreover $f'$ is bounded on the whole real axis. Were $f$ a polynomial, its derivative would be a bounded real-axis polynomial and hence constant, contradicting $f''(0)\ne0$. Thus $f$ is transcendental entire.
+
+\textbf{SOLVED.} All choices and convergence requirements used for the real-input question are verified above. No independent Lean verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/226}, checked 23 September 2026; K. F. Barth and W. J. Schneider's 1970 existence result cited there. For the classical monotone back-and-forth method, see D. Sato and S. Rankin, \emph{Entire functions mapping countable dense subsets of the reals onto each other monotonically}, Bull. Austral. Math. Soc. 10 (1974), 67--70, \url{https://doi.org/10.1017/S0004972700040636}. The Gaussian correction estimates used here are supplied explicitly, rather than assumed from an existence theorem.
+
+The estimate measures coverage of the requested statement, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

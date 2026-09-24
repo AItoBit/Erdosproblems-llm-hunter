@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#718: quadratic density forces a clique subdivision}
+\noindent Density, connectivity and a linkage reduction, 24 September 2026.
+
+\subsection*{Statement and external input}
+We show that $22r^2n$ edges suffice to force a subdivision of $K_r$ in a finite simple graph on $n$ vertices. The constant is deliberately unoptimized.
+The explicit external input is the Bollob\'as--Thomason linkage theorem: every $22t$-connected graph is $t$-linked, meaning that any prescribed pairing of $2t$ distinct vertices can be joined by $t$ pairwise vertex-disjoint paths. Its substantial proof is not reproduced. We prove the density-to-connectivity lemma and the subsequent construction of the subdivision.
+
+\subsection*{An elementary density-to-connectivity lemma}
+If a graph has at least $2kn$ edges, where $k\geq1$, it has a $(k+1)$-connected subgraph. Indeed, choose an induced subgraph $H$ of smallest order $h\geq2k$ satisfying
+\[
+ e(H)>2k(h-k).
+\]
+The original graph qualifies; its edge count also forces its order to exceed $2k$. A graph on $2k$ vertices has at most $k(2k-1)<2k^2$ edges, so $h>2k$. Minimality, applied after deleting any one vertex, implies $\delta(H)>2k$.
+
+Suppose $S$ is a separating set with $s\leq k$ vertices, and write $V(H)\setminus S=A\cup B$ with $A,B$ nonempty and no edges between them. Since all neighbors of a vertex of $A$ lie in $A\cup S$, the minimum-degree bound forces $|A\cup S|>2k$; the same holds for $B\cup S$. Both induced subgraphs are proper and in the range of the minimal choice. Consequently
+\[
+ e(H)\leq e(H[A\cup S])+e(H[B\cup S])
+ \leq2k(h+s-2k)\leq2k(h-k),
+\]
+a contradiction. Thus $H$ has no separating set of size at most $k$, proving the lemma.
+
+\subsection*{Distinct stars and simultaneous linkage}
+Let $r\geq2$, $t=\binom r2$, and $k=22t+r$. Since $2k\leq22r^2$, the hypothesized edge count yields a $(k+1)$-connected subgraph $H$.
+Choose distinct branch vertices $b_1,\ldots,b_r$. For each ordered pair $i\ne j$, choose a neighbor $u_{ij}$ of $b_i$, with all $r(r-1)=2t$ chosen neighbors distinct and outside the branch set. This is possible greedily: before any choice fewer than $r+2t$ vertices are forbidden, whereas the degree in $H$ is at least $k+1>r+2t$.
+
+Deleting the $r$ branch vertices leaves a graph of connectivity at least $k+1-r>22t$. The linkage theorem joins each pair $u_{ij},u_{ji}$, for $i<j$, by pairwise vertex-disjoint paths in this remaining graph. Add the edges $b_i u_{ij}$ and $u_{ji}b_j$. These form internally vertex-disjoint paths for all pairs of branch vertices, with no internal branch vertex. Their union is a subdivision of $K_r$. The case $r=1$ is immediate for a nonempty graph.
+
+\subsection*{Why the quadratic scale is necessary}
+For comparison let $s=\lfloor r^2/8\rfloor$ and consider $K_{s,s}$, for sufficiently large $r$. In a proposed subdivision with $a$ branch vertices on one side and $r-a$ on the other, every same-side branch pair needs at least one distinct internal vertex on the opposite side. The subdivision would therefore use at least
+\[
+ r+\binom a2+\binom{r-a}2
+ \geq \frac{r^2}{4}+\frac r2
+\]
+vertices. But $K_{s,s}$ has $2s\leq r^2/4$ vertices, a contradiction. Disjoint copies produce arbitrarily large examples with
+\[
+ \frac{e(G)}{|V(G)|}=\frac s2=(1/16+o(1))r^2
+\]
+and no such subdivision. This verifies the correct scale independently of the positive result.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved relative to the linkage theorem.} The density lemma, distinct-neighbor selection, loss of connectivity, and conversion of the linkage to a subdivision are proved. The nontrivial external input is precisely specified.
+Sources: \url{https://www.erdosproblems.com/718}; B. Bollob\'as and A. Thomason, \emph{Highly linked graphs}, \url{https://doi.org/10.1007/BF01261316}, primary abstract \url{https://digitalcommons.memphis.edu/facpubs/4905/}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

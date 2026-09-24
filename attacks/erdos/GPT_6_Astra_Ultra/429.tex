@@ -1,0 +1,33 @@
+\section{Erd\H{o}s Problem \#429: arbitrarily sparse admissible sets without prime translates}
+\noindent Complete diagonal construction, including the squarefree variant, 24 September 2026.
+
+\subsection*{1) Statement and the meaning of arbitrary sparsity}
+Does sufficient sparsity of an infinite admissible $A\subseteq\mathbb N$ guarantee some integer translate $A+n$ consisting only of primes? Admissible means that $A$ omits a residue class modulo each prime. We prove a stronger negative statement: for every nondecreasing unbounded function $f:\mathbb N\to\mathbb Z_{\ge0}$ there is an infinite $A$ with $A(N)\le f(N)$ for all $N$, omitting a residue class modulo every prime and every prime square, such that every integer translate contains a positive nonsquarefree composite number.
+
+\subsection*{2) Construction by compatible congruences}
+Enumerate the integers as $z_1,z_2,\ldots$ without omission, for example $0,1,-1,2,-2,\ldots$, and enumerate the primes as $p_1<p_2<\cdots$. Put
+\[P_j=\prod_{i=1}^j p_i^2,\qquad q_j=p_{j+1}.
+\]
+The Chinese remainder theorem supplies an infinite arithmetic progression of integers $a$ satisfying
+\[a\equiv0\pmod{P_j},\qquad a\equiv-z_j\pmod{q_j^2},\tag{1}\]
+because $P_j$ and $q_j^2$ are coprime. Choose $a_j$ from that progression sufficiently large that
+\[a_j>a_{j-1},\qquad a_j+z_j>q_j^2,\qquad f(a_j)\ge j,
+\tag{2}\]
+with $a_0=0$. Each condition is eventually satisfied along the progression: for the last one, use monotonicity and unboundedness of $f$. Define $A=\{a_j:j\ge1\}$.
+
+\subsection*{3) Verify sparsity and admissibility for every prime}
+If $N<a_1$, then $A(N)=0\le f(N)$. Otherwise let $j=A(N)$, so $a_j\le N<a_{j+1}$. By (2) and monotonicity, $A(N)=j\le f(a_j)\le f(N)$. Thus the desired bound holds at every integer cutoff, not just along the selected sequence.
+
+Fix a prime $p_i$. Every $a_j$ with $j\ge i$ is divisible by $p_i^2$, by (1). The entire sequence therefore occupies at most $i$ residue classes modulo $p_i^2$: at most $i-1$ classes from the earlier elements, together with zero. The same bound holds modulo $p_i$. Since $i<p_i<p_i^2$, at least one residue class is omitted for both moduli. This counts the whole infinite set and does not merely establish finite-prefix admissibility.
+
+\subsection*{4) Every translate is excluded}
+Given any $z\in\mathbb Z$, choose $j$ with $z=z_j$. Equations (1) and (2) say that $a_j+z$ is a positive multiple of $q_j^2$, strictly greater than $q_j^2$. It is therefore composite and not squarefree. Consequently $A+z$ is neither a subset of the primes nor a subset of the squarefree integers. Negative shifts cause no exception: the selected witness was explicitly chosen positive.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED in the negative, for both formulations.} The construction works under every prescribed monotone unbounded counting envelope and defeats all integer shifts simultaneously while preserving both residue-omission conditions. It is a Chinese-remainder diagonal treatment of the known counterexamples, with every compatibility and quantifier checked.
+
+Sources: \url{https://www.erdosproblems.com/429}, checked 24 September 2026; D. Weisenberg, \emph{Sparse Admissible Sets and a Problem of Erd\H{o}s and Graham}, \url{https://arxiv.org/abs/2405.12310}. The negative resolution is due to Weisenberg. No novelty or independent Lean verification is claimed.
+
+The estimate applies to the full sparsity and squarefree assertions addressed here.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

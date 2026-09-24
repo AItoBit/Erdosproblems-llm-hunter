@@ -1,0 +1,124 @@
+\section*{Erd\H{o}s Problem 637: many distinct degrees in a Ramsey graph}
+
+\paragraph{Statement and claim.}
+An \(n\)-vertex graph with
+\(\operatorname{hom}(G)\leq C\log n\) has an induced subgraph on
+\(\Omega_C(n)\) vertices with \(\Omega_C(\sqrt n)\) distinct degrees.
+Here \(\operatorname{hom}(G)\) is the maximum of the clique number
+and independence number.
+We reconstruct the diversity argument of Bukh and Sudakov,
+\emph{Induced subgraphs of Ramsey graphs with many distinct degrees},
+JCTB 97 (2007), 612--619:
+\url{https://people.math.ethz.ch/~sudakovb/distinct-degrees.pdf}.
+The final random sampling uses independent vertex choices.
+See also \url{https://www.erdosproblems.com/637}.
+
+\paragraph{External input.}
+We use the fixed-density asymptotic form of the
+Erd\H{o}s--Szemer\'edi homogeneous-set theorem (Theorem 2.1 of
+that paper): for each fixed \(d_0\in(0,1/2]\), and all sufficiently
+large \(M\) depending on \(d_0\), every graph \(H\) of order \(M\)
+and edge density at most \(d_0\) satisfies
+\[
+ \operatorname{hom}(H)\geq
+ c_0\,\frac{\log M}{d_0\log(1/d_0)}
+\]
+for an absolute positive constant \(c_0\).
+Here \(d_0\) is fixed before \(M\) tends to infinity; this is not
+a bound uniform down to arbitrarily small actual graph densities.
+This is the only substantive external structural input.
+
+\paragraph{A large diverse induced subgraph.}
+Call an \(M\)-vertex graph \(\eta\)-diverse if each vertex has at most
+\(M^{1/5}\) other vertices \(y\) for which
+\(|N(x)\mathbin{\triangle}N(y)|<\eta M\).
+Choose a sufficiently large integer \(K=K(C)\), and set
+\(\eta=1/K\) and \(a=8^{-K}\).
+We show that \(G\) contains an induced \(\eta\)-diverse graph of order
+at least \(an\), for all sufficiently large \(n\).
+
+Suppose otherwise. We recursively construct \(K\) disjoint sets
+\(S_1,\ldots,S_K\), each of size
+\(q=\lfloor(an)^{1/5}\rfloor\), and nested induced graphs
+\(G=H_0\supset H_1\supset\cdots\supset H_K\), with
+\(|H_i|\geq|H_{i-1}|/8\) and \(S_i\subset H_{i-1}\setminus H_i\).
+In \(H=H_{i-1}\), failure of diversity supplies a vertex \(x\)
+and \(q\) other vertices \(S_i\) whose neighbourhoods differ from
+that of \(x\) in fewer than \(\eta|H|\) places.
+In \(B=V(H)\setminus S_i\), which has size at least \(|H|/2\),
+either the neighbours or the non-neighbours of \(x\) form a set
+\(D\) of size at least \(|B|/2\).
+Every vertex of \(S_i\) has the corresponding adjacency type to all
+but at most \(\eta|H|\leq4\eta|D|\) vertices of \(D\).
+By averaging, at least half the vertices of \(D\) have that type
+to at least a \(1-8\eta\) fraction of \(S_i\).
+Take these vertices for \(H_i\).
+
+Thus every vertex of every later \(S_j\) has either at most
+\(8\eta q\) neighbours in \(S_i\), or at least
+\((1-8\eta)q\), with the choice depending only on \(i\).
+Select at least \(K/2\) sets having the same choice, and complement
+the graph if necessary. Their union \(S\) has density at most
+\[
+ 8\eta+\frac{2}{K}=\frac{10}{K}.
+\]
+Also \(\log|S|\geq\tfrac15\log n-O_C(1)\).
+Apply the external theorem with the fixed upper bound \(d_0=10/K\).
+It gives
+\[
+ \operatorname{hom}(G)\geq
+ \frac{c_0K}{10\log(K/10)}
+       \bigl(\tfrac15\log n-O_C(1)\bigr)>C\log n
+\]
+if \(K\) was chosen sufficiently large and then \(n\) sufficiently
+large. This contradiction proves the diversity assertion.
+
+\paragraph{Sampling and counting collisions.}
+Let \(H\) be the diverse graph, of order \(M\geq an\).
+Choose a random subset \(W\) by retaining each vertex independently
+with probability \(1/2\).
+For a pair \(x,y\) with
+\(|N_H(x)\triangle N_H(y)|\geq\eta M\), condition on retaining
+both vertices. Their degree difference in \(H[W]\) is a signed sum
+of \(D\geq\eta M-2\) independent fair Bernoulli variables.
+Replacing each negatively signed variable \(X\) by \(1-X\)
+shows that this sum is a translate of
+\(\operatorname{Bin}(D,1/2)\).
+Its largest atom is at most \(O(D^{-1/2})\), by the central
+binomial coefficient estimate. Consequently this pair has equal
+degrees with probability \(O_\eta(M^{-1/2})\).
+
+There are at most \(M^{6/5}\) exceptional ordered pairs.
+If \(Z\) counts unordered pairs of retained vertices with equal
+degrees, it follows that
+\[
+ \mathbb EZ=O_\eta(M^{3/2}).
+\]
+Markov's inequality makes \(Z\leq4\mathbb EZ\) with probability
+at least \(3/4\). Since \(|W|\) has mean \(M/2\) and variance
+\(M/4\), Chebyshev's inequality gives
+\(\Pr(|W|<M/3)\leq9/M\).
+For sufficiently large \(M\), both desired events occur together.
+
+For such a set \(W\), let the nonempty degree classes have sizes
+\(u_1,\ldots,u_r\). Then
+\[
+ \sum_i u_i=|W|,\qquad
+ \sum_i u_i^2=|W|+2Z=O_\eta(M^{3/2}).
+\]
+Cauchy--Schwarz gives
+\[
+ r\geq\frac{|W|^2}{|W|+2Z}
+   =\Omega_\eta(\sqrt M)=\Omega_C(\sqrt n),
+ \qquad |W|\geq an/3.
+\]
+This proves the requested assertion.
+
+\paragraph{Scope.}
+The proof reconstructs the known solution from the stated
+Erd\H{o}s--Szemer\'edi theorem and elementary probabilistic estimates.
+All constants depend only on \(C\); no uniform constant independent
+of the Ramsey parameter is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
 Build script for Erdosproblems-llm-hunter website.
-Reads TeX files from Attacks directory and CSV lists,
+Reads TeX files from the attacks directory and saved problem catalogs,
 generates JSON data files for the static site.
 """
 
 import os
 import json
 import csv
+import html
 import re
 import subprocess
 from datetime import datetime
@@ -20,6 +21,7 @@ LISTS_DIR = BASE_DIR / "lists"
 DATA_DIR = BASE_DIR / "docs" / "data"
 REVIEWS_DIR = BASE_DIR / "reviews"
 ERDOS_STATUS_PATH = LISTS_DIR / "erdos_status.json"
+OPEN_PROBLEMS_PATH = LISTS_DIR / "top500-v22.json"
 # Tao's database includes independence results in its total solved count.
 RESOLVED_ERDOS_STATUSES = {'proved', 'disproved', 'solved', 'independent'}
 # Requested display rule for the Erdos LLM Claim column. This deliberately
@@ -325,6 +327,56 @@ def load_mo_problems_list():
     return problems
 
 
+def load_open_problems_catalog():
+    """Read and validate the versioned ranking without requiring local-only data.
+
+    The supplied edition is evidence about its dated status, not an independent
+    verification of any problem's current mathematical status.
+    """
+    with OPEN_PROBLEMS_PATH.open(encoding='utf-8') as f:
+        snapshot = json.load(f)
+    if not isinstance(snapshot, dict) or not isinstance(snapshot.get('records'), list):
+        raise ValueError('Open problems catalog requires a records array')
+    records = snapshot['records']
+    count = snapshot.get('recordCount')
+    if type(count) is not int or count != len(records) or count < 1:
+        raise ValueError('Open problems catalog recordCount does not match its records')
+    ids, ranks = set(), set()
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError('Malformed open problems catalog record')
+        problem_id = record.get('problemId')
+        if not isinstance(problem_id, str) or not re.fullmatch(
+            r'problem\.[a-z0-9]+(?:[.-][a-z0-9]+)*', problem_id
+        ):
+            raise ValueError(f'Malformed open problem ID: {problem_id!r}')
+        if problem_id in ids:
+            raise ValueError(f'Duplicate open problem ID: {problem_id}')
+        ids.add(problem_id)
+        rank = record.get('releaseRank')
+        if type(rank) is not int or rank < 1:
+            raise ValueError(f'Malformed open problem rank for {problem_id}: {rank!r}')
+        if rank in ranks:
+            raise ValueError(f'Duplicate open problem rank: {rank}')
+        ranks.add(rank)
+        for key in ('canonicalTitle', 'exactTarget', 'primaryDomain',
+                    'primaryDomainLabel', 'displayStatus', 'releaseStatus',
+                    'statusQualification'):
+            if not isinstance(record.get(key), str) or not record[key].strip():
+                raise ValueError(f'Open problem {problem_id} requires {key}')
+        sources = record.get('sources')
+        if not isinstance(sources, list) or not sources or not all(
+            isinstance(source, dict) and isinstance(source.get('url'), str)
+            and source['url'].startswith(('https://', 'http://'))
+            and isinstance(source.get('citation'), str) and source['citation'].strip()
+            for source in sources
+        ):
+            raise ValueError(f'Open problem {problem_id} requires attributed sources')
+    if ranks != set(range(1, count + 1)):
+        raise ValueError('Open problems catalog ranks must be contiguous from 1 to recordCount')
+    return snapshot
+
+
 def load_review(problem_type, problem_id):
     """Load review metadata for a problem, if present."""
     review_path = REVIEWS_DIR / problem_type / f"{problem_id}.json"
@@ -428,7 +480,7 @@ def build_mo_data():
     Problem statements are NOT included - users are directed to
     MathOverflow for the actual problem content.
     """
-    attacks_dir = ATTACKS_DIR / "mo"
+    attacks_dir = ATTACKS_DIR / "open_problems" / "mo"
     problems_list = load_mo_problems_list()
 
     problems = {}
@@ -473,7 +525,7 @@ def build_mo_data():
 
     # Attach review metadata, if any
     for qid, problem_data in problems.items():
-        review = load_review('mo', qid)
+        review = load_review('open_problems/mo', qid) or load_review('mo', qid)
         if review:
             problem_data['review'] = review
 
@@ -503,6 +555,111 @@ def build_mo_data():
     return problems
 
 
+def summarize_open_problem_attempts(problem):
+    """Keep writeup claims and estimates separate from catalog status."""
+    problem['attacks'].sort(key=lambda attack: (
+        attack.get('model', ''), attack.get('version', 1), attack.get('file_path', '')
+    ))
+    attempts = [a for a in problem['attacks'] if a.get('entry_kind') != 'statement_only']
+    problem['llm_status'] = (
+        'none' if not attempts else
+        'unresolved' if any(a.get('status') == 'unresolved' for a in attempts) else 'solved'
+    )
+    problem['llm_status_source'] = 'attempts'
+    completions = [a['completion'] for a in attempts
+                   if type(a.get('completion')) in (int, float)]
+    if completions:
+        problem['completion'] = max(completions)
+        problem['completion_source'] = 'llm'
+
+
+def build_open_problems_data(mo_problems=None, snapshot=None):
+    """Join the ranked edition and legacy MO collection without asserting overlap.
+
+    A rank identifies a position in one edition; the stable problemId identifies
+    its attempts. MO IDs occupy a separate namespace and receive no ranking.
+    """
+    if snapshot is None:
+        snapshot = load_open_problems_catalog()
+    if mo_problems is None:
+        mo_problems = build_mo_data()
+    problems = {}
+    for record in sorted(snapshot['records'], key=lambda item: item['releaseRank']):
+        problem_id = record['problemId']
+        formal_source = record.get('formalStatementSource') or {}
+        problems[problem_id] = {
+            'id': problem_id,
+            'title': record['canonicalTitle'],
+            'collection': 'ranked',
+            'rank': record['releaseRank'],
+            'domain': record['primaryDomain'],
+            'domain_label': record['primaryDomainLabel'],
+            'exact_target': record['exactTarget'],
+            'link': formal_source.get('url') or record['sources'][0]['url'],
+            'sources': record['sources'],
+            'status': record['displayStatus'],
+            'release_status': record['releaseStatus'],
+            'status_statement': record.get('statusStatement'),
+            'status_qualification': record['statusQualification'],
+            'status_reviewed_at': record.get('statusReviewedAt') or None,
+            'edition_date': snapshot.get('editionDate'),
+            'publication_id': snapshot.get('publicationId'),
+            'reader_question': record.get('readerQuestion'),
+            'why_it_matters': record.get('whyItMatters'),
+            'family_label': record.get('familyLabel'),
+            # Preserve exact scope, dated evidence and ranking provenance.
+            'catalog_record': record,
+            'attacks': [],
+        }
+
+    attacks_dir = ATTACKS_DIR / 'open_problems'
+    if attacks_dir.exists():
+        for model_dir in sorted(attacks_dir.iterdir()):
+            if not model_dir.is_dir() or model_dir.name.startswith('.') or model_dir.name == 'mo':
+                continue
+            for tex_file in sorted(model_dir.glob('*.tex')):
+                match = re.fullmatch(r'(?P<id>problem\.[a-z0-9.-]+)(?:_v(?P<ver>[1-9]\d*))?', tex_file.stem)
+                if not match or match.group('id') not in problems:
+                    raise ValueError(
+                        f'Unknown ranked open problem attempt: {tex_file}. '
+                        'Use a catalog problemId, optionally followed by _vN.'
+                    )
+                parsed = parse_attack(read_tex_file(tex_file), model_dir.name.replace('_', ' '),
+                                      get_file_date(tex_file))
+                parsed['file_path'] = tex_file.relative_to(BASE_DIR).as_posix()
+                parsed['version'] = int(match.group('ver') or 1)
+                problems[match.group('id')]['attacks'].append(parsed)
+
+    for problem_id, problem in problems.items():
+        review = load_review('open_problems', problem_id)
+        if review:
+            problem['review'] = review
+        summarize_open_problem_attempts(problem)
+
+    for qid, original in sorted(mo_problems.items(), key=lambda item: int(item[0])):
+        problem = {
+            **original,
+            'id': f'mo:{qid}',
+            'title': html.unescape(original['title']),
+            'mo_id': qid,
+            'collection': 'mo',
+            'rank': None,
+            'domain': 'mathoverflow',
+            'domain_label': 'MathOverflow',
+            'exact_target': None,
+            'sources': [{'citation': html.unescape(original['title']), 'url': original['link']}],
+            'status': 'unreviewed',
+            'status_qualification': 'Legacy MathOverflow collection; current mathematical status has not been reviewed against the ranked catalog.',
+            'status_reviewed_at': None,
+        }
+        # Recompute from actual attempts; a statement-only MO record must not
+        # inherit the old empty-aggregate "solved" state or estimate.
+        problem.pop('completion', None)
+        summarize_open_problem_attempts(problem)
+        problems[problem['id']] = problem
+    return problems
+
+
 def aggregate_problem_status(problems):
     """Aggregate status for each problem based on all its attacks.
     
@@ -529,9 +686,13 @@ def aggregate_problem_status(problems):
     return problems
 
 
-def generate_js_data(erdos_problems, mo_problems):
+def generate_js_data(erdos_problems, mo_problems, open_problems=None, open_catalog=None):
     """Generate JavaScript data files for the frontend."""
-    DATA_DIR.mkdir(exist_ok=True)
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if open_catalog is None:
+        open_catalog = load_open_problems_catalog()
+    if open_problems is None:
+        open_problems = build_open_problems_data(mo_problems, open_catalog)
 
     # Generate erdos_data.js
     with open(DATA_DIR / "erdos_data.js", 'w', encoding='utf-8') as f:
@@ -546,6 +707,20 @@ def generate_js_data(erdos_problems, mo_problems):
         # Sort by question ID
         sorted_problems = dict(sorted(mo_problems.items(), key=lambda x: int(x[0]) if x[0].isdigit() else float('inf')))
         f.write(f"var moProblems = {json.dumps(sorted_problems, indent=2)};\n")
+
+    with open(DATA_DIR / 'open_problems_data.js', 'w', encoding='utf-8') as f:
+        f.write(f'var openProblems = {json.dumps(open_problems, indent=2)};\n')
+        f.write('window.OPEN_PROBLEMS_DATA = openProblems;\n')
+        catalog_info = {
+            'edition_date': open_catalog.get('editionDate'),
+            'publication_id': open_catalog.get('publicationId'),
+            'release_version': open_catalog.get('releaseVersion'),
+            'published_at': open_catalog.get('publishedAt'),
+            'public_boundary': open_catalog.get('publicBoundary'),
+            'source_path': 'lists/top500-v22.json',
+        }
+        f.write(f'var openProblemsCatalog = {json.dumps(catalog_info, indent=2)};\n')
+        f.write('window.OPEN_PROBLEMS_CATALOG = openProblemsCatalog;\n')
 
     # Generate summary statistics
     stats = {
@@ -564,12 +739,33 @@ def generate_js_data(erdos_problems, mo_problems):
         },
         'mo': {
             'total_problems': len(mo_problems),
-            'with_attacks': sum(1 for p in mo_problems.values() if p.get('attacks')),
+            'with_attacks': sum(
+                1 for p in mo_problems.values()
+                if any(a.get('entry_kind') != 'statement_only' for a in p.get('attacks', []))
+            ),
             'models': sorted(set(
                 a['model']
                 for p in mo_problems.values()
                 for a in p.get('attacks', [])
+                if a.get('entry_kind') != 'statement_only'
             ))
+        },
+        'open_problems': {
+            'total_problems': len(open_problems),
+            'ranked_total': sum(p['collection'] == 'ranked' for p in open_problems.values()),
+            'mo_total': sum(p['collection'] == 'mo' for p in open_problems.values()),
+            'with_attacks': sum(
+                1 for p in open_problems.values()
+                if any(a.get('entry_kind') != 'statement_only' for a in p.get('attacks', []))
+            ),
+            'ranked_with_attacks': sum(
+                1 for p in open_problems.values() if p['collection'] == 'ranked'
+                and any(a.get('entry_kind') != 'statement_only' for a in p.get('attacks', []))
+            ),
+            'models': sorted(set(
+                a['model'] for p in open_problems.values() for a in p.get('attacks', [])
+                if a.get('entry_kind') != 'statement_only'
+            )),
         }
     }
 
@@ -579,6 +775,7 @@ def generate_js_data(erdos_problems, mo_problems):
     print(f"Generated data files in {DATA_DIR}")
     print(f"  Erdos problems: {stats['erdos']['total_problems']} ({stats['erdos']['with_attacks']} with attacks)")
     print(f"  MO problems: {stats['mo']['total_problems']} ({stats['mo']['with_attacks']} with attacks)")
+    print(f"  Open problems: {stats['open_problems']['total_problems']} ({stats['open_problems']['ranked_total']} ranked, {stats['open_problems']['with_attacks']} with attacks)")
 
 
 def main():
@@ -586,8 +783,10 @@ def main():
 
     erdos_problems = build_erdos_data()
     mo_problems = build_mo_data()
+    open_catalog = load_open_problems_catalog()
+    open_problems = build_open_problems_data(mo_problems, open_catalog)
 
-    generate_js_data(erdos_problems, mo_problems)
+    generate_js_data(erdos_problems, mo_problems, open_problems, open_catalog)
 
     print("Build complete!")
 

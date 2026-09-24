@@ -1,0 +1,64 @@
+\textbf{Erd\H{o}s problem 548.}
+If $n\geq k+1$, must a graph with more than $(k-1)n/2$ edges contain every tree with $k+1$ vertices?
+
+\textbf{Status and source.}
+The answer is yes. The following reconstructs the marked-permutation proof in the current exposition attributed to GPT-6 Astra, using the corrected, explicit counting maps in the illustrated exposition by Ben Golub. This is a reconstruction of that existing proof, not a claim of a new discovery or of formal verification of this file.
+Sources: \texttt{https://www.erdosproblems.com/548} and
+\texttt{https://www.erdosproblems.com/static/548-exp.pdf}, checked 24 September 2026.
+
+\textbf{A counting theorem for rooted trees.}
+Fix a graph $G$ on $n$ vertices. For a permutation
+$\pi=(v_0,\ldots,v_{n-1})$ and $1\leq j<n$, call $(\pi,j)$ marked when $v_0v_j$ is an edge. Let $B$ count all marked pairs. For a rooted tree $T$, let $C(T)$ count marked pairs whose prefix $\{v_0,\ldots,v_j\}$ contains a copy of $T$ rooted at $v_0$. Each pair is counted once, regardless of the number of copies. Then
+\[
+ B=2e(G)(n-1)!.
+\]
+We prove, by induction on $t=|T|\geq2$, that
+\[
+ B-C(T)\leq(t-2)n!.                                      \tag{1}
+\]
+For $t=2$ the marking edge itself gives the rooted copy, so $C(T)=B$.
+
+\textbf{Removing a leaf root.}
+Suppose the root is a leaf; let $T'$ be the tree after deleting it, rooted at its former neighbour. For each permutation discard its first marked cut counted by $C(T')$, if any. At each remaining such cut $j$, an earlier qualifying prefix contains $T'$ and does not contain $v_j$. Attach $v_j$ to its root $v_0$. This gives $T$ rooted at $v_j$. Reverse the prefix through $j$:
+\[
+ (v_0,v_1,\ldots,v_j\mid v_{j+1},\ldots)
+ \longmapsto(v_j,v_{j-1},\ldots,v_0\mid v_{j+1},\ldots).
+\]
+The image has the same prefix vertex set, is marked, and contains $T$ at its new root. Reversing the same prefix recovers the input, so the map is injective. At most $n!$ inputs were discarded. Consequently
+\[
+ C(T')\leq C(T)+n!,
+\]
+and induction proves (1) in this case. The reversal is performed at the retained cut, not at the earlier discarded cut.
+
+\textbf{Splitting a root with several branches.}
+If the root has degree at least two, split its branches into two nonempty groups, producing rooted proper subtrees $T_1,T_2$ meeting only at their root. Put $t_i=|T_i|$, so $t_1+t_2=t+1$. We claim
+\[
+ C(T_1)+C(T_2)\leq B+C(T)+n!.                             \tag{2}
+\]
+Consider a marked pair that contains $T_1$ but does not contain $T$. Write its permutation, with its cut, as $xRX\mid Y$, where $x$ is the root and $R$ is the shortest initial block for which $xR$ contains $T_1$ rooted at $x$. If $X$ is empty discard this input. There is at most one such input per permutation.
+
+For every other input use the map
+\[
+ xRX\mid Y\longmapsto xX\mid RY.
+\]
+It preserves the marked edge, whose endpoint is the last vertex of the nonempty block $X$. The new prefix $xX$ cannot contain $T_2$: such a copy would be disjoint, except at $x$, from a copy of $T_1$ inside $xR$, and their union would give the forbidden $T$ in the original prefix.
+
+The map is injective. The output cut specifies $X$; in the remaining suffix read vertices after $x$, ignoring $X$, until a rooted $T_1$ first appears. This uniquely recovers $R$, by its original minimality, and the remaining vertices give $Y$. Thus
+\[
+ C(T_1)-C(T)-n!\leq B-C(T_2),
+\]
+which proves (2). The discarded empty block is essential to this inequality.
+
+Adding the two induction inequalities and using (2) now gives
+\[
+ 2B\leq C(T_1)+C(T_2)+(t_1+t_2-4)n!
+ \leq B+C(T)+(t-2)n!,
+\]
+as required.
+
+\textbf{Conclusion.}
+If $G$ contains no copy of a particular $t$-vertex tree, then $C(T)=0$ for any rooting of that tree. Formula (1) yields $2e(G)\leq(t-2)n$. Therefore $e(G)>(t-2)n/2$ forces every such tree. Setting $t=k+1$ proves the stated problem, including its slightly stronger integral-edge formulation. No claim about arbitrary forests is needed.
+
+\textbf{Completion estimate.}
+The rooted counting inequality and both injective maps are proved above; the displayed problem is fully resolved.
+\textbf{COMPLETION: 100\%}

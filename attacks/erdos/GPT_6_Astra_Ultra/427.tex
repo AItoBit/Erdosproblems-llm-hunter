@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 427}
+
+\paragraph{Statement.}
+For positive integers \(n,d\), does some \(k\geq1\) satisfy
+\[
+ d\mid p_{n+1}+\cdots+p_{n+k},
+\]
+where \(p_j\) is the \(j\)-th prime?
+
+\paragraph{External input.}
+We use Shiu's theorem on strings of congruent primes: if \(q\geq3\)
+and \(\gcd(a,q)=1\), there exist arbitrarily long strings of consecutive
+primes all congruent to \(a\pmod q\).
+This is the deep input; its proof is not reproduced here.
+It implies that a string of any prescribed finite length exists beyond
+any prescribed index: otherwise strings of unbounded length would have
+bounded starting index and would force all sufficiently late primes to
+lie in that residue class, which also supplies arbitrarily late strings.
+
+\paragraph{Deduction of the requested divisibility.}
+The case \(d=1\) is immediate. For \(d=2\), the primes after \(p_n\)
+are odd because \(n\geq1\); two of them have an even sum.
+For \(d\geq3\), apply Shiu's theorem with \(a=1\), \(q=d\).
+Choose \(m>n\) such that
+\[
+ p_m,\ldots,p_{m+d-1}\equiv1\pmod d.
+\]
+Write \(s=\sum_{j=n+1}^{m-1}p_j\), allowing an empty sum. There is a
+unique \(\ell\in\{1,\ldots,d\}\) with \(\ell\equiv-s\pmod d\).
+Then
+\[
+ \sum_{j=n+1}^{m+\ell-1}p_j
+ \equiv s+\ell\equiv0\pmod d.
+\]
+Taking \(k=m+\ell-1-n\geq1\) proves the assertion. Choosing strings
+arbitrarily far out gives infinitely many such \(k\) for each fixed
+\(n,d\).
+
+\paragraph{Attribution and scope.}
+This reconstructs the deduction attributed to Cedric Pilatte on the
+problem page. Its external input is
+D.~K.~L.~Shiu, \emph{Strings of congruent primes},
+Journal of the London Mathematical Society 61 (2000), 359--373,
+\url{https://doi.org/10.1112/S0024610799007863}.
+The current statement is \url{https://www.erdosproblems.com/427},
+checked 24 September 2026. Completeness is relative to the explicitly
+stated established theorem, not an independent proof of Shiu's theorem.
+
+\paragraph{Completion estimate.}
+The full assertion follows from Shiu's theorem with all quantifiers checked.
+\textbf{COMPLETION: 100\%}

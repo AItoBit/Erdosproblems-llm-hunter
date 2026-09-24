@@ -1,0 +1,120 @@
+\section*{Erd\H{o}s Problem 570}
+
+\paragraph{Statement and scope.}
+For fixed \(k\geq3\), is
+\[
+ R(C_k,H)\leq2m+\left\lfloor\frac{k-1}{2}\right\rfloor
+ \tag{1}
+\]
+true for every graph \(H\) with \(m\) edges and no isolated vertices,
+once \(m\) is sufficiently large depending on \(k\)?
+The assertion is known to be true. We prove the full sharp matching
+case for every \(k\), and the triangle-versus-tree case. The extension
+to arbitrary \(H\) is unresolved in this attempt.
+
+\paragraph{A construction showing that the proposed bound is sharp.}
+Let \(t=\lfloor(k-1)/2\rfloor\) and \(H=mK_2\).
+On \(2m-1+t\) vertices, take a set \(A\) of size \(2m-1\).
+Colour edges within \(A\) blue and every other edge red.
+The blue graph has matching number \(m-1\).
+In a red cycle, no two successive vertices can both belong to
+\(A\). Thus the number from \(A\) is at most the number from its
+complement, and every red cycle has length at most \(2t<k\).
+Consequently
+\[
+ R(C_k,mK_2)\geq2m+t. \tag{2}
+\]
+
+\paragraph{Matching upper bound via the stated matching theorem.}
+We use the Tutte--Berge formula as an explicit external input:
+for a finite graph \(G\) on \(N\) vertices with maximum matching
+size \(\nu\), some vertex set \(S\) satisfies
+\[
+ 2\nu=N-o(G-S)+|S|,
+\]
+where \(o\) counts the connected components of odd order.
+
+Consider any colouring of \(K_N\), with \(N=2m+t\) and \(m\geq k\).
+If its blue graph has no matching of size \(m\), the formula gives
+\[
+ o(G-S)\geq t+2+|S|.
+\]
+Since \(o(G-S)\leq N-|S|\), this also implies \(|S|\leq m-1\).
+Hence \(G-S\) has at least \(m+t+1\geq k\) vertices and at least
+\(t+2\) components. Edges joining distinct blue components are red.
+
+If there are at least \(k\) components, choose one vertex from
+each of \(k\) of them to obtain a red clique. Otherwise, choose
+\(k\) vertices meeting every component, first choosing one from
+each and then adding arbitrary available vertices.
+The complete multipartite red subgraph on these vertices has no
+part of size larger than
+\[
+ k-(t+2)+1=k-t-1=\lfloor k/2\rfloor.
+\]
+Its minimum degree is therefore at least \(\lceil k/2\rceil\).
+It has a Hamilton cycle by the elementary argument below.
+This gives a red \(C_k\) and proves, together with (2),
+\[
+ R(C_k,mK_2)=2m+\left\lfloor\frac{k-1}{2}\right\rfloor
+ \qquad(m\geq k). \tag{3}
+\]
+
+\paragraph{The Hamilton-cycle step, proved explicitly.}
+Any graph on \(k\geq3\) vertices of minimum degree at least \(k/2\)
+is connected, since two components would each need at least
+\(k/2+1\) vertices.
+Take a longest path \(v_1,\ldots,v_a\). All neighbours of its
+endpoints lie on the path. Among the indices \(1\leq i<a\),
+the conditions \(v_1v_{i+1}\in E\) and \(v_iv_a\in E\)
+hold together for some \(i\): the two index sets have total size
+at least \(k\geq a\), exceeding the available \(a-1\) indices.
+These two edges and the path form a cycle on its \(a\) vertices.
+If \(a<k\), connectivity supplies an edge from this cycle to an
+outside vertex, producing a longer path. Hence \(a=k\).
+
+\paragraph{Another full case: a triangle versus a tree.}
+For every tree \(T\) on \(m+1\) vertices,
+\[
+ R(C_3,T)=2m+1. \tag{4}
+\]
+Indeed, a graph of minimum degree at least \(m\) contains every
+such tree: root the tree and embed its vertices one at a time after
+their parents. When embedding a child, at most \(m-1\) other
+already used vertices can occupy neighbours of its parent's image,
+so an unused neighbour exists.
+
+It follows that a graph containing no \(T\) is \((m-1)\)-degenerate:
+every nonempty subgraph must have a vertex of degree at most \(m-1\).
+Repeated deletion and reverse greedy colouring make it \(m\)-colourable.
+If a blue graph on \(2m+1\) vertices has no \(T\), one of these
+independent colour classes has at least three vertices, giving a
+red triangle. This proves the upper bound in (4).
+For the lower bound, take two blue cliques of size \(m\), with
+all cross edges red. Blue has no connected graph on \(m+1\)
+vertices, and the red bipartite graph has no triangle.
+Since a tree has \(m\) edges, (4) is exactly (1) for this case.
+
+\paragraph{Remaining gap and attribution.}
+The matching argument cannot simply be applied to an arbitrary
+target: a large matching alone need not contain its adjacent edges.
+The tree argument uses a triangle obstruction and does not supply
+a cycle of a prescribed larger length. These are genuine limitations
+of the proofs given here.
+
+The matching proof is reconstructed from Proposition 9 of
+Cambie, Freschi, Morawski, Petrova and Pokrovskiy,
+\emph{Ramsey number of a cycle versus a graph of a given size},
+\url{https://arxiv.org/abs/2601.10238}.
+Their Theorem 3 settles the previously missing odd \(k\geq7\)
+cases for arbitrary targets, with earlier results covering the other
+cycle lengths. That general induction is not proved here.
+The Tutte--Berge formula is the only external input used in (3);
+the other displayed constructions and the tree case are proved in full.
+Current statement: \url{https://www.erdosproblems.com/570},
+checked 24 September 2026. No novelty is claimed.
+
+\paragraph{Completion estimate.}
+The extremal matching case and triangle-versus-tree case are complete;
+the bound for arbitrary targets remains missing from this attempt.
+\textbf{COMPLETION: 45\%}

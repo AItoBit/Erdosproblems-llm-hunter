@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 748: counting sum-free subsets}
+\subsection*{1. Statement and result}
+Let $f(n)$ be the number of sum-free subsets of $[n]=\{1,\ldots,n\}$, where sum-free excludes $x+y=z$ even when $x=y$. We prove
+\[
+ f(n)=2^{n/2+o(n)}.
+\]
+The classical problem is resolved, with stronger constant-factor bounds known. Our reconstruction proves exactly the requested exponential asymptotic using the general hypergraph container theorem as an explicit external input, and proves the required arithmetic supersaturation estimate directly.
+\subsection*{2. The external container input and its hypotheses}
+We use the following specialization of Saxton--Thomason, Corollary 3.6. If a sequence of $3$-uniform hypergraphs on $n$ vertices has average degree $\Theta(n)$, bounded maximum pair codegree, and no repeated edges, then for every fixed $\eta>0$ there is a family $\mathcal C_n$ with
+\[
+ \log|\mathcal C_n|=o(n),\qquad
+ e(H[C])\le\eta e(H)\quad(C\in\mathcal C_n),
+\]
+such that every independent set is contained in some $C\in\mathcal C_n$.
+For completeness, the parameter check in that theorem is as follows. With $\tau=n^{-1/3}$, average degree $d=\Theta(n)$ and bounded pair codegree, its codegree function for $r=3$ is
+\[
+ O\bigl((d\tau)^{-1}+(d\tau^2)^{-1}\bigr)=O(n^{-1/3})=o(1).
+\]
+It is eventually smaller than the required fixed multiple of $\eta$. The theorem bounds the logarithm of the number of containers by $O_\eta(n\tau\log(1/\tau))=O_\eta(n^{2/3}\log n)=o(n)$ and their edge counts by $\eta e(H)$. The container theorem itself is not reproved here.
+Take $H$ to have edges $\{x,y,x+y\}$ for distinct $1\le x<y$ with $x+y\le n$. Its edges are unambiguously indexed by the two smaller numbers. The total is
+\[
+ e(H)=\sum_{z=1}^n\left\lfloor\frac{z-1}{2}\right\rfloor=\frac{n^2}{4}+O(n),
+\]
+so its average degree is $3n/4+O(1)$. Given two distinct vertices $a<b$, a completing vertex is either $a+b$ or $b-a$; there are at most two choices, after checking distinctness and range. Thus the pair codegree is at most two and every triple has codegree at most one. All the hypotheses hold. Every sum-free set is independent in $H$, although the converse can fail because repeated-summand equations were omitted. The needed upper bound uses only the stated implication.
+\subsection*{3. An elementary supersaturation estimate}
+Let $A\subseteq[n]$ with $|A|\ge n/2+t$, where $t\ge8$ is an integer. Take the largest $r=\lfloor t/2\rfloor$ elements of $A$. For any one of them, say $z$, put $B=A\cap[1,z-1]$. Then
+\[
+ |B|\ge |A|-r\ge n/2+t-r.
+\]
+Both $B$ and $z-B$ are subsets of $[1,z-1]$, so
+\[
+ |B\cap(z-B)|\ge2|B|-(z-1)\ge2t-2r+1\ge t.
+\]
+Each point in this intersection represents a solution $x+(z-x)=z$ with both summands in $A$. At most one solution has equal summands. Pairing the other solutions under reflection therefore gives at least $(t-1)/2$ unordered distinct-summand pairs, or certainly at least $(t-2)/2$ edges of $H[A]$ whose largest element is $z$. Different choices of $z$ give different edges. Consequently
+\[
+ e(H[A])\ge\lfloor t/2\rfloor(t-2)/2\ge t^2/16. \tag{1}
+\]
+In particular, for fixed $\epsilon>0$ and all sufficiently large $n$, every set of size at least $(1/2+\epsilon)n$ spans at least $\epsilon^2 n^2/64$ edges (take $t=\lfloor\epsilon n\rfloor$).
+\subsection*{4. Counting}
+Choose $0<\eta<\epsilon^2/64$. Since $e(H)\le n^2$, every container has fewer than $\epsilon^2n^2/64$ edges. By (1), each has size less than $(1/2+\epsilon)n$ for sufficiently large $n$. Therefore
+\[
+ f(n)\le\sum_{C\in\mathcal C_n}2^{|C|}
+ \le2^{o(n)}2^{(1/2+\epsilon)n}.
+\]
+On the other hand, every subset of $\{\lfloor n/2\rfloor+1,\ldots,n\}$ is sum-free because the sum of any two of its elements exceeds $n$. Thus $f(n)\ge2^{\lceil n/2\rceil}$.
+Taking the limsup of $n^{-1}\log_2f(n)$ and then letting the fixed $\epsilon$ tend to zero yields $\lim n^{-1}\log_2 f(n)=1/2$, which is precisely the claimed asymptotic. No uniform choice of the container theorem's constants as $\epsilon\to0$ is being assumed.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/748}; D. Saxton and A. Thomason, \emph{Hypergraph containers}, Invent. Math. 201 (2015), 925--992, Corollary 3.6, \url{https://arxiv.org/abs/1204.6595}.
+This is a full deduction from the explicit general container theorem, with the Schur hypergraph, codegree estimates, supersaturation, and limit passage proved here. It does not reconstruct the stronger constant-factor estimate or claim a new resolution.
+\textbf{SOLVED:} $f(n)=2^{n/2+o(n)}$, relative to the stated external container theorem.
+\noindent COMPLETION: 100\%

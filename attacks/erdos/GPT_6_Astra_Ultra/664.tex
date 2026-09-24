@@ -1,0 +1,66 @@
+\section*{Erd\H{o}s Problem 664}
+
+\paragraph{Statement and result.}
+Suppose \(A_1,\ldots,A_m\subseteq\{1,\ldots,n\}\) have size greater than \(c\sqrt n\), where \(c<1\) is fixed, and distinct sets intersect in at most one point. Must a set \(B\) meet every \(A_i\) in between one and \(O_c(1)\) points? No. We reconstruct Alon's random-subset-of-lines method, obtaining a logarithmic lower bound for some intersection whenever \(B\) meets every set.
+
+\paragraph{The random family.}
+Let \(q\) run through primes and let \(n=q^2+q+1\). The projective plane over \(\mathbb F_q\) has \(n\) points and \(n\) lines, each line containing \(q+1\) points, each point lying on \(q+1\) lines, and any two lines meeting once. These facts follow by representing points as one-dimensional subspaces and lines as two-dimensional subspaces of \(\mathbb F_q^3\).
+
+Independently for every incident point--line pair, retain the point in that line with probability \(1/2\). Let \(A_\ell\) be the retained subset of line \(\ell\). Retentions on different lines are independent, even at their common point. Automatically \(|A_\ell\cap A_{\ell'}|\leq1\).
+
+The elementary binomial lower-tail inequality
+\[
+ \mathbb P(X\leq(1-\theta)\mu)\leq e^{-\theta^2\mu/2}
+ \quad(0<\theta<1), \tag{1}
+\]
+where \(\mu=\mathbb E X\), follows by exponential Markov inequality applied to \(e^{-tX}\) and optimization. Here \(\mu=(q+1)/2\); with \(\theta=1/5\), (1) and a union bound show that all \(n\) sets satisfy
+\[
+ |A_\ell|>\frac25(q+1)>\frac25\sqrt n \tag{2}
+\]
+with probability at least \(1-ne^{-(q+1)/100}\), which tends to one. We will use \(c=2/5\).
+
+\paragraph{Ruling out every thin hitting set.}
+Put
+\[
+ K=\left\lfloor\frac{\log_2 n}{128}\right\rfloor,
+\]
+which tends to infinity. We show that, with probability tending to one, no \(B\) satisfies
+\[
+ 1\leq |B\cap A_\ell|\leq K\quad\hbox{for all lines }\ell. \tag{3}
+\]
+Fix \(B\) of size \(b\), and let \(t_\ell=|B\cap\ell|\). Double counting incidences gives
+\[
+ \sum_\ell t_\ell=(q+1)b. \tag{4}
+\]
+We distinguish two ranges of \(b\).
+
+If \(b\geq16Kn/(q+1)\), the total retained incidence count
+\(T=\sum_\ell|B\cap A_\ell|\) is binomial of mean \(\mu=(q+1)b/2\geq8Kn\). Condition (3) implies \(T\leq Kn\leq\mu/2\). By (1), its probability is at most \(e^{-\mu/8}\leq e^{-Kn}\). Taking a union bound over even all \(2^n\) possible sets \(B\), the probability of any such large set satisfying (3) is at most
+\[
+ \exp((\log2-K)n)=o(1). \tag{5}
+\]
+
+If \(b<16Kn/(q+1)\), equation (4) shows that at least \(n/2\) lines have \(t_\ell\leq32K\). Each such line has probability \(2^{-t_\ell}\geq2^{-32K}\) of retaining none of its points of \(B\). These empty-intersection events are independent across lines. Thus the probability that this fixed \(B\) even hits all the sets is at most
+\[
+ (1-2^{-32K})^{n/2}
+ \leq\exp(-n2^{-32K}/2)
+ \leq\exp(-n^{3/4}/2). \tag{6}
+\]
+The last inequality uses \(32K\leq(\log_2 n)/4\).
+
+The number of sets in this small range is at most
+\[
+ (n+1)n^{16Kn/(q+1)}
+ =\exp\bigl(O(\sqrt n(\log n)^2)\bigr).
+\]
+Multiplying this by (6) gives \(o(1)\), because \(\sqrt n(\log n)^2=o(n^{3/4})\). Together with (5), this proves the simultaneous assertion over every \(B\); no independence between different choices of \(B\) is required.
+
+\paragraph{Conclusion and scope.}
+With positive probability, (2) holds and (3) fails for every \(B\). Fix such a family. Any set meeting every \(A_\ell\) must meet one of them in more than \(K\) points. Since \(K\) is a positive constant times \(\log n\) asymptotically, no bound depending only on \(c=2/5\) can work. This disproves the stated assertion.
+
+The original, stronger incidence requirement that every pair of points belong to exactly one set is not preserved by the random deletions. Accordingly this argument does not settle that separately stated variant or the question about using the full lines of a projective plane.
+
+\paragraph{Attribution and assessment.}
+The counterexample method is credited to Noga Alon in the current problem discussion: \url{https://www.erdosproblems.com/664}, checked 24 September 2026. The argument above supplies the independent incidence choices, both union bounds, and an explicit logarithmic parameter. The standard finite-field projective plane and elementary binomial tail bound are the only auxiliary inputs. No novelty or local formal verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

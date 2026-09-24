@@ -1,0 +1,80 @@
+\section{Erd\H{o}s Problem 166: the off-diagonal Ramsey number $R(4,k)$}
+
+\subsection{1) Statement and scope}
+The requested lower bound is $R(4,k)\gg k^3/(\log k)^{O(1)}$.
+We establish the known stronger specified estimate
+\[
+ R(4,k)\gg\frac{k^3}{(\log k)^4}.
+\]
+Here $R(4,k)$ is the least order forcing a $K_4$ or an independent
+$k$-set. Mattheus and Verstraete proved this bound. We reconstruct the
+sampling and alteration step, including its quantifier for every large
+$k$, from their finite-geometric graph and independent-set estimate.
+
+\subsection{2) The external construction input}
+The construction and counting argument in Section 4.2 of the cited
+paper have the following consequence, with absolute constants $A,B>0$.
+For every sufficiently large prime power $q$ there is a $K_4$-free graph
+$G_q$ on at least $q^4/2$ vertices such that, for
+\[
+ s=s(q)=\lceil Aq(\log q)^2\rceil,
+\]
+the number of independent $s$-subsets is at most
+$(Bq/(\log q)^2)^s$. The paper obtains order
+$q^2(q^2-q+1)$ and permits an absolute $A$ of order $2^{30}$;
+the formulation above absorbs harmless rounding into the constants.
+We use the graph construction and this counting bound as external
+theorems. They are the substantial input, not conclusions of sampling.
+
+\subsection{3) Sampling and alteration}
+Include each vertex independently with probability
+$p=(\log q)^2/(2Bq)$, which is at most one for large $q$.
+Let $X$ count sampled vertices and $Y$ count independent $s$-sets wholly
+inside the sample. Then
+\[
+ \mathbb E X\geq \frac{q^3(\log q)^2}{4B},\qquad
+ \mathbb E Y\leq
+ \left(\frac{Bq}{(\log q)^2}\right)^sp^s=2^{-s}.
+\]
+Some sample therefore has $X-Y$ at least the difference of these
+expectations. Enumerate its original independent $s$-sets and, whenever
+such a set still survives, delete one of its vertices. At most $Y$
+vertices are deleted. Any independent $s$-set in the final graph would
+have appeared in the original list, so none survives.
+
+The final graph is still $K_4$-free, has independence number less than
+$s$, and has at least $c q^3(\log q)^2$ vertices for an absolute $c>0$.
+Thus
+\[
+ R(4,s(q))>c q^3(\log q)^2.                              \tag{1}
+\]
+
+\subsection{4) Passing from prime powers to every parameter}
+Restrict $q$ to powers of $2$. For a sufficiently large integer $k$,
+choose the largest such $q$ with $s(q)\leq k$. Then
+$k<s(2q)\leq Cq(\log q)^2$ for an absolute $C$.
+In particular $q\geq k/(C(\log k)^2)$, after increasing the lower
+threshold so $q\leq k$. This implies $\log q\geq\frac12\log k$
+for all sufficiently large $k$. By monotonicity and (1),
+\[
+ R(4,k)\geq R(4,s(q))
+ \gg q^3(\log q)^2
+ \gg\frac{k^3}{(\log k)^4}.
+\]
+This step is needed: a construction only along a sparse sequence would
+not by itself establish the stated bound for every $k$.
+
+\subsection{5) Outcome and sources}
+\textbf{Outcome: SOLVED using the external finite-geometric construction
+and its independent-set count.} The alteration argument and interpolation
+are complete. No independent reconstruction of the finite geometry,
+container estimates, or original breakthrough is claimed.
+\begin{itemize}
+\item S. Mattheus and J. Verstraete, \emph{The asymptotics of $r(4,t)$},
+Section 4.2, \texttt{https://arxiv.org/abs/2306.04007}.
+\item T. F. Bloom, Problem 166,
+\texttt{https://www.erdosproblems.com/166}, checked 23 September 2026.
+\end{itemize}
+The percentage measures coverage using the external construction input.
+\subsection{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

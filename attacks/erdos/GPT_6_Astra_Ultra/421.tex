@@ -1,0 +1,89 @@
+\section*{Erd\H{o}s Problem 421}
+
+\paragraph{Statement and scope.}
+Does there exist \(A=\{a_1<a_2<\cdots\}\subset\mathbb N\) of natural
+density one such that all products of nonempty consecutive blocks are
+distinct? The current page records an affirmative solution.
+This attempt reconstructs the prime-gap construction in Kyle Pratt's
+exposition and proves its product-distinctness. The density-one estimate
+is unresolved here and is isolated precisely below.
+
+\paragraph{A construction that retains every prime.}
+Call a finite increasing set product-distinct if two nonempty consecutive
+blocks with equal products have the same endpoints. Set \(A_2=\{2\}\).
+For consecutive primes \(p<q\), form
+\[
+ B=A_p\cup\{p+1,\ldots,q\}.
+\]
+If \(B\) is product-distinct, set \(A_q=B\).
+Otherwise set \(A_q=A_p\cup\{q\}\), and call \((p,q)\) rejected.
+The test is finite: list all consecutive products and check for repeats.
+Define \(A=\bigcup_p A_p\).
+
+\paragraph{Proof that no equal consecutive products occur.}
+Suppose \(A_p\) is product-distinct. Acceptance preserves this by
+definition. For rejection, every old element is less than the prime
+\(q\), so no product of old elements is divisible by \(q\).
+Consequently a collision in \(A_p\cup\{q\}\) would have to involve
+two blocks both containing \(q\), or two blocks both avoiding it.
+The second case is excluded by induction. In the first case both blocks
+end at \(q\); after canceling their common terminal factors, different
+starting points would give a nonempty product of integers at least
+two equal to \(1\), which is impossible. Thus induction applies.
+
+The sets \(A_p\) are nested and future stages only append larger
+elements. Every pair of finite blocks of \(A\) is therefore already
+present as the same pair of blocks in some \(A_p\). They cannot collide.
+Also every prime is retained, so \(A\) is infinite.
+Initial stages are
+\[
+\begin{split}
+ A_5&=\{2,3,4,5\},\\
+ A_7&=\{2,3,4,5,7\},\\
+ A_{13}&=\{2,3,4,5,7,8,9,10,11,13\},\\
+ A_{17}&=A_{13}\cup\{17\}.
+\end{split}
+\]
+Here \(6\) is rejected because \(2\cdot3=6\), \(12\) because
+\(3\cdot4=12\), and the interval \((13,17)\) because
+\(3\cdot4\cdot5\cdot7\cdot8=14\cdot15\cdot16\).
+These stages and the absence of other collisions were checked exactly.
+
+\paragraph{The exact density estimate still needed.}
+The omitted integers consist of \(1\) and the interiors of rejected
+prime gaps. For every real \(X\geq1\),
+\[
+ X-\lfloor X\rfloor+\bigl|[1,X]\cap(\mathbb N\setminus A)\bigr|
+ =X-|A\cap[1,X]|.
+\]
+In particular, density one is equivalent to
+\[
+ \sum_{\substack{p<q\ {\rm consecutive\ primes}\\(p,q)\ {\rm rejected}}}
+ \bigl|(p,q)\cap[1,X]\cap\mathbb Z\bigr|=o(X).
+ \tag{1}
+\]
+The partial final gap is included, so this criterion applies to arbitrary
+\(X\), not merely prime endpoints.
+
+One can separate (1) into gaps of length at most \(p^\theta\) and
+longer gaps, with \(\theta=5/72\). It suffices to prove that each of the
+two corresponding weighted sums is \(o(X)\). Counting rejected gaps
+without their lengths would not suffice.
+Pratt's proof supplies the necessary estimates through results on
+primes in almost all short intervals and bounds for integer points
+on algebraic curves, together with a recursive analysis of rejection.
+Those estimates are the missing work here; the elementary construction
+alone does not establish density one.
+
+\paragraph{Sources and attribution.}
+Kyle Pratt, \emph{A digested proof of Erd\H{o}s Problem 421},
+\url{https://www.erdosproblems.com/static/421-Pratt.pdf},
+especially Section 2. Pratt credits earlier AI-assisted work by
+Chojecki and Sneiderman and discusses a different proof by Sharma.
+Current statement: \url{https://www.erdosproblems.com/421},
+checked 24 September 2026. This is a partial reconstruction with
+explicit attribution, not a claim of a new solution.
+
+\paragraph{Completion estimate.}
+The infinite product-distinct construction is proved; the decisive density estimates are missing.
+\textbf{COMPLETION: 40\%}

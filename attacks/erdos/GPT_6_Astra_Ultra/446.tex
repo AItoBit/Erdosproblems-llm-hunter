@@ -1,0 +1,95 @@
+\section*{Erd\H{o}s Problem 446}
+
+\paragraph{Statement and result.}
+Let \(\delta(n)\) be the natural density of integers with a divisor in
+\((n,2n)\), and \(\delta_r(n)\) the density of those with exactly
+\(r\) such divisors. The known answer is
+\[
+ \delta(n)\asymp
+ \frac1{(\log n)^\alpha(\log\log n)^{3/2}},\qquad
+ \alpha=1-\frac{1+\log\log2}{\log2},
+ \tag{1}
+\]
+and, for each fixed \(r\geq1\),
+\[
+ \delta_r(n)\gg_r\delta(n).
+ \tag{2}
+\]
+In particular \(\delta_1(n)=o(\delta(n))\) is false.
+We give a complete deduction from Ford's interval-divisor theorems,
+including the open-endpoint convention and the existence of all densities.
+
+\paragraph{Exact finite formulas.}
+Let \(D_n=\{n+1,\ldots,2n-1\}\), with integer \(n\geq2\), and
+\(L=\operatorname{lcm}(D_n)\).
+The number \(T_n(m)=|\{d\in D_n:d\mid m\}|\) is periodic modulo \(L\).
+Hence all the stated natural densities exist and are rational.
+Inclusion-exclusion gives
+\[
+ \delta(n)=
+ \sum_{\varnothing\ne S\subseteq D_n}
+ \frac{(-1)^{|S|+1}}{\operatorname{lcm}(S)}.
+ \tag{3}
+\]
+More generally, binomial inversion gives, for \(r\geq1\),
+\[
+ \delta_r(n)=
+ \sum_{\substack{S\subseteq D_n\\|S|\geq r}}
+ \frac{(-1)^{|S|-r}\binom{|S|}{r}}{\operatorname{lcm}(S)}.
+ \tag{4}
+\]
+To verify (4), for any integer with \(t\) divisors in \(D_n\), its
+contribution before averaging is
+\(\sum_{j=r}^{t}(-1)^{j-r}\binom jr\binom tj\).
+This is \(1\) if \(t=r\) and zero otherwise, by
+\(\binom tj\binom jr=\binom tr\binom{t-r}{j-r}\).
+Averaging a divisibility event over one period gives the reciprocal
+of its least common multiple, proving both formulas.
+
+\paragraph{The explicit external input.}
+In \emph{The distribution of integers with a divisor in a given interval},
+Ford defines \(\varepsilon(y,z)\) and \(\varepsilon_r(y,z)\) using
+the half-open interval \((y,z]\).
+His Corollary 2 gives (1) for \(\varepsilon(n,2n)\).
+His Corollary 7 gives
+\(\varepsilon_r(n,2n)\gg_r\varepsilon(n,2n)\) for each fixed \(r\).
+These deep theorems are external inputs; their analytic proofs are
+not reconstructed here.
+
+\paragraph{Transfer to the exact statement.}
+The only difference between \((n,2n)\) and \((n,2n]\) is the divisor
+\(2n\). Thus the indicator for having any divisor, and the indicator
+for having exactly \(r\) divisors, can change only on multiples of \(2n\).
+Consequently
+\[
+ |\delta(n)-\varepsilon(n,2n)|\leq\frac1{2n},\qquad
+ |\delta_r(n)-\varepsilon_r(n,2n)|\leq\frac1{2n}.
+ \tag{5}
+\]
+The error \(1/n\) is negligible compared with the function in (1).
+Applying the external bounds and then (5) proves (1)--(2).
+In particular there is a fixed \(c>0\) such that
+\(\delta_1(n)/\delta(n)\geq c\) for all sufficiently large \(n\);
+the ratio cannot tend to zero.
+
+\paragraph{A useful check on the interpretation.}
+The period average of \(T_n\) is exactly
+\[
+ \sum_{d=n+1}^{2n-1}\frac1d=\log2+o(1).
+\]
+Conditioning on \(T_n\geq1\), the mean is this sum divided by
+\(\delta(n)\), and therefore tends to infinity.
+This is consistent with (2): a positive conditional proportion can
+have exactly one divisor while the conditional mean diverges.
+Conflating these two statements would lead to the incorrect conjecture.
+
+\paragraph{Sources and scope.}
+Ford, Annals of Mathematics 168 (2008), 367--433, Corollaries 2 and 7:
+\url{https://annals.math.princeton.edu/2008/168-2/p01}.
+Current statement: \url{https://www.erdosproblems.com/446},
+checked 24 September 2026. This is a complete deduction relative to
+those explicitly identified established theorems.
+
+\paragraph{Completion estimate.}
+Both requested conclusions follow, with density existence and endpoint errors checked.
+\textbf{COMPLETION: 100\%}

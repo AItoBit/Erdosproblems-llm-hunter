@@ -1,0 +1,112 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#135; reconstruction, 2026-09-23.}
+Suppose $P\subset\mathbb R^2$ has $n$ points and every four distinct
+points determine at least five distinct distances. Must $P$ determine
+$\gg n^2$ distances? We reconstruct the known negative answer.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Tao's 2024 paper resolves this by randomizing a finite-field parabola
+and deleting the remaining forbidden quadruples. We prove the
+probability calculation and alteration argument below. Two explicitly
+identified literature inputs are used: the count of non-parallelogram
+forbidden quadruples in a square grid, and the Landau--Ramanujan bound
+for sums of two squares. Neither is claimed as reproved here.
+
+\section{WORK}
+Let $Q=\{0,\ldots,M-1\}^2$ and choose a prime $4M<p<8M$.
+We use these external counting facts, in the form recorded in Tao's
+primary exposition:
+\begin{itemize}
+\item Among four-element subsets of $Q$ having at most four distances,
+all except parallelograms number $O(M^5)$ in total. This is the
+forbidden-pattern classification and counting result of Dumitrescu.
+\item The number of positive integers at most $2M^2$ representable as
+a sum of two integer squares is $O(M^2/\sqrt{\log M})$.
+\end{itemize}
+The second bound controls the number of distances in every subset of
+$Q$. We construct a valid subset of size at least a constant times $M$.
+
+Choose $(a,b,c,d)$ uniformly with $ad-bc\ne0$ in $\mathbb F_p$, and
+choose $e$ uniformly and independently. Let
+\[
+ S=\{(x,y)\in Q:(ax+by)^2=cx+dy+e\pmod p\}.
+\]
+This is the intersection of the grid with an invertible affine image
+of the parabola $\{(t,t^2):t\in\mathbb F_p\}$. It contains no three
+collinear field points. It also contains no four distinct points forming
+a parallelogram: if $t_1+t_4=t_2+t_3$ and
+$t_1^2+t_4^2=t_2^2+t_3^2$, then the unordered pairs
+$\{t_1,t_4\}$ and $\{t_2,t_3\}$ are equal, by their sum and product.
+Any ordinary grid parallelogram would give such an equality modulo
+$p$, with its four points still distinct. Thus $S$ has no parallelograms.
+
+Every fixed grid point belongs to $S$ with probability exactly $1/p$,
+since its defining equation specifies exactly one value of $e$.
+Consequently $\mathbb E|S|=M^2/p\ge M/8$.
+We next prove that every four distinct field points lie in $S$ with
+probability $O(p^{-4})$. If three are collinear this probability is
+zero. Otherwise affine invariance permits the normalization
+\[
+ (0,0),\ (1,0),\ (0,1),\ (s,t),\qquad st\ne0.
+\]
+Affine invariance holds because an invertible affine change of variables
+permutes our parameter tuples: a constant in the first linear form
+can be absorbed into the second after expanding the square, preserving
+the determinant. Membership of the first three points forces
+$e=0,c=a^2,d=b^2$. The fourth then imposes
+\[
+ (s^2-s)a^2+2stab+(t^2-t)b^2=0.                         \tag{1}
+\]
+This is a nonzero polynomial of degree two, because $2st\ne0$.
+It has at most $2p$ zeros in $\mathbb F_p^2$, by the elementary
+polynomial zero bound. There are
+$p(p^2-1)(p^2-p)\asymp p^5$ parameter tuples altogether, so the
+probability is $O(p/p^5)=O(p^{-4})$, as asserted.
+
+Independently retain each point of $S$ with probability $\theta$, a
+small positive constant, to obtain $T$. Its expected size is at least
+$\theta M/8$. Let $Z$ count its forbidden four-element subsets.
+Parallelograms are absent; the counting input and (1) give
+\[
+ \mathbb EZ\le C M^5\theta^4p^{-4}\le C'\theta^4M.
+\]
+Choose fixed $\theta$ sufficiently small that $C'\theta^4\le\theta/16$.
+Then $\mathbb E(|T|-Z)\ge\theta M/16$, so some outcome attains this
+bound. Delete at most one vertex for each forbidden quadruple, processing
+the original list. Deletion creates none, and leaves a set $P$ with
+\[
+ |P|\ge\theta M/16,
+\]
+all of whose four-element subsets have at least five distances.
+Select exactly $n=\lfloor\theta M/16\rfloor$ remaining points if
+necessary. Their distances are among those in the original grid, giving
+\[
+ D(P)=O(M^2/\sqrt{\log M})=O(n^2/\sqrt{\log n})=o(n^2).
+\]
+As $M\to\infty$, these examples disprove a universal quadratic lower
+bound.\hfill$\square$
+
+\section{VERIFICATION}
+The extra thinning is necessary: size and forbidden-quadruple counts
+before thinning are both of order $M$, with uncontrolled constants.
+The proof uses the expectation of their difference, so no independence
+between these two counts or concentration theorem is assumed. Every
+forbidden object is a four-element set, giving exactly the thinning
+factor $\theta^4$.
+
+\section{FINAL STATUS}
+\textbf{SOLVED (known negative construction reconstructed from explicit inputs).}
+The random-parabola and deletion deductions are proved here. The two
+counting inputs are essential external results. No novelty or optimal
+lower bound for the remaining extremal problem is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/135}.
+T.~Tao, \emph{Planar point sets with forbidden four-point patterns and
+few distinct distances}, author's primary exposition and linked paper:
+\url{https://terrytao.wordpress.com/2024/09/03/planar-point-sets-with-forbidden-four-point-patterns-and-few-distinct-distances/}.
+Checked 2026-09-23. Completion is relative to the two stated counting
+inputs, which are not silently treated as elementary facts.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

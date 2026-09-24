@@ -1,0 +1,52 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#379; reconstruction of an explicit prime-power construction, 2026-09-24.}
+Let $S(n)$ be the largest integer $r$ such that every internal binomial coefficient $\binom nk$, $1\leq k\leq n-1$, is divisible by an $r$th power of a prime. Is $\limsup_{n\to\infty}S(n)=\infty$?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current page and discussion record the affirmative elementary construction associated with Cambie, Kova\v c and Tao. The prime may depend on $k$. The argument below shows that just two primes, $2$ and a chosen odd prime $p$, suffice for each constructed row.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose the row length as a power of $2$ that is congruent to $1$ modulo $p^r$. One binomial identity handles most indices using their $2$-adic valuation; a second identity handles all remaining indices using $p$.
+
+\section{WORK}
+Fix $r\geq2$, choose a prime $p>2^{r-1}$, and set
+\[
+E=\varphi(p^r)=p^{r-1}(p-1),\qquad n=2^E.
+\]
+In particular $E\geq r$, and Euler's theorem gives $n\equiv1\pmod {p^r}$. Let $1\leq k<n$.
+
+If $v_2(k)\leq E-r$, the identity
+\[
+k\binom nk=n\binom{n-1}{k-1}
+\]
+implies $v_2\binom nk\geq E-v_2(k)\geq r$, so $2^r\mid\binom nk$.
+
+Otherwise $2^{E-r+1}\mid k$. Writing $D=2^{E-r+1}$, we have
+\[
+k=Dt,\qquad n-k=D(2^{r-1}-t),\qquad1\leq t\leq2^{r-1}-1<p.
+\]
+Neither $k$ nor $n-k$ is divisible by $p$: both parenthesized factors are positive and less than $p$, and $D$ is a power of $2$. Furthermore $k-1\equiv-(n-k)\pmod p$, so $p\nmid k-1$. Since $k\geq D\geq2$, we can use
+\[
+k(k-1)\binom nk=n(n-1)\binom{n-2}{k-2}.
+\]
+The right side is divisible by $p^r$, while $k(k-1)$ is coprime to $p$. Consequently $p^r\mid\binom nk$.
+
+These cases cover every internal index, and prove
+\[
+S\!\left(2^{\varphi(p^r)}\right)\geq r.                         \tag{1}
+\]
+The row lengths tend to infinity as $r\to\infty$, proving the required infinite limsup.
+
+One may make the scale explicit using Bertrand's postulate: choose $2^{r-1}<p<2^r$. Then $E=p^{r-1}(p-1)<2^{r^2}$, so for the associated rows
+\[
+S(n)\geq r>\sqrt{\log_2\log_2 n}.
+\]
+This last estimate is a subsequence lower bound, not a bound for every row.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} Formula (1) is a complete explicit construction. Euler's theorem and, only for the optional quantitative estimate, Bertrand's postulate are the standard inputs. The proof reconstructs the known solution and makes no novelty claim.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/379}; the construction and its attribution: \url{https://www.erdosproblems.com/forum/discuss/379}.
+
+\textbf{Completion rate estimate: 100\%.}

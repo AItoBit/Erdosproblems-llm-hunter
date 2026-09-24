@@ -1,0 +1,44 @@
+\section{Erd\H{o}s Problem \#477: a polynomial value set that tiles the integers}
+\noindent Known positive construction with an explicit analytic input, 24 September 2026.
+
+\subsection*{Statement and choice of polynomial}
+We seek a polynomial $f:\mathbb Z\to\mathbb Z$, of degree at least two, and $A\subseteq\mathbb Z$ such that every integer has exactly one expression $a+b$ with $a\in A$ and $b\in f(\mathbb Z)$. We use
+\[f(t)=t^{13},\qquad B=\{t^{13}:t\in\mathbb Z\},\qquad D=B-B.\]
+The thirteenth-power construction appears in the linked pipeline-math exposition. The current page also reports positive results for even powers. No such even-degree strengthening is needed here. The older local attempt treating squares negatively does not rule out this construction.
+
+The external input is the diagonal case of Heath-Brown's Theorem 2, stated precisely as follows: for a fixed degree $d\ge3$ and positive integer $N\ll X$, the equation
+\[x_1^d\mathbin{\pm}x_2^d\mathbin{\pm}x_3^d=N,\qquad \max_i|x_i|\le X\]
+has $O_d(X^{10/d})$ integer solutions apart from the special solutions in which one signed individual power equals $N$. This theorem, not its determinant-method proof, is used below.
+
+\subsection*{Bad shifts have zero density}
+Fix $c\in\mathbb Z\setminus B$; in particular $c\ne0$. Call $t$ bad if $t^{13}-c=u^{13}-v^{13}$ for some integers $u,v$. Then $u\ne v$. There is an absolute constant $\eta>0$ such that
+\[\left|u^{13}-v^{13}\right|\ge \eta\max(|u|,|v|)^{12}\qquad(u\ne v\text{ integers}).\tag{1}\]
+Indeed the polynomial quotient $(u^{13}-v^{13})/(u-v)$ is positive on real pairs other than $(0,0)$, including its continuous diagonal value $13u^{12}$. Its positive minimum on the compact set $\max(|u|,|v|)=1$, followed by homogeneity and $|u-v|\ge1$, proves (1).
+
+Thus, if $|t|\le T$, every corresponding pair satisfies
+\[\max(|u|,|v|)\ll_c T^{13/12}.\]
+The equation becomes $u^{13}+(-v)^{13}+(-t)^{13}=-c$. If $-c<0$, negate all three coordinates. It is now a sum of three thirteenth powers equal to the positive integer $|c|$, with all coordinates bounded by $X=C_c T^{13/12}$. No special solution is possible: if one power equals $|c|$, then, since the exponent is odd, $c$ itself is an integer thirteenth power, contrary to its choice.
+
+For all sufficiently large $T$, the condition $|c|\ll X$ holds. Heath-Brown's theorem therefore bounds the number of triples by
+\[O_c(X^{10/13})=O_c(T^{5/6}).\tag{2}\]
+The number of bad $t$ is at most the number of triples, so (2) is $o(T)$. Constants may depend on the fixed $c$; no unjustified uniformity in an increasing collection of shifts is used.
+
+\subsection*{A greedy tiling lemma and the construction}
+The preceding estimate implies that for every finite $C\subseteq\mathbb Z\setminus B$ there is $b\in B$ with
+\[(C-b)\cap D=\varnothing.\tag{3}\]
+For each $c\in C$, the excluded choices $b=t^{13}$ with $|t|\le T$ number $O_c(T^{5/6})$. The union over fixed finite $C$ is still $o(T)$, whereas $2\lfloor T\rfloor+1$ distinct thirteenth powers are available. The equivalence of the exclusion in (3) with (2) uses $D=-D$.
+
+Enumerate the integers as $z_1,z_2,\ldots$, and start with $A_0=\varnothing$. Maintain that the translates $a+B$, $a\in A_j$, are pairwise disjoint and cover $z_1,\ldots,z_j$. If the next integer $z$ is already covered, leave the finite set unchanged. Otherwise $C=z-A_j$ is a finite subset of $\mathbb Z\setminus B$. Choose $b$ as in (3) and adjoin $a_*=z-b$.
+
+The new translate contains $z$. For every old $a$, its difference $a_*-a=(z-a)-b$ is outside $D$. An intersection $(a_*+B)\cap(a+B)$ would put this difference in $B-B$, a contradiction. In particular $a_*$ is new, since $0\in D$. This proves the induction. The union $A=\bigcup_j A_j$ covers every integer exactly once together with $B$, as required.
+
+\subsection*{Why the quadratic obstruction does not contradict this}
+If a value set $B_0$ has $q\mathbb Z\subseteq B_0-B_0$, uniqueness forces a complement to have at most one element in each residue class modulo $q$. A finite complement cannot tile with a polynomial value set of degree at least two, whose count in $[-X,X]$ is $O_f(X^{1/\deg f})$.
+For an integer quadratic $f(x)=ux^2+vx+w$, if $v\ne0$ then $f(k)-f(-k)=2vk$; if $v=0$ then $f(k+1)-f(k-1)=4uk$. Thus quadratics have precisely this obstruction. There is no analogous assertion for all degrees, and (2)--(3) show why extending that negative argument would fail.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED in the affirmative relative to Heath-Brown's explicitly stated theorem.} The size reduction, special-solution exclusion, finite-union argument and infinite unique-cover construction are supplied here. The deep counting estimate remains an external established theorem.
+Sources: \url{https://www.erdosproblems.com/477}; D. R. Heath-Brown, \emph{Sums and differences of three $k$th powers}, Theorem 2, \url{https://arxiv.org/html/0806.4330}; the attributed thirteenth-power exposition, \url{https://github.com/Pengbinghui/pipeline-math/blob/main/papers/tiling-complement.pdf}. The direct diagonal special-solution clause suffices, so no assertion about all rational curves on a surface is required. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

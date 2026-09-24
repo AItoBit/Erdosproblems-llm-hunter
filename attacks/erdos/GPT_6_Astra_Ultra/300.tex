@@ -1,0 +1,64 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#300; the sharp lower construction and a density-threshold deduction, 2026-09-24.}
+Let $A(N)$ be the largest size of a set $E\subseteq[1,N]$ containing no subset $S$ with $\sum_{n\in S}1/n=1$. Estimate $A(N)$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Liu and Sawhney prove $A(N)=(1-1/e+o(1))N$. This disproves the earlier expectation that $A(N)\sim N$. Below we prove a finite lower bound by a terminal interval and deduce the matching upper asymptotic from their precise density-threshold theorem, explicitly imported as the difficult input.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+An interval whose entire reciprocal sum is below one automatically avoids a unit-sum subset. The harmonic integral identifies its optimal terminal-interval scale. The external theorem shows that no arbitrary set can asymptotically do better.
+
+\section{WORK}
+Set $m=\lceil N/e\rceil$ and take
+\[
+E_N=\{m+1,m+2,\ldots,N\}.
+\]
+If this interval is nonempty, strict decrease of $1/x$ gives
+\[
+\sum_{n=m+1}^N\frac1n
+<\int_m^N\frac{dx}{x}
+=\log(N/m)\leq1.
+\tag{1}
+\]
+The strict inequality follows term by term from $1/n<\int_{n-1}^n dx/x$. If the interval is empty its reciprocal sum is zero. Every subset has reciprocal sum at most that of $E_N$, so no subset sums to one. Consequently, for every $N\geq1$,
+\[
+A(N)\geq N-\lceil N/e\rceil,
+\qquad
+\liminf_{N\to\infty}A(N)/N\geq1-1/e.
+\tag{2}
+\]
+
+The same constant can be anticipated from a general comparison. Among all $h$-element subsets of $[1,N]$, the terminal interval $\{N-h+1,\ldots,N\}$ has the least reciprocal sum. Therefore a set with $h=(\alpha+o(1))N$ elements has reciprocal sum at least $-\log(1-\alpha)+o(1)$ for $0<\alpha<1$. This exceeds one when $\alpha>1-1/e$. A total sum exceeding one does not by itself imply an exact unit-sum subset; the next input is what closes that logical gap.
+
+\textbf{Declared external theorem.} Liu and Sawhney's Theorem 1.3 states: for every fixed $\varepsilon\in(0,1/2)$, all sufficiently large $N$, and every $E\subseteq[1,N]$ with
+\[
+|E|\geq(1-1/e+\varepsilon)N,
+\]
+there is a subset $S\subseteq E$ whose reciprocal sum equals $1$. Its Fourier-analytic proof and denominator-clearing construction are external dependencies, not derived from the harmonic comparison above.
+
+Fix any such $\varepsilon$. An extremal avoiding set for $A(N)$ cannot reach that threshold once $N$ is sufficiently large, so
+\[
+A(N)<(1-1/e+\varepsilon)N.
+\]
+Taking the limit superior and then letting the fixed positive $\varepsilon$ decrease to zero gives
+\[
+\limsup_{N\to\infty}A(N)/N\leq1-1/e.
+\tag{3}
+\]
+Combining (2) and (3) proves
+\[
+A(N)=(1-1/e+o(1))N.
+\]
+
+\section{VERIFICATION AND SCOPE}
+The lower construction has reciprocal sum strictly below one, even when an integral bound reaches one exactly. The upper deduction uses a theorem for arbitrary subsets, not only intervals. Its quantifier is ``each fixed $\varepsilon$ and sufficiently large $N$'', which is exactly what the limit argument requires. The complete asymptotic deduction is provided; the deep upper-bound theorem is explicitly imported. No new result is claimed.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and historical estimates: \url{https://www.erdosproblems.com/300}.
+\item Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Theorem 1.3: \url{https://arxiv.org/html/2404.07113}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, relative to the stated density-threshold theorem.}
+The finite construction gives $A(N)\geq N-\lceil N/e\rceil$, and the theorem gives the matching asymptotic upper bound.
+\textbf{Completion rate estimate: 100\% of the asymptotic deduction from the stated input.}

@@ -1,0 +1,73 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#294; a modular upper bound and a qualitative lower bound, 2026-09-24.}
+Let $t(N)$ be the least positive integer $t$ for which there is no representation
+\[
+1=\sum_{n\in E}\frac1n,\qquad E\subseteq[t,N],\quad \min E=t,
+\]
+with distinct positive integer denominators. Estimate $t(N)$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Liu and Sawhney prove that $t(N)$ lies between $N/[\log N(\log\log N)^3(\log\log\log N)^{O(1)}]$ and a constant times $N/\log N$. This attempt reconstructs the upper bound by an explicit modular obstruction and proves $t(N)\to\infty$ constructively. It does not reproduce their quantitative lower construction, so the attempt is partial despite the problem's known resolution.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+A prime near $N/\log N$ cannot occur in any unit representation with denominators at most $N$: its possible co-denominators are too few to cancel modulo that prime. In the other direction, construct a finite representation whose smallest denominator is any prescribed fixed $t$.
+
+\section{WORK}
+\textbf{The upper bound.} Use the standard elementary Chebyshev estimate
+\[
+\log\operatorname{lcm}(1,\ldots,m)\leq C m
+\tag{1}
+\]
+for an absolute $C\geq1$, and Bertrand's postulate. Fix $0<c<1/(4C)$. For sufficiently large $N$, Bertrand's postulate, applied to the integer part of $N/(c\log N)$, gives a prime
+\[
+\frac{N}{2c\log N}<p<\frac{3N}{c\log N}.
+\]
+By choosing instead the integer ceiling as the lower endpoint, we can and do arrange the sharper lower bound $p>N/(c\log N)$, with the same displayed upper bound. Put $m=\lfloor N/p\rfloor<c\log N$. Eventually $p^2>N$ and $m<p$.
+
+Suppose a representation with denominators at most $N$ contained $p$; more generally suppose it contained any multiple of $p$. Its denominators divisible by $p$ are precisely $pj$ for a nonempty set $J\subseteq[1,m]$. Multiplying the unit-sum identity by $p$ and reducing modulo $p$ gives
+\[
+\sum_{j\in J}j^{-1}\equiv0\pmod p.
+\tag{2}
+\]
+Let $Q=\operatorname{lcm}(1,\ldots,m)$, which is coprime to $p$. Then $p$ divides $U=\sum_{j\in J}Q/j$, whereas
+\[
+0<U\leq QH_m\leq e^{Cm}(1+\log m)
+\leq N^{1/4}(1+\log\log N)<p.
+\]
+This is impossible. In particular no representation has smallest denominator $p$, and therefore
+\[
+t(N)\leq p\ll N/\log N.
+\tag{3}
+\]
+For bounded $N$ the implied constant can be enlarged. Existence of the least missing value is automatic, since $t=N+1$ cannot occur.
+
+\textbf{Every fixed smallest denominator eventually occurs.} For $t=1$ use $\{1\}$. Suppose $t\geq2$. Let $m$ be the least integer for which $\sum_{n=t}^m1/n\geq1$, which exists by divergence of the harmonic series. If equality holds, the interval itself gives the desired representation. Otherwise
+\[
+r=1-\sum_{n=t}^{m-1}\frac1n\quad\text{satisfies}\quad0<r<1/m.
+\tag{4}
+\]
+Apply the greedy Egyptian-fraction algorithm to $r$. For completeness, if a positive rational remainder is $a/b$ in lowest terms, set $q=\lceil b/a\rceil$. If $a/b=1/q$, finish; otherwise
+\[
+\frac ab-\frac1q=\frac{aq-b}{bq},\qquad 0<aq-b<a.
+\tag{5}
+\]
+After reducing, the numerator strictly decreases, so the process terminates. Moreover, because $q-1<b/a\leq q$, the new remainder is less than $1/[q(q-1)]\leq1/q$ for $q\geq2$. Thus every next denominator strictly exceeds the preceding one. By (4), the first greedy denominator exceeds $m$, avoiding all the already selected denominators $t,\ldots,m-1$.
+
+This constructs a finite set $E_t$ with minimum $t$ and reciprocal sum $1$. For any fixed $T$, take
+\[
+N_T=\max_{1\leq t\leq T}\max E_t.
+\]
+Whenever $N\geq N_T$, all minima $1,\ldots,T$ occur, so $t(N)>T$. Hence $t(N)\to\infty$.
+
+\section{VERIFICATION AND REMAINING GAP}
+The proof establishes $t(N)\to\infty$ and the correct upper scale $t(N)\ll N/\log N$. The greedy construction is not quantitatively efficient enough to imply a lower bound close to that scale. The missing step is a uniform representation construction for every prescribed minimum up to $N/[\log N(\log\log N)^{O(1)}]$. Liu and Sawhney's Theorem 1.6 supplies it in the literature, but it is not proved or used as a substitute for that missing work here.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and known bounds: \url{https://www.erdosproblems.com/294}.
+\item Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Theorem 1.6 and Section 4: \url{https://arxiv.org/html/2404.07113}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved within this reconstruction.}
+The upper bound and qualitative divergence are proved; the near-matching quantitative lower bound remains a declared gap.
+\textbf{Completion rate estimate: 60\%; a heuristic assessment of the proof coverage, not a probability.}

@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#337: a zero-density basis with small truncated doubling}
+\noindent Complete block construction, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A\subseteq\mathbb N$ be an additive basis of some finite order with $A(N)=o(N)$. Must $|(A+A)\cap[1,N]|/A(N)$ tend to infinity? We construct an asymptotic basis of order three for which this ratio tends to one along a subsequence. Both the numerator's cutoff $N$ and the permission to use order three are important.
+
+\subsection*{2) A thin basis of order three}
+For $r=0,1,2$ let
+\[E_r=\left\{\sum_{j\ge0}\epsilon_j2^{3j+r}:\epsilon_j\in\{0,1\},\text{ finitely many nonzero}\right\},\qquad C=\bigcup_{r=0}^2(1+E_r).
+\]
+Splitting the binary digits of any nonnegative integer $m$ according to their positions modulo three gives $m=e_0+e_1+e_2$. Therefore every integer at least three belongs to $C+C+C$. Also
+\[C(X)\le6X^{1/3}\qquad(X\ge1).
+\tag{1}\]
+To verify (1), if $8^k\le X<8^{k+1}$, each $E_r\cap[0,X]$ uses at most $k+1$ binary positions and hence has at most $2^{k+1}\le2X^{1/3}$ elements. Shifting by one and taking a union only decreases this upper bound relative to summing the three counts. In particular $1\in C$.
+
+\subsection*{3) Widely separated top blocks}
+Choose increasing integers $N_j$ recursively, with $N_1$ large, as follows. Having chosen the earlier blocks, let $F_j$ be their union. Choose $N_j$ so large that
+\[N_j\ge4N_{j-1},\qquad |F_j|\le N_j^{1/12},
+\]
+omitting the first condition for $j=1$. This is possible because $F_j$ is finite. Put
+\[L_j=\lfloor N_j^{3/4}\rfloor,\qquad I_j=\{N_j-L_j+1,\ldots,N_j\},\qquad A=C\cup\bigcup_j I_j.
+\]
+Take $N_1$ large enough that $L_j<N_j/2$ for every $j$. The intervals are disjoint, and all later intervals start beyond $N_j$.
+
+\subsection*{4) The final set has density zero and is a basis}
+Since $C\subseteq A$, every integer at least three is a sum of three members of $A$. If $N_j-L_j+1\le X\le N_j$, then
+\[A(X)\le6X^{1/3}+N_j^{1/12}+L_j,
+\]
+and division by $X>N_j/2$ tends to zero uniformly in that interval. Between the end of $I_j$ and the beginning of $I_{j+1}$ the same block count $|F_j|+L_j$ applies, and its ratio to $X$ can only decrease; $6X^{1/3}/X$ also decreases. These intervals cover all sufficiently large $X$, proving $A(X)=o(X)$.
+
+\subsection*{5) Doubling at the selected cutoffs}
+At $N=N_j$, write $L=L_j$ and $D=(C\cap[1,N])\cup F_j$. By (1),
+\[|D|\le6N^{1/3}+N^{1/12},\qquad |D+D|\le|D|^2=O(N^{2/3})=o(L).
+\]
+Two elements of $I_j$ sum to more than $N$. Any sum involving one element of $I_j$ and another positive element, if at most $N$, lies in the last $L$ integers below $N$. Thus
+\[|(A+A)\cap[1,N_j]|\le L_j+o(L_j).
+\]
+On the other hand $A(N_j)\ge L_j$, and $A(N_j)\le L_j+o(L_j)$ by the bound on $D$. Since $1\in C$, the sums $1+i$ with $i\in I_j\setminus\{N_j\}$ supply $L_j-1$ distinct elements of $(A+A)\cap[1,N_j]$. Combining the upper and lower bounds gives
+\[\frac{|(A+A)\cap[1,N_j]|}{A(N_j)}\longrightarrow1.
+\]
+This contradicts the proposed divergence without relying on any claim about the ratio at other cutoffs.
+
+\subsection*{6) Outcome and source}
+\textbf{SOLVED in the negative.} The construction proves the basis property, density zero at every large cutoff, and a bounded subsequence of the exact ratio in the question. It does not address the stronger-cutoff variants with $2N$ or $3N$ in the numerator.
+
+Source: \url{https://www.erdosproblems.com/337}, checked 24 September 2026, which attributes the negative result to Turj\'anyi and its generalization to Ruzsa--Turj\'anyi. The explicit binary skeleton and block estimates above require no external additive-basis theorem. No novelty or independent formal verification is asserted.
+
+The estimate concerns the original proposed limit.
+\subsection*{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

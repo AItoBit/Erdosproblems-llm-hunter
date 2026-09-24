@@ -1,0 +1,36 @@
+\section{Erd\H{o}s Problem \#331: two square-root-sized sets with no common difference}
+\noindent Complete reconstruction of Ruzsa's binary-digit counterexample, 24 September 2026.
+
+\subsection*{1) Statement}
+Suppose $A,B\subseteq\mathbb N$ satisfy $|A\cap[1,N]|\gg\sqrt N$ and $|B\cap[1,N]|\gg\sqrt N$ for every sufficiently large $N$. Must $a_1-a_2=b_1-b_2\ne0$ have infinitely many solutions with $a_1,a_2\in A$, $b_1,b_2\in B$? We construct sets with no such solution at all. The shifts below ensure positivity, regardless of whether the convention for $\mathbb N$ includes zero.
+
+\subsection*{2) Split the even and odd binary positions}
+Let
+\[E=\left\{\sum_{j\ge0}\epsilon_j4^j:\epsilon_j\in\{0,1\},\text{ finitely many nonzero}\right\},\qquad O=2E,
+\]
+and take $A=1+E$, $B=1+O$. Binary expansion gives exactly one representation $m=e+o$, $e\in E$, $o\in O$, for every integer $m\ge0$: assign the digits in positions $0,2,4,\ldots$ to $e$ and those in positions $1,3,5,\ldots$ to $o$. There are no carries because these supports are disjoint. Consequently every integer $n\ge2$ has exactly one representation $n=a+b$, $a\in A$, $b\in B$.
+
+If $a_1-a_2=b_1-b_2$, then $a_1+b_2=a_2+b_1$. The uniqueness just proved forces $a_1=a_2$ and $b_1=b_2$, so their common difference is zero. All nonzero common differences are excluded.
+
+\subsection*{3) Uniform square-root lower bounds}
+For $N\ge2$ put $X=N-1$ and choose $k\ge0$ with $4^k\le X<4^{k+1}$. The elements of $E$ using only positions $0,\ldots,k-1$ number $2^k$ and are at most $(4^k-1)/3$. The corresponding $2^k$ elements of $O$ are at most $2(4^k-1)/3$. Both bounds are at most $X$, so
+\[|A\cap[1,N]|,\ |B\cap[1,N]|\ge2^k>\frac{\sqrt X}{2}\ge\frac{\sqrt N}{2\sqrt2}.
+\]
+There are also matching coarse upper bounds: an element of either set below $N$ uses at most $k+1$ available binary positions, so the counts are at most $2^{k+1}\le2\sqrt X$. Thus both counting functions have order $\sqrt N$ uniformly, as required.
+
+\subsection*{4) The stronger regular-asymptotic variant is different}
+The source also suggests imposing $A(N)\sim c_A\sqrt N$ and $B(N)\sim c_B\sqrt N$ with fixed positive constants. The present example need not satisfy that hypothesis. In fact let
+\[N_k=(4^k-1)/3+1,\qquad M_k=4^k.
+\]
+Exactly the $2^k$ elements of $E$ using its first $k$ positions contribute to $A(N_k)$, and exactly the same elements contribute to $A(M_k)$. Hence
+\[\frac{A(N_k)}{\sqrt{N_k}}\longrightarrow\sqrt3,
+\qquad\frac{A(M_k)}{\sqrt{M_k}}=1.
+\]
+There is no fixed constant $c_A$ of the stronger kind. The construction disproves the original lower-bound assertion; it makes no claim to settle this more regular variant.
+
+\subsection*{5) Outcome and attribution}
+\textbf{SOLVED in the negative for the stated problem.} The unique-sum property, absence of nonzero common differences, positivity, and required uniform density lower bounds have all been proved. This is the known counterexample attributed to Ruzsa at \url{https://www.erdosproblems.com/331}, checked 23 September 2026. No novelty or independent Lean verification is claimed.
+
+The estimate applies to the original displayed assertion, not the separately proposed stronger variant.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,161 @@
+\section{Erd\H{o}s Problem 183: super-exponential multicolour triangle Ramsey growth}
+
+\subsection{1) Statement, attribution, and plan}
+Let $R_k=R(3;k)$ be the least $n$ for which every $k$-colouring of
+the edges of $K_n$ contains a monochromatic triangle. The question asks
+for $\lim_{k\to\infty}R_k^{1/k}$. Its value is now known to be $+\infty$.
+We reconstruct the coordinate-cover and palette recursion from Chapter 9
+of the cited 2026 manuscript. We use parameters sufficient for the
+qualitative limit, rather than its stronger explicit lower bound.
+All construction steps needed for this limit are proved below; the
+construction is attributed to that source and is not claimed as new.
+
+\subsection{2) A pair of functions covering all pairs of words}
+Fix an integer $H\geq3$, and set
+$m=\lceil2H\log H\rceil$, $s=m(m+1)+1$.
+There is an $s$-by-$H^m$ matrix $D$ with entries in $[H]$, whose columns
+are indexed by $z\in[H]^m$, such that every $m+1$ columns contain all
+$H$ symbols in at least one row. To prove this, choose the entries
+independently and uniformly. For any fixed $m+1$ columns, a row fails
+with probability at most
+\[
+ H(1-1/H)^{m+1}<H\exp(-m/H)\leq H^{-1}.
+\]
+The probability all $s$ rows fail is at most $H^{-s}$. There are at
+most $H^{m(m+1)}$ choices of columns. The union bound makes the
+probability of any failure at most $H^{-1}<1$, proving existence.
+
+This yields maps $f,g:[H]^s\to[H]^s$ such that, for any $x,y$,
+\[
+ x_d=f(y)_d\quad\hbox{or}\quad y_d=g(x)_d
+ \quad\hbox{for some }d\in[s].                         \tag{1}
+\]
+Indeed, let $\bar x=(x_1,\ldots,x_m)$ and set $g(x)_r=D_{r,\bar x}$.
+For fixed $y$, the exceptional columns
+\[
+ E_y=\{z:D_{r,z}\ne y_r\text{ for every }r\}
+\]
+number at most $m$, by the matrix property. List them in a fixed order
+as $z^{(1)},\ldots,z^{(\rho)}$ and put
+$f(y)_d=z^{(d)}_d$ for $d\leq\rho$, with arbitrary values thereafter.
+If $\bar x$ is not exceptional, the second equality in (1) holds.
+Otherwise $\bar x=z^{(d)}$ for some $d\leq\rho\leq m$, and the first
+holds at that coordinate. This proves (1).
+
+\subsection{3) Many mutually separated palettes}
+Let the integer $t\geq s$ tend to infinity, keeping $H,m,s$ fixed.
+For each $1\leq j\leq H$, choose a maximal family $\mathcal P_j$ of
+$t$-subsets of $[jt]$ whose distinct members satisfy
+$|P\setminus Q|=|Q\setminus P|\geq s$. Write $B_j=|\mathcal P_j|$.
+Maximality says every $t$-subset is within difference less than $s$
+of a chosen one. A ball of this radius has size
+$\sum_{d=0}^{s-1}\binom td\binom{(j-1)t}d$, hence
+\[
+ B_j\geq
+ \frac{\binom{jt}t}{\sum_{d=0}^{s-1}\binom td\binom{(j-1)t}d}
+ \geq\frac{j^t}{s(jt^2)^{s-1}}.                         \tag{2}
+\]
+For the second inequality, each factor $(jt-r)/(t-r)$ in the binomial
+product is at least $j$, and each summand in the denominator is at most
+$(jt^2)^{s-1}$. Also $B_j\geq1$. A palette records colours omitted
+inside its associated block.
+
+\subsection{4) The recursive colouring and its invariant}
+We construct, for $0\leq j\leq H$, a triangle-free colouring on
+$n_j=\prod_{r=1}^j B_r$ vertices, using the $jt$ colours in $[jt]$.
+The stronger invariant is that the graph of edges of each one colour
+has a proper vertex-colouring with at most $j+1$ labels.
+For $j=0$, take one vertex and no edges.
+
+At stage $j$, for each $P\in\mathcal P_j$ make a block $V_P$ carrying
+the previous construction, with its $(j-1)t$ colours relabelled by
+$[jt]\setminus P$. A colour is called active on this block when it
+is outside $P$, and missing when it belongs to $P$. For each active
+colour $c$, fix a proper $j$-label vertex-colouring
+$\ell^P_c:V_P\to[j]$ of its internal edges.
+
+Order the palettes. For $P<Q$, choose distinct
+$a_1,\ldots,a_s\in Q\setminus P$ and distinct
+$b_1,\ldots,b_s\in P\setminus Q$. For $u\in V_P$, $v\in V_Q$, set
+\[
+ x(u)=(\ell^P_{a_d}(u))_{d=1}^s,\qquad
+ y(v)=(\ell^Q_{b_d}(v))_{d=1}^s.
+\]
+These are words in $[H]^s$, since $j\leq H$. If some coordinate has
+$x(u)_d=f(y(v))_d$, colour $uv$ with $a_d$, choosing the first such
+coordinate. If none does, (1) provides a coordinate with
+$y(v)_d=g(x(u))_d$; colour $uv$ with its $b_d$, again using the first.
+Every cross-edge colour lies in $P\mathbin\triangle Q$. Moreover,
+when the colour is active on one endpoint's block, its proper vertex
+label at that endpoint is fixed by the opposite endpoint.
+
+There is no monochromatic triangle. Inside a block this follows by
+induction. For a triangle with two vertices in one block, suppose the
+two cross edges share colour $c$. If $c$ is missing on that block,
+its internal edge cannot have colour $c$. If $c$ is active, the
+cross-edge rule gives the two vertices the same $\ell_c$ label, so
+their internal edge again cannot have colour $c$. For a triangle in
+three blocks, colour $c$ on all cross edges would require its membership
+in the three palettes to differ on every pair. Three binary membership
+values cannot have that property.
+
+Finally, for a fixed colour $c$, use the internal labels in $[j]$ on
+blocks where $c$ is active, and label $j+1$ on all blocks where it is
+missing. Internal $c$-edges are properly labelled by induction. A
+cross edge of colour $c$ joins one active block to one missing block,
+so its labels differ too. This proves the required $(j+1)$-label
+invariant and completes the induction.
+
+\subsection{5) Growth and the passage from a subsequence to a limit}
+At stage $H$ we have $k=Ht$ colours and $n_H=\prod_{j=1}^H B_j$
+vertices with no monochromatic triangle. From (2),
+\[
+ \log n_H\geq t\log(H!)-O_H(\log t).
+\]
+Consequently, for each fixed $H$,
+\[
+ \liminf_{t\to\infty}\frac{\log(R_{Ht}-1)}{Ht}
+ \geq\frac{\log(H!)}H.                                 \tag{3}
+\]
+These subsequences have arbitrarily large exponential bases, but one
+more argument ensures the limit over every colour count.
+
+Put $N_k=R_k-1$. The usual block product gives
+$N_{a+b}\geq N_aN_b$: replace each vertex of a triangle-free
+$a$-colouring by a copy of a triangle-free $b$-colouring, using disjoint
+colour sets internally and between blocks. A triangle in one block is
+handled internally; one in three blocks projects to the outer colouring;
+one in two blocks uses both colour sets.
+Thus $u_k=\log N_k$ is superadditive and nonnegative. For fixed $r$,
+write $k=qr+h$, $0\leq h<r$. Repeated multiplication, with $N_0=1$
+as an auxiliary convention, gives $u_k\geq q u_r$. It follows that
+$\liminf_k u_k/k\geq u_r/r$ for every $r$, while the limsup is at
+most $\sup_r u_r/r$. Hence $u_k/k$ has a limit in $[0,\infty]$.
+Equation (3) bounds that limit below by $\log(H!)/H$ for every $H$.
+At least $H/2$ factors of $H!$ are at least $H/2$, so this bound tends
+to infinity. Therefore
+\[
+ \frac{\log(R_k-1)}k\longrightarrow\infty,
+ \qquad R_k^{1/k}\longrightarrow\infty.
+\]
+
+\subsection{6) Outcome and sources}
+\textbf{Outcome: SOLVED by reconstruction of the published construction.}
+The probabilistic matrix, coordinate cover, palette packing, colouring
+invariant, and limiting argument have all been supplied. The standard
+finiteness of finite Ramsey numbers is the only background Ramsey fact
+used. This presentation does not claim the construction as original,
+does not reproduce the source's stronger quantitative rate, and has
+not been checked in a proof assistant.
+\begin{itemize}
+\item OpenAI, \emph{Ten Advances in Mathematics and Theoretical
+Computer Science}, Chapter 9, ``Super-exponential lower
+bounds for $R(3,\ldots,3)$'', Sections 2--3 (2026),
+\texttt{https://cdn.openai.com/pdf/ten-proofs-oai.pdf}.
+\item T. F. Bloom, Problem 183,
+\texttt{https://www.erdosproblems.com/183}, checked 23 September 2026.
+\end{itemize}
+The percentage measures the qualitative question proved above; it is
+not an estimate of independent discovery or formal-verification coverage.
+\subsection{7) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

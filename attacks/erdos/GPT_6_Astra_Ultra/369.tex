@@ -1,0 +1,57 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#369; reconstruction of the smooth-polynomial construction, 2026-09-24.}
+For fixed $\varepsilon>0$ and $k\geq2$, show that every sufficiently large $N$ contains $k$ consecutive positive integers all of whose prime factors are at most $N^\varepsilon$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Taken literally, the question allows the fixed block $1,\ldots,k$. The substantive stronger statement is that such a block can be placed near $N$. Balog--Wooley established arbitrarily large smooth blocks; Theorem 2.1 of Bober--Fretwell--Martin--Wooley, \emph{Smooth values of polynomials}, supplies a polynomial construction. The argument below reconstructs its linear-factor case and obtains a block inside $[N-N^c,N]$ for some fixed $c<1$. This is a reconstruction of known mathematics.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Choose disjoint prime sets so that several cyclotomic factorizations simultaneously have small degree. Evaluate the resulting polynomial at its last integer argument below $N$.
+
+\section{WORK}
+\textbf{Choosing the exponents.} Put $\eta=\min(\varepsilon/2,1/2)$. The divergence of the sum of reciprocals of the primes implies that there are disjoint finite sets $\mathcal P_1,\ldots,\mathcal P_k$ of odd primes such that, on writing
+\[
+\gamma_j=\prod_{p\in\mathcal P_j}p,\quad
+D=\prod_{j=1}^k\gamma_j,\quad D_j=D/\gamma_j,
+\]
+one has $\varphi(\gamma_j)/\gamma_j<\eta$ for every $j$. Indeed, $\prod(1-1/p)\leq\exp(-\sum1/p)$, and deleting finitely many primes leaves the reciprocal sum divergent. All $\gamma_j$ are pairwise coprime.
+Choose $1\leq u_j<\gamma_j$ satisfying $D_j u_j\equiv1\pmod {\gamma_j}$, and put $\mu_j=D_j u_j$. Thus $\mu_j\equiv1\pmod {\gamma_j}$ and $\gamma_i\mid\mu_j$ if $i\ne j$. Define
+\[
+C=\prod_{j=1}^k j^{\mu_j},\qquad g(t)=Ct^D.
+\]
+For each $j$ the positive integer
+\[
+A_j=j^{(\mu_j-1)/\gamma_j}\prod_{i\ne j}i^{\mu_i/\gamma_j}
+\]
+is well defined and satisfies $C=jA_j^{\gamma_j}$. Consequently
+\[
+g(t)-j=j\big((A_jt^{D_j})^{\gamma_j}-1\big)
+ =j\prod_{e\mid\gamma_j}\Phi_e(A_jt^{D_j}),                 \tag{1}
+\]
+where $\Phi_e$ denotes the $e$th cyclotomic polynomial.
+
+\textbf{Bounding every prime factor.} Because $\gamma_j$ is squarefree, $e\mid\gamma_j$ implies $\varphi(e)\leq\varphi(\gamma_j)$. Each polynomial factor on the right of (1) therefore has degree at most
+\[
+D_j\varphi(\gamma_j)<\eta D.
+\]
+There are finitely many fixed factors. For all sufficiently large integer $t$, every such factor is nonzero and has absolute value at most $K t^{\eta D}$ for one fixed $K$. Every prime dividing $g(t)-j$ divides either $j$ or one of those integer factors. Since $g(t)=Ct^D$, and $\eta<\varepsilon$,
+\[
+P(g(t)-j)\leq\max(k,Kt^{\eta D})\leq g(t)^\varepsilon
+\quad (1\leq j\leq k) .                                  \tag{2}
+\]
+No assertion about irreducibility after substitution is needed: an integer's prime divisors are bounded by its absolute value.
+
+\textbf{Positioning the block for every large $N$.} Take
+$t=\lfloor(N/C)^{1/D}\rfloor$. Then $g(t)\leq N<g(t+1)$, and
+\[
+0\leq N-g(t)<C\big((t+1)^D-t^D\big)=O(N^{1-1/D}).
+\]
+The $k$ consecutive numbers $g(t)-k,\ldots,g(t)-1$ are positive for large $N$ and satisfy (2), hence are $N^\varepsilon$-smooth. With $c=1-1/(2D)$, their distance from $N$ is eventually at most $N^c$. This proves the stronger all-$N$ statement.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The construction and the passage from polynomial values to a block near every large $N$ are proved above. The standard facts used are divergence of the prime reciprocal sum and cyclotomic factorization. No effective small threshold or optimal value of $c$ is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/369}; Bober, Fretwell, Martin and Wooley, \emph{Smooth values of polynomials}, Theorem 2.1: \url{https://arxiv.org/html/1710.01970}. Tao's explanation of the near-$N$ deduction: \url{https://www.erdosproblems.com/forum/discuss/369}.
+
+\textbf{Completion rate estimate: 100\%.}

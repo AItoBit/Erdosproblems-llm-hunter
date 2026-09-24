@@ -1,0 +1,96 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#392; reconstruction by correcting an approximate factorization, 2026-09-24.}
+Let $A(n)$ be the least number of positive integer factors in a representation $n!=a_1\cdots a_{A(n)}$ with all $a_i\leq n^2$. Prove
+\[
+A(n)=\frac n2-\frac{n}{2\log n}+o(n/\log n).
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current discussion contains Tao's approximate-factorization proof of the stronger factor bound $a_i\leq n$; Cambie observes that pairing those factors settles the displayed question. The argument below expands the prime-exponent corrections and their costs. It does not assume an unproved efficiency property of a greedy prime-packing algorithm.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+For factors bounded by $n$, define their waste as $W=\sum_i\log(n/a_i)$. An exact factorization has
+\[
+t\log n=\log(n!)+W.                                      \tag{1}
+\]
+We construct one with $W=o(n)$. Stirling then determines $t$, and pairing gives the $n^2$ bound.
+
+\section{WORK}
+\textbf{Initial multiset.} Fix an integer $M\geq2$ and $0<\varepsilon<1/4$, and let $n$ tend to infinity with these parameters fixed. Put $L=\lfloor n/M\rfloor$. Start with $M$ copies of each integer in $(n-L,n]$, and discard every copy having a prime factor greater than $\varepsilon n$. Call the remaining multiset $\mathcal A$. Each factor is at most $n$, and its initial waste satisfies
+\[
+W_0\leq ML\log\frac n{n-L}\leq 2n/M.                    \tag{2}
+\]
+Discarding whole factors cannot increase waste.
+
+Write $e_p=v_p(n!)$, and let $f_p$ be the exponent of $p$ in the product of $\mathcal A$. Before discarding, the exponent is
+\[
+b_p=M\sum_{j\geq1}\left(\left\lfloor\frac n{p^j}\right\rfloor-
+\left\lfloor\frac{n-L}{p^j}\right\rfloor\right).
+\]
+Counting each interval of multiples and summing its rounding errors gives
+\[
+b_p=\frac{ML}{p-1}+O\!\left(M\frac{\log n}{\log p}\right),\quad
+e_p=\frac n{p-1}+O\!\left(\frac{\log n}{\log p}\right).
+\]
+Here only $p^j\leq n$ contribute, and completing the geometric sum adds $O(M)$. Since $0\leq n-ML<M$, it follows that
+\[
+|b_p-e_p|\leq C M\frac{\log n}{\log p},                   \tag{3}
+\]
+with an absolute constant $C$ after increasing it if necessary.
+
+\textbf{How discarding affects the prime ranges.} If a discarded integer has a prime divisor $q>\varepsilon n$, it is $qh$ with $h<1/\varepsilon$. For large $n$, this $q$ exceeds $\sqrt n$, and is the only prime divisor larger than $\varepsilon n$. Thus discarding does not affect exponents of primes in $(1/\varepsilon,\varepsilon n]$. The number of discarded integers before multiplicity is at most
+\[
+\sum_{h<1/\varepsilon}\pi(n/h)=O_\varepsilon(n/\log n),   \tag{4}
+\]
+by the standard Chebyshev bound $\pi(y)\ll y/\log y$. For a fixed prime $p\leq1/\varepsilon$, each discarded integer contains at most $\log(1/\varepsilon)/\log p$ copies of $p$. Combining (3)--(4) gives these bounds:
+\[
+\begin{array}{c|c}
+\text{prime range}&\text{exponent discrepancy}\\\hline
+\varepsilon n<p\leq n&f_p=0,\quad e_p\leq1/\varepsilon\\
+\sqrt n<p\leq\varepsilon n&|f_p-e_p|\leq C M\\
+1/\varepsilon<p\leq\sqrt n&|f_p-e_p|=O(M\log n)\\
+p\leq1/\varepsilon&(f_p-e_p)_+=O(M\log n),\quad
+(e_p-f_p)_+=O_{\varepsilon,M}(n/\log n).
+\end{array}                                                       \tag{5}
+\]
+For the second line only the first prime power occurs, so its error in (3) is indeed $O(M)$.
+
+\textbf{Remove every surplus.} For each $p$ with $f_p>e_p$, divide $f_p-e_p$ copies of $p$ out of the factors containing them. This always leaves positive integers at most $n$, changes no other prime exponent, and increases waste by exactly $(f_p-e_p)\log p$. There are no surpluses above $\varepsilon n$. The primes between $\sqrt n$ and $\varepsilon n$ contribute at most
+\[
+CM\pi(\varepsilon n)\log n\leq C' M\varepsilon n
+\]
+for all sufficiently large $n$, with an absolute $C'$. The other primes contribute $O(M\sqrt n\log^2 n)+O_{\varepsilon,M}(\log^2 n)=o_{\varepsilon,M}(n)$. The total cost of removal is thus $O(M\varepsilon n)+o_{\varepsilon,M}(n)$.
+
+\textbf{Add the non-tiny deficits.} For each missing copy of a prime $p>1/\varepsilon$, append $p$ as a separate factor. Its waste is $\log(n/p)$. Primes above $\varepsilon n$ contribute $O_\varepsilon(\pi(n))=o_\varepsilon(n)$, since their multiplicities and individual wastes are bounded in terms of $\varepsilon$. Medium primes contribute at most $CM\pi(\varepsilon n)\log n=O(M\varepsilon n)$. Primes in $(1/\varepsilon,\sqrt n]$ contribute $O(M\sqrt n\log^2 n)=o_M(n)$. All these new factors are at most $n$.
+
+\textbf{Bundle the tiny deficits.} The missing copies of primes $p\leq1/\varepsilon$ have total logarithmic mass
+\[
+T=O_{\varepsilon,M}(n/\log n)
+\]
+by the last line of (5). Multiply them successively into a factor until the next multiplication would exceed $n$, then start another factor. Every completed factor is greater than $\varepsilon n$, since the next prime is at most $1/\varepsilon$. Except for one possible final factor, each therefore uses logarithmic mass at least $\log(\varepsilon n)$ and has waste at most $\log(1/\varepsilon)$. Their total waste is bounded by
+\[
+\frac{T}{\log(\varepsilon n)}\log(1/\varepsilon)+\log n
+=O_{\varepsilon,M}(n/\log^2 n)+O(\log n)=o(n).             \tag{6}
+\]
+All prime exponents now match $n!$ exactly. Factors equal to $1$ may be discarded, only decreasing waste.
+
+Combining (2)--(6) constructs an exact factorization with
+\[
+0\leq W\leq 2n/M+C''M\varepsilon n+o_{\varepsilon,M}(n), \tag{7}
+\]
+where $C''$ is absolute. Given any $\eta>0$, choose $M$ with $2/M<\eta/3$, then choose $\varepsilon$ with $C''M\varepsilon<\eta/3$, and finally choose $n$ large enough for the last term to be below $\eta n/3$. Thus the minimum achievable waste is $o(n)$, with the order of choices in (7) fully specified.
+
+\textbf{Deduction for the requested factor cap.} Let $T(n)$ be the least number of factors bounded by $n$. Formula (1), the nonnegativity of waste, and (7) imply
+\[
+T(n)=\frac{\log(n!)}{\log n}+o(n/\log n)
+=n-\frac n{\log n}+o(n/\log n).
+\]
+Pair consecutive factors in such a representation, leaving one unpaired if $T(n)$ is odd. Every resulting factor is at most $n^2$, so $A(n)\leq\lceil T(n)/2\rceil$. Conversely $n!\leq n^{2A(n)}$, giving $A(n)\geq\log(n!)/(2\log n)$. Stirling and these matching bounds prove the desired formula.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The waste construction and all correction estimates are proved. The standard external tools are Chebyshev's prime-counting upper bound and Stirling's formula; the full prime number theorem is not needed for these coarser estimates. The construction reconstructs Tao's argument. No claim of checking a Lean kernel or proving efficiency of a particular greedy algorithm is made.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/392}; Tao's approximate-factorization argument and Cambie's pairing deduction: \url{https://www.erdosproblems.com/forum/discuss/392}.
+
+\textbf{Completion rate estimate: 100\%.}

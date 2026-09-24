@@ -1,0 +1,58 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#224; volume reconstruction, 2026-09-23.}
+Must every set of $2^d+1$ distinct points in $\mathbb R^d$ contain three points forming an obtuse angle?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The answer is affirmative, by the Danzer--Gr\"unbaum theorem on nonobtuse sets. The proof below reconstructs the elementary convex-body volume argument. It establishes the sharp bound $2^d$ and includes the equality-size example. No regularity of the finite point set is assumed and no novelty is claimed.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Nonobtuse angles make every pair of points support opposite faces of the convex hull in the direction joining that pair. This forces half-sized copies of the hull, one at each point, to have disjoint interiors. Compare their total volume with that of the original hull.
+
+\section{WORK}
+Let $S$ be a finite set with no obtuse angle, and let $K=\operatorname{conv}S$. Work in its affine hull $H$, of dimension $r\leq d$. If $r=0$, there is one point and the result is immediate. Assume $r\geq1$, so $K$ has positive finite $r$-dimensional volume.
+
+For distinct $p,q\in S$ put $u=q-p$. Nonobtuseness of the angles at $p$ and $q$ in every triangle $p,q,s$ gives
+\[
+u\cdot p\leq u\cdot s\leq u\cdot q\qquad(s\in S).
+\tag{1}
+\]
+For $s=p,q$ these inequalities hold directly. Linearity extends them to every $s\in K$. The width of the range of this linear functional is exactly
+\[
+u\cdot q-u\cdot p=|q-p|^2>0.
+\tag{2}
+\]
+If $s$ is in the relative interior of $K$, both inequalities in (1) are strict. Indeed a relative interior point cannot maximize or minimize a nonconstant linear functional: a small displacement in the $u$ direction within $H$ would remain in $K$ and improve the value.
+
+For each $p\in S$ define
+\[
+K_p=\tfrac12(p+K).
+\]
+Convexity gives $K_p\subset K$, and homothety gives $\operatorname{vol}_r(K_p)=2^{-r}\operatorname{vol}_r(K)$. Suppose the relative interiors of $K_p$ and $K_q$ intersect for $p\ne q$. Then $p+x=q+y$ for some relative interior points $x,y\in K$. Taking dot products with $u=q-p$ gives
+\[
+u\cdot(x-y)=|q-p|^2.
+\]
+But the strict versions of (1)--(2) give
+\[
+u\cdot(x-y)<u\cdot q-u\cdot p=|q-p|^2,
+\]
+a contradiction. Thus the relative interiors of the $K_p$ are pairwise disjoint. Boundaries of the finitely many polytopes have $r$-dimensional measure zero, so additivity and containment yield
+\[
+|S|\,2^{-r}\operatorname{vol}_r(K)
+=\sum_{p\in S}\operatorname{vol}_r(K_p)
+\leq\operatorname{vol}_r(K).
+\]
+Cancelling the positive volume gives $|S|\leq2^r\leq2^d$.
+
+\textbf{Sharpness.} The $2^d$ vertices of $\{0,1\}^d$ have no obtuse angle. At a vertex $p$, each coordinate of both $q-p$ and $s-p$ is either nonnegative (when the corresponding coordinate of $p$ is zero) or nonpositive (when it is one). Their coordinatewise products are nonnegative, so $(q-p)\cdot(s-p)\geq0$. Thus every angle is at most $90$ degrees.
+
+\section{VERIFICATION AND SCOPE}
+Using volume in the affine hull handles point sets contained in a proper subspace; ambient $d$-dimensional volume would give no information for such sets. Only intersections of interiors are excluded, since boundary contacts are harmless for volume. The cube shows that the threshold cannot be reduced. The argument proves existence of an obtuse angle, not a stronger statement prescribing its amount above $90$ degrees.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and attribution to L. Danzer and B. Gr\"unbaum (1962): \url{https://www.erdosproblems.com/224}.
+\item L. Danzer and B. Gr\"unbaum, \emph{\"Uber zwei Probleme bez\"uglich konvexer K\"orper von P. Erd\H{o}s und von V. L. Klee}, Mathematische Zeitschrift 79 (1962), 95--99; the standard half-homothet volume proof is reconstructed above.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved by reconstruction of the known sharp bound.} Every $2^d+1$ points contain an obtuse angle, and $2^d$ cube vertices show sharpness.
+\textbf{Completion rate estimate: 100\%.}

@@ -5,7 +5,9 @@ Let x_1<x_2<... be a strictly increasing sequence of positive integers.
 For \alpha\in[0,1], consider the fractional parts {\alpha x_n} in [0,1).
 For N>=1 define the discrepancy
 
+\[
   D(N;\alpha) := \max_{I\subset[0,1]} \left| \#\{1\le n\le N : {\alpha x_n}\in I\} - |I| N \right|,
+\]
 
 where the maximum is over intervals I\subset[0,1] and |I| denotes length.
 (Almost all \alpha means with respect to Lebesgue measure on [0,1].)
@@ -75,8 +77,10 @@ Let y_1,...,y_N \in [0,1). For each integer h>=1 set
   T_h := \sum_{n=1}^N e^{2\pi i h y_n}.
 Then for every integer H>=1,
 
+\[
   D_N(y_1,...,y_N)
   := \max_{I\subset[0,1]} \left|\#\{n\le N: y_n\in I\} - |I|N\right|
+\]
 
 satisfies
 
@@ -114,14 +118,18 @@ of bounded variation; for this specific sawtooth it can be checked directly by s
 by parts).
 Hence
 
+\[
   \left|\sum_{n=1}^N \psi(y_n-a) + \sum_{1\le |h|\le H} \frac{e^{-2\pi i h a}}{2\pi i h} T_h\right|
   \le \sum_{n=1}^N |R_H(y_n-a)| \le \frac{N}{2(H+1)}.
+\]
 
 Similarly with b in place of a. Subtracting the two identities and using the triangle
 inequality gives
 
+\[
   \left|\sum_{n=1}^N (1_I(y_n)-(b-a))\right|
   \le \frac{N}{H+1} + \frac{1}{\pi} \sum_{h=1}^H \frac{|T_h|}{h},
+\]
 
 because the h and -h terms combine to a real coefficient of size <=1/(\pi h) times |T_h|.
 Taking the maximum over I proves the inequality.
@@ -139,12 +147,16 @@ Then
 Proof.
 Expand the square and integrate term-by-term:
 
+\[
   \int_0^1 |S_h(N;\alpha)|^2 d\alpha
   = \sum_{m=1}^N \sum_{n=1}^N \int_0^1 e^{2\pi i h \alpha (x_m-x_n)} d\alpha.
+\]
 
 If x_m=x_n then the integrand is identically 1 and the integral is 1.
 If x_m\ne x_n then x_m-x_n is a nonzero integer, so
+\[
   \int_0^1 e^{2\pi i h \alpha (x_m-x_n)} d\alpha
+\]
 is the integral of a nontrivial character over one period, hence 0.
 Because (x_n) is strictly increasing, x_m=x_n iff m=n. Therefore the double sum collapses
 to N diagonal terms, giving N.
@@ -157,7 +169,9 @@ Let f_1,...,f_N be an orthonormal family in L^2([0,1]). Define partial sums
   F_m := \sum_{n=1}^m f_n.
 Then there is an absolute constant C>0 such that
 
+\[
   \int_0^1 \left(\max_{1\le m\le N} |F_m(t)|\right)^2 dt \le C (\log_2(2N))^2 \sum_{n=1}^N \|f_n\|_2^2.
+\]
 
 In particular, if \|f_n\|_2=1 for all n, then
   \int (\max_{m\le N}|F_m|)^2 \le C N (\log N)^2.
@@ -180,26 +194,34 @@ Apply Cauchy--Schwarz in r:
 
 Taking the maximum over m gives
 
+\[
   \max_{m\le N} |F_m|^2 <= L \sum_{r=0}^{L-1} \max_{m\le N} |G_{r,m}|^2
                          <= L \sum_{r=0}^{L-1} \max_{s} \left|\sum_{n\in B_{r,s}} f_n\right|^2.
+\]
 
 Integrate over t and use the union bound over s with orthonormality:
 For fixed r, the block sums over disjoint blocks are orthogonal in L^2, so
 
+\[
   \int \sum_s \left|\sum_{n\in B_{r,s}} f_n\right|^2 dt
   = \sum_s \sum_{n\in B_{r,s}} \|f_n\|_2^2
   = \sum_{n=1}^N \|f_n\|_2^2.
+\]
 
-Since \max_s a_s^2 <= \sum_s a_s^2 for nonnegative a_s, we get
+Since \(\max_s a_s^2 <= \sum_s a_s^2\) for nonnegative a_s, we get
 
+\[
   \int \max_s \left|\sum_{n\in B_{r,s}} f_n\right|^2 dt
   <= \sum_{n=1}^N \|f_n\|_2^2.
+\]
 
 Putting the estimates together,
 
+\[
   \int (\max_{m\le N}|F_m|)^2 dt
   <= L \sum_{r=0}^{L-1} \sum_{n=1}^N \|f_n\|_2^2
   = L^2 \sum_{n=1}^N \|f_n\|_2^2.
+\]
 
 Absorb the base-2 logs into an absolute constant to obtain the stated form.
 \qed
@@ -221,28 +243,36 @@ For each h, the functions f_{h,n}(\alpha):=e^{2\pi i h \alpha x_n} are orthonorm
 by the same calculation as in Lemma 992.2 (with h fixed).
 Applying Lemma 992.3 with N=N_r gives
 
+\[
   \int_0^1 \left(\max_{1\le m\le N_r} |S_h(m;\alpha)|\right)^2 d\alpha <= C N_r (\log N_r)^2,
+\]
 
 with an absolute constant C independent of h and r.
 
 Now form the weighted sum
 
+\[
   Z_r(\alpha) := \sum_{h=1}^{N_r} \frac{1}{h^2} \left(\max_{1\le m\le N_r} |S_h(m;\alpha)|\right)^2.
+\]
 
 Integrate and use Tonelli:
 
+\[
   \int_0^1 Z_r(\alpha) d\alpha
   <= \sum_{h=1}^{N_r} \frac{1}{h^2} \cdot C N_r (\log N_r)^2
   <= C N_r (\log N_r)^2 \sum_{h=1}^\infty \frac{1}{h^2}
   = C' N_r (\log N_r)^2,
+\]
 
 for another absolute constant C'.
 
 By Markov's inequality,
 
+\[
   \mu\left\{\alpha : Z_r(\alpha) > N_r (\log N_r)^4\right\}
   <= \frac{\int Z_r}{N_r (\log N_r)^4}
   <= \frac{C'}{(\log N_r)^2}.
+\]
 
 The series \sum_r 1/(\log N_r)^2 = \sum_r 1/r^2 converges, so by the Borel--Cantelli lemma,
 for almost all \alpha there exists r_0(\alpha) such that for all r>=r_0,
@@ -252,17 +282,21 @@ for almost all \alpha there exists r_0(\alpha) such that for all r>=r_0,
 Fix such an \alpha and take any N with 1<=N<=N_r (where r is large enough so that the above
 holds). Then for each h<=N we have |S_h(N;\alpha)| <= \max_{m<=N_r}|S_h(m;\alpha)|, hence
 
+\[
   \sum_{h=1}^N \frac{|S_h(N;\alpha)|^2}{h^2}
   <= \sum_{h=1}^{N_r} \frac{1}{h^2} \left(\max_{m<=N_r}|S_h(m;\alpha)|\right)^2
   = Z_r(\alpha)
   <= N_r (\log N_r)^4.
+\]
 
 Apply Cauchy--Schwarz with weights 1/h and 1/h:
 
+\[
   \sum_{h=1}^N \frac{|S_h(N;\alpha)|}{h}
   <= \left(\sum_{h=1}^N \frac{1}{h}\right)^{1/2}
      \left(\sum_{h=1}^N \frac{|S_h(N;\alpha)|^2}{h^2}\right)^{1/2}
   <= (\log N +1)^{1/2} \cdot \sqrt{N_r} (\log N_r)^2.
+\]
 
 Since N<=N_r<=2N, we have \sqrt{N_r} \ll \sqrt{N} and \log N_r \asymp \log N. Thus the RHS is
 
@@ -270,8 +304,10 @@ Since N<=N_r<=2N, we have \sqrt{N_r} \ll \sqrt{N} and \log N_r \asymp \log N. Th
 
 Finally apply Lemma 992.1 with the points y_n={\alpha x_n} and choose H=N:
 
+\[
   D(N;\alpha) <= \frac{N}{N+1} + \frac{1}{\pi} \sum_{h=1}^N \frac{|S_h(N;\alpha)|}{h}
              <= 1 + O( \sqrt{N} (\log N)^{5/2} ).
+\]
 
 This proves the claimed bound for all sufficiently large N (for the given typical \alpha).
 \qed

@@ -1,0 +1,75 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#305; a modular counting lower bound and a sharp-scale upper deduction, 2026-09-24.}
+For $1\leq a<b$, let $D(a,b)$ be the least possible largest denominator in a representation of $a/b$ as a sum of distinct positive unit fractions. Set $D(b)=\max_{1\leq a<b}D(a,b)$. Is
+\[
+D(b)\ll b(\log b)^{1+o(1)}?
+\]
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Yokota answered the question affirmatively, and Liu--Sawhney slightly sharpened the iterated-logarithm factors. We prove the prime lower bound by a complete modular counting argument and derive the requested upper scale from Liu--Sawhney's explicitly stated uniform representation theorem. The construction proving that theorem is the substantial external dependency; no new resolution is claimed.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+For prime denominator $p$, only denominators divisible by $p$ can contribute to the numerator modulo $p$. If too few such denominators are available, their subsets cannot represent all $p-1$ nonzero numerator residues. Then check carefully that the known upper theorem is uniform in $a$ and that its iterated logarithms are $(\log b)^{o(1)}$.
+
+\section{WORK}
+\textbf{A prime lower bound.} Let $p\geq3$ be prime, and put
+\[
+m=\lfloor\log_2(p-1)\rfloor,\qquad M=pm.
+\]
+Since $m<p$, we have $M<p^2$. Suppose that $a/p$ is represented using distinct denominators at most $M$. Its denominators divisible by $p$ are $pj$ for a set $J\subseteq[1,m]$. Multiply the identity by $p$ and reduce modulo $p$. All terms from denominators coprime to $p$ vanish, while the other terms give
+\[
+a\equiv\sum_{j\in J}j^{-1}\pmod p.
+\tag{1}
+\]
+The reduction is valid because $j<p$ and no denominator is divisible by $p^2$. The set $J$ must be nonempty when $1\leq a<p$.
+
+There are only $2^m-1$ nonempty subsets of $[1,m]$, and
+\[
+2^m-1\leq p-2<p-1.
+\]
+Thus the sums on the right side of (1) cannot cover all $p-1$ nonzero residues modulo $p$, even before allowing for collisions between different subsets. Some $a\in\{1,\ldots,p-1\}$ admits no representation with denominators at most $M$. Hence
+\[
+D(p)>p\lfloor\log_2(p-1)\rfloor
+=\left(\frac1{\log2}+o(1)\right)p\log p.
+\tag{2}
+\]
+In particular a logarithmic factor cannot be removed from a bound uniform in $b$.
+
+\textbf{Declared external upper theorem.} Liu and Sawhney's Theorem 1.5 gives absolute constants $C,K$ and a threshold $b_0$ such that, for every $b\geq b_0$ and every integer $1\leq a<b$, there is a representation with distinct denominators
+\[
+1<n_1<\cdots<n_s
+\leq Cb(\log b)(\log\log b)^3(\log\log\log b)^K,
+\qquad \frac ab=\sum_{i=1}^s\frac1{n_i}.
+\tag{3}
+\]
+The constants and threshold do not depend on $a$. The theorem is not limited to coprime $a,b$; in any case reduction of a rational target is part of the underlying representation construction. Its proof is imported rather than inferred from (2).
+
+Taking the maximum over $a$ in (3) gives the same bound for $D(b)$. Put
+\[
+\eta(b)=\frac{3\log\log\log b+K\log\log\log\log b}{\log\log b}
+\]
+for sufficiently large $b$ that these expressions are defined. Then $\eta(b)\to0$, and
+\[
+(\log\log b)^3(\log\log\log b)^K=(\log b)^{\eta(b)}.
+\]
+Consequently
+\[
+D(b)\leq Cb(\log b)^{1+\eta(b)},
+\tag{4}
+\]
+which is precisely the desired estimate.
+
+There is no finiteness issue for the remaining small $b$: the greedy Egyptian-fraction algorithm represents every positive rational with distinct denominators. Indeed, subtracting $1/\lceil q/r\rceil$ from a non-unit reduced fraction $r/q$ strictly decreases its positive reduced numerator, and the next denominator strictly increases. The process therefore terminates. Only finitely many fractions occur below a fixed $b_0$, so an enlarged constant can absorb those cases under any conventional positive modification of the small logarithms.
+
+\section{VERIFICATION AND SCOPE}
+The modular argument needs $M<p^2$, which is why $m<p$ was checked. It counts numerator residues, not representations, and therefore remains valid even when many subsets have the same residue. The upper bound is uniform in the numerator, as required for $D(b)$. This proof establishes the requested scale and a matching logarithmic obstruction on primes; it does not reproduce the sharper known iterated-logarithm lower factors.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and the Bleicher--Erd\H{o}s and Yokota bounds: \url{https://www.erdosproblems.com/305}.
+\item Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Theorem 1.5: \url{https://arxiv.org/html/2404.07113}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved, using the stated uniform upper-bound theorem.}
+The desired upper scale follows, and the prime lower bound is independently proved by modular counting.
+\textbf{Completion rate estimate: 100\% of the requested bound, relative to Theorem 1.5.}

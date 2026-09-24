@@ -1,0 +1,40 @@
+\section{Erd\H{o}s Problem 631: the sharp list-colouring bound is five}
+\subsection*{Statement and scope}
+Every planar graph is 5-choosable, and the constant five is best possible. This attempt supplies the full strengthened induction proving the upper bound, following Thomassen. For optimality it explicitly uses Voigt's established construction of a planar graph that is not 4-choosable; that separate finite construction is an external input.
+
+\subsection*{A strengthened extension lemma}
+Let $G$ be a simple plane near-triangulation: its outer face is bounded by a cycle $v_1v_2\cdots v_k$, and every bounded face is a triangle. Suppose $v_1,v_2$ are already assigned distinct colours from singleton lists, every other outer vertex has a list of at least three colours, and every interior vertex a list of at least five. Then the precolouring extends to a proper list colouring of $G$.
+We prove this by induction on the number of vertices. A triangle with no interior vertices is immediate.
+
+If the outer cycle has a chord $xy$, split $G$ along it into its two closed sides. Each side is a smaller near-triangulation. First colour the side containing the outer edge $v_1v_2$, using induction. Then treat $x,y$ as the two distinctly precoloured endpoints of an outer edge of the other side, and apply induction again. The two colourings agree on the intersection $\{x,y\}$ and therefore combine. Each formerly interior vertex that becomes a boundary vertex has a list of at least three, as required. If one of $v_1,v_2$ lies on the second side, it is necessarily one of $x,y$, so there is no extra precoloured boundary vertex.
+
+It remains to handle an outer cycle without a chord. In their order around $v_k$, its neighbours are
+\[
+ v_1,u_1,\ldots,u_t,v_{k-1}.
+\]
+Every $u_i$ is interior, because another outer neighbour would be a chord. The $u_i$ are distinct, and consecutive neighbours are joined by edges, since the intervening bounded faces are triangles. Unless $G$ is the already handled triangle, deleting $v_k$ leaves a near-triangulation whose outer cycle is
+\[
+ v_1,v_2,\ldots,v_{k-1},u_t,\ldots,u_1.
+\]
+For clarity, a simple near-triangulation with a simple outer boundary is 2-connected; the listed distinct neighbours and absence of an outer chord ensure that this new boundary is again simple. When $t=0$, the triangle at $v_k$ forces $k=3$, giving the base case.
+
+Choose two distinct colours $a,b$ in $L(v_k)$ different from the fixed colour of $v_1$. Remove both $a,b$ from the lists of the interior neighbours $u_i$, and delete $v_k$. The new boundary vertices $u_i$ retain at least three colours; all other required list sizes are unchanged. Induction colours $G-v_k$. Every $u_i$ now avoids both $a,b$, and $v_1$ does so by their choice. At most one of $a,b$ is the colour of $v_{k-1}$. Give $v_k$ the other colour. This extends the colouring and completes the induction.
+
+\subsection*{Deduction for arbitrary planar graphs}
+A simple planar graph with at least three vertices can be augmented, without adding vertices, to a maximal planar graph, by joining components if necessary and then adding edges while planarity permits. Its plane embedding has triangular faces. A proper list colouring of this supergraph is also one of the original graph.
+Given five-element lists, choose any outer edge $v_1v_2$ and choose distinct colours on its ends, which is possible from their lists. Restrict those two lists to the chosen colours and apply the extension lemma; all other boundary lists have at least three colours and all interior lists have five. Graphs on at most two vertices are coloured directly. Therefore
+\[
+ \boxed{\chi_L(G)\le5\quad\text{for every planar }G.}
+\]
+
+\subsection*{Sharpness and the precise external dependency}
+Voigt's 1993 paper constructs a planar graph $V$ and lists of four colours on its vertices for which no proper list colouring exists. We use this published finite-construction theorem as an external input, not a certificate reproduced in this file. It gives $\chi_L(V)\ge5$, while the proved upper bound gives $\chi_L(V)\le5$. Hence $\chi_L(V)=5$ and the constant is sharp. The ordinary four-colour theorem does not settle this issue: a common four-colour palette and arbitrary four-element vertex lists are different requirements.
+
+\subsection*{Conclusion and sources}
+\textbf{Status: solved with the sharpness construction explicitly external.} The upper-bound proof is fully reconstructed; only the independent lower-bound example is imported. Neither theorem is claimed as new.
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/631}, checked 24 September 2026.
+\item C. Thomassen, \emph{Every planar graph is 5-choosable}, J. Combin. Theory B 62 (1994), 180--181, \url{https://doi.org/10.1006/jctb.1994.1062}.
+\item M. Voigt, \emph{List colourings of planar graphs}, Discrete Math. 120 (1993), 215--219, \url{https://doi.org/10.1016/0012-365X(93)90579-I}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% relative to Voigt's stated sharpness theorem; the upper bound is proved here.}

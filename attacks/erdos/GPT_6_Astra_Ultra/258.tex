@@ -1,0 +1,48 @@
+\section{Erd\H{o}s Problem \#258}
+\subsection{Statement and attribution}
+For positive integers $a_n\to\infty$, must
+\[
+ S=\sum_{n\ge1}\frac{\tau(n)}{a_1\cdots a_n}
+\]
+be irrational? Yes. The current problem page credits Chojecki, using GPT-5.4 Pro, with the deduction from Tao--Ter\"av\"ainen below. This is an attributed reconstruction of that deduction, with its substantial external input stated explicitly; no novelty is claimed. The older local attempts prove only restricted cases and predate this resolution.
+
+\subsection{External input and plan}
+Tao and Ter\"av\"ainen, Theorem 1.1 of arXiv:2512.01739, prove that there is an absolute $C>0$ and arbitrarily large integers $N$ such that
+\[
+ \Omega(N+k)\le Ck\qquad\hbox{for every integer }k\ge1.
+ \tag{1}
+\]
+Here $\Omega$ counts prime factors with multiplicity. The simultaneous quantifier over the entire infinite tail is essential. Their sieve theorem is an external input, not reproved here. We prove completely that (1) implies the answer, without monotonicity of the bases.
+
+\subsection{Work: a positive integer smaller than one}
+Write $Q_n=\prod_{j\le n}a_j$. Eventually $a_j\ge2$, and $\tau(n)\le n$, so comparison with $\sum n2^{-n}$ proves convergence. If $m=\prod p^{e_p}$, then
+\[
+ \tau(m)=\prod_p(e_p+1)\le\prod_p2^{e_p}=2^{\Omega(m)}.
+\]
+Consequently the shifts in (1) satisfy $\tau(N+k)\le\Lambda^k$ for $\Lambda=2^C$.
+
+Suppose $S=A/B$ with integers $A$ and $B\ge1$. Choose an integer $M>(B+1)\Lambda$. Since $a_n\to\infty$, all sufficiently late bases are at least $M$. Choose a shift $N$ from (1) beyond that point and consider
+\[
+ I=BQ_N\left(S-\sum_{n\le N}\frac{\tau(n)}{Q_n}\right).
+\]
+This is an integer: $BQ_NS=AQ_N$, and $Q_N/Q_n$ is an integer for $n\le N$. It is strictly positive because the remaining summands are positive. But
+\[
+ 0<I=B\sum_{k\ge1}\frac{\tau(N+k)}{a_{N+1}\cdots a_{N+k}}
+ \le B\sum_{k\ge1}(\Lambda/M)^k
+ =\frac{B\Lambda}{M-\Lambda}<1,
+\]
+a contradiction. Hence $S$ is irrational.
+
+\subsection{Verification and outcome}
+The rational denominator $B$ need not divide any $Q_N$: multiplication by $B$ handles this. The argument requires small scaled tails only along the shifts provided by (1), not at every index. No monotonicity or uniform bound on $\tau(n)/a_n$ was assumed.
+
+\textbf{SOLVED, relative to the explicitly stated Tao--Ter\"av\"ainen theorem.} The deduction is complete; the deep sieve input is not reproduced.
+
+\subsection{Sources}
+\begin{itemize}
+\item T. Tao and J. Ter\"av\"ainen, \emph{Quantitative correlations and some problems on prime factors of consecutive integers}, Theorem 1.1, \url{https://arxiv.org/abs/2512.01739}.
+\item \emph{A short note on Erd\H{o}s Problem \#258}, 14 April 2026, \url{https://www.ulam.ai/research/erdos258.pdf}.
+\item Current statement: \url{https://www.erdosproblems.com/258}.
+\end{itemize}
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

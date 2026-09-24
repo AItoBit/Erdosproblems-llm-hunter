@@ -1,0 +1,73 @@
+\subsection*{Erd\H{o}s problem \#355}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Find increasing positive integers $n_i$ with $n_{i+1}\ge\lambda n_i$ for some $\lambda>1$, such that finite sums of their reciprocals contain every rational number in a nonempty open interval.
+
+\noindent\textbf{2) CONTEXT AND METHOD.}
+We reconstruct van Doorn--Kova\v{c}, Sections 3--4 of \emph{Lacunary sequences whose reciprocal sums represent all rational numbers in an interval}. The answer is yes for every $1<\lambda<2$. The proof below builds divisor chains and converts a fine subset-sum mesh into exact rational representations. No novelty is claimed.
+
+\noindent\textbf{3) A FINITE MESH LEMMA.}
+If $x_1>\cdots>x_m>0$ and
+\[
+ x_i\le\sum_{j=i+1}^m x_j+x_m\quad(1\le i<m),
+\]
+then the subset sums have successive gaps at most $x_m$ throughout $[0,\sum x_i]$. Induct on $m$: the sums excluding $x_1$ fill the interval $[0,\sum_{i>1}x_i]$ with gaps at most $x_m$, and their translates by $x_1$ do the same on $[x_1,\sum x_i]$. The two intervals overlap or leave a gap at most $x_m$, proving the induction.
+
+In particular, if $n_{i+1}\le2n_i$, then for every $i<m$,
+\[
+ \sum_{j=i+1}^m\frac1{n_j}+\frac1{n_m}
+ \ge\frac1{n_i}\left(\sum_{h=1}^{m-i}2^{-h}+2^{-(m-i)}\right)=\frac1{n_i}.
+\]
+If, additionally, $n_m$ is divisible by all preceding denominators, all subset sums lie in $(1/n_m)\mathbb Z$. A gap bound of $1/n_m$ therefore means that every grid point in the whole interval is represented exactly.
+
+\noindent\textbf{4) DIVISOR CHAINS WITH RATIOS BETWEEN $\lambda$ AND $2$.}
+For any integer $Q\ge2$ and $1<\rho<2$, we can find a multiple $N$ of $Q$ and divisors
+\[
+ 1=d_0<d_1<\cdots<d_M=N,
+ \qquad \rho\le d_{j+1}/d_j\le2.
+\]
+If $Q$ is a power of $2$, use its powers-of-two divisor chain. Otherwise $\log_2Q$ is irrational: a rational value would imply that an integer power of $Q$ is a power of $2$, contrary to an odd prime divisor of $Q$. Density of the irrational rotation $b\log_2Q\pmod1$ supplies positive integers $a,b$ with
+\[
+ \rho<Q^b/2^a<2.
+\]
+Take $N=2^aQ^b$ and the divisors
+\[
+ 1,2,\ldots,2^a,\ Q^b,2Q^b,\ldots,2^aQ^b,
+\]
+where the indicated runs are powers of two. All ratios are $2$ except the single bridging ratio, which lies in $(\rho,2)$.
+
+\noindent\textbf{5) THE INFINITE CONSTRUCTION.}
+Let $p_k$ be the $k$th prime. Start with $1,2$, endpoint $D_1=2$. At stage $k\ge2$, apply the preceding lemma to
+\[
+ Q_k=p_1\cdots p_k,
+ \qquad \rho_k=\max(\lambda,2-1/k),
+\]
+and obtain $N_k$ and $d_{k,0}=1<\cdots<d_{k,M_k}=N_k$. Append
+\[
+ D_{k-1}d_{k,1},\ldots,D_{k-1}d_{k,M_k},
+ \qquad D_k=D_{k-1}N_k.
+\]
+Every endpoint $D_k$ is divisible by every earlier term, by induction and the divisor-chain property. Moreover, every positive integer divides some $D_k$: the exponent of each fixed prime in $\prod_{j=1}^kN_j$ tends to infinity. All successive ratios belong to $[\lambda,2]$, and they tend to $2$ since the lower bounds $\rho_k$ do. Every stage $k\ge2$ has a ratio strictly below $2$.
+
+Write the resulting infinite sequence as $(n_i)$ and let $T=\sum_i1/n_i$. Lacunarity gives $T<\infty$, while $n_i\le2^{i-1}$ and some strict inequalities imply $T>2$.
+
+Fix a rational $0\le q<T$. Choose a stage endpoint $D_k=n_m$ so large that its denominator divides $D_k$ and $q\le\sum_{i=1}^m1/n_i$. The finite mesh lemma and divisibility then represent $q$ exactly as a finite sum of distinct reciprocals. Thus every rational in $[0,T)$, in particular $[0,2]$, is represented.
+
+\noindent\textbf{6) THE BOUNDARY $\lambda=2$.}
+For completeness, this threshold cannot be attained. Suppose $n_{i+1}\ge2n_i$ and put $x_i=1/n_i$. Then $x_i\ge\sum_{j>i}x_j$. If strict inequality holds for infinitely many $i$, the compact set of all finite or infinite subsums has empty interior. Here are the details: at such an index $m$, cover it by the intervals
+\[
+ \left[\sum_{i\le m}\epsilon_ix_i,
+       \sum_{i\le m}\epsilon_ix_i+\sum_{i>m}x_i\right].
+\]
+Their interiors are disjoint when ordered lexicographically, since the first differing digit outweighs all later ones. Intervals can touch only across a binary carry; the strict inequality at digit $m$ prevents chains of three touching intervals. Therefore each connected component of this cover has length at most $2\sum_{i>m}x_i\to0$. No nondegenerate interval can lie in the compact subsum set. Since rational points in an interval are dense, the finite sums cannot contain all of them.
+
+If instead equality $x_i=\sum_{j>i}x_j$ holds for all sufficiently large $i$, subtracting successive equalities gives $x_i=2x_{i+1}$. The denominators are eventually a fixed integer times powers of two. Their finite reciprocal sums have reduced denominators involving only finitely many primes, so they miss rational numbers in every open interval.
+
+\noindent\textbf{7) VERIFICATION AND FINAL.}
+The grid argument gives finite exact sums, not merely infinite subsums or dense approximations. Denominator divisibility is ensured at arbitrarily late endpoints, and all ratios remain in the required range. \textbf{SOLVED.} The existence construction and the impossibility at $2$ are fully reconstructed; the only standard qualitative input is density of an irrational rotation.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/355}; \url{https://arxiv.org/pdf/2509.24971}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

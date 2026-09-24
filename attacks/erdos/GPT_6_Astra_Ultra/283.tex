@@ -1,0 +1,103 @@
+\section{Erd\H{o}s Problem \#283}
+\subsection{Statement and attribution}
+Let $p$ be a polynomial taking integer values on $\mathbb Z$, with positive leading coefficient and no fixed divisor greater than one. Must every sufficiently large integer $m$ have a representation
+\[
+ \sum_{n\in A}\frac1n=1,\qquad \sum_{n\in A}p(n)=m
+\]
+with $A$ a finite set of distinct positive integers? Yes. We reconstruct the switching proof credited to GPT-5.5 Pro, prompted by Price and edited by Barreto, using the formalization-informed presentation linked in the current discussion. The proof works with any prescribed rational reciprocal sum $\alpha>0$ and any lower bound on the denominators. No novelty is claimed.
+
+The substantial external input is the Roth--Szekeres--Graham completeness theorem: a nonconstant rational polynomial $q$ taking positive integer values on the positive integers, with positive leading coefficient and gcd of its values equal to one, has every sufficiently large integer as a finite sum of values $q(j)$ with distinct indices. We use this theorem explicitly; its proof is not reproduced. Integer-valued polynomials on $\mathbb Z$ have rational coefficients by interpolation.
+
+\subsection{Work I: elementary tools and residue corrections}
+First, every rational $R>0$ is a sum of reciprocals of distinct integers exceeding any prescribed bound $L$. Take the longest initial segment $L+1,\ldots,N$ whose reciprocal sum is strictly below $R$; its remaining rational residual is at most $1/(N+1)$. The usual greedy Egyptian algorithm terminates: for a residual $a/b$ in lowest terms and $q=\lceil b/a\rceil$, the positive new numerator $aq-b$ is smaller than $a$, unless the residual is already $1/q$. Its denominators strictly increase and start at least at $N+1$. Increasing $L$ to at least one ensures every denominator is at least two.
+Moreover splitting the largest denominator $y$ by
+\[
+ \frac1y=\frac1{y+1}+\frac1{y(y+1)}
+ \tag{1}
+\]
+preserves distinctness and increases the number of terms by one. Thus all sufficiently large numbers of terms occur.
+
+Call a finite set $E\subseteq\{2,3,\ldots\}$ a pattern if $\sum_{e\in E}1/e=1$, and put
+$Q_E(x)=\sum_{e\in E}p(ex)-p(x)$. For any positive integers $T,H$ and residue $b\pmod H$, there is a pattern all of whose elements are divisible by $T$ and with $|E|\equiv b\pmod H$: represent the rational number $T$ by sufficiently many distinct reciprocal terms and multiply all their denominators by $T$. The preceding length adjustment gives the prescribed cardinality; if $T=1$, use denominators exceeding one.
+
+Suppose $p$ has degree $r\ge1$ and leading coefficient $a>0$. Every $Q_E$ has degree $r$ and positive leading coefficient $a(\sum_{e\in E}e^r-1)$. We claim
+\[
+ \gcd\{Q_E(n):E\hbox{ a pattern},\ n\ge1\}=1.
+ \tag{2}
+\]
+Choose $B\ge1$ with $Bp\in\mathbb Z[x]$. Modulo an integer $h$, the values of $p$ have period $hB$: polynomial differences for $Bp$ are divisible by $hB$, and division by $B$ gives the assertion. If a prime $\ell$ divided every value in (2), choose a pattern whose elements are divisible by $\ell B$ and whose cardinality is divisible by $\ell$. Then
+$Q_E(n)\equiv|E|p(0)-p(n)\equiv-p(n)\pmod\ell$, contradicting the absence of a fixed prime divisor for $p$. This proves (2). Finitely many of these switching values already have gcd one, so finitely many patterns suffice.
+
+\subsection{Work II: a long family of independent switches}
+Fix a rational $\alpha>0$ and a denominator bound $L$. Put
+\[
+ P=36,\quad u_j=Pj+1,\quad D_j=u_ju_{j+1},\quad
+ A(x)=p(2x)+p(3x)+p(6x)-p(x).
+\]
+Write $\Theta=2^r+3^r+6^r-1>1$ and $\lambda=aP^{2r}$. Choose $J$ large enough that all $A(D_j)>0$ for $j\ge J$, all relevant initial denominators exceed $L$, and $1/(Pu_J)<\alpha$. Let
+\[
+ g=\gcd_{j\ge J}A(D_j),\qquad
+ \mu=\lambda(1+\Theta)/2.
+\]
+The polynomial whose values are $A(D_j)/g$, reindexed from $j=J$, satisfies the completeness theorem. In particular there is $M_0$ such that, for all large $N$, every multiple $M$ of $g$ in
+\[
+ M_0\le M\le\mu N^{2r}
+ \tag{3}
+\]
+is a sum of distinct values $A(D_j)$ with $J\le j\le N$. To verify the finite upper limit, the theorem first provides a representation using arbitrary $j\ge J$. But
+$A(D_j)\sim\lambda\Theta j^{2r}$ and $\mu<\lambda\Theta$, so every term with $j>N$ exceeds $\mu N^{2r}$ for large $N$. Positivity excludes such terms from a representation in (3). The rational polynomial $A(D_j)/g$ is integer-valued on every positive integer of its reindexing, which also implies integer-valuedness on all integers: clear its coefficient denominators and move an argument to a positive one in the same residue class modulo that denominator.
+
+We need only finitely many additional switches to correct residues modulo $g$. By (2), choose switching values $Q_{E_\sigma}(b_\sigma)$ whose residues generate $\mathbb Z/g\mathbb Z$. Make $g-1$ separate copies of each type. For each copy choose a large integer $c_\nu\equiv b_\sigma\pmod{gB}$, with pattern $G_\nu=E_\sigma$, so that
+\[
+ b_\nu:=Q_{G_\nu}(c_\nu)>0,
+ \qquad C_0:=\sum_\nu1/c_\nu<\alpha-1/(Pu_J).
+ \tag{4}
+\]
+Also require every candidate denominator $ec_\nu$, $e\in\{1\}\cup G_\nu$, to avoid all other copies' candidates and every $hD_j$ with $h\in\{1,2,3,6\}$ and $j\ge J$.
+
+These choices exist: in a fixed residue class the available integers $c\le X$ number $X/(gB)+O(1)$, whereas each collision equation $ec=hD_j$ excludes only $O(\sqrt X)$ choices, since $D_j\asymp j^2$. There are finitely many multiplier pairs and finitely many previously chosen candidates. Arbitrarily large choices remain, giving positivity and (4) as well. The residues of subset sums of the $b_\nu$ fill every class modulo $g$: express a residue as an integer combination of the generators and reduce each coefficient to $0,\ldots,g-1$. Let $B_*:=\sum_\nu b_\nu$. When $g=1$ use no correction copies and put $C_0=B_*=0$.
+
+\subsection{Work III: fill the reciprocal sum and prevent collisions}
+Set $R_0=\alpha-1/(Pu_J)-C_0>0$. Let $Y$ exceed all correction candidates and $L$, and choose an integer $\Lambda>Y$ divisible by eight. Represent $\Lambda R_0$ as a finite sum of distinct unit fractions $\sum_{f\in F}1/f$. The fixed denominators $\Lambda f$ then have reciprocal sum $R_0$.
+For $N\ge J$, put $\tau_N=Pu_{N+1}$. Telescoping gives
+\[
+ \sum_{j=J}^{N}\frac1{D_j}+\frac1{\tau_N}=\frac1{Pu_J}.
+ \tag{5}
+\]
+Together with the correction denominators $c_\nu$ and the fixed denominators $\Lambda f$, this is a representation of $\alpha$.
+
+Independently switch any chosen $D_j$ to $2D_j,3D_j,6D_j$, and any chosen $c_\nu$ to the set $\{ec_\nu:e\in G_\nu\}$. Each operation preserves the reciprocal sum and adds respectively $A(D_j)$ or $b_\nu$ to the polynomial sum.
+
+We verify distinctness for every selection. Since $u_j\equiv1\pmod{36}$, the candidates $hD_j$ have four different valuation pairs $(v_2,v_3)$, namely $(0,0),(1,0),(0,1),(1,1)$ for $h=1,2,3,6$. Equal candidates must therefore have the same $h$, and then strict increase of $D_j$ gives the same $j$. The denominator $\tau_N$ has valuation pair $(2,2)$, so never meets them. Fixed denominators have $v_2\ge3$, and are larger than all correction candidates. Correction candidates were chosen to avoid each other and all main candidates. Finally $\tau_N>Y$ for large $N$, excluding the remaining possible collisions. All denominators exceed $L$.
+
+\subsection{Work IV: every sufficiently large integer occurs}
+Let the unswitched polynomial sum be
+\[
+ B_N=\sum_{j=J}^{N}p(D_j)+p(\tau_N)
+                 +\sum_\nu p(c_\nu)+\sum_{f\in F}p(\Lambda f).
+\]
+For each sufficiently large $N$, every integer in
+\[
+ [B_N+B_*+M_0,\ B_N+\mu N^{2r}]
+ \tag{6}
+\]
+is attainable. Indeed choose a correction subset with sum $\Delta\equiv m-B_N\pmod g$. Since $0\le\Delta\le B_*$, the residual $M=m-B_N-\Delta$ satisfies (3). Represent it by main switching values and perform precisely those switches.
+
+It remains to verify that these intervals have no large gaps. Directly,
+\[
+ B_{N+1}-B_N=p(D_{N+1})+p(\tau_{N+1})-p(\tau_N)
+             =\lambda N^{2r}+O(N^{2r-1}).
+\]
+Thus $B_N\to\infty$, and $\mu>\lambda$ implies that the upper endpoint of (6) eventually exceeds the lower endpoint of the next interval. Their widths are positive and their lower endpoints increase to infinity. Their union therefore contains every sufficiently large integer. This proves the theorem for degree $r\ge1$.
+
+If $p$ is constant, positivity and the fixed-divisor hypothesis force $p=1$. The polynomial sum is then the number of terms, and the initial Egyptian expansion and operation (1) give every sufficiently large number of terms. This completes the constant case too.
+
+\subsection{Verification and outcome}
+The construction corrects residue classes with finitely many independent switches, then fills actual intervals with the growing family of main switches. Merely proving the switching values have gcd one would not suffice; the finite-window completeness argument and interval overlap close that gap. The old local attempts proved only unboundedness or the constant case; no assertion from them is used without proof.
+
+\textbf{SOLVED, with the Roth--Szekeres--Graham theorem explicitly external.} Taking $\alpha=1$ proves the stated problem; the reconstruction also permits any rational $\alpha>0$ and a prescribed denominator lower bound.
+
+\subsection{Sources}
+R. L. Graham, \emph{Complete sequences of polynomial values}, Duke Math. J. 31 (1964), 275--285, \url{https://mathweb.ucsd.edu/~ronspubs/64_04_polynomial.pdf}. Attributed 2026 switching proof and revised exposition: \url{https://www.overleaf.com/read/gdmnffbshxsq} and \url{https://drive.google.com/file/d/1cW2Z7vpTjLQ2Wf6SMb6_nbO9JYlfznnt/view}. Current statement and authorship discussion: \url{https://www.erdosproblems.com/forum/discuss/283}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

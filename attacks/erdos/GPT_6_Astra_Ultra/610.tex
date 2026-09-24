@@ -1,0 +1,47 @@
+\section{Erd\H{o}s Problem 610: meeting every maximal clique}
+\subsection*{Statement and scope}
+Let $\tau(G)$ be the smallest size of a vertex set meeting every maximal clique of size at least two in a graph $G$. Is there an absolute $c>0$ such that every sufficiently large $n$-vertex graph satisfies
+\[
+ \tau(G)\le n-c\sqrt{n\log n}?
+\]
+The answer is affirmative. This attempt reconstructs the reduction in Joret--Micek--Reed--Smid, with their maximum-degree clique-colouring theorem stated explicitly as the external input. All logarithms below are natural.
+
+\subsection*{External input and plan}
+A clique colouring forbids monochromatic maximal cliques of size at least two. We use the following theorem from \emph{Tight Bounds on the Clique Chromatic Number}, Theorem 1: for every $\varepsilon>0$, every graph of sufficiently large maximum degree $\Delta$ has a clique colouring with at most $(1+\varepsilon)\Delta/\log\Delta$ colours. We do not reproduce its probabilistic proof.
+We first convert this degree bound into a bound depending only on the order, then take the complement of a large colour class.
+
+\subsection*{Reconstruction}
+Put $D=\lceil\sqrt{n\log n}\rceil$. Starting with $G$, whenever the remaining graph has a vertex $v_i$ of degree at least $D$, delete that vertex and its entire current neighbourhood $W_i$. Stop with an induced graph $H$ of maximum degree less than $D$. The deleted blocks are disjoint, so their number $k$ satisfies
+\[
+ k(D+1)\le n,\qquad k\le n/D.
+\]
+The selected centres $v_1,\ldots,v_k$ are independent: a later centre was not a neighbour of an earlier centre when the latter was removed.
+
+Colour all centres with one colour. Give each set $W_i$ its own new colour, and colour $H$ with a disjoint palette. The theorem above, together with an ordinary greedy colouring when the maximum degree is bounded, gives
+\[
+ \chi_c(H)\le C\frac D{\log D}
+\]
+for an absolute $C$ and all sufficiently large $n$. To justify the uniformity here, use the theorem with $\varepsilon=1$ once $\Delta(H)$ exceeds its fixed threshold, and use that $x/\log x$ is increasing for $x>e$; below that threshold a fixed number of colours suffices.
+
+This really is a clique colouring of $G$. A clique contained in $W_i$ extends by $v_i$, so cannot be maximal in $G$. A monochromatic clique lying in $H$ and maximal in $G$ would also be maximal in $H$, contrary to the colouring of $H$. The centre class is independent. No other monochromatic clique is possible because the palettes are disjoint. Consequently
+\[
+ \chi_c(G)\le 1+\frac nD+C\frac D{\log D}
+          \le C'\sqrt{\frac n{\log n}}.
+\]
+A largest colour class $I$ therefore has at least $(C')^{-1}\sqrt{n\log n}$ vertices. It contains no maximal clique of size at least two, so $V(G)\setminus I$ meets every such clique. Hence
+\[
+ \boxed{\tau(G)\le n-(C')^{-1}\sqrt{n\log n}.}
+\]
+Isolated vertices cause no exception because their singleton cliques were excluded in the definition.
+
+\subsection*{Verification and conclusion}
+The deletion uses degrees in the current induced graph, which is essential both for disjointness of the blocks and independence of the centres. A clique in a neighbourhood need not be independent; the argument only uses its available extension by the centre. The external theorem controls maximal cliques, exactly the notion required here.
+
+\textbf{Status: solved, conditional only on the explicitly cited established clique-colouring theorem.} This is a reconstruction of the known resolution, not a claim of a new theorem. The missing independent ingredient is a proof of that cited theorem; there is no further deduction needed for the stated problem.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/610} (statement, checked 24 September 2026).
+\item G. Joret, P. Micek, B. Reed and M. Smid, \emph{Tight Bounds on the Clique Chromatic Number}, Theorem 1 and Corollary 2, \url{https://arxiv.org/abs/2006.11353}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 100\% of the deduction, with the external theorem identified above.}

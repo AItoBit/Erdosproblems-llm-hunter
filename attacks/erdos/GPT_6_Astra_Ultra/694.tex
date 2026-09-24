@@ -1,0 +1,108 @@
+\section*{Erd\H{o}s Problem 694: ratios of extreme inverse totients}
+
+\paragraph{Statement and claim.}
+For \(n\) in the image of Euler's totient function, let
+\(f_{\min}(n)\) and \(f_{\max}(n)\) be its smallest and largest
+preimages, and set
+\[
+ R(x)=\max_{\substack{n\leq x\\n\in\phi(\mathbb N)}}
+             \frac{f_{\max}(n)}{f_{\min}(n)}.
+\]
+Then
+\[
+ R(x)=(e^\gamma+o(1))\log\log x.
+\]
+The lower construction is attributed on the problem page to
+GPT-5.5 Pro prompted by Liam Price; Thomas Bloom gives a concise
+proof in the primary discussion:
+\url{https://www.erdosproblems.com/forum/thread/694}.
+We reconstruct the details, rather than claim a new discovery.
+The external analytic inputs are Mertens' prime-product theorem,
+the prime number theorem, and Linnik's theorem.
+
+\paragraph{A uniform upper bound.}
+If \(m=\prod p^a\), then
+\[
+ \frac{\phi(m)^2}{m}=\prod_{p^a\parallel m}p^{a-2}(p-1)^2
+ \geq\frac12.
+\]
+Every odd-prime factor on the right is at least one, and the
+factor for \(2\), if present, is at least \(1/2\).
+Consequently \(\phi(m)=n\) implies \(m\leq2n^2\).
+In particular the extreme preimages exist and are finite.
+
+Put \(Y=\log(2x^2)\). Uniformly for \(m\leq2x^2\), separate the
+prime factors of \(m\) at \(Y\). There are at most
+\(\log(2x^2)/\log Y\) distinct prime factors exceeding \(Y\), so
+\[
+ \prod_{\substack{p\mid m\\p>Y}}(1-1/p)^{-1}
+ \leq\exp\left(\frac{2\log(2x^2)}{Y\log Y}\right)=1+o(1).
+\]
+Mertens' theorem handles the smaller primes:
+\[
+ \frac m{\phi(m)}
+ \leq(1+o(1))\prod_{p\leq Y}(1-1/p)^{-1}
+ =(e^\gamma+o(1))\log Y
+ =(e^\gamma+o(1))\log\log x.
+\]
+For \(a=f_{\min}(n)\), \(b=f_{\max}(n)\), use
+\[
+ \frac ba=\frac b{\phi(b)}\frac{\phi(a)}a
+          \leq\frac b{\phi(b)}
+\]
+to obtain the required upper bound.
+
+\paragraph{Two preimages with separated sizes.}
+Let \(y\to\infty\), and define
+\[
+ P=\prod_{p\leq y}p,\qquad A=\phi(P)=\prod_{p\leq y}(p-1).
+\]
+Linnik's theorem gives absolute constants \(C,L\), with \(L\geq1\),
+and a prime \(\ell\equiv1\pmod A\) with \(\ell\leq CA^L\).
+Write \(\ell=Ak+1\), and put
+\[
+ Q=\prod_{\substack{q\mid k\\q>y\\q\ {\rm prime}}}q,\qquad
+ a=\ell Q,\qquad b=kPQ.
+\]
+The prime \(\ell\) does not divide \(Q\), since every prime
+factor of \(Q\) divides \(k<\ell\). Hence
+\[
+ \phi(a)=(\ell-1)\phi(Q)=Ak\phi(Q).
+\]
+The distinct prime factors of \(b\) are exactly the primes at most
+\(y\), together with the primes dividing \(Q\). Therefore
+\[
+ \phi(b)=kPQ\frac AP\frac{\phi(Q)}Q=Ak\phi(Q)=\phi(a).
+\]
+This calculation includes arbitrary prime powers in \(k\);
+it does not require \(k\) to be smooth or squarefree.
+The ratio is
+\[
+ \frac ba=\frac{kP}{\ell}
+   =\left(1-\frac1\ell\right)\prod_{p\leq y}\frac p{p-1}
+   =(e^\gamma+o(1))\log y.                                    \tag{1}
+\]
+
+\paragraph{Ensuring the common totient is at most \(x\).}
+Since \(Q\leq k\),
+\[
+ n_y:=\phi(a)\leq Ak^2\leq C^2 A^{2L-1}.
+\]
+The prime number theorem implies
+\(\log A\leq\sum_{p\leq y}\log p\leq2y\) for large \(y\).
+Choose \(y=\log x/(8L)\). Then \(n_y\leq x\) for sufficiently
+large \(x\), while \(\log y=\log\log x+O(1)\).
+Both \(a,b\) are preimages of \(n_y\), and \(b/a\to\infty\), so
+\[
+ R(x)\geq\frac{f_{\max}(n_y)}{f_{\min}(n_y)}
+       \geq\frac ba=(e^\gamma+o(1))\log\log x.
+\]
+Together with the upper bound this proves the asymptotic formula.
+
+\paragraph{Scope.}
+The ratio problem is fully resolved relative to the three named
+classical analytic inputs. No resolution of Carmichael's separate
+unique-preimage conjecture is asserted.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,50 @@
+\section{Erd\H{o}s Problem \#433: the extremal Frobenius number}
+\noindent Complete asymptotic deduction from Dixmier's interval theorem, 24 September 2026.
+
+\subsection*{1) Statement and asymptotic regime}
+For a finite set $A$ of positive integers with $\gcd(A)=1$, let $G(A)$ be its Frobenius number, the largest integer not expressible as a nonnegative integer combination of elements of $A$. Set $G(A)=-1$ when every nonnegative integer is representable. For $2\le k\le n$, put
+\[g(k,n)=\max\{G(A):A\subseteq[1,n],\ |A|=k,\ \gcd(A)=1\}.
+\]
+The question is whether $g(k,n)\sim n^2/(k-1)$ for fixed $k$ as $n\to\infty$. We prove this, and in fact the same asymptotic whenever $k=o(n)$, using the stated external interval-count theorem.
+
+\subsection*{2) The exact external input and a rounding issue}
+Dixmier's interval-count theorem says that if $A$ has $k$ elements, gcd one, and maximum $m$, and $S$ is the semigroup it generates, then
+\[|S\cap((j-1)m,jm]|\ge\min\{m,j(k-1)+1\}\qquad(j\ge1).\tag{1}\]
+Its proof is an external dependency. This formulation is stated in the original paper's abstract and avoids relying on a problematic rounded bound in the problem-page commentary.
+
+Indeed, that commentary displays an upper expression using $\lfloor(n-1)/(k-1)\rfloor-1$. At $(k,n)=(3,4)$ it would give $g(3,4)\le-1$, whereas $A=\{2,3,4\}$ has $G(A)=1$. We instead derive the ceiling bound directly from (1).
+
+\subsection*{3) Upper bound from full intervals}
+Write $h=k-1$ and $J=\lceil(m-1)/h\rceil$. For every $j\ge J$, (1) fills the entire interval $((j-1)m,jm]$. Also $(J-1)m$ is representable, since $m\in A$. Therefore
+\[G(A)\le(J-1)m-1.
+\]
+The function $(\lceil(m-1)/h\rceil-1)m$ is nonnegative and nondecreasing for $m\ge k$. Since $m\le n$, this gives
+\[g(k,n)\le\left(\left\lceil\frac{n-1}{k-1}\right\rceil-1\right)n-1
+\le\frac{n(n-1)}{k-1}-1.\tag{2}\]
+Only this verified bound is used in the asymptotic argument.
+
+\subsection*{4) Exact lower example from consecutive generators}
+Take $A=\{m,m+1,\ldots,m+h\}$ with $m=n-h$. Its gcd is one. Sums of exactly $\ell$ terms fill precisely the integer interval
+\[J_\ell=[\ell m,\ell n],\qquad \ell\ge0.
+\]
+To verify there are no holes inside $J_\ell$, write a desired offset between 0 and $\ell h$ as a sum of $\ell$ integers from $[0,h]$, using as many $h$'s as possible and one remainder.
+
+The gap just before $J_\ell$ has length
+\[\ell m-(\ell-1)n-1=n-\ell h-1.
+\]
+These lengths decrease with $\ell$. The final positive gap occurs at $t=\lfloor(n-2)/h\rfloor$, and its final point is $tm-1$. If $m=1$, there are no gaps and $t=0$, giving the same convention. Thus
+\[G(A)=\left\lfloor\frac{n-2}{k-1}\right\rfloor(n-k+1)-1.\tag{3}\]
+
+The right side of (3) is $n^2/(k-1)-O(n)$, with an absolute error bound for $2\le k\le n$. For example using $\lfloor u\rfloor\ge u-1$ gives an error at most $4n+1$. Together with (2), this proves
+\[g(k,n)=\frac{n^2}{k-1}+O(n).
+\]
+In particular the relative error tends to zero whenever $k=o(n)$, including every fixed $k\ge2$. The condition on the regime is substantive: when $k=n$, the only set is $[1,n]$ and $g(n,n)=-1$.
+
+\subsection*{5) Outcome and sources}
+\textbf{SOLVED for the stated fixed-$k$ asymptotic, relative to (1).} The lower example and all rounding, monotonicity and limiting steps are proved; Dixmier's interval-count theorem is the declared external ingredient. The transcription discrepancy in the commentary does not affect that theorem or this proof.
+
+Sources: \url{https://www.erdosproblems.com/433}, checked 24 September 2026; J. Dixmier, \emph{Proof of a conjecture by Erd\H{o}s and Graham concerning the problem of Frobenius}, J. Number Theory 34 (1990), 198--209, \url{https://doi.org/10.1016/0022-314X(90)90150-P}. No novelty or independent Lean verification is claimed.
+
+The estimate applies to the complete deduction from the explicitly stated theorem.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

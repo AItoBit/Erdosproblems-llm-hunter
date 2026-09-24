@@ -1,0 +1,59 @@
+\section{Erd\H{o}s Problem \#147: an explicit cubic counterexample from Janzer's theorem}
+\noindent Reconstruction with a declared external input, 23 September 2026.
+
+\subsection*{1) Statement and approach}
+The conjecture asks whether every bipartite graph of minimum degree $r$ satisfies $\operatorname{ex}(n,H)\gg_H n^{2-1/(r-1)+\epsilon(H)}$ for some $\epsilon(H)>0$. We disprove it at $r=3$ by specifying Janzer's graph and applying his extremal theorem. We also prove the weaker random-deletion lower bound, to distinguish the two exponents.
+
+\subsection*{2) The graph and the external theorem}
+For integers $k\ge1$, $\ell\ge2$, index vertices by $(i,j)$ with $1\le i\le4k$ and $j\in\mathbb Z/(2\ell)\mathbb Z$. Include these edges:
+\[
+ \begin{split}
+ &(2i-1,j)(2i,j)\quad(1\le i\le2k);\\
+ &(1,j)(1,j+1),\quad(4k,j)(4k,j+1);\\
+ &(2i,j)(2i+1,j+1),\quad(2i+1,j)(2i,j+1)
+       \quad(1\le i\le2k-1).
+ \end{split}\tag{1}
+\]
+This is $H_{k,\ell}$ in Definition 1.5 of O. Janzer, \emph{Disproof of a conjecture of Erd\H{o}s and Simonovits on the Tur\'an number of graphs with minimum degree 3}, \url{https://arxiv.org/html/2109.06110v2}. Its Theorem 1.6 states that, for $0<\eta<1/6$, $k\ge1/\eta$, and $\ell\ge16k/\eta$,
+\[
+ \operatorname{ex}(n,H_{k,\ell})=O_{k,\ell,\eta}(n^{4/3+\eta}).\tag{2}
+\]
+We accept (2) as the external input; its graph-counting proof is not reproduced.
+
+\subsection*{3) Checking the hypotheses and contradiction}
+Every vertex has one neighbour from the first line of (1). In an interior row it also has the two neighbours in the adjacent row given by the third line. At either boundary row it instead has the two cycle neighbours. These are distinct since $2\ell\ge4$. Thus the graph is simple and 3-regular, on $8k\ell$ vertices.
+
+The parity of $j+\lfloor i/2\rfloor$ is a bipartition: the first type of edge changes $\lfloor i/2\rfloor$ by one, the boundary edges change $j$ by one, and the remaining edges change $j$ by one while leaving the row parity contribution unchanged. The graph is connected: the first row is a cycle, and every successive row has neighbours in the preceding row.
+
+Choose $\eta=1/8$, $k=8$, $\ell=1024$. All conditions of (2) hold and the resulting fixed graph $H$ has minimum degree three, with
+\[
+ \operatorname{ex}(n,H)=O(n^{35/24}).
+\]
+The proposed lower bound at $r=3$ would be $c_H n^{3/2+\epsilon(H)}$. Their ratio is at most a constant times
+\[
+ n^{35/24-(3/2+\epsilon(H))}=n^{-1/24-\epsilon(H)}\longrightarrow0,
+\]
+which contradicts any positive lower-bound constant. The same one fixed graph defeats every choice of positive $\epsilon(H)$; it does not vary with $n$.
+
+\subsection*{4) What the elementary deletion method actually proves}
+Let a fixed graph have $v$ vertices, $e>1$ edges and minimum degree at least $r\ge2$. In a random graph on $n$ vertices with edge probability $p=a n^{-(v-2)/(e-1)}$, the expected number of edges is at least $(a/4)n^{\beta}$ for $n\ge2$, where
+\[
+ \beta=2-\frac{v-2}{e-1}.
+\]
+The expected number of labelled copies of the forbidden graph is at most $n^vp^e=a^e n^\beta$. Fix $0<a\le1$ small enough that $a^e\le a/8$. Some realization has at least $(a/8)n^\beta$ more edges than forbidden copies. Deleting one edge from each original copy leaves a forbidden-subgraph-free graph with at least that many edges; deletion creates no new copies.
+
+Since $e\ge rv/2$,
+\[
+ \beta\ge2-\frac{2(v-2)}{rv-2}
+ =2-\frac2r+\frac{4(r-1)}{r(rv-2)}>2-\frac2r.
+\]
+This is the weaker lower exponent recorded in the editorial, with an explicit positive increment. It is compatible with (2), since the increment depends on the large fixed forbidden graph. It does not give the conjectured $2-1/(r-1)$ exponent.
+
+\subsection*{5) Outcome and sources}
+\textbf{SOLVED, reconstructing the known negative answer from the specified Janzer theorem.} The construction checks, quantifier contradiction and weaker lower bound are proved above. The upper-bound theorem (2) is the sole deep external input, and no independent Lean verification or novelty is claimed.
+
+Problem: \url{https://www.erdosproblems.com/147}, checked 23 September 2026; primary theorem linked in Section 2.
+
+The estimate describes complete coverage with the declared theorem accepted, not a claim to reprove that theorem or a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

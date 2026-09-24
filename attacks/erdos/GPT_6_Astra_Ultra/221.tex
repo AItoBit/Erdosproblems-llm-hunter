@@ -1,0 +1,72 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#221; reconstruction of Ruzsa's construction, 2026-09-23.}
+Find $A\subset\mathbb N$ such that $A(N)=|A\cap[1,N]|\ll N/\log N$ and every sufficiently large integer is $a+2^k$ with $a\in A$ and $k\geq0$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Ruzsa answered this affirmatively in 1972. The current source gives his construction, and Wouter van Doorn explains a choice of its constants. The proof below verifies the coverage, primitive-root assertion, and counting bound explicitly. The sharper later asymptotic $A(N)\sim N/\log_2N$ is not needed and is not reconstructed.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Use powers of five as moduli. Two adjacent target residues ensure that one is a unit, and powers of two run through every unit modulo $5^n$. Count the union of the resulting sparse progressions by separating small and large moduli.
+
+\section{WORK}
+Define
+\[
+B=\bigcup_{n\geq0}\{5^n m:m\in\mathbb Z,\ 1\leq m<2^{5^{n+1}}\},
+\qquad A=B\cup(B+1).
+\tag{1}
+\]
+All elements are positive integers.
+
+\textbf{Primitive roots.} For $s\geq0$,
+\[
+v_5(2^{4\cdot5^s}-1)=s+1.
+\tag{2}
+\]
+For $s=0$ this follows from $2^4-1=15$. If $u=1+5^t c$ with $t\geq1$ and $5\nmid c$, the binomial expansion shows $v_5(u^5-1)=t+1$: its first term is $5^{t+1}c$ and all remaining terms have larger valuation. This proves (2) by induction. The order of $2$ modulo $5^n$ divides $4\cdot5^{n-1}$ by Euler's theorem and is a multiple of four by reduction modulo five. Equation (2) then shows that it is exactly $4\cdot5^{n-1}$. Thus the powers $2^k$ with $1\leq k\leq4\cdot5^{n-1}$ exhaust all units modulo $5^n$.
+
+\textbf{Coverage.} Let $N\geq32$, and choose $n\geq1$ with
+\[
+5^n\leq\log_2N<5^{n+1}.
+\]
+At least one of $N,N-1$ is not divisible by five. Choose $\varepsilon\in\{0,1\}$ accordingly. By the preceding paragraph there is
+\[
+1\leq k\leq4\cdot5^{n-1}<5^n,
+\qquad 2^k\equiv N-\varepsilon\pmod{5^n}.
+\]
+Set $m=(N-\varepsilon-2^k)/5^n$. This is an integer, and it is positive because
+\[
+N-\varepsilon-2^k\geq2^{5^n}-1-2^{5^n-1}>0.
+\]
+Moreover $m<N<2^{5^{n+1}}$. Thus $a=5^n m+\varepsilon\in A$, and $N=a+2^k$ as required.
+
+\textbf{Counting.} Put $L=\log_2X$ and take $X$ sufficiently large. In counting $B\cap[1,X]$, a fixed index $n$ contributes at most
+\[
+\min\{X/5^n,\ 2^{5^{n+1}}\}.
+\tag{3}
+\]
+If $5^{n+1}\leq L/2$, the second bound is at most $\sqrt X$, and there are $O(\log L)$ such indices. Their total is $O(\sqrt X\log L)=o(X/L)$.
+For the other indices, let $n_0$ be the smallest one satisfying $5^{n_0+1}>L/2$. Then $5^{n_0}>L/10$, so their total contribution is at most
+\[
+\sum_{n\geq n_0}X/5^n
+=\frac54\frac{X}{5^{n_0}}<\frac{25X}{2L}.
+\tag{4}
+\]
+The infinite tail causes no difficulty: when $5^n>X$ there are actually no positive multiples below $X$, and the upper bound in (4) remains valid. Duplicate representations only overcount the union. Finally $A(X)\leq B(X)+B(X-1)\leq2B(X)$, proving $A(X)\ll X/\log X$.
+
+\textbf{Why this order is necessary.} For any such complement, every integer in $[N_0,X]$ supplies a pair $(a,k)$ with $a\leq X$ and $0\leq k\leq\lfloor\log_2X\rfloor$. A fixed pair has only one sum. Therefore
+\[
+X-N_0+1\leq A(X)(\lfloor\log_2X\rfloor+1),
+\]
+so $A(X)\geq(1-o(1))X/\log_2X$. The constructed order of growth is optimal, although its leading constant is not optimized here.
+
+\section{VERIFICATION AND SCOPE}
+The two shifts in (1) are necessary for this residue argument when the target is divisible by five. The coverage exponent is strictly below $5^n$, which makes the remaining summand positive even at the lower endpoint $N=2^{5^n}$. The counting proof treats the rapidly growing cutoffs independently of that coverage choice. All claims needed for the original existence question are proved; no new discovery or exact-asymptotic construction is claimed.
+
+\section{SOURCES}
+\begin{itemize}
+\item Statement, Ruzsa's construction, and original references [Ru72], [Ru01]: \url{https://www.erdosproblems.com/221}.
+\item W. van Doorn's explanation of the explicit cutoff, in the problem discussion: \url{https://www.erdosproblems.com/forum/thread/221}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved by reconstruction of a known construction.} The set (1) is a complement to the powers of two with the required optimal order of counting function.
+\textbf{Completion rate estimate: 100\%.}

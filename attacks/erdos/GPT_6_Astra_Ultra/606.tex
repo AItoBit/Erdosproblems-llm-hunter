@@ -1,0 +1,40 @@
+\section{Erd\H{o}s Problem \#606: possible numbers of determined lines}
+\noindent Exact deficit identities and a realized upper interval, 24 September 2026.
+
+\subsection*{Statement and context}
+For $n$ distinct points in the real plane, determine every possible number $L$ of lines containing at least two of them. Salamon--Erd\H{o}s give the full large-$n$ classification. We prove the elementary lower bound for noncollinear sets, the two universal missing values immediately below $\binom n2$, and an explicit interval of realized values near that maximum. This does not reconstruct the complete classification.
+
+\subsection*{An exact accounting identity}
+Let $r_\ell\geq2$ be the number of selected points on a determined line $\ell$. Each unordered point pair belongs to exactly one such line, so
+\[\sum_\ell\binom{r_\ell}{2}=\binom n2,\qquad
+\binom n2-L=\sum_{\ell:r_\ell\geq3}\left(\binom{r_\ell}{2}-1\right).\tag{1}
+\]
+The positive contributions on the right start with $2,5,9,14,\ldots$. They cannot sum to one or three. Thus $\binom n2-1$ and $\binom n2-3$ are impossible for every $n$ for which these are meaningful candidate counts. A configuration with no three collinear attains $\binom n2$, while a collinear configuration attains one.
+
+\subsection*{A linear-algebra proof of $L\geq n$ when noncollinear}
+Let $M$ be the point--line incidence matrix, with one row for each point and one column for each determined line. Let $d_i$ be the number of determined lines through point $i$. Distinct points lie on exactly one common line, so
+\[MM^{\mathsf T}=J+\operatorname{diag}(d_1-1,\ldots,d_n-1),
+\]
+where $J$ is the all-ones matrix. If the set is noncollinear, every $d_i\geq2$: one line through a point containing all other points would make the entire set collinear. For a nonzero real vector $x$, the quadratic form is
+\[x^{\mathsf T}MM^{\mathsf T}x
+=\left(\sum_i x_i\right)^2+\sum_i(d_i-1)x_i^2>0.
+\]
+Hence $\operatorname{rank}M=n$, requiring at least $n$ columns. Equality is attainable with $n-1$ points on one line and one point outside it, for $n\geq3$.
+
+\subsection*{Realizing prescribed small deficits}
+For any nonnegative integers $a,b$ with $3a+4b\leq n$, place $a$ groups of three and $b$ groups of four points on their own distinct lines, and place the remaining points generically, so the only lines with at least three points are these prescribed group lines. Such a configuration exists by sequential choices: choose each new group line avoiding earlier points, choose its first point away from the finitely many intersections with lines through earlier point pairs, and choose all further points on that line away from the same finite forbidden set. A triple involving two new points lies on the new group line, which contains no earlier point. A triple involving one new point and two earlier points is excluded by the forbidden set. Repeating this argument, and then adding generic singleton points, creates no unintended collinear triple.
+Equation (1) gives exactly
+\[L=\binom n2-2a-5b.\tag{2}
+\]
+Consequently every deficit $D$ with $0\leq D\leq\lfloor2n/3\rfloor$, except $D=1,3$, is realized. For even $D$, take $a=D/2,b=0$, using $3D/2\leq n$ points. For odd $D\geq5$, take $b=1,a=(D-5)/2$, using $(3D-7)/2\leq n$ points. There are no other parity cases. Thus (2) fills a genuinely consecutive upper interval apart from the two proved omissions.
+Another exact family is obtained by taking $r$ collinear points and $n-r$ otherwise generic points. It gives
+\[L=1+r(n-r)+\binom{n-r}{2}
+=\binom n2-\binom r2+1\qquad(2\leq r\leq n).
+\]
+
+\subsection*{Outcome and remaining gap}
+\textbf{Attempt status: unresolved.} The incidence identity, lower bound, forbidden deficits and indicated realizations are fully proved. The intermediate ranges, their gaps, and Salamon--Erd\H{o}s's full sufficiently-large-$n$ classification are not determined here. The interval proved above extends only $O(n)$ below the maximum, not down to the much smaller scale achieved in the literature.
+Sources: \url{https://www.erdosproblems.com/606}; P. Salamon and P. Erd\H{o}s, \emph{The solution to a problem of Gr\"unbaum}, \url{https://combinatorica.hu/~p_erdos/1988-36.pdf}. No novelty or formal-verification claim is made.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

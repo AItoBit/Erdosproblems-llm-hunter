@@ -1,0 +1,95 @@
+\section*{Erd\H{o}s Problem 581}
+
+\paragraph{Statement and result.}
+Let \(f(m)\) be the minimum, over triangle-free graphs with exactly \(m\) edges, of the largest number of edges in a bipartite subgraph. The known answer is
+\[
+ f(m)=\frac m2+\Theta(m^{4/5}). \tag{1}
+\]
+We prove the lower bound in detail and derive the upper bound for every integer \(m\) from an explicitly stated algebraic graph theorem. That construction theorem is the only deep external input. Equation (1) is an order estimate for the excess, not an exact formula for each integer.
+
+\paragraph{A cut from vectors.}
+The largest bipartite subgraph has as many edges as a maximum cut: any bipartite subgraph has a bipartition, and all the graph's edges across that partition can be included. Discard isolated vertices. For each vertex \(u\) of degree \(d_u>0\), define a unit vector
+\[
+ v_u=\frac1{\sqrt2}\left(e_u-\frac1{\sqrt{d_u}}\sum_{w\in N(u)}e_w\right)
+\]
+in a Euclidean space with orthonormal coordinates indexed by the vertices. If \(uv\) is an edge, triangle-freeness gives \(N(u)\cap N(v)=\varnothing\), and hence
+\[
+ \langle v_u,v_v\rangle=-\frac12\left(d_u^{-1/2}+d_v^{-1/2}\right)=:\rho_{uv}.
+\]
+Cut vertices according to the sign of their inner product with a standard Gaussian vector. Rotational symmetry in the plane of two unit vectors says that the probability their signs differ is their angle divided by \(\pi\). Since \(\rho_{uv}\leq0\) and \(\arcsin t\geq t\) for \(t\in[0,1]\), this probability is at least \(1/2-\rho_{uv}/\pi\). Summing over edges proves
+\[
+ \operatorname{MaxCut}(G)\geq\frac m2+
+ \frac1{2\pi}\sum_u\sqrt{d_u}. \tag{2}
+\]
+Degenerate angles are covered by continuity. An outcome attaining the expectation exists.
+
+\paragraph{Graphs with no subgraph of high minimum degree.}
+Set \(D=\lceil m^{2/5}\rceil\), with \(m\geq1\). If every nonempty subgraph has a vertex of degree less than \(D\), iteratively delete such vertices and orient edges toward vertices deleted later. The outdegrees \(d_u^+\) satisfy \(d_u^+<D\), \(d_u^+\leq d_u\), and \(\sum d_u^+=m\). Thus
+\[
+ \sum_u\sqrt{d_u}\geq\sum_u\sqrt{d_u^+}
+ \geq\frac m{\sqrt D}\geq\frac1{\sqrt2}m^{4/5}.
+\]
+Equation (2) supplies a gain of at least \(m^{4/5}/(2\pi\sqrt2)\).
+
+\paragraph{Graphs with a dense core.}
+Otherwise there is an induced subgraph \(H\) of order \(s\) and minimum degree at least \(D\). Put \(r=\lceil2s/D\rceil\leq3s/D\), and independently sample \(r\) vertices of \(H\), allowing repetitions. Each vertex fails to have a sampled neighbour with probability at most
+\[
+ (1-D/s)^r\leq e^{-2}<1/4.
+\]
+Let \(W\) be the vertices with a sampled neighbour. By a union bound, each edge of \(H\) has both ends in \(W\) with probability greater than \(1/2\). Some sample therefore has
+\[
+ e(H[W])\geq e(H)/2\geq sD/4. \tag{3}
+\]
+Colour each vertex of \(W\) by the index of its first sampled neighbour. This is a proper colouring with at most \(r\) colours, because two adjacent vertices with the same sampled neighbour would make a triangle.
+
+Randomly partition the \(r\) colour labels into parts of sizes \(\lfloor r/2\rfloor,\lceil r/2\rceil\). Two distinct labels are separated with probability
+\[
+ \frac{2\lfloor r/2\rfloor\lceil r/2\rceil}{r(r-1)}
+ \geq\frac12+\frac1{2r}.
+\]
+Hence (3) yields a cut of \(H[W]\) exceeding half its edges by at least
+\[
+ \frac{sD}{8r}\geq\frac{D^2}{24}\geq\frac{m^{4/5}}{24}.
+\]
+Assign all vertices outside \(W\) independently and fairly to the two cut classes. Every other edge crosses with probability \(1/2\), so some extension retains this gain above \(m/2\). Together with the previous case this proves, for example,
+\[
+ f(m)\geq m/2+m^{4/5}/100. \tag{4}
+\]
+
+\paragraph{The external algebraic family and its spectral consequence.}
+We use Alon's explicit construction in the following form. For each integer \(a\geq2\) not divisible by three, a triangle-free regular graph exists with
+\[
+ n_a=2^{3a},\qquad d_a=2^{a-1}(2^{a-1}-1),\qquad
+ \lambda_{\min}\geq-9\cdot2^a-3\cdot2^{a/2}-1/4. \tag{5}
+\]
+Here \(\lambda_{\min}\) is the smallest adjacency eigenvalue. The finite-field construction establishing (5) is accepted as an external theorem; it is not proved by the cut calculations below.
+
+For any graph with adjacency matrix \(A\) and cut sign vector \(z\in\{-1,1\}^n\),
+\[
+ \text{cut size}=\frac m2-\frac14 z^TAz
+ \leq\frac m2-\frac14\lambda_{\min}n. \tag{6}
+\]
+The inequality follows by expansion in an orthonormal eigenbasis and \(\|z\|^2=n\). Applying (6) to (5), with \(m_a=n_ad_a/2\), gives
+\[
+ \operatorname{MaxCut}(G_a)\leq m_a/2+C m_a^{4/5}, \tag{7}
+\]
+for an absolute \(C\): indeed \(2^{5a-4}\leq m_a<2^{5a-3}\), whereas \(-\lambda_{\min}n_a=O(2^{4a})\).
+
+\paragraph{Filling every edge count.}
+This last step matters because (7) alone only covers a subsequence. The smallest allowed index is \(a=2\), with \(m_2=64\). Consecutive allowed indices differ by one or two. Directly from
+\[
+ m_a=2^{4a-2}(2^{a-1}-1)
+\]
+the ratio of consecutive allowed edge counts is greater than \(32\) and less than \(4096\). Greedily subtract the largest \(m_a\) not exceeding the current remainder. The resulting representation of any integer \(m\) uses at most \(4095\) copies at each scale, and leaves a remainder less than \(64\).
+
+Take the disjoint union of those graph copies and one isolated edge for each remaining unit. This is triangle-free with exactly \(m\) edges. Maximum cut is additive across components. Moreover, the geometric separation of the scales gives
+\[
+ \sum_a c_a m_a^{4/5}
+ \leq4095\sum_{j\geq0}(m/32^j)^{4/5}=O(m^{4/5}),
+\]
+where \(c_a\) are the greedy multiplicities; missing scales only decrease the sum. The fewer than \(64\) isolated edges contribute a bounded additional excess. This proves \(f(m)\leq m/2+O(m^{4/5})\) for all \(m\), and completes (1) together with (4).
+
+\paragraph{Attribution and assessment.}
+The result and the dense-core method are due to Alon; the vector argument above supplies the needed degree-sum cut bound directly. Primary source: N. Alon, \emph{Bipartite subgraphs}, Section 3, \url{https://www.cs.tau.ac.il/~nogaa/PDFS/bipartite3.pdf}; its cited explicit Ramsey graph construction supplies (5). Current statement: \url{https://www.erdosproblems.com/581}, checked 24 September 2026. This is a complete reconstruction relative to (5), with the arbitrary-edge-count step included. No novelty or local formal verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,98 @@
+\section*{Erd\H{o}s Problem 418}
+
+\paragraph{Statement and result.}
+Are infinitely many positive integers absent from the range of
+\(n-\varphi(n)\)? Yes: the known Browkin--Schinzel family is
+\[
+ 2^kP,\qquad k\geq1,\qquad P=509203.
+ \tag{1}
+\]
+We reconstruct the argument using elementary reductions, a modular
+cover, and an explicitly bounded totient computation.
+
+\paragraph{Two arithmetic facts about \(P\).}
+Trial division up to \(\lfloor\sqrt P\rfloor=713\) shows that \(P\)
+is prime. Also \(P+1=509204\) is not a power of two.
+For every \(t\geq1\), \(2^tP-1\) is composite. The following table gives
+a proper prime divisor whenever \(t\) lies in the indicated residue class:
+\[
+\begin{array}{c|rrrrrr}
+\text{divisor}&3&5&7&13&17&241\\ \hline
+t&0\pmod2&1\pmod4&2\pmod3&7\pmod{12}&7\pmod8&3\pmod{24}.
+\end{array}
+\tag{2}
+\]
+These classes cover every residue modulo \(24\); each congruence is
+checked by modular exponentiation. The divisors are proper since
+\(2^tP-1>241\).
+
+\paragraph{The finite base case.}
+There is no \(n\) with \(n-\varphi(n)=2P\).
+Indeed, for odd \(n>1\), \(\varphi(n)\) is even and the difference is
+odd. The value at \(n=1\) is zero. For even \(n\),
+\(\varphi(n)\leq n/2\), so such an \(n\) would satisfy \(n\leq4P\).
+The following entire certificate checks precisely this finite range
+and the arithmetic assertions above:
+\begin{verbatim}
+from math import isqrt
+P = 509203
+assert all(P % d for d in range(2, isqrt(P) + 1))
+assert (P + 1) & P
+cover = [(3,2,0),(5,4,1),(7,3,2),
+         (13,12,7),(17,8,7),(241,24,3)]
+for q, period, residue in cover:
+    assert pow(2, period, q) == 1
+    assert (P * pow(2, residue, q) - 1) % q == 0
+assert all(any(t % period == residue
+               for q, period, residue in cover)
+           for t in range(24))
+limit = 4 * P
+phi = list(range(limit + 1))
+for q in range(2, limit + 1):
+    if phi[q] == q:
+        for n in range(q, limit + 1, q):
+            phi[n] -= phi[n] // q
+assert all(n - phi[n] != 2 * P
+           for n in range(2, limit + 1, 2))
+\end{verbatim}
+This code was run successfully. The sieve computes Euler's product
+formula exactly: when a prime \(q\) is processed, its factor
+\(1-1/q\) is applied once to every multiple. Thus the check establishes
+the stated base case without an unbounded search.
+
+\paragraph{Lifting the base case to the infinite family.}
+Suppose \(n-\varphi(n)=2^kP\), \(k\geq1\). As above \(n\) is even.
+Write \(n=2^s m\) with \(s\geq1\) and \(m\) odd. Multiplicativity gives
+\[
+ 2^{s-1}(2m-\varphi(m))=2^kP.
+ \tag{3}
+\]
+If \(m=1\), the left side is a power of two, a contradiction.
+If \(m\) has at least two distinct prime factors, then
+\(4\mid\varphi(m)\), so \(v_2(2m-\varphi(m))=1\).
+Equation (3) forces \(s=k\) and \(2m-\varphi(m)=2P\).
+But \(\varphi(2m)=\varphi(m)\), contradicting the base case at \(2m\).
+
+It remains that \(m=q^a\) for an odd prime \(q\), \(a\geq1\).
+Equation (3) becomes
+\[
+ 2^{s-1}q^{a-1}(q+1)=2^kP.
+\]
+If \(a=1\), it implies \(q=2^tP-1\) for an integer \(t\geq1\),
+contradicting (2). If \(a\geq2\), the odd factor \(q^{a-1}\)
+must divide the prime \(P\), so \(q=P\), \(a=2\), and then \(P+1\)
+must be a power of two. This is also impossible. All cases are exhausted,
+proving (1).
+
+\paragraph{Attribution and scope.}
+The family is due to J.~Browkin and A.~Schinzel,
+\emph{On integers not of the form \(n-\varphi(n)\)},
+Colloquium Mathematicum 68 (1995), 55--58,
+\url{https://doi.org/10.4064/cm-68-1-55-58}.
+Statement: \url{https://www.erdosproblems.com/418},
+checked 24 September 2026. This proves infinitude, and makes no claim
+about positive density or novelty.
+
+\paragraph{Completion estimate.}
+The infinite family is proved with an explicit, successfully executed finite base certificate.
+\textbf{COMPLETION: 100\%}

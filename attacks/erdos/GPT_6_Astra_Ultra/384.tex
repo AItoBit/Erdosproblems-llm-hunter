@@ -1,0 +1,49 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#384; literal counterexamples and the published non-strict theorem, 2026-09-24.}
+The current page asks whether, for $2\leq k\leq n-2$, the coefficient $\binom nk$ has a prime divisor strictly less than $n/2$, except for $\binom73=35$. The strict inequality requires correction: Ecklund's published theorem gives a divisor \emph{at most} $n/2$ (after using symmetry), with the exceptional positions $k=3,4$ when $n=7$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The first page of Ecklund's 1969 paper states the bound $p\leq\max(n/k,n/2)$ for $n\geq2k$, apart from $\binom73$. For $2\leq k\leq n/2$ this is $p\leq n/2$. Replacing it with $p<n/2$ changes the assertion. Both the literal counterexample and the corrected known result are addressed below.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Exhibit and classify all failures of the strict inequality at $k=2$, prove the strict version at $k=3$ apart from $n=7$, and specify exactly which part of the general corrected result is imported from Ecklund.
+
+\section{WORK}
+\textbf{The literal assertion is false.} For example,
+\[
+\binom42=6,\qquad\binom62=15,\qquad\binom{14}2=91=7\cdot13.
+\]
+None has a prime divisor strictly below $n/2$. These are additional exceptions to the stated strict version.
+
+\textbf{Exact classification for $k=2$.} If $n\geq5$ is odd, then $(n-1)/2\geq2$ is a divisor of $\binom n2=n(n-1)/2$, and any of its prime factors is less than $n/2$. If $n=2m\geq4$, then
+\[
+\binom n2=m(2m-1).
+\]
+If $m$ is composite it has a prime divisor at most $m/2<m$. If $m$ is prime and $2m-1$ is composite, the latter has a prime divisor at most $\sqrt{2m-1}<m$. Conversely, when both $m$ and $2m-1$ are prime the only prime divisors are $m$ and $2m-1$, neither below $m=n/2$. Thus the strict version fails at $k=2$ precisely when
+\[
+n=2p\quad\text{with both }p\text{ and }2p-1\text{ prime}.       \tag{1}
+\]
+No claim that there are infinitely many such primes is necessary. Symmetry gives the same classification at $k=n-2$.
+
+\textbf{The next internal position.} For $k=3$ it suffices by symmetry to consider $n\geq6$. If $n=3m$, then
+$\binom n3=m(n-1)(n-2)/2$ has the factor $m\geq2$, whose prime divisors are below $n/2$. The remaining residue classes are as follows:
+\[
+\begin{array}{c|c|c}
+n&\binom n3&\text{small factor}\\\hline
+6t+1&t(6t+1)(6t-1)&t\quad(t\geq2)\\
+6t+4&(2t+1)(6t+4)(3t+1)&2\quad(t\geq1)\\
+6t+5&(6t+5)(3t+2)(2t+1)&2t+1\quad(t\geq1)\\
+6t+2&t(6t+2)(6t+1)&2\quad(t\geq1).
+\end{array}
+\]
+Each displayed small factor has a prime divisor below $n/2$. The excluded case in the first row is $t=1$, namely $\binom73=35$, which indeed has no prime divisor at most $7/2$.
+
+\textbf{The corrected general theorem.} The declared external input is Ecklund's result: if $2\leq k\leq n/2$, then $\binom nk$ has a prime divisor $p\leq\max(n/k,n/2)=n/2$, except when $(n,k)=(7,3)$. Applying it to $\min(k,n-k)$ proves the corrected assertion for the full internal range, with exceptions $(7,3)$ and $(7,4)$. The estimates and finite checks in Ecklund's proof for general $k$ are not reconstructed here.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: solved.} The literal strict assertion is disproved by complete factorizations, with the exact boundary classification (1) and an elementary proof for $k=3$. The general non-strict version is settled relative to the explicitly cited published theorem. A strict bound cannot be inferred from that theorem.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/384}; E. F. Ecklund, Jr., \emph{On prime divisors of the binomial coefficient}, Pacific Journal of Mathematics 29 (1969), 267--270: \url{https://msp.org/pjm/1969/29-2/pjm-v29-n2-s.pdf}.
+
+\textbf{Completion rate estimate: 100\% for the literal question; the general corrected bound uses Ecklund's theorem.}

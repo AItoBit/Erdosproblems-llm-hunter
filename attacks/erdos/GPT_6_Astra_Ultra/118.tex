@@ -1,0 +1,59 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#118; partial analysis of a known negative result, 2026-09-23.}
+For an ordinal or order type $\alpha$, the relation $\alpha\to(\alpha,n)^2$ means that every red/blue coloring of pairs of a set of order type $\alpha$ has either a red homogeneous subset of that same order type or a blue set of $n$ points. Does $\alpha\to(\alpha,3)^2$ imply $\alpha\to(\alpha,n)^2$ for every finite $n\geq3$? The general answer is known to be no. The elementary arguments here settle important simpler cases and expose the order-type obstruction, but do not reconstruct the known counterexample.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The current source cites independent negative results of Schipperus and Darby, and Larson's counterexample at $\alpha=\omega^{\omega^2}$ and $n=5$. Larson's paper concerns graphs avoiding both an independent set of the specified ordinal type and a five-vertex clique. That coloring construction, together with the positive three-point partition relation for the same ordinal, is the missing main input in this attempt. A cardinality-only Ramsey argument cannot replace it.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Prove the positive result for regular infinite cardinals, prove a necessary indecomposability condition on an ordinal satisfying the premise, and make the distinction between order type and cardinality explicit. This narrows the mechanism a genuine ordinal counterexample must use.
+
+\section{WORK}
+\subsection{The positive result for regular infinite cardinals}
+Let $\kappa$ be a regular infinite cardinal; regularity means that a union of fewer than $\kappa$ sets, each of cardinality less than $\kappa$, still has cardinality less than $\kappa$. We prove by induction on $n\geq2$ that
+\[
+\kappa\to(\kappa,n)^2
+\tag{1}
+\]
+when the required red subset is measured by cardinality. The $n=2$ case is immediate: either there is a blue edge or every edge is red.
+
+Assume the assertion for $n-1$ and consider a coloring on a set of size $\kappa$. If some vertex $v$ has $\kappa$ blue neighbors, apply the induction hypothesis inside that neighborhood. A red set of size $\kappa$ already finishes the proof; otherwise a blue $(n-1)$-clique there combines with $v$ to form a blue $n$-clique.
+
+In the remaining case, every vertex has fewer than $\kappa$ blue neighbors. Construct distinct vertices $v_\xi$ for $\xi<\kappa$ by recursion. At stage $\xi$, exclude the earlier vertices and all of their blue neighborhoods. Regularity says that fewer than $\kappa$ vertices have been excluded, so choose another vertex. It is joined in red to every earlier choice. The resulting red set has size $\kappa$, proving (1).
+
+For $\kappa=\aleph_0$, every infinite subset of $\omega$ in its usual order has order type $\omega$, so this also proves $\omega\to(\omega,n)^2$ in the order-type interpretation. The same observation works for the reverse order $\omega^*$. More generally, a subset of the initial ordinal representing a cardinal $\kappa$ with size $\kappa$ has order type $\kappa$: its order type is at most $\kappa$ and cannot be a smaller ordinal of smaller cardinality. Thus the regular-cardinal argument applies to those initial ordinals as well.
+
+\subsection{A necessary condition for a nonzero partition ordinal}
+Suppose an ordinal has a decomposition $\alpha=\beta+\gamma$ with $0<\beta<\alpha$ and $0<\gamma<\alpha$. View its underlying order as a first block of type $\beta$ followed by a second block of type $\gamma$. Color pairs within a block red and pairs between blocks blue. A red homogeneous set is confined to one block and therefore cannot have order type $\alpha$. A blue clique uses at most one vertex from each block, so has size at most two. Hence
+\[
+\alpha\not\to(\alpha,3)^2.
+\tag{2}
+\]
+For example, $\omega+\omega$ fails the premise, although it has the same cardinality as $\omega$. This already demonstrates why replacing a countable ordinal by its cardinality changes the problem.
+
+Consequently an ordinal satisfying the premise must be additively indecomposable: it cannot be expressed as a sum of two smaller nonzero ordinals. For finite ordinals this leaves only $0$ and $1$, which trivially satisfy all the indicated relations. Every finite $m\geq2$ also fails the premise directly by coloring just one pair blue and every other pair red: there is no red set of size $m$ and no blue triangle.
+
+\subsection{Why ordinary infinite Ramsey theory misses the counterexample}
+The ordinal $\omega^{\omega^2}$ is countable but is much larger than $\omega$ as an order type. It has an infinite subset of type $\omega$, for example its first $\omega$ elements. Producing merely an infinite red subset therefore does not produce a red subset of type $\omega^{\omega^2}$. Relabeling the ordinal by the natural numbers erases precisely the structure required in the red alternative.
+
+To establish the recorded counterexample one must prove both of the following assertions for the same ordinal:
+\[
+\omega^{\omega^2}\to(\omega^{\omega^2},3)^2,
+\qquad
+\omega^{\omega^2}\not\to(\omega^{\omega^2},5)^2.
+\tag{3}
+\]
+The second assertion requires an explicit coloring with no blue five-clique and no red subset of the full ordinal type; the first is a universal assertion about every coloring. Showing the second alone would not refute the implication in the problem. Neither assertion in (3) follows from the elementary arguments above. They are recorded as the known resolution described in the sources, not as proved steps of this attempt.
+
+\section{VERIFICATION AND SCOPE}
+The positive proof uses regularity exactly at the transfinite recursion step; it is not silently applied to singular cardinals. The two-block coloring proves a necessary condition, not a characterization of all partition ordinals. The file does not claim that every additively indecomposable ordinal satisfies the premise, or that countability is sufficient to replace order-type homogeneity by ordinary infinite homogeneity.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement, attribution, and the particular counterexample (3): \url{https://www.erdosproblems.com/118}.
+\item J. A. Larson, \emph{An ordinal partition avoiding pentagrams}, Journal of Symbolic Logic 65 (2000), 969--978, primary publisher record: \url{https://doi.org/10.2307/2586684}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved as an independent reconstruction of the ordinal counterexample.} The regular-cardinal positive case and the indecomposability obstruction are proved. The two substantive ordinal assertions (3) remain external; no novelty is claimed.
+\textbf{Completion rate estimate: 30\%.}

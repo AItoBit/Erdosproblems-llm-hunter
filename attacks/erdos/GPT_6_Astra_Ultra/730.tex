@@ -1,0 +1,65 @@
+\section{Erd\H{o}s Problem \#730: equal prime supports of neighboring central binomial coefficients}
+\noindent Exact transition criterion and finite-prime progress, 24 September 2026.
+
+\subsection*{Statement and current scope}
+Set $B_n=\binom{2n}{n}$ and $S(n)=\{p:p\mid B_n\}$. Are there infinitely many distinct $n,m$ with $S(n)=S(m)$? The current discussion reports a solution, attributed to GPT Pro prompted by Price, including $\gg\sqrt x$ consecutive collisions up to $x$. We do not treat that report as a proof. The older local attempt supplies the basic valuation formula; here we derive a sharper exact local transition test, useful obstructions and an infinite finite-prime compatibility construction. The global infinitude remains unproved in this attempt.
+
+\subsection*{The carry criterion}
+Counting prime powers in factorials gives
+\[
+ v_p(B_n)=\sum_{j\geq1}
+ \left(\left\lfloor\frac{2n}{p^j}\right\rfloor
+      -2\left\lfloor\frac n{p^j}\right\rfloor\right).
+\]
+Equivalently it counts carries in adding $n+n$ in base $p$: writing the digit sums as $s_p$ gives $(2s_p(n)-s_p(2n))/(p-1)$.
+For odd $p$, absence of all carries is equivalent to every base-$p$ digit of $n$ being at most $(p-1)/2$. Indeed a first carry occurs precisely at a digit exceeding this threshold. For $p=2$, $v_2(B_n)=s_2(n)>0$ whenever $n>0$, so two never enters or leaves the support.
+
+\subsection*{Only the bridge factors matter}
+The exact ratio is
+\[
+ \frac{B_{n+1}}{B_n}=\frac{2(2n+1)}{n+1}. \tag{1}
+\]
+For an odd prime dividing neither bridge number $n+1$ nor $2n+1$, the valuation is unchanged. The bridge numbers are coprime, so the remaining cases separate.
+
+If $p^a\parallel n+1$ and $u=(n+1)/p^a$, then
+\[
+ v_p(B_n)=a+v_p(B_u),\qquad v_p(B_{n+1})=v_p(B_u). \tag{2}
+\]
+To verify the first identity directly, the first $a$ floor differences are one, since $n=p^au-1$. For the higher differences, write $j=a+h$; they become
+$\lfloor(2u-1)/p^h\rfloor-2\lfloor(u-1)/p^h\rfloor$.
+Their sum is $v_p((2u-1)!/(u-1)!^2)=v_p((u/2)B_u)=v_p(B_u)$, because $p$ is odd and $p\nmid u$. The second identity follows from (1).
+Thus $p$ disappears exactly when all digits of $u$ are at most $(p-1)/2$.
+
+If instead $p^a\parallel2n+1$ and $u=(2n+1)/p^a$, write
+\[
+ n=p^a\frac{u-1}{2}+\frac{p^a-1}{2}.
+\]
+The lowest $a$ digits all equal $(p-1)/2$; doubling them creates no carries and sends no carry to the remaining digits. Hence
+\[
+ v_p(B_n)=v_p\left(B_{(u-1)/2}\right). \tag{3}
+\]
+Equation (1) adds $a$ to this valuation. Thus $p$ enters exactly when all digits of $(u-1)/2$ are at most $(p-1)/2$, with $B_0=1$.
+
+Equations (2)--(3), checked only on prime factors of two integers, are a necessary and sufficient test for $S(n)=S(n+1)$. No scan over all primes up to $2n+2$ is needed.
+
+\subsection*{Consequences and a certificate for $(87,88)$}
+If $p>\sqrt{2n+1}$ divides $2n+1$, it occurs to exponent one and its quotient $u$ is less than $p$. Then $(u-1)/2<(p-1)/2$, so (3) says that $p$ enters. Such a large prime divisor is therefore forbidden in a collision.
+Likewise, if an odd $p>\sqrt{2(n+1)}$ divides $n+1$, its quotient is $u<p/2$ and (2) says that $p$ disappears. Pure odd prime powers in either bridge number are also ruled out by these criteria.
+
+For $n=87$, the bridge factorizations are $88=2^3\cdot11$ and $175=5^2\cdot7$. For the disappearing candidate $11$, the quotient $u=8$ has a digit exceeding $5$, so $11$ remains. For $5$, $(175/25-1)/2=3$ has a digit exceeding $2$, so $5$ was already present. For $7$, $(175/7-1)/2=12$ has base-seven digits $15$, including a digit exceeding $3$, so $7$ was already present. Two is always present and every other prime is unchanged. This proves the collision without factoring either huge binomial coefficient.
+
+\subsection*{An infinite finite-coordinate statement}
+Fix any bound $P\geq3$ and let $Q$ be the product of $p^2$ over odd primes $p\leq P$. For every positive $n\equiv-2\pmod Q$, and each such $p$,
+\[
+ n\bmod p^2=p^2-2\geq p^2/2,\qquad
+ (n+1)\bmod p^2=p^2-1\geq p^2/2.
+\]
+The $j=2$ term in the valuation formula is one for both $n$ and $n+1$. Thus every prime at most $P$ divides both $B_n$ and $B_{n+1}$. This gives an infinite progression on which all these prime-support coordinates agree, with natural density $1/Q$.
+The cutoff is fixed before $n$ grows; primes above it remain uncontrolled. Consequently a sequence of these statements for increasing $P$ does not prove a global collision.
+
+\subsection*{Remaining gap and sources}
+\textbf{Attempt status: unresolved.} The exact transition test, two large-prime obstructions, explicit collision and finite-prime infinite families are proved. The missing step is uniform control of every prime factor of the bridge numbers for an infinite family of $n$; the reported quadratic-family/digit estimates are not reconstructed.
+Sources: \url{https://www.erdosproblems.com/730}; \url{https://www.erdosproblems.com/forum/discuss/730}; the linked proof is \url{https://www.overleaf.com/read/gpttrsmhbhbk}. No novelty, global resolution, or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

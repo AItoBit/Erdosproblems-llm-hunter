@@ -1,0 +1,46 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#210; sharp construction and partial lower-bound attempt, 2026-09-23.}
+For $n\geq3$, let $f(n)$ be the minimum number of ordinary lines determined by a noncollinear $n$-point set in $\mathbb R^2$. An ordinary line contains exactly two of the points. Does $f(n)$ tend to infinity, and at what rate? The current page's phrase ``minimal such that ... at least'' is interpreted as this intended extremal minimum; literally minimizing a valid lower bound would not define the stated problem.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem is solved: Kelly--Moser proved $f(n)\geq3n/7$, and Green--Tao proved the sharper lower bound $\lfloor n/2\rfloor$ for sufficiently large $n$, with the additional bound $3\lfloor n/4\rfloor$ for odd $n$. This file reconstructs the sharp even-order construction and a useful elementary lower bound in the presence of a rich line. It does not reprove the general lower-bound theorem.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First make the familiar ``points on a circle and at infinity'' example a legitimate finite real planar configuration, and count all its ordinary lines exactly. Then identify what elementary cross-line counting can prove and where it stops.
+
+\section{WORK}
+\textbf{An exact construction for $n=2m$, $m\geq3$.} In the real projective plane, place $m$ points $v_i$ on a unit circle at angles $2\pi i/m$, $i\in\mathbb Z/m\mathbb Z$. Add $m$ points $D_s$ on the line at infinity, one for the direction with angle
+\[
+\pi s/m+\pi/2\pmod\pi,
+\qquad s\in\mathbb Z/m\mathbb Z.
+\]
+These $m$ directions are distinct. The chord $v_iv_j$ for $i\ne j$ has direction $D_{i+j}$, as follows by subtracting the sine and cosine coordinates. Thus every line through two circle points also contains one of the chosen points at infinity, and is not ordinary.
+
+For a circle point $v_i$ and an ideal point $D_s$, the line is a chord through $v_j$, where $j=s-i\pmod m$, unless $j=i$. In that exceptional case, equivalently $s=2i\pmod m$, it is the tangent at $v_i$. A tangent contains only this one circle point and this one ideal point, so it is ordinary. There is exactly one tangent for each $i$, hence exactly $m$ such lines. The line at infinity contains $m\geq3$ chosen points, so it is not ordinary. Every line determined by a pair of the $2m$ points is one of these types. The configuration therefore has exactly $m$ ordinary lines.
+
+To put all points into the ordinary affine plane, choose a projective line $H$ containing none of the finitely many chosen points, and apply a projectivity sending $H$ to the new line at infinity. Such an $H$ exists, and an invertible projectivity preserves incidences and multiplicities. All $2m$ images are now finite real points. They are not collinear, since the original circle contains three noncollinear chosen points. Consequently
+\[
+f(2m)\leq m\qquad(m\geq3).
+\tag{1}
+\]
+Together with the explicitly external Green--Tao lower bound, (1) gives the known equality $f(2m)=m$ for all sufficiently large $m$.
+
+\textbf{An elementary lower bound with a rich line.} Let a configuration have $M$ points on a line $\ell$ and $r=n-M\geq1$ points outside it. Fix one outside point $q$. The $M$ lines joining $q$ to the points on $\ell$ are distinct. Any such line which is not ordinary must contain another outside point; the $r-1$ other outside points can spoil at most $r-1$ of the $M$ lines. Hence at least $M-r+1$ are ordinary when this expression is positive. Summing over the $r$ outside points counts each of these ordinary lines once, because it has exactly one outside point. Thus
+\[
+\#\{\text{ordinary lines}\}\geq r\max(0,M-r+1).
+\tag{2}
+\]
+In particular, if $1\leq r\leq n/3$, the lower bound is at least $r(n/3+1)$, and hence at least $n/3+1$.
+
+\section{VERIFICATION AND SCOPE}
+The projective construction is converted explicitly to a finite affine one; it does not assume that points at infinity themselves belong to $\mathbb R^2$. Even when $m$ is even and two tangents are parallel, they are distinct lines and their shared ideal direction causes no extra point on either tangent. Formula (2) proves a linear bound only for configurations with a sufficiently rich line. When all lines are sparse it gives no general bound tending to infinity. Filling that gap requires an argument such as Kelly--Moser or Green--Tao, not another application of the counting already supplied here. The known universal conclusion is $f(n)=\Theta(n)$; its lower-bound proof is not reconstructed in this attempt.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and historical lower bounds: \url{https://www.erdosproblems.com/210}.
+\item B. Green and T. Tao, \emph{On sets defining few ordinary lines}: \url{https://arxiv.org/abs/1208.4714}.
+\item T. Tao's author exposition of the lower bounds and B\"or\"oczky configurations: \url{https://terrytao.wordpress.com/2012/08/24/on-sets-defining-few-ordinary-lines/}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved by this partial reconstruction.} The sharp even-order upper construction and the rich-line lower bound are proved. The established general lower bound is credited but not reproved; no novelty is claimed.
+\textbf{Completion rate estimate: 55\%.}

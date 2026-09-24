@@ -1,0 +1,71 @@
+\section*{Erd\H{o}s Problem 648: decreasing greatest prime factors}
+
+\paragraph{Statement and claim.}
+Write \(P(a)\) for the greatest prime factor of \(a\geq2\).
+Let \(g(n)\) be the largest length of a sequence
+\[
+ 2\leq a_1<\cdots<a_t<n,\qquad P(a_1)>\cdots>P(a_t).
+\]
+We reconstruct Cambie's determination of the order of magnitude:
+\[
+ (2-o(1))\sqrt{\frac n{\log n}}
+ \ \leq g(n)\ \leq\
+ (2\sqrt2+o(1))\sqrt{\frac n{\log n}}.
+\]
+The source is Stijn Cambie, \emph{On Erd\H{o}s problem \#648},
+\url{https://arxiv.org/abs/2503.22691}; see also
+\url{https://www.erdosproblems.com/648}.
+The only asymptotic input below is the prime number theorem.
+The existence or value of a limiting leading constant is not asserted.
+
+\paragraph{Upper bound.}
+Put \(p_i=P(a_i)\) and \(b_i=a_i/p_i\). Since \(a_{i+1}>a_i\) and
+\(p_{i+1}<p_i\), we have \(b_{i+1}>b_i\). These are positive integers,
+so \(b_i\geq i\). If \(q_j\) is the \(j\)-th prime, then the \(t-i+1\)
+distinct primes \(p_i,\ldots,p_t\) show that \(p_i\geq q_{t-i+1}\).
+Therefore
+\[
+ n>a_i=b_ip_i\geq i q_{t-i+1}.
+\]
+Taking \(i=\lfloor t/2\rfloor\), and using \(q_j\sim j\log j\), gives
+\[
+ n\geq(1-o(1))\frac{t^2\log t}{4}.
+\]
+The lower bound proved next shows that the extremal \(t=g(n)\)
+is at least a constant times \(\sqrt{n/\log n}\).
+The displayed upper bound then implies
+\(\log t=(\tfrac12+o(1))\log n\), and hence the claimed
+upper constant \(2\sqrt2\).
+
+\paragraph{Lower bound.}
+Fix \(0<\varepsilon<1\), and put
+\(z=(1-\varepsilon)\sqrt{n\log n}\).
+List all primes in \((\sqrt n,z]\) in decreasing order as
+\(p_1>\cdots>p_r\). Starting with \(a_0=0\), define
+\[
+ a_i=p_i\left(\left\lfloor\frac{a_{i-1}}{p_i}\right\rfloor+1\right).
+\]
+Then \(a_i>a_{i-1}\) and
+\[
+ a_i\leq\sum_{j=1}^i p_j\leq\sum_{p\leq z}p
+       \sim\frac{z^2}{2\log z}
+       \sim(1-\varepsilon)^2n<n.
+\]
+Here the prime-sum estimate follows from the prime number theorem
+by partial summation. Since \(p_i>\sqrt n\) and \(a_i<n\), the
+cofactor \(a_i/p_i\) is smaller than \(\sqrt n<p_i\).
+All its prime factors are therefore smaller than \(p_i\), proving
+\(P(a_i)=p_i\). Finally,
+\[
+ r=\pi(z)-\pi(\sqrt n)
+   =(2(1-\varepsilon)+o(1))\sqrt{\frac n{\log n}}.
+\]
+Letting \(\varepsilon\) tend to zero gives the lower bound.
+
+\paragraph{Scope.}
+This proves the known order-of-magnitude resolution, including the two
+displayed asymptotic constants, rather than an exact formula for \(g(n)\).
+It is an attributed reconstruction, not a new resolution.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

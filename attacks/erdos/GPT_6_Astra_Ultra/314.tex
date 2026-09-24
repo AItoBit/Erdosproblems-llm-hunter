@@ -1,0 +1,74 @@
+\section{Erd\H{o}s Problem \#314: harmonic sums just above one}
+\noindent Reconstruction of the Lim--Steinerberger argument, 23 September 2026.
+
+\subsection*{1) Statement and the direction of approximation}
+Let $m(n)$ be minimal with $\sum_{j=n}^{m(n)}1/j\ge1$, and let $\epsilon(n)$ be the excess above one. We prove $\liminf_{n\to\infty}n^2\epsilon(n)=0$ by constructing sums that approach one \emph{from above}. An absolute-value approximation from below would not suffice, because adding the next reciprocal changes the sum by order $1/n$.
+
+The proof reconstructs Lim and Steinerberger's qualitative argument. Its classical background inputs are Euler's continued fraction for $e$ and the harmonic-number expansion
+\[
+ H_v=\log v+\gamma+\frac1{2v}-\frac1{12v^2}+O(v^{-4}).\tag{1}
+\]
+We do not claim their stronger logarithmic error exponent.
+
+\subsection*{2) Locating the real-valued target endpoint}
+For bounded real $y$, set
+\[
+ m=en-\frac{1+e}{2}+\frac yn,
+ \qquad y_* =\frac{e-e^{-1}}{24}>0.
+\]
+Using the right side of (1) as a function of a real argument and expanding in powers of $1/n$ gives, when $m,n$ are integers,
+\[
+ H_m-H_{n-1}-1
+ =\frac{24e^{-1}y+e^{-2}-1}{24n^2}+O(n^{-3})
+ =\frac{y-y_*}{en^2}+O(n^{-3}).\tag{2}
+\]
+The error is uniform for $y$ in a fixed compact interval. To check the cancellation, write $a=-(1+e)/2$. In $\log m+1/(2m)-1/(12m^2)$ the coefficients beyond $\log(en)$ are $(a+1/2)/e$ at $n^{-1}$ and $y/e-a^2/(2e^2)-a/(2e^2)-1/(12e^2)$ at $n^{-2}$. The corresponding expansion at $n-1$ is $\log n-1/(2n)-1/(12n^2)$. Subtraction gives exactly (2).
+
+\subsection*{3) Odd convergents with a small positive error}
+Use the classical identity
+\[
+ e=[2;1,2,1,1,4,1,1,6,1,\ldots].
+\]
+Number convergents from one, so the first ones are $2/1,3/1,8/3,11/4,19/7$. For every even $k\ge0$, the convergent $p/q=p_{3k+2}/q_{3k+2}$ has both numerator and denominator odd and lies above $e$. Moreover
+\[
+ \frac pq-e=\frac r{q^2},\qquad
+ \frac1{2k+4}<r<\frac1{2k+2}.\tag{3}
+\]
+Here is the needed continued-fraction verification. The recurrences $p_j=a_jp_{j-1}+p_{j-2}$ and $q_j=a_jq_{j-1}+q_{j-2}$ modulo two give the repeating pair pattern
+\[
+ (0,1),(1,1),(0,1),(1,0),(1,1),(1,0),
+\]
+so indices $3k+2$ have odd entries. The determinant identity makes the even-indexed convergents lie above $e$, and $3k+2$ is even for even $k$. Finally the next partial quotient is $2k+2$. The exact continued-fraction tail formula gives $r=1/(\tau+q_{j-1}/q_j)$ with $2k+2<\tau<2k+3$ and $0<q_{j-1}/q_j\le1$, proving (3). The denominators tend to infinity at least at Fibonacci rate by their positive-coefficient recurrence.
+
+\subsection*{4) Odd rescaling and a strictly positive excess}
+Put $d_*=(4y_*/r)^{1/2}$. Choose an odd positive integer $d$ in $[d_*+1,d_*+3]$, possible because consecutive odd integers are two apart. Define integers
+\[
+ n=\frac{dq+1}{2},\qquad m=\frac{dp-1}{2}.
+\]
+For large $k$, $m\ge n$. An exact calculation using (3) shows that this endpoint has the form in Section 2 with
+\[
+ y=n\left(m-en+\frac{1+e}{2}\right)
+ =\frac{rd^2}{4}+\frac{rd}{4q}.
+\]
+If $d=d_*+\eta$, $1\le\eta\le3$, then
+\[
+ y-y_* =\frac{r(2d_*\eta+\eta^2)}4+\frac{rd}{4q}.
+\]
+All terms are positive. Since $r\asymp1/k$, $d_*\asymp\sqrt k$ and $d\asymp\sqrt k$, there are absolute positive constants $c,C$ such that
+\[
+ \frac c{\sqrt k}\le y-y_*\le\frac C{\sqrt k}\tag{4}
+\]
+for all sufficiently large even $k$. Also $n\asymp\sqrt k\,q$, so the $O(n^{-3})$ error in (2) is smaller than the positive main term in (4) by a factor tending to zero. Equations (2)--(4) therefore imply
+\[
+ 0<H_m-H_{n-1}-1\ll\frac1{n^2\sqrt k}.
+\]
+This excess is eventually smaller than $1/m$. Subtracting that last reciprocal puts the sum below one, proving that the constructed $m$ is exactly $m(n)$, not merely some later endpoint. Hence $0\le n^2\epsilon(n)\ll k^{-1/2}\to0$ along this sequence. Nonnegativity of every $\epsilon(n)$ completes the liminf proof.
+
+\subsection*{5) Outcome and sources}
+\textbf{SOLVED by reconstruction.} The sign, parity, rounding, error comparison and minimal-endpoint condition are all verified. The Euler continued fraction and expansion (1) are standard analytic inputs; no quantitative improvement or formal verification is claimed.
+
+Sources: \url{https://www.erdosproblems.com/314}, checked 23 September 2026; J. Lim and S. Steinerberger, \emph{On differences of two harmonic numbers}, Sections 2.2--2.6, \url{https://arxiv.org/html/2405.11354}. The rescaling choice above makes its dependence on $d$ explicit.
+
+The estimate measures resolution of the requested liminf, not a correctness probability.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

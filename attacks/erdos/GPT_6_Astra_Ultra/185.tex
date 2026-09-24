@@ -1,0 +1,71 @@
+\section{Erd\H{o}s Problem 185: avoiding collinear triples in a ternary cube}
+
+\subsection{1) Statement and scope}
+Let $f_3(n)$ be the largest size of a subset of $\{0,1,2\}^n$ with
+no three distinct collinear points. Is $f_3(n)=o(3^n)$?
+We prove the answer is yes using density Hales--Jewett as an explicit
+external theorem. We also reconstruct the elementary spherical-layer
+lower bound $f_3(n)\gg3^n/\sqrt n$.
+
+\subsection{2) Deduction of the upper bound}
+The density Hales--Jewett theorem for three symbols states that for
+every $\epsilon>0$ there is an $N_0(\epsilon)$ such that, for all
+$n\geq N_0(\epsilon)$, every subset of $\{0,1,2\}^n$ of size at least
+$\epsilon3^n$ contains a combinatorial line. Its variable coordinates
+form a nonempty set $S$. If $b$ has the fixed coordinates of the line
+and zero in $S$, the three points are
+\[
+ b,\quad b+\mathbf1_S,\quad b+2\mathbf1_S.
+\]
+They are distinct and collinear in $\mathbb R^n$. Therefore a set with
+no collinear triple has size less than $\epsilon3^n$ whenever
+$n\geq N_0(\epsilon)$. Since this holds for every positive $\epsilon$,
+it is exactly $f_3(n)/3^n\to0$.
+
+\subsection{3) An explicit lower bound from a sphere}
+For an integer $r$, consider
+\[
+ S_r=\left\{x\in\{0,1,2\}^n:
+             \sum_{i=1}^n(x_i-1)^2=r\right\}.
+\]
+A Euclidean sphere has no three distinct collinear points: restricting
+its defining squared norm to a line with nonzero direction gives a
+quadratic equation with positive leading coefficient, hence at most
+two roots. Thus every $S_r$ is an admissible set.
+
+Choose $x$ uniformly from the cube and let
+$X=\sum_i(x_i-1)^2$. Its summands are independent, equal to one with
+probability $2/3$, so
+$\mathbb EX=2n/3$ and $\operatorname{Var}X=2n/9$.
+Chebyshev's inequality gives
+\[
+ \mathbb P(|X-2n/3|<\sqrt n)\geq7/9.
+\]
+The indicated interval contains at most $2\sqrt n+2$ integers. At least
+one layer therefore has size at least
+\[
+ \frac{7\cdot3^n}{9(2\sqrt n+2)}
+ \geq\frac7{36}\frac{3^n}{\sqrt n}\qquad(n\geq1).
+\]
+The lower and upper bounds are compatible, since the density of this
+construction tends to zero. They do not determine an asymptotically
+exact formula for $f_3(n)$.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED using density Hales--Jewett.} The geometric
+deduction and the spherical construction are proved in full. The
+general density theorem is not reproved here; the separate attempt for
+Problem 171 only proves its two-symbol special case. No novelty or
+local formal-verification claim is made.
+\begin{itemize}
+\item D. H. J. Polymath, \emph{A new proof of the density Hales--Jewett
+theorem}, \texttt{https://annals.math.princeton.edu/2012/175-3/p06},
+\texttt{https://arxiv.org/abs/0910.3926}; the original theorem is due
+to Furstenberg and Katznelson.
+\item T. F. Bloom, Problem 185,
+\texttt{https://www.erdosproblems.com/185}, checked 23 September 2026.
+\end{itemize}
+The percentage measures resolution of the stated little-$o$ question
+with its external input, not an exact extremal asymptotic.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

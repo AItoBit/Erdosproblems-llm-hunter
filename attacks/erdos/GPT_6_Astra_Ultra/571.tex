@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 571}
+
+\paragraph{Statement and scope.}
+For each rational \(\alpha\in[1,2)\), does there exist a single bipartite graph \(F\) such that \(\operatorname{ex}(n,F)=\Theta(n^\alpha)\)? Here copies are ordinary, not necessarily induced, subgraphs. This attempt proves the cases \(\alpha=1,3/2\) and an arithmetic reduction relevant to proposed constructions. The general graph construction remains unresolved in this attempt.
+
+\paragraph{Exponent one.}
+Take \(F=P_3\), the path on three vertices. A graph avoids \(P_3\) exactly when its maximum degree is at most one. Consequently
+\[
+ \operatorname{ex}(n,P_3)=\lfloor n/2\rfloor.
+\]
+Both directions are exact: the edges of an avoiding graph form a matching, and a largest matching attains the bound.
+
+\paragraph{Exponent three halves: upper bound.}
+Take \(F=C_4\). If a graph with \(n\) vertices and \(m\) edges has no \(C_4\), any two vertices have at most one common neighbour. Counting unordered pairs of neighbours at their centre gives
+\[
+ \sum_v\binom{d(v)}2\leq\binom n2.
+\]
+Since \(\sum_v d(v)^2\geq4m^2/n\), this implies
+\[
+ 4m^2-2mn\leq n^2(n-1),\qquad
+ m\leq\frac n4(1+\sqrt{4n-3}). \tag{1}
+\]
+This proves the required \(O(n^{3/2})\) upper bound.
+
+\paragraph{Exponent three halves: lower bound for every large order.}
+Let \(q\) be a power of two. We use the standard existence of a field \(\mathbb F_q\). Make one vertex class the \(q^2\) points \((x,y)\) of \(\mathbb F_q^2\), and the other the \(q^2\) lines indexed by \((a,b)\), with adjacency \(y=ax+b\). Each line contains exactly \(q\) points, so there are \(q^3\) edges and \(2q^2\) vertices. Two distinct points lie on at most one such line: different first coordinates determine \(a,b\) uniquely, and equal first coordinates with different second coordinates admit none. Thus this graph is \(C_4\)-free.
+
+For any sufficiently large \(n\), choose the largest power of two with \(q\leq\sqrt{n/2}\). Then \(q>\sqrt{n/2}/2\). Add isolated vertices to reach order \(n\); the result has more than \(n^{3/2}/(16\sqrt2)\) edges. Together with (1), this proves
+\[
+ \operatorname{ex}(n,C_4)=\Theta(n^{3/2}). \tag{2}
+\]
+The choice of \(q\) is necessary to obtain every large \(n\), rather than only a sparse subsequence.
+
+\paragraph{An arithmetic closure calculation.}
+Write the desired exponent as \(2-\beta\), where \(\beta\in(0,1]\) is rational. Consider the transformations
+\[
+ \Phi_j(x)=\frac{x+j}{x+j+1},\qquad j=0,1,2,\ldots.
+\]
+Every such \(\beta\) is obtainable from \(1\) by finitely many of these transformations. To prove this, write \(\beta=a/b<1\) in lowest terms and put
+\[
+ j=\left\lceil\frac a{b-a}\right\rceil-1,
+ \qquad x=\frac a{b-a}-j.
+\]
+Here \(j\geq0\), \(0<x\leq1\), and \(\Phi_j(x)=a/b\). The reduced denominator of \(x\) is at most \(b-a<b\). Induction on the denominator therefore terminates at \(1\), proving the claim.
+
+This calculation is only arithmetic. To turn it into a solution one would need a proved graph operation that sends a graph or suitable rooted construction of parameter \(x\) to one of parameter \(\Phi_j(x)\), while preserving both matching extremal estimates and the requirement of a single forbidden graph. An identity between rational numbers supplies none of those properties. No such closure lemma is proved here.
+
+\paragraph{Source and assessment.}
+Statement and current proof discussion: \url{https://www.erdosproblems.com/571}, checked 24 September 2026. The page's proposed general construction is not treated here as a verified theorem. The matching and affine-incidence examples are classical and are reconstructed above; no novelty or local Lean verification is claimed. The remaining gap is the general rational-exponent construction, including its upper bound.
+
+\textbf{Completion rate estimate: 35\%.}

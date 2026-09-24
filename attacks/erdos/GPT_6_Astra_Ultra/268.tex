@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem \#268}
+\subsection{Statement and attribution}
+Does the set
+\[
+ X=\left\{\left(\sum_{n\in A}\frac1n,
+ \sum_{n\in A}\frac1{n+1},\sum_{n\in A}\frac1{n+2}\right):
+ A\subseteq\mathbb N\hbox{ infinite},\ \sum_{n\in A}1/n<\infty\right\}
+\]
+contain a nonempty open subset of $\mathbb R^3$? Yes. Kova\v c first proved the three-dimensional case; Kova\v c and Tao subsequently proved all dimensions. We reconstruct the latter paper's local approximation and iteration in dimension three, including the approximation lemma. No novelty is claimed.
+
+\subsection{Work I: coordinates with different decay rates}
+Define
+\[
+ f_1(x)=1/x,\quad f_2(x)=1/[x(x+1)],\quad
+ f_3(x)=1/[x(x+1)(x+2)].
+\]
+The invertible linear map
+\[
+ U(x,y,z)=\bigl(x,x-y,(x-2y+z)/2\bigr)
+\]
+maps $(1/n,1/(n+1),1/(n+2))$ to $(f_1(n),f_2(n),f_3(n))$. It suffices to construct an open box of sums in the latter coordinates.
+
+We prove a finite approximation lemma. For all sufficiently large integers $N$, and integers $1\le M\le N/12$, put
+\[
+ s_i=\sum_{j=1}^3f_i(jN),\qquad
+ S(N,M)=\left\{\left(\sum_{j=1}^3f_i(jN+u_j)\right)_{i=1}^3:
+                   u_j\in[-M,M]\cap\mathbb Z\right\}.
+\]
+There are fixed $\varepsilon>0$ and $D\ge1$ such that every $y$ with
+$|y_i-s_i|\le\varepsilon M/N^{i+1}$ has an approximant $v\in S(N,M)$ satisfying
+\[
+ |y_i-v_i|\le D\left(N^{-i-1}+M^2N^{-i-2}\right)
+ \quad(1\le i\le3).
+ \tag{1}
+\]
+
+Here are the details. Differentiation or Taylor expansion of these fixed rational functions gives, uniformly for the indicated integer shifts,
+\[
+ f_i(jN+u)=f_i(jN)-\frac{iu}{j^{i+1}N^{i+1}}
+                  +O\left(\frac{u^2}{N^{i+2}}\right).
+ \tag{2}
+\]
+For nonzero integer $u$, the possible first-derivative error $O(|u|N^{-i-2})$ is absorbed by $u^2$; for $u=0$ the error is zero. More explicitly, $f_i'(x)=-ix^{-i-1}+O(x^{-i-2})$ and $f_i''(x)=O(x^{-i-2})$ on these intervals, which proves (2).
+The matrix $W_{ij}=ij^{-i-1}$ is invertible: after removing nonzero row and column factors its determinant is a Vandermonde determinant at $1,1/2,1/3$. Choose $\varepsilon>0$ so that $\|W^{-1}\|_\infty\varepsilon\le1/2$. For $z_i=N^{i+1}(y_i-s_i)$, the vector $u^*=-W^{-1}z$ has coordinates in $[-M/2,M/2]$. Round them to integers $u_j$. Since $M\ge1$, they lie in $[-M,M]$, and $\|W(u-u^*)\|_\infty$ is bounded independently of $M,N$. Combining this rounding error with (2) proves (1).
+
+\subsection{Work II: the next block absorbs the approximation error}
+Let $\alpha=9/8$ and, for large integer $k$, set
+$N_k=\lceil\exp(\alpha^k)\rceil$, $M_k=\lfloor\sqrt{N_k}\rfloor$. Write $s_k$ for the center above, $S_k=S(N_k,M_k)$ and
+\[
+ R_k=\prod_{i=1}^3[-\varepsilon M_k/N_k^{i+1},
+                         \varepsilon M_k/N_k^{i+1}].
+\]
+For every sufficiently large $k$, (1) implies
+\[
+ s_k+R_k\subseteq S_k+R_{k+1}.
+ \tag{3}
+\]
+Indeed the error in (1) is at most $2DN_k^{-i-1}$, whereas the next permitted error is asymptotic to $\varepsilon N_{k+1}^{-i-1/2}$. Their ratio tends to zero because
+\[
+ \alpha(i+1/2)<i+1\qquad(i=1,2,3),
+\]
+with the closest case $\alpha(7/2)=63/16<4$.
+
+Choose $k_0$ so that (3) and all preceding conditions hold thereafter. We claim that every point of the nondegenerate box
+\[
+ \sum_{k\ge k_0}s_k+R_{k_0}
+ \tag{4}
+\]
+is the sum of a series $\sum_{k\ge k_0}v_k$ with $v_k\in S_k$. To prove this, maintain the invariant
+\[
+ y\in\sum_{k=k_0}^{K-1}v_k+\sum_{k\ge K}s_k+R_K.
+\]
+It holds initially by (4), and (3) supplies $v_K$ and the next invariant. The baseline tail and the diameter of $R_K$ both tend to zero. Thus passing to the limit gives $y=\sum v_k$.
+
+Each chosen block consists of three distinct positive integers $jN_k+u_j$. Blocks are disjoint and ordered once $k_0$ is large, since $N_{k+1}/N_k\to\infty$ and $M_k=o(N_k)$. The resulting set $A$ is infinite, and its reciprocal sum is bounded by a constant times $\sum_kN_k^{-1}<\infty$. Thus every point of (4) belongs to $U(X)$, and the inverse image of its interior is a nonempty open subset of $X$.
+
+\subsection{Verification and outcome}
+Rounding is done only after solving an invertible three-variable linear system; arbitrary independent rounding of the target coordinates would not suffice. The inequality $\alpha<8/7$ ensures contraction in the fastest-decaying third coordinate. Infinite sets, distinct denominators and convergence have all been checked.
+
+\textbf{SOLVED.} The local approximation and infinite construction are proved above, using only elementary analysis and finite-dimensional linear algebra.
+
+\subsection{Sources}
+V. Kova\v c, \emph{On the set of points represented by harmonic subseries}, \url{https://arxiv.org/abs/2405.07681}; V. Kova\v c and T. Tao, \emph{On several irrationality problems for Ahmes series}, Section 7, \url{https://arxiv.org/abs/2406.17593}; current statement: \url{https://www.erdosproblems.com/268}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

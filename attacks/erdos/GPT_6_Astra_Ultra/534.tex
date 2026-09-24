@@ -1,0 +1,51 @@
+\textbf{Erd\H{o}s problem 534.}
+Determine the maximum $g(N)$ of $|A|$ for $N\in A\subseteq[1,N]$ with $\gcd(a,b)>1$ for distinct members.
+
+\textbf{Known extremal input and scope.}
+We use Theorem 1 of Ahlswede and Khachatrian, \emph{Sets of integers with pairwise common divisor and a factor from a specified set of primes}, Acta Arithmetica 75 (1996), 259--276:
+\texttt{https://matwbn.icm.edu.pl/ksiazki/aa/aa75/aa7536.pdf}.
+For primes $Q=\{q_1<\cdots<q_r\}$ and $N\geq\prod_iq_i$, their theorem determines the largest pairwise noncoprime subset of $[1,N]$ all of whose members have a prime factor in $Q$. It is attained among the families of multiples of
+$2q_1,\ldots,2q_j,q_1\cdots q_j$, $1\leq j\leq r$.
+The extremal upper bound is an external dependency; the reduction, admissibility, exact evaluation, and examples are supplied below.
+Problem source: \texttt{https://www.erdosproblems.com/534}; sources checked 24 September 2026.
+
+\textbf{Reduction and extremal families.}
+For $N>1$, take $Q$ to be its distinct prime factors. Every admissible member has a prime factor in $Q$, because it has gcd greater than one with $N$; this also holds for $N$ itself. The hypothesis $N\geq\prod_iq_i$ is automatic.
+Put $Q_j=\prod_{i=1}^jq_i$, and define
+\[
+ A_j=\{a\leq N:\ 2q_i\mid a\text{ for some }i\leq j
+                     \text{ or }Q_j\mid a\}.
+\]
+These families contain $N$. Two members divisible by some $2q_i$ have the common factor $2$; two multiples of $Q_j$ have that common factor; and a mixed pair has some common factor $q_i$. Thus each $A_j$ is admissible. The external theorem gives
+\[
+ g(N)=\max_{1\leq j\leq r}|A_j|.                         \tag{1}
+\]
+For the degenerate case $N=1$, the answer is $g(1)=1$.
+
+\textbf{A closed arithmetic formula.}
+If $N$ is even, $g(N)=N/2$: all even numbers work, while pairing $(1,2),(3,4),\ldots,(N-1,N)$ bounds any pairwise noncoprime family by $N/2$, since consecutive numbers are coprime.
+
+Suppose $N$ is odd. All $q_i$ and $Q_j$ are odd. The even members of $A_j$ are exactly the even integers having a factor in $\{q_1,\ldots,q_j\}$. Among $1,\ldots,N-1$, the involution $a\mapsto N-a$ preserves coprimality to $Q_j$ and reverses parity. There are
+$(N/Q_j)\varphi(Q_j)$ integers in $[1,N]$ coprime to $Q_j$, so the number of even members is
+\[
+ E_j=\frac{N-1-(N/Q_j)\varphi(Q_j)}2.
+\]
+The odd members of $A_j$ are the odd multiples of $Q_j$, of which there are $(N/Q_j+1)/2$. Therefore
+\[
+ \boxed{\quad g(N)=
+ \max_{1\leq j\leq r}
+ \frac{N-(N/Q_j)\varphi(Q_j)+N/Q_j}{2}\quad(N>1\text{ odd}).\quad} \tag{2}
+\]
+All quantities are integers. A prime power $N=q^a$ gives $g(N)=N/q$.
+
+\textbf{An explicit failure of the original two proposed choices.}
+Take
+\[
+ N=11\cdot13\cdot17\cdot2003=4869293.
+\]
+The four values in (2) are $442663,408612,512768,512727$. Thus $g(N)=512768$, attained by multiples of $22,26,34,2431$.
+The even integers sharing a factor with $N$ form a family of size $512726$. Even after adjoining $N$ to repair its failure to contain the prescribed odd endpoint, its size is only $512727$. Both that choice and all multiples of the smallest prime factor are strictly inferior. Primality of $2003$ is checked by trial division by the primes at most $43$.
+
+\textbf{Completion estimate.}
+The full maximum and an extremal family are determined, with the Ahlswede--Khachatrian upper bound explicitly used as an external theorem.
+\textbf{COMPLETION: 100\%}

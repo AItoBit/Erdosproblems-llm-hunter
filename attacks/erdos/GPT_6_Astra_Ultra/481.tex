@@ -1,0 +1,39 @@
+\section{Erd\H{o}s Problem \#481: collisions under expanding affine maps}
+\noindent Complete harmonic-weight reconstruction, 24 September 2026.
+
+\subsection*{Statement}
+Let $a_i,b_i\in\mathbb N$ for $1\le i\le r$, with $C:=\sum_i1/a_i>1$. Starting from the one-element sequence $A_1=(1)$, replace each entry $x$ at every step by all $a_ix+b_i$, retaining multiplicities. We prove that some level $A_k$ has repeated entries. In particular, collisions at different levels alone would not suffice.
+
+\subsection*{Harmonic mass cannot grow both linearly and exponentially}
+Assume every level has distinct entries, and put
+\[S_k=\sum_{x\in A_k}\frac1x,\qquad B=\sum_{i=1}^r\frac{b_i}{a_i^2}.\]
+The level contains exactly $r^{k-1}$ distinct positive integers. Ordering them increasingly, the $j$th is at least $j$, so
+\[0<S_k\le H_{r^{k-1}}\le1+(k-1)\log r.\tag{1}\]
+Since all $a_i,b_i\ge1$, the minimum entry increases by at least one at each step. Thus every entry of $A_k$ is at least $k$.
+
+The defining multiset recurrence, before any assumption of distinctness, gives
+\[S_{k+1}=\sum_{x\in A_k}\sum_i\frac1{a_ix+b_i}.
+\]
+The exact identity
+\[\frac1{a_ix+b_i}=\frac1{a_ix}-\frac{b_i}{a_ix(a_ix+b_i)}
+\ge\frac1{a_ix}-\frac{b_i}{a_i^2x^2}
+\]
+therefore implies
+\[S_{k+1}\ge C S_k-B\sum_{x\in A_k}\frac1{x^2}
+\ge\left(C-\frac Bk\right)S_k.\tag{2}\]
+Choose a fixed integer $K>B/(C-1)$ and set $\rho=C-B/K>1$. For every $k\ge K$, (2) gives $S_{k+1}\ge\rho S_k$, and consequently
+\[S_k\ge\rho^{k-K}S_K.\tag{3}\]
+The positive constant $S_K$ makes (3) exponential in $k$, contradicting (1). Some level must contain a repeated integer, proving the assertion.
+
+\subsection*{The strict reciprocal threshold is meaningful}
+For comparison, the two maps $x\mapsto2x+1$ and $x\mapsto2x+2$ have reciprocal sum exactly one. At depth $d$, their values at $1$ are
+\[2^d+\sum_{j=0}^{d-1}2^j c_j,\qquad c_j\in\{1,2\}.
+\]
+After subtracting $\sum_{j=0}^{d-1}2^j$, the remaining digits $c_j-1$ are binary. Different words therefore yield different values at the same depth. Thus replacing $>1$ by $\ge1$ would make the statement false.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED.} All estimates and the contradiction are elementary and included. The proof is the harmonic-weight method written by Kevin Barreto in the primary discussion, related there to Klarner's earlier affine-semigroup theorem; it is not a new solution. The stronger equality-of-affine-maps assertion is not required or claimed here.
+Sources: \url{https://www.erdosproblems.com/481} and \url{https://www.erdosproblems.com/forum/discuss/481}, checked 24 September 2026. The existing Lean result belongs to its cited authors, and no local formal check of this text is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

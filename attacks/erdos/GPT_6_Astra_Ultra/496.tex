@@ -1,0 +1,41 @@
+\section{Erd\H{o}s Problem \#496: an irrational quadratic form}
+\noindent Reconstruction with sign and positivity conditions checked, 24 September 2026.
+
+\subsection*{1) Statement and a necessary correction}
+For irrational $\alpha\in\mathbb R$ and $\epsilon>0$, are there positive integers $x,y,z$ such that
+\[|x^2+y^2-\alpha z^2|<\epsilon?\tag{1}\]
+The affirmative answer requires $\alpha>0$. If $\alpha<0$, then for positive $x,y,z$,
+\[x^2+y^2-\alpha z^2=x^2+y^2+|\alpha|z^2\ge2+|\alpha|.\]
+For example $\alpha=-\sqrt2$ and $\epsilon=1$ disprove the literal assertion over all real irrational $\alpha$. We now establish (1) for every positive irrational $\alpha$ using Margulis's theorem, also addressing the requirement that all three coordinates be positive.
+
+\subsection*{2) The precise external input}
+The Oppenheim--Margulis theorem states that a nondegenerate indefinite real quadratic form in at least three variables, which is not a real scalar multiple of a form with rational coefficients, takes arbitrarily small absolute values on nonzero integer vectors. This is the deep external input. Its proof through unipotent dynamics is not supplied here.
+
+For $\alpha>0$, the form
+\[Q(u,v,w)=u^2+v^2-\alpha w^2
+\]
+is nondegenerate, with determinant $-\alpha\ne0$, and indefinite. If it were a scalar multiple of a rational form, the ratio of its $w^2$ coefficient to its $u^2$ coefficient would be rational, forcing $\alpha$ rational. Thus every hypothesis of the theorem holds.
+
+\subsection*{3) Eliminate zero coordinates without losing the approximation}
+Apply the theorem with
+\[0<\delta<\min(1,\alpha,\epsilon/25)
+\]
+to obtain a nonzero integer vector $(u,v,w)$ with $|Q(u,v,w)|<\delta$. We necessarily have $w\ne0$: if $w=0$, then $Q=u^2+v^2$ is a positive integer. Also $(u,v)\ne(0,0)$, since otherwise $|Q|=\alpha w^2\ge\alpha$.
+
+If both $u$ and $v$ are nonzero, their absolute values, together with $|w|$, already give positive integers satisfying (1). If exactly one of $u,v$ is zero, use the integer transformation
+\[U=3u-4v,\qquad V=4u+3v,\qquad W=5w.
+\]
+Then $U,V,W$ are all nonzero, and direct expansion gives
+\[U^2+V^2=25(u^2+v^2),\qquad Q(U,V,W)=25Q(u,v,w).
+\]
+Thus $x=|U|$, $y=|V|$, $z=|W|$ are positive and satisfy (1). The factor $25$ was accounted for in the original choice of $\delta$.
+
+The value $Q$ cannot equal zero at a vector with $w\ne0$, since equality would express $\alpha=(u^2+v^2)/w^2$ as a rational number. Consequently, taking $\epsilon\to0$ also forces infinitely many distinct positive triples: a finite collection would have a positive minimum error. No effective bound on the smallest such triple is obtained.
+
+\subsection*{4) Outcome and attribution}
+\textbf{SOLVED in the negative as literally stated for arbitrary irrational real $\alpha$; solved in the affirmative for $\alpha>0$ relative to Margulis's theorem.} The additional coordinate-positivity step is proved explicitly, rather than inferred from a theorem allowing zero or negative coordinates.
+
+Sources: \url{https://www.erdosproblems.com/496}, checked 24 September 2026; G. A. Margulis, ``Indefinite quadratic forms and unipotent flows on homogeneous spaces'', Banach Center Publications 23 (1989), 399--409, \url{https://doi.org/10.4064/-23-1-399-409}. The named theorem is an external dependency. No novelty or formal verification is claimed.
+
+\subsection*{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

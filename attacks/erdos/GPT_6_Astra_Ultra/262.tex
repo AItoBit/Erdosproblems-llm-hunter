@@ -1,0 +1,67 @@
+\section{Erd\H{o}s Problem \#262}
+\subsection{Statement and scope}
+An increasing sequence of positive integers $(a_n)$ is called an irrationality sequence here if $\sum_{n\ge1}1/(t_na_n)$ is irrational for every sequence of positive integers $(t_n)$. How slowly can $a_n$ grow?
+
+Han\v cl's resolution gives the necessary threshold
+\[
+ \limsup_{n\to\infty}\frac{\log_2\log_2 a_n}{n}\ge1.
+ \tag{1}
+\]
+We prove a constructive obstruction implying this threshold and the stronger condition recorded on the problem page. For the matching example we explicitly use Erd\H{o}s's known theorem that $a_n=2^{2^n}$ is an irrationality sequence. Thus the answer concerns the double-exponential growth scale, not a classification of every sequence at the boundary. No novelty is claimed.
+
+\subsection{Work: a greedy construction of a rational sum}
+We prove the following useful sufficient condition for failure:
+\[
+ L:=\sum_{n\ge1}2^{-n}\log a_n<\infty
+ \quad\Longrightarrow\quad (a_n)\hbox{ is not an irrationality sequence}.
+ \tag{2}
+\]
+Choose a positive rational $r_0$ with $\log r_0+L<-1$. Recursively define
+\[
+ t_n=\left\lfloor\frac1{a_nr_{n-1}}\right\rfloor+1,
+ \qquad r_n=r_{n-1}-\frac1{a_nt_n}.
+\]
+The strict choice of the next integer ensures $t_n>1/(a_nr_{n-1})$, so $r_n>0$, even when the quantity inside the floor is an integer. Also
+\[
+ t_n\le\frac1{a_nr_{n-1}}+1,
+ \qquad
+ r_n\le r_{n-1}-\frac{r_{n-1}}{1+a_nr_{n-1}}
+ \le a_nr_{n-1}^2.
+\]
+Taking logarithms and iterating gives
+\[
+ \log r_n\le 2^n\left(\log r_0+
+                 \sum_{j=1}^n2^{-j}\log a_j\right)<-2^n.
+\]
+Thus $r_n\to0$, and telescoping proves
+\[
+ \sum_{n\ge1}\frac1{t_na_n}=r_0\in\mathbb Q.
+\]
+All $t_n$ are positive integers and every summand is nonzero. This proves (2).
+
+\subsection{Consequences for the precise growth question}
+If the limsup in (1) were less than one, then for some $\varepsilon>0$ and all sufficiently large $n$,
+$\log a_n\le (\log2)2^{(1-\varepsilon)n}$. The series in (2) would converge geometrically, contradicting irrationality. This proves (1).
+
+More generally, suppose $a_n\le K2^{2^{n-F(n)}}$ eventually and $\sum_n2^{-F(n)}<\infty$. Then
+\[
+ 2^{-n}\log a_n\le 2^{-n}\log K+(\log2)2^{-F(n)},
+\]
+so (2) applies. This gives the stronger obstruction in the current editorial, with no regularity required of $F$.
+
+The known Erd\H{o}s example $a_n=2^{2^n}$ has
+$\log_2\log_2 a_n=n$. Its irrationality for arbitrary integer multipliers is the external positive input; it does not follow merely from its rate of growth. Indeed double-exponential sequences can also have rational reciprocal sums. For the simpler non-example $a_n=n!$, choosing $t_n=n+2$ gives the exact telescoping identity
+\[
+ \frac1{(n+2)n!}=\frac1{(n+1)!}-\frac1{(n+2)!},
+ \qquad \sum_{n\ge1}\frac1{(n+2)n!}=\frac12.
+\]
+
+\subsection{Verification and outcome}
+The greedy proof does not rely on numerical approximation, divisibility between different $a_n$, or monotonicity. It constructs a rational sum and bounds the residual by $e^{-2^n}$. Together with Erd\H{o}s's example it determines the threshold (1) sharply on the stated logarithmic scale.
+
+\textbf{SOLVED at the growth-scale resolution in the question, with the positive example explicitly cited.} No claim is made that (1) is sufficient for an arbitrary sequence.
+
+\subsection{Sources}
+J. Han\v cl, \emph{Expression of real numbers with the help of infinite series}, Acta Arith. 59 (1991), 97--104, \url{https://matwbn.icm.edu.pl/ksiazki/aa/aa59/aa5921.pdf}; P. Erd\H{o}s, \emph{Some problems and results on the irrationality of the sum of infinite series}, J. Math. Sci. 10 (1975), 1--7. The definitions and the positive example are also stated in Section 2.1.3 of Kova\v c--Tao, \url{https://arxiv.org/abs/2406.17593}. Current statement: \url{https://www.erdosproblems.com/262}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

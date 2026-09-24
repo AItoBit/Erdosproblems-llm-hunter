@@ -1,0 +1,102 @@
+\section{Erd\H{o}s Problem 164: the weighted sum of a primitive set}
+
+\subsection{1) Statement and scope}
+A set $A\subseteq\{2,3,\ldots\}$ is primitive if distinct members never
+divide one another. The assertion is
+\[
+ \sum_{a\in A}\frac1{a\log a}
+ \leq \sum_{p\ {\rm prime}}\frac1{p\log p}.
+\]
+It was proved by Lichtman. The following reconstruction uses the von
+Mangoldt-chain approach of Alexeev and collaborators (2026), with one
+analytic inequality stated explicitly as an external input. The
+probability argument and the exceptional prime-power adjustment are
+proved here. Logarithms are natural.
+
+\subsection{2) The analytic input and a downward chain}
+Write $w(n)=1/(n\log n)$ and let $\Lambda$ be the von Mangoldt function.
+Lemma 3.3(ii) of the cited 2026 paper states, for every real $m\geq2$,
+with $x=\log m/\log2$,
+\[
+ \log m\sum_{q\geq2}\frac{\Lambda(q)}{q\log^2(mq)}
+ \leq\frac{x}{x+1/2}.                                      \tag{1}
+\]
+This analytic estimate is not reproved in this note.
+
+For a composite integer $n$ which is not a prime power, set
+$T(n,n/q)=\Lambda(q)/\log n$ for each divisor $q\geq2$ of $n$.
+Terms with zero numerator are ignored. The destination is always at
+least $2$, and $\sum_{q\mid n}\Lambda(q)=\log n$ shows that these
+probabilities sum to one. For $n=p^k$, $k\geq2$, instead put
+\[
+ T(p^k,p)=2/k,\qquad
+ T(p^k,p^j)=1/k\quad(2\leq j\leq k-1).
+\]
+The empty second range when $k=2$ is allowed. These probabilities also
+sum to one. Primes have no downward transitions.
+
+Let $W(m)=\sum_{n>m}w(n)T(n,m)$. If $m$ is composite, direct substitution
+gives
+\[
+ \frac{W(m)}{w(m)}=
+ \log m\sum_{q\geq2}\frac{\Lambda(q)}{q\log^2(mq)}\leq1.
+\]
+If $m=p$ is prime, the doubled last transition contributes the additional
+term $\sum_{k\geq2}1/(k^2p^{k-1})$. Since $x=\log_2p\leq p-1$,
+\[
+ \sum_{k\geq2}\frac1{k^2p^{k-1}}
+ \leq\frac1{4(p-1)}\leq\frac1{2p-1}
+ \leq\frac1{2x+1}.
+\]
+Together with (1), this yields $W(p)/w(p)\leq
+x/(x+1/2)+1/(2x+1)=1$. Thus $W(m)\leq w(m)$ for every $m\geq2$.
+
+\subsection{3) Reverse the chain and count visits}
+The prime mass $P=\sum_p w(p)$ is finite. For completeness, primes in
+$(2^j,2^{j+1}]$ divide $\binom{2^{j+1}}{2^j}\leq4^{2^j}$, so there
+are at most $2^{j+1}/j$ of them for $j\geq1$. Their total weight is at
+most $2/(j^2\log2)$; adding the prime $2$ proves convergence.
+
+Start a random chain at a prime $p$, with probability $w(p)/P$.
+From $m$ move to a proper multiple $n>m$ with probability
+\[
+ Q(m,n)=\frac{w(n)T(n,m)}{w(m)}.
+\]
+The preceding bound says that the row sum of $Q$ is at most one.
+With the remaining probability the chain terminates. Thus this defines
+a countable-state process; its integer states strictly increase and
+each divides the next.
+
+Let $h(n)$ be $P$ times the probability that the process ever visits
+$n$. A prime can only be visited initially, so $h(p)=w(p)$. For composite
+$n$, its possible predecessors are its proper divisors at least $2$.
+Induction on $n$ and the fact that a state cannot be visited twice give
+\[
+ h(n)=\sum_{\substack{m\mid n\\2\leq m<n}}h(m)Q(m,n)
+ =w(n)\sum_m T(n,m)=w(n).
+\]
+Every trajectory visits at most one member of a primitive set. Therefore,
+by the nonnegative sum rule for expectations,
+\[
+ \sum_{a\in A}w(a)
+ =P\,\mathbb E\bigl[\#\{\hbox{visited states in }A\}\bigr]\leq P.
+\]
+This includes infinite primitive sets, without an unproved exchange of
+signed series. The primes themselves are primitive and attain $P$.
+
+\subsection{4) Outcome and sources}
+\textbf{Outcome: SOLVED using the stated analytic lemma.} All steps from
+(1) to the desired inequality are proved above. The original resolution
+and the later chain method belong to the cited authors; this is an
+exposition, not a novelty or formal-verification claim.
+\begin{itemize}
+\item B. Alexeev, K. Barreto, Y. Li, J. D. Lichtman, L. Price,
+J. I. Shah, Q. Tang, and T. Tao, \emph{Primitive sets and von Mangoldt
+chains: Erd\H{o}s Problem \#1196 and beyond}, Lemma 3.3(ii) and Section 5,
+\texttt{https://arxiv.org/abs/2605.00301}.
+\item T. F. Bloom, Problem 164,
+\texttt{https://www.erdosproblems.com/164}, checked 23 September 2026.
+\end{itemize}
+The percentage includes the explicitly cited analytic input.
+\subsection{5) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,85 @@
+\section{Erd\H{o}s Problem 245: doubling of an infinite set of density zero}
+
+\subsection{1) Statement and scope}
+For an infinite set $A\subseteq\mathbb N$ with $A(N)=o(N)$,
+must
+\[
+ \limsup_{N\to\infty}\frac{(A+A)(N)}{A(N)}\geq3?
+\]
+Here $S(N)=|S\cap[1,N]|$. Freiman proved the affirmative answer.
+This attempt establishes the sharpness of the constant by a
+fully specified example with limsup equal to three. The universal
+lower bound is unresolved in this attempt.
+
+\subsection{2) The block construction and zero density}
+For $j\geq1$, put
+\[
+ x_j=2^{4^j},\qquad \ell_j=\sqrt{x_j},\qquad
+ I_j=[x_j,x_j+\ell_j]\cap\mathbb Z,\qquad A=\bigcup_{j\geq1}I_j.
+\]
+Let $B_j=\bigcup_{i<j}I_i$, $b_j=|B_j|$, and
+$M_j=\max B_j$ for $j\geq2$. Since
+$x_j=x_{j-1}^4$ and $\ell_j=x_{j-1}^2$,
+\[
+ b_j=O(\sqrt{x_{j-1}}),\qquad
+ M_j=O(x_{j-1}),\qquad
+ b_j^2+M_j=o(\ell_j),\qquad b_j=o(\ell_j).
+\]
+For $x_j\leq N<x_{j+1}$ we have
+$A(N)\leq b_j+\ell_j+1=O(\sqrt{x_j})$ and $N\geq x_j$.
+Therefore $A(N)/N\to0$.
+
+\subsection{3) Bounding the limsup from above}
+First let $x_j+\ell_j\leq N<x_{j+1}$.
+Only the first $j$ blocks can contribute to $(A+A)\cap[1,N]$.
+Old--old sums have at most $b_j^2$ possible values.
+New--old sums lie in an interval of length at most
+$\ell_j+M_j+1$. New--new sums lie in
+$[2x_j,2x_j+2\ell_j]$, of size $2\ell_j+1$.
+Consequently
+\[
+ (A+A)(N)\leq 3\ell_j+b_j^2+M_j+2
+             =3\ell_j+o(\ell_j),
+ \qquad A(N)=b_j+\ell_j+1.
+\]
+The ratio is at most $3+o(1)$ throughout this range.
+
+Next let $N=x_j+t$, where $0\leq t\leq\ell_j$.
+No new--new sum is at most $N$. All old--old sums are already
+below $x_j$, while the new--old sums at most $N$ lie in an
+interval of size at most $t+1$. At $x_j-1$, the preceding
+completed-block bound gives
+$|B_j+B_j|\leq(3+\varepsilon_j)b_j$, with $\varepsilon_j\to0$.
+Thus
+\[
+ \frac{(A+A)(x_j+t)}{A(x_j+t)}
+ \leq\frac{(3+\varepsilon_j)b_j+t+1}{b_j+t+1}
+ \leq3+|\varepsilon_j|.
+\]
+This also covers the partially filled blocks, so the global
+limsup is at most three.
+
+\subsection{4) Attaining three}
+Fix one $a_*\in I_1$. For large $j$, at
+$N_j=2x_j+2\ell_j<x_{j+1}$, both intervals
+\[
+ a_*+I_j,\qquad I_j+I_j=[2x_j,2x_j+2\ell_j]\cap\mathbb Z
+\]
+are present and disjoint. Their total size is $3\ell_j+2$.
+Since $A(N_j)=b_j+\ell_j+1=(1+o(1))\ell_j$,
+the ratio has limsup at least three, and hence exactly three.
+
+For comparison, a much weaker universal bound follows from
+$a_*+A\subseteq A+A$:
+$(A+A)(N)\geq A(N-a_*)\geq A(N)-a_*$, so the liminf is at
+least one. This elementary observation does not establish
+Freiman's lower bound of three.
+
+\subsection{5) Attribution and remaining work}
+Source: \url{https://www.erdosproblems.com/245}, which records
+Freiman's 1973 resolution. The separated-block construction is
+an exposition of the sharpness mechanism, not a claimed new
+resolution. What is missing is a proof that every infinite
+zero-density set has limsup at least three.
+\subsection{6) Completion estimate}
+\textbf{COMPLETION: 35\%}

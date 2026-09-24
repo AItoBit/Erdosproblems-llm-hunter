@@ -1,0 +1,47 @@
+\section{Erd\H{o}s Problem \#205}
+\subsection*{1. FORMAL RESTATEMENT}
+Must every sufficiently large positive integer $n$ have a representation $n=2^k+m$, $k\ge0,m\ge1$, with $\Omega(m)<\log\log m$? Here $\Omega$ counts prime factors with multiplicity. What happens for smaller target functions?
+\subsection*{2. LITERATURE AND APPROACH}
+The current problem page records a negative answer by Barreto and Leeham, with quantitative refinements by Tao and Alexeev. We give a complete Chinese remainder construction of the even obstructions, consistent with that reported method. This is a reconstruction of a known result, not a new counterexample. No conclusion about odd $n$ is inferred.
+\subsection*{3. THE CRT CONSTRUCTION}
+Fix an integer $L\ge2$, and choose $L^2$ distinct odd primes $p_{r,j}$ indexed by $0\le r<L$, $1\le j\le L$. Set
+\[
+ M_L=2^L\prod_{r=0}^{L-1}\prod_{j=1}^L p_{r,j}.
+\]
+CRT gives a residue $b_L\in[0,M_L)$ satisfying
+\[
+ b_L\equiv0\pmod{2^L},\qquad b_L\equiv2^r\pmod{p_{r,j}}
+ \quad(0\le r<L,\ 1\le j\le L).
+\]
+Put $n_L=M_L+b_L$, so $M_L\le n_L<2M_L$ and $2^L\mid n_L$.
+For every $k\ge0$ with $2^k<n_L$, the positive integer $m=n_L-2^k$ satisfies
+\[
+ \Omega(m)\ge L.                                         \tag{1}
+\]
+If $k<L$, all $L$ distinct primes in the row indexed by $k$ divide $m$. If $k\ge L$, the integer $m$ is divisible by $2^L$, whose repeated prime factors count $L$ times. These two cases cover every permitted exponent, including those much larger than $L$.
+\subsection*{4. SIZE CONTROL AND THE NEGATIVE ANSWER}
+For a self-contained size estimate, Bertrand's postulate implies that the $j$th odd prime is less than $2^{j+1}$. Choosing the first $L^2$ odd primes gives $\log n_L=O(L^4)$ and hence
+\[
+ \log\log n_L=O(\log L)=o(L).
+\]
+Since $m\le n_L$, (1) excludes $\Omega(m)<\log\log m$ for all sufficiently large $L$. The construction itself rules out $m=1$; for $m>1$, $\log\log m\le\log\log n_L$. Also $n_L\ge M_L\to\infty$, so these are arbitrarily large counterexamples, not just one repeated integer. The same construction excludes $\Omega(m)<\epsilon\log\log m$ for every fixed $\epsilon>0$.
+
+One can recover the recorded quantitative strength with the standard prime estimate $p_j\ll j\log(j+1)$ (an explicit external input for this refinement). It gives
+\[
+ \log n_L\ll L^2\log L.
+\]
+Conversely the product of $L^2$ distinct primes is at least $(L^2+1)!$, so $\log n_L\gg L^2\log L$. Consequently
+\[
+ L\gg\sqrt{\frac{\log n_L}{\log\log n_L}},\qquad
+ \Omega(n_L-2^k)\gg\sqrt{\frac{\log n_L}{\log\log n_L}}
+ \quad(2^k<n_L).
+\]
+In particular every prescribed nonnegative function
+$g(t)=o(\sqrt{\log t/\log\log t})$ as $t\to\infty$ also fails as a universal target $\Omega(m)<g(m)$. Indeed (1) forces $m\ge2^L\to\infty$ uniformly in $k$, while $\log t/\log\log t$ is eventually increasing and $m\le n_L$.
+\subsection*{5. FINAL AND VERIFICATION}
+\textbf{SOLVED: negative answer for the proposed targets.}
+The proof gives all-exponent obstructions; checking only $k<L$ would have been insufficient without the large power of two. The core disproof needs only CRT and Bertrand's postulate. The sharper square-root scale additionally uses the stated classical prime bound. Nothing here resolves the separate odd-counterexample question.
+\subsection*{6. SOURCES}
+Current statement and attribution of the CRT resolution and refinements: \texttt{https://www.erdosproblems.com/205}, including its discussion thread. The elementary proof is provided in full above; the prime estimate $p_j\ll j\log(j+1)$ is used only for the optional quantitative strengthening.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

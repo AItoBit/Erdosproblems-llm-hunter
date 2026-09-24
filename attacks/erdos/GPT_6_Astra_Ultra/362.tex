@@ -1,0 +1,74 @@
+\subsection*{Erd\H{o}s problem \#362}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+For a set $A$ of $N$ distinct positive integers, uniformly in the integer target $t$, prove that at most $C2^N/N^{3/2}$ subsets sum to $t$. If their cardinality is also prescribed as $l$, prove the uniform stronger bound $C'2^N/N^2$.
+
+\noindent\textbf{2) CONTEXT AND EXPLICIT INPUT.}
+S\'ark\"ozy--Szemer\'edi proved the first bound; Hal\'asz established the second through a multidimensional theorem. We use only the following scalar S\'ark\"ozy--Szemer\'edi input, stated explicitly as Theorem 1.1 in Nguyen's \emph{A new approach to an old problem of Erd\H{o}s and Moser}:
+\[
+ \sup_z\mathbb P\left(\sum_{i=1}^m\epsilon_i b_i=z\right)
+ \le C m^{-3/2}
+ \quad\text{for distinct integers }b_i
+ \text{ and independent uniform signs }\epsilon_i. \tag{SS}
+\]
+Its proof is external. We give the first conversion and a separate pairing argument deriving the two-constraint estimate from this scalar theorem. No novelty is claimed.
+
+\noindent\textbf{3) UNRESTRICTED CARDINALITY.}
+Choose a uniformly random subset of $A=\{a_1<\cdots<a_N\}$, with independent inclusion indicators $\xi_i\in\{0,1\}$. Then
+\[
+ 2\sum_i a_i\xi_i-\sum_i a_i
+   =\sum_i a_i(2\xi_i-1).
+\]
+Apply (SS) with $b_i=a_i$, and multiply the resulting probability bound by $2^N$. This proves the first assertion, with a constant independent of $t$.
+
+\noindent\textbf{4) PAIRING TO RETAIN THE CARDINALITY GAIN.}
+First suppose $N=2m$. Pair the smallest with the largest, the second smallest with the second largest, and so on:
+\[
+ (a_i,a_{2m+1-i}),\qquad1\le i\le m.
+\]
+Their positive differences
+$d_i=a_{2m+1-i}-a_i$ are strictly decreasing, hence distinct. A uniform random subset can be generated independently for each pair as follows. With probability $1/2$ call it active and choose exactly one of its two members, each orientation equally likely. Otherwise call it inactive and choose either both members or neither, each with probability $1/2$. The four pair states are thus equally likely.
+
+Condition on the set $J$ of active pairs, and let $h=|J|$. Inactive both/neither decisions are independent fair bits. The subset cardinality is
+\[
+ |S|=h+2Y,\qquad Y\sim\operatorname{Bin}(m-h,1/2),
+\]
+independent of all active orientations. If $m/4\le h\le3m/4$, the central binomial bound gives
+\[
+ \mathbb P(|S|=l\mid J)\le C_1m^{-1/2}. \tag{2}
+\]
+Now additionally fix every inactive decision. The subset sum, as the active orientations vary, has the form
+\[
+ c+\sum_{i\in J}d_i\eta_i,
+\]
+where the $\eta_i$ are independent fair $\{0,1\}$ bits and $c$ is fixed. By (SS), its largest atom is at most $C_2h^{-3/2}\le C_3m^{-3/2}$. Since the cardinality condition depends only on the inactive decisions and $J$, average this bound over those decisions satisfying it. Combining with (2) gives
+\[
+ \mathbb P\big(\sum_{a\in S}a=t,\ |S|=l\mid J\big)
+ \le C_4m^{-2}
+\]
+on the central range of $h$, uniformly in both targets.
+
+The active count is $\operatorname{Bin}(m,1/2)$, so an exponential-moment estimate bounds the probability of $h<m/4$ or $h>3m/4$ by $2e^{-c m}$. Consequently
+\[
+ \mathbb P\big(\sum_{a\in S}a=t,\ |S|=l\big)
+ \le C_4m^{-2}+2e^{-cm}\ll N^{-2}.
+\]
+For odd $N$, first condition on the inclusion of one element, and apply the even result to the remaining $N-1$ elements, shifting $t$ and $l$ as appropriate. Enlarging the absolute constant handles all small $N$. Multiplication by $2^N$ proves the second assertion.
+
+\noindent\textbf{5) WHY THESE POWERS CANNOT BE IMPROVED.}
+Take $A=[1,N]$. For a uniform random subset,
+\[
+ \operatorname{Var}\Big(\sum_{i=1}^Ni\xi_i\Big)
+ =\frac14\sum_{i=1}^Ni^2=O(N^3),\qquad
+ \operatorname{Var}\Big(\sum_i\xi_i\Big)=N/4.
+\]
+Chebyshev's inequality places a fixed positive fraction of all subsets in an interval of $O(N^{3/2})$ possible sum values, so one sum occurs at least $c2^N/N^{3/2}$ times. Applying Chebyshev to both coordinates and a union bound similarly puts a fixed positive fraction in a rectangle with $O(N^{3/2})\cdot O(N^{1/2})=O(N^2)$ integer pairs. Hence some pair $(t,l)$ has at least $c'2^N/N^2$ representations. These are sharpness bounds up to constants, not exact extremizer claims.
+
+\noindent\textbf{6) VERIFICATION AND FINAL.}
+Pair differences are distinct even if the original set is highly irregular. The cardinality restriction is imposed before averaging over independent active orientations, preserving the extra $N^{-1/2}$ factor. \textbf{SOLVED relative to the explicitly stated scalar theorem (SS).} The two-constraint reduction and both sharpness arguments are proved here; the deep scalar anti-concentration theorem remains an external dependency.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/362}; \url{https://arxiv.org/pdf/1112.0755}; \url{https://eudml.org/doc/204757}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

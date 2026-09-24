@@ -1,0 +1,45 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#207; partial reconstruction, 2026-09-23.}
+For every fixed $g\geq2$, do all sufficiently large $n\equiv1,3\pmod6$ admit a Steiner triple system in which the union of any $j$ distinct edges has at least $j+3$ vertices, for every $2\leq j\leq g$? A Steiner triple system is a collection of three-element subsets in which each pair of distinct vertices occurs exactly once.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Kwan, Sah, Sawhney, and Simkin proved the full assertion. Their high-girth existence theorem involves substantially more than the explicit construction below. This attempt establishes the required local property through four edges on an infinite sequence of admissible orders. It does not claim a new solution of the general theorem.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+First identify the divisibility restrictions and the first genuinely forbidden configuration. Then construct a family which avoids that configuration, checking every edge count relevant to $g=4$.
+
+\section{WORK}
+\textbf{Necessary divisibility.} At a vertex $v$, the other $n-1$ vertices are partitioned into pairs by the edges containing $v$, so $n$ is odd. Counting pairs over all edges gives $|E|=n(n-1)/6$, an integer. Together these requirements give $n\equiv1,3\pmod6$.
+
+\textbf{Two and three edges.} Distinct edges intersect in at most one vertex, since a repeated pair would violate uniqueness. Two edges consequently have union of size at least five. For three edges, inclusion--exclusion gives union size at least $9-3=6$. Thus the requirements for $j=2,3$ hold in every Steiner triple system.
+
+\textbf{Four edges on six vertices.} In a linear triple system, three edges through a common vertex already use seven vertices. Therefore a collection of four edges with union of size at most six has every vertex in at most two of the four edges. Its twelve incidences force exactly six vertices, all of degree two. Each of the six pairs of edges must intersect once: every vertex accounts for one pair of edges, and no pair can be accounted for twice. Relabelling the six intersections gives precisely the Pasch pattern
+\[
+\{a,b,c\},\quad\{a,d,e\},\quad\{f,b,d\},\quad\{f,c,e\}.
+\tag{1}
+\]
+Consequently avoiding (1) is exactly what is needed to make every four-edge union have at least seven vertices.
+
+\textbf{An explicit Pasch-free family.} Let $V=\mathbb F_3^r$, where $r\geq1$, and take as edges all three-element sets with sum zero. Given distinct $x,y$, the unique candidate for the third vertex is $z=-x-y$. It differs from $x$: otherwise $y=-2x=x$ in characteristic three, a contradiction. Likewise it differs from $y$. Hence these edges form a Steiner triple system on $3^r$ vertices.
+
+If (1) were present, its first three equations would give
+\[
+c=-a-b,\qquad e=-a-d,\qquad f=-b-d.
+\]
+The fourth equation would then imply
+\[
+0=f+c+e=-2(a+b+d)=a+b+d,
+\]
+so $d=-a-b=c$. The six intersection vertices in a Pasch configuration are distinct, so this is impossible. This construction therefore satisfies the desired inequalities simultaneously for $2\leq j\leq4$. The orders $3^r$ are unbounded and all are $3\pmod6$.
+
+\section{VERIFICATION AND SCOPE}
+The argument proves the full local claim through four edges for an explicit infinite family, and proves why the admissibility congruences are necessary. It does not establish existence for every sufficiently large admissible order, even for $g=4$, nor control collections with arbitrarily prescribed $g$. The missing work is the general high-girth construction and its completion to an exact Steiner system. The Kwan--Sah--Sawhney--Simkin theorem supplies that in the literature; its proof has not been reconstructed here. Finite checks of pair uniqueness and Pasch avoidance in small vector spaces support the formulas, but the symbolic proof above is what establishes the infinite family.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement and known resolution: \url{https://www.erdosproblems.com/207}.
+\item M. Kwan, A. Sah, M. Sawhney, and M. Simkin, \emph{High-Girth Steiner Triple Systems}, main theorem: \url{https://arxiv.org/abs/2201.04554}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved by this partial reconstruction.} The general problem is already solved in the cited literature. This file proves the explicit $g\leq4$, $n=3^r$ family and the first obstruction, without a novelty claim.
+\textbf{Completion rate estimate: 35\%.}

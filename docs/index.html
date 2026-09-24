@@ -12,7 +12,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erdos Problems LLM Hunter (beta)</title>
+    <title>Erdos &amp; Top Open Problems - LLM Hunter (beta)</title>
     <link rel="stylesheet" href="styles.css">
     <script>
         window.MathJax = {
@@ -39,11 +39,11 @@
 </head>
 <body>
     <header>
-        <h1>Erdos Problems LLM Hunter (beta)</h1>
+        <h1>Erdos &amp; Top Open Problems - LLM Hunter (beta)</h1>
         <nav>
             <a href="index.html" class="active">Home</a>
             <a href="erdos.html">Erdos Problems</a>
-            <a href="mo.html">MathOverflow</a>
+            <a href="open_problems.html">Top Open Problems</a>
             <a href="about.html">About</a>
             <button type="button" id="theme-toggle" class="theme-toggle" aria-pressed="false">Light</button>
         </nav>
@@ -54,7 +54,8 @@
             <p>
                 A collection of attempts by advanced Large Language Models (LLMs) to solve
                 open mathematical problems from the <a href="https://www.erdosproblems.com/">Erdos Problems</a>
-                collection and <a href="https://mathoverflow.net/">MathOverflow</a>.
+                collection and a ranked catalogue of <a href="open_problems.html">Top Open Problems</a>,
+                including the <a href="mo.html">MathOverflow subset</a>.
             </p>
         </section>
 
@@ -68,10 +69,11 @@
                     <a href="erdos.html" class="btn">Browse Erdos Problems</a>
                 </div>
                 <div class="stat-box">
-                    <h3>MathOverflow Problems</h3>
-                    <p><span id="mo-total">-</span> problems tracked</p>
-                    <p><span id="mo-attacks">-</span> with LLM attempts</p>
-                    <a href="mo.html" class="btn">Browse MO Problems</a>
+                    <h3>Top Open Problems</h3>
+                    <p><span id="open-total">-</span> entries tracked</p>
+                    <p><span id="open-ranked-total">-</span> ranked problems + <a href="mo.html"><span id="open-mo-total">-</span> MathOverflow entries</a></p>
+                    <p><span id="open-attacks">-</span> with LLM attempts</p>
+                    <a href="open_problems.html" class="btn">Browse Top Open Problems</a>
                 </div>
             </div>
         </section>
@@ -105,43 +107,36 @@
         <p>
             <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter">GitHub Repository</a> |
             <a href="about.html">About</a> |
-            <a href="LICENSE">Apache License 2.0</a>
+            <a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/LICENSE">Apache License 2.0</a>
         </p>
     </footer>
 
     <script src="data/erdos_data.js"></script>
-    <script src="data/mo_data.js"></script>
+    <script src="data/open_problems_data.js"></script>
     <script src="data/stats.js"></script>
     <script src="app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const api = window.ProblemHunting;
             if (typeof siteStats !== 'undefined') {
                 document.getElementById('erdos-total').textContent = siteStats.erdos.total_problems;
                 document.getElementById('erdos-attacks').textContent = siteStats.erdos.with_attacks;
-                document.getElementById('mo-total').textContent = siteStats.mo.total_problems;
-                document.getElementById('mo-attacks').textContent = siteStats.mo.with_attacks;
-
-                // Display models
-                const allModels = [...new Set([...siteStats.erdos.models, ...siteStats.mo.models])];
-                const modelsList = document.getElementById('models-list');
-                modelsList.innerHTML = allModels.map(m => `<li>${m}</li>`).join('');
-            }
-
-            // Display recent attacks
-            if (typeof erdosProblems !== 'undefined') {
-                const withAttacks = Object.values(erdosProblems)
-                    .filter(p => p.attacks && p.attacks.length > 0)
-                    .slice(0, 10);
-
-                const recentDiv = document.getElementById('recent-attacks');
-                if (withAttacks.length > 0) {
-                    recentDiv.innerHTML = '<ul>' + withAttacks.map(p =>
-                        `<li><a href="problem.html?type=erdos&id=${p.number}">Erdos Problem #${p.number}</a> - ${p.attacks.length} attempt(s)</li>`
-                    ).join('') + '</ul>';
-                } else {
-                    recentDiv.innerHTML = '<p>No problems with attacks found.</p>';
+                if (siteStats.open_problems) {
+                    document.getElementById('open-total').textContent = siteStats.open_problems.total_problems;
+                    document.getElementById('open-ranked-total').textContent = siteStats.open_problems.ranked_total;
+                    document.getElementById('open-mo-total').textContent = siteStats.open_problems.mo_total;
+                    document.getElementById('open-attacks').textContent = siteStats.open_problems.with_attacks;
                 }
+                const allModels = [...new Set([...siteStats.erdos.models, ...(siteStats.open_problems?.models || [])])];
+                document.getElementById('models-list').innerHTML = allModels.map(model => `<li>${api.escapeHtml(model)}</li>`).join('');
             }
+            const problems = api.getAttemptPreview(
+                typeof erdosProblems === 'undefined' ? {} : erdosProblems,
+                window.OPEN_PROBLEMS_DATA || {}
+            );
+            document.getElementById('recent-attacks').innerHTML = problems.length
+                ? '<ul>' + problems.map(problem => `<li><a href="${api.escapeHtml(problem.href)}">${api.escapeHtml(problem.label)}</a> — ${problem.count} attempt(s)</li>`).join('') + '</ul>'
+                : '<p>No mathematical attempts have been added yet.</p>';
         });
     </script>
 </body>

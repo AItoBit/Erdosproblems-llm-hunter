@@ -1,0 +1,70 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#93; reconstruction using Altman's geometric lemma, 2026-09-23.}
+Prove that the vertices of a strictly convex $n$-gon determine at least $\lfloor n/2\rfloor$ distinct positive distances. Distances may have different endpoints; this is not the stronger question of finding one vertex from which that many distances occur.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The problem is known to be proved by Altman. His 1972 paper gives a second proof using chains of chords on one side of a diameter. We reconstruct the rank argument and the endpoint cases, with the precise two-chord geometric lemma stated as an external input. We do not claim a new result or a self-contained proof of that lemma.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Rank the different distances in decreasing order. A chain of many successive sides lying strictly inside one arc cut off by a diameter forces a short side to have a large rank. An endpoint equality case supplies the extra unit needed when the diameter cuts the polygon into almost equal arcs.
+
+\section{WORK}
+\subsection{The geometric input and a separate elementary inequality}
+We use Lemma 1 in Section III of Altman's cited paper in this form. Let $X=V_0,V_1,\ldots,V_t=Y$ be the vertices on one boundary arc of a strictly convex polygon, where $XY$ is a diameter of its vertex set. If
+\[
+0<s<u<v<t,\qquad s<r<v,
+\]
+so that $V_sV_r$ and $V_uV_v$ have their two initial and their two final indices increasing, then
+\[
+|V_sV_v|>\min\{|V_sV_r|,|V_uV_v|\}.
+\tag{1}
+\]
+The relative order of $u$ and $r$ is unrestricted, including $u=r$. Altman's terminology ``parallel'' means a chord inside this arc; it does not require Euclidean parallelism. The strict inequality (1) is the only external geometric lemma used below.
+
+We will also use an elementary inequality, which we prove. If $X,U,V,Y$ occur in that cyclic order in a strictly convex polygon, the diagonals $XV$ and $UY$ intersect at an interior point $O$. Strict triangle inequalities in the two nondegenerate triangles $XOY$ and $UOV$ give
+\[
+|XY|+|UV|<|XV|+|UY|.
+\tag{2}
+\]
+
+\subsection{Ranks and chains}
+Write the distinct vertex distances as $d_1>d_2>\cdots>d_D$, and call the index of a distance its rank. Fix a diameter $XY$, of length $d_1$, and its boundary arc as above. A chain of $f\geq1$ chords is
+\[
+V_{s_1}V_{r_1},\ldots,V_{s_f}V_{r_f},
+\quad 0<s_1<\cdots<s_f<t,\quad 0<r_1<\cdots<r_f<t,\quad s_i<r_i.
+\]
+Let $x$ be the rank of the shortest chord in the chain. We claim
+\[
+x\geq f+1;
+\quad\text{if equality holds, each of }X,Y\text{ is incident to another diameter.}
+\tag{3}
+\]
+For $f=1$, (2) applied to its chord $UV$ gives $d_1+|UV|<|XV|+|UY|\leq2d_1$, so $|UV|<d_1$ and $x\geq2$. If $x=2$, every distance other than $d_1$ is at most $|UV|=d_2$. Unless both $XV$ and $UY$ have length $d_1$, their sum is at most $d_1+d_2$, contradicting (2). Hence equality in the rank bound forces an additional diameter at both endpoints.
+
+For $f>1$, replace the chain by its $f-1$ chords $V_{s_i}V_{r_{i+1}}$, $1\leq i<f$. These form a chain with increasing initial and final indices. By (1), each new chord is longer than at least one of its two old neighbors, and hence longer than the shortest old chord. The rank $x'$ of the shortest new chord consequently satisfies $x'\leq x-1$. Induction gives $x'\geq f$, proving $x\geq f+1$. If $x=f+1$, then $x'=f$, so the induction equality case again forces another diameter at both $X$ and $Y$. This proves (3).
+
+In particular, if even one endpoint of $XY$ has no other incident diameter, then
+\[
+x\geq f+2.
+\tag{4}
+\]
+
+\subsection{The two endpoint cases}
+Assume $n\geq6$ and put $m=\lfloor n/2\rfloor$. First suppose no two diameters share an endpoint. Choose any diameter. Its longer boundary arc has $L\geq m$ sides. Delete the first and last side of that arc: the remaining $f=L-2\geq m-2\geq1$ sides form a chain strictly inside the arc. Equation (4) gives a rank $x\geq f+2\geq m$, and therefore $D\geq m$.
+
+Now suppose two distinct diameters share an endpoint. At least one of them has a boundary arc containing $L\geq m+1$ sides. If $n$ is odd, every chord has such a longer arc. If $n=2m$ is even, a chord fails this property only when its other endpoint is the unique vertex exactly $m$ steps from the common endpoint; two different chords cannot both fail it. On the selected arc, delete its first and last sides as before. There remain $f=L-2\geq m-1$ consecutive internal sides, and (3) gives $x\geq f+1\geq m$. Again $D\geq m$.
+
+For $n\leq3$ the assertion is immediate. For $n=4,5$ it only asks for two distances. Four distinct planar points cannot all be mutually equidistant: after fixing two points at distance $d$, the only points at distance $d$ from both are the two equilateral apices, whose mutual distance is $\sqrt3d$. Thus any four-point subset already has two distances. This completes every case.
+
+\section{VERIFICATION AND SCOPE}
+The proof uses the exact external lemma (1), not the whole distance theorem as an unexplained input. The chain induction, its equality case, the even/odd arc count, and the small cases are proved here. The argument concerns distances among all pairs; it supplies no claim about the still stronger one-vertex problem. Regular $n$-gons have exactly $\lfloor n/2\rfloor$ chord lengths, so the conclusion is sharp.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current statement: \url{https://www.erdosproblems.com/93}.
+\item E. Altman, \emph{Some theorems on convex polygons}, Canadian Mathematical Bulletin 15 (1972), 329--340; Section III, Lemma 1, and the proof in Section IV: \url{https://www.cambridge.org/core/services/aop-cambridge-core/content/view/DA46D2AE99BE9FDFED775A10D868A2DE/S0008439500061361a.pdf/some_theorems_on_convex_polygons.pdf}.
+\end{itemize}
+
+\section{CONCLUSION}
+\textbf{Attempt status: solved using the explicitly stated Altman lemma.} The deduction proves the sharp $\lfloor n/2\rfloor$ lower bound. No novelty is claimed.
+\textbf{Completion rate estimate: 100\%.}

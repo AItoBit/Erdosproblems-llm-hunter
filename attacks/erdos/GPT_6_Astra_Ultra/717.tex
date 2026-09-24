@@ -1,0 +1,74 @@
+\section{Erd\H{o}s Problem \#717: chromatic number versus clique subdivisions}
+\noindent Reconstruction of the independence-number reduction, 24 September 2026.
+
+\subsection*{Statement and exact external input}
+Write $\sigma(G)$ for the maximum order of a complete graph whose subdivision is a subgraph of $G$. We prove
+\[
+ \frac{\chi(G)}{\sigma(G)}\leq C\frac{\sqrt n}{\log n}\qquad(n\geq2)
+\]
+using the following nontrivial theorem of Fox--Lee--Sudakov (Theorem 1.2 of the primary source). There are absolute $c_1,c_2>0$ such that, for a graph on $n$ vertices with independence number $\alpha$,
+\[
+ \sigma(G)\geq c_1n^{\alpha/(2\alpha-1)}
+       \quad\hbox{if }\alpha<2\log n,
+\]
+and, on writing $\alpha=a\log n$,
+\[
+ \sigma(G)\geq c_2\sqrt{\frac n{a\log a}}
+       \quad\hbox{if }a\geq2.
+\]
+These independence-number subdivision estimates are the unexpanded external input. We supply the induction converting them to the requested chromatic estimate.
+
+\subsection*{Small independence number}
+Choose
+\[
+ C\geq\max\{e^8,16/(c_1e),4/(c_2\sqrt e)\}.
+\]
+Induct on $n$, and put $k=\chi(G)$. Since $\sqrt x/\log x\geq e/2>1$ for $x>1$, the case $k<C$ is immediate from $\sigma(G)\geq1$.
+
+Suppose $\alpha<4n/k$. If $\alpha<2\log n$, put $a=\alpha/\log n$. Since $\alpha/(2\alpha-1)\geq1/2+1/(4\alpha)$, the first input gives
+\[
+ \frac{k}{\sigma(G)}
+ \leq\frac{\sqrt n}{\log n}\,
+       \frac4{c_1a e^{1/(4a)}}
+ \leq\frac{\sqrt n}{\log n}\frac{16}{c_1e}.
+\]
+The last step follows by minimizing $a e^{1/(4a)}$ over positive $a$: its minimum is $e/4$ at $a=1/4$.
+If $\alpha\geq2\log n$, the second input instead gives
+\[
+ \frac{k}{\sigma(G)}
+ \leq\frac{\sqrt n}{\log n}\frac4{c_2}
+          \sqrt{\frac{\log a}{a}}
+ \leq\frac{\sqrt n}{\log n}\frac4{c_2\sqrt e},
+\]
+because $(\log a)/a\leq1/e$ for $a>0$. Both estimates have the required constant.
+
+\subsection*{Large independence number}
+Otherwise delete a maximum independent set. The remaining induced graph $G'$ has $n'\leq(1-4/k)n$ vertices and $\chi(G')\geq k-1$. If $n'<e^2$, then $k\leq n'+1<9<C$, already covered. Assume $n'\geq e^2$. The induction hypothesis and $\sigma(G)\geq\sigma(G')$ give
+\[
+ \frac{k}{\sigma(G)}
+ \leq\frac{k}{k-1}C\frac{\sqrt{n'}}{\log n'}.
+\]
+The function $\sqrt x/\log x$ is increasing on $[e^2,\infty)$, so this is at most
+\[
+ C\frac{\sqrt n}{\log n}
+ \frac{k}{k-1}\sqrt{1-\frac4k}
+ \left(1+\frac{\log(1-4/k)}{\log n}\right)^{-1}.
+\]
+For $k\geq e^8$, concavity of the square root gives
+\[
+ \frac{k}{k-1}\sqrt{1-\frac4k}
+ \leq\frac{k-2}{k-1}\leq1-\frac1k.
+\]
+Also $\log(1-u)\geq-2u$ for $0\leq u\leq1/2$. Since $n\geq k\geq e^8$,
+\[
+ 1+\frac{\log(1-4/k)}{\log n}
+ \geq1-\frac8{k\log n}\geq1-\frac1k.
+\]
+The last two factors therefore have product at most one. This completes the induction, including the floor-free deletion step since $n'$ is its actual integer value.
+
+\subsection*{Outcome}
+\textbf{Attempt status: solved relative to the stated subdivision estimates.} The argument is the complete Section 2 deduction of Fox--Lee--Sudakov, with the monotonicity and constant checks made explicit. It does not purport to prove their deeper Theorem 1.2.
+Sources: \url{https://www.erdosproblems.com/717}; J. Fox, C. Lee and B. Sudakov, \emph{Chromatic number, clique subdivisions, and the conjectures of Haj\'os and Erd\H{o}s--Fajtlowicz}, \url{https://arxiv.org/abs/1107.1920}. No novelty or local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

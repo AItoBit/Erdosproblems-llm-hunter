@@ -1,0 +1,99 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#136; partial reconstruction, 2026-09-23.}
+Let $f(n)$ be the smallest number of colors in an edge coloring of
+$K_n$ such that every four vertices span edges of at least five colors.
+Determine its asymptotic size.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The known answer is $f(n)=(5/6+o(1))n$, first proved by
+Bennett--Cushman--Dudek--Pra\l at, with a subsequent proof by Joos--Mubayi.
+We reconstruct the sharp leading lower bound and its structural
+consequences. The matching asymptotic construction is an identified
+remaining dependency, not presented as our own proof.
+
+\section{WORK}
+Fix a valid coloring of $K_n$, $n\ge4$, with $q$ colors. In the graph
+formed by one color, a vertex cannot have degree three: those three
+edges together with their four endpoints would leave at most four
+colors on that $K_4$. There can also be no three-edge path and no
+monochromatic triangle, for the same reason (adjoin any fourth vertex
+to a triangle). Consequently every monochromatic component is an
+isolated vertex, a single edge, or a path of two edges.
+Across all $q$ color graphs, let their numbers be $x_0,x_1,x_2$,
+respectively. Counting vertex incidences and edges yields
+\[
+ x_0+2x_1+3x_2=nq,\qquad x_1+2x_2=\binom n2.             \tag{1}
+\]
+
+Every monochromatic two-edge path $u-w-v$ has a closing edge $uv$
+of a different color. That edge must be a single-edge component in its
+own color. Indeed an additional edge of its color incident to $u$ or
+$v$ would, together with the two path edges, give two different
+repeated colors on four vertices, leaving at most four colors in total.
+The additional endpoint cannot be $w$ because those path edges have
+the other color.
+Furthermore two different monochromatic two-edge paths cannot have
+the same closing edge. If their centers are $w,z$, the four edges
+$uw,vw,uz,vz$ already use at most two colors; with $uv,wz$ the induced
+$K_4$ uses at most four. Therefore closure defines an injection from
+the $x_2$ path components to the $x_1$ single-edge components, so
+\[
+ x_1\ge x_2.                                             \tag{2}
+\]
+Combining (1) and (2) gives the exact identity
+\[
+ nq=\frac53\binom n2+x_0+\frac13(x_1-x_2),
+\]
+and hence
+\[
+ f(n)\ge\frac56(n-1).                                   \tag{3}
+\]
+This proves the full leading constant in the known lower bound, not
+just the weaker maximum-degree observation $q\ge(n-1)/2$.
+
+The same identity gives a useful necessary structure for any coloring
+with $q=(5/6+o(1))n$:
+\[
+ x_0=o(n^2),\quad x_1-x_2=o(n^2),\quad
+ x_1=(1/6+o(1))n^2,\quad x_2=(1/6+o(1))n^2.              \tag{4}
+\]
+Thus almost every vertex-color pair is used, and almost all single-edge
+components must close a monochromatic two-edge path. Merely using a
+proper edge coloring, which has no two-edge monochromatic paths,
+cannot approach this equality structure.
+
+Bennett and coauthors construct such colorings by a controlled process
+of coloring triangles with one repeated and one single color.
+Joos--Mubayi obtain the upper bound from conflict-free hypergraph
+matchings followed by a controlled completion of the uncolored edges.
+Their precise known bound $q\le5n/6+o(n)$ together with (3) yields the
+literature answer. It is not enough to color most edges and give every
+remaining edge a new color: an $o(n^2)$ remainder need not cost only
+$o(n)$ colors. That completion issue is part of the missing proof here.
+
+\section{VERIFICATION}
+The injection establishing (2) treats both possibilities for the
+colors of two paths with the same endpoints. The path count is a count
+of components, not all length-two walks. For $n=4$, give one adjacent
+pair of edges the same color and the other four edges distinct colors;
+this realizes $f(4)=5$, consistent with (3) and with the strict local
+four-vertex condition.
+
+\section{FINAL STATUS}
+\textbf{UNRESOLVED within this partial reconstruction; the asymptotic
+problem is solved in the literature.}
+The lower bound and near-equality structure are fully established.
+The upper-bound construction and its completion with $o(n)$ extra
+colors have not been reproduced. No new theorem is claimed.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/136}.
+P.~Bennett, R.~Cushman, A.~Dudek and P.~Pra\l at,
+\emph{The Erd\H{o}s--Gy\'arf\'as function $f(n,4,5)=5n/6+o(n)$},
+Section 2, \url{https://arxiv.org/abs/2207.02920}.
+F.~Joos and D.~Mubayi, \emph{Ramsey theory constructions from hypergraph
+matchings}, \url{https://arxiv.org/abs/2208.12563}.
+Checked 2026-09-23. The estimate concerns the argument reproduced here.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

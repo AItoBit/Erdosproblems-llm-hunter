@@ -1,0 +1,73 @@
+\section{Erd\H{o}s Problem \#270}
+\subsection{Statement and attribution}
+If $f:\mathbb N\to\mathbb N$ tends to infinity, must
+\[
+ \sum_{n\ge1}\frac1{(n+1)\cdots(n+f(n))}
+\]
+be irrational? No. Crmari\'c and Kova\v c proved that every positive real number can be obtained. We reconstruct their two-stage subsum construction. In particular it gives rational counterexamples. No novelty is claimed, and no conclusion is drawn here about the additional requirement that $f$ be nondecreasing.
+
+\subsection{Work I: a finite-choice interval lemma}
+Let $X_j$ be finite subsets of $[0,\infty)$ with at least two points, with $\sum_j\max X_j<\infty$. Let $\Delta_j$ be the largest gap between consecutive elements of $X_j$. If
+\[
+ \Delta_j\le\sum_{l>j}(\max X_l-\min X_l)\quad\hbox{for every }j,
+ \tag{1}
+\]
+then the sums $\sum_jx_j$, $x_j\in X_j$, fill the entire interval
+$[\sum_j\min X_j,\sum_j\max X_j]$.
+
+Indeed, if a residual lies between the sums of the remaining minima and maxima, the translates of the next remaining-tail interval by the ordered elements of $X_j$ overlap by (1), and together fill that residual interval. Choose an element preserving this condition and repeat. The residual tends to zero by convergence, proving the claim.
+For $X_j=\{0,w_j\}$ this also proves the usual subsum lemma: a positive summable sequence with $w_j\le\sum_{l>j}w_l$ has all subsums in $[0,\sum_jw_j]$. If this inequality holds only eventually, its tail still supplies such an interval starting at zero.
+
+\subsection{Work II: approximate a fine grid on each sparse row}
+Fix $0<\theta<M$. Partition the positive integers into
+\[
+ S_j=\{2^{j-1}(2l-1):l\ge1\},\qquad j\ge1,
+\]
+and write $w_j(n)=1/[(n+1)\cdots(n+j)]$.
+For $j\ge2$, the sequence $w_j(n)$ along $S_j$ is summable and its $l$th term is $O_j(l^{-j})$, whereas its tail is bounded below by a positive constant times $l^{1-j}$. Thus the subsum inequality holds eventually. Its subsums include $[0,b_j]$ for some $b_j>0$. Choose
+$0<\varepsilon_j\le\min(b_j,\theta2^{-j})$.
+
+For the first row, $\sum_{n\in S_1}1/(n+1)$ diverges and its terms tend to zero. It has a convergent subseries with any prescribed nonnegative sum: greedily take a term whenever it does not exceed the residual. A positive limiting residual would force inclusion of every sufficiently late term and contradict divergence. We use this fact to approximate a grid on $[\theta/2,M+\theta/2]$.
+
+Choose grid spacings $\rho_1=M/m_1$ and $\rho_j=\varepsilon_j/m_j$ for integers $m_j$, so small that
+\[
+ \rho_1<\min(\theta/8,\varepsilon_2/8),\qquad
+ \rho_j<\min(\varepsilon_j/8,\varepsilon_{j+1}/8,\theta2^{-j})\quad(j\ge2).
+ \tag{2}
+\]
+For each grid point on the first interval, or on $[0,\varepsilon_j]$ when $j\ge2$, select a subseries of the row's $w_j(n)$ having exactly that sum, and truncate it to a finite set $T$ with error less than $\rho_j/16$.
+
+Define a function on that row by taking $f(n)=j$ for $n\in T$. For the remaining $n\in S_j$, choose finite integers $f(n)\ge n+j$ so large that the sum of their positive contributions is less than $\rho_j/16$. This can be done term by term, for example by bounding the contribution at $n$ by $\rho_j2^{-n}/16$. The resulting entire-row sum differs from its grid point by less than $\rho_j/8$.
+
+Do this for all finitely many grid points on the row. Let $X_j$ be the finite set of the resulting row sums, each accompanied by its chosen row function. The approximations are ordered and distinct since their error is less than one eighth of the grid spacing. In particular
+\[
+ \Delta_j<2\rho_j,
+\]
+and, for $j\ge2$,
+\[
+ 0<\min X_j\le\rho_j/8,\quad
+ \varepsilon_j-\rho_j/8\le\max X_j\le\varepsilon_j+\rho_j/8.
+ \tag{3}
+\]
+For $j=1$ the analogous endpoints are $\theta/2$ and $M+\theta/2$.
+
+\subsection{Work III: fill the target interval and check divergence of $f$}
+From (2)--(3), the span of $X_{j+1}$ is at least $\varepsilon_{j+1}/2$, which exceeds $2\rho_j>\Delta_j$. Thus even the first summand in the tail of (1) is enough. Also $\sum\max X_j<\infty$, and
+\[
+ \sum_j\min X_j\le\theta/2+\tfrac18\sum_j\rho_j<\theta,
+ \qquad \sum_j\max X_j\ge\max X_1>M.
+\]
+The interval lemma therefore represents every $\alpha\in[\theta,M]$ by a choice $x_j\in X_j$. Combine the accompanying row functions into a single function $f$ on $\mathbb N$. Positivity allows the row sums to be rearranged, so the resulting series has sum exactly $\alpha$.
+
+For any fixed integer $K$, rows $j>K$ have $f(n)\ge j>K$. In each of the finitely many rows $j\le K$, only finitely many exceptional selected points have $f(n)=j$, and off those sets $f(n)\ge n+j$. Hence only finitely many $n$ satisfy $f(n)\le K$. This is exactly $f(n)\to\infty$.
+Since every positive $\alpha$ belongs to some interval $[\theta,M]$, all positive real values occur. Taking, for example, $\alpha=1$ disproves the proposed irrationality.
+
+\subsection{Verification and outcome}
+The unselected terms were made small and positive, rather than deleted; thus the construction assigns a finite positive $f(n)$ to every integer $n$. The second use of the interval lemma absorbs these perturbations exactly, so there is no residual approximation gap.
+
+\textbf{SOLVED: the assertion is false, and every positive real sum is attainable.} The full construction is supplied above.
+
+\subsection{Sources}
+T. Crmari\'c and V. Kova\v c, \emph{On the irrationality of certain super-polynomially decaying series}, Sections 2--3, \url{https://arxiv.org/abs/2504.18712}; current statement: \url{https://www.erdosproblems.com/270}.
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

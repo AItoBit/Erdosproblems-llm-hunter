@@ -1,0 +1,45 @@
+\section{Erd\H{o}s Problem \#346: robust completeness and the golden ratio}
+\noindent Partial necessary conditions and a deletion criterion, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $A=\{a_1<a_2<\cdots\}\subseteq\mathbb N$. Assume deleting any finite subset leaves a complete sequence, whereas deleting any infinite subset leaves a sequence which is not complete. Here complete means that every sufficiently large integer is a sum of distinct remaining terms. If $a_{n+1}/a_n\ge1+\epsilon$ uniformly for some $\epsilon>0$, must the ratios tend to $\phi=(1+\sqrt5)/2$? The source records a counterexample; the argument below isolates what each deletion hypothesis actually requires, without claiming to reconstruct that counterexample.
+
+\subsection*{2) Finite-deletion completeness forces a divergent surplus}
+Put $S_n=\sum_{i\le n}a_i$. Fix $m$. Completeness of the tail $\{a_{m+1},a_{m+2},\ldots\}$ implies
+\[a_{n+1}\le S_n-S_m+1\quad\text{for every sufficiently large }n.
+\tag{1}\]
+Otherwise the integer $S_n-S_m+1$ is too large to be a sum of the tail elements at most $a_n$, but smaller than every later element. If (1) failed for infinitely many $n$, these missing integers would tend to infinity, contradicting tail completeness.
+
+Since (1) holds for every fixed $m$ and $S_m\to\infty$, it follows that
+\[S_n-a_{n+1}\longrightarrow\infty.\tag{2}\]
+This is a necessary condition, not a sufficient one: it says nothing by itself about which residues or intervals are attained by the subset sums.
+
+For example, a uniform ratio bound $a_{n+1}\ge q a_n$ with $q\ge2$ is impossible. If $q=2$, then $a_i\le a_n2^{-(n-i)}$ and $S_n<2a_n\le a_{n+1}$, contradicting (2). For $q>2$ the same contradiction follows by replacing $q$ by 2. Thus the exponential lower bound allowed by the first hypothesis must be strictly below two.
+
+\subsection*{3) Infinite-deletion failure is automatic above $\phi$}
+Suppose more strongly that $a_{n+1}\ge q a_n$ for every $n$, with a fixed $q>\phi$. Then
+\[S_{n-1}\le\frac{q}{q-1}a_{n-1},\qquad a_{n+1}\ge q^2a_{n-1}.
+\]
+The difference between the right sides is a fixed positive multiple of $a_{n-1}$, since $q^2>q/(q-1)$ is equivalent to $q^2-q-1>0$. Hence eventually
+\[a_{n+1}>S_{n-1}+1.\tag{3}\]
+If an infinite set of indices is deleted, consider any sufficiently large deleted index $n$. Every retained term below $a_{n+1}$ is among $a_1,\ldots,a_{n-1}$; all of their subset sums are at most $S_{n-1}$. By (3), the integer $S_{n-1}+1$ cannot be a sum of retained terms. These missing integers are unbounded as the deleted indices tend to infinity. Thus every infinite deletion destroys completeness.
+
+The same conclusion holds if the ratio bound starts only after a fixed initial segment: the initial sum contributes a fixed additive constant, while the positive margin in (3) grows without bound. Consequently $\liminf a_{n+1}/a_n>\phi$ is already sufficient for the infinite-deletion condition. It does not establish finite-deletion completeness.
+
+\subsection*{4) A precise sufficient mechanism for completing a tail}
+An elementary interval-extension lemma shows one route to proving the missing property. Suppose subset sums of a finite group of available terms contain every integer in $[u,u+L]$. Let the remaining terms be $b_1,b_2,\ldots$, disjoint from that group, and assume
+\[b_j\le L+1+\sum_{i<j}b_i\qquad\text{for every }j.
+\]
+Inductively, adding $b_j$ to the current interval gives a translated interval which overlaps or touches it, so all integers in
+\[\left[u,u+L+\sum_{i\le j}b_i\right]
+\]
+are attained. Since the total tends to infinity, that tail is complete. A proof of robustness must produce such a seed or another adequate covering mechanism after every finite deletion. The surplus condition (2) alone does not provide a seed interval.
+
+\subsection*{5) Outcome and source}
+\textbf{UNRESOLVED in this attempt.} The necessary divergent-surplus condition, the exclusion of a uniform ratio at least two, the sufficient infinite-deletion obstruction above $\phi$, and the interval-extension mechanism are proved. A sequence satisfying finite-deletion completeness and the specified irregular ratios, together with verification of every tail, is still missing.
+
+Source: \url{https://www.erdosproblems.com/346}, checked 24 September 2026, which reports a counterexample by GPT Pro prompted by Price. That construction is not asserted to have been verified here. These reductions also clarify the source's observation about ratios above the golden ratio. No novelty or formal verification is claimed.
+
+The estimate measures progress toward constructing and verifying a full counterexample.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

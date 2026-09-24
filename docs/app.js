@@ -30,9 +30,9 @@ function updateUrl(params) {
  * Escape HTML to prevent XSS
  */
 function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    return String(text ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[character]);
 }
 
 /**
@@ -137,6 +137,201 @@ function getModelLabels(attacks) {
  */
 function countWithAttacks(problems) {
     return Object.values(problems).filter(p => getMathematicalAttempts(p.attacks).length > 0).length;
+}
+
+/**
+ * The ranked catalogue and the historical MathOverflow subset share one collection.
+ * A catalogue status is source metadata, never evidence that an LLM solved a problem.
+ */
+function getOpenProblemCollection(problem) {
+    return problem.collection === 'mo' ? 'mo' : 'ranked';
+}
+
+function getOpenProblemHref(problem) {
+    if (getOpenProblemCollection(problem) === 'mo') {
+        const id = problem.mo_id || String(problem.id).replace(/^mo:/, '');
+        return `problem.html?type=mo&id=${encodeURIComponent(id)}`;
+    }
+    return `problem.html?type=open_problems&id=${encodeURIComponent(problem.id)}`;
+}
+
+function sortOpenProblems(a, b) {
+    const aIsMO = getOpenProblemCollection(a) === 'mo';
+    const bIsMO = getOpenProblemCollection(b) === 'mo';
+    if (aIsMO !== bIsMO) return Number(aIsMO) - Number(bIsMO);
+    if (aIsMO) return sortByScore(a, b) || String(a.id).localeCompare(String(b.id));
+    const rankA = Number.isFinite(a.rank) ? a.rank : Infinity;
+    const rankB = Number.isFinite(b.rank) ? b.rank : Infinity;
+    return rankA - rankB || String(a.id).localeCompare(String(b.id));
+}
+
+function getOpenProblemDomains(problems) {
+    const grouped = new Map();
+    for (const problem of Object.values(problems)) {
+        if (!problem.domain) continue;
+        const label = problem.domain_label || problem.domain;
+        const key = label.trim().toLowerCase();
+        if (!grouped.has(key)) grouped.set(key, { label, counts: new Map() });
+        const group = grouped.get(key);
+        group.counts.set(problem.domain, (group.counts.get(problem.domain) || 0) + 1);
+    }
+    return [...grouped.values()].map(group => {
+        // Prefer the most common source spelling, while retaining every alias for saved URLs.
+        const aliases = [...group.counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([value]) => value);
+        return { value: aliases[0], label: group.label, aliases };
+    }).sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function filterOpenProblems(problems, filters = {}) {
+    const search = String(filters.search || '').trim().toLowerCase();
+    const domainGroup = filters.domain && getOpenProblemDomains(problems).find(group => group.aliases.includes(filters.domain));
+    const domainAliases = domainGroup ? domainGroup.aliases : [filters.domain];
+    return Object.values(problems).filter(problem => {
+        if (filters.source && getOpenProblemCollection(problem) !== filters.source) return false;
+        if (filters.domain && !domainAliases.includes(problem.domain)) return false;
+        if (filters.withAttempts && !getMathematicalAttempts(problem.attacks).length) return false;
+        if (!search) return true;
+        const sourceText = (problem.sources || []).map(source => `${source.citation || ''} ${source.url || ''}`).join(' ');
+        return [problem.id, problem.mo_id, problem.rank, problem.title, problem.exact_target,
+            problem.domain_label, ...(problem.catalog_record?.aliases || []), sourceText]
+            .filter(value => value !== null && value !== undefined).join(' ').toLowerCase().includes(search);
+    });
+}
+
+function getOpenProblemClaim(problem) {
+    const attempts = getMathematicalAttempts(problem.attacks);
+    if (!attempts.length) return 'no attempt';
+    if (problem.llm_status && problem.llm_status !== 'none') return problem.llm_status;
+    const statuses = [...new Set(attempts.map(attempt => attempt.status).filter(Boolean))];
+    return statuses.length === 1 ? statuses[0] : statuses.length ? 'mixed claims' : 'not stated';
+}
+
+function getOpenProblemStatusLabel(problem) {
+    return String(problem.status || 'unreviewed').replace(/_/g, ' ');
+}
+
+function getOpenProblemSources(problem) {
+    return (problem.sources || []).filter(source => /^https?:\/\//i.test(source.url || ''));
+}
+
+function renderOpenProblemRows(problems) {
+    if (!problems.length) return '<tr><td colspan="8">No problems match these filters.</td></tr>';
+    return problems.map(problem => {
+        const isMO = getOpenProblemCollection(problem) === 'mo';
+        const rank = !isMO && Number.isFinite(problem.rank) ? problem.rank : '—';
+        const attempts = getMathematicalAttempts(problem.attacks);
+        const labels = getModelLabels(problem.attacks);
+        const sourceLabel = isMO ? 'MathOverflow subset' : 'Ranked catalogue';
+        const metadata = [problem.domain_label, sourceLabel,
+            isMO && Number.isFinite(problem.score) ? `MO score: ${problem.score}` : ''].filter(Boolean).join(' · ');
+        const reviewed = problem.status_reviewed_at
+            ? `<span class="catalogue-meta">Reviewed ${escapeHtml(String(problem.status_reviewed_at).slice(0, 10))}</span>` : '';
+        const qualification = problem.status_qualification
+            ? ` title="${escapeHtml(problem.status_qualification)}"` : '';
+        const reviewHandles = getReviewHandles(problem.review);
+        const reviewTitle = reviewHandles.length ? ` title="${escapeHtml(`Reviewed by ${reviewHandles.map(handle => `@${handle}`).join(', ')}`)}"` : '';
+        const source = getOpenProblemSources(problem)[0];
+        const sourceLink = source
+            ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener" title="${escapeHtml(source.citation || 'Original source')}">Source</a>` : '—';
+        return `<tr>
+            <td>${rank}</td>
+            <td class="catalogue-problem"><a href="${escapeHtml(getOpenProblemHref(problem))}">${escapeHtml(problem.title || problem.id)}</a><span class="catalogue-meta">${escapeHtml(metadata)}</span></td>
+            <td${qualification}>${escapeHtml(getOpenProblemStatusLabel(problem))}${reviewed}</td>
+            <td class="${escapeHtml(getReviewClass(problem.review))}"${reviewTitle}>${escapeHtml(getReviewLabel(problem.review))}</td>
+            <td class="claim-status">${escapeHtml(getOpenProblemClaim(problem))}<span class="catalogue-meta">${attempts.length} attempt${attempts.length === 1 ? '' : 's'}</span></td>
+            <td>${attempts.length ? escapeHtml(formatCompletion(problem.completion)) || '—' : '—'}</td>
+            <td>${labels.length ? labels.map(escapeHtml).join(', ') : '—'}</td>
+            <td>${sourceLink}</td>
+        </tr>`;
+    }).join('');
+}
+
+/**
+ * Show examples from both collections; the MO subset is already included in openProblems.
+ */
+function getAttemptPreview(erdos, openProblems, limit = 10) {
+    const erdosRows = Object.values(erdos || {}).filter(problem => getMathematicalAttempts(problem.attacks).length)
+        .sort(sortByNumber).map(problem => ({
+            href: `problem.html?type=erdos&id=${encodeURIComponent(problem.number || problem.id)}`,
+            label: `Erdos Problem #${problem.number || problem.id}`,
+            count: getMathematicalAttempts(problem.attacks).length
+        }));
+    const openRows = Object.values(openProblems || {}).filter(problem => getMathematicalAttempts(problem.attacks).length)
+        .sort(sortOpenProblems).map(problem => ({
+            href: getOpenProblemHref(problem),
+            label: `${getOpenProblemCollection(problem) === 'mo' ? 'MathOverflow' : `Top Open Problem #${problem.rank}`}: ${problem.title || problem.id}`,
+            count: getMathematicalAttempts(problem.attacks).length
+        }));
+    const result = [];
+    for (let i = 0; result.length < limit && (i < erdosRows.length || i < openRows.length); i++) {
+        if (erdosRows[i]) result.push(erdosRows[i]);
+        if (openRows[i] && result.length < limit) result.push(openRows[i]);
+    }
+    return result;
+}
+
+function initOpenProblemsPage() {
+    const tbody = document.getElementById('open-problems-tbody');
+    if (!tbody) return;
+    const catalogue = window.OPEN_PROBLEMS_DATA;
+    const count = document.getElementById('results-count');
+    if (!catalogue) {
+        tbody.innerHTML = '<tr><td colspan="8">Unable to load the problem catalogue.</td></tr>';
+        count.textContent = 'Catalogue unavailable';
+        return;
+    }
+    const subset = document.body.dataset.collection === 'mo';
+    const search = document.getElementById('search');
+    const domains = document.getElementById('filter-domain');
+    const sources = document.getElementById('filter-source');
+    const attempts = document.getElementById('filter-attacks');
+    const sort = document.getElementById('sort-by');
+    const params = getUrlParams();
+    const records = Object.values(catalogue).filter(problem => !subset || getOpenProblemCollection(problem) === 'mo');
+    const domainOptions = getOpenProblemDomains(records);
+    domains.innerHTML = '<option value="">All domains</option>' + domainOptions
+        .map(({ value, label }) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('');
+    search.value = params.get('q') || '';
+    domains.value = domainOptions.find(group => group.aliases.includes(params.get('domain')))?.value || '';
+    sources.value = subset ? 'mo' : ['ranked', 'mo'].includes(params.get('source')) ? params.get('source') : '';
+    attempts.checked = params.get('attempts') === '1';
+    const validSorts = ['rank', 'title', 'attempts', 'score', 'review', 'claim', 'completion'];
+    sort.value = validSorts.includes(params.get('sort')) ? params.get('sort') : subset ? 'score' : 'rank';
+    const metadata = window.OPEN_PROBLEMS_CATALOG;
+    const edition = document.getElementById('catalogue-edition');
+    if (edition && metadata) edition.textContent = `Catalogue edition ${metadata.edition_date || ''}${metadata.release_version ? ` (v${metadata.release_version})` : ''}.`;
+
+    function renderTable(syncUrl = true) {
+        const filtered = filterOpenProblems(records, {
+            search: search.value, domain: domains.value, source: sources.value, withAttempts: attempts.checked
+        });
+        filtered.sort((a, b) => {
+            if (sort.value === 'title') return String(a.title).localeCompare(String(b.title)) || sortOpenProblems(a, b);
+            if (sort.value === 'attempts') return getMathematicalAttempts(b.attacks).length - getMathematicalAttempts(a.attacks).length || sortOpenProblems(a, b);
+            if (sort.value === 'score') return sortByScore(a, b) || sortOpenProblems(a, b);
+            if (sort.value === 'review') return getReviewLabel(a.review).localeCompare(getReviewLabel(b.review)) || sortOpenProblems(a, b);
+            if (sort.value === 'claim') return getOpenProblemClaim(a).localeCompare(getOpenProblemClaim(b)) || sortOpenProblems(a, b);
+            if (sort.value === 'completion') return (Number.isFinite(b.completion) ? b.completion : -1) - (Number.isFinite(a.completion) ? a.completion : -1) || sortOpenProblems(a, b);
+            return sortOpenProblems(a, b);
+        });
+        if (typeof MathJax !== 'undefined' && MathJax.typesetClear) MathJax.typesetClear([tbody]);
+        tbody.innerHTML = renderOpenProblemRows(filtered);
+        count.textContent = `${filtered.length} of ${records.length} entries · ${countWithAttacks(filtered)} with LLM attempts`;
+        if (syncUrl) updateUrl({ q: search.value.trim(), domain: domains.value, source: subset ? null : sources.value,
+            attempts: attempts.checked ? '1' : null, sort: sort.value === (subset ? 'score' : 'rank') ? null : sort.value });
+        renderMath();
+    }
+    search.addEventListener('input', debounce(() => renderTable(), 200));
+    [domains, sources, attempts, sort].forEach(input => input.addEventListener('change', () => renderTable()));
+    document.getElementById('reset-filters').addEventListener('click', () => {
+        search.value = '';
+        domains.value = '';
+        sources.value = subset ? 'mo' : '';
+        attempts.checked = false;
+        sort.value = subset ? 'score' : 'rank';
+        renderTable();
+    });
+    renderTable(false);
 }
 
 /**
@@ -456,6 +651,17 @@ window.ProblemHunting = {
     getModelLabels,
     getMathematicalAttempts,
     countWithAttacks,
+    getOpenProblemCollection,
+    getOpenProblemHref,
+    sortOpenProblems,
+    getOpenProblemDomains,
+    filterOpenProblems,
+    getOpenProblemClaim,
+    getOpenProblemStatusLabel,
+    getOpenProblemSources,
+    renderOpenProblemRows,
+    getAttemptPreview,
+    initOpenProblemsPage,
     formatDate,
     getStatusClass,
     getReviewLabel,
@@ -480,4 +686,5 @@ window.ProblemHunting = {
 document.addEventListener('DOMContentLoaded', function() {
     initThemeToggle();
     initCollapsibles();
+    initOpenProblemsPage();
 });

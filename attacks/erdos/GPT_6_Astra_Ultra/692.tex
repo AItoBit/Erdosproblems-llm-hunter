@@ -1,0 +1,91 @@
+\section*{Erd\H{o}s Problem 692: exactly one divisor in an interval}
+
+\paragraph{Statement and status.}
+For integers \(n<m\), let \(\delta_1(n,m)\) be the density of
+integers having exactly one divisor in the open interval \((n,m)\).
+The proposed unimodality in \(m\) is false. We reconstruct its
+small counterexample and give a terminating procedure locating
+the global maximum for every fixed \(n\). A useful explicit or
+asymptotic formula for that location remains unresolved here.
+The counterexample is attributed to Cambie,
+\url{https://arxiv.org/abs/2501.10333};
+the problem and its additional maximum-location question are at
+\url{https://www.erdosproblems.com/692}.
+
+\paragraph{Exact finite formula.}
+Let \(D=\{n+1,\ldots,m-1\}\). The event is periodic modulo
+\(\operatorname{lcm}(D)\), so the density exists. Inclusion--exclusion
+with a marked divisor gives
+\[
+ \delta_1(n,m)=
+ \sum_{\varnothing\ne S\subseteq D}
+ \frac{(-1)^{|S|-1}|S|}{\operatorname{lcm}(S)}.                  \tag{1}
+\]
+To verify the coefficient, an integer divisible by exactly \(j\)
+members of \(D\) contributes
+\(\sum_{s=1}^j(-1)^{s-1}s\binom js\), which is \(1\) for \(j=1\)
+and \(0\) for every other \(j\).
+
+\paragraph{A strict decrease followed by a strict increase.}
+For \(n=3\), the first relevant divisor sets are
+\(\{4,5\}\), \(\{4,5,6\}\), and \(\{4,5,6,7\}\).
+Formula (1) gives
+\[
+ \delta_1(3,6)=\frac14+\frac15-\frac2{20}=\frac7{20},
+\]
+\[
+ \delta_1(3,7)=
+ \left(\frac14+\frac15+\frac16\right)
+ -2\left(\frac1{20}+\frac1{12}+\frac1{30}\right)
+ +\frac3{60}=\frac13.
+\]
+The density of integers divisible by none of \(4,5,6\) is
+\[
+ 1-\frac{37}{60}+\frac16-\frac1{60}=\frac8{15}.
+\]
+Divisibility by \(7\) is independent of the residue modulo \(60\).
+Exactly one of \(4,5,6,7\) divides an integer precisely when it
+has exactly one of the first three and is not divisible by \(7\),
+or has none of the first three and is divisible by \(7\). Therefore
+\[
+ \delta_1(3,8)=\frac67\cdot\frac13+\frac17\cdot\frac8{15}
+             =\frac{38}{105}.
+\]
+Since \(7/20>1/3<38/105\), unimodality fails.
+
+\paragraph{The global maximum is attained and can be certified finitely.}
+Fix \(n\geq1\). An integer with exactly one divisor in \((n,m)\)
+has at most one prime divisor in that interval. Independence
+over these primes gives the upper bound
+\[
+ \delta_1(n,m)\leq U_n(m):=
+ \prod_{n<p<m}\left(1-\frac1p\right)
+ \left(1+\sum_{n<p<m}\frac1{p-1}\right).                         \tag{2}
+\]
+Put \(S=\sum_{n<p<m}1/p\). Because
+\(\sum_p(1/(p-1)-1/p)<\infty\), the right side is at most
+\(e^{-S}(1+S+C)\), for an absolute constant \(C\).
+Euler's divergence of the sum of reciprocal primes implies
+\(S\longrightarrow\infty\), so \(U_n(m)\longrightarrow0\).
+Moreover \(U_n(m)\) is nonincreasing: it is the probability
+that at most one of an increasing collection of independent
+prime-divisibility events occurs.
+
+At \(m=n+2\), there is just the divisor \(n+1\), and the density
+is \(1/(n+1)>0\). Enumerate primes until an integer cutoff \(M\)
+satisfies \(U_n(M)<1/(n+1)\). This search terminates by (2).
+For all \(m\geq M\), the density is smaller than the already
+known value at \(n+2\). Evaluate (1) for the finitely many
+integers \(n<m<M\), and select those with largest value.
+This is a finite exact algorithm, with a certificate excluding
+every later value of \(m\).
+
+\paragraph{Remaining gap.}
+The disproof of unimodality is complete. The procedure above
+does not give an efficient bound, a simple formula, or an
+asymptotic description of the maximizing location as \(n\) grows.
+That further part of the question is unresolved in this attempt;
+it should not be confused with the settled counterexample.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 65\%}

@@ -1,0 +1,67 @@
+\section{Erd\H{o}s Problem \#721: asymmetric van der Waerden bounds}
+\noindent A local-lemma lower bound and a quantitative-Roth upper bound, 24 September 2026.
+
+\subsection*{Statement and proved bounds}
+Let $W(3,k)$ be the least $N$ such that every red/blue coloring of $[N]$ has a nonconstant red three-term arithmetic progression or a blue $k$-term arithmetic progression. We prove, for large $k$,
+\[
+ \frac{k^2}{10^6(\log k)^2}\ll W(3,k)
+ \leq \exp\bigl(O((\log k)^{12})\bigr)<\exp(k^{1/2}).
+\]
+These answer the two specific requests for a nontrivial lower bound and a subexponential upper bound. They do not claim the strongest bounds in the current literature.
+
+\subsection*{The probabilistic tool}
+We use the asymmetric Lov\'asz local lemma in its standard finite form. Events $E_i$ have a dependency graph if each $E_i$ is independent of every collection of nonneighbors. If numbers $0<x_i<1$ satisfy
+\[
+ \mathbb P(E_i)\leq x_i\prod_{j\sim i}(1-x_j),
+\]
+then the probability that none of the events occurs is positive. The dependency notion here holds because events involving disjoint sets of independently colored integers are independent. This standard lemma is an explicit external input.
+
+\subsection*{A biased coloring and all dependency estimates}
+Write $L=\log k$, let $N=\lfloor k^2/(10^6L^2)\rfloor$, and color each integer red independently with probability $p=10L/k$. For large $k$ we have $N\geq k$ and $0<p<1$.
+The bad events are a red three-term progression, of probability $p^3$, and a blue $k$-term progression, of probability $(1-p)^k\leq k^{-10}$.
+
+A fixed integer lies in at most $3N$ three-term progressions: choose its position and the common difference. It lies in at most $kN$ $k$-term progressions by the same count. Thus a red bad event has at most $9N$ red and $3kN$ blue neighbors; a blue bad event has at most $3kN$ red and $k^2N$ blue neighbors. Overcounting is harmless.
+
+Assign local-lemma weights
+\[
+ x=2p^3\quad\hbox{to red events},\qquad y=N^{-3}\quad\hbox{to blue events}.
+\]
+These are at most $1/2$ for large $k$. The sum of neighboring weights is at most
+\[
+ S_R=18Np^3+3k/N^2=o(1)
+\]
+for a red event, and
+\[
+ S_B=6kNp^3+k^2/N^2
+ \leq0.006L+o(1)\leq L/4
+\]
+for a blue event. Since $\log(1-u)\geq-2u$ for $0\leq u\leq1/2$, the neighboring product is at least $e^{-2S_R}$ or $e^{-2S_B}$.
+For red events this is eventually at least $1/2$, so $x e^{-2S_R}\geq p^3$. For blue events, $N\leq k^2$ gives
+\[
+ y e^{-2S_B}\geq k^{-6}k^{-1/2}\geq k^{-10}.
+\]
+All local-lemma conditions hold. A coloring avoiding both bad event types exists, proving $W(3,k)>N$.
+
+\subsection*{The quantitative additive-combinatorial input}
+We use the Kelley--Meka theorem in the following weaker but convenient form: there are absolute $A,a>0$ such that every three-term-progression-free set $R\subseteq[N]$ satisfies
+\[
+ |R|/N\leq A\exp\bigl(-a(\log N)^{1/12}\bigr). \tag{1}
+\]
+This follows from Theorem 1.2 in the primary source, which gives at least $2^{-O(d^{12})}N^2$ solutions of $x+y=2z$ when $|R|/N\geq2^{-d}$; the at most $N$ trivial solutions imply (1). The deep proof of that theorem is not reproduced.
+
+If a coloring has no blue $k$-term progression, each disjoint interval of $k$ consecutive integers contains a red point. Consequently, for $N\geq2k$,
+\[
+ |R|\geq\lfloor N/k\rfloor\geq N/(2k).
+\]
+If it also has no red three-term progression, (1) implies
+\[
+ a(\log N)^{1/12}\leq\log(2Ak).
+\]
+Choose an absolute constant $B$ large enough and then $N=\lceil\exp(B(\log k)^{12})\rceil$ to contradict this inequality for all large $k$. Finally $(\log k)^{12}=o(k^{1/2})$, so the requested strict subexponential bound follows.
+
+\subsection*{Outcome and attribution}
+\textbf{Attempt status: solved for the two stated quantitative challenges, relative to the explicit external inputs.} The coloring probabilities, dependency estimates and conversion from a Roth bound are proved. No matching growth order is claimed.
+Sources: \url{https://www.erdosproblems.com/721}; Z. Kelley and R. Meka, \emph{Strong bounds for 3-progressions}, Theorems 1.1--1.2, \url{https://arxiv.org/abs/2302.05537}. The local lemma is standard; these bounds are not claimed as novel or optimal. No local formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

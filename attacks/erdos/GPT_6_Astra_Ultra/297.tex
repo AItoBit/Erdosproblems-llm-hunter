@@ -1,0 +1,89 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#297; a sharp entropy upper bound and a constructive exponential lower bound, 2026-09-24.}
+Let
+\[
+F(N)=\#\{E\subseteq[1,N]:\ \sum_{n\in E}1/n=1\}.
+\]
+Determine its growth, particularly its exponential rate.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Liu--Sawhney and, independently, Conlon--Fox--He--Mubayi--Pham--Suk--Verstra\"ete determine $F(N)=\exp((\gamma_*+o(1))N)$, where $\gamma_*\approx0.631573$. The proof below establishes the matching upper exponent directly and proves a weaker positive exponential lower exponent using Martin's dense unit-fraction representations. It leaves a definite gap at the sharp lower bound. The upper-bound method is the standard exponential-weight argument underlying the known result.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Assign each subset a weight depending only on its reciprocal sum. Optimizing the resulting product gives the sharp upper exponent. For a lower bound, find linearly many terms that can be replaced independently by three unit fractions without introducing any repeated denominator.
+
+\section{WORK}
+\textbf{The product bound.} Fix $\lambda>0$. Expanding a product over subsets gives
+\[
+\prod_{n=1}^N(1+e^{-\lambda N/n})
+=\sum_{E\subseteq[1,N]}\exp\!\left(-\lambda N\sum_{n\in E}\frac1n\right).
+\]
+Each subset counted by $F(N)$ contributes exactly $e^{-\lambda N}$, and all other contributions are nonnegative. Hence
+\[
+F(N)\leq e^{\lambda N}\prod_{n=1}^N(1+e^{-\lambda N/n}).
+\tag{1}
+\]
+The function $x\mapsto\log(1+e^{-\lambda/x})$, with value zero at $x=0$, is continuous on $[0,1]$. Its Riemann sums therefore imply
+\[
+\limsup_{N\to\infty}\frac{\log F(N)}N
+\leq\Phi(\lambda):=\lambda+\int_0^1\log(1+e^{-\lambda/x})\,dx.
+\tag{2}
+\]
+
+\textbf{Optimization and the constant.} Differentiating for $\lambda>0$ is justified by the exponential decay near $x=0$. We obtain
+\[
+\Phi'(\lambda)=1-I(\lambda),\qquad
+I(\lambda)=\int_0^1\frac{dx}{x(1+e^{\lambda/x})}
+=\int_\lambda^\infty\frac{du}{u(1+e^u)}.
+\tag{3}
+\]
+The last expression shows that $I$ is continuous, strictly decreasing, tends to infinity as $\lambda\downarrow0$, and tends to zero as $\lambda\to\infty$. Thus there is a unique $\lambda_*>0$ with $I(\lambda_*)=1$. The derivative changes from negative to positive there, giving the unique global minimum
+\[
+\gamma_*:=\Phi(\lambda_*),\qquad
+F(N)\leq\exp((\gamma_*+o(1))N).
+\tag{4}
+\]
+The limit $\Phi(0+)=\log2$ follows by dominated convergence, and $\Phi'<0$ near zero, so $\gamma_*<\log2$ strictly. Consequently (4) already rules out $F(N)=2^{(1+o(1))N}$. The numerical values quoted by Liu--Sawhney are $\lambda_*\approx0.127191$ and $\gamma_*\approx0.631573$, corresponding to $\gamma_*/\log2\approx0.9112$ in base two. The exact integral definition, not the numerical approximation, is used in the proof.
+
+\textbf{A declared input for a positive exponential lower bound.} Martin's Theorem 1, specialized to target $1$, gives for all sufficiently large $M$ a set $D\subseteq[1,M]$ with
+\[
+\sum_{d\in D}\frac1d=1,\qquad |D|\geq\frac35M.
+\tag{5}
+\]
+Indeed the theorem gives $|D|>(1-e^{-1})M-O(M\log\log M/\log M)$, and $1-e^{-1}>3/5$. Its construction is imported here.
+
+At least $M/10$ members of $D$ lie in $(M/2,M]$. On these members put an edge between $d$ and $e$ exactly when $2d=3e$ or $3d=2e$. Each vertex has at most two neighbors. Repeatedly selecting one vertex and deleting it and its neighbors therefore gives an independent set $T$ with
+\[
+|T|\geq M/30.
+\tag{6}
+\]
+For each $d\in T$, independently either retain $1/d$ or use the identity
+\[
+\frac1d=\frac1{2d}+\frac1{3d}+\frac1{6d}.
+\tag{7}
+\]
+All new denominators exceed $M$, so they avoid all original denominators. To check collisions between replacements for different $d,e\in T$, note that $d/e\in(1/2,2)$. Among ratios of elements of $\{2,3,6\}$, the only nontrivial possibilities in this interval are $3/2$ and $2/3$, exactly the edges we excluded. Thus every choice produces a representation with distinct denominators at most $6M$.
+
+Different choices produce different sets: the original denominator $d\leq M$ is present precisely when its term was retained, and no replacement can produce it. There are consequently $2^{|T|}$ representations, giving
+\[
+F(6M)\geq2^{M/30}.
+\]
+For arbitrary sufficiently large $N$, take $M=\lfloor N/6\rfloor$ and use monotonicity to obtain
+\[
+F(N)\geq2^{N/180-O(1)}.
+\tag{8}
+\]
+
+\section{VERIFICATION AND REMAINING GAP}
+The argument proves a positive exponential lower rate and the exact known upper exponent. In particular it places $F(N)$ strictly below the full subset count on the exponential scale. It does not prove $F(N)\geq\exp((\gamma_*-o(1))N)$: that requires constructing exponentially many representations whose denominator distribution realizes the optimizing weights in (3). The independent replacement construction loses most of that entropy. The published sharp lower bound is acknowledged but not used to conceal this gap.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem and independent resolutions: \url{https://www.erdosproblems.com/297}.
+\item Y. P. Liu and M. Sawhney, \emph{On further questions regarding unit fractions}, Theorem 1.2: \url{https://arxiv.org/html/2404.07113}.
+\item G. Martin, \emph{Denser Egyptian Fractions}, Theorem 1: \url{https://arxiv.org/pdf/math/9811112}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: unresolved within this reconstruction.}
+The sharp upper exponent and a positive exponential lower bound are proved; matching the lower exponent remains a gap.
+\textbf{Completion rate estimate: 75\%; a heuristic estimate of the proof coverage.}

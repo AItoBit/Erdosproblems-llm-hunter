@@ -1,0 +1,41 @@
+\section*{Erd\H{o}s Problem 578}
+
+\paragraph{Statement and result.}
+Does the binomial random graph on \(2^d\) vertices with edge probability \(1/2\) contain the \(d\)-dimensional cube \(Q_d\) with probability tending to one? Yes. We state precisely the external spanning-subgraph theorem giving existence, and prove the complementary first-moment obstruction, including the boundary probability \(1/4\).
+
+\paragraph{The external existence input.}
+We use the following consequence of Riordan's spanning-subgraph theorem: for each fixed real \(p>1/4\),
+\[
+ \mathbb P\bigl(Q_d\subseteq G(2^d,p)\bigr)\longrightarrow1
+ \quad(d\longrightarrow\infty). \tag{1}
+\]
+The copy in (1) is spanning because the host and target have the same order. The theorem concerns ordinary subgraphs, so extra host edges are allowed. Its proof is an external dependency, not reproduced here. Applying (1) with the fixed value \(p=1/2>1/4\) answers the question. No assertion about a limiting distribution for the number of copies is needed.
+
+\paragraph{Counting the distinct spanning cubes.}
+Put \(n=2^d\). The cube has \(dn/2\) edges and exactly \(n d!\) automorphisms. Indeed translations of \(\mathbb F_2^d\) and permutations of coordinates supply that many. Conversely, after the image of the zero vertex and its \(d\) neighbours are prescribed, an automorphism is determined: distance from zero is preserved, and a vertex corresponding to a subset of size at least two is uniquely specified in its distance layer by its neighbours in the preceding layer. Induction through the layers proves the assertion. For a subset of size two, the other common neighbour lies in layer zero and cannot cause ambiguity.
+
+Thus the number of different spanning copies on a fixed labelled vertex set is \(n!/(n d!)\). If \(X\) counts the copies present in \(G(n,p)\), linearity of expectation gives the exact identity
+\[
+ \mathbb E X=\frac{n!}{n d!}\,p^{dn/2}. \tag{2}
+\]
+Overlaps between cubes do not affect this first moment.
+
+\paragraph{The boundary and all smaller fixed probabilities.}
+At \(p=1/4\), the last factor in (2) is \(2^{-dn}=n^{-n}\). For even \(n\), bound the first half of the factors in \(n!\) by \(n/2\), and the rest by \(n\). This gives
+\[
+ n!\leq n^n2^{-n/2},\qquad
+ \mathbb E X\leq\frac{2^{-n/2}}{n d!}\longrightarrow0.
+\]
+Markov's inequality implies \(\mathbb P(X>0)\leq\mathbb E X\to0\). The same conclusion holds for every \(p\leq1/4\), by (2) or by monotone coupling. Combined with the external input (1), this determines the fixed-probability transition, with absence at the boundary itself.
+
+For completeness, (2) also explains why the first moment cannot establish (1). Stirling's formula gives
+\[
+ \log\mathbb E X
+ =n\log n\left(1+\frac{\log p}{2\log2}\right)-n+o(n\log n).
+\]
+The leading coefficient is positive when \(p>1/4\), so the expectation grows very rapidly. An increasing expectation alone does not exclude the possibility of rare graphs with many copies; the dependence among the embeddings is exactly the issue handled by the external theorem.
+
+\paragraph{Attribution and assessment.}
+Oliver Riordan, \emph{Spanning subgraphs of random graphs}, Combinatorics, Probability and Computing 9 (2000), 125--148, \url{https://doi.org/10.1017/S0963548399004150}, provides the existence input. Current statement: \url{https://www.erdosproblems.com/578}, checked 24 September 2026. This is a complete answer relative to the explicitly stated theorem, together with the independently detailed necessary bound; it is not a self-contained reproof of Riordan's theorem and claims neither novelty nor local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

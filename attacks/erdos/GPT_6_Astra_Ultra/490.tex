@@ -1,0 +1,62 @@
+\section{Erd\H{o}s Problem \#490: distinct products of two sets}
+\noindent Reconstruction of the pruning-and-sieve proof, 24 September 2026.
+
+\subsection*{Statement and explicit analytic inputs}
+Let $A,B\subseteq[1,N]$ and assume the map $(a,b)\mapsto ab$ on $A\times B$ is injective. We prove $|A||B|\ll N^2/\log N$. Empty sets are trivial, so assume both sets are nonempty. The argument follows Erd\H{o}s and Szemer\'edi's simplified proof. The prime-counting estimates and the upper-bound sieve used below are established external inputs, not proved here.
+
+We use Chebyshev's upper bound for primes, the reciprocal-prime estimate $\sum_{p\le x}1/p=\log\log x+O(1)$, and this standard uniform upper-bound sieve: for any set $\mathcal Q$ of primes at most $z$, where $2\le z\le M^{1/10}$,
+\[\#\{n\le M:q\nmid n\ (q\in\mathcal Q)\}
+\le C M\prod_{q\in\mathcal Q}(1-1/q),\tag{1}\]
+with an absolute $C$. The deliberately small sieve range keeps (1) within the usual elementary upper-bound sieve. The primary proof invokes Brun's upper-bound method for the same purpose.
+
+\subsection*{Prune primes with too little support}
+Let $z=N^{1/20}$; bounded small $N$ can be absorbed into the final constant. Chebyshev's estimate, summed in dyadic prime intervals, implies
+\[S:=\sum_p\frac1{p\log p}<\infty.
+\]
+Choose an absolute $\epsilon>0$ with $\epsilon S<1/2$. Starting with $A$, if a prime $p\le z$ occurs but divides fewer than $\epsilon|U|/(p\log p)$ members of the current set $U$, delete all of its multiples and continue. Each prime causes at most one deletion, because afterward it never occurs again. The remaining fraction is at least
+\[\prod_{p\le z}\left(1-\frac\epsilon{p\log p}\right)
+\ge1-\epsilon S>1/2.
+\]
+The resulting set $U\subseteq A$ has $|U|>|A|/2$, and every prime $p\le z$ dividing any member of $U$ divides at least $\epsilon|U|/(p\log p)$ members. Apply the same procedure to obtain $V\subseteq B$ with $|V|>|B|/2$. The product map remains injective.
+
+Call a prime at most $z$ common when it divides some member of both $U$ and $V$. Divide these primes into the intervals $[2^j,2^{j+1})$, $j\ge1$. A band is heavy when it contains more than $2^{j/2}$ common primes.
+
+\subsection*{No heavy band}
+If no band is heavy, the common primes have bounded reciprocal sum, since $\sum_j2^{-j/2}<\infty$. Let $\mathcal Q$ be the primes at most $z$ absent from $U$, and $\mathcal R$ those absent from $V$. Every noncommon prime is in at least one of these sets, so
+\[\sum_{q\in\mathcal Q}\frac1q+\sum_{r\in\mathcal R}\frac1r
+\ge\log\log z-O(1).
+\]
+Apply (1), with $M=N$, to $U$ and $V$, and use $1-t\le e^{-t}$. Their cardinality product is $O(N^2/\log z)=O(N^2/\log N)$.
+
+\subsection*{The last heavy band}
+Otherwise let $t$ be the largest heavy index. For every common prime $p$ in its band, form all ordered quotient pairs
+\[(u/p,v/p),\qquad u\in U,\ v\in V,\quad p\mid u,v.
+\]
+There are at least
+\[c\frac{|U||V|}{(t+1)^2 2^{3t/2}}\tag{2}\]
+such pairs in total: there are more than $2^{t/2}$ primes, and each contributes at least $\epsilon^2|U||V|/(p^2\log^2p)$.
+
+All these pairs are distinct, including across different primes. If $u/p=u'/p'$ and $v/p=v'/p'$, then $uv'=u'v$. Injectivity of products on $U\times V$ forces $u=u'$ and $v=v'$, and hence $p=p'$.
+
+Both coordinates are at most $M=N/2^t$. Let $\mathcal Q$ be the primes $q$ with $2^{t+1}\le q\le z$ absent from $U$, and define $\mathcal R$ analogously. Every first coordinate avoids $\mathcal Q$, and every second avoids $\mathcal R$. By maximality of $t$, the common primes above $2^{t+1}$ have reciprocal sum at most $\sum_{j>t}2^{-j/2}=O(1)$. Mertens' estimate therefore gives
+\[\sum_{q\in\mathcal Q}\frac1q+\sum_{r\in\mathcal R}\frac1r
+\ge\log\log z-\log(t+1)-O(1).\tag{3}\]
+This inequality remains valid when the interval is empty, by increasing the absolute constant. Also $2^t\le z$, so $M\ge N^{19/20}$ and $z\le M^{1/10}$ for large $N$. Thus the sieve hypothesis is valid uniformly in the chosen band.
+
+Equations (1) and (3) bound the number of quotient pairs above by
+\[C\frac{N^2}{2^{2t}}\frac{t+1}{\log N}.\tag{4}\]
+Comparing (2) and (4) yields
+\[|U||V|\le C\frac{N^2}{\log N}\frac{(t+1)^3}{2^{t/2}}
+\ll\frac{N^2}{\log N},
+\]
+since the final factor is bounded for all positive integers $t$. The pruning losses are at most a factor four, completing the proof.
+
+\subsection*{The order cannot be improved}
+Take $A=[1,\lfloor N/2\rfloor]$ and $B$ to be the primes in $(N/2,N]$. If $ap=a'p'$ with $p\ne p'$, then $p\mid a'$, impossible because $a'<p$. Thus products are distinct. The prime number theorem gives $|A||B|\sim N^2/(4\log N)$, proving the correct order. This lower example does not determine an optimal leading constant or the existence of the refined limit discussed in the editorial.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED relative to the explicit classical sieve and prime estimates.} The pruning termination and retained mass, cross-prime quotient injectivity, last-band selection and parameter ranges are fully justified here. The deeper sieve estimate is retained as an external theorem.
+Sources: \url{https://www.erdosproblems.com/490}; P. Erd\H{o}s and E. Szemer\'edi, \emph{On multiplicative representations of integers}, Theorem 1, pp. 421--423, \url{https://users.renyi.hu/~p_erdos/1976-24.pdf}. No novelty or formal verification is claimed.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

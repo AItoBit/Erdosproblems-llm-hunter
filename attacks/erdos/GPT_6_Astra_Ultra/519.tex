@@ -1,0 +1,59 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#519; coefficient bounds for complex power sums, 2026-09-24.}
+Let $z_1=1,z_2,\ldots,z_n\in\mathbb C$ and $s_k=\sum_{i=1}^nz_i^k$. Prove that $\max_{1\leq k\leq n}|s_k|$ exceeds a positive absolute constant independent of $n$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Atkinson established the requested absolute bound, initially with constant $1/6$; Erd\H{o}s's 1961 original problem discussion records this result and earlier bounds of logarithmic size. The calculation below reconstructs an elementary logarithmic bound and completely solves the restricted case $|z_i|\geq1$ for every $i$. It does not reconstruct Atkinson's argument for arbitrary moduli.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Use the formal logarithm of $\prod_i(1-z_it)$ to control its coefficients from the first $n$ power sums. The root at $t=1$ forces a nontrivial sum of coefficients; a large constant term in the reciprocal-root polynomial gives a stronger obstruction when all moduli are at least one.
+
+\section{WORK}
+Put $M=\max_{1\leq k\leq n}|s_k|$ and
+\[
+ Q(t)=\prod_{i=1}^n(1-z_it)=\sum_{j=0}^n b_jt^j,
+ \qquad b_0=1.
+\]
+As an identity of formal power series,
+\[
+ Q(t)=\exp\left(-\sum_{k\geq1}\frac{s_k}{k}t^k\right).
+\]
+In particular, for $j\leq n$ its coefficient of $t^j$ depends only on $s_1,\ldots,s_j$. Expanding the exponential coefficient by coefficient and applying the triangle inequality yields
+\[
+ |b_j|\leq[t^j]\exp\left(M\sum_{k=1}^n\frac{t^k}{k}\right)
+ \quad(0\leq j\leq n).                              \tag{1}
+\]
+This is a formal coefficient argument, so it makes no assumption that $|z_i|\leq1$ or that a power series converges at $t=1$.
+
+\textbf{A logarithmic bound for arbitrary complex numbers.} Since $z_1=1$, $Q(1)=0$, hence $\sum_{j=1}^nb_j=-1$. The series on the right of (1) has nonnegative coefficients and converges at $1$. With $H_n=\sum_{k=1}^n1/k$,
+\[
+ 1\leq\sum_{j=1}^n|b_j|\leq e^{MH_n}-1.
+\]
+Therefore
+\[
+ \boxed{\displaystyle M\geq\frac{\log2}{H_n}
+              \geq\frac{\log2}{1+\log n}.}            \tag{2}
+\]
+This improves the elementary order-$1/n$ bound but still tends to zero.
+
+\textbf{The complete case of moduli at least one.} In degree $n$, the majorant in (1) has the same coefficient as
+\[
+ \exp\left(M\sum_{k\geq1}\frac{t^k}{k}\right)
+ =(1-t)^{-M}.
+\]
+Thus
+\[
+ \prod_{i=1}^n|z_i|=|b_n|
+ \leq\frac{M(M+1)\cdots(M+n-1)}{n!}.                 \tag{3}
+\]
+If every $|z_i|\geq1$, the left side is at least one. If $0\leq M<1$, each factor $(M+j)/(j+1)$ on the right is strictly below one, so their product is below one. This contradiction proves $M\geq1$ in the restricted case. It is sharp: for $n\geq2$, take all $(n+1)$st roots of unity except one root $\zeta\ne1$. The remaining $n$ numbers include $1$, and $s_k=-\zeta^k$ for $1\leq k\leq n$, so $M=1$. For $n=1$ equality is immediate.
+
+\textbf{Where the general obstacle lies.} It suffices to prove the desired constant bound when all moduli are at most one and some number equals one. Indeed, choose $z_j$ of largest modulus $R\geq1$ and replace every $z_i$ by $w_i=z_i/z_j$. Then $w_j=1$, $|w_i|\leq1$, and $|s_k(z)|=R^k|s_k(w)|$. However, in this remaining regime the product in (3) may be arbitrarily small or zero. The coefficient obstruction giving $M\geq1$ consequently no longer applies. Equation (2) alone does not remove this dependence on $n$.
+
+\section{RESULT AND LIMITATIONS}
+\textbf{Attempt status: unresolved.} The general bound (2) and the sharp bound $M\geq1$ when all $|z_i|\geq1$ are fully proved. A positive absolute constant for arbitrary complex numbers remains the missing step in this reconstruction; Atkinson's known resolution is acknowledged rather than asserted as a proof supplied here.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/519}; P. Erd\H{o}s, \emph{Some unsolved problems}, 1961, page 251, \url{https://real.mtak.hu/201135/1/cut_MATKUTINT_6_1_-_2_1961_pp221_-_254.pdf}; F. V. Atkinson, \emph{On sums of powers of complex numbers}, Acta Mathematica Academiae Scientiarum Hungaricae 12 (1961), 185--188, \url{https://doi.org/10.1007/BF02066680}.
+
+\textbf{Completion rate estimate: 50\%.}

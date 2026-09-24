@@ -1,0 +1,49 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#214; finite geometric deduction from Juh\'asz's lemma, 2026-09-23.}
+If $S\subset\mathbb R^2$ contains no pair of points at distance one, must its complement contain the four vertices of a unit square?
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+The answer is affirmative. Juh\'asz proved a stronger theorem about arbitrary four-point configurations in a two-colouring with a forbidden distance in one colour. Here the only non-elementary input is his preliminary monochromatic rhombus lemma. The subsequent deduction for the unit square is fully reconstructed in vector coordinates.
+
+\section{OBJECTIVE AND ATTACK PLAN}
+Colour $S$ blue and its complement red. A blue point forces every point at distance one from it to be red. Starting from a red equilateral rhombus, apply this rule to two candidate squares and their translates.
+
+\section{WORK}
+\textbf{Declared external input (Juh\'asz, Lemma 3).} In a red--blue colouring of the plane with no blue pair at distance $t>0$, there is a red rhombus of side $t$ whose acute angles are $60$ degrees. The lemma has no measurability or other regularity hypothesis. Its proof is not reproduced here.
+
+Apply the lemma with $t=1$. After translation, the four red vertices can be written
+\[
+0,\quad u,\quad v,\quad u+v,
+\qquad |u|=|v|=|u-v|=1.
+\tag{1}
+\]
+Choose a unit vector $w$ perpendicular to $u$. The points $0,u,w,u+w$ form a unit square.
+
+If $w$ and $u+w$ are both red, we are done. If $u+w$ is blue, then $v+w$ and $u+v+w$ are red, since their distances from $u+w$ are respectively $|u-v|=1$ and $|v|=1$. Together with the already red $v,u+v$, they form the translated square
+\[
+\{v,u+v,v+w,u+v+w\}.
+\tag{2}
+\]
+
+It remains to consider $w$ blue and $u+w$ red. Let $R$ be the rotation through angle $60$ or $-60$ degrees that carries $u$ to $v$, and set $w'=Rw$. Then $w'$ is a unit vector perpendicular to $v$, and
+\[
+|w-w'|=2\sin(\pi/6)|w|=1.
+\]
+Hence $w'$ is red. If $v+w'$ is red, then $\{0,v,w',v+w'\}$ is a red unit square. If $v+w'$ is blue, the two points $u+w'$ and $u+v+w'$ are red: their distances from it are $|u-v|=1$ and $|u|=1$. The four points
+\[
+\{u,u+v,u+w',u+v+w'\}
+\tag{3}
+\]
+then form a red unit square. These cases exhaust the possible colours.
+
+\section{VERIFICATION AND SCOPE}
+Every forced colour follows from an explicitly checked unit distance. Every displayed square has two perpendicular unit sides, so none is a degenerate parallelogram. No assumption about interiors, measurability, density, or closedness of $S$ is used. The result is complete relative to Juh\'asz's rhombus lemma; this file does not claim to replace its proof or to establish the full arbitrary-four-point theorem independently.
+
+\section{SOURCES}
+\begin{itemize}
+\item Current problem: \url{https://www.erdosproblems.com/214}.
+\item R. Juh\'asz, \emph{Ramsey type theorems in the plane}, Journal of Combinatorial Theory, Series A 27 (1979), 152--160, Lemma 3 and Theorem 1: \url{https://www.cs.umd.edu/~gasarch/TOPICS/ERT/JuhERT.pdf}.
+\end{itemize}
+\section{CONCLUSION}
+\textbf{Attempt status: solved using a named external lemma.} The complement necessarily contains a unit square. The geometric deduction reconstructs the cited method, with no novelty claim.
+\textbf{Completion rate estimate: 100\%.}

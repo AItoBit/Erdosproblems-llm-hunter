@@ -1,0 +1,56 @@
+\section{Erd\H{o}s Problem 633: square-only triangle dissections}
+\subsection*{Statement and distinction between results and proof coverage}
+Classify triangles which can be cut into congruent triangles only when the number of pieces is a perfect square. The pieces need not be similar to the original triangle. Beeson--Laczkovich--Zhang give a complete classification in their 2026 paper. This attempt records that classification accurately, proves several of its construction mechanisms, and derives its countability consequence. It does not claim to reconstruct the paper's full necessity argument or its elliptic-curve exclusions.
+
+\subsection*{1. The current classification, explicitly attributed}
+The following is \emph{external Theorem 1} of Beeson--Laczkovich--Zhang, not a theorem newly proved in this file. A triangle admits a non-square dissection if and only if its angles, in some order $(A,B,C)$, satisfy at least one of the following eight conditions:
+\begin{enumerate}
+\item $A=B$.
+\item $C=\pi/2$, and the legs have integer ratio $M/K$ with $M^2+K^2$ not a square.
+\item $(A,B,C)=(\pi/6,\pi/2,\pi/3)$.
+\item $C=\pi/3$ and $\sqrt3\tan(A/2)\in\mathbb Q$.
+\item $B=2A$ and $\sqrt3\tan(A/2)\in\mathbb Q$.
+\item $B=2A$ and $\sin(A/2)\in\mathbb Q$.
+\item $C=A/2+B$ and $2\sin(A/4)=M/K\in\mathbb Q$, with integers $M,K$, $K\ne0$, and $2K^2-M^2$ not a square.
+\item $C=2A+B/2$ and $\sqrt3\tan(A/2)\in\mathbb Q$.
+\end{enumerate}
+All angles must of course be positive and sum to $\pi$; in the leg-ratio condition $M,K$ may be chosen positive. Multiplying both $M,K$ by the same nonzero integer multiplies either tested quadratic form by a square, so the square/non-square conditions do not depend on the chosen integer representation of the ratio. The square-only triangles are exactly the complement of this list of exceptional similarity classes, by the cited theorem.
+
+\subsection*{2. All square counts occur for every triangle}
+Subdivide each side into $k$ equal parts and draw the lines parallel to the sides through the subdivision points. The resulting triangular grid has $k^2$ small triangles, each with the three side lengths of the original divided by $k$, possibly with reversed orientation. Thus they are congruent by side-side-side. One can count them by area: every tile has area $1/k^2$ of the original. Consequently the question concerns only the possible additional, non-square counts; it never asks whether the square counts themselves exist.
+
+\subsection*{3. Three explicit non-square mechanisms}
+An isosceles triangle is divided by its symmetry axis into two congruent right triangles. Since two is not a square, this proves exceptional case 1, including the equilateral triangle.
+
+For case 2, scale a right triangle so that its legs have positive integer lengths $M,K$, and write $c=\sqrt{M^2+K^2}$ for its hypotenuse. The altitude to the hypotenuse splits it into two triangles similar to the original, with linear scale factors $M/c$ and $K/c$. Subdivide the first of these into $M^2$ congruent similar triangles by the square-grid construction, and the second into $K^2$ such triangles. Every resulting tile has scale $1/c$ relative to the original, so the two collections are congruent to each other. Their total number is
+\[
+ N=M^2+K^2.
+\]
+When this integer is not a square, it is the required non-square dissection. This argument does not assert that every right triangle is exceptional; the arithmetic condition matters.
+
+For case 3, use the right triangle with vertices
+\[
+ D=(0,0),\quad A=(1,0),\quad B=(0,\sqrt3).
+\]
+Put $O=(0,1/\sqrt3)$ and $M=(1/2,\sqrt3/2)$, the midpoint of $AB$. The segments $AO$ and $MO$ divide the original triangle into $DAO$, $AMO$, and $MBO$. Each is a right triangle with legs $1$ and $1/\sqrt3$: for the last two, the right angle is at $M$, as their coordinate dot products verify. They are therefore congruent, giving a dissection into three pieces. All three tiles are similar to the original $30$--$60$--$90$ triangle.
+
+\subsection*{4. Countability and almost every triangle}
+Conditional on the external classification, its countability consequence requires no further tiling theorem. Normalize a similarity class by its ordered angles, so the parameter domain is
+\[
+ \{(A,B):A>0,\ B>0,\ A+B<\pi\}.
+\]
+Outside the isosceles case, each row in the classification gives at most countably many classes. In case 2 the rational leg ratio determines the triangle; case 3 is a single class. In cases 4,5,8, a rational value of $\sqrt3\tan(A/2)$ determines $A$ uniquely in $(0,\pi)$, after which the stated linear relation and $A+B+C=\pi$ determine the other two angles. The same reasoning uses strict monotonicity of $\sin(A/2)$ for case 6, and of $\sin(A/4)$ for case 7. Permuting the angles multiplies the number of descriptions by at most six. A finite union of countable sets is countable.
+The isosceles classes lie on three straight line segments in this angle domain; these have two-dimensional Lebesgue measure zero, as does a countable set. Thus almost every triangle, in this precise angle-parameter sense, is square-only. This does not mean every scalene triangle is square-only: the right triangles constructed above give explicit exceptions.
+
+\subsection*{Checks and remaining gap}
+The constructions use congruence, not merely similarity: the equal-scale argument in case 2 and the explicit common side lengths in case 3 ensure that distinction. The eight-row criterion must allow permutations of the angles; imposing a sorted order instead would omit valid triangles.
+What is not proved here is that every non-square tiling falls into one of the eight cases, nor the existence and arithmetic non-square assertions in cases 4--8. Those are the substantial classification and Diophantine parts of the cited paper. Merely listing its theorem is not counted as an independent proof of those steps.
+
+\textbf{Attempt status: unresolved as a full proof reconstruction.} The problem itself has a published preprint resolution; the proved contribution of this attempt is the universal square construction, the three complete exceptional constructions, and the stated consequence of the external classification.
+
+\subsection*{Sources}
+\begin{itemize}
+\item \url{https://www.erdosproblems.com/633}, checked 24 September 2026.
+\item M. Beeson, M. Laczkovich and Y. X. Zhang, \emph{Solution of Erd\H{o}s Problem 633}, Theorem 1 and Corollary 2, version 3 dated 25 August 2026, \url{https://arxiv.org/abs/2604.03609}.
+\end{itemize}
+\noindent\textbf{Completion estimate: 65\%; the full necessity argument and exceptional cases 4--8 are not reconstructed.}

@@ -1,0 +1,118 @@
+\section{FORMAL RESTATEMENT}
+\textbf{Erd\H{o}s \#140; partial reconstruction, 2026-09-23.}
+Let $r_3(N)$ be the largest cardinality of a subset of $[N]$ without a
+nonconstant three-term arithmetic progression. Prove that for every
+fixed $C>0$, $r_3(N)\ll_C N/(\log N)^C$.
+
+\section{QUICK LITERATURE AND CONTEXT CHECK}
+Kelley--Meka proved a stronger stretched-exponential upper bound;
+Bloom--Sisask give a primary mathematical exposition. We verify its
+implication for the question, prove a Fourier obstruction, and
+reconstruct the contrasting Behrend lower construction. The central
+Kelley--Meka density-increment argument is not reproduced, so this
+attempt remains partial. No new result is claimed.
+
+\section{WORK}
+\subsection*{What the known theorem gives}
+The published bound is
+\[
+ r_3(N)\le K N\exp(-c(\log N)^{1/12})                     \tag{1}
+\]
+for absolute positive $c,K$. For any $C>0$, the function
+$t^C\exp(-ct^{1/12})$ is bounded on $[1,\infty)$: its logarithm
+is $C\log t-ct^{1/12}$ and tends to $-\infty$.
+Indeed its only possible interior maximum has
+$t^{1/12}=12C/c$. Thus (1) implies
+$r_3(N)\ll_C N/(\log N)^C$ after enlarging the constant for small $N$.
+This deduction is complete, but (1) is a cited theorem, not a theorem
+proved by the following partial work.
+
+\subsection*{A proved Fourier obstruction}
+Let $p>2N$ be an odd prime, embed a progression-free $A\subseteq[N]$
+in $\mathbb F_p$, and put $\alpha=|A|/p$. No extra cyclic three-term
+progressions arise: the integer $x+z-2y$ has absolute value less than
+$2N<p$. Define normalized Fourier coefficients
+\[
+ \widehat{1_A}(r)=p^{-1}\sum_x1_A(x)e^{-2\pi irx/p}.
+\]
+Fourier orthogonality and Parseval give
+\[
+ \frac1{p^2}\sum_{x,d}1_A(x)1_A(x+d)1_A(x+2d)
+   =\sum_r\widehat{1_A}(r)^2\widehat{1_A}(-2r),\qquad
+ \sum_r|\widehat{1_A}(r)|^2=\alpha.
+\]
+Only $d=0$ contributes on the left, so it equals $\alpha/p$.
+Writing $M=\max_{r\ne0}|\widehat{1_A}(r)|$, and noting that
+$r\mapsto-2r$ permutes the nonzero residues, we obtain
+\[
+ \alpha^3-\alpha/p\le M\alpha.
+\]
+If $\alpha^2\ge2/p$, this forces
+\[
+ M\ge\alpha^2/2.                                         \tag{2}
+\]
+Thus a progression-free set of non-negligible density has a nonzero
+Fourier bias. Turning that bias into sufficiently efficient density
+increments over many scales is a separate task: (2) alone does not
+prove the logarithmic bounds asked for here.
+
+\subsection*{Why polynomial-saving guesses would be false}
+Choose integers $d\ge3,m\ge2$. Partition the vectors
+$x\in\{0,\ldots,m-1\}^d$ by $\|x\|_2^2$. There are at most
+$d(m-1)^2+1\le dm^2$ possible values, so one sphere contains at least
+$m^{d-2}/d$ such vectors. Map them into integers by
+\[
+ \phi(x)=\sum_{j=0}^{d-1}x_j(2m)^j.
+\]
+These values lie in $[0,(2m)^d)$. If
+$\phi(x)+\phi(z)=2\phi(y)$, neither side has carries in base $2m$,
+so $x+z=2y$ coordinatewise. For points on a common sphere,
+\[
+ \|x\|^2+\|z\|^2-2\|(x+z)/2\|^2=\tfrac12\|x-z\|^2
+\]
+then forces $x=z=y$. Thus the image, and its translate by $1$, are
+progression-free.
+For large $N$, take $d=\lfloor\sqrt{\log N}\rfloor$ and
+$m=\lfloor N^{1/d}/2\rfloor$. Then $(2m)^d\le N$ and
+$m\ge N^{1/d}/4$. Consequently
+\[
+ \log r_3(N)\ge(d-2)\log m-\log d
+ \ge\log N-2\log N/d-d\log4-\log d,
+\]
+which proves
+\[
+ r_3(N)\ge N\exp(-C_0\sqrt{\log N})                     \tag{3}
+\]
+for some absolute $C_0$. This is the classical sphere construction of
+Behrend, reconstructed here. In particular $r_3(N)$ cannot be
+$O(N^{1-\epsilon})$ for any fixed $\epsilon>0$.
+The lower bound (3) is compatible with the requested upper bound;
+confusing these very different scales would give a false obstruction.
+
+\section{VERIFICATION}
+The no-carry base is $2m$, not $m$. All three vectors in the progression
+test lie on the same sphere. The Fourier coefficients are normalized
+by $p$, which is essential for the diagonal count $\alpha/p$.
+The batch checks exhaust the small sphere examples and compare the
+Fourier identity with direct progression counts.
+
+\section{FINAL STATUS}
+\textbf{UNRESOLVED within this partial reconstruction; the requested
+bound is proved in the literature.}
+The Fourier obstruction, Behrend construction, and deduction from (1)
+are proved. The substantial missing step is a proof of (1), or another
+density-increment estimate strong enough to beat every fixed logarithmic
+power. The existing theorem is explicitly attributed rather than
+relabelled as a new solution.
+
+\section{SOURCES}
+\url{https://www.erdosproblems.com/140}.
+Z.~Kelley and R.~Meka, \emph{Strong bounds for 3-progressions},
+\url{https://arxiv.org/abs/2302.05537}.
+T.~F.~Bloom and O.~Sisask, \emph{The Kelley--Meka bounds for sets free
+of three-term arithmetic progressions},
+\url{https://msp.org/ent/2023/2-1/ent-v2-n1-p02-s.pdf}.
+Checked 2026-09-23. Completion assesses the proof reconstructed here.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

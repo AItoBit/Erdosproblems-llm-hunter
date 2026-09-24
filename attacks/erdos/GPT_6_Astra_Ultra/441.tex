@@ -1,0 +1,37 @@
+\section{Erd\H{o}s Problem \#441: sets with pairwise bounded least common multiples}
+\noindent Partial reconstruction and an exact small counterexample, 24 September 2026.
+
+\subsection*{1) Statement}
+Let $g(N)$ be the largest size of $A\subseteq\{1,\ldots,N\}$ such that $\operatorname{lcm}(a,b)\le N$ for every $a,b\in A$. Determine $g(N)$. Is it attained by
+\[B_N=\{a\in\mathbb N:a\le\sqrt{N/2}\}
+\ \cup\ \{a\in2\mathbb N:\sqrt{N/2}\le a\le\sqrt{2N}\}?\]
+We give a valid construction, a universal upper bound of the correct order, and a counterexample to the literal assertion that this construction is always optimal. The sharp asymptotic and arbitrarily large counterexamples are not proved here.
+
+\subsection*{2) Verify the proposed construction}
+Put $t=\sqrt{N/2}$, so that $\sqrt{2N}=2t$. Two elements of the first part have product at most $t^2=N/2$. One element from each part has product at most $2t^2=N$. Two elements of the second part are even, and therefore
+\[\operatorname{lcm}(a,b)=\frac{ab}{\gcd(a,b)}\le\frac{(2t)^2}{2}=N.\]
+The same conclusions hold for equal elements; alternatively their least common multiple is just the element itself. Every listed element is at most $N$ (the case $N=1$ is immediate). Thus $B_N$ is admissible. Counting integers and even integers, with a possible shared endpoint counted once, gives
+\[|B_N|=t+\frac t2+O(1)=\frac3{2\sqrt2}\sqrt N+O(1).\tag{1}\]
+
+\subsection*{3) A telescoping universal upper bound}
+Order any admissible set increasingly. There are at most $\lfloor\sqrt N\rfloor$ elements at most $\sqrt N$. Let its remaining elements be $b_1<\cdots<b_r$. If $r\ge2$, each adjacent pair is admissible, and
+\[\frac1N\le\frac{\gcd(b_j,b_{j+1})}{b_jb_{j+1}}
+\le\frac{b_{j+1}-b_j}{b_jb_{j+1}}
+=\frac1{b_j}-\frac1{b_{j+1}}.\]
+Summing gives $(r-1)/N<1/b_1<1/\sqrt N$. For $r\le1$ the resulting bound is immediate as well. Hence
+\[g(N)\le2\sqrt N+1.\tag{2}\]
+Together, (1) and (2) prove the square-root order of magnitude with explicit constants.
+
+\subsection*{4) An exact counterexample at $N=4$}
+The proposed set is $B_4=\{1,2\}$, whereas $\{1,2,4\}$ is admissible and has size three. Moreover $g(4)=3$: an admissible set containing $3$ can contain neither $2$ nor $4$, because their least common multiples with $3$ are $6$ and $12$. Such a set has size at most two. A set omitting $3$ has at most three elements, and the displayed example attains three.
+
+Thus the proposed construction is not optimal for every $N$. This small example does not establish the published, stronger statement that its deficit is unbounded along infinitely many $N$.
+
+\subsection*{5) Outcome and attribution}
+\textbf{UNRESOLVED in this attempt.} \textbf{PARTIAL PROGRESS on determining $g(N)$; the literal universal optimality assertion is disproved.} The sharp known asymptotic is $g(N)\sim\sqrt{9N/8}$, due to Chen. Obtaining that coefficient from above requires more than (2). Chen and Dai also establish substantially stronger failures of exact optimality for arbitrarily large $N$. Those results are recorded as context rather than treated as proofs reconstructed in this document.
+
+Source: \url{https://www.erdosproblems.com/441}, checked 24 September 2026, including its original references to Erd\H{o}s, Choi, Chen, and Chen--Dai. All arguments actually used in (1), (2), and the $N=4$ counterexample are given above. No novelty or formal verification is claimed.
+
+The estimate includes the still-missing sharp asymptotic and large-parameter refinement.
+\subsection*{6) COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

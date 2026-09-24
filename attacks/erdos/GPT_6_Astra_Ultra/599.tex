@@ -1,0 +1,31 @@
+\section{Erd\H{o}s Problem \#599: a separator meeting each disjoint path once}
+\noindent Complete finite-packing case in possibly infinite graphs, 24 September 2026.
+
+\subsection*{Statement and proof scope}
+For disjoint independent vertex sets $A,B$ in an arbitrary graph, seek a family $\mathcal P$ of pairwise vertex-disjoint finite $A$--$B$ paths and a separating set $S$ consisting of exactly one vertex from each path. Aharoni--Berger proved the general infinite theorem. We give a full proof when the maximum number of disjoint $A$--$B$ paths is finite, even if the graph and both terminal sets are infinite. We then extend this to arbitrary disjoint unions of components with finite packing numbers.
+
+\subsection*{A finite flow in an infinite network}
+Suppose the packing numbers are bounded by a finite integer, and choose a maximum family $\mathcal P$ of size $k$. If $k=0$, take $S=\varnothing$. Assume $k>0$. Paths can be trimmed so their internal vertices avoid $A\cup B$.
+Split every vertex $v$ into $v^-,v^+$ and insert an arc $v^-\to v^+$ of capacity one. For each undirected edge $uv$, insert arcs $u^+\to v^-$ and $v^+\to u^-$ of capacity $k+1$. Add a source $s$ with arcs $s\to a^-$ for $a\in A$, and a sink $t$ with arcs $b^+\to t$ for $b\in B$, also of capacity $k+1$.
+The paths in $\mathcal P$ give an integral flow $f$ of value $k$ with finite support, by sending one unit along each split path. There are no arcs entering $s$ or leaving $t$.
+
+Define residual arcs in the usual explicit way: an original arc has a forward residual arc if its flow is below capacity and a reverse residual arc if its flow is positive. If a finite residual path from $s$ to $t$ existed, increasing flow along forward arcs and decreasing it along reverse arcs by one would produce a finite-support integral flow of value $k+1$. On its finite support, remove directed flow cycles and repeatedly extract source--sink paths; conservation ensures that this decomposes its value into $k+1$ unit paths. Capacity one on each split-vertex arc makes the resulting graph paths vertex-disjoint. Trim and erase cycles in their projections to obtain $k+1$ disjoint $A$--$B$ paths, contradicting maximality.
+Therefore $t$ is not in the set $R$ of network vertices reachable from $s$ by finite residual paths.
+
+\subsection*{The cut is finite despite the infinite graph}
+Every original arc from $R$ to its complement is saturated: otherwise it would be a forward residual arc extending reachability. Since all capacities are positive, such arcs have positive flow and hence belong to the finite support of $f$. Every original arc from the complement into $R$ has flow zero, because otherwise its reverse would extend reachability.
+Summing conservation over the finite support on the $R$ side yields
+\[\sum_{e:R\to R^c}\operatorname{cap}(e)
+=\sum_{e:R\to R^c}f(e)-\sum_{e:R^c\to R}f(e)=k.\tag{1}\]
+This sum is legitimate without summing over infinitely many nonzero quantities: the support is finite, and all other terms vanish. No capacity-$k+1$ arc can occur in this cut. Thus its arcs are exactly $k$ split-vertex arcs $v^-\to v^+$.
+Let $S$ be their original vertices. Every $A$--$B$ path gives an $s$--$t$ path in the network, which must cross this cut, so it meets $S$. Since the $k$ paths in $\mathcal P$ are vertex-disjoint and each meets the $k$-element set $S$, each meets it exactly once, and every vertex of $S$ lies on one of them. This is precisely the required orthogonality.
+
+\subsection*{A further infinite case}
+Suppose every connected component of $G$ has a finite maximum packing number between its portions of $A$ and $B$, without a common bound between components. Apply the proved result in each component and take the unions of the chosen path families and separators. Different components are disjoint, every terminal path stays in one component, and the one-vertex-per-path property is preserved. This settles such graphs even when the resulting family is infinite or uncountable.
+
+\subsection*{Outcome and remaining gap}
+\textbf{Attempt status: unresolved.} The finite-packing theorem, including infinite terminal sets, and the componentwise extension are complete. Components admitting arbitrarily large finite packings are not covered by this proof. Choosing an infinite packing alone would not automatically produce a separator meeting its paths exactly once; that is the essential gap in a naive extension.
+Sources: \url{https://www.erdosproblems.com/599}; R. Aharoni and E. Berger, \emph{Menger's theorem for infinite graphs}, introduction and Theorem 1.1, \url{https://arxiv.org/abs/math/0509397}. The finite-support augmentation argument is supplied rather than importing the full infinite theorem. No novelty or formal-verification claim is made.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 55\%}

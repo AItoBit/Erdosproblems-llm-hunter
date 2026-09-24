@@ -1,0 +1,56 @@
+\section{Erd\H{o}s Problem \#482: nonlinear recurrences that extract digits}
+\noindent Complete reconstruction of two known recurrence families, 24 September 2026.
+
+\subsection*{Statement and digit convention}
+The Graham--Pollak recurrence $u_1=1$, $u_{n+1}=\lfloor\sqrt2(u_n+1/2)\rfloor$ yields the binary digits of $\sqrt2$ through $u_{2n+1}-2u_{2n-1}$. The question asks for analogous results for square roots and other algebraic numbers. We give a binary construction for every positive real number, recovering that recurrence, and then an arbitrary-base construction.
+For $w>0$ and integer base $g\ge2$, let $m=\lfloor\log_g w\rfloor$ and $t=w/g^m\in[1,g)$. Its digits, starting with the leading nonzero digit, are
+\[d_n=\lfloor tg^{n-1}\rfloor-g\lfloor tg^{n-2}\rfloor\quad(n\ge1).\tag{1}\]
+The radix point is restored using $m$. The floor convention chooses terminating expansions when available. The first digit of $\sqrt2$ here is its leading $1$, not the first digit after the point.
+
+\subsection*{A binary recurrence recovering Graham--Pollak}
+Normalize $t=w/2^{\lfloor\log_2w\rfloor}$ and set
+\[a=\frac{2(t+1)}{t+2},\qquad b=\frac{t+2}{t+1}=\frac2a.
+\]
+Define
+\[u_1=1,\qquad u_{2k}=\lfloor a(u_{2k-1}+1/2)\rfloor,
+\qquad u_{2k+1}=\lfloor b(u_{2k}+1/2)\rfloor.\tag{2}\]
+We prove the exact invariants
+\[u_{2k}=2^{k-1}+\lfloor t2^{k-1}\rfloor,\qquad
+u_{2k+1}=2^k+\lfloor t2^{k-1}\rfloor.\tag{3}\]
+
+The odd formula holds for $k=0$, since $\lfloor t/2\rfloor=0$. For the first induction step put $F=\lfloor t2^{k-2}\rfloor$, $r=\{t2^{k-2}\}$, $\delta=\lfloor2r\rfloor$, and $G=2F+\delta=\lfloor t2^{k-1}\rfloor$. Subtracting the desired integer from the unrounded expression gives
+\[a(2^{k-1}+F+1/2)-(2^{k-1}+G)
+=\frac{2r+t+1-(t+2)\delta}{t+2}.
+\]
+If $\delta=0$, the numerator lies in $[t+1,t+2)$; if $\delta=1$, it lies in $[0,1)$. The error is therefore in $[0,1)$ in both cases, proving the even formula. For the reverse step put $s=\{t2^{k-1}\}$. The corresponding error is
+\[b(2^{k-1}+G+1/2)-(2^k+G)=\frac{-s+(t+2)/2}{t+1}\in[0,1).
+\]
+Indeed its numerator is positive and at most $(t+2)/2<t+1$. This proves the odd formula and completes the induction. Subtracting twice the preceding odd formula in (3) proves $u_{2n+1}-2u_{2n-1}=d_n$.
+For $t=\sqrt2$, both $a,b$ equal $\sqrt2$, recovering the original recurrence. For any positive algebraic $w$, both coefficients are algebraic as well.
+
+\subsection*{Every integral base}
+For arbitrary $g\ge2$ use its normalized $t\in[1,g)$ and put
+\[a=\frac{g}{(g-1)(t+g)},\qquad b=\frac ga=(g-1)(t+g).
+\]
+Define the nonnegative integer sequence
+\[v_1=1,\qquad v_{2k}=\lfloor a(v_{2k-1}-1/g)\rfloor,
+\qquad v_{2k+1}=\lfloor b(v_{2k}+1/(g-1))\rfloor.\tag{4}\]
+Here $v_2=0$ is allowed. The exact formulas are
+\[v_{2k}=\frac{g^{k-1}-1}{g-1},\qquad
+v_{2k+1}=g^k+\lfloor tg^{k-1}\rfloor.\tag{5}\]
+The first even value is zero because $a(1-1/g)=1/(t+g)\in(0,1)$. Given the even formula, the unrounded next expression is exactly $(t+g)g^{k-1}$, proving the odd formula. Conversely, if the odd formula holds, write $s=\{g^{k-1}(t+g)\}$. The unrounded expression for $v_{2k+2}$ equals
+\[\frac{g^k-1}{g-1}+E,\qquad
+E=\frac1{g-1}-as-\frac ag.
+\]
+Since $0<a\le g/(g^2-1)$ and $0\le s<1$,
+\[E>\frac1{g-1}-a(1+1/g)\ge0,
+\qquad E\le\frac1{g-1}-\frac ag<1.
+\]
+This proves (5). Equation (1) now yields $v_{2n+1}-gv_{2n-1}=d_n$ in every base.
+
+\subsection*{Outcome and attribution}
+\textbf{SOLVED in the requested constructive sense.} These families cover every positive square root and algebraic number, and in fact every positive real. They are known Rabinowitz--Gilbert/Stoll constructions, not new digit-generation results. The exact invariants and all floor inequalities used here are proved above.
+Sources: \url{https://www.erdosproblems.com/482}; T. Stoll, \emph{On families of nonlinear recurrences related to digits}, Theorems 1.1 and 1.3, \url{https://cs.uwaterloo.ca/journals/JIS/VOL8/Stoll/stoll56.pdf}. The all-base instance uses the permitted parameter $\epsilon=-1/g$. No claim about numerical efficiency or formal verification is made.
+
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

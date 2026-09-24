@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 577}
+
+\paragraph{Statement and scope.}
+Does every graph on \(4k\) vertices with minimum degree at least \(2k\) contain \(k\) vertex-disjoint copies of \(C_4\)? Wang proved the affirmative answer. This attempt proves sharpness of the degree threshold, the bipartite case, and a general packing of \(k/2-O(\sqrt k)\) cycles. The full packing theorem remains unresolved in this attempt.
+
+\paragraph{A bound for a graph with no four-cycle.}
+If a graph \(H\) of order \(s\) has minimum degree \(d\) and no \(C_4\), fix a vertex \(v\). The number of length-two paths starting at \(v\), without returning immediately to \(v\), is
+\[
+ \sum_{u\in N_H(v)}(d_H(u)-1)\geq d(d-1).
+\]
+Their endpoints must be distinct: two paths with the same endpoint and different middle vertices give a four-cycle. The endpoints lie among the \(s-1\) vertices other than \(v\), including possibly neighbours of \(v\). Therefore
+\[
+ d(d-1)\leq s-1,
+ \qquad d\leq\frac{1+\sqrt{4s-3}}2. \tag{1}
+\]
+This counting does not require triangle-freeness.
+
+\paragraph{A guaranteed partial packing.}
+Choose a maximal collection of \(r\) vertex-disjoint four-cycles in the graph of the question. The graph remaining after their vertices are removed is \(C_4\)-free and has
+\[
+ s=4k-4r,\qquad \delta(H)\geq2k-4r. \tag{2}
+\]
+If \(s=0\), the desired full packing has already been found. If \(r\geq k/2\), the weaker bound below holds immediately. Otherwise the lower bound in (2) is positive; apply (1), using \(s\leq4k\), to obtain
+\[
+ 2k-4r\leq\frac12+2\sqrt k.
+\]
+Thus in all cases there exists a packing satisfying
+\[
+ r\geq\frac k2-\frac{\sqrt k}{2}-\frac18. \tag{3}
+\]
+Integer rounding may of course strengthen this bound. It gives a linear number of disjoint quadrilaterals, but does not reach a spanning packing.
+
+\paragraph{The threshold cannot be decreased.}
+The complete bipartite graph \(K_{2k-1,2k+1}\) has order \(4k\) and minimum degree \(2k-1\). Every four-cycle uses two vertices in each class. Hence at most
+\[
+ \left\lfloor\frac{2k-1}{2}\right\rfloor=k-1
+\]
+can be vertex-disjoint. This proves the asserted degree condition, if sufficient, is sharp for every \(k\).
+
+\paragraph{The bipartite case and the first order.}
+If the graph in the question is itself bipartite with classes \(A,B\), its minimum degree implies \(|A|,|B|\geq2k\). Their sum is \(4k\), so both have size exactly \(2k\). Every vertex must be adjacent to the entire other class. Partition each class into pairs and match these pairs across the classes; each resulting \(K_{2,2}\) is a four-cycle, giving the required \(k\) disjoint copies.
+
+For \(k=1\), a graph on four vertices with minimum degree two has complement of maximum degree one. Its missing edges form a matching, extendible to a perfect matching. Removing that perfect matching from \(K_4\) leaves a four-cycle contained in the original graph. This also proves the smallest case without a bipartiteness assumption.
+
+\paragraph{Remaining gap and source.}
+A maximal packing can leave vertices uncovered, and (1) only controls the size and degree of the leftover graph. To force \(r=k\), one needs a replacement or augmentation argument involving the already chosen cycles. No such argument is proved here. The complete result is Hong Wang, \emph{Proof of the Erd\H{o}s--Faudree Conjecture on Quadrilaterals}, Graphs and Combinatorics 26 (2010), 833--877, \url{https://doi.org/10.1007/s00373-010-0948-3}. Its proof is not used to fill the gap. Current statement: \url{https://www.erdosproblems.com/577}, checked 24 September 2026. No novelty or formal verification is claimed.
+
+\textbf{Completion rate estimate: 40\%.}

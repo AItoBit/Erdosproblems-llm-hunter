@@ -1,0 +1,85 @@
+\subsection*{Erd\H{o}s problem \#347}
+
+\noindent\textbf{1) FORMAL RESTATEMENT.}
+Construct increasing positive integers with consecutive ratio tending to $2$ whose finite subset sums have natural density $1$ after any finite deletion.
+
+\noindent\textbf{2) CONTEXT AND METHOD.}
+The current statement is affirmative. The following reconstructs the block construction of Enrique Barschkis, based on Tao and van Doorn. It supplies the greedy and counting details, including passage from the block endpoints to every real cutoff. This is a known construction, with no novelty claim. The earlier local attempt's modular obstruction is only necessary: it does not imply impossibility.
+
+\noindent\textbf{3) CONSTRUCTION AND RATIOS.}
+For $j\ge0$, put
+\[
+ k_j=4+\lceil\log_2\log_2(j+16)\rceil,\quad q_j=2^{k_j}-2,
+ \quad M_0=10,\quad M_{j+1}=\lfloor(q_j+1/2)M_j\rfloor.
+\]
+Thus $q_j\ge62$, $q_j\asymp\log(j+16)$, $k_j\to\infty$, and
+\[
+ q_jM_j+1<M_{j+1}<(q_j+1)M_j,
+ \qquad M_j\ge10\cdot62^j.
+\]
+Concatenate the blocks
+\[
+ M_j,2M_j,\ldots,2^{k_j-2}M_j,
+ (2^{k_j-1}-1)M_j+1.
+\]
+Every block and every boundary is strictly increasing. Ratios inside a block equal $2$, except the last, which is
+$2-2^{2-k_j}+2^{2-k_j}/M_j$. The boundary ratio is
+\[
+ \frac{M_{j+1}}{(2^{k_j-1}-1)M_j+1}
+ =2+O(2^{-k_j})+O(M_j^{-1}).
+\]
+Consequently all consecutive ratios tend to $2$.
+
+\noindent\textbf{4) GREEDY REPRESENTATION AND CORRECTION.}
+Fix a tail of blocks $j\ge j_0$. Define
+\[
+ c_j=(2^{k_j-1}-1)M_j,
+\]
+\[
+ B_j=\{hM_j:0\le h\le2^{k_j-1}-1\}
+ \cup\{hM_j+1:2^{k_j-1}\le h\le2^{k_j}-2\}.
+\]
+Every member of $B_j$ is a subset sum of its block. There are $q_j+1$ members, one of which is $c_j$. The extra subset sum $c_j+1$, excluded from $B_j$, is available by using the block's last term instead of all its preceding terms.
+
+Consecutive entries of $B_j$ have gap at most $M_j+1$. Its largest entry is $q_jM_j+1<M_{j+1}$, and the remaining distance to $M_{j+1}$ is less than $M_j$. Hence, for every integer $0\le x\le M_{j+1}$, subtracting the largest $b\in B_j$ with $b\le x$ leaves an integer in $[0,M_j]$. Descending through the blocks gives, for every integer $0\le m\le M_{N+1}$,
+\[
+ m=\sum_{j=j_0}^{N}b_j+d,\qquad b_j\in B_j,\quad0\le d\le M_{j_0}.
+\]
+If at least $M_{j_0}$ of the digits equal $c_j$, switch exactly $d$ of them to $c_j+1$. All blocks use disjoint terms, so this is an exact subset-sum representation of $m$ using only the tail.
+
+\noindent\textbf{5) EXCEPTION COUNT AND NATURAL DENSITY.}
+Write $H=M_{j_0}$ and $S_N=\sum_{j=j_0}^{N}q_j^{-1}$. The greedy map from $m$ to its digits and remainder is injective, since their sum recovers $m$. Therefore the number $E_N$ of missing integers in $[0,M_{N+1}]$ is at most
+\[
+ (H+1)\Big(\prod_{j=j_0}^{N}q_j\Big)
+ \sum_{r=0}^{H-1}e_r(q_{j_0}^{-1},\ldots,q_N^{-1})
+ \le(H+1)\Big(\prod q_j\Big)\sum_{r=0}^{H-1}\frac{S_N^r}{r!}.
+\]
+The recurrence and convergence of $\sum M_j^{-1}$ give a constant $c>0$ with
+\[
+ M_{N+1}\ge cM_{j_0}\prod_{j=j_0}^{N}(q_j+1/2).
+\]
+Indeed the relative rounding losses are bounded by
+$1/((q_j+1/2)M_j)$, and the product of one minus these losses is positive. Since
+$\log(1+1/(2q_j))\ge1/(4q_j)$,
+\[
+ \frac{E_N}{M_{N+1}}
+ \le C_H e^{-S_N/4}\sum_{r=0}^{H-1}\frac{S_N^r}{r!}.
+\]
+Now $S_N\gg N/\log(N+16)$ and $S_N=O(N)$, so the right side decays faster than every fixed negative power of $N$.
+
+For an arbitrary large cutoff $X$, choose $N$ with $M_N\le X<M_{N+1}$. The number of missing integers up to $X$ is at most $E_N$, and
+\[
+ \frac{E_N}{X}\le\frac{M_{N+1}}{M_N}\frac{E_N}{M_{N+1}}
+ \ll\log(N+16)\frac{E_N}{M_{N+1}}\longrightarrow0.
+\]
+Thus the tail's subset sums have natural density $1$. Every cofinite subsequence contains a whole block tail, proving the required assertion.
+
+\noindent\textbf{6) VERIFICATION AND FINAL.}
+The integer remainder bound includes the unique gap of length $M_j+1$, and the final density argument controls cutoffs between the increasingly separated block endpoints. The argument is complete and elementary; it does not claim that every sufficiently large integer is represented.
+\textbf{SOLVED.} Completion is assessed for the precise density-one question.
+
+\subsection*{Sources}
+\url{https://www.erdosproblems.com/347}; \url{https://raw.githubusercontent.com/ebarschkis/ErdosProblem/main/Problem347/note.tex}; \url{https://www.erdosproblems.com/forum/thread/347}.
+
+\section{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}
