@@ -297,9 +297,6 @@ function initOpenProblemsPage() {
     attempts.checked = params.get('attempts') === '1';
     const validSorts = ['rank', 'title', 'attempts', 'score', 'review', 'claim', 'completion'];
     sort.value = validSorts.includes(params.get('sort')) ? params.get('sort') : subset ? 'score' : 'rank';
-    const metadata = window.OPEN_PROBLEMS_CATALOG;
-    const edition = document.getElementById('catalogue-edition');
-    if (edition && metadata) edition.textContent = `Catalogue edition ${metadata.edition_date || ''}${metadata.release_version ? ` (v${metadata.release_version})` : ''}.`;
 
     function renderTable(syncUrl = true) {
         const filtered = filterOpenProblems(records, {

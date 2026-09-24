@@ -127,7 +127,7 @@ loadPage(browser);
 assert.match(browser.elements['results-count'].textContent, /^4 of 4 entries · 2 with LLM attempts$/);
 assert.equal(browser.elements['sort-by'].value, 'rank');
 assert.equal(browser.elements['filter-attacks'].checked, false);
-assert.match(browser.elements['catalogue-edition'].textContent, /2026-09-22 \(v22\)/);
+assert.equal(browser.elements['catalogue-edition'].textContent, '');
 assert.ok(browser.elements['open-problems-tbody'].innerHTML.indexOf('>Alpha<') < browser.elements['open-problems-tbody'].innerHTML.indexOf('>Beta'));
 browser.elements['filter-attacks'].checked = true;
 browser.elements['filter-attacks'].handlers.change();
