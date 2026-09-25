@@ -1,0 +1,61 @@
+\section*{Erd\H{o}s Problem 1129: optimal nodes and the endpoint convention}
+
+\paragraph{Statement.}
+For distinct ordered nodes \(-1\leq x_1<\cdots<x_n\leq1\), let
+\[
+ l_k(x)=\prod_{j\ne k}\frac{x-x_j}{x_k-x_j},
+ \qquad L_{\boldsymbol x}(x)=\sum_k|l_k(x)|,
+ \qquad\Lambda(\boldsymbol x)=\max_{[-1,1]}L_{\boldsymbol x}.
+\]
+We describe all minimizers, relative to the established de Boor--Pinkus theorem for fixed endpoints. The distinction between fixed and movable endpoints matters: the literal formulation at \url{https://www.erdosproblems.com/1129} does not have a unique minimizer when \(n\geq3\).
+
+\paragraph{Explicit external theorem.}
+For \(n\geq3\), among canonical arrays
+\(-1=t_1<\cdots<t_n=1\), there is a unique array \(\boldsymbol t^*\) whose \(n-1\) internal interval maxima of \(L_{\boldsymbol t^*}\) all equal a constant \(\Lambda_n^*\).
+For every other canonical array, the least internal maximum is strictly below \(\Lambda_n^*\) and the greatest is strictly above it.
+This is the consequence of Theorems 1 and 2 of C. de Boor and A. Pinkus, \emph{Proof of the conjectures of Bernstein and Erd\H{o}s concerning the optimal nodes for polynomial interpolation}, J. Approximation Theory 24 (1978), 289--303, \url{https://doi.org/10.1016/0021-9045(78)90014-X}.
+Their paper fixes both endpoints; its indexing uses \(n+1\) nodes. This deep theorem is imported, not reproved here.
+Reflection and uniqueness show that \(\boldsymbol t^*\) is symmetric.
+
+\paragraph{All minimizers with movable endpoints.}
+Write \(L^*=L_{\boldsymbol t^*}\). Then the answer to the literal problem is precisely
+\[
+ \boxed{\quad x_i=c+h t_i^*,\quad h>0,\quad
+ -1\leq c-h<c+h\leq1,\quad
+ L^*((-1-c)/h)\leq\Lambda_n^*,\
+ L^*((1-c)/h)\leq\Lambda_n^*.\quad}
+\]
+To prove necessity, normalize an arbitrary array by
+\[
+ c=(x_1+x_n)/2,\qquad h=(x_n-x_1)/2,\qquad t_i=(x_i-c)/h.
+\]
+The Lagrange product formula gives \(L_{\boldsymbol x}(c+hu)=L_{\boldsymbol t}(u)\).
+The global maximum is at least the largest internal interval maximum, hence at least \(\Lambda_n^*\). The canonical optimal array attains that lower bound. If any other array attains it, the strict part of the external theorem forces \(\boldsymbol t=\boldsymbol t^*\), and the two displayed endpoint inequalities are necessary.
+
+They are also sufficient. For \(u>1\), each \(|l_k^*(u)|\) is a product of positive increasing factors divided by a positive constant, so \(L^*(u)\) is increasing. For \(u<-1\) it increases as \(u\) moves left. Thus the exterior interval maxima occur at the domain endpoints \(-1,1\), while every internal maximum equals \(\Lambda_n^*\).
+
+Equivalently, let \(r_n>1\) be the unique solution \(L^*(r_n)=\Lambda_n^*\). It exists since \(L^*(1)=1<\Lambda_n^*\), exterior growth is strict, and \(L^*(u)\to\infty\).
+Symmetry gives the alternative constraints
+\[
+ (1+|c|)/r_n\leq h\leq1-|c|.
+\]
+This makes the nonuniqueness explicit.
+
+\paragraph{A fully calculated example.}
+For three canonical nodes \(-1,u,1\), the two internal maxima are
+\[
+ 1+\frac{(1+u)^2}{4(1-u)},\qquad
+ 1+\frac{(1-u)^2}{4(1+u)}.
+\]
+If \(u\geq0\), the first is at least \(5/4\); if \(u\leq0\), the second is at least \(5/4\). Equality of their maximum to \(5/4\) forces \(u=0\).
+For nodes \(-t,0,t\), direct evaluation outside their span gives
+\[
+ \Lambda(-t,0,t)=\max\{5/4,\ 2/t^2-1\}.
+\]
+Thus every \(\sqrt{8/9}\leq t\leq1\) is a minimizer. Only the first of these has both exterior maxima equal to the internal ones. Unqualified uniqueness or equality of all \(n+1\) interval maxima therefore cannot characterize the literal problem.
+
+For \(n=2\), the minimum \(1\) is attained only at \(-1,1\), since the Lebesgue function is \(1\) between the two nodes and strictly larger outside. For \(n=1\), it is identically \(1\), so every node is optimal.
+
+\paragraph{Completion estimate.}
+All literal minimizers are characterized, using the stated canonical de Boor--Pinkus theorem as the external input; the three-node case and the endpoint correction are proved directly.
+\textbf{COMPLETION: 100\%}

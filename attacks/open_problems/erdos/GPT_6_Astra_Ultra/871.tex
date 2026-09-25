@@ -1,0 +1,42 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 871: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and result}
+Must every asymptotic basis of order two with $r_A(n)\to\infty$ decompose into two disjoint asymptotic bases? No. We reconstruct Larsen's selection argument from \url{https://raw.githubusercontent.com/Larsen-Daniel/Erdos-869/main/869.pdf}, Section 3, explicitly using its general block-construction theorem. The original problem-specific source is linked at \url{https://www.erdosproblems.com/871}.
+
+\section*{Precise construction input}
+Theorem 2 and the formulas in Section 4 of Larsen's paper supply the following input. Put $N_j=4^{j+1}$. At each stage choose any finite $G_j$ from the previously constructed part of $B$ below $N_j$. One can construct a set $B$ for which:
+\begin{enumerate}
+\item every sufficiently large $n\notin\{N_j\}$ has at least $cn$ unordered representations in $B$, with summand ratio at most $100$, for an absolute $c>0$;
+\item the complete representations of $N_{j+1}$ in $B$ are exactly $g+(N_{j+1}-g)$, $g\in G_j$;
+\item each stage only adds elements strictly between $N_j$ and $N_{j+1}$.
+\end{enumerate}
+This is a flexible construction theorem, not an assumption that the present counterexample exists. Its random block proof is also reconstructed in this collection's attempt for Problem 869. The exactness assertion follows from the source's block formula: random complements are added only for missing old elements, and the only allowed old-element complements are those deliberately planted from $G_j$. Here we use this theorem as a named external input and prove the remaining selection, divergence and indecomposability statements.
+
+\section*{The selection rule and its consequences}
+A finite set is stage-$j$ eligible if it consists of exactly $j$ previously constructed elements of $B$ in $[j,N_j)$. Keep all sets once they become eligible. At each stage select an as-yet unselected eligible set with smallest maximum, breaking ties by a fixed ordering; if there is none, take $G_j=\varnothing$. Every eligible set is eventually selected, since there are only finitely many subsets with bounded maximum.
+
+For all sufficiently large $j$ there are at least $j$ currently eligible sets. Indeed the balanced representations of $N_j-1$ already use old elements and give $\gg N_j$ distinct old summands. After deleting the first $j-1$ integers, there remain more than $2j$ elements, supplying more than $j$ different $j$-subsets. At most $j-1$ sets were previously selected. Thus the empty choice occurs only finitely often.
+
+Also $|G_j|\to\infty$. For any fixed $L$, sets of size at most $L$ can only have become eligible in one of the first $L$ stages; they lie in a fixed finite interval, so there are only finitely many of them. Each is selected at most once. Since $G_j$ is eventually nonempty, its size tends to infinity. The construction input now gives $r_B(n)\to\infty$ along the nonspecial integers and along $N_{j+1}$ alike, and $B$ is an asymptotic basis.
+
+Let $D\subseteq B$ be any subbasis. Every eligible set arising at a sufficiently late stage must meet $D$, since its later witness has no representation in $D$ if the whole set is omitted. Let $M$ be large and let $j$ be the least integer with $N_j>M^2$. Then $j=O(\log M)<M$. If $(B\setminus D)\cap[M,M^2]$ had at least $j$ elements, any $j$ of them would form a stage-$j$ eligible set disjoint from $D$, a contradiction. Consequently
+\[
+ |(B\setminus D)\cap[M,M^2]|<j=O(\log M).\tag{1}
+\]
+
+If $B=D_1\sqcup D_2$ with both $D_i$ bases, apply (1) to each to obtain $|B\cap[M,M^2]|<2j$. This is impossible. Choose a nonspecial integer $u\in\{M^2-1,M^2-2\}$; for large $M$ at least one is nonspecial. Its $\gg u$ balanced representations have both summands in $[M,M^2]$, since $u/101\ge M$ eventually. Distinct unordered representations use disjoint summands except for a possible diagonal singleton, so this interval contains $\gg M^2$ elements of $B$. This contradicts $O(\log M)$ and proves indecomposability.
+
+\section*{Assessment}
+The negative answer follows completely relative to the precise external block theorem. In particular, selecting an old eligible set need not give $|G_j|=j$; the separate finiteness argument above is what justifies divergent representations. This quantifier distinction is essential.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

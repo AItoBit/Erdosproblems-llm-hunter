@@ -1,0 +1,74 @@
+\section*{Erd\H{o}s Problem 1000: vanishing average of new reduced denominators}
+\subsection*{Statement and attribution}
+For a strictly increasing positive integer sequence $A=(n_k)$, let $\phi_A(k)$ count those $1\le m\le n_k$ for which
+$n_k/\gcd(m,n_k)$ is unequal to every earlier $n_j$.
+We construct $A$ with
+\[
+ \frac1N\sum_{k\le N}\frac{\phi_A(k)}{n_k}\longrightarrow0.
+\]
+Haight's thesis is credited with the known resolution. The explicit prime-times-divisors construction below is reconstructed from the public proof linked in the problem discussion, \emph{Erdos1000.lean} in \texttt{plby/lean-proofs}; that source credits Aristotle for formalization. We prove the mathematical construction here and do not claim to have run Lean or to have a new result.
+
+\subsection*{One finite block}
+Let $r$ be prime and $q$ a positive integer coprime to $r$. Suppose $n_k=rq$ and every $rd$ with $d\mid q$, $d<q$, has occurred earlier.
+If an admissible numerator $m$ is not divisible by $r$ and has $\gcd(m,q)>1$, its reduced denominator is
+\[
+ \frac{rq}{\gcd(m,q)}=rd
+\]
+for a proper divisor $d$ of $q$, contradicting admissibility.
+Thus every counted numerator either is coprime to $rq$, or is divisible by $r$. There are at most $\phi(rq)+q$ such numerators, giving
+\[
+ \frac{\phi_A(k)}{rq}\le
+ \frac{\phi(q)}q+\frac1r.
+ \tag{1}
+\]
+Additional denominators from earlier blocks can only decrease the left side. This inequality, rather than an unjustified exact invariance under scaling, is what the construction needs.
+
+\subsection*{A divisor average tending to zero}
+Let $p_1<p_2<\cdots$ be all primes, $Q_t=\prod_{i=1}^{t}p_i$, and
+\[
+ a_t=\frac1{2^t}\sum_{d\mid Q_t}\frac{\phi(d)}d.
+\]
+Squarefree divisors correspond to subsets of the first $t$ primes, so multiplicativity gives
+\[
+ a_t=\prod_{i=1}^{t}\frac{1+(1-1/p_i)}2
+ =\prod_{i=1}^{t}\left(1-\frac1{2p_i}\right)\longrightarrow0.
+ \tag{2}
+\]
+For completeness, $\sum_p1/p$ diverges: if it converged, the finite Euler products $\prod_{p\le x}(1-1/p)^{-1}$ would stay bounded, since
+$-\log(1-1/p)\le1/p+C/p^2$. But expanding these products shows that they dominate $\sum_{n\le x}1/n$, a contradiction. Applying $\log(1-u)\le-u$ proves (2).
+
+\subsection*{Ordering all blocks and controlling every prefix}
+Choose primes $r_t$ recursively so that
+\[
+ r_t>\max(Q_t,\ r_{t-1}Q_{t-1},\ 1/a_t)
+\]
+(omit the middle term at $t=1$). Infinitely many primes guarantee these choices.
+The $t$-th block consists of all $2^t$ numbers
+\[
+ \{r_td:d\mid Q_t\},
+\]
+listed increasingly. Every number in this block exceeds all numbers in preceding blocks; its proper-divisor companions occur earlier within the same block. Concatenating the blocks therefore produces a strictly increasing infinite sequence.
+By (1)--(2), the sum of $\phi_A(k)/n_k$ over the whole $t$-th block is at most
+\[
+ 2^t(a_t+1/r_t)\le2^{t+1}a_t.
+ \tag{3}
+\]
+Let a prefix end anywhere in block $t$. For $t\ge2$ its length is at least
+$\sum_{j<t}2^j=2^t-2$.
+All summands are nonnegative, so even an unfinished block contributes no more than its full-block bound. Thus the prefix average is at most
+\[
+ \frac{\sum_{j\le t}2^{j+1}a_j}{2^t-2}.
+ \tag{4}
+\]
+This tends to zero. Indeed, given $\epsilon>0$, choose $J$ with $a_j<\epsilon$ for $j\ge J$.
+The finite sum over $j<J$, divided by $2^t-2$, vanishes; the remaining geometric sum in (4) is at most $(4+o(1))\epsilon$.
+Since $\epsilon$ is arbitrary, every prefix average tends to zero, not just the block-end subsequence.
+
+\subsection*{Why this does not force individual terms to vanish}
+If $\liminf\phi_A(k)/n_k=0$, then $\liminf\phi(n_k)/n_k=0$, so arbitrarily large primes divide members of $A$. For such a prime $p$, let $n_k$ be its first occurrence. Whenever $p\nmid m$, the reduced denominator $n_k/\gcd(m,n_k)$ is still divisible by $p$ and cannot equal any earlier $n_j$. Hence $\phi_A(k)/n_k\ge1-1/p$.
+Thus the known obstruction $\limsup\phi_A(k)/n_k=1$ is fully compatible with our vanishing Ces\`aro average.
+
+\subsection*{Conclusion and sources}
+The required sequence has been constructed and every-prefix convergence proved. Sources: \url{https://www.erdosproblems.com/1000}; \url{https://www.erdosproblems.com/forum/discuss/1000}; \url{https://github.com/plby/lean-proofs/blob/main/src/v4.24.0/ErdosProblems/Erdos1000.lean}. Haight's historical thesis is cited as attribution, not as an unexamined premise of this proof.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

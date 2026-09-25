@@ -1,0 +1,69 @@
+\section*{Erd\H{o}s Problem 1019}
+
+\paragraph{Statement and result.}
+Every simple graph on \(n\) vertices with at least
+\[
+ \left\lfloor n^2/4\right\rfloor+
+ \left\lfloor(n+1)/2\right\rfloor
+\]
+edges contains a planar graph on \(h>3\) vertices with \(3h-6\) edges. We prove the sharp extremal classification underlying Simonovits's solution, following the exposition supplied by Cambie in the problem's discussion.
+
+\paragraph{The forbidden subgraphs and extremal examples.}
+Call a graph bad if it contains either \(K_4\) or \(C_j+2K_1\) for some \(j\geq3\), where \(+\) denotes the join: the two additional, nonadjacent vertices are each joined to every cycle vertex. Both are saturated planar graphs. For the latter, draw the cycle as an equator and the two additional vertices on opposite sides. It has \(j+2\) vertices and \(3j=3(j+2)-6\) edges.
+
+Define
+\[
+ E(n)=\lfloor n^2/4\rfloor+\lfloor(n-1)/2\rfloor.
+\]
+For \(n\geq3\) we will prove:
+\[
+ \begin{gathered}
+ e(G)\geq E(n),\quad G\text{ not bad}\\
+ \Longrightarrow\quad
+ G=T_a+I_b,\qquad a+b=n,\quad 0\leq a-b\leq2,
+ \tag{1}
+ \end{gathered}
+\]
+where \(T_a\) is a tree and \(I_b\) is an independent set. Such a join has \(ab+a-1=E(n)\) edges.
+
+These joins contain no saturated planar subgraph of order at least four. Indeed, suppose \(H\) were such a subgraph. Every vertex of a simple plane triangulation of order at least four has degree at least three, and every edge has two triangular faces with distinct third vertices. A vertex of \(H\) in the tree side that has no neighbour on the independent side has at least three neighbours within the tree side. If it has a neighbour on the independent side, the two faces incident to that edge give it two distinct neighbours within the tree side. Thus the nonempty subgraph of \(T_a\) induced by the tree vertices of \(H\) has minimum degree at least two, contradicting that it is a forest.
+
+\paragraph{Induction: reduction to the equality case.}
+The assertion (1) and the upper bound \(e(G)\leq E(n)\) for graphs that are not bad hold for \(n=3,4\): the equality graphs are \(K_3\) and \(K_4-e\), respectively.
+
+For the induction step, first consider a graph with exactly \(E(n)\) edges that is not bad. Direct calculation gives
+\[
+ E(n)-E(n-1)=d:=\lfloor(n+1)/2\rfloor,\qquad
+ \left\lfloor 2E(n)/n\right\rfloor\leq d.
+\]
+Choose a minimum-degree vertex \(x\). The graph \(G-x\) has at least \(E(n-1)\) edges. By induction it has exactly that many and is \(T_a+I_b\), with \(a+b=n-1\) and \(0\leq a-b\leq2\). Hence \(d_G(x)=d\).
+
+If \(n=2r\), necessarily \((a,b,d)=(r,r-1,r)\). If \(n=2r+1\), the possibilities are
+\[
+ (a,b,d)=(r,r,r+1)\quad\hbox{or}\quad(r+1,r-1,r+1).
+\tag{2}
+\]
+In particular \(d\geq a\) and \(d>b\).
+
+\paragraph{Classify the neighbours of the deleted vertex.}
+Let \(u\) be the number of neighbours of \(x\) in \(T_a\), and \(v\) its number of neighbours in \(I_b\), so \(u+v=d\).
+
+If \(u\geq2\) and \(v\geq2\), choose two tree neighbours and the unique tree path between them. Adding \(x\) gives a cycle; two independent-side neighbours of \(x\) are adjacent to every vertex of that cycle. This gives \(C_j+2K_1\), a contradiction.
+
+If \(u\leq1\), then \(d>b\) forces \(u=1\), \(v=b\), and \(d=b+1\). Add \(x\) as a leaf to \(T_a\). The resulting graph is \(T_{a+1}+I_b\), with the permitted balance by (2).
+
+If \(v=0\), then \(u=d\geq a\), so \(u=a=d\). The graph is \(T_a+I_{b+1}\), again with the permitted balance.
+
+It remains that \(v=1\) and \(u\geq2\). Let \(z\) be the independent-side neighbour. Two adjacent tree neighbours of \(x\) would form \(K_4\) with \(x,z\); thus its tree neighbours are independent. The balanced odd case in (2) would give \(u=a\), impossible because \(T_a\) has an edge. In the other cases \(u=a-1\). Let \(w\) be the omitted tree vertex. Every edge of the tree must touch \(w\), so the tree is a star centred at \(w\). Repartition the vertices: \(I_b\cup\{w,x\}\) induces a tree with edges \(wI_b\) and \(xz\), while \(V(T_a)\setminus\{w\}\) is independent and joined to that entire tree. The new part sizes are \(b+2,a-1\); their difference is \(3-(a-b)\), equal to one or two. This proves (1) for graphs with exactly \(E(n)\) edges.
+
+\paragraph{One more edge always forces a bad subgraph.}
+Suppose a graph that is not bad has more than \(E(n)\) edges. Choose a spanning subgraph with exactly \(E(n)\) edges. By the equality case it is \(T_a+I_b\). Adding any missing edge inside \(I_b\) forms \(K_4\) with an edge of the tree. Adding a missing edge within the tree makes a cycle, joined to any two independent-side vertices, hence gives \(C_j+2K_1\). For \(n\geq5\), the allowed balance gives \(a\geq2,b\geq2\), so both arguments apply. The already checked base cases handle smaller \(n\). This contradiction proves the inductive upper bound and completes the induction.
+
+Finally the edge threshold in the question is exactly \(E(n)+1\), because
+\(\lfloor(n+1)/2\rfloor=\lfloor(n-1)/2\rfloor+1\). A saturated planar subgraph is therefore forced, and the joins above show that one fewer edge does not suffice.
+
+\paragraph{Attribution and assessment.}
+This is a detailed reconstruction of Simonovits's thesis argument as communicated by S. Cambie at \url{https://www.erdosproblems.com/forum/thread/1019}, with the parity cases and induction on the edge threshold made explicit. The current statement is \url{https://www.erdosproblems.com/1019}, checked 24 September 2026. Only elementary graph and planar-triangulation facts are used. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

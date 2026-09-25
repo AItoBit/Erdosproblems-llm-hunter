@@ -1,0 +1,49 @@
+\section*{Erd\H{o}s Problem 1123: two density ideals and their quotient algebras}
+\subsection*{Statement and known independence}
+For $A\subseteq\mathbb N$, write
+\[
+ A(x)=|A\cap[1,x]|,\qquad L_A(x)=\sum_{\substack{n\le x\\n\in A}}\frac1n.
+\]
+Let $\mathcal I_d$ consist of sets with $A(x)/x\to0$, and $\mathcal I_\ell$ of sets with $L_A(x)/\log x\to0$. The algebras are $B_1=\mathcal P(\mathbb N)/\mathcal I_d$ and $B_2=\mathcal P(\mathbb N)/\mathcal I_\ell$, with equality modulo symmetric difference in the indicated ideal.
+The requested nonisomorphism is independent of ZFC: Just--Krawczyk prove isomorphism under CH, while Farah proves nonisomorphism under OCA and MA, consistently with ZFC. We prove concrete structural facts about both algebras and isolate why the natural quotient map does not settle abstract isomorphism. The consistency constructions remain unresolved in this attempt; neither answer is asserted as an unconditional ZFC theorem.
+
+\subsection*{The ideals are distinct}
+Both families are ideals, since counting functions and weighted counts are nonnegative and subadditive under union. They contain finite sets and are proper. Summation by parts gives, for integer $x\ge1$,
+\[
+ L_A(x)=\frac{A(x)}x+\sum_{n=1}^{x-1}A(n)\left(\frac1n-\frac1{n+1}\right).
+\]
+If $A(n)\le\varepsilon n$ eventually, the tail is at most $\varepsilon\sum_{n<x}1/(n+1)$, plus a constant from the initial segment. Division by $\log x$ and then $\varepsilon\downarrow0$ proves $\mathcal I_d\subseteq\mathcal I_\ell$.
+
+The inclusion is strict. Put $N_j=2^{2^j}$ and
+\[
+ A=\bigcup_{j\ge1}[N_j,2N_j]\cap\mathbb N.
+\]
+At $x=2N_j$ the ratio $A(x)/x$ is at least $1/2$, so $A\notin\mathcal I_d$. Each block has harmonic weight at most two. If $N_k\le x<N_{k+1}$, then
+\[
+ \frac{L_A(x)}{\log x}\le\frac{2k}{2^k\log2}\longrightarrow0.
+\]
+Hence $A\in\mathcal I_\ell$.
+
+\subsection*{What the natural map does and does not prove}
+The identity on subsets induces a surjective Boolean homomorphism
+\[
+ q:B_1\longrightarrow B_2,\qquad [A]_{\mathcal I_d}\longmapsto[A]_{\mathcal I_\ell}.
+\]
+It is well defined by the ideal inclusion and preserves union, intersection and complement. It is not injective: the preceding block set is nonzero in $B_1$ and zero in $B_2$.
+This proves only that this particular map is not an isomorphism. An abstract isomorphism could rearrange the equivalence classes. Nonisomorphic kernels for a preferred presentation are not an invariant of the abstract Boolean algebra. Indeed the known CH result rules out using this observation as an unconditional nonisomorphism proof.
+
+\subsection*{Both quotient algebras are atomless}
+Let $A=\{a_1<a_2<\cdots\}$ represent a nonzero class, and split it into odd- and even-indexed subsequences $A_0,A_1$. For natural density, $|A_i(x)-A(x)/2|\le1$, so both pieces have positive upper density whenever $A$ does. Thus neither piece is zero modulo $\mathcal I_d$.
+For logarithmic density, the alternating-series bound for the decreasing weights $1/a_j$ gives
+\[
+ |L_{A_0}(x)-L_{A_1}(x)|\le1/a_1\le1.
+\]
+Hence each logarithmic count is $L_A(x)/2+O(1)$, and neither piece belongs to $\mathcal I_\ell$ if $A$ does not. In both algebras every nonzero element is therefore the disjoint join of two nonzero elements.
+
+Both algebras also have cardinality $\mathfrak c$. For the lower bound, partition $\mathbb N$ into $C_j=\{n:v_2(n)=j\}$, $j\ge0$. Each $C_j$ has positive natural and logarithmic density $2^{-j-1}$. The map $S\mapsto[\bigcup_{j\in S}C_j]$ is injective into either quotient: a nonempty symmetric difference contains an entire positive-density class. The upper bound comes from $\mathcal P(\mathbb N)$. Thus cardinality and atomlessness do not distinguish $B_1$ and $B_2$.
+
+\subsection*{Assessment and sources}
+The ideal inclusion is strict, the natural surjection is noninjective, and both algebras are atomless of the same cardinality. These results do not reconstruct the CH isomorphism or the OCA+MA obstruction. The remaining issue is a set-theoretic independence proof, not a missing elementary cardinality argument.
+Sources: \url{https://www.erdosproblems.com/1123}; W. Just and A. Krawczyk, \emph{On certain Boolean algebras $\mathcal P(\omega)/\mathcal I$}, Trans. Amer. Math. Soc. 285 (1984), 411--429, \url{https://doi.org/10.1090/S0002-9947-1984-0748847-1}; I. Farah, \emph{Analytic quotients}, Memoirs Amer. Math. Soc. 148 (2000), Corollary 3.4.4. The cited model-dependent conclusions are attribution, not proofs supplied here.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

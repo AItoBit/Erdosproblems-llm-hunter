@@ -1,0 +1,160 @@
+\section*{Erd\H{o}s Problem 804: local independence need not be global}
+
+\paragraph{Statement and claim.}
+Let \(F(n,s,t)\) be the minimum possible independence number
+of an \(n\)-vertex graph in which every \(s\)-vertex subset
+contains an independent \(t\)-set.
+Writing \(L=\log n\), with integer roundings understood,
+we reconstruct the bounds
+\[
+ \frac{L^2}{\log L}\ll F(n,L^2,L)\ll L^2,\qquad
+ F(n,L^3,L)\asymp\frac{L^2}{\log L}.                            \tag{1}
+\]
+They disprove both proposed larger lower bounds.
+The arguments follow the counting and random-graph methods
+of Alon--Sudakov,
+\emph{On graphs with subgraphs having large independence numbers},
+\url{https://www.cs.tau.ac.il/~nogaa/PDFS/erdoshajnal4.pdf}.
+See \url{https://www.erdosproblems.com/804}.
+We supply the needed estimates below rather than use (1)
+as an unexplained external theorem. All logarithms are natural.
+
+\paragraph{A local-to-global lower bound.}
+Suppose \(s\geq2t\geq4\), and put \(u=\lfloor t/2\rfloor\).
+In any remaining vertex set \(V\) of order \(M\geq s\),
+every \(s\)-set contains an independent \(2u\)-set.
+Double counting gives at least
+\[
+ \frac{\binom Ms}{\binom{M-2u}{s-2u}}
+ =\frac{\binom M{2u}}{\binom s{2u}}
+ \geq(M/s)^{2u}
+\]
+independent \(2u\)-sets.
+Average over their \(u\)-element cores. Some independent
+\(u\)-set \(X\) has at least
+\[
+ (M/s)^{2u}/\binom Mu
+ \geq\left(\frac{Mu}{es^2}\right)^u
+\]
+distinct \(u\)-element extensions \(Y\), disjoint from \(X\),
+such that \(X\cup Y\) is independent.
+Let \(V'\) be the union of these extensions.
+There are no edges from \(X\) to \(V'\), and
+\[
+ \left(\frac{e|V'|}{u}\right)^u
+ \geq\binom{|V'|}{u}
+ \geq\left(\frac{Mu}{es^2}\right)^u.
+\]
+Therefore
+\[
+ |V'|\geq\frac{Mu^2}{e^2s^2}
+       \geq aM,\qquad a=\frac{t^2}{16e^2s^2}.
+\]
+Repeat inside \(V'\) while its order is at least \(s\).
+The successive cores are pairwise disjoint with no edges
+between them. We obtain at least a constant times
+\(\log(n/s)/\log(s/t)\) cores, and consequently
+\[
+ F(n,s,t)\gg\frac{t\log(n/s)}{\log(s/t)}.                       \tag{2}
+\]
+For \(s=\lceil L^2\rceil\) or \(\lceil L^3\rceil\) and
+\(t=\lceil L\rceil\), this is \(\Omega(L^2/\log L)\).
+
+\paragraph{A random counterexample when \(s=\lceil L^2\rceil\).}
+Take \(G\sim G(n,p)\), with \(t=\lceil L\rceil\) and
+\(p=e^{-12}/t\).
+Let
+\[
+ b=\left\lfloor\frac{s^2}{2t}-\frac s2\right\rfloor+1.
+\]
+If some \(s\)-set spans at least \(b\) edges, a union bound
+on specified edge sets gives probability at most
+\[
+ \binom ns\binom{\binom s2}{b}p^b
+ \leq\exp(s(L+1))
+       \left(\frac{eps^2}{2b}\right)^b.
+\]
+For large \(n\), \(s\geq2t\) and \(b\geq s^2/(4t)\);
+the parenthesized factor is at most
+\(2ept=2e^{-11}<e^{-10}\).
+The resulting bound
+\(\exp(s(L+1)-10s^2/(4t))\) tends to zero.
+Thus every \(s\)-set has at most \(s^2/(2t)-s/2\) edges.
+Its average degree is at most \(s/t-1\), so the elementary
+independence estimate \(\alpha\geq v/(\bar d+1)\)
+gives an independent set of size at least \(t\).
+
+For \(K=\lceil4L/p\rceil\), on the other hand,
+\[
+ \Pr(\alpha(G)\geq K)
+ \leq\binom nK(1-p)^{\binom K2}
+ \leq\exp\left(KL-\frac p2K(K-1)\right)=o(1).
+                                                               \tag{3}
+\]
+Both properties hold simultaneously, giving
+\(F(n,L^2,L)=O(L^2)\).
+
+\paragraph{A stronger random construction when \(s=\lceil L^3\rceil\).}
+Take now \(p=(\log L)/(16L)\), still with \(t=\lceil L\rceil\).
+We show that every \(s\)-set has an independent \(t\)-set
+with probability tending to one.
+For a fixed \(s\)-set, repeatedly run the greedy algorithm
+to find a maximal independent set in the remaining graph,
+and remove the set it found.
+The algorithm need only expose edges incident with the
+selected independent vertices. Conditional on the history,
+edges between the remaining vertices are still independent
+Bernoulli variables with parameter \(p\).
+
+While at least \(s/2\) vertices remain, the probability
+that a maximal independent set of size less than \(t\)
+exists is at most
+\[
+ t s^t\exp\left(-\frac s3(1-p)^t\right).                       \tag{4}
+\]
+Indeed, for a specified candidate of size \(j<t\), maximality
+requires each of at least \(s/3\) outside vertices to have
+a neighbour in it. The probability is at most
+\((1-(1-p)^j)^{s/3}\leq\exp(-(s/3)(1-p)^t)\).
+There are at most \(ts^t\) candidates.
+For large \(n\),
+\[
+ (1-p)^t\geq e^{-2pt}\geq L^{-1/4}.
+\]
+Thus (4) is at most
+\(\exp(-(s/4)L^{-1/4})\), since \(t\log s=o(sL^{-1/4})\).
+
+If the fixed \(s\)-set contains no independent \(t\)-set,
+at least \(\lfloor s/(2t)\rfloor\geq s/(3t)\) successive
+rounds must all produce such small maximal sets.
+Applying the preceding conditional probability bound at
+each round gives failure probability at most
+\[
+ \exp\left(-\frac{s^2}{12t}L^{-1/4}\right)
+ =\exp(-\Omega(L^{19/4})).
+\]
+This estimate does not assume unconditional independence
+between rounds.
+There are at most \(n^s=\exp(O(L^4))\) choices of the
+original \(s\)-set, so their union-bound failure probability
+still tends to zero.
+
+Finally (3), for this new \(p\), gives
+\(\alpha(G)<K=O(L^2/\log L)\) with probability tending
+to one. The two desired properties again hold simultaneously.
+Together with (2), this proves the second assertion in (1).
+
+\paragraph{Conclusion and scope.}
+The first construction has global independence
+\(O((\log n)^2)=n^{o(1)}\), disproving the suggested
+\(n^{1/2-o(1)}\) lower bound.
+The second has global independence
+\(O((\log n)^2/\log\log n)=o((\log n)^3)\), disproving
+the other suggestion, with the matching lower order
+proved in (2). Integer ceilings do not affect any estimate.
+The elementary average-degree independence bound used above
+follows, for example, by the random-order greedy argument
+giving \(\alpha\geq\sum_v1/(d(v)+1)\geq v/(\bar d+1)\).
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

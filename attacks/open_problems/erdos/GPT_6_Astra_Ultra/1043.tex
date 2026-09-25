@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1043: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and explicit answer}
+No: the monic cubic $f(z)=z^3-1$ is a counterexample. We prove that the projection of
+\[
+ K=\{z:|z^3-1|\le1\}
+\]
+onto every line has length at least
+\[
+ 2^{1/3}+2^{-1/3}>2. \tag{1}
+\]
+The cubic example is identified in Nat Sothanaphan's discussion at \url{https://www.erdosproblems.com/forum/thread/1043}. The historical negative resolution is Pommerenke's 1961 work; we give an elementary quantitative proof for this particular polynomial, without claiming the best known projection constant.
+
+\section*{Projections are intervals}
+For $z=re^{i\theta}$,
+\[
+ |z^3-1|\le1\quad\Longleftrightarrow\quad
+ r=0\ \text{or}\ 0<r^3\le2\cos(3\theta).
+\tag{2}
+\]
+Thus each radial segment from zero to a point of $K$ belongs to $K$. In particular $K$ is compact and connected. Every orthogonal projection is therefore a compact interval, whose measure equals its width. This matters: a large convex-hull width alone would not prove the projection-measure claim for an arbitrary disconnected set.
+
+Let $w(\phi)$ be this width in direction $e^{i\phi}$. The threefold rotational symmetry of $K$ gives period $2\pi/3$, and an unoriented projection gives period $\pi$. Consequently $w$ has period $\pi/3$, and it suffices to consider $0\le\phi\le\pi/3$. Put $x=3\phi/4\in[0,\pi/4]$.
+
+\section*{Two boundary points for every direction}
+Take the point at angle $\theta_+=\phi/4$ with radius $(2\cos x)^{1/3}$. It lies on $\partial K$ by (2), and its projection in direction $\phi$ is
+\[
+ (2\cos x)^{1/3}\cos(\theta_+-\phi)
+ =2^{1/3}\cos^{4/3}x.
+\]
+For the opposite side take
+\[
+ \theta_-=\frac{5\pi}{4}+\frac\phi4,
+ \qquad r_-=(2\cos(x-\pi/4))^{1/3}.
+\]
+Since $\cos(3\theta_-)=\cos(x-\pi/4)>0$, this is also a boundary point. Its projection is negative, namely
+\[
+ r_-\cos(\theta_--\phi)
+ =-2^{1/3}\cos^{4/3}(x-\pi/4).
+\]
+Therefore
+\[
+ w(\phi)\ge2^{1/3}\left(\cos^{4/3}x+\cos^{4/3}(x-\pi/4)\right). \tag{3}
+\]
+No claim that these points maximize the projections is needed for the lower bound.
+
+\section*{A uniform trigonometric bound}
+For $h(x)=\cos^{4/3}x$ and $|x|\le\pi/4$,
+\[
+ h''(x)=\frac43\cos^{-2/3}x
+ \left(\frac13\sin^2x-\cos^2x\right)<0.
+\]
+Hence the sum on the right of (3) is concave on $[0,\pi/4]$. A concave function on an interval is at least the smaller of its endpoint values, and these endpoints are equal to $1+2^{-2/3}$. This proves (1). Finally $u+u^{-1}>2$ for $u=2^{1/3}\ne1$, since $(u-1)^2/u>0$.
+
+\section*{Assessment}
+The explicit cubic, connectedness needed for projection measure, and the uniform lower bound for every direction are all proved. Thus the negative answer requires no external approximation or capacity theorem. The larger published constant $2.386$ is not claimed here.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

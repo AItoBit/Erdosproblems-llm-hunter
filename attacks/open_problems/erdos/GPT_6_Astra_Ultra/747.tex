@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem 747: the perfect-matching threshold for random triples}
+\subsection*{1. Statement and answer}
+Choose $m$ distinct triples uniformly from a set of $3n$ vertices. For what $m$ does there exist a family of $n$ pairwise disjoint selected triples? We derive the sharp window
+\[
+ m=n(\log(3n)+c)+O(1),\qquad
+ \mathbb P(\text{perfect matching})\longrightarrow\exp(-e^{-c}) \tag{1}
+\]
+for every fixed real $c$. In particular the threshold is asymptotic to $n\log n$. The deep matching input is Kahn's hitting-time theorem; the isolated-vertex calculation and transfer to (1) are proved below.
+\subsection*{2. The external theorem and coupling}
+For fixed $r\ge3$ and $N$ divisible by $r$, order all $\binom Nr$ hyperedges uniformly at random and expose them one at a time. Kahn's \emph{Hitting times for Shamir's Problem}, Theorem 1.3, states that with probability tending to one a perfect matching already exists at the first instant when no vertex is isolated. We use its case $r=3$, $N=3n$. Its proof is an external dependency, not supplied here.
+Before this instant a perfect matching is impossible, and afterward both coverage of all vertices and existence of a perfect matching persist. Thus at any deterministic edge count, the probabilities of a perfect matching and of having no isolated vertex differ by $o(1)$. This conclusion comes from a single process event of probability $1-o(1)$ and is valid throughout the window.
+\subsection*{3. Exact factorial moments of isolated vertices}
+Set $N=3n$ and $M=\binom N3$, and let $X$ be the number of isolated vertices after $m$ exposures. For a fixed set of $r$ distinct vertices, all must be avoided by all selected triples, so
+\[
+ \mathbb E(X)_r=(N)_r
+ \frac{\binom{\binom{N-r}{3}}m}{\binom Mm}. \tag{2}
+\]
+Here $r$ is fixed while $N\to\infty$; it is a moment index, unrelated to the hypergraph uniformity, which is three.
+Write $b=M-\binom{N-r}{3}$. Direct expansion gives $b/M=3r/N+O_r(N^{-2})$. For $m=O(N\log N)$, taking logarithms of the avoidance probability in (2) gives
+\[
+ \begin{split}
+ \sum_{j=0}^{m-1}\log\left(1-\frac b{M-j}\right)
+ &=-\frac{mb}{M}+O_r\left(\frac m{N^2}+\frac{m^2}{N^4}\right)\\
+ &=-\frac{3rm}{N}+o(1).
+ \end{split} \tag{3}
+\]
+The first error bounds the quadratic logarithmic terms, and the second controls replacing $M-j$ by $M$.
+If $m=\lfloor (N/3)(\log N+c)\rfloor$, (2)--(3) yield
+\[
+ \mathbb E(X)_r=(N)_r\exp(-r\log N-rc+o(1))
+ \longrightarrow e^{-rc}. \tag{4}
+\]
+Bonferroni's inequalities bound $\mathbb P(X=0)$ between the successive odd and even finite partial sums of $\sum_r(-1)^r\mathbb E(X)_r/r!$. Passing to the limit for each fixed truncation using (4), then letting the truncation length grow, gives
+\[
+ \mathbb P(X=0)\longrightarrow\sum_{r=0}^\infty\frac{(-e^{-c})^r}{r!}
+ =\exp(-e^{-c}).
+\]
+Combining this with the hitting-time theorem proves (1).
+\subsection*{4. Threshold and normalization checks}
+For every fixed $\epsilon>0$, at $m\ge(1+\epsilon)n\log n$ the parameter $m/n-\log(3n)$ tends to $+\infty$, so monotone comparison with each fixed $c$ in (1) gives probability tending to one. At $m\le(1-\epsilon)n\log n$, it tends to $-\infty$, and the same comparison gives probability tending to zero. For completeness, fix $0<\epsilon<1$ and set $m=\lfloor(1-\epsilon)n\log n\rfloor$. The obstruction at this boundary is visible directly from (2): $\mathbb EX\asymp n^\epsilon\to\infty$ and $\mathbb E(X)_2=(1+o(1))(\mathbb EX)^2$, so an isolated vertex exists with high probability by the second-moment inequality.
+If the window is instead written $m=n\log n+an+O(1)$, then $c=a-\log3$, and the limit is $\exp(-3e^{-a})$. Keeping this factor of three is necessary because the problem has $3n$, not $n$, vertices.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/747}; J. Kahn, \emph{Hitting times for Shamir's Problem}, \url{https://arxiv.org/abs/2008.01605}; J. Kahn, \emph{Asymptotics for Shamir's Problem}, \url{https://arxiv.org/abs/1909.06834}.
+A family of $n$ disjoint triples covers all $3n$ vertices, so it is exactly a perfect matching. The proof uses the uniform distinct-triple model specified by the question. The claim of completion is relative to Kahn's explicitly stated theorem; the probabilistic calculation and the normalization are established here. This is not a new solution of Shamir's problem.
+\textbf{SOLVED:} the threshold is $n\log n$, with the sharp fixed-window probability (1), relative to the declared hitting-time theorem.
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,101 @@
+\section*{Erd\H{o}s Problem 797: acyclic colouring in subquadratic size}
+
+\paragraph{Statement and claim.}
+Every graph of maximum degree \(d\geq1\) has a proper colouring
+with at most \(\lceil100d^{4/3}\rceil\) colours in which no cycle
+uses only two colours. In particular \(f(d)=o(d^2)\).
+We reconstruct the four-event argument of Alon, McDiarmid,
+and Reed, \emph{Acyclic coloring of graphs}, Section 2:
+\url{https://www.cs.tau.ac.il/~nogaa/PDFS/Publications2/Acyclic%20colouring%20of%20graphs.pdf}.
+See \url{https://www.erdosproblems.com/797}.
+The probabilistic external input is the asymmetric
+Lov\'asz local lemma.
+
+\paragraph{The random colouring and the forbidden events.}
+Put \(q=\lceil100d^{4/3}\rceil\), and independently give each
+vertex a uniform colour from \([q]\).
+Call a nonadjacent pair special if it has more than
+\(d^{2/3}\) common neighbours.
+Consider these four types of bad events:
+\begin{enumerate}
+\item the ends of an edge receive the same colour;
+\item on a simple path \(v_0v_1v_2v_3v_4\), the colours satisfy
+\(c(v_0)=c(v_2)=c(v_4)\) and \(c(v_1)=c(v_3)\);
+\item on a chordless four-cycle with neither opposite pair special,
+the colours agree on both opposite pairs;
+\item a special pair receives the same colour.
+\end{enumerate}
+Their probabilities are, respectively,
+\(q^{-1},q^{-3},q^{-2},q^{-1}\).
+Paths here need not be induced; this only makes avoidance
+a stronger sufficient condition.
+
+\paragraph{How many events involve a given vertex?}
+A vertex belongs to at most \(d\) edges and at most
+\(5d^4\) of the specified path events, by choosing its
+position in an oriented path and then the four steps.
+There are at most \(d^2\) length-two walks from a fixed
+vertex. Each special other endpoint consumes more than
+\(d^{2/3}\) such walks, so there are at most \(d^{4/3}\)
+special pairs containing it.
+Finally choose the first two steps of a four-cycle through
+the vertex, in at most \(d^2\) ways.
+Its opposite vertices are nonadjacent. If that pair is not
+special, there are at most
+\(d^{2/3}\) choices for the fourth vertex.
+Thus at most \(d^{8/3}\) events of the third type contain
+the fixed vertex.
+
+\paragraph{Checking the local lemma quantitatively.}
+Join two bad events in the dependency graph whenever they
+share a vertex. Each is independent of the entire collection
+of nonneighbours, since their colour variables are disjoint.
+Give each event the weight twice its probability.
+All weights are less than one.
+An event depends on at most five vertex colours, so the
+sum of its neighbours' weights is at most
+\[
+ 5\left(\frac{2d}{q}
+       +\frac{10d^4}{q^3}
+       +\frac{2d^{8/3}}{q^2}
+       +\frac{2d^{4/3}}q\right)
+ \leq \frac{20}{100}+\frac{50}{100^3}+\frac{10}{100^2}
+ <\frac12.
+\]
+For numbers \(0\leq x_i\leq1\),
+\(\prod_i(1-x_i)\geq1-\sum_i x_i\).
+Therefore, for every bad event \(E\),
+\[
+ \Pr(E)\leq (2\Pr(E))
+              \prod_{F\sim E}(1-2\Pr(F)).
+\]
+These are the hypotheses of the asymmetric local lemma,
+which gives a colouring avoiding every bad event.
+
+\paragraph{Why the resulting colouring is acyclic.}
+Avoiding the first type makes it proper, so a two-coloured
+cycle would have even length.
+A two-coloured four-cycle has no diagonal, since such an
+edge would join equal colours in a proper colouring.
+It either has a special opposite pair, violating the fourth
+condition, or violates the third.
+A two-coloured cycle of length at least six contains
+five consecutive distinct vertices forming a path of
+length four, violating the second condition.
+Thus no two-coloured cycle remains.
+When \(d=0\), one colour suffices.
+
+\paragraph{Size and scope.}
+The bound just proved implies
+\[
+ 0\leq f(d)/d^2\leq100d^{-2/3}+d^{-2}\longrightarrow0.
+\]
+For context, Theorem 1.2 of the same primary paper
+establishes the stronger lower estimate
+\(f(d)\gg d^{4/3}/(\log d)^{1/3}\).
+That lower theorem is an explicitly external additional
+estimate; it is not needed for our complete proof of
+the subquadratic assertion.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

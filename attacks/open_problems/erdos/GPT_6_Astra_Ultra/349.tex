@@ -1,0 +1,107 @@
+\section*{Erd\H{o}s Problem \#349: floors of geometric sequences}
+\subsection*{1. Statement and indexing}
+For which $t,\alpha>0$ is the set of positive distinct values
+\[
+ A(t,\alpha)=\{\lfloor t\alpha^n\rfloor:n=0,1,2,\ldots\}\setminus\{0\}
+\]
+complete, meaning that its finite subset sums contain every sufficiently
+large integer? A convention starting at $n=1$ is obtained by replacing
+$t$ by $t\alpha$. Finite initial terms can affect completeness, so this
+shift must not be dismissed as harmless. Repeated values cannot be
+used repeatedly in the set interpretation of the question.
+The following boundary classification and positive family leave the
+general problem unresolved.
+
+\subsection*{2. Two incomplete ranges}
+For $0<\alpha\le1$ there are only finitely many positive distinct values,
+so their subset sums form a finite set. For $\alpha>2$, the number of
+indices whose positive value is at most $X$ is at most
+$\log_\alpha X+O_{t,\alpha}(1)$. Only these indices can contribute to
+a sum at most $X$. Even allowing repetition of equal values at different
+indices gives at most
+\[
+ O_{t,\alpha}(X^{\log_\alpha 2})=o(X)
+\]
+different sums. The subset-sum set has density zero, hence is not complete.
+
+\subsection*{3. Exact classification at $\alpha=2$}
+Put $a_j=\lfloor t2^j\rfloor$ and
+$\varepsilon_j=a_{j+1}-2a_j\in\{0,1\}$. Telescoping gives
+\[
+ \sum_{j=0}^{n-1}a_j
+   =a_n-a_0-\sum_{j=0}^{n-1}\varepsilon_j.          \tag{1}
+\]
+If $a_0+\sum_{j<n}\varepsilon_j\ge2$ for some $n$, it remains so for
+every larger $n$. Then
+\[
+ \sum_{j<n}a_j+1<a_n.
+\]
+The integer on the left is not representable even using indexed terms:
+all earlier terms together are too small, and later positive terms
+are too large. These holes tend to infinity, proving incompleteness
+also for distinct values.
+
+Otherwise $a_0+\sum_{j<n}\varepsilon_j\le1$ for every $n$.
+Since $t>0$, either $a_0=1$ and all $\varepsilon_j=0$, or $a_0=0$
+and exactly one $\varepsilon_j$ equals $1$.
+The possibility of no such digit in the latter case would force
+all $a_j=0$ and hence $t=0$.
+Taking $t=\lim_{j\to\infty}2^{-j}a_j$ shows precisely
+\[
+ t=2^{-s}\qquad(s=0,1,2,\ldots).
+\]
+Conversely these parameters give the positive distinct values
+$1,2,4,\ldots$, whose subset sums contain all nonnegative integers.
+Therefore
+\[
+ \boxed{A(t,2)\text{ is complete}\ \Longleftrightarrow\
+                   t=2^{-s}\text{ for an integer }s\ge0.}
+\]
+
+\subsection*{4. A complete proof of a positive family below $2$}
+We prove that $A(1,\alpha)$ is strongly complete whenever
+$1<\alpha\le5/3$. List its positive distinct values as
+$b_1<b_2<\cdots$. They begin with $b_1=1,b_2=2$.
+To see the second value explicitly, if $\alpha\le\sqrt2$, the first
+power leaving $[1,2)$ is less than $2\alpha\le2\sqrt2<3$.
+If $\sqrt2<\alpha\le5/3$, the power $\alpha^2$ lies in $[2,25/9]$,
+while $1,\alpha$ have floor $1$.
+
+For any attained value $a\ge2$, consider its last occurrence before
+the next distinct value $b$. The corresponding real power is less
+than $a+1$, so
+\[
+ b<\alpha(a+1)\le \frac53(a+1)\le2a+1.
+\]
+As $b$ is an integer, $b\le2a$. Thus $b_{i+1}\le2b_i$ for every $i$.
+Writing $S_i=b_1+\cdots+b_i$, induction gives
+\[
+ S_i\ge2b_i-1:
+ \quad S_{i+1}\ge2b_i-1+b_{i+1}\ge2b_{i+1}-1.
+\]
+It follows that $b_{i+1}\le S_i+1$. Starting with the represented
+interval $[0,1]$, the intervals $[0,S_i]$ and
+$[b_{i+1},S_i+b_{i+1}]$ therefore meet or are adjacent.
+Induction proves that every nonnegative integer is a subset sum of
+\emph{distinct values} $b_i$.
+
+More generally, $t=\alpha^{-s}$ for an integer $s\ge0$ contains this
+entire sequence among the indices $n\ge s$, so is also complete.
+This is a statement about a specified family of parameters, not about
+all $t$ in that range of $\alpha$.
+
+\subsection*{5. Assessment and provenance}
+The missing part is a classification of arbitrary $t>0$ when
+$1<\alpha<2$, including the conjectural universal completeness below
+the golden ratio. Neither the doubling boundary nor the proved
+$t=1$ family supplies such a classification. In particular modular
+tests for a finite prefix do not decide it.
+
+Statement and literature context:
+\texttt{https://www.erdosproblems.com/349}, checked 2026-09-25.
+The prior GPT Pro 5.2 attempt was reviewed; the indexing and
+distinct-value requirements have been retained explicitly here.
+All results used in the partial proof are proved above.
+No novelty or formal Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

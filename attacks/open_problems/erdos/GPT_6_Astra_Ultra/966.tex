@@ -1,0 +1,37 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 966: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and strategy}
+For $k,r\ge2$, we construct a finite $A\subseteq\mathbb N$ with no nonconstant $(k+1)$-term arithmetic progression, such that every $r$-coloring of $A$ contains a nonconstant monochromatic $k$-term progression. This is the standard Hales--Jewett cube argument described by Terence Tao in the discussion \url{https://www.erdosproblems.com/forum/thread/966}; the question was originally reported as solved by Spencer.
+
+\section*{The exact external input}
+The finite Hales--Jewett theorem states that, for an alphabet of $k$ symbols and $r$ colors, some dimension $d$ guarantees a monochromatic combinatorial line in every coloring of $\{0,1,\ldots,k-1\}^d$. Such a line fixes all coordinates outside a nonempty set $J$ and puts the same variable symbol in every coordinate of $J$. We use this theorem, and prove the integer embedding and progression exclusion.
+
+Choose an integer base $q>2k$, and define
+\[
+ \Phi(x_0,\ldots,x_{d-1})=1+\sum_{j=0}^{d-1}x_jq^j,
+ \qquad A=\Phi(\{0,\ldots,k-1\}^d).
+\]
+Base-$q$ uniqueness makes $\Phi$ injective and $A$ consists of positive integers. A combinatorial line maps to a $k$-term progression whose common difference is $\sum_{j\in J}q^j>0$. Pulling back a coloring of $A$ and applying Hales--Jewett therefore gives the required monochromatic progression.
+
+\section*{Why a longer progression cannot occur}
+We first verify the relevant no-carry assertion. If three cube images satisfy $\Phi(x)-2\Phi(y)+\Phi(z)=0$, then
+\[
+ \sum_j(x_j-2y_j+z_j)q^j=0,\qquad |x_j-2y_j+z_j|\le2(k-1)<q.
+\]
+Reducing modulo $q$ forces the first coefficient to be zero, since it is divisible by $q$ and has smaller absolute value. Dividing by $q$ and repeating forces every coefficient to be zero. Thus each coordinate of $x,y,z$ is itself in arithmetic progression.
+
+Suppose $k+1$ distinct increasing members of $A$ formed an arithmetic progression. Applying the assertion to every three consecutive members shows that their inverse images have the form $v,v+w,\ldots,v+kw$ for an integer vector $w$. Injectivity implies $w\ne0$. At some coordinate its endpoint difference has absolute value at least $k$, whereas both endpoint digits lie in $[0,k-1]$. This contradiction proves the exclusion.
+
+\section*{Assessment}
+The construction proves both required properties completely relative to finite Hales--Jewett. It supplies a finite set, which is stronger than merely asking for an unspecified subset of the positive integers. No quantitative bound on its size is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

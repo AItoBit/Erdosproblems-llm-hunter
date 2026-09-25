@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 322: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and conventions}
+For fixed $k\ge3$, let $r_k(n)$ count ordered representations of $n$ as the sum of $k$ positive $k$th powers. How large can $r_k(n)$ be; is $r_k(n)>n^c$ infinitely often for some fixed $c>0$? The current question and the known affirmative answer for $k=3$ are recorded at \url{https://www.erdosproblems.com/322}. The general problem is unresolved in this attempt; no polynomial lower bound for $k\ge4$ is proved here.
+
+We also write $R_k^0(X)$ for the count of all nonnegative $k$-tuples whose sum of $k$th powers is at most $X$. Allowing zero only changes the first moment by a boundary error below. This corrects the earlier GPT-5.2 draft's silent convention change and its invalid intermediate claim that unit cubes require only a constant additive slack in the sum of powers.
+
+\section*{A precise first moment}
+Let $V_k$ be the volume of $\{t_i\ge0:\sum_{i=1}^k t_i^k\le1\}$. Scaling shows that the volume at radius $T=X^{1/k}$ in the $\ell^k$ norm is $V_kT^k=V_kX$. Unit cubes based at nonnegative lattice points inside that ball cover it: round every coordinate down. Their union is contained in the ball of radius $T+k^{1/k}$ by the triangle inequality for the $\ell^k$ norm. Since their interiors are disjoint,
+\[
+ V_kX\le R_k^0(X)\le V_k(X^{1/k}+k^{1/k})^k.
+\]
+Therefore
+\[
+ R_k^0(X)=V_kX+O_k(X^{1-1/k}). \tag{1}
+\]
+Tuples with a zero coordinate number at most $k(\lfloor X^{1/k}\rfloor+1)^{k-1}$, so the same asymptotic holds for $\sum_{1\le n\le X}r_k(n)$. If desired, the beta integral gives $V_k=\Gamma(1+1/k)^k$, but the proof only needs its positive finite volume.
+
+\section*{A divisor bound for two powers}
+For odd $k$, suppose $u^k+v^k=M>0$ with $u,v\ge0$. Then $s=u+v$ is a positive divisor of $M$. For fixed $s$, the real function $u^k+(s-u)^k$ is strictly decreasing up to $s/2$ and strictly increasing thereafter. Hence at most two ordered pairs correspond to that divisor, and their number is at most $2\tau(M)$.
+
+For even $k$, put $U=u^{k/2},V=v^{k/2}$. These pairs inject into the representations of $M$ as two integer squares. The standard Gaussian-integer factorization bound for the latter is $4\tau(M)$. For clarity, its count comes from unique factorization in $\mathbb Z[i]$: a prime $p\equiv1\pmod4$ of exponent $e$ in $M$ offers $e+1$ distributions between its conjugate factors; primes $p\equiv3\pmod4$ require even exponents and offer no choice; the prime $2$ offers no further choice; and there are four units. Thus the count is either zero or $4\prod_{p\equiv1(4)}(e_p+1)\le4\tau(M)$. Unique factorization in the Euclidean ring $\mathbb Z[i]$ is the explicit standard algebraic input.
+
+For every $\epsilon>0$, $\tau(M)\ll_\epsilon M^\epsilon$. An elementary proof writes $\tau(M)=\prod(e_p+1)$. For all sufficiently large primes, $e+1\le2^e\le p^{\epsilon e}$ for every $e\ge0$. For each of the finitely many remaining primes, $(e+1)/p^{\epsilon e}$ is bounded uniformly in $e$. Multiplying these finite constants proves the assertion.
+
+\section*{Pointwise and exceptional-set consequences}
+Fixing the first $k-2$ entries in a representation leaves a sum of two powers. There are at most $\lfloor n^{1/k}\rfloor^{k-2}$ choices for those positive entries. A nonpositive remainder contributes no positive pair; every positive remainder is at most $n$. The preceding bound gives
+\[
+ r_k(n)\ll_{k,\epsilon}n^{(k-2)/k+\epsilon}. \tag{2}
+\]
+Under the nonnegative convention the same estimate holds: a zero remainder contributes exactly one pair, and the number of fixed tuples is $O_k(n^{(k-2)/k})$.
+
+Equation (1) also gives
+\[
+ \#\{n\le X:r_k(n)\ge H\}\ll_k X/H. \tag{3}
+\]
+Large representation counts are therefore sparse at any growing threshold, but this is compatible with infinitely many polynomial-sized exceptions. Homogeneity alone supplies only a fixed lower bound: choosing the $k$ distinct positive entries $t,2t,\ldots,kt$ gives at least $k!$ representations of $(1^k+\cdots+k^k)t^k$ for every $t\ge1$.
+
+\section*{Remaining gap and provenance}
+The exact first-moment asymptotic, divisor-based pointwise bound and exceptional-count estimate are proved. They do not force unbounded multiplicity, let alone $n^c$ for a fixed $c$. Mahler's much stronger cubic construction is attributed context, not reconstructed here; neither it nor the known subpolynomial large-value constructions imply the requested assertion for every $k\ge4$. The older unsourced computational maxima and abandoned cube-volume manipulations are replaced by the complete arguments above.
+
+\textbf{Completion rate estimate: 30\%.}
+\end{document}

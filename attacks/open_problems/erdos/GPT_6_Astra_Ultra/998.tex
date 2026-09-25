@@ -1,0 +1,76 @@
+\section*{Erd\H{o}s Problem 998: bounded remainder intervals}
+\subsection*{The displayed statement needs an endpoint correction}
+The current page asks whether bounded discrepancy for $[u,v)$ under an irrational rotation forces \emph{both} $u$ and $v$ to belong to the orbit of zero. That literal condition is false. The correct Hecke--Ostrowski--Kesten theorem is
+\[
+ \sup_{N\ge1}\left|\sum_{m=1}^{N}1_{[u,v)}(\{m\alpha\})-N(v-u)\right|<\infty
+ \quad\Longleftrightarrow\quad
+ v-u\in\mathbb Z\alpha+\mathbb Z.
+ \tag{1}
+\]
+We prove (1) and then give an explicit counterexample to the extra endpoint restriction. The necessity is the classical bounded-coboundary/eigenvalue argument; no novelty is claimed. Standard Fourier completeness on the circle is the only analytic background used.
+
+\subsection*{Sufficiency by a telescoping identity}
+Let $T(x)=x+\alpha$ on $\mathbb R/\mathbb Z$, and first suppose
+$0<\ell=v-u<1$ and $\ell\equiv k\alpha\pmod1$, $k\in\mathbb Z\setminus\{0\}$.
+With $g(x)=\{x-u\}$ we have the exact half-open interval identity
+\[
+ 1_{[u,v)}(x)-\ell=g(T^{-k}x)-g(x).
+\]
+Indeed $\{y-\ell\}-\{y\}$ equals $1-\ell$ for $0\le\{y\}<\ell$ and $-\ell$ otherwise.
+Summing along $T^m x$ cancels all but two blocks of at most $|k|$ terms, each in $[0,1)$, giving discrepancy at most $|k|$ for every starting point and every $N$.
+The empty and full intervals have identically zero discrepancy and also satisfy the right side of (1).
+
+\subsection*{Bounded sums along one orbit give a bounded $L^2$ family}
+Conversely let $f=1_{[u,v)}-\ell$ and suppose its sums along the orbit of zero are bounded by $C$ for every $N$; an eventual bound can be enlarged to cover the finite initial segment.
+Every shifted orbit block then has modulus at most $2C$.
+Fix $N$. The function $S_Nf(x)=\sum_{j=0}^{N-1}f(T^jx)$ is constant on each interval between its finitely many discontinuities. The orbit of zero is dense, so its block bound implies
+$|S_Nf(x)|\le2C$ away from those finitely many points. In particular
+\[
+ \|S_Nf\|_2\le2C\qquad(N\ge1).
+ \tag{2}
+\]
+This argument is what justifies passing from the one specified starting point to an almost-everywhere statement.
+
+\subsection*{Constructing a transfer function}
+For $h\ne0$, the $h$-th Fourier coefficient of $S_Nf$ is
+\[
+ \widehat f(h)\frac{1-e(Nh\alpha)}{1-e(h\alpha)}.
+\]
+Average Parseval's identity for $1\le N\le M$ and let $M\to\infty$. Since $\alpha$ is irrational,
+the average of $|1-e(Nh\alpha)|^2$ tends to $2$ for every nonzero $h$.
+Fatou's lemma for the nonnegative Fourier sum, together with (2), gives
+\[
+ \sum_{h\ne0}\frac{|\widehat f(h)|^2}{|1-e(h\alpha)|^2}\le2C^2.
+\]
+There is therefore a real $L^2$ function $g$ whose nonzero Fourier coefficients are
+$\widehat f(h)/(1-e(h\alpha))$, and whose mean is zero.
+The reality follows from conjugate symmetry. Fourier completeness yields
+\[
+ f(x)=g(x)-g(Tx)\quad\hbox{for almost every }x.
+ \tag{3}
+\]
+
+\subsection*{Exponentiation forces the interval length}
+Put $H(x)=e(g(x))$, so $|H|=1$ and $H$ is a nonzero $L^2$ function.
+Because $f(x)=1_{[u,v)}(x)-\ell$, equation (3) implies
+$H(Tx)=e(\ell)H(x)$ almost everywhere.
+Some Fourier coefficient $\widehat H(h)$ is nonzero. Comparing that coefficient on the two sides gives
+\[
+ e(h\alpha)\widehat H(h)=e(\ell)\widehat H(h),
+\]
+so $\ell\equiv h\alpha\pmod1$. This proves necessity and completes (1).
+
+\subsection*{A counterexample to the literal endpoint condition}
+Take $\alpha=\sqrt2-1$,
+\[
+ u=(1-\alpha)/2=1-\sqrt2/2,\qquad v=(1+\alpha)/2=\sqrt2/2.
+\]
+Then $v-u=\alpha$, and the telescoping proof gives discrepancy at most $1$ for every $N$.
+Neither endpoint equals $\{k\alpha\}$ for any integer $k$: comparison of rational and $\sqrt2$ coefficients would require respectively $k=-1/2$ or $k=1/2$.
+Thus the page's endpoint assertion is disproved, while its intended interval-length theorem is proved.
+
+\subsection*{Sources and scope}
+Sources: \url{https://www.erdosproblems.com/998}; H. Kesten, \emph{On a conjecture of Erd\H{o}s and Sz\"usz related to uniform distribution mod 1}, Acta Arith. 12 (1966), 193--212, \url{https://doi.org/10.4064/aa-12-2-193-212}; the bounded-remainder/eigenvalue formulation recorded as Theorems 5--6 in \url{https://www.numdam.org/item/10.5802/aif.2079.pdf}.
+The full proof above addresses both formulations explicitly, without inheriting the erroneous endpoint condition.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

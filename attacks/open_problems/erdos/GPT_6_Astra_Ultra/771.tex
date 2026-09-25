@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem \#771: a subset avoiding one prescribed sum}
+\subsection*{Statement and outcome}
+Let \(f(n)\) be the largest integer such that for every \(m\geq1\), some \(S\subseteq[1,n]\) of size \(f(n)\) has no subset summing to \(m\). The asserted asymptotic is
+\[
+f(n)=\left(\frac12+o(1)\right)\frac n{\log n},
+\]
+with natural logarithms. We prove the lower bound and the precise arithmetic reduction for the upper bound, taking one explicitly stated Alon--Freiman subset-sum theorem as external input. Attempt status: solved relative to that theorem and the prime number theorem.
+
+\subsection*{A uniform lower bound}
+Write \(T=n(n+1)/2\). If \(m>T\), the whole interval \([1,n]\) avoids \(m\). Otherwise let \(p\) be the least prime not dividing \(m\). Such a prime exists. All primes smaller than \(p\) divide \(m\), so
+\[
+\sum_{\ell<p,\ \ell\ {\rm prime}}\log\ell\leq\log m\leq2\log n+O(1).
+\]
+The prime number theorem in the form \(\vartheta(x)\sim x\) implies uniformly that
+\(p\leq(2+o(1))\log n\). More explicitly, for each \(\varepsilon>0\), the product of primes at most \((2+\varepsilon)\log n\) exceeds \(T\) for large \(n\), so one of them fails to divide \(m\).
+Take all multiples of \(p\) up to \(n\). Every subset sum is divisible by \(p\), whereas \(m\) is not. Its size is
+\[
+\left\lfloor\frac np\right\rfloor\geq
+\left(\frac12-o(1)\right)\frac n{\log n}.
+\]
+
+\subsection*{The external subset-sum input}
+For \(F(n,m)=\max\{|S|:S\subseteq[1,n],\,m\notin\Sigma(S)\}\), let \(s(m)\) be the least positive integer not dividing \(m\). Alon and Freiman's Theorem 1.2 states that, for every fixed \(\varepsilon>0\) and sufficiently large \(n\),
+\[
+3n^{5/3+\varepsilon}<m<\frac{n^2}{20(\log n)^2}
+\quad\Longrightarrow\quad
+F(n,m)=\left\lfloor\frac n{s(m)}\right\rfloor+s(m)-2. \tag{1}
+\]
+The analytic subset-sum theorem behind (1) is not reproved here. We verify all scale and divisibility requirements needed to apply it.
+
+\subsection*{Choosing the difficult sum}
+Put \(B=n^2/(40(\log n)^2)\), \(L_j=\operatorname{lcm}(1,\ldots,j)\), and choose the largest \(j\) with \(L_j\leq B\). Set \(m=L_j\). Then \(L_{j+1}>B\), so \(j+1\nmid m\), whereas every integer at most \(j\) divides \(m\). Therefore
+\[
+s(m)=j+1. \tag{2}
+\]
+Also \(L_{j+1}/L_j\leq j+1\), whence
+\[
+\frac B{j+1}<m\leq B. \tag{3}
+\]
+The identity \(\log L_j=\psi(j)\), and the prime number theorem \(\psi(j)\sim j\), show
+\[
+j=(2+o(1))\log n.
+\]
+To check this carefully, maximality gives
+\(\psi(j)\leq\log B<\psi(j+1)\); \(j\to\infty\), and both endpoints are asymptotic to \(j\). Thus \(j\sim\log B\sim2\log n\).
+
+Choose, for example, \(\varepsilon=1/12\). By (3),
+\(m\gg n^2/(\log n)^3>3n^{7/4}\) for large \(n\), while \(m\leq B<n^2/(20(\log n)^2)\). Hence (1) applies. Since \(f(n)=\min_{m\geq1}F(n,m)\),
+\[
+f(n)\leq F(n,m)
+=\frac n{(2+o(1))\log n}+O(\log n)
+=\left(\frac12+o(1)\right)\frac n{\log n}.
+\]
+Together with the uniform lower bound, this proves the claim.
+
+\subsection*{A direct check of the extremal modular mechanism}
+The least nondivisor \(s=s(m)\) is necessarily a prime power: if it had two coprime proper factors larger than one, both would divide \(m\), forcing \(s\mid m\). Write \(m\equiv i\pmod s\), \(1\leq i<s\). Take all multiples of \(s\) up to \(n\), together with \(i-1\) distinct integers congruent to \(1\pmod s\) and \(s-i-1\) congruent to \(-1\pmod s\). For large \(n\) in the above range there are enough choices. For \(s=2\) both extra groups are empty; otherwise they are disjoint. Any subset of the extra integers has residue represented by an integer in
+\([-(s-i-1),i-1]\), which contains no integer congruent to \(i\pmod s\). This supplies exactly \(\lfloor n/s\rfloor+s-2\) elements avoiding \(m\), and independently checks the lower side of (1).
+
+\subsection*{Attribution and scope}
+The prime-multiple lower construction is Erd\H{o}s--Graham's; the difficult-sum choice and (1) are due to N. Alon and G. Freiman, \emph{On sums of subsets of a set of integers}, Combinatorica 8 (1988), 297--306, Theorem 1.2 and Section 4, \url{https://web.math.princeton.edu/~nalon/PDFS/Publications/On%20sums%20of%20subsets%20of%20a%20set%20of%20integers.pdf}. The exact dependence on that substantial external theorem is part of this completion claim. Statement checked at \url{https://www.erdosproblems.com/771} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

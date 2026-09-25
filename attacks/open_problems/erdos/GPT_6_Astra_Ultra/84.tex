@@ -1,0 +1,41 @@
+\section*{Erd\H{o}s Problem 84: counting distinct cycle-length sets}
+\subsection*{1. Statement and scope}
+Let $f(n)$ count the sets $\mathcal C(G)\subseteq\{3,\ldots,n\}$ realized by graphs on $n$ vertices. The two requested conclusions are $f(n)=o(2^n)$ and $f(n)/2^{n/2}\to\infty$. The first is known; the second remains unresolved in this attempt. We reconstruct Faudree's encoding and give an additional-family recurrence, while separating the published upper-bound input from our direct arguments.
+
+\subsection*{2. The known upper bound as an explicit input}
+Nenadov's Theorem 1.1 states that some absolute $c>0$ satisfies
+\[
+ f(n)\le2^{n-c\sqrt n/(\log n)^{3/2}}
+\]
+for all sufficiently large $n$. Taking this published theorem as an external input, division by $2^n$ proves $f(n)/2^n\to0$, because $\sqrt n/(\log n)^{3/2}\to\infty$. The container argument proving the theorem is not reproduced here.
+
+\subsection*{3. Recoverable bits from a path and a fan}
+First let $n=2m\ge4$. For each $A\subseteq\{m+1,\ldots,2m\}$, take the path $1,2,\ldots,2m$ and add the edges $1a$ for $a\in A$. Removing vertex one leaves a path, so every cycle uses one and exactly two of its incident edges. Its length is either $a$ for some $a\in A$ (using neighbour two), or $b-a+2$ for distinct $a<b$ in $A$.
+The second type has length at most $m+1$. Equality forces $a=m+1$ and $b=2m$, so even that possible boundary length already belongs to $A$. Therefore
+\[
+ \mathcal C(G_A)\cap\{m+1,\ldots,2m\}=A. \tag{1}
+\]
+This recovers all $m$ bits and proves $f(2m)\ge2^m$.
+For $n=2m+1\ge5$, instead use $A\subseteq\{m+2,\ldots,2m+1\}$. A second-type length is at most $m+1$, strictly below this interval, so the same decoding gives $f(2m+1)\ge2^m$. The bound is asserted only for $n\ge4$; for $n=1,2$ the only cycle set is empty.
+
+\subsection*{4. Adding a family with no long cycles}
+For even $n=2m$, realize every cycle set on $m$ vertices and add $m$ isolated vertices. These $f(m)$ sets have no length greater than $m$. Among the $2^m$ encoded sets in (1), only $A=\varnothing$ has no length greater than $m$; its entire cycle set is empty. Thus the two families overlap in exactly that one set, giving
+\[
+ f(2m)\ge2^m+f(m)-1. \tag{2}
+\]
+For odd $n=2m+1$, the analogous low-length family uses $m+1$ vertices, and the encoded family has a length at least $m+2$ whenever $A\ne\varnothing$. Hence
+\[
+ f(2m+1)\ge2^m+f(m+1)-1. \tag{3}
+\]
+In particular, for $n\ge8$ these recurrences and the base construction imply
+\[
+ f(n)\ge2^{\lfloor n/2\rfloor}
+ +2^{\lfloor\lceil n/2\rceil/2\rfloor}-1.
+\]
+The added family is real, but its size is exponentially smaller than the main term. These bounds do not make the ratio to $2^{n/2}$ tend to infinity.
+
+\subsection*{5. Assessment and attribution}
+The full encoding, its endpoint check, and the additive recurrences are proved. The first requested limit follows relative to Nenadov's stated theorem. The unresolved lower-bound task needs a diverging multiplicative improvement over $2^{n/2}$, which (2)--(3) do not supply. The fan construction is due to Faudree and appears in Nenadov's introduction. This replaces earlier GPT-5.2 write-ups with checked LaTeX, precise small-$n$ restrictions and explicit scope; no novelty or unperformed exhaustive computation is claimed.
+Sources: \url{https://www.erdosproblems.com/84}; R. Nenadov, \emph{Improved bound on the number of cycle sets}, Theorem 1.1 and introduction, \url{https://arxiv.org/abs/2501.09904}.
+
+\textbf{Completion rate estimate: 40\%.}

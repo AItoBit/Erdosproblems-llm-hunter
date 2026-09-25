@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1161: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $f_n(k)$ be the number of permutations in $S_n$ of order $k$, and set $p_n(k)=f_n(k)/n!$. The largest value is asymptotic to $(n-1)!$. More precisely, for all sufficiently large $n$ the unique maximizing order is
+\[
+ k_n=n-j_0,\qquad j_0=\max K_n,\qquad
+ K_n=\{0\le j<n:\operatorname{lcm}(1,\ldots,j)\mid n-j\},\tag{1}
+\]
+where the empty least common multiple is $1$. We give the comparison proof and exact finite counting formula. The two analytic estimates stated below are external inputs from Beker, \emph{The most likely order of a random permutation}, Theorem 1.1 and Proposition 4.1, \url{https://arxiv.org/abs/2510.11698}.
+
+The editorial's apparent exact equality $f_n(k_n)=(n-1)!$ must not be substituted for its asymptotic assertion. In fact $1\in K_n$ for $n>1$, and the permutations having an $(n-1)$-cycle already give
+\[
+ f_n(n-1)\ge n!/(n-1)>(n-1)!
+\]
+for $n\ge3$. The primary paper gives the asymptotic, not that incorrect equality.
+
+\section*{The precise analytic inputs}
+For all sufficiently large $n$, Beker proves that
+\[
+ p_n(m)\ge1/n\quad\Longrightarrow\quad m=n-j\text{ for some }j\in K_n.\tag{2}
+\]
+Uniformly for $j\in K_n$, the paper also proves
+\[
+ p_n(n-j)=\frac1{n-j}+\eta(n,j)+O(n^{-3+o(1)}),\tag{3}
+\]
+where
+\[
+ \eta(n,j)=
+ \begin{cases}
+ 0,&j\in\{0,1\}\text{ or }2^{\lfloor\log_2j\rfloor+1}\mid n-j,\\
+ \displaystyle\frac{2^{1-\lfloor\log_2j\rfloor}}{(n-j)^2},&\text{otherwise}.
+ \end{cases}
+\]
+In particular $0\le\eta(n,j)\le(n-j)^{-2}$ for $j\ge2$. These are substantial permutation-order estimates: (2) localizes every possible mode, and the error in (3) is smaller than the differences we will compare. Neither is inferred merely from counting long cycles.
+
+The standard estimate $\log\operatorname{lcm}(1,\ldots,j)\asymp j$ shows that every $j\in K_n$ is $O(\log n)$. Only its lower bound is needed here; it is the usual Chebyshev bound for the prime-power counting function. Thus $n-j\sim n$ uniformly in (3).
+
+\section*{Comparing every candidate, with strict inequalities}
+The $n$-cycles have probability $1/n$, so every maximizing order meets the hypothesis of (2). Fix $j\in K_n$ with $j<j_0$. The difference between the displayed main terms of (3) at $j_0$ and $j$ is
+\[
+ \Delta=\frac{j_0-j}{(n-j_0)(n-j)}+\eta(n,j_0)-\eta(n,j).\tag{4}
+\]
+If $j=0$ or $1$, then $\eta(n,j)=0$ and $j_0-j\ge1$, giving $\Delta\ge(n-j)^{-2}$. If $j\ge2$, let $L=\operatorname{lcm}(1,\ldots,j)$. Since $j,j_0\in K_n$ and $j<j_0$, $L$ divides both $n-j$ and $n-j_0$, hence divides $j_0-j$. Therefore $j_0-j\ge L\ge2$ and
+\[
+ \Delta\ge\frac2{(n-j_0)(n-j)}-\frac1{(n-j)^2}>
+ \frac1{(n-j)^2}.
+\]
+The combined error from (3) is $o(n^{-2})$, uniformly over all the $O(\log n)$ candidates. Consequently $p_n(n-j_0)>p_n(n-j)$ for every other candidate once $n$ is large. This proves (1), including uniqueness.
+
+Equation (3) then yields
+\[
+ \max_k p_n(k)=\frac1n+O\left(\frac{\log n}{n^2}\right),\qquad
+ \max_k f_n(k)=(n-1)!\left(1+O\left(\frac{\log n}{n}\right)\right).
+\]
+The first term has a direct explanation: for $j\in K_n$ with $j<n/2$, a permutation with an $(n-j)$-cycle has order $n-j$, because all cycles on its remaining $j$ points have lengths dividing $n-j$. There are exactly $n!/(n-j)$ such permutations. Additional cycle structures account for the correction in (3).
+
+\section*{An exact formula, also covering the finite exceptions}
+For a positive integer $d$, let $C_n(d)$ count permutations whose order divides $d$. A cycle decomposition with $m_\ell$ cycles of length $\ell$ has $n!/\prod_\ell(\ell^{m_\ell}m_\ell!)$ permutations. Summing these disjoint classes gives the formal-power-series identity
+\[
+ C_n(d)=n![z^n]\exp\left(\sum_{\substack{\ell\mid d\\\ell\le n}}\frac{z^\ell}{\ell}\right).
+\]
+Since $C_n(d)=\sum_{k\mid d}f_n(k)$, M\"obius inversion gives
+\[
+ f_n(k)=\sum_{d\mid k}\mu(k/d)C_n(d).\tag{5}
+\]
+Every permutation order divides $\operatorname{lcm}(1,\ldots,n)$, so (5) is a finite exact procedure for all small $n$ as well. This formula alone does not replace the uniform analytic bounds (2)--(3).
+
+\section*{Result and dependency}
+The strict comparison and asymptotic conclusion are completely deduced from the explicitly attributed localization and expansion, and the finite counting formula is proved directly. The difficult estimates of Beker remain external inputs. No independent new resolution is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

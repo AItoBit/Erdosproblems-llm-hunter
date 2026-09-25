@@ -1,0 +1,68 @@
+\section*{Erd\H{o}s Problem 408: an additive formula for totient height}
+\subsection*{Statement and outcome}
+Set $f(1)=0$ and let $f(n)$ be the number of iterations of Euler's totient needed to reach $1$. Does $f(n)/\log n$ have a limiting distribution or a constant normal order? What happens to the largest prime factor after about $\log\log n$ iterations?
+
+We reconstruct the exact additive structure of the height, prove two-sided logarithmic bounds, and exhibit different limiting ratios on two sparse subsequences. These do not settle the distribution or normal-order questions. Source: \url{https://www.erdosproblems.com/408}. The additive structure is classical Shapiro theory; a primary modern treatment is Bal--Bhatnagar, Theorem 1, \url{https://arxiv.org/abs/1903.09619}. No novelty is claimed.
+
+\subsection*{Constructing the additive function without circularity}
+Define a weight $w(p)$ on primes recursively by
+\[
+ w(2)=1,\qquad w(p)=\sum_{q^e\parallel p-1}e\,w(q)\quad(p>2).
+\]
+Every prime on the right is smaller than $p$, so this definition is well-founded. Extend completely additively to $h(1)=0$ and
+$h(n)=\sum_{p^e\parallel n}e w(p)$. The totient product formula implies
+\[
+ h(\varphi(n))=
+ \begin{cases}
+ h(n)-1,&n\text{ even},\\
+ h(n),&n>1\text{ odd}.
+ \end{cases} \tag{1}
+\]
+For each odd prime factor $p$, its contribution is $(e-1)w(p)+h(p-1)=e w(p)$; the prime $2$, if present, contributes one less than its original exponent. This proves (1) directly.
+
+For $n>2$, $\varphi(n)$ is even, since reduced residue classes pair as $u,n-u$. Induction on $n$, using $\varphi(n)<n$ for $n>1$ and checking $n=2$ separately, now gives
+\[
+ f(n)=\begin{cases}
+ h(n),&n\text{ even},\\
+ h(n)+1,&n>1\text{ odd}.
+ \end{cases} \tag{2}
+\]
+Thus the prime-factor formula for the height is fully proved, rather than assuming additivity of $\varphi$ or of its iterates. In particular for $a,b>1$,
+\[
+ f(ab)=\begin{cases}
+ f(a)+f(b),&a,b\text{ both even},\\
+ f(a)+f(b)-1,&\text{otherwise}.
+ \end{cases} \tag{3}
+\]
+The exclusion of $1$ in (3) is necessary with the convention $f(1)=0$.
+
+\subsection*{Bounds and exactly computed extremal families}
+We show inductively on primes that $p\le3^{w(p)}$. It holds for $2$. If it holds for smaller primes, then the even integer $p-1$ satisfies
+\[
+ p-1\le\frac23\,3^{h(p-1)}=2\cdot3^{w(p)-1};
+\]
+one factor $2$ gives the extra $2/3$, and the other prime factors use the induction hypothesis. Since $w(p)\ge1$, adding one proves $p\le3^{w(p)}$. Multiplication then gives $n\le3^{h(n)}$ for every $n$, and $n\le(2/3)3^{h(n)}$ for even $n$. Equation (2) yields
+\[
+ f(n)>\log_3 n\quad(n>1). \tag{4}
+\]
+For odd $n$ use $f=h+1$, and for even $n$ use the strict factor $2/3$.
+
+For an even integer $m$, $\varphi(m)\le m/2$. After the first step from any $n>2$, all subsequent iterates greater than one are even. Hence before reaching one, $\varphi_j(n)\le(n-1)/2^{j-1}$ for $j\ge1$. Taking $j=\lceil\log_2 n\rceil$ forces the iterate below $2$, unless it already reached $1$. Thus
+\[
+ f(n)\le\lceil\log_2 n\rceil. \tag{5}
+\]
+The rounding and the initial parity step matter: $\varphi(m)\le m/2$ is false for odd primes.
+
+As $w(3)=h(2)=1$, the exact formulas include
+\[
+ f(2^r)=r,\qquad f(3^r)=r+1,\qquad f(2\cdot3^r)=r+1.
+\]
+Therefore the ratios tend respectively to $1/\log2$ and $1/\log3$ on the first and third families. There is no ordinary limit over all integers. These families have density zero, so they do not contradict a constant normal order or a limiting distribution.
+
+\subsection*{A modest prime-factor observation and the remaining gap}
+Let $P(m)$ be the largest prime factor, with $P(1)=1$. Every prime dividing $\varphi(m)$ either is a prime already dividing $m$, or divides $p-1$ for some prime $p\mid m$. Consequently $P(\varphi(m))\le P(m)$, and the largest prime factors never increase under iteration.
+For $1\le j\le f(n)$, the halving estimate also gives
+$P(\varphi_j(n))\le(n-1)/2^{j-1}$. At $j=\lfloor\log\log n\rfloor$ this is only $O(n/(\log n)^{\log2})$, far larger than $n^{o(1)}$. Monotonicity alone does not provide the stronger typical bound requested.
+
+The older local draft's valid elementary upper bound is retained, now joined by the full additive reconstruction and its consequences. Understanding the weighted prime-factor sum $h(n)$ for a density-one set of integers, and controlling large prime factors along typical totient chains, remain unresolved in this attempt. No conjectural distribution theorem is used as an unconditional result.
+\textbf{Completion rate estimate: 45\%.}

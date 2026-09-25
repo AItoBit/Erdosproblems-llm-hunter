@@ -1,0 +1,53 @@
+\section*{Erd\H{o}s Problem \#765: the asymptotic \(C_4\) extremal number}
+\subsection*{Statement and outcome}
+Determine the asymptotic value of \(\operatorname{ex}(n,C_4)\), the maximum edge count in a simple \(n\)-vertex graph containing no four-cycle. We reconstruct the classical answer
+\[
+\operatorname{ex}(n,C_4)=\left(\frac12+o(1)\right)n^{3/2}.
+\]
+Attempt status: solved. The lower-order refinements mentioned in the editorial are separate questions.
+
+\subsection*{Counting common neighbours}
+In a \(C_4\)-free graph, two distinct vertices have at most one common neighbour. Counting unordered pairs of neighbours of each vertex therefore gives
+\[
+\sum_{v}\binom{d(v)}2\leq\binom n2.
+\]
+If \(e\) is the number of edges, Cauchy--Schwarz gives
+\[
+\frac{4e^2}{n}-2e\leq n(n-1).
+\]
+Solving the quadratic,
+\[
+e\leq\frac n4\left(1+\sqrt{4n-3}\right)
+=\frac12n^{3/2}+\frac n4+O(\sqrt n). \tag{1}
+\]
+
+\subsection*{An explicit polarity construction}
+Let \(q\) be an odd prime, and let the vertices be the one-dimensional subspaces of \(\mathbb F_q^3\), of which there are \(v=q^2+q+1\). For nonzero representatives define
+\[
+B((x,y,z),(x',y',z'))=xz'+zx'-2yy'.
+\]
+Join two \emph{distinct} projective points exactly when \(B=0\). This is well-defined under scaling, symmetric, and nondegenerate, since its matrix has nonzero determinant in odd characteristic.
+
+For two distinct projective points \(u,v\), the equations \(B(u,w)=B(v,w)=0\) are independent linear equations: otherwise nondegeneracy would force \(u,v\) proportional. Their joint solution space has dimension one. Thus the two vertices have at most one common neighbour, and the graph has no \(C_4\).
+
+The orthogonal plane to any vertex contains \(q+1\) projective points. The graph degree is \(q+1\), except that a self-orthogonal point loses its loop and has degree \(q\). Self-orthogonality is \(xz=y^2\). Its projective solutions are
+\[
+[t^2:t:1]\quad(t\in\mathbb F_q),\qquad [1:0:0],
+\]
+so there are exactly \(q+1\) of them. Therefore
+\[
+e=\frac12\big((q^2+q+1)(q+1)-(q+1)\big)
+=\frac12q(q+1)^2. \tag{2}
+\]
+This includes the loop correction and establishes the sharp leading coefficient on these orders.
+
+\subsection*{Passing to every large order}
+We use the classical prime number theorem only in the following explicit form: if \(x\to\infty\), the largest prime \(q\leq x\) satisfies \(q/x\to1\). For any fixed \(\eta>0\), this follows from
+\(\pi(x)-\pi((1-\eta)x)\sim\eta x/\log x>0\).
+
+Take \(x=(\sqrt{4n-3}-1)/2\) and the largest odd prime \(q\leq x\). Then \(q^2+q+1\leq n\) and \(q=(1-o(1))\sqrt n\). Add isolated vertices to (2) to obtain exactly \(n\) vertices. Its edge count is \((1/2-o(1))n^{3/2}\), which together with (1) proves the formula.
+
+\subsection*{Attribution and scope}
+The upper bound is Reiman's common-neighbour argument, and the finite-field lower construction is the Erd\H{o}s--R\'enyi/Brown polarity construction. The proof is given above, with the prime number theorem explicitly external. Historical references and the precise current statement were checked at \url{https://www.erdosproblems.com/765} on 24 September 2026. No exact all-\(n\) lower-order formula, novelty, or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

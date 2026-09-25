@@ -1,0 +1,120 @@
+\section*{Erd\H{o}s Problem 851}
+
+\paragraph{Statement and result.}
+Given \(\epsilon>0\), is there an integer \(r\) such that the integers representable as \(2^k+m\), where \(k\geq0\), \(m\geq1\), and \(m\) has at most \(r\) distinct prime divisors, have density at least \(1-\epsilon\)? We prove the precise lower-density assertion
+\[
+ \liminf_{x\to\infty}\frac1x
+ \bigl|\{n\leq x:n=2^k+m,\ \omega(m)\leq r\}\bigr|
+ \geq1-\epsilon.
+\]
+Here \(\omega\) counts distinct prime divisors. No existence of a natural-density limit, or bound with prime factors counted with multiplicity, is asserted. The proof follows the middle-prime-avoidance strategy credited to Liam Price and GPT-5.2 Pro in the problem's discussion, with the sieve input stated explicitly below.
+
+\paragraph{A convergent order sum.}
+For an odd squarefree integer \(d\), put
+\[
+ b(d)=\prod_{p\mid d}\frac1{p-2},\qquad
+ q(d)=\operatorname{ord}_d(2),
+\]
+with \(b(1)=q(1)=1\). We first prove
+\[
+ \sum_{\substack{d>1\\d\text{ odd and squarefree}}}
+ \frac{b(d)}{q(d)}<\infty. \tag{1}
+\]
+For \(H\geq2\), every prime dividing a \(d\) with \(q(d)\leq H\) divides
+\(M_H=\prod_{1\leq j\leq\lfloor H\rfloor}(2^j-1)\). Consequently
+\[
+ \sum_{q(d)\leq H}b(d)
+ \leq\prod_{\substack{p\mid M_H\\p>2}}
+ \left(1+\frac1{p-2}\right)\ll\log(2H). \tag{2}
+\]
+To justify the last bound, split at \(p=H^3\). For smaller primes, the product is \(O(\log H)\) by Mertens' product estimate, since
+\[
+ \left(1+\frac1{p-2}\right)(1-1/p)
+ =1+\frac1{p(p-2)}
+\]
+and the product of these correction factors converges. There are \(O(H^2/\log H)\) larger prime divisors of \(M_H\), because \(\log M_H=O(H^2)\); their reciprocal sum is \(O(1/(H\log H))\), so their product is bounded. Grouping (2) into the ranges \(2^j\leq q(d)<2^{j+1}\) bounds (1) by a constant times \(\sum_{j\geq0}(j+1)2^{-j}\).
+
+For \(z\geq3\), define the tail
+\[
+ \delta_z=\sum_{\substack{d>1\text{ squarefree}\\p\mid d\Rightarrow p>z}}
+ \frac{b(d)}{q(d)}.
+\]
+By convergence of (1), \(\delta_z\to0\) as \(z\to\infty\). For \(h\geq1\), also set
+\[
+ S_z(h)=\prod_{\substack{p>z\\p\mid2^h-1}}
+ \left(1+\frac1{p-2}\right).
+\]
+Expanding the product, and using \(d\mid2^h-1\) if and only if \(q(d)\mid h\), gives the useful uniform bound
+\[
+ \frac2{K^2}\sum_{h=1}^{K-1}(K-h)S_z(h)\leq1+\delta_z
+ \qquad(K\geq1). \tag{3}
+\]
+Indeed, the contribution of \(d=1\) is \((K-1)/K\leq1\). For any positive integer \(q\),
+\[
+ 2\sum_{1\leq jq<K}(K-jq)\leq K^2/q.
+\]
+Writing the number of summands as \(m\), this follows from
+\(K^2/q-2mK+qm(m+1)=q(m-K/q)^2+qm\geq0\). Apply this inequality to each remaining \(d\). All summands are nonnegative, so the interchange of sums is justified.
+
+\paragraph{The external sieve input and its hypotheses.}
+We use the fundamental lemma of the combinatorial sieve in dimension at most two. Its needed form is as follows. At each prime \(p\) choose \(\nu(p)\) forbidden residue classes, with \(\nu(p)=0\) for \(p\leq z\) and \(\nu(p)\leq2\) otherwise. Let \(y=x^{1/t}\), \(D=x^{1/4}\), with fixed sufficiently large \(t\). Then the number of \(1\leq n\leq x\) avoiding all forbidden classes at primes \(p\leq y\) is
+\[
+ \bigl(1+O(e^{-t/4})\bigr)x
+ \prod_{p\leq y}(1-\nu(p)/p)+O(D\log D). \tag{4}
+\]
+The constants can be taken absolute here. This is Corollary 19 of Tao's sieve notes, with sieve parameter \(s=\log D/\log y=t/4\). The residue-count remainders are \(O(\nu(d))\) by the Chinese remainder theorem, and
+\(\sum_{d\leq D}\nu(d)\leq\sum_{d\leq D}\tau(d)\leq D(1+\log D)\).
+The dimension-two product condition follows from \(\nu(p)\leq2\) and Mertens' product estimate; factors at \(p\leq z\) are simply omitted. Also \(\nu(p)/p\leq2/3\), so no local factor vanishes. These verify the required uniform hypotheses. The proof of the fundamental lemma itself is an external dependency.
+
+\paragraph{Counting representations after sieving middle primes.}
+Fix \(z\geq3\) and \(t\), to be chosen later, and let
+\[
+ K=\left\lfloor\frac{\log x}{2\log2}\right\rfloor,
+ \quad P=\prod_{z<p\leq y}p,
+ \quad V=\prod_{z<p\leq y}(1-1/p),
+ \quad R(n)=\sum_{0\leq k<K}\mathbf1_{\gcd(n-2^k,P)=1}.
+\]
+We consider uniform \(n\in\{1,\ldots,\lfloor x\rfloor\}\). For a single shift, (4) has \(\nu(p)=1\). For two distinct shifts \(k,\ell\), it has \(\nu(p)=1\) if \(p\mid2^{|k-\ell|}-1\), and \(\nu(p)=2\) otherwise. Write the corresponding pair product as \(V_{k\ell}\). Then
+\[
+ \frac{V_{k\ell}}{V^2}
+ =\prod_{z<p\leq y}\frac{1-2/p}{(1-1/p)^2}
+ \prod_{\substack{z<p\leq y\\p\mid2^{|k-\ell|}-1}}
+ \frac{1-1/p}{1-2/p}
+ \leq S_z(|k-\ell|).
+\]
+The first product has every factor \(1-1/(p-1)^2\leq1\), and the second has factors \(1+1/(p-2)\). Therefore (3) yields
+\[
+ \sum_{k\ne\ell}V_{k\ell}\leq K^2V^2(1+\delta_z). \tag{5}
+\]
+Put \(\mu_x=KV\) and \(\eta_t=C e^{-t/4}\), with an absolute constant covering (4). Applying (4) and (5), including the diagonal terms in the second moment, gives
+\[
+ \mathbb ER\geq(1-\eta_t)\mu_x-o(1),\qquad
+ \mathbb ER^2\leq(1+\eta_t)
+ \bigl(\mu_x+(1+\delta_z)\mu_x^2\bigr)+o(1). \tag{6}
+\]
+The summed remainder is at most \(O(K^2D\log D/x)=o(1)\); all limits here hold with \(z,t\) fixed.
+
+Mertens' product estimate, with \(W_z=\prod_{p\leq z}(1-1/p)\), shows that
+\[
+ \mu_x\longrightarrow
+ \Lambda_{z,t}=\frac{t e^{-\gamma}}{2\log2\,W_z}>0.
+\]
+By Cauchy--Schwarz, \(\mathbb P(R>0)\geq(\mathbb ER)^2/\mathbb ER^2\). Thus (6) implies
+\[
+ \liminf_{x\to\infty}\mathbb P(R>0)
+ \geq \frac{(1-\eta_t)^2}
+ {(1+\eta_t)(1+\delta_z+1/\Lambda_{z,t})}. \tag{7}
+\]
+Choose \(z\) sufficiently large that \(\delta_z\) is small, and then choose the fixed \(t\) sufficiently large. The right-hand side of (7) can be made greater than \(1-\epsilon\).
+
+\paragraph{From the sieve to almost-prime summands.}
+Discard the \(O(\sqrt x)\) integers \(n\leq\sqrt x\). If \(R(n)>0\) for a remaining integer, some \(k<K\) gives a positive \(m=n-2^k\leq x\) with no prime divisor in \((z,y]\). There are at most \(\pi(z)\) distinct prime divisors at most \(z\), and at most \(\lceil t\rceil\) distinct prime divisors above \(y=x^{1/t}\), since their product is at most \(x\). Hence
+\[
+ \omega(m)\leq r:=\pi(z)+\lceil t\rceil.
+\]
+This \(r\) depends only on \(\epsilon\), and (7) proves the stated lower-density conclusion.
+
+\paragraph{Attribution and assessment.}
+See \url{https://www.erdosproblems.com/851} and the discussion at \url{https://www.erdosproblems.com/forum/thread/851}, checked 24 September 2026. The discussion credits Price and GPT-5.2 Pro with the middle-prime-avoidance argument; the order-sum convergence is a classical Romanoff-type ingredient, proved above. The explicit external analytic inputs are Mertens' estimates and the fundamental lemma as stated in T. Tao, \emph{254A, Notes 4: Some sieve theory}, Corollary 19, \url{https://terrytao.wordpress.com/2015/01/21/254a-notes-4-some-sieve-theory/}. This is a complete deduction relative to those inputs. The sharper quantitative dependence of \(r\) discussed in the source is not claimed. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

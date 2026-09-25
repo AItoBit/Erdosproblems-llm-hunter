@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1165: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and the exact planar theorem}
+For simple random walk $(S_j)$ on $\mathbb Z^2$, put
+\[
+ f_N(x)=\#\{0\le j\le N:S_j=x\},\quad
+ M_N=\max_x f_N(x),\quad F_N=\{x:f_N(x)=M_N\}.
+\]
+The requested probabilities are
+\[
+ \mathbb P(|F_N|=r\text{ infinitely often})=
+ \begin{cases}1,&r=3,\\0,&r\ge4.\end{cases}\tag{1}
+\]
+The deep external input used here is Hao--Li--Okada--Zheng, \emph{Favorite Sites for Simple Random Walk in Two and More Dimensions}, Theorem 1.1 in version 2, \url{https://arxiv.org/abs/2409.00995}, which states
+\[
+ \limsup_{N\to\infty}|F_N|=3\quad\hbox{almost surely}.\tag{2}
+\]
+This theorem includes both planar assertions. T\'oth's earlier eventual-three theorem concerns one-dimensional walk, as the introduction of the cited primary paper explicitly explains; it cannot by itself be used for the planar upper bound.
+
+We use (2) as an attributed theorem rather than claim to reproduce its delicate estimates on near-favorite sites. The deductions below clarify the simultaneous events, prove the complementary cases $r=1,2$, and derive a pathwise bound for the number of sites that have ever been favorites.
+
+\section*{Turning the integer limsup into the requested events}
+Every $|F_N|$ is a positive integer. On the probability-one event (2), infinitely many values at least $4$ would give limsup at least $4$, so eventually $|F_N|\le3$. If only finitely many values equaled $3$, eventually $|F_N|\le2$, a contradiction. Thus $3$ occurs infinitely often and every $r\ge4$ occurs only finitely often on the \emph{same} event of probability one. This proves (1) simultaneously for all integers $r\ge3$, without any independence assertion about successive favorite sets.
+
+\section*{A deterministic plateau lemma}
+The maximum $M_N$ is nondecreasing and increases by at most one per step. Whenever it increases from $m-1$ to $m$, exactly one site has just reached $m$, so the favorite set at that time is a singleton. During a time interval on which $M_N=m$, a favorite cannot cease being a favorite: visiting it would increase the maximum. A nonfavorite site can join only when it reaches $m$, and at most one site joins at any step. Therefore the favorite sets grow by single additions during each plateau, and reset to a singleton at the next record.
+
+The recurrent planar walk visits the origin infinitely often almost surely, hence $M_N\to\infty$ and every plateau is finite. It follows that $|F_N|=1$ infinitely often. On the event (2), the infinitely many occurrences of $3$ must lie in infinitely many distinct plateaus. In each of these, growth from the initial singleton to size $3$ passes through size $2$. Thus size $2$ also occurs infinitely often almost surely. In particular the full classification for positive $r$ is probability one for $1,2,3$, and zero for larger $r$.
+
+There is a useful historical consequence. Once $|F_N|\le3$ forever, every later plateau contributes at most three sites to the union of all favorite sets. The finite initial segment contributes a finite random number $C_0$. Thus for all sufficiently large $N$,
+\[
+ \left|\bigcup_{j=0}^N F_j\right|\le C_0+3M_N.\tag{3}
+\]
+This uses the monotonicity within a plateau; summing the instantaneous cardinalities over times would not give (3).
+
+\section*{An elementary upper bound for the maximum local time}
+For completeness the logarithmic order needed in (3) can be bounded without the sharp maximal-local-time theorem. Let $u_j=\mathbb P(S_j=0)$ and let $q_j$ be the probability of no positive-time return by time $j$. Rotating the two coordinates gives two independent one-dimensional simple walks, so
+\[
+ u_{2j}=\binom{2j}{j}^2/16^j\le1/(j+1),\qquad u_{2j+1}=0.
+\]
+The inequality follows by induction from the ratio $(2j+1)^2/[4(j+1)^2]$. In particular $G_L=\sum_{j=0}^Lu_j\le2(1+\log(L+1))$. Decomposing according to the last visit to the origin by time $4m$ gives
+\[
+ 1=\sum_{j=0}^{4m}u_jq_{4m-j}
+ \le q_mG_{4m}+\sum_{j=3m+1}^{4m}\frac2{j+1}
+ <q_mG_{4m}+2/3.
+\]
+Consequently $q_m\ge1/[6(1+\log(4m+1))]\ge1/(24\log m)$ for $m\ge3$.
+
+By the strong Markov property, after the first visit to a specified site, the probability of accumulating $k$ visits by time $N$ is at most $(1-q_N)^{k-1}$. To union-bound over all possible first visits, use their at most $N+1$ time indices; conditional on the path up to each such index the same estimate applies. Therefore
+\[
+ \mathbb P(M_N\ge k)\le(N+1)(1-q_N)^{k-1}.
+\]
+For $k=\lceil120(\log N)^2\rceil+1$ this is at most $2N^{-4}$ for $N\ge3$. Borel--Cantelli proves $M_N=O((\log N)^2)$ almost surely, and (3) gives the same upper order for the number of historical favorites.
+
+\section*{Result and dependency}
+The requested classification is complete relative to the explicitly stated planar theorem (2). The integer-event conversion, plateau structure, complementary cases, and historical-union bound are proved here. The central theorem of Hao--Li--Okada--Zheng remains a deep external input, and this is not an independent new proof of it.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

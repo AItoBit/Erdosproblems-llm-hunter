@@ -1,0 +1,43 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1187: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{The two answers}
+Every finite colouring of the integers has monochromatic arithmetic progressions consisting of primes, of every prescribed finite length. By contrast, already two colours can forbid every three-term monochromatic progression with prime common difference. These are different requirements on the primes.
+
+The prime-progression input is Green--Tao, \emph{The primes contain arbitrarily long arithmetic progressions}, Theorem 1.1, \url{https://arxiv.org/abs/math/0404188}. The current statement and its two parts are at \url{https://www.erdosproblems.com/1187}. We use the ordinary Green--Tao theorem, rather than needing its stronger positive-relative-density version, together with finite van der Waerden.
+
+\section*{Compose two precise finite existence theorems}
+Fix $r$ colours and a desired length $k\ge3$. The finite van der Waerden theorem provides an integer $W=W(r,k)$ such that every colouring of $\{0,\ldots,W-1\}$ with $r$ colours has a monochromatic progression
+\[
+ i_0,i_0+d,\ldots,i_0+(k-1)d,\qquad d\ge1.
+\tag{1}
+\]
+Green--Tao provides a prime arithmetic progression
+\[
+ p,p+D,\ldots,p+(W-1)D,\qquad D\ge1.
+\tag{2}
+\]
+Colour the index $i$ by the given colour of the prime $p+iD$. Apply (1). The selected terms of (2) are
+\[
+ p+i_0D,\ p+(i_0+d)D,\ldots,p+(i_0+(k-1)d)D.
+\]
+They are primes, have one colour, and form a nonconstant integer progression with common difference $dD$. All indices stay in the original range, so no modular interpretation or wraparound is involved. This proves the first assertion for every colouring. The two stated existence theorems are explicit external inputs, and neither theorem is reproved here.
+
+\section*{A two-colour obstruction to prime common difference}
+Colour integers congruent to $0$ or $1$ modulo $4$ red, and those congruent to $2$ or $3$ blue. Suppose $a,a+q,a+2q$ had one colour with prime $q$.
+
+If $q=2$, adding $q$ changes the colour, so even the first pair has different colours. If $q$ is odd, then $2q\equiv2\pmod4$. The first and third terms consequently have residues differing by two, which again changes the colour. Thus a monochromatic triple is impossible. Every progression of length at least three contains its first three terms, so the same colouring rules out all the lengths in the second question. This argument covers negative starting integers as well, since only their residues matter.
+
+For comparison, a four-colouring by the exact residue modulo four would even exclude monochromatic pairs of prime difference: such a difference would have to be divisible by four. The two-colour construction is the stronger statement relevant to the requested lengths.
+
+\section*{Assessment}
+Both parts are resolved. The positive part is a complete reduction from two named classical theorems; the negative part is an explicit elementary colouring with all primes checked by parity. No claim of a new proof of Green--Tao or van der Waerden is made.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

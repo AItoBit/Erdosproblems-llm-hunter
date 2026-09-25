@@ -1,0 +1,66 @@
+\section*{Erd\H{o}s Problem 989: discrepancy of planar disks}
+\subsection*{Statement and source qualifications}
+For an infinite point set $A\subset\mathbb R^2$, write
+$f_A(r)=\sup_z|\#(A\cap B(z,r))-\pi r^2|$.
+Here \emph{circle} is understood as the filled disk; counting only its circumference would be a different problem. Non-locally-finite sets already have infinite discrepancy in a bounded disk, so consider locally finite sets.
+
+We prove unboundedness and the finite-scale extremal bounds
+\[
+ c\sqrt R\le \inf_A\sup_{0<r\le R} f_A(r)
+ \le C\sqrt{R\log(2R)}\qquad(R\ge2).
+ \tag{1}
+\]
+The lower bound uses Beck's precise Theorem 2A in \emph{Irregularities of distribution I}, Acta Math. 159 (1987), 1--49. That theorem includes contractions as well as translations. Its upper-bound discussion constructs a point set depending on the chosen body, hence on $R$ here. We preserve these quantifiers: (1) alone does not give one set with the stated upper bound at every radius, or a lower bound for every exact radius.
+
+\subsection*{The external lower estimate and unboundedness}
+Beck's Theorem 2A says that for any locally finite infinite $A$ and any compact planar convex body $K$ with inradius at least $1$,
+\[
+ \sup_{\rho\in SO(2),\,0<a\le1,\,z\in\mathbb R^2}
+ \left|\#(A\cap(z+a\rho K))-\operatorname{area}(aK)\right|
+ \ge c\sqrt{\operatorname{perimeter}(K)}.
+\]
+Its Fourier-analytic proof is an explicit external input here.
+Taking $K=B(0,R)$ proves the lower half of (1), and in particular $f_A$ is unbounded.
+If every $f_A(r)$ is finite, the large errors must occur at radii tending to infinity: for $r\le R_0$, disk inclusion gives
+$f_A(r)\le f_A(R_0)+2\pi R_0^2$. Thus one also obtains radii $r_j\to\infty$ with $f_A(r_j)\ge c\sqrt{r_j}$.
+
+\subsection*{A periodic construction for each prescribed scale}
+Fix $R\ge2$ and let $L=\lceil4R\rceil$. Partition the flat torus
+$\mathbb R^2/(L\mathbb Z)^2$ into its $L^2$ unit squares. Independently choose one uniform point in each square, then extend the resulting set periodically to the plane.
+For a torus disk $B$ of radius at most $R+1<L/2$, its point count is a sum of independent indicator variables and has expectation $\operatorname{area}(B)$.
+Only unit squares meeting the boundary contribute variance. Every such square lies in the annulus of width $2\sqrt2$ about the circle, so there are $O(R)$ of them, uniformly including small radii. Hence
+\[
+ \operatorname{Var}\#(A\cap B)\le C_0R.
+\]
+Bernstein's inequality, for independent centered variables of modulus at most $1$, gives
+\[
+ \mathbb P\{|\#(A\cap B)-\operatorname{area}(B)|>u\}
+ \le2\exp\left(-\frac{u^2}{2(C_0R+u/3)}\right).
+ \tag{2}
+\]
+
+Take a mesh of spacing at most $\delta=R^{-2}$ for both center coordinates and for radii in $[0,R+1]$.
+There are $O(R^9)$ mesh disks.
+For sufficiently large fixed $C_1$, (2) and the union bound show that with positive probability all mesh disks have error at most
+$C_1\sqrt{R\log R}$, for all sufficiently large $R$.
+The bounded range of smaller $R$ can be absorbed by increasing the constant.
+
+For any disk of radius at most $R$, select a mesh center within $\delta$ in Euclidean distance, using a slightly finer coordinate mesh if necessary, and a mesh radius within $\delta$.
+The disk is sandwiched between concentric mesh disks whose radii differ from its radius by at most $4\delta$; use the empty set for a negative inner radius.
+Their areas differ from the desired area by $O(R\delta+\delta^2)=O(1)$.
+The sandwich and the simultaneous mesh estimates prove the upper half of (1) for every disk of radius at most $R$, including all centers.
+Periodicity identifies planar disk counts with these torus counts because the radii are below $L/2$.
+
+\subsection*{A single set with a weaker bound at all scales}
+For $A=\mathbb Z^2$, associate to each lattice point its unit square centered there.
+If $c_0=\sqrt2/2$, the union of the squares centered in $B(z,r)$ lies in $B(z,r+c_0)$ and contains $B(z,\max(0,r-c_0))$ up to boundaries. Comparing areas gives
+\[
+ f_{\mathbb Z^2}(r)\le C(r+1)
+\]
+uniformly in the center and radius. Thus this attempt also gives one globally defined set with a proved all-scale upper estimate.
+
+\subsection*{Remaining gap}
+The first question, unboundedness for every $A$, is answered using the stated Beck theorem. The finite-scale order is determined up to $\sqrt{\log R}$ by the proved construction. The stronger quantifiers suggested by the page's exact-radius growth sentence are unresolved in this attempt: no common set attaining $O(\sqrt{r\log r})$ for all large $r$, or exact-radius lower bound for every $r$, has been derived here. The completion estimate reflects this gap, not an assertion that the literature is unresolved.
+Sources: \url{https://www.erdosproblems.com/989}; Beck, \url{https://doi.org/10.1007/BF02392553}, Theorem 2A and the discussion on pages 4--5. No novelty is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 75\%}

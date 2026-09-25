@@ -1,0 +1,68 @@
+\section*{Erd\H{o}s Problem 1130: the maximin interpolation problem}
+
+\paragraph{Statement and normalization.}
+For distinct ordered nodes \(-1\leq x_1<\cdots<x_n\leq1\), let
+\[
+ L_{\boldsymbol x}(x)=\sum_{k=1}^n
+ \left|\prod_{j\ne k}\frac{x-x_j}{x_k-x_j}\right|,
+ \qquad
+ \Upsilon(\boldsymbol x)=\min_{0\leq i\leq n}
+ \max_{x\in[x_i,x_{i+1}]}L_{\boldsymbol x}(x),
+\]
+where \(x_0=-1,x_{n+1}=1\). We prove the logarithmic bound and characterize all maximizers under this literal convention, which includes both exterior intervals.
+Source: \url{https://www.erdosproblems.com/1130}.
+
+\paragraph{The canonical input.}
+Theorems 1 and 2 of de Boor--Pinkus (1978), \url{https://doi.org/10.1016/0021-9045(78)90014-X}, imply that for \(n\geq3\) there is a unique canonical array
+\(-1=t_1^*<\cdots<t_n^*=1\) whose \(n-1\) internal interval maxima all have a common value \(\Lambda_n^*\).
+For any other canonical array, the minimum internal maximum is strictly smaller and the maximum internal maximum is strictly larger.
+We use this theorem as an explicit external input, with its endpoints fixed and its node indexing adjusted. Write \(L^*=L_{\boldsymbol t^*}\).
+
+\paragraph{Characterization with exterior intervals included.}
+The exact maximum of \(\Upsilon\) is \(\Lambda_n^*\), and all maximizers are
+\[
+ \boxed{\quad x_i=c+h t_i^*,\quad h>0,\quad
+ -1\leq c-h<c+h\leq1,\quad
+ L^*((-1-c)/h)\geq\Lambda_n^*,\
+ L^*((1-c)/h)\geq\Lambda_n^*.\quad}
+\]
+Indeed, affine normalization by \(c=(x_1+x_n)/2\), \(h=(x_n-x_1)/2\) preserves every internal maximum. Thus
+\(\Upsilon(\boldsymbol x)\leq\min_{1\leq i<n}\lambda_i\leq\Lambda_n^*\),
+with equality only if the normalized array is \(\boldsymbol t^*\).
+For this array each exterior maximum occurs at its outer endpoint: beyond the outermost node each absolute Lagrange product grows as one moves farther away. The two displayed inequalities are therefore exactly the remaining equality conditions.
+
+The canonical array is symmetric by uniqueness. Its exterior function grows strictly from \(L^*(1)=1\) to infinity, and \(\Lambda_n^*>1\).
+Let \(r_n>1\) satisfy \(L^*(r_n)=\Lambda_n^*\). The conditions become
+\[
+ |c|<1,\qquad 0<h\leq(1-|c|)/r_n.
+\]
+They are nonempty, proving attainment, and also show that maximizers need not be unique or have all \(n+1\) maxima equal. For example, with three nodes \(-t,0,t\), the internal maxima are \(5/4\), the exterior ones are \(2/t^2-1\), and every \(0<t\leq\sqrt{8/9}\) maximizes \(\Upsilon\).
+For \(n=2\), \(\Upsilon=1\) for every pair of nodes, because its internal maximum is \(1\) and all maxima are at least \(1\). For \(n=1\), likewise \(\Upsilon=1\).
+
+\paragraph{An elementary \(O(\log n)\) upper bound.}
+It remains to bound \(\Lambda_n^*\). Use the \(n\) Chebyshev zeros
+\(z_k=\cos\theta_k\), \(\theta_k=(2k-1)\pi/(2n)\).
+For \(x=\cos\theta\), their Lagrange functions satisfy
+\[
+ |l_k(\cos\theta)|
+ =\frac{|\cos n\theta|\sin\theta_k}
+ {n|\cos\theta-\cos\theta_k|}
+ \leq\frac{\pi|\cos n\theta|}{n|\theta-\theta_k|}.
+\]
+The inequality follows from
+\(\sin\theta_k\leq2\sin((\theta+\theta_k)/2)\) and
+\(\sin(|\theta-\theta_k|/2)\geq|\theta-\theta_k|/\pi\).
+Let \(k_0\) be a nearest zero angle. Then
+\(|\cos n\theta|\leq n|\theta-\theta_{k_0}|\), so the \(k_0\)-term is at most \(\pi\). For \(k\ne k_0\),
+\[
+ |\theta-\theta_k|\geq(|k-k_0|-1/2)\pi/n,
+ \qquad |l_k(\cos\theta)|\leq\frac1{|k-k_0|-1/2}.
+\]
+Consequently the sum is at most
+\(\pi+2\sum_{j=1}^{n-1}(j-1/2)^{-1}=O(\log n)\), uniformly in \(\theta\); values at nodes follow by continuity.
+Stretching these zeros so that the extreme nodes become \(-1,1\) cannot increase the maximum: the affine preimage of the domain is a subinterval of the original domain.
+Canonical optimality now gives \(\Lambda_n^*=O(\log n)\), and hence \(\Upsilon\ll\log n\) for \(n\geq2\).
+
+\paragraph{Completion estimate.}
+The logarithmic bound and complete literal maximizer characterization follow, with only the canonical extremal-node theorem imported.
+\textbf{COMPLETION: 100\%}

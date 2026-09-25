@@ -1,0 +1,40 @@
+\section*{Erd\H{o}s Problem 81: the sharp split-graph obstruction}
+\subsection*{1. Statement and scope}
+An edge-clique partition consists of cliques whose edge sets are pairwise disjoint and cover every edge. Write $\operatorname{cp}(G)$ for its minimum size. Must every chordal $n$-vertex graph satisfy $\operatorname{cp}(G)\le n^2/6+O(n)$? We prove the exact partition number of the complete split examples responsible for the proposed leading constant. The upper bound for arbitrary chordal graphs remains unresolved.
+
+\subsection*{2. The examples are chordal}
+Let $J_{a,b}$ have a clique $A$ of size $a$, an independent set $B$ of size $b$, and every cross edge. More generally every split graph is chordal: a cycle of length at least four cannot have consecutive vertices in the independent part. If it has at least three clique vertices, some pair of them is nonconsecutive on the cycle and gives a chord. If it has exactly two, they either form a chord or are consecutive, in which case the remaining path around the cycle has consecutive independent vertices, impossible. With fewer than two clique vertices such a cycle is also impossible.
+
+\subsection*{3. A lower bound for every edge-clique partition}
+A clique containing a vertex of $B$ contains exactly one such vertex and some $s\ge1$ vertices of $A$, if it covers an edge. It covers $s$ cross edges and $\binom s2$ internal edges of $A$. If $q_B$ is the number of these cliques in a partition, then their parameters satisfy $\sum_i s_i=ab$. Thus
+\[
+ ab-q_B=\sum_i(s_i-1)\le\sum_i\binom{s_i}{2}\le\binom a2.
+\]
+The last inequality uses edge-disjointness, not merely that the cliques cover the graph. All cliques lying entirely inside $A$ add to the total. Therefore
+\[
+ \operatorname{cp}(J_{a,b})\ge ab-\binom a2. \tag{1}
+\]
+This holds for any $a,b$, even when its right side is uninformative.
+
+\subsection*{4. An explicit matching partition when $b\ge a$}
+Label $A$ by $0,\ldots,a-1$. Colour the edge $\{x,y\}$ of $K_a$ by $x+y\pmod a$. For any fixed $x$, different neighbours give different colours, so each colour class is a matching. Assign its at most $a$ colours to distinct vertices $v_j$ of $B$. For every internal edge $xy$ of colour $j$, take the triangle $\{x,y,v_j\}$. These triangles are edge-disjoint: the internal edge is unique, and the matching condition prevents repeated edges from $v_j$ to a vertex of $A$.
+There are $\binom a2$ triangles, covering all internal edges and $2\binom a2$ cross edges. Cover every remaining cross edge by itself. The total is
+\[
+ \binom a2+ab-2\binom a2=ab-\binom a2,
+\]
+proving equality in (1) for $b\ge a$. The same description handles $a=1$, with no internal edges or triangles.
+
+\subsection*{5. The leading constant and the missing step}
+Take $a=\lfloor n/3\rfloor$, $b=n-a$. Then $b\ge a$ and
+\[
+ \operatorname{cp}(J_{a,b})=an-\tfrac32a^2+\tfrac12a
+ =\frac{n^2}{6}+\frac n6+O(1).
+\]
+Indeed, if $a=n/3+u$ with bounded $u$, the error is $u/2-3u^2/2$. Thus any universal leading coefficient smaller than $1/6$ fails. This is a lower obstruction, not a proof that all chordal graphs meet that coefficient.
+A tempting simplicial-vertex induction does not automatically partition edges: a clique comprising a vertex and its neighbourhood would reuse edges already assigned inside that neighbourhood. The construction above explicitly controls such reuse through matchings, but no corresponding global scheme for all chordal graphs is established.
+
+\subsection*{6. Assessment and attribution}
+The exact complete-split formula, chordality, and the asymptotic obstruction are proved. A general upper partition construction remains unresolved. The extremal example is the known one on the problem page; the detailed proof develops the earlier GPT-5.2 attempt with an explicit elementary edge-colouring and no claim of novelty or unperformed computations.
+Source: \url{https://www.erdosproblems.com/81}.
+
+\textbf{Completion rate estimate: 25\%.}

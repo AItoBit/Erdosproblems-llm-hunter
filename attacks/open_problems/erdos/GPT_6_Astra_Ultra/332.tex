@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 332: differences occurring infinitely often}
+\subsection*{Statement and scope}
+For $A\subset\mathbb N$, let
+$D(A)=\{d\in\mathbb Z:|A\cap(A+d)|=\infty\}$. Which hypotheses ensure that $D(A)$ has bounded gaps? We prove the sufficient condition of positive upper Banach density and construct a set of zero upper Banach density with $D(A)=\mathbb Z$. A general characterization is unresolved here.
+
+Source: \url{https://www.erdosproblems.com/332}. This repairs the earlier GPT-5.2 packing proof: upper Banach densities of arbitrary disjoint sets cannot be added. The corrected proof uses the fact that all sets are translates of one fixed set. The sufficient condition is classical, not a new theorem.
+
+\subsection*{The corrected common-interval packing argument}
+Write
+\[
+ d^*(A)=\limsup_{N\to\infty}\sup_{M\in\mathbb Z}
+ \frac{|A\cap[M+1,M+N]|}{N}=\delta>0.
+\]
+Suppose $A+x_1,\ldots,A+x_m$ have pairwise finite intersections. Choose intervals $I_j$ of lengths $N_j\to\infty$ on which $|A\cap I_j|/N_j\to\delta$. For each fixed shift $x_i$,
+\[
+ |(A+x_i)\cap I_j|\ge |A\cap I_j|-2|x_i|.
+\]
+This follows because translating an interval by $x_i$ changes at most $2|x_i|$ integer positions. The union of all pairwise intersections has a finite size independent of $j$. Inclusion--exclusion through its first two terms therefore gives
+\[
+ N_j\ge\left|\bigcup_i(A+x_i)\cap I_j\right|
+ \ge m|A\cap I_j|-O_{x_1,\ldots,x_m,A}(1).
+\]
+Divide by $N_j$ and let $j\to\infty$: $m\delta\le1$.
+
+Starting with shift zero, repeatedly add a shift whose translate has finite intersection with all previous translates. The preceding bound forces this procedure to stop with a finite maximal set $X$. For every $t\in\mathbb Z$, some $x\in X$ has
+$|(A+t)\cap(A+x)|=\infty$; this is also true if $t\in X$, since $A$ is infinite. Hence $t-x\in D(A)$ and
+\[
+ \mathbb Z=X+D(A). \tag{1}
+\]
+Let $L=\max X-\min X+1$. Given an interval $[v,v+L-1]$, apply (1) to $t=v+\max X$. Then $t-x\in D(A)$ for some $x\in X$, and
+$v\le t-x\le v+L-1$. Thus $D(A)$ has bounded gaps. In particular positive upper asymptotic density is sufficient.
+
+\subsection*{Zero upper Banach density can still give every difference}
+Put $d_j=1+v_2(j)$ and $M_j=2^{j^2}$, and define
+\[
+ A=\bigcup_{j\ge1}\{M_j,M_j+d_j\}.
+\]
+Every positive integer $d$ occurs as $d_j$ infinitely often, namely when $v_2(j)=d-1$. Thus $d$, $-d$, and also zero belong to $D(A)$, proving $D(A)=\mathbb Z$.
+
+Nevertheless $d^*(A)=0$. The gaps between the consecutive two-point blocks tend to infinity. For any fixed $K$, discard finitely many initial blocks so that every later inter-block gap is at least $K$. An interval of $N$ integers then meets at most $N/K+2$ of those blocks, hence contains at most $2N/K+4$ of their points. Restoring the fixed finite initial set contributes $O_K(1)$. Taking the supremum over intervals, then $N\to\infty$, gives $d^*(A)\le2/K$. Letting $K\to\infty$ proves the claim.
+
+For comparison, $A=\{2^j:j\ge0\}$ has no infinitely repeated nonzero difference: in $2^u-2^v=2^v(2^{u-v}-1)$, the $2$-adic valuation determines $v$, then the value determines $u$. Hence its $D(A)$ is just $\{0\}$.
+
+\subsection*{Remaining gap}
+The two sparse examples show that vanishing density alone does not decide the outcome. The packing argument supplies a useful sufficient hypothesis, but no necessary and sufficient condition for bounded gaps, positive density, or divergent reciprocal sum of positive elements of $D(A)$.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

@@ -1,0 +1,79 @@
+\section*{Erd\H{o}s Problem \#925: graphs that admit a triangle-free edge colouring}
+\subsection*{Statement and answer}
+Does some \(\delta>0\) force every sufficiently large \(n\)-vertex graph admitting a red-blue edge colouring without monochromatic triangles to have an independent set of size \(\gg n^{1/3+\delta}\)?
+No. We reconstruct the Alon--R\"odl random-relabeling method, using Kim's triangle-free Ramsey theorem as an explicit input, to obtain arbitrarily large counterexamples with
+\[
+\alpha(G)=O\bigl(n^{1/3}(\log n)^{4/3}\bigr). \tag{1}
+\]
+We also prove the elementary \(n^{1/3}\) lower exponent for comparison.
+
+\subsection*{The external existence input}
+Kim's theorem supplies an absolute constant \(0<c\leq1\) such that, for every sufficiently large integer \(f\), there is a triangle-free graph \(Q\) on
+\[
+q=\left\lfloor\frac{cf^2}{\log f}\right\rfloor
+\]
+vertices with \(\alpha(Q)<f\). Restricting to an induced subgraph permits this exact order. This substantial theorem is not reproved.
+
+Replace every vertex of \(Q\) by an independent set of \(r\) vertices and every edge by a complete bipartite graph between the corresponding parts. The graph \(F\), of order \(N=qr\), is triangle-free. An independent \(t\)-set meets fewer than \(f\) parts. Hence the number \(I_t(F)\) of such sets satisfies
+\[
+I_t(F)\leq\binom qf\binom{fr}{t}, \tag{2}
+\]
+provided \(q\geq f\); if \(fr<t\), there are no such sets.
+
+\subsection*{Superimposing two triangle-free graphs}
+Let \(F'\) be a uniformly randomly relabelled copy of \(F\). Each fixed \(t\)-set is independent in \(F'\) with probability \(I_t(F)/\binom Nt\). Thus the expected number independent in both copies is
+\[
+\frac{I_t(F)^2}{\binom Nt}. \tag{3}
+\]
+If (3) is less than one, some relabelling has no common independent \(t\)-set. Define \(G=F\cup F'\), colouring the edges of \(F\) red and the remaining edges of \(F'\) blue. Each colour graph is triangle-free, and \(\alpha(G)<t\). Intersections of the two edge sets cause no problem: the blue graph is a subgraph of \(F'\).
+
+\subsection*{Choosing the parameters}
+For a large integer \(t\), take
+\[
+f=\left\lfloor\frac{t}{4\log t}\right\rfloor,\qquad
+q=\left\lfloor\frac{cf^2}{\log f}\right\rfloor,\qquad
+r=\left\lfloor\frac{tq}{100f^2}\right\rfloor.
+\]
+All three parameters tend to infinity, and \(q\geq f\) eventually. Using
+\(\binom ab\leq(ea/b)^b\) and \(\binom Nt\geq(N/t)^t\), equations (2)--(3) give, when \(fr\geq t\),
+\[
+\frac{I_t(F)^2}{\binom Nt}
+\leq
+\left[
+\left(\frac{eq}{f}\right)^{2f/t}
+\frac{e^2f^2r}{tq}
+\right]^t
+\leq\left(\frac{e^3}{100}\right)^t<1. \tag{4}
+\]
+Here \(\log(eq/f)\leq2\log t\), so the first factor in brackets is at most \(e\); the definition of \(r\) bounds the second by \(e^2/100\). If \(fr<t\), the same conclusion holds trivially.
+
+The quantities being rounded tend to infinity, so each floor changes its positive argument by a bounded factor. Therefore
+\[
+N=qr\asymp \frac{tq^2}{f^2}
+\asymp \frac{tf^2}{(\log f)^2}
+\asymp \frac{t^3}{(\log t)^4}. \tag{5}
+\]
+Since \(\log N\asymp\log t\), equation (5) implies (1).
+
+For every fixed \(\delta>0\),
+\[
+\frac{\alpha(G)}{N^{1/3+\delta}}
+<\frac{t}{N^{1/3+\delta}}
+\ll \frac{(\log t)^{4/3+4\delta}}{t^{3\delta}}
+\longrightarrow0.
+\]
+As \(N\to\infty\), these examples contradict any proposed positive constant in the lower bound from the question. An unbounded sequence of orders suffices to refute a statement required at every sufficiently large order.
+
+\subsection*{Why the baseline exponent \(1/3\) is natural}
+Let \(R(3,3,t)\) be the three-colour Ramsey number with triangle targets in the first two colours and a \(t\)-clique target in the third. The vertex-neighbourhood argument gives
+\[
+R(3,3,t)\leq R(2,3,t)+R(3,2,t)+R(3,3,t-1).
+\]
+Also \(R(2,3,t)=R(3,t)\leq\binom{t+1}{2}\), by the ordinary two-colour recurrence. Starting from \(R(3,3,1)=1\), summation yields \(R(3,3,t)=O(t^3)\).
+
+In a red-blue triangle-free colouring of \(G\), colour every missing edge with a third colour. The only Ramsey outcome is a third-colour clique, which is an independent set of \(G\). Choosing \(t\) a sufficiently small constant multiple of \(n^{1/3}\) proves \(\alpha(G)\gg n^{1/3}\), without any deep theorem.
+
+\subsection*{Attribution and scope}
+The relabeling method and blow-up simplification are recorded by N. Alon and V. R\"odl, \emph{Sharp bounds for some multicolor Ramsey numbers}, \url{https://web.math.princeton.edu/~nalon/PDFS/arodl4.pdf}, Lemma 3.1 and Section 4. The only deep input is J. H. Kim's triangle-free Ramsey theorem (1995), \url{https://doi.org/10.1002/rsa.3240070302}. The same underlying argument is reconstructed in the local attempt for Problem 553; it is spelled out here for this question's quantifiers. Current statement: \url{https://www.erdosproblems.com/925}, checked 24 September 2026. No novelty or formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

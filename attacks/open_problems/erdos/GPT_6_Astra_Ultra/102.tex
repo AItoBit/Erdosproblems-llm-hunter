@@ -1,0 +1,68 @@
+\section*{Erd\H{o}s Problem 102: many rich lines with small maximum collinearity}
+
+\subsection*{1. Statement and scope}
+For a fixed $c>0$, consider $n$-point planar sets determining at least $cn^2$ lines with four or more points. Let $h_c(n)$ denote the largest universally guaranteed number of collinear points, equivalently the minimum, over these admissible sets, of their maximum collinearity. This interpretation is used only when the admissible class is nonempty. The question whether $h_c(n)\to\infty$ remains unresolved.
+
+We prove in detail the high-dimensional grid and generic-projection construction attributed to Zach Hunter on the problem page. It rules out a universal square-root lower order, but does not rule out divergence. More generally, for every fixed pair of integers $d\ge2$ and $k\ge4$, we obtain a positive explicit $c_{d,k}$ and, for all sufficiently large $n$, planar sets with at least $(c_{d,k}/2)n^2$ lines containing at least $k$ points and with no line containing more than $n^{1/d}$ points.
+
+\subsection*{2. Counting long directions in a grid}
+Let $m\ge4k$, let $G=\{1,\ldots,m\}^d$, and put $M=\lfloor m/(2k)\rfloor$. Call a positive integer vector $v=(v_1,\ldots,v_d)\in\{1,\ldots,M\}^d$ primitive if its coordinates have greatest common divisor one. The number of nonprimitive vectors is at most
+\[
+ \sum_{a=2}^M\lfloor M/a\rfloor^d
+ \le M^d\sum_{a=2}^{\infty}a^{-d}<\frac23 M^d.\tag{1}
+\]
+For completeness, when $d\ge2$ the last series is bounded by
+$\sum_{a=2}^5a^{-2}+\int_5^\infty x^{-2}\,dx<2/3$.
+There are at least $M^d/3$ primitive vectors. At most $(M/2)^d\le M^d/4$ vectors have every coordinate at most $M/2$, so at least
+\[
+ M^d/12\tag{2}
+\]
+primitive vectors have $\max_i v_i>M/2$.
+
+For each such vector and each start point $u\in\{1,\ldots,\lfloor m/2\rfloor\}^d$, the points
+\[
+ u,\ u+v,\ldots,u+(k-1)v
+\]
+lie in $G$, since every coordinate of the last point is at most $m/2+(k-1)m/(2k)<m$. Thus they determine a line with at least $k$ grid points.
+
+We must bound repetitions of the same line in this count. A line has at most one positive primitive integer direction vector. Furthermore, two integer points on a line in primitive direction $v$ differ by an integer multiple of $v$: if their difference is $tv$, integer coefficients expressing $\gcd(v_1,\ldots,v_d)=1$ as a combination of the coordinates show that $t$ is an integer. The coordinate with $v_i>M/2$ consequently bounds the total number of grid points on that line by
+\[
+ 1+\frac{m-1}{v_i}<1+\frac{2m}{M}\le1+8k.\tag{3}
+\]
+In particular, no line arises from more than $1+8k$ start points. Using $\lfloor m/2\rfloor\ge m/3$ and $M\ge m/(4k)$, the number of distinct $k$-rich lines is at least
+\[
+ \frac{\lfloor m/2\rfloor^dM^d}{12(1+8k)}
+ \ge c_{d,k}m^{2d},\qquad
+ c_{d,k}=\frac1{12(1+8k)(12k)^d}.\tag{4}
+\]
+On the other hand, every line in $\mathbb R^d$ has at most $m$ points of $G$. Choose a coordinate in which its direction is nonzero; that coordinate is injective along the line and takes only $m$ values on the grid. This upper bound concerns all lines, not merely the positive directions counted above.
+
+\subsection*{3. Projection without new collinearities}
+There is a linear map $T:\mathbb R^d\to\mathbb R^2$ that is injective on $G$ and sends no noncollinear triple of grid points to a collinear triple. Here is a finite algebraic proof of its existence.
+
+For each distinct pair $a,b\in G$, the condition $T(a-b)=0$ is a proper linear condition on the $2d$ entries of $T$; equivalently $\|T(a-b)\|^2$ is a nonzero polynomial in those entries. For each noncollinear triple $a,b,c$, the determinant
+\[
+ \det\bigl(T(b-a),T(c-a)\bigr)
+\]
+is also a nonzero polynomial: choose a linear map taking the two independent vectors $b-a,c-a$ to the standard basis of $\mathbb R^2$. The product of these finitely many nonzero polynomials is nonzero. A nonzero real polynomial has some nonzero value, as follows by induction on its number of variables from the one-variable root bound. Choosing $T$ there avoids all prohibited conditions simultaneously.
+
+Every old collinearity is preserved by linearity, and none is created among distinct grid points. Rich lines counted in (4) stay distinct: if two distinct old lines merged, choose two points on the first and a point of the second outside the first to obtain a newly collinear triple. Similarly, any line containing at least three projected points comes from collinear grid points. It follows that $T(G)$ is an $m^d$-point planar set with at least $c_{d,k}m^{2d}$ $k$-rich lines and maximum collinearity at most $m$.
+
+\subsection*{4. Arbitrary orders and the limitation of this construction}
+For an arbitrary large $n$, take $m=\lfloor n^{1/d}\rfloor$. Then $n_0=m^d$ satisfies $n_0/n\to1$. Add $n-n_0$ points one at a time, avoiding every line determined by two existing points. This is possible because only finitely many lines are forbidden at each step. No new collinear triple appears, so old rich lines persist and maximum collinearity remains at most $m$ once $m\ge k$. For sufficiently large $n$, (4) gives at least $(c_{d,k}/2)n^2$ rich lines. In particular,
+\[
+ h_c(n)\le\lfloor n^{1/d}\rfloor
+ \quad\text{if }0<c\le c_{d,4}/2,
+ \quad n\text{ sufficiently large}.\tag{5}
+\]
+Already $d=3$ disproves a proposed general lower estimate $h_c(n)\gg_c\sqrt n$ for all fixed positive $c$. Since $c_{d,4}/2$ decreases exponentially with $d$, taking the largest permitted $d$ also gives the upper exponent $O(1/\log(1/c))$ as $c\downarrow0$.
+
+For each fixed choice of $c$ supplied by this construction, however, $d$ is fixed and the bound $n^{1/d}$ still tends to infinity. Thus (5) does not refute the actual divergence question. Nor does it prove any lower bound tending to infinity: even forcing five collinear points in the stated dense four-rich-line regime is not established here.
+
+\subsection*{5. Attribution and assessment}
+The grid/projection idea is Hunter's construction, recorded on the current problem page. The direction count, primitive-vector repetition bound, generic projection argument, padding step and explicit constants are proved here. No novelty is claimed. The remaining lower-bound problem is explicit.
+
+Source: \url{https://www.erdosproblems.com/102}.
+
+\textbf{Completion rate estimate: 35\%.}
+

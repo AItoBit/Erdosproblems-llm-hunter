@@ -1,0 +1,54 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 131: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $F(N)$ be the largest size of a set $A\subseteq[1,N]\cap\mathbb Z$ for which no $a\in A$ divides the sum of a nonempty subset of $A\setminus\{a\}$. Estimate $F(N)$; in particular, could it be $N^{1/2-o(1)}$? Source: \url{https://www.erdosproblems.com/131}.
+We prove a transfer between non-averaging and non-dividing sets. Combined with one declared external theorem it gives
+\[
+ N^{1/5-o(1)}\le F(N)\le N^{1/4+o(1)}.
+\]
+The square-root proposal is therefore false, but the exact growth remains unresolved.
+
+\section*{Non-averaging means every subset size}
+A set $B$ is non-averaging if no member is the arithmetic mean of a nonempty subset of the other members. Every non-dividing set is non-averaging: an equality $ta=\sum_{b\in S}b$, where $t=|S|$, gives the forbidden divisibility. Merely excluding three-term progressions would not establish this implication for larger subsets.
+The external input is Pham--Zakharov, \emph{Sharp bound for the Erd\H{o}s--Straus non-averaging set problem}, \url{https://arxiv.org/abs/2410.14624}. It states that the maximal size of a non-averaging subset of $[1,H]$ is $H^{1/4+o(1)}$. Its structural proof is not reproduced here. Applying its upper bound immediately gives $F(N)\le N^{1/4+o(1)}$.
+
+\section*{A converse transfer with a larger ambient interval}
+Let $B\subseteq[1,H]$ be non-averaging and $k=|B|$. Put $M=kH$ and
+\[
+ A=M+B\subseteq[1,(k+1)H].
+\]
+We claim $A$ is non-dividing. If $M+b$ divides the sum of $t$ other members, with $1\le t\le k-1$, write
+\[
+ q(M+b)=tM+\sum_{c\in S}c.
+\]
+Subtracting $t(M+b)$ gives
+\[
+ (q-t)(M+b)=\sum_{c\in S}c-tb.
+\]
+The right side has absolute value at most $t(H-1)<M+b$. Consequently the integer $q-t$ is zero, which would make $b$ the average of $S$, a contradiction.
+
+Fix any $0<\varepsilon<1/4$, let $H=\lfloor N^{4/5}\rfloor$, and take a non-averaging set of exactly $k=\lfloor H^{1/4-\varepsilon}\rfloor$ elements. Such a set exists for all large $H$ by the lower direction of the stated theorem and heredity under taking subsets. Since
+\[
+ (k+1)H\le H^{5/4-\varepsilon}+H\le N
+\]
+eventually, the transfer yields
+$F(N)\ge N^{1/5-(4/5)\varepsilon+o(1)}$.
+As $\varepsilon$ is arbitrary this proves the displayed lower exponent. It does not assert a uniform positive constant times $N^{1/5}$ from this theorem alone.
+
+\section*{An elementary explicit family and a finite criterion}
+The powers $B=\{2^j:0\le j<k\}$ are non-averaging. Indeed, for a putative average $2^j$, if the smallest exponent among the other summands is $i<j$, their sum has exact 2-adic valuation $i$, whereas $t2^j$ has valuation at least $j$. If that smallest exponent exceeds $j$, every summand is larger than the proposed average. These are the only cases because $2^j$ itself is excluded.
+Thus the transfer produces an explicit $k$-element non-dividing set inside $[1,(k+1)2^{k-1}]$ without external combinatorics.
+
+To check a finite candidate exactly, for each $a\in A$ form all residues modulo $a$ of nonempty subset sums of $A\setminus\{a\}$. The condition is precisely that zero is absent. These residues can be generated successively by retaining old nonempty residues, adding the new singleton residue, and adding the new element to every old residue. The empty subset must not be counted as a forbidden representation of zero.
+
+\section*{Assessment and provenance}
+The subset-average implication and the translation transfer are fully proved; the sharp non-averaging theorem supplies the two asymptotic bounds. The original GPT-Pro-5.2 draft checked only three-term progressions and supplied unreproduced numerical tables; neither is used as evidence here. Determining the exponent between $1/5$ and $1/4$ is the remaining problem. No novelty claim is made.
+
+\textbf{Completion rate estimate: 40\%.}
+\end{document}

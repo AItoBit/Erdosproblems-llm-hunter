@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1180: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For $\epsilon>0$, the question asks for a constant number of summands, independent of the prime $p$, sufficient to express every residue modulo $p$ as a sum of reciprocals of integers at most $p^\epsilon$. Repeated summands are permitted by this formulation; denominators divisible by $p$ are, of course, excluded.
+
+The full question has an affirmative answer. Glibichuk's primary abstract gives, for sufficiently large $p$, the stronger distinct-denominator conclusion with
+\[
+ C_\epsilon=8\bigl(\lfloor1/\epsilon+1/2\rfloor+1\bigr)^2;
+\]
+see \emph{Combinational properties of sets of residues modulo a prime and the Erd\H{o}s--Graham problem}, \url{https://www.mathnet.ru/eng/mzm2708}. We do not reconstruct its small-$\epsilon$ sum-product argument here. This attempt proves the result for every $\epsilon>1/2$, including distinct denominators for large primes, and the general counting obstruction. The range $0<\epsilon\le1/2$ remains unresolved within this attempt.
+
+\section*{Fourier completion and its exact input}
+It suffices first to take $1/2<\epsilon<1$. Write $H=\lfloor p^\epsilon\rfloor$, $e_p(t)=\exp(2\pi it/p)$, and
+\[
+ S(a)=\sum_{1\le x\le H}e_p(a/x).
+\]
+We use the classical Weil bound for complete Kloosterman sums as an explicit standard external theorem; see Conrad, equation (1), \url{https://kconrad.math.uconn.edu/articles/kloosterman.pdf}:
+\[
+ \left|\sum_{x\in\mathbb F_p^*}e_p(ax^{-1}+bx)\right|\le2\sqrt p
+ \quad(a,b\ne0).
+\]
+For $b=0$, $a\ne0$, the sum is $-1$ by the bijection $x\mapsto x^{-1}$ and additive-character orthogonality. Let $I$ be the indicator of $\{1,\ldots,H\}$ in $\mathbb F_p$. Fourier inversion therefore gives, for $a\ne0$,
+\[
+ |S(a)|\le\frac{2\sqrt p}{p}\sum_{b\in\mathbb F_p}|\widehat I(b)|
+ \ll\sqrt p\log p=:M.\tag{1}
+\]
+Indeed $|\widehat I(b)|\le\min(H,1/|\sin(\pi b/p)|)$ by the geometric-sum formula. Pairing $b$ and $p-b$ and using $\sin(\pi b/p)\ge2b/p$ for $1\le b\le p/2$ shows that the sum of these bounds is $O(p\log p)$. All constants in (1) are absolute.
+
+\section*{A bounded number of sums for every exponent above one half}
+Let $r_k(c)$ count ordered $k$-tuples of denominators from $[1,H]$ whose inverse sum is $c$. Character orthogonality gives
+\[
+ r_k(c)=\frac{H^k}{p}+\frac1p\sum_{a\ne0}S(a)^k e_p(-ac).
+\]
+Since inversion is injective on $[1,H]$, Parseval gives $\sum_a|S(a)|^2=pH$. Thus, for any integer $k\ge2$,
+\[
+ \left|r_k(c)-\frac{H^k}{p}\right|\le H M^{k-2}.\tag{2}
+\]
+Choose a fixed integer $k>\epsilon/(\epsilon-1/2)$. This is at least $3$ in the present range. The ratio of the error in (2) to its main term is at most
+\[
+ \frac{pM^{k-2}}{H^{k-1}}
+ \ll_\epsilon p^{k/2-(k-1)\epsilon}(\log p)^{k-2}=o(1),
+\]
+because the exponent is negative by our choice of $k$. Uniformly for every residue $c$, we therefore have $r_k(c)=(1+o(1))H^k/p>0$.
+
+We can even require distinct denominators. For any fixed pair of positions forced equal, choose their common denominator and the other $k-3$ freely specified positions. There are at most $H^{k-2}$ choices. The remaining position has at most one possible denominator, since its inverse is then determined. Consequently the number of representations with any repeated denominator is at most $\binom{k}{2}H^{k-2}$. Relative to $H^k/p$ this is $O_k(p/H^2)=o(1)$. A distinct representation therefore exists for every $c$ once $p$ is sufficiently large.
+
+For the finitely many smaller primes, sums of $1=1^{-1}$ represent every nonzero residue with at most $p-1$ terms and zero with at most $p$ terms. Increasing the constant to cover these finitely many primes proves the original repeated-summand statement for all primes. For $\epsilon\ge1$, denominators $1,\ldots,p-1$ already supply every nonzero inverse residue, and two such residues sum to zero (also for $p=2$); thus two summands suffice.
+
+\section*{The unavoidable lower bound and the missing range}
+If at most $C$ terms are permitted from a set of $H$ denominators, the number of ordered descriptions is at most $\sum_{j=0}^C H^j\le(C+1)H^C$. Covering all $p$ residues requires $p\le(C+1)p^{\epsilon C}$. Letting $p\to\infty$ proves $\epsilon C\ge1$ for any fixed valid constant $C$. This is a counting obstruction, not a matching upper bound.
+
+For $\epsilon\le1/2$, the Kloosterman completion bound (1) is not smaller than the trivial bound $H$, and the exponent in (2) cannot be made negative by any fixed $k$. The proof therefore stops at a real analytic barrier. The sum-product amplification needed below that barrier is not supplied here; the cited known full result is context rather than a claim that this attempt proves it.
+
+\textbf{Completion rate estimate: 60\%.}
+
+\end{document}

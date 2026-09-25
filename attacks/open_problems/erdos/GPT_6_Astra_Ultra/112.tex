@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 112: independent sets or transitive tournaments}
+\subsection*{Statement and correction}
+Let $k(n,m)$ be the least $N$ such that every oriented graph on $N$ vertices contains an independent $n$-set or a transitive tournament on $m$ vertices. We estimate this number; the general sharp growth question is unresolved here. Oriented means at most one directed edge on each unordered pair. The same bounds apply if both directions are allowed and the tournament is a subgraph, rather than an induced subgraph: retain one arc from every adjacent pair, apply the result, and restore the discarded arcs.
+
+This replaces the earlier GPT-5.2 attempt's unjustified exact formula for tournament Ramsey numbers. In particular, the standard induction gives an upper bound, not equality for all $m$. Source statement and references: \url{https://www.erdosproblems.com/112}. All results below are elementary Ramsey bounds, not new extremal claims.
+
+\subsection*{A recurrence}
+The boundary values are $k(1,m)=k(n,1)=1$ and $k(n,2)=n$. For $n,m\ge2$,
+\[
+ k(n,m)\le k(n-1,m)+2k(n,m-1)-1. \tag{1}
+\]
+At a vertex $v$, partition all other vertices into its out-neighbours, in-neighbours, and non-neighbours. If the graph avoids both target configurations, each of the first two classes has at most $k(n,m-1)-1$ vertices: a transitive $(m-1)$-tournament there extends with $v$ as source or sink. The third class has at most $k(n-1,m)-1$ vertices, because an independent $(n-1)$-set extends with $v$. Adding $v$ proves (1).
+
+In particular,
+\[
+ k(n,3)\le n^2,
+\]
+by summing $k(n,3)\le k(n-1,3)+2n-1$ from the boundary $k(1,3)=1$. More generally (1) inductively gives $k(n,m)=O_m(n^{m-1})$ for each fixed $m$: summing a polynomial bound of degree $m-2$ produces one of degree $m-1$.
+
+\subsection*{The tournament boundary and lower bounds}
+Write $T(m)=k(2,m)$. Formula (1) gives
+\[
+ T(m)\le2T(m-1),\qquad T(2)=2,
+\]
+and therefore $T(m)\le2^{m-1}$. A random tournament on $N$ vertices has expected number of transitive $m$-sets
+\[
+ {N\choose m}\frac{m!}{2^{\binom m2}}
+ \le N^m2^{-\binom m2}.
+\]
+Here there are exactly $m!$ transitive orientations on a labelled $m$-set, one for each linear order. Whenever $N^m<2^{\binom m2}$, some $N$-vertex tournament has no transitive $m$-set. Taking $n-1$ disjoint copies gives an oriented graph with independence number $n-1$ and no transitive $m$-tournament. Thus
+\[
+ k(n,m)\ge(n-1)N+1
+ \quad\hbox{whenever }N^m<2^{\binom m2}. \tag{2}
+\]
+Exactly $T(3)=4$: a cyclic triangle supplies the lower bound, while any four-vertex tournament has a vertex with two out-neighbours or two in-neighbours, which together form a transitive triangle.
+
+\subsection*{Comparison with ordinary Ramsey numbers}
+Let $R(n,m)$ be the undirected Ramsey number and $R(n,m,m)$ its three-colour counterpart. Then
+\[
+ R(n,m)\le k(n,m)\le R(n,m,m). \tag{3}
+\]
+For the lower bound orient arbitrarily a graph on $R(n,m)-1$ vertices with no independent $n$-set and no $m$-clique. A transitive tournament would require such a clique. For the upper bound order the vertices and colour each pair as a non-edge, a forward edge, or a backward edge. Either edge colour on an $m$-set gives a transitive tournament in that order or its reverse.
+
+\subsection*{Remaining gap}
+The polynomial upper bound for fixed $m$, the exponential tournament bounds, and (3) do not determine the sharp asymptotics or the sought joint dependence on $n,m$. No equality $T(m)=2^{m-1}$ is inferred.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

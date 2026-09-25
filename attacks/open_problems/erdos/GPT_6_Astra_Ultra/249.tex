@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 249: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Is $S=\sum_{n\ge1}\varphi(n)2^{-n}$ irrational? The question is unresolved here. Source: \url{https://www.erdosproblems.com/249}. We retain the valid convolution identities from the earlier GPT-5.2 attempt and give a precise carry-control criterion and a CRT construction showing why divisibility blocks alone do not prove it. No novelty or irrationality claim is made.
+
+\section*{Two absolutely convergent identities}
+Since $0<\varphi(n)\le n$,
+\[
+ 0<\sum_{n>N}\frac{\varphi(n)}{2^n}\le\frac{N+2}{2^N}. \tag{1}
+\]
+The elementary convolution formula $\varphi(n)=\sum_{d\mid n}\mu(d)n/d$ gives, for $|z|<1$,
+\[
+ \sum_{n\ge1}\varphi(n)z^n
+ =\sum_{d\ge1}\mu(d)\sum_{m\ge1}m z^{dm}
+ =\sum_{d\ge1}\mu(d)\frac{z^d}{(1-z^d)^2}. \tag{2}
+\]
+The interchange is justified by the majorant $\sum_d |z|^d/(1-|z|)^2<\infty$. Hence $S=\sum_d\mu(d)2^d/(2^d-1)^2$.
+
+Put $b=\varphi*\mu$. Then $b*1=\varphi$ and a second expansion gives
+\[
+ S=\sum_{m\ge1}\frac{b(m)}{2^m-1}. \tag{3}
+\]
+Here $|b(m)|\le\sum_{d\mid m}\varphi(d)=m$, so absolute convergence again justifies exchanging the sums. Neither the rational terms in (2) nor those in (3) alone force an irrational sum.
+
+\section*{An exact sufficient criterion}
+For integers $m\ge0$, let
+\[
+ T_m=\sum_{j\ge1}\frac{\varphi(m+j)}{2^j}.
+\]
+Then $2^mS$ differs from $T_m$ by an integer. If $S=a/b$ is rational with $b\ge1$, every $T_m$ lies in the lattice $b^{-1}\mathbb Z$.
+
+Suppose there are pairs $(m,L)$, with $L\to\infty$, such that
+\[
+ 2^j\mid\varphi(m+j)\quad(1\le j\le L),
+ \qquad \frac{m+L+2}{2^L}\longrightarrow0. \tag{4}
+\]
+The first $L$ terms of $T_m$ then sum to an integer $I$. Its remaining tail satisfies
+\[
+ 0<T_m-I\le\sum_{j>L}\frac{m+j}{2^j}
+ =\frac{m+L+2}{2^L}.
+\]
+For a sufficiently late pair in (4), this lies strictly between $0$ and $1/b$, contradicting $T_m-I\in b^{-1}\mathbb Z$. Therefore (4) would prove irrationality. This argument deals explicitly with carries from all later coefficients.
+
+\section*{Divisibility blocks exist, but their locations are uncontrolled}
+For any fixed $L$, choose disjoint sets $\mathcal P_j$ of $j$ distinct odd primes, $1\le j\le L$. By CRT there are arbitrarily large positive integers $m$ satisfying
+\[
+ m+j\equiv0\pmod p\quad(p\in\mathcal P_j).
+\]
+Every indicated odd prime factor contributes an even factor $p-1$ to the product formula for $\varphi(m+j)$. Thus $2^j\mid\varphi(m+j)$ for all $j\le L$. This proves arbitrarily long blocks of the first condition in (4), without any prime-in-progression hypothesis.
+
+It does not establish the second condition. For example, using the first $L(L+1)/2$ odd primes gives a CRT modulus $P$ far larger than $2^L$: merely because these are distinct integers, $P\ge (L(L+1)/2)!$. The available bound on the least nonnegative representative, $m<P$, therefore gives no bound of the required form $m=o(2^L)$. It does not prove that the representative is large either; it simply fails to control it sufficiently. Passing to later representatives only worsens the tail bound.
+
+\section*{Remaining gap}
+The exact arithmetic identities, positive tail bound and divisibility construction are proved. The missing estimate is an appropriately early long block, or another way of making the nonintegral tail simultaneously positive and arbitrarily small. Rapid convergence and a long numerical decimal expansion do not supply that estimate. No unsupported computation from the older draft is carried over.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

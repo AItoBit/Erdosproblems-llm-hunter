@@ -1,0 +1,33 @@
+\section*{Erd\H{o}s Problem 107: convex polygons}
+\subsection*{Statement and scope}
+Let $f(n)$ be the least $N$ such that every $N$ planar points, with no three collinear, contain $n$ points in convex position. The conjecture is $f(n)=2^{n-2}+1$. This attempt proves the classical cup--cap upper bound and the exact case $f(4)=5$; the conjecture is unresolved here.
+
+This revises the earlier GPT-5.2 attempts. Their proposed small-case proofs used invalid implications concerning empty triangles or triangulation edges. The arguments below replace those steps. The cup--cap method is classical Erd\H{o}s--Szekeres mathematics, not a new result. Current statement and historical references: \url{https://www.erdosproblems.com/107}.
+
+\subsection*{A complete cup--cap recurrence}
+Rotate the axes so that all $x$ coordinates are distinct. A $k$-cup is a sequence of $k$ points in increasing $x$ order whose successive slopes strictly increase; a $k$-cap has strictly decreasing successive slopes. Such points are in convex position: every intermediate point of a cup is strictly below the chord joining any earlier and later points, and the reverse holds for a cap.
+
+Let $M(a,b)$ be the largest number of points having neither an $a$-cup nor a $b$-cap. For $a,b\ge2$,
+\[
+ M(a,b)\le {a+b-4\choose a-2}. \tag{1}
+\]
+The boundary values $M(2,b)=M(a,2)=1$ follow because any two points constitute both a cup and a cap. For $a,b\ge3$, partition a counterexample into $A$, the points which end an $(a-1)$-cup, and its complement $B$. The set $B$ has neither an $(a-1)$-cup nor a $b$-cap.
+
+The set $A$ has no $(b-1)$-cap. Indeed, suppose $q_1,\ldots,q_{b-1}$ were one. Choose an $(a-1)$-cup ending at $q_1$, with penultimate point $p$. If the slope $pq_1$ is smaller than the slope $q_1q_2$, appending $q_2$ produces an $a$-cup. If it is larger, prepending $p$ produces a $b$-cap. Equality would make $p,q_1,q_2$ collinear. All alternatives are impossible. Thus
+\[
+ |A|\le M(a,b-1),\qquad |B|\le M(a-1,b).
+\]
+Induction and Pascal's identity prove (1), including finiteness of the maxima. Taking $a=b=n$ gives
+\[
+ f(n)\le {2n-4\choose n-2}+1. \tag{2}
+\]
+
+\subsection*{The exact four-point case}
+Four points consisting of a triangle and a strictly interior point show $f(4)\ge5$. Now take five points. If their convex hull has at least four vertices, we are done. Otherwise its vertices are $A,B,C$, and the remaining points $D,E$ are strictly inside that triangle. The line $DE$ separates the three triangle vertices into one on one side and two on the other; it cannot leave all three strictly on the same side while containing interior points of the triangle. Relabel so that $B,C$ lie on the same side of $DE$.
+
+In the four-point set $\{B,C,D,E\}$, the line $DE$ is a supporting line, and the line $BC$ is also a supporting line because $D,E$ lie inside $ABC$. General position makes both $DE$ and $BC$ edges of this four-point convex hull, with four different endpoints. Hence all four points are vertices, proving $f(4)=5$.
+
+\subsection*{Remaining gap}
+The recurrence controls cups and caps relative to one direction and yields the much larger bound (2). It does not show that every set of $2^{n-2}+1$ points contains an arbitrary convex $n$-gon. Proving that sharper upper bound, or giving a counterexample, is the missing part.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

@@ -396,7 +396,7 @@ def build_erdos_data():
     Problem statements are NOT included - users are directed to
     erdosproblems.com for the actual problem content.
     """
-    attacks_dir = ATTACKS_DIR / "erdos"
+    attacks_dir = ATTACKS_DIR / "open_problems" / "erdos"
     problems_list = load_erdos_problems_list()
     status_snapshot = load_erdos_status()
     for problem_num in status_snapshot['problems']:
@@ -615,7 +615,7 @@ def build_open_problems_data(mo_problems=None, snapshot=None):
     attacks_dir = ATTACKS_DIR / 'open_problems'
     if attacks_dir.exists():
         for model_dir in sorted(attacks_dir.iterdir()):
-            if not model_dir.is_dir() or model_dir.name.startswith('.') or model_dir.name == 'mo':
+            if not model_dir.is_dir() or model_dir.name.startswith('.') or model_dir.name in {'mo', 'erdos'}:
                 continue
             for tex_file in sorted(model_dir.glob('*.tex')):
                 match = re.fullmatch(r'(?P<id>problem\.[a-z0-9.-]+)(?:_v(?P<ver>[1-9]\d*))?', tex_file.stem)

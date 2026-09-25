@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 868: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and current resolution}
+If an asymptotic additive basis $A\subseteq\mathbb N$ of order two has representation function tending to infinity, must it contain a minimal asymptotic basis? What if its representation function is at least $\varepsilon\log n$? Both assertions are false, by Daniel Larsen and Michael Larsen, \emph{Robust additive bases without minimal subbases}, \url{https://raw.githubusercontent.com/Larsen-Daniel/Erdos-868/main/868.pdf}. This attempt proves the obstruction mechanism and a logarithmic random-basis estimate, but does not reconstruct the probabilistic surgery needed to combine them. Its proof status is therefore unresolved, despite the known negative resolution.
+
+We use unordered representations $r_A(n)=|\{(a,b)\in A^2:a\le b,\ a+b=n\}|$. The ordered convention in the question lies between $r_A(n)$ and $2r_A(n)$ and gives the same divergence and positive-logarithmic-lower-bound questions.
+
+\section*{A proved obstruction criterion}
+Suppose the sufficiently large integers are covered by two sets $B,C$, and $A$ is a basis with the following properties.
+\begin{enumerate}
+\item For each sufficiently large $c\in C$ choose at least three distinct unordered representations $c=a_i+a_i'$ in $A$. For every set $S$ formed by choosing one endpoint from all but one of these pairs, there is a witness $b=b(c,S)\in B$, with $b>2\max S$, such that the complete list of representations of $b$ in $A$ is $s+(b-s)$, $s\in S$.
+\item The witnesses $b(c,S)$ tend to infinity uniformly as $c\to\infty$.
+\item The smallest summand in any representation in $A$ of $b\in B$ tends to infinity as $b\to\infty$.
+\end{enumerate}
+Then $A$ has no minimal subbasis. To prove this, let $D\subseteq A$ be any subbasis. If a large $c\in C$ had at most one representation in $D$, from every other selected representation choose an endpoint outside $D$. This gives a set $S\subseteq A\setminus D$, and therefore a witness $b$ with no representation in $D$, a contradiction when $c$ is large. Thus $r_D(c)\ge2$ eventually on $C$. Deleting any fixed $d\in D$ destroys at most one unordered representation of any integer, so $D\setminus\{d\}$ still represents the large members of $C$. By property 3 it also still represents the large members of $B$. It is consequently a basis, and $D$ is not minimal.
+
+For a fixed sum, distinct unordered representation pairs are disjoint as sets of summands, apart from the harmless singleton diagonal pair. Thus the endpoint selections in this criterion are well defined; they do not tacitly require independent choices among overlapping pairs. The condition $b>2\max S$ makes their newly planted witness representations distinct.
+
+\section*{Why the logarithmic scale is compatible with a sparse basis}
+Here is a complete elementary probability calculation. Select each integer $x$ independently with probability
+\[
+ p_x=\min\{1,K\sqrt{\log(x+1)/x}\},
+\]
+where $K$ is a sufficiently large constant. For a large $n$, use the pairs $\{a,n-a\}$ with $\lceil n/3\rceil\le a< n/2$. These are disjoint, so their inclusion indicators are independent. There are at least $n/7$ such pairs, and each is included with probability at least $K^2\log n/(2n)$ once $n$ is large. Their expected count is at least $K^2\log n/14$. The elementary Chernoff estimate $\mathbb P(X<\mathbb EX/2)\le\exp(-\mathbb EX/8)$ gives
+\[
+ \mathbb P\left(r_A(n)<K^2\log n/28\right)\le n^{-K^2/112}.
+\]
+Choosing, for example, $K=40$ makes these probabilities summable. The union bound on tails (equivalently the first Borel--Cantelli lemma) shows that almost surely $r_A(n)\gg\log n$ for every sufficiently large $n$. Also
+\[
+ \mathbb E|A\cap[1,X]|\ll_K\sqrt{X\log(X+1)}:
+\]
+use $p_x\le K\sqrt{\log(X+1)}x^{-1/2}$ and $\sum_{x\le X}x^{-1/2}\le2\sqrt X$. Thus a logarithmic representation lower bound is naturally available before surgery.
+
+\section*{The precise missing step}
+The random basis just constructed has not been shown to satisfy the obstruction criterion. Planting $b-S$ may introduce unwanted representations of other witnesses; deleting old representations of $b$ may destroy too many representations elsewhere. Larsen--Larsen address exactly these interactions on intervals $[X_j,X_{j+1})$, $X_j=2^{2^j}$: their Proposition 5 bounds simultaneous additive collisions, Lemma 7 bounds damage by $37$ representations, and Lemmas 9--10 provide the coverage and exact witness properties. Their construction gives the positive constant $15/(512\log2)$ in the unordered convention. These surgery estimates are reported as source results, not proved or silently assumed in this attempt.
+
+The established progress is the complete implication from the witness mechanism to absence of minimal subbases, including deletion and quantifier checks, and the separate logarithmic random-basis estimate. The unproved compatibility of the two constructions prevents this file from claiming a complete independent counterexample.
+
+\textbf{Completion rate estimate: 65\%.}
+
+\end{document}

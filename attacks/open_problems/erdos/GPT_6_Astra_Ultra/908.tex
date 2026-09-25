@@ -1,0 +1,199 @@
+\section*{Erd\H{o}s Problem 908: the measurable conclusion and a wording correction}
+
+\paragraph{Literal statement and the primary theorem.}
+The current problem page assumes that every difference
+\(\Delta_t f\) is measurable, but asks for
+\(f=g+H+r\) with \(g\) \emph{continuous}, \(H\) additive,
+and \(\Delta_t r=0\) almost everywhere for each fixed \(t\).
+That literal continuous-\(g\) statement is false.
+Laczkovich's original Theorem 3 instead has \(g\)
+\emph{Lebesgue measurable}. We first give the counterexample
+to the literal wording, then reconstruct the corrected
+theorem relative to two explicitly stated preparatory
+results from the same paper.
+
+\paragraph{A counterexample to continuity of \(g\).}
+Take \(f(x)=\mathbf1_{[0,\infty)}(x)\). It is measurable,
+so all its differences are measurable.
+Its difference with shift one equals one on \((-1,0)\)
+and zero on \((-\infty,-1)\cup(0,\infty)\).
+If the displayed continuous-\(g\) decomposition existed,
+then for almost every \(x\)
+\[
+ \Delta_1 f(x)=g(x+1)-g(x)+H(1).
+\]
+The right side is continuous. A continuous function
+equal almost everywhere to a constant on an open
+interval equals that constant everywhere there:
+otherwise a neighbourhood of positive measure
+would contradict the almost-everywhere equality.
+It would therefore equal zero just to the left of
+\(-1\) and one just to its right, an impossibility.
+This argument does not assume that \(r\) is measurable
+and uses only the null set associated with shift one.
+
+\paragraph{Two explicit inputs for the corrected theorem.}
+On measurable 1-periodic functions modulo equality
+almost everywhere, use the translation-invariant metric
+\[
+ \|u\|_0=\int_0^1\min(1,|u(x)|)\,dx,\qquad
+ s(u)=\inf_{a\in\mathbb R}\|u-a\|_0.
+\]
+Convergence for this metric is convergence in measure.
+We retain the following two results of Laczkovich as
+external inputs, stated in their equivalent
+convergence-in-measure form.
+\begin{enumerate}
+\item Theorem 2: if \(u_j\) are measurable 1-periodic
+functions and \(\Delta_tu_j\to0\) in measure for every
+fixed real \(t\), then \(s(u_j)\to0\).
+\item Theorem 1: if \(c:\mathbb R\to\mathbb R\),
+\(c(0)=0\), and
+\[
+ c(h+k)-c(h)-c(k)\longrightarrow0\quad((h,k)\to(0,0)),
+\]
+then \(c=H+u\), where \(H\) is additive and \(u(h)\to0\)
+as \(h\to0\), with \(u(0)=0\).
+\end{enumerate}
+Their proofs are not reproduced here. Standard
+translation continuity in measure, Fubini's theorem,
+and the Borel--Cantelli lemma will also be used.
+
+\paragraph{Reduction to a periodic function.}
+All real shifts have measurable differences, since
+\(\Delta_{-t}f(x)=-\Delta_tf(x-t)\).
+Define \(F\) by \(F(x)=f(x)\) on \([0,1)\) and
+extend it with period one.
+On each interval \([j,j+1)\),
+\(f(x)-F(x)=f(x)-f(x-j)\) is measurable.
+Thus \(f-F\) is measurable, and every difference of
+\(F\) is measurable. It suffices to decompose \(F\).
+Put \(D_h(x)=F(x+h)-F(x)\).
+
+For \(h_j\to0\) and fixed \(t\),
+\[
+ \Delta_tD_{h_j}(x)=\Delta_{h_j}D_t(x)\longrightarrow0
+ \quad\hbox{in measure}.
+\]
+The first external input gives \(s(D_h)\to0\) as \(h\to0\).
+Choose a minimizing constant \(c(h)\), so that
+\(\|D_h-c(h)\|_0=s(D_h)\), choosing periodically
+and with \(c(0)=0\).
+Such a minimum exists: the metric is continuous in the
+constant and tends to one as its absolute value tends
+to infinity; if the infimum is one, every constant minimizes.
+
+The identity
+\[
+ D_{h+k}(x)=D_h(x+k)+D_k(x)
+\]
+and the triangle inequality imply
+\[
+ \min(1,|c(h+k)-c(h)-c(k)|)
+ \leq s(D_{h+k})+s(D_h)+s(D_k)\longrightarrow0.
+\]
+Apply the second external input to obtain \(c=H+u\).
+Replacing \(H(x)\) by \(H(x)-xH(1)\) and \(u(x)\)
+by \(u(x)+xH(1)\), we may suppose \(H(1)=0\).
+
+\paragraph{A jointly measurable representative.}
+Set
+\[
+ K(x,h)=F(x+h)-F(x)-H(h).
+\]
+For fixed \(h\), this is measurable and 1-periodic in \(x\).
+Moreover
+\[
+ \|K(\,\cdot\,,h)\|_0
+ \leq s(D_h)+\min(1,|u(h)|)\longrightarrow0
+ \quad(h\to0).
+\]
+Its cocycle identity gives
+\[
+ \|K(\,\cdot\,,h)-K(\,\cdot\,,h')\|_0
+ =\|K(\,\cdot\,,h-h')\|_0.
+\]
+Choose positive meshes \(\eta_j\to0\) so small that
+the last norm is below \(2^{-3j}\) whenever
+\(|h-h'|\leq\eta_j\), and define
+\[
+ G_j(x,h)=K(x,\eta_j\lfloor h/\eta_j\rfloor).
+\]
+Each \(G_j\) is jointly Lebesgue measurable, and its
+section as a function of \(h\) is Borel for every \(x\).
+For fixed \(h\),
+\[
+ \lambda\{x\in[0,1]:|G_j(x,h)-K(x,h)|\geq2^{-j}\}
+ \leq2^{-2j}.
+\]
+Borel--Cantelli shows that \(G_j(x,h)\to K(x,h)\)
+for almost every \(x\), for each fixed \(h\).
+Define \(G(x,h)\) as the finite limit when it exists,
+and zero otherwise. Then \(G\) is jointly measurable,
+each \(G(x,\cdot)\) is Borel, and
+\[
+ R(x,h):=K(x,h)-G(x,h)=0
+ \quad\hbox{for a.e. }x,\quad\hbox{for every fixed }h.
+\tag{1}
+\]
+Periodicity in \(x\) extends this assertion from \([0,1]\)
+to the whole line.
+
+\paragraph{Extracting the almost-invariant remainder.}
+Although joint measurability of \(R\) is not presumed,
+its defect is jointly measurable:
+\[
+ \begin{split}
+ L(x,y,z)
+ &:=R(x,y+z)-R(x+y,z)-R(x,y)\\
+ &=-G(x,y+z)+G(x+y,z)+G(x,y).
+ \end{split}
+\]
+For fixed \(y,z\), (1) makes \(L(x,y,z)=0\) for a.e. \(x\).
+Fubini therefore supplies \(x_0\) such that
+\(L(x_0,y,z)=0\) for almost every pair \((y,z)\).
+For almost every \(z\), this and (1) give
+\[
+ R(x_0,y+z)-R(x_0,y)=0\quad\hbox{for a.e. }y.
+\tag{2}
+\]
+Let \(Z\) be the full-measure set of such \(z\).
+For any real \(t\), choose \(z_1,z_2\in Z\) with
+\(t=z_1+z_2\); this is possible because
+\(Z\cap(t-Z)\) has full measure.
+Adding the two translated instances of (2) proves
+the same equality for shift \(t\).
+The exceptional null set may depend on \(t\), exactly
+as required in the question.
+
+Now put
+\[
+ r(x)=R(x_0,x-x_0),\qquad
+ g_0(x)=G(x_0,x-x_0)+F(x_0)-H(x_0).
+\]
+By construction \(g_0\) is measurable,
+\(F=g_0+H+r\), and \(\Delta_t r=0\) a.e. for every \(t\).
+Finally \(g=g_0+(f-F)\) is measurable and
+\(f=g+H+r\), proving the corrected theorem.
+
+\paragraph{Sources and assessment.}
+The exact primary source is M. Laczkovich,
+\emph{Functions with measurable differences},
+Acta Math. Acad. Sci. Hungar. 35 (1980), 217--235,
+especially Theorems 1--3 on pages 218--227:
+\url{https://real-j.mtak.hu/7443/1/MTA_ActaMathHung_35.pdf}.
+The erroneous continuous-\(g\) wording also appears
+in Erd\H{o}s's 1982 exposition, page 76,
+\url{https://users.renyi.hu/~p_erdos/1982-33.pdf};
+it is not merely being attributed to a website transcription.
+The current page
+\url{https://www.erdosproblems.com/908} was checked
+24 September 2026.
+The literal counterexample is elementary and complete.
+The corrected affirmative theorem is completely deduced
+from the two declared preparatory inputs, following
+Laczkovich's proof. No novelty or local formal
+verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

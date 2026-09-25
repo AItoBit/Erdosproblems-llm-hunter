@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 51: minimal inverse totients}
+\subsection*{1. Statement and scope}
+For a totient value $a$, let $n_a=\min\{n\ge1:\varphi(n)=a\}$. Must $n_a/a$ be unbounded, equivalently tend to infinity along some infinite sequence of totients? The problem remains unresolved. We give a finite description of every fibre, an elementary size bound, and a corrected analytic estimate. These are bounds and reductions, not a construction forcing large minimal preimages.
+
+\subsection*{2. Bounds valid for every preimage}
+Unique factorization gives $\varphi(n)=\prod_{p^e\parallel n}p^{e-1}(p-1)$ and
+\[
+ \frac{\varphi(n)^2}{n}=\prod_{p^e\parallel n}p^{e-2}(p-1)^2.
+\]
+For odd $p$ each factor exceeds one; for $p\ge5$ it is at least $16/5$. The factor at $2^e$ is $2^{e-2}$, so it is at least one unless $e=1$. If $n=2m$ with $m$ odd and $m\notin\{1,3\}$, then either $m$ has a prime factor at least five, or $9\mid m$. In the latter case its factor at three is at least $4$. Thus the odd part contributes more than two, overcoming the factor $1/2$ at two. We conclude
+\[
+ \varphi(n)^2\ge n\quad(n\ne2,6).
+\]
+Hence $a\ge3$ and $\varphi(n)=a$ imply $n\le a^2$. Also $a\ge2$ implies $n\ge a+1$, since $\varphi(n)\le n-1$ for $n>1$. The exception $a=1$ must be retained: $n_1=1$, so the asserted lower bound is false there. For an odd prime $p$, the upper witness $\varphi(p)=p-1$ and lower bound give $n_{p-1}=p$. The prime $p=2$ is again exceptional.
+
+\subsection*{3. A complete finite search rule}
+If $p^e\parallel n$ and $\varphi(n)=a$, then $p-1\mid a$ and $e\le v_p(a)+1$. Consequently every possible prime divisor lies in the finite set
+\[
+ P_a=\{d+1:d\mid a,\ d+1\text{ is prime}\}.
+\]
+For each $p\in P_a$, choose either exponent zero or an exponent $1\le e\le v_p(a)+1$. Retain precisely those choices for which
+\[
+ \prod_{p:e_p>0}p^{e_p-1}(p-1)=a. \tag{1}
+\]
+Their products $\prod p^{e_p}$ are exactly all preimages, by the totient formula in both directions. Taking their minimum computes $n_a$ without any assumption about an arbitrary search cutoff. This also handles $a=1$: $P_1=\{2\}$ and the two possibilities are $1,2$.
+The rule exposes the difficulty: $p-1\mid a$ is necessary for $p$ to occur, but does not force $p$ into every admissible choice in (1).
+
+\subsection*{4. A corrected logarithmic upper bound}
+As an explicitly external input, Rosser--Schoenfeld Theorem 15 gives, for $n\ge3$,
+\[
+ \frac n{\varphi(n)}<e^\gamma\log\log n+\frac{2.50637}{\log\log n}.
+\]
+For a totient $a\ge3$, use $a+1\le n_a\le a^2$ in the two terms separately:
+\[
+ \frac{n_a}{a}<e^\gamma\log\log(a^2)
+       +\frac{2.50637}{\log\log(a+1)}=O(\log\log a). \tag{2}
+\]
+Both denominators are positive. The reciprocal term decreases as its argument increases; substituting $a^2$ into both terms without proving monotonicity of their sum is not justified. Equation (2) avoids that issue.
+
+\subsection*{5. Assessment}
+The exact finite-fibre algorithm and the bounds are proved, with only the displayed analytic inequality taken as an external theorem. None excludes arbitrarily slow unbounded growth of $n_a/a$, so neither direction of the question is resolved. No unperformed search up to $10^8$ is claimed. This replaces an unverified bundle of earlier GPT-5.2 attempts, preserving their attribution and correcting the small exceptions and the analytic substitution. The earlier originals remain in their model folders.
+Sources: \url{https://www.erdosproblems.com/51}; J. B. Rosser and L. Schoenfeld, \emph{Approximate formulas for some functions of prime numbers}, Illinois J. Math. 6 (1962), Theorem 15, \url{https://doi.org/10.1215/ijm/1255631807}.
+
+\textbf{Completion rate estimate: 20\%.}

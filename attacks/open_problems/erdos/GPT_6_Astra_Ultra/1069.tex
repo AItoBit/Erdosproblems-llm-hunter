@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 1069}
+
+\paragraph{Statement and scope.}
+For \(n\) distinct points in the plane and an integer \(2\leq k\leq\sqrt n\), let \(L_k\) be the number of lines containing at least \(k\) points. We prove
+\[
+ L_k\leq256\,\frac{n^2}{k^3}.
+\]
+The implicit restriction \(k\geq2\) is necessary: infinitely many lines pass through any single point. The numerical constant is not claimed to be optimal.
+
+\paragraph{The crossing estimate, with its proof.}
+Consider a simple graph drawn in the plane with \(v\) vertices and \(e\) edges. Suppose edges do not pass through other vertices, adjacent edges do not cross in their interiors, and \(X\) counts pairs of edges crossing in their interiors. Removing at most one edge per crossing pair gives a planar graph. The planar edge bound therefore yields
+\[
+ e\leq3v+X.
+\]
+This loose bound is valid also for fewer than three vertices. Keep every vertex independently with probability \(p\), and retain the induced edges with their drawing. An edge survives with probability \(p^2\), and a crossing pair with probability \(p^4\), because its endpoints are distinct. Taking expectations gives
+\[
+ p^2e\leq3pv+p^4X.
+\]
+If \(e\geq4v>0\), choose \(p=4v/e\leq1\). Rearranging proves
+\[
+ X\geq\frac{e^3}{64v^2}. \tag{1}
+\]
+Concurrent intersections cause no difficulty: remove edges for each crossing pair, or perturb the drawing locally so that the pairs cross at distinct nearby points. The estimate counts pairs, not merely distinct locations.
+
+\paragraph{The graph supplied by rich lines.}
+Let \(\mathcal L\) be all \(k\)-rich lines and write \(L=|\mathcal L|\). This number is finite, since each line contains a pair of the given points. On each such line, join consecutive given points by straight edges. If it contains \(t\) points, it supplies \(t-1\) edges; hence the resulting graph satisfies
+\[
+ e=\sum_{\ell\in\mathcal L}(|\ell\cap P|-1)\geq L(k-1).
+\]
+The graph is simple because a pair of distinct points determines a unique line. An edge has no other given point in its interior by the consecutive-point rule. Two edges from the same line have disjoint interiors. Two different rich lines give at most one crossing pair: at their unique intersection, at most one edge from each line has the intersection in its interior. Thus
+\[
+ X\leq\binom L2\leq L^2/2. \tag{2}
+\]
+If the intersection is one of the given points, it is a graph vertex and contributes no crossing.
+
+\paragraph{The two edge-count cases.}
+There is nothing to prove if \(L=0\). If \(e<4n\), then
+\[
+ L<\frac{4n}{k-1}\leq\frac{8n}{k}
+ \leq\frac{8n^2}{k^3},
+\]
+where the last step uses \(k^2\leq n\).
+Otherwise apply (1) with \(v=n\), and combine it with (2):
+\[
+ \frac{L^3(k-1)^3}{64n^2}\leq\frac{L^2}{2}.
+\]
+Cancelling \(L^2\) gives
+\[
+ L\leq\frac{32n^2}{(k-1)^3}
+ \leq\frac{256n^2}{k^3},
+\]
+as asserted. Without the restriction \(k\leq\sqrt n\), the same reasoning gives the more general bound
+\(L_k\ll n^2/k^3+n/k\).
+
+\paragraph{Attribution and assessment.}
+The asserted order is the Szemer\'edi--Trotter rich-line bound. This exposition supplies its standard crossing-number proof, including the elementary probabilistic proof of the crossing estimate. It uses the planar graph edge bound, which follows from Euler's formula by counting face lengths. Source statement: \url{https://www.erdosproblems.com/1069}, checked 24 September 2026. The exact best constant and the refined constructions discussed on that page are separate questions. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

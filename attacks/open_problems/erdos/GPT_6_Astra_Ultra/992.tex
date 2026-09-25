@@ -1,0 +1,78 @@
+\section*{Erd\H{o}s Problem 992: a metric discrepancy counterexample}
+\subsection*{Statement and attribution}
+The proposed bounds $\sqrt N(\log N)^{o(1)}$ and
+$\sqrt N(\log\log N)^{O(1)}$ are false for general increasing integer sequences.
+We give a complete block construction proving, for one fixed sequence and almost every $\alpha$,
+\[
+ \limsup_{N\to\infty}\frac{D(N;\alpha)}{\sqrt{N\log N}}=\infty.
+\]
+The known negative result is due to Berkes and Philipp, \emph{The size of trigonometric and Walsh series and uniform distribution mod 1}, J. London Math. Soc. 50 (1994), 454--464. The proof below reconstructs the independent-digit block mechanism; no novelty is claimed.
+
+\subsection*{Blocks and independent exceptional events}
+For integers $i\ge3$, put
+\[
+ r_i=\lceil i\log i\log\log i\rceil,\qquad
+ \ell_i=\lceil\log_2(6r_i)\rceil.
+\]
+Choose $b_3=0$ and $b_{i+1}=b_i+\ell_i+1$, and set $M_i=2^{b_i}$.
+Our increasing sequence is the concatenation of the blocks
+\[
+ M_i,\,2M_i,\ldots,r_iM_i\qquad(i=3,4,\ldots).
+\]
+There is no overlap or reordering issue: $M_{i+1}=2^{\ell_i+1}M_i>r_iM_i$.
+
+Except for the null set of dyadic rationals, the binary digits of a Lebesgue-uniform $\alpha\in[0,1)$ are independent fair bits. Let $E_i$ be the event that digits
+$b_i+1,\ldots,b_i+\ell_i$ are all zero.
+These digit ranges are disjoint, so the events are independent. Moreover
+\[
+ \frac1{12r_i}<\lambda(E_i)=2^{-\ell_i}\le\frac1{6r_i},
+ \qquad
+ \sum_{i\ge3}\frac1{r_i}=\infty.
+\]
+The divergence follows from the integral of $1/(x\log x\log\log x)$; rounding only changes a constant factor.
+The independent Borel--Cantelli lemma therefore gives infinitely many $E_i$ for almost every $\alpha$.
+
+On $E_i$, $0\le\{M_i\alpha\}<2^{-\ell_i}\le1/(6r_i)$.
+Thus for every $1\le j\le r_i$,
+$\cos(2\pi jM_i\alpha)\ge1/2$, and the whole block sum is at least $r_i/2$.
+
+\subsection*{A large block forces a large prefix}
+Let $N_i=\sum_{j=3}^{i}r_j$ and
+$S_N(\alpha)=\sum_{n\le N}\cos(2\pi\alpha x_n)$ for the constructed sequence $(x_n)$.
+On $E_i$,
+\[
+ S_{N_i}-S_{N_{i-1}}\ge r_i/2,
+\]
+so at least one of $|S_{N_i}|,|S_{N_{i-1}}|$ is at least $r_i/4$.
+Both possible indices tend to infinity with $i$. For all large $i$,
+\[
+ N_i\ll i^2\log i\log\log i,\qquad \log N_i\ll\log i.
+\]
+Consequently, at one of these two endpoints $N$,
+\[
+ \frac{|S_N|}{\sqrt{N\log N}}
+ \ge\frac{r_i/4}{\sqrt{N_i\log N_i}}
+ \gg\sqrt{\log\log i}\longrightarrow\infty
+\]
+along the infinitely many successful blocks.
+This step permits earlier blocks to have either sign; it does not assume that their sums are negligible.
+
+\subsection*{From a cosine sum to interval discrepancy}
+For points $y_1,\ldots,y_N\in[0,1)$ define
+$F(t)=\#\{j:y_j\le t\}-Nt$.
+Integration by parts against the signed measure $\sum_j\delta_{y_j}-N\,dt$, of total mass zero, gives
+\[
+ \left|\sum_{j=1}^{N}\cos(2\pi y_j)\right|
+ \le\sup_t|F(t)|\int_0^1|(\cos(2\pi t))'|\,dt
+ =4\sup_t|F(t)|\le4D_N.
+\]
+Endpoint conventions do not affect the supremum; alternatively use limits of half-open intervals.
+Apply this with $y_j=\{\alpha x_j\}$. The preceding prefix estimate proves the displayed discrepancy limsup.
+
+\subsection*{Conclusion and comparison with the conjectures}
+For any fixed $C$, $\sqrt{N}(\log\log N)^C=o(\sqrt{N\log N})$.
+Also $\sqrt{N}(\log N)^{o(1)}=o(\sqrt{N\log N})$. Our single integer sequence therefore disproves both assertions on a set of $\alpha$ of full measure.
+The proof uses only independence of disjoint binary digits, Borel--Cantelli, and the displayed elementary discrepancy inequality. It does not use an invalid uniform truncation estimate for the discontinuous sawtooth function.
+Sources: \url{https://www.erdosproblems.com/992} and \url{https://doi.org/10.1112/jlms/50.3.454}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

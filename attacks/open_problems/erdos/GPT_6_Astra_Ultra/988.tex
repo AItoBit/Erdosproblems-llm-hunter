@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 988: spherical cap discrepancy}
+\subsection*{Statement and attribution}
+For $P=\{p_1,\ldots,p_n\}\subset S^2$, let
+$D(P)=\sup_C|\#(P\cap C)-n\sigma(C)|$, where $\sigma$ is normalized surface area and $C$ ranges over spherical caps. We prove the stronger bound
+\[
+ D(P)\ge c n^{1/4}.
+\]
+The qualitative question was answered by Schmidt, \emph{Irregularities of Distribution IV}, Invent. Math. 7 (1969), 55--82. The proof below reconstructs the distance-energy method underlying Stolarsky's invariance principle and its discrepancy applications. All identities and the lower bound needed here are proved below; no novelty is claimed.
+
+\subsection*{The cap integral equals a distance deficit}
+Parameterize caps by $C(z,t)=\{x\in S^2:x\cdot z\ge t\}$, with $z\in S^2$ and $-1\le t\le1$, and set $\nu=\sum_i\delta_{p_i}-n\sigma$. Since $\nu(S^2)=0$,
+\[
+ E:=\int_{S^2}\int_{-1}^{1}\nu(C(z,t))^2\,dt\,d\sigma(z)
+ =-\frac12\iint\!\left[\int_{S^2}\int_{-1}^{1}
+  (1_{C(z,t)}(x)-1_{C(z,t)}(y))^2\,dt\,d\sigma(z)\right]d\nu(x)d\nu(y).
+\]
+This follows by expanding the square: the two terms involving only $x$ or only $y$ vanish after integration against $\nu\otimes\nu$. For fixed $z$, the inner integral is $|(x-y)\cdot z|$. Rotational symmetry and the uniform distribution of one coordinate of $z$ on $[-1,1]$ show that its average is $|x-y|/2$. Also
+\[
+ \int_{S^2}|x-y|\,d\sigma(y)
+ =\frac12\int_{-1}^{1}\sqrt{2-2u}\,du=\frac43.
+\]
+Consequently
+\[
+ E=\frac14\left(\frac43n^2-\sum_{i,j}|p_i-p_j|\right).
+ \tag{1}
+\]
+All integrands are bounded, so Fubini is legitimate even for this signed finite measure. The parameter space has measure $2$, whence $E\le2D(P)^2$.
+
+\subsection*{Positive polynomial kernels}
+Put $T(x,y)=(1+x\cdot y)/2$. For every integer $k\ge0$,
+\[
+ Q_k:=\iint T(x,y)^k\,d\nu(x)d\nu(y)\ge0.
+ \tag{2}
+\]
+Indeed, expanding $(1+x\cdot y)^k$ and then each power of $x\cdot y$ expresses $Q_k$ as a sum of nonnegative coefficients times squares
+$\bigl(\int x_1^{a_1}x_2^{a_2}x_3^{a_3}\,d\nu(x)\bigr)^2$.
+For fixed $x$, $T(x,y)$ is uniform on $[0,1]$ under $\sigma(y)$; hence
+\[
+ Q_k=\sum_{i,j}T(p_i,p_j)^k-\frac{n^2}{k+1}.
+ \tag{3}
+\]
+Every summand in the double sum is nonnegative, and its diagonal contributes $n$. For $k\ge2n$, this gives $Q_k\ge n/2$.
+
+\subsection*{The high-degree tail forces a deficit}
+The binomial expansion, including its uniformly convergent endpoint, is
+\[
+ \sqrt{1-t}=1-\sum_{k\ge1}a_k t^k,\qquad
+ a_k=\frac{\binom{2k}{k}}{4^k(2k-1)}>0,\qquad
+ \sum_{k\ge1}a_k=1.
+\]
+Uniform convergence follows from positivity and summability of the coefficients. Since $|x-y|=2\sqrt{1-T(x,y)}$, (1)--(3) imply
+\[
+ \frac43n^2-\sum_{i,j}|p_i-p_j|
+ =2\sum_{k\ge1}a_kQ_k
+ \ge n\sum_{k\ge2n}a_k.
+\]
+There is no cancellation from the discarded terms because of (2).
+Let $b_k=\binom{2k}{k}/4^k$, with $b_0=1$. Then
+$a_k=b_{k-1}-b_k$, so the last tail equals $b_{2n-1}$.
+Moreover
+\[
+ \log b_m=\sum_{j=1}^{m}\log(1-1/(2j))
+ \ge-\frac12\sum_{j=1}^{m}\frac1j-\frac14\sum_{j=1}^{m}\frac1{j^2}
+ \ge-\frac12\log(m+1)-C,
+\]
+using $\log(1-u)\ge-u-u^2$ for $0\le u\le1/2$.
+Thus $b_{2n-1}\ge c/\sqrt n$. Combining everything gives
+$2D(P)^2\ge E\ge c\sqrt n$, as required.
+
+\subsection*{Conclusion and sources}
+The minimum discrepancy tends to infinity, with the proved quantitative rate $cn^{1/4}$. The argument also allows repeated points. It does not claim a matching upper bound for the supremum norm. References: \url{https://www.erdosproblems.com/988}; Schmidt, \url{https://doi.org/10.1007/BF01418774}; K. B. Stolarsky, \emph{Sums of distances between points on a sphere II}, Proc. Amer. Math. Soc. 41 (1973), 575--582, \url{https://doi.org/10.1090/S0002-9939-1973-0333995-9}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

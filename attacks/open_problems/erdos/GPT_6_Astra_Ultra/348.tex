@@ -1,0 +1,111 @@
+\section*{Erd\H{o}s Problem \#348: robustness of complete sequences}
+\subsection*{1. Statement and conventions}
+For which integers $0\le m<n$ does an indexed nondecreasing sequence
+of positive integers remain complete after every deletion of $m$ terms,
+but fail to be complete after every deletion of $n$ terms?
+Repeated values have separate indices. Here \emph{complete} means that
+finite subset sums contain every sufficiently large integer; strong
+completeness means that they contain every nonnegative integer.
+We prove the standard weak examples with an explicit infinite-hole
+argument, and reconstruct van Doorn's impossibility result for the
+strong interpretation. The intended weak problem for $m\ge2$ remains
+unresolved.
+
+\subsection*{2. The elementary strong-completeness criterion}
+If $a_1\le a_2\le\cdots$ are positive integers and
+$S_r=\sum_{i\le r}a_i$, strong completeness is equivalent to
+\[
+ a_1=1,\qquad a_{r+1}\le S_r+1\quad(r\ge1).
+\]
+Sufficiency follows by joining the intervals $[0,S_r]$ and
+$[a_{r+1},a_{r+1}+S_r]$ inductively. Necessity follows because otherwise
+$1$, or $S_r+1$, lies below all later terms and exceeds the sum of all
+earlier terms. This argument is about indexed multisets as well.
+
+\subsection*{3. Full verification of the weak examples}
+The sequence $1,2,4,\ldots$ is strongly complete. Deleting $2^t$
+excludes every integer whose binary expansion has digit $1$ in position
+$t$; this is an infinite residue obstruction. Thus it gives $(m,n)=(0,1)$.
+
+Let $F_1=F_2=1$, $F_{j+2}=F_{j+1}+F_j$. Recall
+\[
+ \sum_{i=1}^j F_i=F_{j+2}-1.
+\]
+After deleting $F_t$, the remaining sequence is strongly complete.
+Indeed, before the deletion the criterion above is unchanged.
+For a retained $F_j$ with $j>t$, the earlier available sum is
+$F_{j+1}-1-F_t$, so the necessary inequality reduces to
+$F_t\le F_{j-1}$. The initial available term is still $1$.
+
+Deleting \emph{any two} terms destroys even weak completeness.
+Fix deleted indices $a<b$ and write $D=F_a+F_b$. For each
+$1\le r\le F_a$, the integer
+\[
+ H_b=F_{b+1}-r
+\]
+is missing: all available terms through index $b$ sum to
+$F_{b+1}-1-F_a<H_b$, while every later term is at least $F_{b+1}$.
+Suppose $H_j=F_{j+1}-r$ is missing for some $j\ge b$.
+Consider $H_{j+2}=F_{j+3}-r$. No term beyond index $j+2$ can occur.
+If $F_{j+2}$ is used, its removal would represent the previous hole
+$F_{j+1}-r$. If it is not used, the sum of all available terms through
+$j+1$ is
+\[
+ F_{j+3}-1-D<F_{j+3}-r.
+\]
+Both possibilities fail. The infinitely many values $H_{b+2t}$ are
+therefore missing. This completes the weak $(1,2)$ example, including
+the point that a single small hole would not have been enough.
+Further deletions preserve these obstructions, giving every $(0,n)$
+with $n\ge1$ and every $(1,n)$ with $n\ge2$.
+
+\subsection*{4. Why the strong interpretation has no examples for $m\ge2$}
+Suppose deletion of any two terms preserves strong completeness.
+For $r\ge2$, delete the terms at indices $r-1,r$. Applying the necessary
+criterion just before the retained term $a_{r+1}$ gives
+\[
+ a_{r+1}\le S_{r-2}+1,\qquad
+ S_r+1-a_{r+1}\ge a_{r-1}+a_r.                    \tag{1}
+\]
+If the sequence is unbounded, choose any prescribed number $n$ of
+indices $3\le i_1<\cdots<i_n$, successively far enough apart that
+\[
+ a_{i_j-1}\ge\sum_{\ell<j}a_{i_\ell}.
+\]
+After these deletions, let $D_r$ denote the sum deleted through index
+$r$. If the last such index is $i_j\le r$, then
+\[
+ D_r\le a_{i_j-1}+a_{i_j}\le a_{r-1}+a_r.
+\]
+Thus (1) implies $a_{r+1}\le S_r-D_r+1$ at every retained term
+$a_{r+1}$. Before the first deletion the original inequalities hold,
+and the first term was not removed. The remaining sequence is strongly
+complete. In particular these $n$ deletions do not destroy completeness.
+
+If instead the nondecreasing integer sequence is bounded, it has an
+infinite constant tail. Removing any fixed number of terms sufficiently
+far out in that tail leaves the subset-sum set unchanged, because every
+finite use of that value can be replaced by unused indices.
+The same conclusion follows.
+
+Finally, robustness under all $m\ge2$ deletions implies robustness under
+all two deletions: extend any two deleted indices to $m$ indices, and
+then restore the extra terms. This proves the claimed impossibility
+for all $2\le m<n$ in the strong interpretation.
+
+\subsection*{5. Assessment and references}
+The weak examples and the full strong classification are proved here.
+The decisive inequality (1) need not hold for a sequence with finitely
+many exceptional subset sums, so this does not settle the intended
+weak $(2,3)$ case or the general weak classification.
+
+Sources: \texttt{https://www.erdosproblems.com/348} and Wouter van Doorn's
+original discussion at
+\texttt{https://www.erdosproblems.com/forum/thread/348}, checked 2026-09-25.
+The strong argument reconstructs that known result, with the bounded
+case and finite-deletion quantifiers explicit. Earlier GPT Pro 5.2
+work was checked; the infinite-hole proof avoids equating failure of
+strong completeness with failure of weak completeness.
+No novelty or formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

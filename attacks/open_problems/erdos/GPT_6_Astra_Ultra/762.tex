@@ -1,0 +1,30 @@
+\section*{Erd\H{o}s Problem \#762: chromatic versus cochromatic number}
+\subsection*{Statement and outcome}
+The cochromatic number \(\zeta(G)\) is the least number of classes partitioning \(V(G)\), each class inducing either a clique or an independent set. Must a \(K_5\)-free graph with \(\zeta(G)\geq4\) satisfy \(\chi(G)\leq\zeta(G)+2\)?
+No. The construction below reconstructs Steiner's counterexample and proves
+\[
+\omega(G)=4,\qquad \zeta(G)=4,\qquad \chi(G)=7.
+\]
+Attempt status: solved, by a reconstruction of the known disproof.
+
+\subsection*{The eleven-vertex seed}
+Take disjoint cycles \(C,D\), each of length five, and join every vertex of \(C\) to every vertex of \(D\). Choose \(c_0\in C,d_0\in D\). Add one vertex \(v\), adjacent only to \(c_0,d_0\). Call the resulting graph \(H\).
+It has clique number four: a clique away from \(v\) uses at most two vertices of each cycle, and a clique through \(v\) has size at most three. Its chromatic number is six. Each cycle needs three separate colours, and \(v\) can use any of the four colours absent from its two neighbours.
+
+There is also a partition of \(H\) into three cliques. One is \(\{v,c_0,d_0\}\). Deleting the selected vertex from each cycle leaves a four-vertex path with a perfect matching; joining the corresponding matching edges produces two four-vertex cliques. In particular, every independent set meets \(H\) in at most three vertices.
+
+Every proper three-colouring of a five-cycle has colour-class sizes \(2,2,1\). Up to rotation, reflection and renaming its cyclic word is \(1,2,3,2,3\). For any omitted colour, there are two nonadjacent vertices bearing the other two colours: for omitted colours \(1,2,3\), use respectively positions \((2,5),(1,3),(1,4)\).
+
+Consequently, in every proper six-colouring of \(H\) there is a set \(X\subset V(H)\) meeting all six colours with \(\omega(H[X])\leq3\). Indeed, the two cycles use disjoint three-colour palettes. Suppose \(v\)'s colour belongs to \(C\)'s palette. Choose the nonadjacent pair in \(C\) bearing the other two colours, and one representative of each colour of \(D\). Together with \(v\) these form \(X\). The three chosen \(D\)-vertices induce a forest, and \(v\) has at most one neighbour among them. Thus those four vertices are bipartite, while the chosen pair in \(C\) is independent. This gives a three-colouring of \(H[X]\).
+
+\subsection*{The final graph and all three parameters}
+For every subset \(X\subseteq V(H)\) with \(\omega(H[X])\leq3\), add one vertex \(w_X\) whose neighbourhood is exactly \(X\). All new vertices are pairwise nonadjacent. This describes a finite graph without a search or an unverified adjacency list.
+
+A clique containing a new vertex has size at most \(1+3=4\), and \(H\) already contains a four-clique. Hence \(\omega(G)=4\). Six colours do not suffice: restricting such a colouring to \(H\) supplies a set \(X\) as above, leaving no colour for \(w_X\). Conversely, colour \(H\) with six colours and all new vertices with a seventh, so \(\chi(G)=7\).
+
+The three seed cliques and the new independent set show \(\zeta(G)\leq4\). Suppose that three homogeneous classes sufficed. If all three were cliques, they would cover at most twelve vertices, whereas \(G\) has at least the eleven seed vertices and eleven singleton-neighbourhood vertices. If at least two classes were independent, they would cover at most \(3+3+4=10\) seed vertices. Thus there must be exactly two clique classes and one independent class. To cover the eleven seed vertices, both clique classes must consist of four seed vertices, and the independent class must contain the other three seed vertices and every new vertex. This is impossible: any seed vertex \(x\) is adjacent to \(w_{\{x\}}\). Therefore \(\zeta(G)=4\), disproving the inequality.
+
+\subsection*{Attribution and scope}
+The seed, extension and argument are due to R. Steiner, \emph{On the difference between the chromatic and cochromatic number}, arXiv:2408.02400v2, Section 3, \url{https://arxiv.org/html/2408.02400v2}. All required finite graph arguments are reproduced above. Statement checked at \url{https://www.erdosproblems.com/762} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

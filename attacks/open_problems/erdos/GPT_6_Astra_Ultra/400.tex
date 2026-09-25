@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 400: factorial packing and normal order}
+\subsection*{Statement and outcome}
+For fixed $k\ge2$, maximize $g_k(n)=a_1+\cdots+a_k-n$ over positive integers satisfying $\prod_i a_i!\mid n!$. The questions ask for a mean asymptotic $\sum_{n\le x}g_k(n)\sim c_kx\log x$ and a corresponding normal order. We prove valuation bounds, an exact recurrence at primes, an unbounded subsequence, and that the normal-order assertion would imply the mean assertion. The existence or value of the constant remains unresolved. Source: \url{https://www.erdosproblems.com/400}.
+
+Allowing zero entries does not change the maximum: replacing $0$ by $1$ preserves the factorial product and increases the sum. Each entry is at most $n$, simply because $a_i!\le\prod_j a_j!\le n!$. The older local explanation invoking a prime between $n$ and $a_i$ was not valid for every $a_i>n$.
+
+\subsection*{Exact digit constraints}
+Counting multiples of prime powers gives $v_p(m!)=\sum_{j\ge1}\lfloor m/p^j\rfloor$. If $s_p(m)$ is the base-$p$ digit sum, summing the digit expansion gives
+\[
+ v_p(m!)=\frac{m-s_p(m)}{p-1}.
+\]
+For every admissible tuple and every prime $p$ this proves
+\[
+ a_1+\cdots+a_k-n\le\sum_i s_p(a_i)-s_p(n). \tag{1}
+\]
+Conversely, the inequalities in (1) for all primes are equivalent to factorial divisibility: they are exactly its prime valuations.
+
+For $p=2$, each $a_i\le n$ has at most $\lfloor\log_2 n\rfloor+1$ binary digits, so
+\[
+ k-1\le g_k(n)\le k(\lfloor\log_2 n\rfloor+1)-s_2(n). \tag{2}
+\]
+The lower bound uses $a_1=n$ and the other entries $1$. Thus $g_k(n)=O_k(\log(n+1))$ and $\sum_{n\le x}g_k(n)=O_k(x\log x)$. The upper bound is only necessary when a single prime is used; maximizing the binary right side alone need not produce an admissible tuple.
+
+\subsection*{An exact prime recurrence}
+Every tuple allowed for $n-1$ is also allowed for $n$, hence $g_k(n)\ge g_k(n-1)-1$. At a prime $p$ there is a precise identity:
+\[
+ g_k(p)=\max\{k-1,\ g_k(p-1)-1\}. \tag{3}
+\]
+If an entry is $p$, its factorial already equals $p!$, so every other entry is $1$ and the value is $k-1$. Otherwise all entries are at most $p-1$, and their product of factorials is coprime to $p$. Such a product divides $p!$ exactly when it divides $(p-1)!$, because the valuations at every other prime agree. The maximum in this second case is therefore $g_k(p-1)-1$. Both cases have admissible witnesses, proving (3).
+
+\subsection*{An explicit unbounded subsequence}
+If $n\ge2$ and $s!\mid n$, take the two entries $n-1,s$ and fill the other $k-2$ positions by $1$. Their factorial product divides $(n-1)!n=n!$, giving
+\[
+ g_k(n)\ge s+k-3. \tag{4}
+\]
+In particular, for $n=s!$ this diverges. Since $\log(s!)\sim s\log s$ by the integral bounds for $\sum_{j\le s}\log j$, it yields
+\[
+ g_k(s!)\ge(1+o(1))\frac{\log(s!)}{\log\log(s!)}.
+\]
+This subsequence has density zero and the displayed lower scale is smaller than $\log n$. It establishes neither a positive normal-order constant nor a lower mean of order $x\log x$.
+
+\subsection*{Why normal order would settle the mean}
+Suppose, as an explicit additional hypothesis, that $g_k(n)/\log n\to c$ in natural density: for each $\epsilon>0$, the integers with $|g_k(n)/\log n-c|>\epsilon$ have counting function $o(x)$. By (2), their contribution up to $x$ is $o(x\log x)$. On the remaining integers the difference between $g_k(n)$ and $c\log n$ is at most $\epsilon\log n$. Since $\sum_{n\le x}\log n=x\log x+O(x)$, division by $x\log x$ and then $\epsilon\downarrow0$ prove
+\[
+ \sum_{n\le x}g_k(n)=(c+o(1))x\log x. \tag{5}
+\]
+If $c=0$, this is a little-oh conclusion rather than an asymptotic to a nonzero quantity. The equivalent formulation using $\log x$ for almost all $n\le x$ follows by first restricting to $n\ge\delta x$ and then letting $\delta\downarrow0$.
+
+\subsection*{Assessment and gap}
+The valid binary valuation argument of the older draft is extended by (1), (3)--(5), without retaining its unsupported computational maximum claims. These facts do not prove convergence in density or identify a limiting constant. Simultaneously controlling the valuations at all primes for extremizing tuples is the missing part. No novelty is claimed.
+\textbf{Completion rate estimate: 35\%.}

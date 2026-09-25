@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 159: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Correct statement and scope}
+The current problem asks whether there is an absolute $c>0$ such that
+\[
+ R(C_4,K_n)\ll n^{2-c}.
+\]
+It does not ask for a matching quadratic lower bound. Here $R(C_4,K_n)$ is the least $N$ such that every graph on $N$ vertices has a four-cycle or an independent $n$-set. Source: \url{https://www.erdosproblems.com/159}.
+We supply elementary bounds
+\[
+ c_0(n/\log n)^{4/3}\le R(C_4,K_n)\le(n+1)^2
+\]
+for sufficiently large $n$. They are weaker than the bounds recorded on the problem page and leave the requested fixed power saving unresolved.
+
+\section*{Quadratic upper bound with the probabilistic lemma proved}
+In a $C_4$-free graph on $N$ vertices, two vertices have at most one common neighbour. Counting length-two paths by their middle vertex gives
+\[
+ \sum_v\binom{d(v)}2\le\binom N2.
+\]
+If $\bar d$ is the average degree, convexity yields
+$\bar d(\bar d-1)\le N-1$, so $\bar d<\sqrt N+1$.
+Choose a uniformly random ordering of the vertices and retain a vertex if it precedes all its neighbours. The retained set is independent, and vertex $v$ is retained with probability $1/(d(v)+1)$. Thus some independent set has size at least
+\[
+ \sum_v\frac1{d(v)+1}\ge\frac N{\bar d+1}>\frac N{\sqrt N+2},
+\]
+where the middle inequality is Cauchy--Schwarz. At $N=(n+1)^2$ the last expression equals
+$n-1+4/(n+3)>n-1$. Integrality forces an independent set of at least $n$ vertices, proving the upper bound.
+
+\section*{A superlinear lower bound by deleting four-cycles}
+For large $n$ choose
+\[
+ N=\left\lfloor\left(\frac{n}{8\log n}\right)^{4/3}\right\rfloor,
+ \qquad p=N^{-3/4},
+\]
+and form the random graph with independent edge probability $p$. The expected number $X$ of four-cycles is
+\[
+ \mathbb EX=3\binom N4p^4\le N/8,
+\]
+so $\mathbb P(X>N/2)\le1/4$ by Markov's inequality.
+The probability of an independent $n$-set is at most
+\[
+ \binom Nn(1-p)^{\binom n2}
+ \le\exp\left(n\log N-\frac{pn(n-1)}2\right).
+\]
+For all large $n$ we have $N\ge n$, $\log N\le\tfrac43\log n$, $pn\ge8\log n$ and $n-1\ge n/2$. The exponent is consequently at most $-\tfrac23n\log n$, so this probability is less than $1/4$.
+With positive probability both $X\le N/2$ and $\alpha(G)<n$. Select one vertex from each four-cycle of this graph and remove the union of the selected vertices. At most $N/2$ vertices are removed, and every old four-cycle is destroyed; deleting vertices cannot create new cycles or increase the independence number. The surviving graph has at least $N/2$ vertices, is $C_4$-free and still has independence number less than $n$. It follows that
+\[
+ R(C_4,K_n)>\lfloor N/2\rfloor
+ \gg(n/\log n)^{4/3}.
+\]
+No claim is made that this elementary alteration argument attains the stronger published lower exponent.
+
+\section*{Remaining gap and provenance}
+The earlier GPT-Pro-5.2 draft restated the target as quadratic order and sought a quadratic lower bound. That would point in the opposite direction from the actual power-saving question. Its common-neighbour argument is retained and sharpened; its unrecorded exact Ramsey computation is not needed. The unresolved task is an upper bound with exponent strictly smaller than two, or a lower bound excluding every such saving. All proofs above are elementary and make no novelty claim.
+
+\textbf{Completion rate estimate: 20\%.}
+\end{document}

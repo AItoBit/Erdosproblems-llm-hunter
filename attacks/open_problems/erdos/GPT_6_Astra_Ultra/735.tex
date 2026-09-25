@@ -1,0 +1,39 @@
+\section*{Erd\H{o}s Problem 735: positive-weight magic configurations}
+\subsection*{1. Statement and scope}
+Classify finite point sets $P\subset\mathbb R^2$ admitting positive weights such that every line determined by at least two points has the same total weight. For $|P|\ge2$, divide by this positive common total and normalize every determined-line sum to $1$.
+The known complete classification, proved by Ackerman, Buchin, Knauer, Pinchasi and Rote, consists of collinear sets, sets with no three collinear, near-pencils with all but one point collinear, and projective copies of one seven-point failed-Fano configuration. This attempt explicitly verifies all those families and their normalized weights, and proves a useful necessity reduction. It does not reconstruct the geometric classification lemma at the end of that reduction.
+\subsection*{2. Complete verification of the listed families}
+If all points are collinear, any positive weights summing to $1$ work. For zero or one point there is no determined line and the condition is vacuous.
+If $n\ge3$ and no three points are collinear, every pair has weight sum $1$. Comparing the pairs in any triple forces each of their weights to be $1/2$, and comparison with that triple forces every remaining weight to be $1/2$. These weights work. For two points only their total is prescribed.
+For a near-pencil with $r\ge3$ points on a line $L$ and an off-line point $p$, every line from $p$ to $L$ contains exactly those two points. All $r$ on-line weights must therefore have one common value $u$, and $ru=1$. The unique normalized weights are
+\[
+ w(x)=1/r\quad(x\in L\cap P),\qquad w(p)=1-1/r>0.
+\]
+The three-point near-pencil is already the no-three-collinear case.
+For the exceptional family take
+\[
+ A=(0,0),\ B=(2,0),\ C=(0,2),\
+ a=(1,1),\ b=(0,1),\ c=(1,0),\ O=(2/3,2/3).
+\]
+The six three-point lines have point sets
+\[
+ \{A,B,c\},\ \{B,C,a\},\ \{C,A,b\},\
+ \{A,a,O\},\ \{B,b,O\},\ \{C,c,O\}.
+\]
+Their pairs are all distinct and account for $18$ of the $\binom72=21$ pairs. The remaining pairs are $ab,bc,ca$, each an ordinary line, as is checked immediately from the coordinates. Assign weight $1/2$ to $a,b,c$ and weight $1/4$ to $A,B,C,O$. Every determined line has weight $1$. These weights are unique: the ordinary-line equations first force the three half-weights, the three side equations then force $w(A)=w(B)=w(C)=1/4$, and a median equation forces $w(O)=1/4$.
+Any projective transformation for which all seven image points are finite preserves incidence, hence preserves the line-sum condition and these weights. This coordinate configuration is projectively equivalent to the version drawn using an equilateral triangle and its angle bisectors.
+\subsection*{3. A necessity reduction from ordinary lines}
+We use one explicitly external input, the Kelly--Moser ordinary-line bound: a noncollinear set of $t$ real planar points determines at least $3t/7$ lines containing exactly two of them.
+Suppose $P$ is not collinear and not a near-pencil. For every $p\in P$, there is an ordinary line of $P$ avoiding $p$. To see this, assume all ordinary lines pass through $p$. The set $Q=P\setminus\{p\}$ is noncollinear. Every ordinary line of $Q$ must pass through $p$, because otherwise it would be an ordinary line of $P$ avoiding $p$. There are at least $3(n-1)/7$ such lines. Their pairs of $Q$-points are disjoint, since different lines through $p$ meet only at $p$. Thus at least $6(n-1)/7$ points of $Q$ lie on these three-point lines of $P$. None can lie on an ordinary line of $P$ through $p$. There are consequently at most $(n-1)/7$ ordinary lines of $P$, contrary to the lower bound $3n/7$.
+Let $A$ be the set of points incident with an ordinary line of $P$. Every point in $A$ has weight $1/2$. Indeed, if an endpoint $p$ of an ordinary line had weight other than $1/2$, one endpoint of that line would have weight greater than $1/2$; call it $p$. Choose an ordinary line $qr$ avoiding $p$. Its weights sum to $1$, so one endpoint, say $q$, has weight at least $1/2$. The determined line $pq$ then has weight greater than $1$, impossible.
+It follows that every line through two points of $A$ is ordinary: their weights already sum to $1$, so positivity excludes a third point. Put $B=P\setminus A$. If $b\in B$ and $a\in A$, the line $ab$ cannot be ordinary, by the definition of $B$. It has a third positive-weight point, so $w(b)<1/2$. We have proved
+\[
+ w(a)=1/2\ (a\in A),\qquad 0<w(b)<1/2\ (b\in B),
+\]
+and the ordinary lines of $P$ are exactly the lines joining pairs of points of $A$. The set $A$ is nonempty by the same ordinary-line theorem. If $B=\varnothing$, all determined lines are ordinary and the general-position family has already been obtained.
+\subsection*{4. Exact missing step}
+When both $A$ and $B$ are nonempty, the remaining geometric assertion is that the positive line-sum condition and the ordinary-line pattern just proved force $|A|=3$, $|B|=4$, with precisely the exceptional incidence configuration. This is Theorem 2 in the authors' paper; their proof passes to weighted arrangements of great circles. I have verified its statement and the elementary reduction above, but have not supplied an independent reconstruction of that arrangement argument. Treating the finite weight equations alone as a classification would omit the essential real-geometric restriction.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/735}; E. Ackerman, K. Buchin, C. Knauer, R. Pinchasi and G. Rote, \emph{There are not too many magic configurations}, Discrete Comput. Geom. 39 (2008), 3--16, author manuscript \url{https://page.mi.fu-berlin.de/rote/Papers/pdf/There+are+not+too+many+magic+configurations.pdf}. The Kelly--Moser bound and its use in this reduction are explicitly recorded in that manuscript.
+\textbf{UNRESOLVED in this reconstruction:} every listed example and its weights are verified, and necessity is reduced to the precise mixed ordinary-line classification lemma, whose proof is still missing here. The problem itself has the known complete resolution stated above. The estimate measures this attempt's proof coverage, not the likelihood of a new solution.
+\textbf{Completion rate estimate: 60\%.}

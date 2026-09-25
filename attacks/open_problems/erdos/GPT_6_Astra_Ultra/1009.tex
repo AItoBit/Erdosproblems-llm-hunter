@@ -1,0 +1,61 @@
+\section*{Erd\H{o}s Problem 1009}
+
+\paragraph{Statement and result.}
+For every fixed \(c>0\), there is a constant \(f(c)\) such that every graph on \(n\) vertices with at least \(\lfloor n^2/4\rfloor+k\) edges, where \(0\leq k<cn\) is an integer, has at least \(k-f(c)\) edge-disjoint triangles. We give the precise deduction from Gy\H{o}ri's stronger packing estimate, together with an elementary general bound, exact examples, and the obstruction to taking \(f(c)=0\) for every \(c\).
+
+\paragraph{The external theorem and its quantifiers.}
+The packing theorem of Gy\H{o}ri, in the triangle case, states that if
+\[
+ e(G)=\lfloor n^2/4\rfloor+k,\qquad k=o(n^2),
+\]
+then
+\[
+ \nu_3(G)\geq k-O(k^2/n^2),
+\tag{1}
+\]
+where \(\nu_3\) is the maximum number of edge-disjoint triangles. We use the uniform graph-theoretic meaning of this estimate: for a fixed bound \(k\leq cn\), there are constants \(C_c,N_c\) such that
+\[
+ \nu_3(G)\geq k-C_c k^2/n^2
+ \quad(n\geq N_c,\ 0<k<cn).
+\tag{2}
+\]
+For clarity, this uniformity also follows from the sequential formulation of (1). If (2) failed for a fixed \(c\), one could choose \(n_j\to\infty\), \(k_j<cn_j\), and graphs with
+\((k_j-\nu_3(G_j))n_j^2/k_j^2\to\infty\). Then \(k_j=o(n_j^2)\), contradicting (1).
+
+This substantial packing theorem is the external dependency; its proof is not replaced by the elementary arguments below. It is stated as Theorem 1.6 of Balogh--Wigal, \emph{Packing edge disjoint cliques in graphs}, \url{https://arxiv.org/abs/2502.16683}, which cites Gy\H{o}ri's original work. In particular the error constant is not asserted to be arbitrarily small.
+
+\paragraph{Deduction for every order, including small orders.}
+If the host has more than the specified edge count, discard edges until equality holds. For \(n\geq N_c\), (2) gives \(\nu_3(G)\geq k-C_c c^2\). For \(n<N_c\), use the trivial inequality \(\nu_3(G)\geq0\) and \(k<cN_c\). Thus a concrete permissible choice in terms of the theorem's constants is
+\[
+ f(c)=\left\lceil\max(C_c c^2,cN_c)\right\rceil.
+\]
+The case \(k=0\) is immediate. This proves exactly the requested existence of a constant independent of \(n\).
+
+\paragraph{An elementary comparison and a sharp family.}
+For reference, a maximal family of \(r\) edge-disjoint triangles leaves a triangle-free graph after its \(3r\) edges are removed. Mantel's bound therefore gives
+\[
+ \lfloor n^2/4\rfloor+k-3r\leq\lfloor n^2/4\rfloor,
+ \qquad r\geq k/3.
+\]
+Mantel's bound itself follows by observing that in a triangle-free graph \(d(u)+d(v)\leq n\) on every edge. Summing and using Cauchy--Schwarz gives
+\(4e^2/n\leq\sum_vd(v)^2\leq ne\), hence \(e\leq n^2/4\). The factor \(1/3\) argument alone does not prove (1).
+
+Start with \(K_{a,b}\), where \(a=\lceil n/2\rceil\), \(b=\lfloor n/2\rfloor\), and add \(k\leq b\) edges within the \(a\)-part, when that many edges are available. Assign a different vertex of the \(b\)-part to each added edge. The corresponding \(k\) triangles are edge-disjoint: different apices ensure distinct cross edges. Every triangle uses at least one added edge, so no edge-disjoint packing has more than \(k\) triangles. Thus \(\nu_3=k\) in this entire family.
+
+\paragraph{Why a positive loss is sometimes necessary.}
+Sauer's example has parts \(A,B,C\), of sizes \(r,r,4\). Include all edges between distinct parts and all six edges inside \(C\), with no edges inside \(A\) or \(B\). Its order is \(n=2r+4\), and
+\[
+ e(G)=r^2+8r+6
+      =\lfloor n^2/4\rfloor+(2n-6).
+\]
+Every triangle not contained wholly in \(C\) uses exactly two of the \(8r\) edges between \(C\) and \(A\cup B\). Hence a packing contains at most \(4r\) such triangles. Inside \(C=K_4\), any two triangles share an edge, so at most one further triangle can be packed. Therefore
+\[
+ \nu_3(G)\leq4r+1=2n-7,
+\]
+one fewer than the excess \(k=2n-6<2n\). In particular a valid choice for \(c=2\) must satisfy \(f(2)\geq1\).
+
+\paragraph{Attribution and assessment.}
+The affirmative resolution is Gy\H{o}ri's; the deficit example is Sauer's, as recorded at \url{https://www.erdosproblems.com/1009} and \url{https://www.erdosproblems.com/forum/thread/1009}, checked 24 September 2026. The proof above is complete relative to the explicitly stated external packing theorem, with its uniformity and finite-order deduction made explicit. The supplementary bounds and example counts are proved directly. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

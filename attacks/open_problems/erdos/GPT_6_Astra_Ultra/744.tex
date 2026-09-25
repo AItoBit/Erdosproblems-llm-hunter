@@ -1,0 +1,26 @@
+\section*{Erd\H{o}s Problem 744: a bounded bipartization cost for critical graphs}
+\subsection*{1. Statement and outcome}
+For a $k$-critical graph $G$ on $n$ vertices, let the edge-bipartization cost be the fewest edges whose removal makes $G$ bipartite. Must its minimum $f_k(n)$ tend to infinity, and in particular must $f_4(n)\gg\log n$?
+The answer is no. For every fixed $k\ge4$ and every $r\ge1$, the construction below is $k$-critical, has $r(k-1)+1$ vertices, and has bipartization cost at most $\binom{k-1}{2}$. Thus even an unbounded sequence of orders disproves both proposed growth conclusions.
+The generalized Mycielski construction is classical. R\"odl and Tuza proved the sharper eventual identity $f_k(n)=\binom{k-1}{2}$; the proof here establishes the counterexamples directly and does not claim their sharp lower bound or their result at every sufficiently large order.
+\subsection*{2. Construction and chromatic number}
+Put $q=k-1$. Take vertices $(i,a)$ with $0\le i<r$ and $1\le a\le q$, together with an apex $z$. The bottom level $i=0$ is a clique. Between consecutive levels join $(i,a)$ to $(i+1,b)$ precisely when $a\ne b$. There are no other edges within or between levels. Join $z$ to every vertex in the last level.
+A $(q+1)$-coloring gives $(i,a)$ color $a$ and $z$ the extra color. Conversely, in any $q$-coloring the bottom clique uses all $q$ colors; rename them so that $(0,a)$ has color $a$. If level $i$ has this coloring, $(i+1,a)$ sees every color except $a$, so its color is forced to be $a$. Induction forces all $q$ colors on the last level, making $z$ impossible. Hence $\chi(G)=q+1=k$.
+\subsection*{3. Every edge deletion permits $q$ colors}
+We give all cases, which also prove vertex criticality.
+If a bottom edge with distinct indices $a,b$ is deleted, give both bottom vertices $a,b$ color $a$, leave the other colors unchanged, and leave color $b$ unused. Suppose at some level the two positions $a,b$ share color $c$ and exactly one color $d$ is absent, while the other positions have distinct colors. On the next level give both positions $a,b$ color $d$ and keep each other position's previous color. This is proper: color $d$ was absent, and each of the other colors occurs only at its corresponding, nonadjacent position below. Thus the repeated and absent colors interchange at every step. The final level misses one color, which is available for $z$.
+If the deleted edge joins $(i,a)$ to $(i+1,b)$, $a\ne b$, color all levels through $i$ by their indices. On level $i+1$, change the color of position $b$ to $a$, leaving every other position unchanged. The only newly conflicting edge is exactly the deleted edge. We now have the repeated/absent pair $a,b$, so propagate the preceding rule and color $z$ by the final absent color.
+Finally, if the deleted edge is $z(r-1,a)$, use index colors on every level and give $z$ color $a$.
+Every edge deletion is therefore $q$-colorable. Every vertex has an incident edge; deleting a vertex leaves a subgraph of the graph obtained by deleting that edge, so every vertex deletion is also $q$-colorable. Every proper subgraph is contained in one of these deletions. This proves $k$-criticality, with respect to arbitrary proper subgraphs.
+\subsection*{4. Bipartization and the limit}
+Delete the $\binom q2$ edges of the bottom clique. Color the remaining levels alternately by the parity of $i$ and place $z$ on the opposite side from the last level. Every surviving edge crosses this bipartition. Consequently
+\[
+ f_k(r(k-1)+1)\le\binom{k-1}{2}\qquad(r\ge1).
+\]
+For $k=4$ the upper bound is $3$ for arbitrarily large orders. This contradicts both divergence to infinity and any positive logarithmic lower bound.
+\subsection*{5. Verification and attribution}
+The missing edge between equal indices is essential to both the forced-color argument and the explicit deletion colorings. The exceptional case $r=1$ is $K_k$ and is covered by the same rules. No assertion that generalized Mycielski graphs always raise chromatic number for arbitrary input graphs is needed here.
+Sources: \url{https://www.erdosproblems.com/744}; V. R\"odl and Zs. Tuza, \emph{On color critical graphs}, J. Combin. Theory Ser. B 38 (1985), 204--213, \url{https://doi.org/10.1016/0095-8956(85)90066-8}. This is a reconstruction of known counterexamples, not a new resolution.
+\subsection*{6. Final assessment}
+\textbf{SOLVED:} the proposed divergence is disproved by explicit critical graphs, with complete proofs of criticality and bounded bipartization cost.
+\textbf{Completion rate estimate: 100\%.}

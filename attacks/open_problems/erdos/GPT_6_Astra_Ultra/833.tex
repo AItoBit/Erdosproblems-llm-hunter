@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem 833: exponential degree in a non-two-colourable hypergraph}
+\subsection*{1. Statement and target}
+Does some absolute $c>0$ ensure that every $r$-uniform hypergraph of chromatic number three, $r\ge2$, has a vertex of degree at least $(1+c)^r$? Yes. We reconstruct the Erd\H{o}s--Lov\'asz local-lemma method and prove the needed probabilistic lemma, obtaining the explicit, unoptimized choice $1+c=2^{1/16}$. The separate extremal question of determining the best degree bound for every $r$ is not claimed here.
+\subsection*{2. The local lemma, proved}
+Suppose events $E_1,\ldots,E_m$ have a dependency graph of maximum degree $d$: each $E_i$ is independent of the joint collection of nonneighboring events. Suppose $\mathbb P(E_i)\le p$, and there is $0<x<1$ with
+\[
+ p\le x(1-x)^d.                                           \tag{1}
+\]
+Then the probability that all events fail is positive.
+Here is the conditional-probability proof. Induct on $|S|$ to establish
+\[
+ \mathbb P\left(E_i\mid\bigcap_{j\in S}\overline E_j\right)\le x
+ \quad(i\notin S),                                       \tag{2}
+\]
+and positivity of all conditioning events. The empty case follows from $p\le x$. Split $S$ into the neighbors $S_1$ of $i$ and the nonneighbors $S_2$. If $S_1$ is empty, independence gives (2). Otherwise, by discarding restrictions in the numerator,
+\[
+ \mathbb P\left(E_i\mid\bigcap_{j\in S}\overline E_j\right)
+ \le\frac{\mathbb P(E_i\mid\bigcap_{j\in S_2}\overline E_j)}
+ {\mathbb P(\bigcap_{j\in S_1}\overline E_j\mid\bigcap_{j\in S_2}\overline E_j)}
+ \le\frac p{(1-x)^{|S_1|}}\le x.
+\]
+The denominator bound follows by exposing the events of $S_1$ one at a time and using the inductive bounds, which condition on fewer than $|S|$ events. Positivity for the next conditioning set follows by multiplying factors at least $1-x$. Finally $\mathbb P(\bigcap_i\overline E_i)\ge(1-x)^m>0$.
+A convenient sufficient condition is $4p(d+1)\le1$: take $x=1/(2(d+1))$ and use Bernoulli's inequality
+\[
+ (1-x)^d\ge1-dx\ge\tfrac12.
+\]
+Then $x(1-x)^d\ge1/(4(d+1))$.
+\subsection*{3. Applying the lemma to edges}
+Colour each vertex independently red or blue, with equal probabilities. For an $r$-edge $e$, let $E_e$ be its being monochromatic. Then
+\[
+ \mathbb P(E_e)=2^{1-r}.
+\]
+Events on disjoint edges depend on disjoint random coordinates, so the edge-intersection graph is a dependency graph. If the maximum vertex degree is $\Delta\ge1$, an edge meets at most $r(\Delta-1)$ other edges. Consequently $d+1\le r\Delta$.
+If $\Delta\le2^{r-3}/r$, then
+\[
+ 4\cdot2^{1-r}(d+1)\le4\cdot2^{1-r}r\Delta\le1,
+\]
+so the lemma supplies a proper two-colouring. Thus every hypergraph with chromatic number three satisfies
+\[
+ \Delta>\frac{2^{r-3}}r.                                 \tag{3}
+\]
+It also satisfies $\Delta\ge2$, since edges in a hypergraph of maximum degree at most one are pairwise disjoint and can each be two-coloured.
+For $2\le r\le16$, $2^{r/16}\le2\le\Delta$. For $r\ge16$,
+\[
+ \frac{2^{r-3}}r\ge2^{r/16}.
+\]
+Indeed this is true at $r=16$, and the ratio of its left-to-right quotient at $r+1$ and $r$ is $2^{15/16}r/(r+1)>1$. Combining this with (3) proves $\Delta\ge(2^{1/16})^r$, as required.
+For infinite hypergraphs of finite bounded maximum degree, the same conclusion follows from the finite case by the usual compactness theorem for finite-colourings: every finite induced constraint system is two-colourable. The finite problem requires no compactness input.
+\subsection*{4. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/833}; P. Erd\H{o}s and L. Lov\'asz, \emph{Problems and results on 3-chromatic hypergraphs and some related questions}, 1975, \url{https://users.renyi.hu/~p_erdos/1975-34.pdf}. The dependency method originates in that paper. All probabilistic estimates used here are proved above.
+\textbf{SOLVED for the stated existence question.} A uniform positive $c$ is exhibited and the local lemma is reconstructed completely; optimal values of the accompanying extremal function are outside this assertion. No novelty or formal-verification claim is made.
+\textbf{Completion rate estimate: 100\%.}

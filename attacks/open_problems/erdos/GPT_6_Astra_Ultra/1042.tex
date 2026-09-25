@@ -1,0 +1,82 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1042: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{The two conclusions, with their quantifiers}
+There exists a compact set of transfinite diameter one, outside every closed unit disk, which allows $n$ components for every positive integer $n$. On the other hand, for each fixed nonempty compact set $F$ of capacity less than one there are constants $c(F)>0$ and $N(F)$ such that every monic degree-$n$ polynomial with roots in $F$ has at most $(1-c(F))n$ components once $n\ge N(F)$.
+
+The second assertion is asymptotic: for $n=1$ there is always one component, so a bound $(1-c)n$ with $c>0$ cannot hold at every degree. This is exactly the quantifier in Theorem 2.1(a) of Ghosh--Ramachandran, \emph{On the number of components of polynomial lemniscates}, \url{https://arxiv.org/abs/2312.13673}. We reconstruct its compactness argument, and give an explicit example for the first assertion. We do not assert that every capacity-one set has the first property, or determine the optimal constant solely from the capacity.
+
+\section*{Potential-theoretic inputs and a root-count observation}
+We use the standard equivalence between transfinite diameter and logarithmic capacity, in the following precise forms:
+\[
+ \log\operatorname{cap}(F)=\sup_{\mu\in\mathcal P(F)}
+ \iint\log|z-w|\,d\mu(z)\,d\mu(w),\tag{1}
+\]
+where $\mathcal P(F)$ denotes Borel probability measures on the compact set $F$, and $\log0=-\infty$ is allowed; also $\operatorname{cap}([-2,2])=1$. The interval formula follows, for example, from the exterior conformal map $w\mapsto w+w^{-1}$, whose leading coefficient is one. These classical capacity facts are explicit external inputs. Weak compactness of probability measures on a compact metric space is also used.
+
+Every component $U$ of $\{|p|<1\}$ contains a root of $p$. Indeed $U$ is bounded, its boundary has $|p|=1$, and if there were no root then $\log|p|$ would be harmonic in $U$, continuous on its closure, negative inside and zero on the boundary. The maximum and minimum principles rule this out. Distinct components contain disjoint roots, so there are at most $n$ components, with multiplicities counted when estimating the number of roots consumed by one component.
+
+\section*{Capacity below one forces a positive fraction of roots together}
+Suppose the claimed asymptotic bound fails. There are polynomials $p_j$ of degrees $n_j\to\infty$, all roots in $F$, whose numbers of components divided by $n_j$ tend to one. Let
+\[
+ \mu_j=\frac1{n_j}\sum_{p_j(a)=0}\delta_a
+\]
+count roots with multiplicity. After a subsequence, $\mu_j$ converges weakly to a probability measure $\mu$ on $F$. Write
+\[
+ U_\mu(z)=\int\log|z-w|\,d\mu(w).
+\]
+By (1), $\int U_\mu\,d\mu\le\log\operatorname{cap}(F)<0$. This remains meaningful if the capacity is zero or the energy is minus infinity. Consequently there is $z_0\in\operatorname{supp}\mu$ with $U_\mu(z_0)<0$.
+
+The logarithmic potential is upper semicontinuous: on any compact set of $z$ values the kernel is bounded above, and the reverse Fatou inequality applies. Choose a small closed disk $B$ centred at $z_0$ and $\delta>0$ such that
+\[
+ \sup_{z\in B}U_\mu(z)<-2\delta.
+\tag{2}
+\]
+Its interior has positive $\mu$-mass because $z_0$ lies in the support.
+
+We need an upper bound uniform in $z$, not just pointwise convergence. For $M>0$ the truncated kernel
+\[
+ K_M(z,w)=\max\{\log|z-w|,-M\}
+\]
+is continuous on $B\times F$. If $z_j\to z$ in $B$, weak convergence and uniform continuity give
+\[
+ \limsup_j U_{\mu_j}(z_j)
+ \le\int K_M(z,w)\,d\mu(w).
+\]
+Letting $M\to\infty$ gives an upper bound $U_\mu(z)$. If the desired uniform inequality failed, choose violating points in $B$ and a convergent subsequence; (2) would contradict this bound. Therefore eventually
+\[
+ \sup_{z\in B}\frac1{n_j}\log|p_j(z)|
+ =\sup_{z\in B}U_{\mu_j}(z)<-\delta.
+\tag{3}
+\]
+Thus the entire connected disk $B$ lies in a single component of $\{|p_j|<1\}$. By the open-set part of weak convergence, for some fixed $\eta>0$ and all large $j$, at least $\eta n_j$ roots lie in the interior of $B$. That component uses at least this many roots. All other components need separate roots, so
+\[
+ \#\operatorname{components}\{|p_j|<1\}\le n_j-\eta n_j+1.
+\]
+This contradicts the assumed ratio tending to one. Equivalently the limsup of the maximal component ratio is strictly below one; choosing any smaller positive gap gives the stated $c(F)$ and $N(F)$.
+
+The problem says closed rather than compact. A nonempty closed unbounded set has infinite transfinite diameter: for any fixed number of points, hold all but one distinct points fixed and send the last to infinity. Thus its finite-transfinite-diameter hypotheses reduce to compact sets. An empty set admits no positive-degree polynomial with all roots in it.
+
+\section*{A capacity-one set with the maximal number of components}
+Take $F=[-2,2]$. Its endpoints are distance four apart, so it cannot fit into a radius-one disk, and its capacity is one. Let $T_n$ be the Chebyshev polynomial defined by $T_n(\cos\theta)=\cos(n\theta)$, and set
+\[
+ P_n(z)=2T_n(z/2).
+\]
+The leading coefficient is one, the $n$ roots are the distinct real points
+\[
+ 2\cos\frac{(2j-1)\pi}{2n},\qquad 1\le j\le n,
+\]
+and for $n\ge2$ its $n-1$ critical points are $2\cos(k\pi/n)$, with critical values $2(-1)^k$. All critical values therefore lie outside the closed unit disk. Over the unit disk the proper polynomial map $P_n$ is an unbranched $n$-sheeted covering. Analytic continuation of the local inverse branches, and simple connectedness of the disk, split its inverse image into exactly $n$ components. The case $n=1$ is immediate. This supplies the requested maximal-component example at every degree.
+
+\section*{Assessment}
+Both main assertions are proved, using (1), the interval capacity, weak compactness, and standard inverse-branch theory as identified inputs. The argument does not supply an effective value of $c(F)$ and does not claim the stronger bound at small degrees. It reconstructs the known capacity argument and an explicit Chebyshev example.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

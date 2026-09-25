@@ -1,0 +1,36 @@
+\section*{Erd\H{o}s Problem 111: distance from bipartiteness}
+\subsection*{Statement and scope}
+For a graph $G$ of chromatic number $\aleph_1$, let $h_G(n)$ be the maximum, over its $n$-vertex subgraphs, of the minimum number of edges whose removal makes that subgraph bipartite. The question asks whether $h_G(n)/n\to\infty$. We prove a uniform positive linear lower bound depending on $G$, but superlinear growth is unresolved here.
+
+This revises the earlier GPT-5.2 max-cut and odd-cycle observations and adds the uncountable disjoint-cycle argument. Source: \url{https://www.erdosproblems.com/111}. These are elementary partial results, not a claimed new resolution.
+
+\subsection*{Two useful finite identities}
+For a finite graph $H$ write $\tau(H)$ for its edge-deletion distance from bipartiteness. Then
+\[
+ \tau(H)=e(H)-\operatorname{MaxCut}(H). \tag{1}
+\]
+Indeed, retaining all edges across any vertex bipartition gives a bipartite graph. Conversely every bipartite spanning subgraph retains only edges of some cut. Also, if $H$ contains $t$ edge-disjoint odd cycles, then $\tau(H)\ge t$, because at least one edge from each cycle must be removed.
+
+For every $n$-vertex graph,
+\[
+ \tau(H)\le {n\choose2}-\left\lfloor\frac{n^2}{4}\right\rfloor
+ =\left\lfloor\frac{(n-1)^2}{4}\right\rfloor. \tag{2}
+\]
+Choose any partition into $\lfloor n/2\rfloor$ and $\lceil n/2\rceil$ vertices and discard its internal edges; there are at most the number on the right.
+
+\subsection*{Uncountable chromatic number forces many disjoint odd cycles}
+Choose a maximal family $\mathcal C$ of pairwise vertex-disjoint finite odd cycles. Such a family exists by the usual maximality principle. It cannot be countable. If it were, the union $S$ of its vertices would be countable, and $G-S$ would have no odd cycle by maximality. A graph with no finite odd cycle is bipartite: in each connected component, parity of path length from a chosen root is well-defined, since two paths of opposite parity would give an odd closed walk and hence an odd cycle.
+
+Colour $G-S$ with two colours and give the vertices of $S$ distinct further colours. This countable colouring contradicts $\chi(G)=\aleph_1$.
+
+There are only countably many odd cycle lengths. Thus some odd integer $\ell\ge3$ occurs for uncountably many members of $\mathcal C$; otherwise $\mathcal C$ would be a countable union of countable sets. For every $n$, take $\lfloor n/\ell\rfloor$ of these cycles and add arbitrary vertices to reach $n$ vertices. Their cycles are still edge-disjoint, so
+\[
+ h_G(n)\ge\left\lfloor\frac n\ell\right\rfloor,\qquad
+ \liminf_{n\to\infty}\frac{h_G(n)}n\ge\frac1\ell>0. \tag{3}
+\]
+Additional edges between the chosen vertices cannot invalidate this lower bound.
+
+\subsection*{Remaining gap}
+The fixed-length packing argument gives only a fixed linear coefficient. A disjoint union of $\ell$-cycles has linear deletion distance and chromatic number three, illustrating the limitation of the packing method; it is not a counterexample under the uncountable-chromatic hypothesis. To answer the question one must force arbitrarily large deletion cost per vertex, rather than just arbitrarily many disjoint cycles.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem 327: forbidden unit-fraction pairs}
+\subsection*{Statement and scope}
+For $A\subset[1,N]\cap\mathbb N$, condition (I) requires $a+b\nmid ab$ for distinct $a,b\in A$. Can such a set be substantially larger than the odd numbers? Condition (II) requires $a+b\nmid2ab$; must sets satisfying (II) have size $o(N)$?
+
+The $o(N)$ question concerns (II), not (I), since the odd numbers already disprove it for (I). This corrects the earlier GPT-5.2 restatement. We give explicit constructions and density upper bounds, but both main asymptotic questions are unresolved here. Source: \url{https://www.erdosproblems.com/327}. The arguments are elementary; no novelty or unverified exhaustive-search claim is made.
+
+\subsection*{The exact divisibility test}
+Write $a=gx$, $b=gy$, where $g=\gcd(a,b)$ and $\gcd(x,y)=1$. Since $\gcd(x+y,xy)=1$,
+\[
+ a+b\mid ab\ \Longleftrightarrow\ x+y\mid g,\qquad
+ a+b\mid2ab\ \Longleftrightarrow\
+ \frac{x+y}{\gcd(x+y,2)}\mid g. \tag{1}
+\]
+For example, $a=3t,b=6t$ violate both conditions, while $a=2t,b=6t$ always violate (II). The first condition is also equivalent to excluding pairs whose reciprocal sum is a unit fraction, since $1/a+1/b=(a+b)/(ab)$.
+
+\subsection*{Adding elements to all the odd numbers}
+All odd integers in $[1,N]$ satisfy (I), by parity. They can be augmented by every number $2p\le N$ with $p$ prime and $p>\sqrt N+2$. To check this, consider an odd $b$ and $a=2p$. Their gcd is either $1$ or $p$. Gcd one cannot give divisibility by (1). In the second case write $b=pt$, with $t$ odd. Formula (1) would require $t+2\mid p$, hence $t=p-2$, giving $b=p(p-2)>N$. This is impossible.
+
+For two distinct added numbers $2p,2q$, the gcd is $2$, and (1) would require $p+q\mid2$, also impossible. Thus we have the rigorous bound
+\[
+ \max_{A\text{ satisfying (I)}}|A|
+ \ge \left\lceil\frac N2\right\rceil+
+ \#\{p\text{ prime}:\sqrt N+2<p\le N/2\}. \tag{2}
+\]
+This is a verified enlargement of the odd numbers, without asserting a positive constant improvement in density. For (II), the set of all primes at most $N$ is an elementary construction: distinct primes have gcd one and $(p+q)/\gcd(p+q,2)>1$.
+
+\subsection*{Disjoint forbidden pairs give uniform upper bounds}
+For (I), take all pairs
+\[
+ \{3\cdot4^j u,\ 6\cdot4^j u\},
+ \qquad j\ge0,\quad u\text{ odd},\quad6\cdot4^j u\le N.
+\]
+Each is forbidden. They are pairwise disjoint, because after dividing by three their two members have consecutive $2$-adic valuations $2j,2j+1$ and the same odd part. Their number is
+\[
+ \sum_{j\ge0}\#\{u\le N/(6\cdot4^j):u\text{ odd}\}
+ =\frac N{12}\sum_{j\ge0}4^{-j}+O(\log(N+2))
+ =\frac N9+O(\log(N+2)).
+\]
+At least one element from each pair must be excluded. Therefore
+\[
+ |A|\le\frac89N+O(\log(N+2))\qquad\text{under (I)}. \tag{3}
+\]
+
+Under (II), instead use
+\[
+ \{2\cdot9^j u,\ 6\cdot9^j u\},
+ \qquad 3\nmid u,\quad6\cdot9^j u\le N.
+\]
+After division by two, uniqueness of the $3$-free part and the valuations $2j,2j+1$ again makes the pairs disjoint. Their number is
+\[
+ \sum_{j\ge0}\left(\frac23\frac{N}{6\cdot9^j}+O(1)\right)
+ =\frac N8+O(\log(N+2)),
+\]
+so
+\[
+ |A|\le\frac78N+O(\log(N+2))\qquad\text{under (II)}. \tag{4}
+\]
+The sums contain only $O(\log(N+2))$ nonempty terms; the omitted geometric tails contribute $O(1)$.
+
+\subsection*{Remaining gap}
+Neither (2)--(3) determine whether (I) permits density bounded above $1/2$ by a fixed positive amount. Bound (4) removes only a fixed fraction and does not prove the requested $o(N)$ conclusion for (II).
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

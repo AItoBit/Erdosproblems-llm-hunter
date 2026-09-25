@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 1008}
+
+\paragraph{Statement and result.}
+Every finite simple graph with \(m\) edges has a subgraph without a four-cycle and with at least \(\tfrac12m^{2/3}\) edges. We prove this by the elementary alteration argument given by Zach Hunter in the problem's discussion. The exponent is optimal for arbitrary host graphs.
+
+\paragraph{Counting the forbidden configurations.}
+Let \(C(G)\) be the number of unoriented copies of \(C_4\), including those with diagonals present in the host. A matching of two edges can be the pair of opposite edges of at most two four-cycles: on its four endpoints there are only two ways to join the opposite edges into a cycle. Each four-cycle has exactly two opposite-edge matchings. Double counting therefore gives
+\[
+ 2C(G)\leq 2\binom m2,\qquad C(G)\leq\binom m2.
+\tag{1}
+\]
+The argument counts subgraphs, not induced subgraphs, so chords cause no difficulty.
+
+\paragraph{Sampling and deletion.}
+For \(m\geq1\), retain each edge independently with probability \(p=m^{-1/3}\), and call the resulting graph \(H\). Linearity of expectation gives
+\[
+ \mathbb E e(H)=pm,\qquad
+ \mathbb E C(H)=p^4C(G).
+\]
+For each four-cycle of \(H\), choose one of its edges and delete the union of the chosen edges. The resulting graph \(H'\) has no four-cycle: any such cycle would already have been a cycle of \(H\), from which a chosen edge was deleted. Since the union of the chosen edges has size at most \(C(H)\),
+\[
+ e(H')\geq e(H)-C(H).
+\]
+At least one outcome satisfies
+\[
+ e(H')\geq pm-p^4\binom m2
+ =\frac12m^{2/3}+\frac12m^{-1/3}
+ \geq\frac12m^{2/3}.
+\]
+When \(m=0\), the empty graph proves the assertion. This proves the requested uniform bound, without an asymptotic qualification on \(m\).
+
+\paragraph{Why the exponent cannot be increased.}
+Take the complete bipartite host \(K_{n,n^2}\), which has \(m=n^3\) edges. In a four-cycle-free subgraph, let \(d_1,\ldots,d_{n^2}\) be the degrees on the larger side. Any two vertices on the smaller side have at most one common neighbour, so
+\[
+ \sum_{i=1}^{n^2}\binom{d_i}{2}\leq\binom n2.
+\]
+For every integer \(d\geq0\), \(d\leq1+\binom d2\). Consequently
+\[
+ e(H)=\sum_i d_i\leq n^2+\binom n2<\frac32n^2
+ =\frac32m^{2/3}.
+\]
+Thus no bound \(c\,m^\beta\), with fixed \(c>0\) and \(\beta>2/3\), can hold for all host graphs. This is Folkman's obstruction to the earlier \(m^{3/4}\) proposal.
+
+\paragraph{Attribution and assessment.}
+The general result was published by Conlon, Fox, and Sudakov, \emph{Large subgraphs without complete bipartite graphs}, \url{https://arxiv.org/abs/1401.6711}. The proof reconstructed here is Hunter's elementary argument at \url{https://www.erdosproblems.com/forum/thread/1008}; the current statement is \url{https://www.erdosproblems.com/1008}, checked 24 September 2026. All mathematical steps used above are supplied. This is a reconstruction of a known solution, with no novelty claim or local Lean verification.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

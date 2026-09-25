@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 161: density thresholds in coloured hypergraphs}
+\subsection*{Statement and conventions}
+For a two-colouring of the $t$-subsets of $[n]$, require every $X$ with $|X|\ge m$ to have at least $\alpha\binom{|X|}{t}$ edges of each colour. The current statement defines $F^{(t)}(n,\alpha)$ using the \emph{smallest} such $m$. Permit $m=n+1$ to record the vacuous case when no nonvacuous threshold exists.
+
+With the literal non-strict requirement, $F^{(t)}(n,0)=1$. A Ramsey threshold at zero instead requires at least one edge of each colour whenever $\binom{|X|}{t}>0$. Also, for fixed finite $n,t$ this is an integer-valued step function. The substantive question concerns asymptotic scales as $n$ grows.
+
+We prove a random-colouring upper bound, characterize the finite breakpoints, and solve $t=1$. The general asymptotic jump question remains unresolved in this attempt.
+
+\subsection*{Checking one size suffices}
+Suppose $m\ge t$ and every $m$-subset has at least $\alpha\binom mt$ red edges. For $|X|=s\ge m$, sum over its $m$-subsets. Each red edge occurs $\binom{s-t}{m-t}$ times, giving
+\[
+ e_R(X)\binom{s-t}{m-t}\ge\alpha\binom sm\binom mt
+ =\alpha\binom st\binom{s-t}{m-t}.
+\]
+The same holds for blue; strict inequalities also propagate by this argument.
+
+\subsection*{An explicit probabilistic constant}
+Fix $t\ge2$ and $0<\alpha<1/2$, and put
+$I_\alpha=\log2+\alpha\log\alpha+(1-\alpha)\log(1-\alpha)>0$.
+For $Y\sim\operatorname{Bin}(E,1/2)$, exponential Markov gives
+\[
+ \mathbb P(Y\le\alpha E)
+ \le e^{z\alpha E}((1+e^{-z})/2)^E
+ \quad(z>0).
+\]
+Minimizing at $e^{-z}=\alpha/(1-\alpha)$ gives $e^{-I_\alpha E}$; reflection handles the other tail. Thus in a random colouring the probability that some $m$-set fails even the strict density requirement is at most
+$2\binom nm e^{-I_\alpha\binom mt}$.
+
+For fixed $\eta>0$, take
+\[
+ m=\left\lceil
+ \left(\frac{t!}{I_\alpha}+\eta\right)^{1/(t-1)}
+ (\log n)^{1/(t-1)}\right\rceil.
+\]
+Using $\binom mt=(1+o(1))m^t/t!$, the logarithm of the failure bound tends to $-\infty$. A suitable colouring therefore exists, and the preceding averaging handles all larger sets. In particular,
+\[
+ \limsup_{n\to\infty}\frac{F^{(t)}(n,\alpha)}
+ {(\log n)^{1/(t-1)}}
+ \le\left(\frac{t!}{I_\alpha}\right)^{1/(t-1)}.
+\]
+
+\subsection*{Finite breakpoints and the one-uniform case}
+For $m\ge t$ define
+\[
+ \beta_m=\max_c\min_{|X|=m}
+ \frac{\min(e_R(X),e_B(X))}{\binom mt}.
+\]
+There are finitely many colourings. Averaging gives
+$F^{(t)}(n,\alpha)\le m$ exactly when $\alpha\le\beta_m$.
+Each $\beta_m$ is an integer divided by $\binom mt$, and these numbers are nondecreasing in $m$. This identifies the finite breakpoints without deciding their asymptotic scales.
+
+For $t=1$, if the two vertex classes have sizes $r,n-r$, an $m$-set has at least $\max(0,m-(n-r))$ red vertices and at least $\max(0,m-r)$ blue vertices; both minima are attained. For $\alpha>0$ and $m\le n$, feasibility is equivalent to
+$(1-\alpha)m\ge\max(r,n-r)$. Optimizing at a balanced colouring yields
+\[
+ F^{(1)}(n,\alpha)=
+ \min\left(n+1,\left\lceil
+ \frac{\lceil n/2\rceil}{1-\alpha}\right\rceil\right).
+\]
+At $n=6$ the values are $4$ on $(0,1/4]$, $5$ on $(1/4,2/5]$, and $6$ on $(2/5,1/2)$, while the literal value at zero is $1$. Multiple finite jumps already occur here.
+
+\subsection*{Assessment and attribution}
+The union-bound idea in the old \texttt{gpt\_pro\_5.2/161.tex} is retained with its all-larger-subsets step now supplied by exact double counting. Its discussion of a largest threshold is obsolete for the current source, and its rounding assertion near $1/2$ is not used. A matching general lower bound and the classification of asymptotic jumps are missing. Source: \url{https://www.erdosproblems.com/161}. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

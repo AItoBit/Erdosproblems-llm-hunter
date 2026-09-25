@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 409: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For $T(n)=\varphi(n)+1$, how many iterations are needed to reach a prime? Can infinitely many starting values reach one fixed prime, and what are the basin densities? Source: \url{https://www.erdosproblems.com/409}. We prove termination with an explicit $O(\sqrt n)$ bound and determine several entire prime basins. The general basin and sharp iteration questions remain unresolved here.
+
+This corrects the earlier GPT-5.2 draft's suggestion that termination itself might fail. Its fixed-depth finiteness argument is retained with proof; no novelty is claimed for the elementary deductions.
+
+\section*{Strict descent and an explicit iteration bound}
+If $n$ is composite, its least prime divisor $p$ is at most $\sqrt n$. The product formula for the totient gives
+\[
+ \varphi(n)\le n(1-1/p)\le n-\sqrt n.
+\]
+Therefore $T(n)\le n-\sqrt n+1<n$ for every composite $n\ge4$. A prime $p$ is fixed because $\varphi(p)=p-1$. Also $1\mapsto2$. Thus every positive integer reaches a prime.
+
+Let $F(n)$ count steps before the first prime, including $F(p)=0$. At any composite term $x\ge4$, put $y=T(x)$. Since $x-y\ge\sqrt x-1\ge\sqrt x/2$,
+\[
+ \sqrt x-\sqrt y=\frac{x-y}{\sqrt x+\sqrt y}\ge\frac14.
+\]
+Summing this inequality along the strictly decreasing part proves
+\[
+ F(n)\le4\sqrt n\qquad(n\ge2),\qquad F(1)=1. \tag{1}
+\]
+In particular $F(n)=o(n)$. On the other hand, $F(2p)=1$ for every odd prime $p$, since $\varphi(2p)=p-1$.
+
+\section*{Finite levels and exact small basins}
+For a fixed $v$, every solution of $\varphi(m)=v$ has prime factors $p$ satisfying $p-1\mid v$ and exponents at most $1+v_p(v)$. This gives a finite list of possibilities and hence proves finite preimages. Induction backwards shows that, for fixed prime $q$ and fixed depth $d$, only finitely many starts reach $q$ in at most $d$ steps. An infinite basin, if one exists, must therefore involve unbounded depths.
+
+For $m>2$, $\varphi(m)$ is even by pairing reduced residues $a$ and $m-a$. Thus $T(m)$ is odd, while $T(1)=T(2)=2$. In particular no even integer larger than two has a predecessor. The complete small totient fibres are
+\[
+ \varphi^{-1}(1)=\{1,2\},\quad
+ \varphi^{-1}(2)=\{3,4,6\},\quad
+ \varphi^{-1}(4)=\{5,8,10,12\}.
+\]
+These follow either directly from the product formula or by the finite prime-and-exponent list just proved. The parity observation now gives the entire basins
+\[
+ B_2=\{1,2\},\quad B_3=\{3,4,6\},\quad
+ B_5=\{5,8,10,12\}.
+\]
+All three have density zero, not merely finite depth.
+
+One further example is
+\[
+ B_7=\{7,9,14,15,16,18,20,24,30\}.
+\]
+Indeed $\varphi^{-1}(6)=\{7,9,14,18\}$ and $\varphi^{-1}(8)=\{15,16,20,24,30\}$. The only new odd value needing predecessors is $15$, but $\varphi(m)=14$ has no solution: its allowable primes are only $2,3$, whose totient factors cannot supply the factor $7$. Every other new predecessor is even and is a leaf. These checks prove exhaustion of this basin.
+
+\section*{The divisor-sum variant}
+For $U(n)=\sigma(n)-1$ and $n\ge2$, $U(n)\ge n$, with equality exactly at primes. For a composite $n$, a proper divisor between $1$ and $n$ makes the inequality strict. Consequently such an orbit either reaches a prime or increases without bound; it cannot have a nonprime cycle. Any start reaching a fixed prime $p$ is at most $p$, so that variant has only finite prime basins. This does not prove that all of its orbits terminate.
+
+\section*{Remaining gap}
+Termination and (1) are proved for the totient map, and four prime basins are completely determined. There is no uniform bound on basin depth for arbitrary primes in this argument, no proof or disproof of an infinite basin, and no general basin-density formula. The unresolved part of the divisor-sum variant is different: its trajectories increase rather than descend.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

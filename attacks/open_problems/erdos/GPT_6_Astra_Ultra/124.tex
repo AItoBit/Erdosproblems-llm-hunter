@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 124: sums of distinct powers}
+\subsection*{Statement, attribution, and scope}
+For finitely many bases $3\le d_1<\cdots<d_r$, let $P(d,k)$ be the finite sums of distinct powers $d^j$ with $j\ge k$, including the empty sum. Put
+\[
+ S=\sum_{i=1}^r\frac1{d_i-1}.
+\]
+The intended hypothesis is $S\ge1$; the repeated denominator $d_r-1$ in the displayed website statement is a typographical error, as its commentary and cited formulation confirm. Question one asks whether $P(d_1,0)+\cdots+P(d_r,0)$ contains all sufficiently large integers. Question two adds $\gcd(d_1,\ldots,d_r)=1$ and asks the analogous assertion for \emph{every} fixed $k\ge1$.
+
+We completely reconstruct the affirmative answer to question one and the necessity of $S\ge1$ for finite collections. The general tail assertion remains unresolved here. The first proof is the Aristotle--Alexeev argument explained by tsaf; the necessity argument is Pomerance's observation reconstructed by Tao. Primary discussion: \url{https://www.erdosproblems.com/forum/thread/124?order=oldest}. The original source-model files are retained; their rounding argument and weakened tail quantifier are replaced here. No new proof attribution is claimed.
+
+\subsection*{The completeness criterion}
+If a nondecreasing sequence of positive integers $w_1,w_2,\ldots$ satisfies
+\[
+ w_1=1,\qquad w_{j+1}\le1+\sum_{\ell\le j}w_\ell, \tag{1}
+\]
+then every nonnegative integer is a finite subsequence sum. Indeed, if the first $j$ terms represent every integer in $[0,A]$, adjoining $w_{j+1}\le A+1$ makes $[0,A]$ and $[w_{j+1},w_{j+1}+A]$ overlap or meet consecutively. Induction gives all integers up to each prefix sum, and the prefix sums tend to infinity.
+
+Apply this to all powers $d_i^e$, $e\ge0$, sorted with multiplicity. Copies of the same numerical power from different bases are distinct permitted summands. If the next term is $x$, let $p_i$ be the least power of $d_i$ which is at least $x$. Every smaller power has already appeared, so the sum of preceding terms is at least
+\[
+ \sum_i\frac{p_i-1}{d_i-1}
+ \ge (x-1)\sum_i\frac1{d_i-1}
+ \ge x-1. \tag{2}
+\]
+The first term is one; thus (1) holds. This proves the stronger conclusion that \emph{every} nonnegative integer is represented when $S\ge1$. Grouping the selected powers by base gives the requested sum of elements of $P(d_i,0)$. Crucially, (2) is exact and also works at the boundary $S=1$.
+
+\subsection*{Necessity for a finite set of bases}
+Suppose $S<1$. Simultaneous Dirichlet approximation gives arbitrarily large integers $q$ for which all
+\[
+ q\frac{\log d_1}{\log d_i}\quad(2\le i\le r)
+\]
+are arbitrarily close to integers. To see the recurrence directly, partition the unit $(r-1)$-cube into $N^{r-1}$ boxes and compare the first $N^{r-1}+1$ multiples of this vector. Their difference gives a positive $q$ with each error at most $1/N$. If the resulting $q$ stay bounded along a subsequence, one fixed $q$ has all errors exactly zero, and its multiples give arbitrarily large exact returns.
+
+Choose corresponding integer exponents $e_i$ and put $p_1=d_1^q$, $p_i=d_i^{e_i}$. Along such returns, $p_i/p_1\to1$. Let $x=\min_i p_i$. Then $x\to\infty$ and, for large returns, $p_i/d_i<x\le p_i$. Hence $p_i$ is exactly the first power of $d_i$ at least $x$, and the sum of all allowed powers strictly below $x$ is
+\[
+ A=\sum_i\frac{p_i-1}{d_i-1},\qquad \frac Ax\longrightarrow S<1.
+\]
+For large returns, $A+1<x$. No subsequence sum equals $A+1$: using only smaller powers gives at most $A$, while using any other power gives at least $x$. These omitted integers tend to infinity. Thus $S\ge1$ is necessary for eventual completeness in question one, and therefore also for any tail version.
+
+\subsection*{The tail obstruction and the remaining gap}
+If $g=\gcd(d_1,\ldots,d_r)>1$, every summand with exponent at least $k$ is divisible by $g^k$, so the tail set cannot contain all large integers. This proves necessity of the gcd condition.
+
+Removing finitely many initial powers removes the base case of (1). Eventual inequalities between successive large powers and previous tail sums do not, by themselves, create an initial interval of consecutive representable integers. The first proof therefore does not establish question two, even with $S\ge1$ and gcd one. The universal assertion for every fixed $k\ge1$ is the precise remaining gap.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

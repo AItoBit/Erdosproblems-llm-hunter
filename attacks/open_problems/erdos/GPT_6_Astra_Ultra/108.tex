@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 108: high girth inside a high-chromatic host}
+\subsection*{Statement and scope}
+For fixed $k\ge2$ and $r\ge4$, must some $f(k,r)$ ensure that every graph of chromatic number at least $f(k,r)$ contains a subgraph of girth at least $r$ and chromatic number at least $k$? The universal-host assertion is unresolved here. We prove necessary size bounds, the case $k=2$, and the distinction between the required assertion and the classical existence of high-girth, high-chromatic graphs.
+
+This revises the earlier GPT-5.2 attempt, retaining its valid critical-subgraph reduction and correcting its assertion that an entire breadth-first ball must be a tree. Source statement: \url{https://www.erdosproblems.com/108}. The random-graph existence argument below is the classical Erd\H{o}s method; no novelty is claimed.
+
+\subsection*{Critical graphs and the Moore obstruction}
+A finite graph with chromatic number at least $k$ has a vertex-minimal induced subgraph $H$ with this property. Deleting any vertex leaves a $(k-1)$-colourable graph, so $\chi(H)=k$ and every vertex of $H$ has degree at least $k-1$: otherwise its colour could be supplied after colouring the other vertices.
+
+For minimum degree $d\ge2$ and girth at least $r$, breadth-first path counting gives
+\[
+ |H|\ge
+ \begin{cases}
+ 1+d\sum_{i=0}^{s-1}(d-1)^i,&r=2s+1,\\
+ 2\sum_{i=0}^{s-1}(d-1)^i,&r=2s.
+ \end{cases} \tag{1}
+\]
+For odd $r$, root at a vertex and count nonbacktracking paths of lengths up to $s$. A repeated vertex, or two distinct such paths with the same endpoint, would create a cycle of length at most $2s$. Thus the path endpoints counted at each level are distinct. Edges between vertices of the last level may exist; they are not used or excluded by this argument.
+
+For even $r$, root at an edge and grow paths to depth $s-1$ on each side, forbidding the root edge as the first step. A collision on one side gives a cycle of length at most $2s-2$, and a collision between the two sides gives one of length at most $2s-1$. This proves the second formula.
+
+If a threshold $f(k,r)$ exists, apply its assertion to the complete graph on $f(k,r)$ vertices and then to a critical subgraph of the promised witness. For $k\ge3$, (1) with $d=k-1$ is therefore a necessary lower bound on $f(k,r)$. For $k=2$, the exact threshold is $2$: every graph of chromatic number at least two contains an edge, whose girth is infinite.
+
+\subsection*{Existence does not supply the universal host}
+For completeness, fix $k,r$ and let $G$ be a random graph on $N$ vertices with independent edge probability
+\[
+ p=N^{-1+1/(2r)}.
+\]
+The expected number of cycles of lengths $3,\ldots,r-1$ is at most
+$\sum_{\ell=3}^{r-1}(Np)^\ell/(2\ell)=O_r(N^{1/2})$.
+Markov's inequality shows that, with probability tending to one, fewer than $N/2$ such cycles occur.
+
+Put $t=\lceil N/(2k)\rceil$. The expected number of independent $t$-sets is at most
+\[
+ {N\choose t}(1-p)^{\binom t2}
+ \le 2^N\exp\bigl(-p\binom t2\bigr)=o(1),
+\]
+since $p t^2$ has order $N^{1+1/(2r)}$. Hence some graph has fewer than $N/2$ short cycles and no independent $t$-set. Remove at most one vertex for each short cycle. The remaining graph $H$ has more than $N/2$ vertices, girth at least $r$, and independence number at most $t-1<N/(2k)$. Consequently $\chi(H)\ge |H|/\alpha(H)>k$.
+
+This constructs witnesses inside sufficiently large complete graphs. An arbitrary high-chromatic host need not contain those complete graphs, so the construction does not establish the requested extraction theorem.
+\subsection*{Remaining gap}
+We have a quantitative necessary obstruction and witnesses for some hosts. A procedure that extracts a high-girth, high-chromatic subgraph from every sufficiently high-chromatic host is still missing.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

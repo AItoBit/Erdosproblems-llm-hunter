@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem 101: four-point lines with no five collinear}
+
+\subsection*{1. Statement and scope}
+Suppose $P$ is a set of $n$ real planar points, no five on one line. Is the number of four-point lines $o(n^2)$? This remains unresolved. We prove the bound
+\[
+ t_4\le\frac{n(n-1)-6}{14}\qquad(n\ge5),\tag{1}
+\]
+where $t_r$ denotes the number of lines containing exactly $r$ points of $P$. The improvement over direct pair counting comes from the real-projective-plane Euler argument usually called Melchior's inequality. We give that argument rather than treating it as an unexplained input. A simple construction is also supplied, without claiming to match the much stronger known lower bounds.
+
+\subsection*{2. Pair counting and the real-plane constraint}
+Every pair of distinct points lies on exactly one line. Because there are no five collinear,
+\[
+ t_2+3t_3+6t_4=\binom n2.\tag{2}
+\]
+For $n\ge5$, the points are not all collinear. Dualize their projective completions to an arrangement of $n$ distinct projective lines, not all concurrent. A vertex where exactly $r$ dual lines meet corresponds to an $r$-point line of the original set, so the arrangement has
+\[
+ V=\sum_{r\ge2}t_r,\qquad E=\sum_{r\ge2}r t_r.
+\]
+Here each arrangement line is a projective circle cut into as many edges as it has vertices; equivalently, each vertex has degree $2r$ and every edge has two ends. The arrangement gives a cellular decomposition of the real projective plane, whose Euler characteristic is one. Thus $F=1-V+E$.
+
+Every face has at least three edge occurrences on its boundary. There are no one-sided polygon boundaries in the edge-counting sense: such a boundary would require a line with only one intersection vertex, making the whole arrangement concurrent. A two-edge boundary would require two distinct projective lines to meet at two distinct vertices, which is impossible. The nonconcurrent line arrangement has disk faces, as can also be seen by lifting to the sphere and cutting by great circles. Counting face-edge incidences, with both sides of every edge counted, therefore gives $3F\le2E$. Substituting Euler's relation yields
+\[
+ 3\le3V-E=\sum_{r\ge2}(3-r)t_r,
+ \quad\text{or}\quad
+ t_2\ge3+\sum_{r\ge4}(r-3)t_r.\tag{3}
+\]
+In our case this is $t_2\ge t_4+3$. Combining it with (2) gives
+\[
+ 7t_4+3t_3\le\binom n2-3,
+\]
+which proves (1). The use of real projective geometry is essential in this argument; the same face count is not available for arbitrary abstract incidence systems.
+
+\subsection*{3. A completely controlled lower construction}
+For every $n$ there is a configuration with no five collinear and at least $\lfloor n/4\rfloor$ four-point lines. Construct successive groups of four points as follows. Choose a new line avoiding all previously chosen points. On it choose four distinct new points, each avoiding the finitely many lines determined by pairs of old points. Such choices exist because the new line is different from all those old pair-lines and meets each in at most one forbidden point.
+
+The new group supplies its own four-point line. A different line contains at most one new point, since two new points already determine the new group line. If it contains a new point and two old ones, that new point would lie on a forbidden old pair-line. Hence no other line gains a third point and no previous four-point line gains a fifth. Repeat for $\lfloor n/4\rfloor$ groups, then add any remaining points one at a time off all lines determined by existing pairs. This preserves every asserted property.
+
+This linear lower bound is merely an explicit checked example. It is far below the known constructions approaching quadratic size cited on the problem page, and no improvement over those constructions is asserted.
+
+\subsection*{4. What the bound does not provide}
+Inequality (1) improves the constant in the elementary quadratic upper bound but leaves a positive constant multiplying $n^2$. It therefore does not establish the required little-$o$ estimate. To finish the problem, one must show that $t_4/n^2$ tends to zero uniformly over the permitted configurations, or construct a sequence for which it stays bounded away from zero. Neither conclusion follows from (2)--(3).
+
+Source: \url{https://www.erdosproblems.com/101}. The proof of (3) is the classical Melchior argument, reconstructed above using the Euler formula for the real projective plane. No stronger incidence theorem is assumed.
+
+\textbf{Completion rate estimate: 25\%.}
+

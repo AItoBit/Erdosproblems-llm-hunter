@@ -1,0 +1,74 @@
+\section*{Erd\H{o}s Problem \#921: odd girth and chromatic number}
+\subsection*{Statement and scope}
+For fixed \(k\geq4\), let \(f_k(n)\) be the largest integer such that an \(n\)-vertex graph with no odd cycle of length at most \(f_k(n)\) can have chromatic number at least \(k\). The question asks whether \(f_k(n)\asymp_k n^{1/(k-2)}\).
+We prove this order, with two explicitly identified classical inputs: the local-colouring theorem of Kierstead--Szemer\'edi--Trotter and Schrijver's theorem on stable Kneser graphs. The counting, odd-girth estimate, passage to every sufficiently large order, and application of the local theorem are supplied below.
+
+\subsection*{The upper bound}
+Put \(d=k-2\) and \(R=2d\lceil n^{1/d}\rceil\).
+The local-colouring theorem states that if every subgraph \(H\) of an \(n\)-vertex graph whose radius in the ambient graph is at most \(2d\lceil n^{1/d}\rceil\) is \(c\)-colourable, then
+\[
+ \chi(G)\leq d(c-1)+1. \tag{1}
+\]
+Radius in the ambient graph means
+\(\min_{x\in V(H)}\max_{y\in V(H)}\operatorname{dist}_G(x,y)\).
+This is Theorem 1 of the cited primary paper, with its integer-rounding convention.
+
+Suppose \(G\) has no odd cycle of length at most \(2R+1\).
+Every ball of radius \(R\) in \(G\) is bipartite: colour each vertex by the parity of its distance from the centre. An edge between equal parities, together with the two tree paths to the centre, would produce an odd closed walk of length at most \(2R+1\). Removing repeated-vertex subwalks from an odd closed walk leaves an odd cycle no longer than the walk.
+A subgraph of ambient radius at most \(R\) lies in such a ball, so (1), with \(c=2\), gives
+\[
+ \chi(G)\leq d+1=k-1.
+\]
+Consequently every graph with \(\chi(G)\geq k\) has an odd cycle of length at most
+\[
+ 4d\lceil n^{1/d}\rceil+1. \tag{2}
+\]
+
+\subsection*{A construction and an exact vertex count}
+For an integer \(t\geq1\), arrange \(2t+d\) positions on a circle. Let \(S_t\) have as vertices the \(t\)-subsets containing no two consecutive positions, including the first and last positions. Two vertices of \(S_t\) are adjacent when the corresponding subsets are disjoint.
+Schrijver's theorem gives
+\[
+ \chi(S_t)=(2t+d)-2t+2=d+2=k. \tag{3}
+\]
+This is the only chromatic lower-bound input in this construction.
+
+Its number of vertices is
+\[
+ v_t=\frac{2t+d}{t}\binom{t+d-1}{d}
+     =\frac{2t+d}{t+d}\binom{t+d}{d}
+     =\Theta_d(t^d). \tag{4}
+\]
+Indeed, distinguish one of the \(t\) selected positions and read clockwise. Between successive selected positions there is at least one unselected position. After allocating these \(t\) compulsory positions, distribute the remaining \(d\) positions among the \(t\) gaps. This gives \((2t+d)\binom{t+d-1}{d}\) rooted descriptions, and each subset has exactly \(t\) such descriptions.
+
+\subsection*{The odd-girth calculation}
+Consider an odd cycle of length \(2r+1\) in \(S_t\), written
+\(A_0,A_1,\ldots,A_{2r},A_0\).
+Both \(A_i\) and \(A_{i+2}\) are \(t\)-subsets of the complement of \(A_{i+1}\), which has size \(t+d\). Thus
+\[
+ |A_i\setminus A_{i+2}|\leq d.
+\]
+Following the even-indexed sets gives
+\[
+ |A_0\setminus A_{2r}|
+ \leq\sum_{j=0}^{r-1}|A_{2j}\setminus A_{2j+2}|
+ \leq rd.
+\]
+But \(A_{2r}\) and \(A_0\) are adjacent, hence disjoint, so the left side is \(t\).
+Therefore
+\[
+ \operatorname{oddgirth}(S_t)\geq 2\lceil t/d\rceil+1. \tag{5}
+\]
+
+For every sufficiently large \(n\), choose \(t\) with \(v_t\leq n<v_{t+1}\) and add isolated vertices to \(S_t\). The expression in (4) is increasing and at most \(C_d(t+1)^d\), so \(t\geq c_d n^{1/d}\) for large \(n\). The resulting graph has exactly \(n\) vertices, chromatic number \(k\), and odd girth at least \(c'_d n^{1/d}\).
+Together with (2), this proves the desired order. Whether the cutoff is defined using \(<\) or \(\leq\) changes it by at most one.
+
+\subsection*{Attribution and remaining gap}
+This is a reconstruction of the known result, not a new claim. The two named theorems (1) and (3) are external inputs; their proofs are not claimed here. Subject to those precisely stated inputs, both bounds and all quantifiers in the requested asymptotic statement have been proved. Attempt status: solved with explicit external theorem dependencies.
+Sources: \url{https://www.erdosproblems.com/921};
+Kierstead, Szemer\'edi and Trotter, \emph{On coloring graphs with locally small chromatic number}, Combinatorica 4 (1984), 183--185, Theorem 1,
+\url{https://trotter.math.gatech.edu/papers/45.pdf};
+Schrijver, \emph{Vertex-critical subgraphs of Kneser graphs}, Nieuw Archief voor Wiskunde 26 (1978), 454--461, Theorem 2,
+\url{https://ir.cwi.nl/pub/9898/9898D.pdf}.
+The completion estimate concerns the deduction with these external inputs.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 170: a Fourier obstruction for sparse rulers}
+\subsection*{Statement and outcome}
+Let $F(N)$ be the minimum size of $A\subseteq\{0,\ldots,N\}$ with
+$\{0,\ldots,N\}\subseteq A-A$. The problem asks for the value of
+$\lim F(N)/\sqrt N$. We prove, without assuming existence of that limit,
+\[
+ \liminf\frac{F(N)}{\sqrt N}
+ \ge\left(2-\frac49\sin\frac92\right)^{1/2}>1.56,
+ \qquad
+ \limsup\frac{F(N)}{\sqrt N}\le2.
+ \tag{1}
+\]
+The lower bound reconstructs the classical trigonometric obstruction behind Leech's estimate. The upper construction is elementary and weaker than the known $\sqrt3$ bound. Neither the limit's existence theorem nor its exact value is proved here.
+
+\subsection*{Count excess representations rather than only pairs}
+Fix an admissible $A$, write $m=|A|$, and let
+$r(d)=\#\{(a,b)\in A^2:a-b=d\}$ for $1\le d\le N$.
+Then $r(d)\ge1$ and
+$\sum_{d=1}^Nr(d)=\binom m2$.
+For every real $\theta$,
+\[
+ 0\le\left|\sum_{a\in A}e^{i\theta a}\right|^2
+ =m+2\sum_{d=1}^Nr(d)\cos(\theta d).
+\]
+Since $\cos(\theta d)\le1$ and $r(d)-1\ge0$, the right side is at most
+\[
+ m+2\sum_{d=1}^N\cos(\theta d)
+ +2\left(\binom m2-N\right)
+ =m^2-2N+2\sum_{d=1}^N\cos(\theta d).
+\]
+Thus
+\[
+ \frac{m^2}{N}\ge
+ 2-\frac2N\sum_{d=1}^N\cos(\theta d).
+ \tag{2}
+\]
+Set $\theta=x/N$ for a fixed $x>0$. The Riemann sum tends to
+$\int_0^1\cos(xt)\,dt=\sin x/x$, giving
+\[
+ \liminf\frac{F(N)^2}{N}\ge 2(1-\sin x/x).
+ \tag{3}
+\]
+The choice $x=9/2$ proves (1)'s lower constant. Its strict comparison with $1.56$ can be certified without rounded trigonometric values: the alternating Taylor upper sum
+$\sum_{j=0}^{12}(-1)^j(9/2)^{2j+1}/(2j+1)!$
+is less than $-2439/2500$, and subsequent terms decrease in absolute value. Therefore
+$2-(4/9)\sin(9/2)>(39/25)^2$.
+Optimizing $x$ in (3) gives the familiar slightly stronger constant near $1.56037$.
+
+\subsection*{An explicit ruler for every length}
+Let $s=\lceil\sqrt N\rceil$ and $q=\lfloor N/s\rfloor$, and set
+\[
+ A=\{0,1,\ldots,s\}\cup\{s,2s,\ldots,qs\}\cup\{N\}.
+\]
+For $0<d\le qs$, put $j=\lceil d/s\rceil$ and $r=js-d$, so
+$1\le j\le q$, $0\le r<s$, and $d=js-r\in A-A$.
+For $qs<d\le N$, we have $0\le N-d<N-qs<s$, so
+$d=N-(N-d)\in A-A$. Zero is automatic. This proves admissibility, and
+$|A|\le s+q+1\le2s+1$, yielding (1)'s upper limit.
+
+\subsection*{Assessment and attribution}
+The two-scale upper construction and the weaker pair-count lower bound occur in the old local \texttt{gpt\_pro\_5.2/170.tex}. The Fourier calculation above supplies a materially stronger lower bound with all its inequalities proved. Its classical attribution is J. Leech, \emph{On the Representation of 1,2,\ldots,n by Differences}, J. London Math. Soc. 31 (1956), 160--169, \url{https://doi.org/10.1112/jlms/s1-31.2.160}. The publisher record was checked; the argument here does not depend on an inaccessible scan. Problem: \url{https://www.erdosproblems.com/170}.
+Determining the exact constant remains unresolved in this attempt. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 974: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and classification}
+Let $z_1=1,z_2,\ldots,z_n\in\mathbb C$ and $s_k=\sum_{i=1}^n z_i^k$. Suppose infinitely many positive integers $k$ satisfy
+\[
+ s_k=s_{k+1}=\cdots=s_{k+n-2}=0.
+\]
+For odd $n$, the multiset is exactly the set of $n$th roots of unity. For even $n=2m$, it is the disjoint union of the $m$th roots of unity and a rotated copy $\gamma$ times that set, where $\beta=\gamma^m$ is a root of unity of even order. Conversely these configurations have the required infinitely many blocks. This makes the word ``essentially'' in the problem precise.
+
+The recorded resolution is Tijdeman, \emph{On a conjecture of Tur\'an and Erd\H{o}s}, 1966, \url{https://doi.org/10.1016/S1385-7258(66)50044-0}. The elementary Vandermonde and self-inversive argument below also reconstructs ideas in the public mathematical discussion, \url{https://www.erdosproblems.com/forum/thread/974}. The case $n=1$ is immediate; assume $n\ge2$.
+
+\section*{Distinctness and roots of unity}
+Take a block $s_{a+1},\ldots,s_{a+n-1}=0$ with $a\ge0$. If there were only $r<n$ distinct nonzero values $y_1,\ldots,y_r$ among the $z_i$, with positive multiplicities $u_i$, the first $r$ equations would read
+\[
+ \sum_{i=1}^r (u_i y_i^a)y_i^\ell=0\qquad(1\le\ell\le r).
+\]
+The matrix $(y_i^\ell)$ is invertible, since the $y_i$ are distinct and nonzero. This contradicts $u_i y_i^a\ne0$. Thus all $n$ entries are distinct and nonzero.
+
+The $(n-1)\times n$ matrix $V=(z_i^\ell)_{1\le\ell<n}$ has rank $n-1$, by its Vandermonde minors. If another block starts at $b+1$, $b>a$, the vectors $(z_i^a)$ and $(z_i^b)$ both lie in its one-dimensional kernel. Their first coordinates are one, so they are equal. Hence $z_i^{b-a}=1$ for every $i$, and in particular $|z_i|=1$.
+
+Conjugating the first block gives $s_{-a-n+1},\ldots,s_{-a-1}=0$. Comparing the corresponding kernel vectors with starting exponents $a$ and $-a-n$ gives
+\[
+ z_i^{2a+n}=1\qquad(1\le i\le n). \tag{1}
+\]
+Only two of the infinitely many original blocks were needed up to this point.
+
+\section*{Odd cardinality}
+Let $n=2m+1$ and $L=2a+n$, which is odd. Set $t_i=z_i^{(L+1)/2}$. By (1), $t_i^2=z_i$, $t_i^L=1$, and the original block becomes
+\[
+ \sum_i t_i^j=0\qquad(j=1-2m,3-2m,\ldots,2m-1).
+\]
+Indeed the exponent $2(a+\ell)$ may be reduced modulo $L$ to $2\ell-n$. Thus all positive odd power sums through $2m-1$ vanish. Newton's identities imply that every odd elementary symmetric function $e_j(t)$ with $j<n$ vanishes: in the identity for odd $j$, an odd power sum vanishes, while every term with an even power sum contains an earlier odd elementary symmetric function.
+
+For any $n$ unit complex numbers,
+\[
+ e_{n-j}=e_n\overline{e_j}. \tag{2}
+\]
+This follows by pairing each product over $n-j$ entries with its complementary $j$ entries and using $\overline{t_i}=t_i^{-1}$. Since $n$ is odd, (2) also makes all intermediate even elementary symmetric functions vanish. Therefore the monic polynomial with roots $t_i$ has only its leading and constant terms: they form a regular $n$-gon. Squaring preserves a regular odd $n$-gon, so the $z_i$ do too. Since one $z_i$ equals one, they are exactly all $n$th roots of unity.
+
+\section*{Even cardinality}
+Let $n=2m$ and $h=a+m$. Equation (1) gives $\epsilon_i=z_i^h\in\{1,-1\}$. The block equations say
+\[
+ \sum_i\epsilon_i z_i^j=0\qquad(1-m\le j\le m-1).
+\]
+At $j=0$ this partitions the points into two sets $S,T$, each of size $m$, according to the sign of $\epsilon_i$. Their power sums agree through degree $m-1$, and Newton's identities give $e_j(S)=e_j(T)$ for $1\le j<m$. Their top elementary symmetric functions differ, or their monic root polynomials would be identical although the sets are disjoint. Apply (2) to these two $m$-point sets. For $1\le j<m$,
+\[
+ (e_m(S)-e_m(T))\overline{e_j(S)}=0,
+\]
+so every intermediate coefficient vanishes. Each set is a regular $m$-gon. Since $1\in S$, we have $S=\{z:z^m=1\}$ and $T=\gamma S$, with $\beta=\gamma^m\ne1$ of modulus one.
+
+The power sums now have the exact form
+\[
+ s_k=0\quad(m\nmid k),\qquad s_{mq}=m(1+\beta^q).
+\]
+A block of $2m-1$ consecutive zero terms contains at least one multiple of $m$. It cannot contain two consecutive multiples, because $\beta^q=\beta^{q+1}=-1$ would imply $\beta=1$. It therefore has the form $mq-m+1,\ldots,mq+m-1$, with $\beta^q=-1$. This is equivalent to $\beta$ being a root of unity of even order. Conversely such a $\beta$ gives infinitely many positive $q$ with $\beta^q=-1$, and hence infinitely many required blocks. For odd $n$, the usual identity $s_k=0$ unless $n\mid k$ gives the converse immediately.
+
+\section*{Assessment}
+The exact odd and even classifications, necessity and sufficiency, are proved without importing the classification theorem as a black box.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

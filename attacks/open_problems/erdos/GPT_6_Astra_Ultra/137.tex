@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 137: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+An integer is powerful if each prime dividing it occurs to exponent at least two. Can
+$P_{m,k}=m(m+1)\cdots(m+k-1)$ be powerful for any $k\ge3$? Source: \url{https://www.erdosproblems.com/137}.
+We give exact valuation criteria, exclude the range $m\le k+1$, and describe the two parity cases for three consecutive factors. The general question remains unresolved.
+
+\section*{Valuations and large primes}
+Counting multiples of every prime power gives the finite exact formula
+\[
+ v_p(P_{m,k})=\sum_{j\ge1}\left(
+ \left\lfloor\frac{m+k-1}{p^j}\right\rfloor-
+ \left\lfloor\frac{m-1}{p^j}\right\rfloor\right).
+\]
+The product is powerful if and only if none of these valuations equals one.
+If $p\ge k$, it divides at most one factor: two multiples would differ by at least $p$, while the span of the factors is $k-1$. Thus every prime $p\ge k$ occurring in any factor must already have exponent at least two in that factor.
+Equivalently, a necessary condition is that every factor have a representation
+\[
+ m+i=a_i b_i^2c_i^3,
+\]
+where $a_i$ is squarefree and supported on primes less than $k$. To see this, put each exponent-one prime in $a_i$; every even exponent is supplied by $b_i^2$, and every odd exponent at least three is supplied by $c_i^3b_i^2$. Such a representation excludes exponent-one large primes. After imposing it, powerfulness is decided by the remaining finitely many valuations at primes $p<k$; the representation alone does not check those primes.
+
+\section*{A whole initial range is impossible}
+Suppose $m\le k+1$ and put $U=m+k-1\ge3$. Bertrand's postulate gives a prime
+\[
+ U/2<p\le U.
+\]
+For even $U=2t\ge4$, use a prime $t<p<2t$; for odd $U=2t+1\ge5$, the same interval has integer $p\ge t+1>U/2$. The case $U=3$ uses $p=2$.
+Since $U\ge2m-2$, integrality gives $p\ge m$. Its only multiple in $[m,U]$ is $p$ itself, so its exponent in the product is exactly one. Hence no product with $m\le k+1$ is powerful. Bertrand's postulate is the explicit classical input to this exclusion.
+
+\section*{The exact three-factor distinction}
+Let $k=3$. If $m$ is odd, the three factors are pairwise coprime: the only possible common divisor of the outer two divides two, and they are odd. Therefore their product is powerful if and only if each factor individually is powerful.
+If $m$ is even, every odd prime divides at most one factor. The odd parts of $m$ and $m+2$, and the entire odd integer $m+1$, must consequently be powerful. Conversely these three conditions suffice: one of $m,m+2$ has 2-adic valuation one and the other at least two, so their total 2-adic valuation is at least three. This reduces the even case to three specified odd powerful parts; it does not solve their simultaneous existence.
+
+\section*{A warning about the perfect-power theorem}
+Being powerful is weaker than being a perfect power: for example $72=2^3\cdot3^2$ is powerful but not a perfect power. Thus the known exclusion of perfect powers among consecutive products does not settle this question. The earlier GPT-Pro-5.2 draft's large-prime obstruction is retained and strengthened above; its unrecorded searches are not used as proof. The missing step is a uniform source of an exponent-one prime when $m>k+1$, or an actual powerful counterexample.
+
+\textbf{Completion rate estimate: 20\%.}
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1164: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement, probability convention, and source}
+Let $(S_j)_{j\ge0}$ be simple random walk on $\mathbb Z^2$ starting at the origin. For each realized path let $R_N$ be the largest integer $r\ge0$ such that every lattice point in the Euclidean disk of radius $r$ has been visited by time $N$. This is a random radius. The literal alternative requiring coverage by time $N$ on almost every path gives no positive radius: the event of taking $N$ consecutive steps in one direction has positive probability and misses a neighbor of the origin.
+
+With the intended pathwise definition the precise distributional conclusion is
+\[
+ \frac{(\log(R_N\vee1))^2}{\log N}\ \Longrightarrow\ \operatorname{Exp}(4),\tag{1}
+\]
+where the exponential distribution has \emph{survival} function $e^{-4x}$. Thus the editorial's displayed $e^{-4x}$ cannot be the cumulative distribution function written there: it is decreasing. We prove the inversion and its scale consequences carefully, using the deep cover-time theorem of Dembo--Peres--Rosen--Zeitouni, \emph{Cover times for Brownian motion and random walks in two dimensions}, Theorem 1.4, \url{https://annals.math.princeton.edu/wp-content/uploads/annals-v160-n2-p02.pdf}, as an explicit external input.
+
+\section*{The exact cover-time input and inversion}
+Write $T_r=\inf\{N:\text{the disk of radius }r\text{ is covered by time }N\}$. The cited theorem states, for every fixed $t>0$,
+\[
+ \lim_{r\to\infty}\mathbb P\left(\log T_r\le t(\log r)^2\right)=e^{-4/t}.\tag{2}
+\]
+The essential deterministic identity is
+\[
+ \{R_N\ge r\}=\{T_r\le N\}.\tag{3}
+\]
+Fix $x>0$ and take $r_N=\lceil\exp(\sqrt{x\log N})\rceil$. Then $r_N\to\infty$ and
+\[
+ t_N=\frac{\log N}{(\log r_N)^2}\longrightarrow1/x.
+\]
+Although (2) is stated for fixed $t$, it applies along $t_N$ by a monotonicity sandwich: for any $0<\delta<1/x$, eventually the probability with threshold $t_N$ lies between those with thresholds $1/x-\delta$ and $1/x+\delta$. Apply (2), then let $\delta\downarrow0$. By (3),
+\[
+ \mathbb P\left((\log(R_N\vee1))^2/\log N\ge x\right)\longrightarrow e^{-4x}.\tag{4}
+\]
+The ceiling in $r_N$ is exactly the integer threshold for this event. To pass from (4) to the cumulative distribution function, sandwich strict and nonstrict thresholds at $x\pm\delta$ and use continuity of $e^{-4x}$. The result is $1-e^{-4x}$ for $x\ge0$, proving (1). Recurrence ensures that $R_N\ge1$ eventually almost surely, so the harmless $\vee1$ does not change the asymptotic result.
+
+\section*{What the scale assertion actually implies}
+Put $Z_N=\log(R_N\vee1)/\sqrt{\log N}$. Equation (1) says $Z_N$ converges in distribution to a positive random variable $Z$ with
+\[
+ \mathbb P(Z>z)=e^{-4z^2}\qquad(z\ge0).
+\]
+In particular, given $\delta>0$, constants $0<c_\delta<C_\delta<\infty$ can be chosen so that
+\[
+ \liminf_{N\to\infty}\mathbb P\left(
+ c_\delta\sqrt{\log N}\le\log(R_N\vee1)\le C_\delta\sqrt{\log N}
+ \right)\ge1-\delta.\tag{5}
+\]
+For example choose $c_\delta$ small with $1-e^{-4c_\delta^2}<\delta/2$ and $C_\delta$ large with $e^{-4C_\delta^2}<\delta/2$. More generally, for every function $h(N)\to\infty$,
+\[
+ \mathbb P\left(
+ e^{\sqrt{\log N}/h(N)}\le R_N\le e^{h(N)\sqrt{\log N}}
+ \right)\longrightarrow1.\tag{6}
+\]
+Indeed first bound the two tails with arbitrary fixed small and large thresholds using (4), then let those fixed thresholds tend to $0$ and infinity. For large $N$, the thresholds in (6) are still weaker.
+
+There cannot be \emph{fixed deterministic} $0<c<C<\infty$ such that $c\le Z_N\le C$ eventually almost surely. Such a conclusion would imply $\mathbb P(Z_N\notin[c,C])\to0$ by dominated convergence, contradicting the positive lower and upper limiting tails in (4). In particular an unqualified almost-sure deterministic-constant interpretation of $\asymp$ is not what (2) proves. No stronger pathwise envelope theorem is asserted here.
+
+\section*{Result and dependency}
+The intended scale is established in the precise distributional and high-probability senses (1), (5), and (6), with the editorial's CDF sign and radius convention corrected. The substantive planar cover-time estimate (2) is imported from the cited primary theorem; the threshold inversion and all quantifier conclusions are proved here.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

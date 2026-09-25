@@ -1,0 +1,102 @@
+\section*{Erd\H{o}s Problem 946}
+
+\paragraph{Statement and result.}
+Are there infinitely many positive integers \(n\) for which \(\tau(n)=\tau(n+1)\)? Yes. We reconstruct the arithmetic and sieve deduction of Heath-Brown's quantitative bound
+\[
+ \#\{n\leq x:\tau(n)=\tau(n+1)\}\gg\frac{x}{(\log x)^7}.
+\]
+Two nontrivial inputs are stated explicitly. The proof below verifies the required affine forms, removes all fixed-prime obstructions, balances the fixed divisor counts, and controls the multiplicity in passing to consecutive integers. The stronger later bounds mentioned on the problem page are not claimed as reconstructed here.
+
+\paragraph{The two external lemmas.}
+The first is Heath-Brown's key lemma, stated as Lemma 1 in Hildebrand's paper. There exist positive integers \(a_1<\cdots<a_7\) such that, for every \(i<j\), writing \(d_{ij}=a_j-a_i\),
+\[
+ d_{ij}\mid\gcd(a_i,a_j),\qquad
+ \tau(a_j)\tau(a_i/d_{ij})
+ =\tau(a_i)\tau(a_j/d_{ij}). \tag{1}
+\]
+We import the existence lemma, not an explicit numerical seven-tuple.
+
+The second is the seven-dimensional almost-prime sieve, Hildebrand's Lemma 2 with \(g=7,r=27\). Suppose \(L_i(t)=P_i t+Q_i\) are fixed integer affine forms with positive leading coefficients, nonzero determinants \(P_iQ_j-P_jQ_i\), and no prime dividing \(\prod_iL_i(t)\) for every integer \(t\). There is a fixed \(\delta>0\) such that, for all sufficiently large \(T\), at least \(cT/(\log T)^7\) integers \(1\leq t\leq T\) satisfy
+\[
+ \Omega\left(\prod_{i=1}^7L_i(t)\right)\leq27,
+ \qquad \prod_{i=1}^7L_i(t)\text{ squarefree},
+ \qquad P^-\left(\prod_{i=1}^7L_i(t)\right)>T^\delta. \tag{2}
+\]
+Here \(\Omega\) counts prime factors with multiplicity. The coefficients are fixed before \(T\) tends to infinity, so the coefficient-size condition in that lemma is satisfied eventually. The sieve and the key lemma are the external dependencies.
+
+\paragraph{Balancing the fixed divisor counts.}
+Let
+\[
+ D=2\prod_{i=1}^7\tau(a_i).
+\]
+Choose distinct primes \(q_1,\ldots,q_7>a_7+7\), and set
+\[
+ m_i=q_i^{D/\tau(a_i)-1}.
+\]
+Each exponent is a positive integer, the \(m_i\) are pairwise coprime and coprime to all \(a_j\), and
+\[
+ \tau(a_i)\tau(m_i)=D. \tag{3}
+\]
+Define \(A=7!\prod_{i=1}^7a_i^2\) and \(P=A\prod_i m_i\). The Chinese remainder theorem supplies a fixed nonnegative \(n_0\) with
+\[
+ n_0\equiv0\pmod A,\qquad n_0\equiv-a_i\pmod{m_i}\quad(1\leq i\leq7).
+\]
+For \(t\geq1\), put
+\[
+ n_i(t)=n_0+Pt+a_i=a_i m_i L_i(t),\qquad
+ L_i(t)=\frac{P}{a_i m_i}t+\frac{n_0+a_i}{a_i m_i}. \tag{4}
+\]
+Both coefficients in (4) are positive integers. The integrality of the constant coefficient follows from the two congruences and \(\gcd(a_i,m_i)=1\).
+
+\paragraph{Every local sieve hypothesis.}
+Write the coefficients in (4) as \(P_i,Q_i\). We claim \(\gcd(P_i,Q_i)=1\). If a prime \(p\mid P_i\) divides \(A\), then \(p\nmid m_i\). If \(p\nmid a_i\), the congruence \(n_0+a_i\equiv a_i\not\equiv0\pmod p\) gives \(p\nmid Q_i\). If \(p\mid a_i\), the square factors in \(A\) ensure that \(p\mid n_0/a_i\), so \(Q_i m_i=n_0/a_i+1\not\equiv0\pmod p\).
+
+The remaining possibility is \(p=q_j\) for some \(j\ne i\). The prime \(q_i\) itself does not divide \(P_i\), since its full power \(m_i\) was divided out. For \(j\ne i\),
+\[
+ n_0+a_i\equiv a_i-a_j\not\equiv0\pmod{q_j},
+\]
+because \(0<|a_i-a_j|<q_j\). Also \(q_j\nmid a_i m_i\), so again \(q_j\nmid Q_i\). This proves the claim.
+
+For \(p\leq7\), every \(P_i\) is divisible by \(p\): after dividing by \(a_i m_i\), the factors \(7!\prod a_j^2\) still contain \(p\). The coprimality just proved then shows that every \(L_i(t)\) is nonzero modulo \(p\), for every \(t\). For \(p>7\), each form has at most one zero modulo \(p\), so their seven forbidden classes cannot cover all classes. Thus the product has no fixed prime divisor.
+
+Finally,
+\[
+ P_iQ_j-P_jQ_i
+ =\frac{P(a_j-a_i)}{a_i m_i a_j m_j}\ne0.
+\]
+All hypotheses of (2) are now verified.
+
+\paragraph{Pigeonholing the almost-prime factors.}
+For sufficiently large \(T\), the least-prime condition in (2) makes every \(L_i(t)\) coprime to all the fixed \(a_jm_j\). Discarding finitely many small \(t\), we may also assume that every \(L_i(t)>1\). Thus the seven positive integers \(\Omega(L_i(t))\) have sum at most 27. They cannot all be distinct, because \(1+2+\cdots+7=28\). Choose \(i<j\) with equal values. Squarefreeness in (2) implies
+\[
+ \tau(L_i(t))=2^{\Omega(L_i(t))}
+             =2^{\Omega(L_j(t))}=\tau(L_j(t)). \tag{5}
+\]
+
+Let \(d=d_{ij}\). Since \(d\mid a_i,a_j,A\), it divides both \(n_i(t)\) and \(n_j(t)\), and
+\[
+ \frac{n_j(t)}d-\frac{n_i(t)}d=1.
+\]
+The relevant factors are coprime, so (1), (3), and (5) give
+\[
+ \begin{aligned}
+ \tau(n_i(t)/d)
+ &=\tau(a_i/d)\tau(m_i)\tau(L_i(t))\\
+ &=D\frac{\tau(a_i/d)}{\tau(a_i)}\tau(L_i(t))\\
+ &=D\frac{\tau(a_j/d)}{\tau(a_j)}\tau(L_j(t))
+ =\tau(n_j(t)/d).
+ \end{aligned}
+\]
+Thus every good parameter produces a pair of consecutive integers with equal divisor counts.
+
+\paragraph{Counting distinct outputs.}
+There are only \(\binom72=21\) choices of the pair \((i,j)\). For a fixed pair, \(n_i(t)/d_{ij}\) is a strictly increasing affine function of \(t\), so a given output has at most one preimage for that pair. Consequently the number of distinct outputs is at least one twenty-first of the number of good parameters.
+
+All outputs from \(t\leq T\) are at most \(CT\), for a fixed constant depending only on our fixed construction. Equation (2), followed by \(T=\lfloor x/C\rfloor\), proves the announced lower bound and hence infinitude.
+
+\paragraph{Attribution and assessment.}
+The original solution is D. R. Heath-Brown, \emph{The divisor function at consecutive integers}, Mathematika 31 (1984), 141--149, \url{https://doi.org/10.1112/S0025579300010743}. Both external lemmas in the precise form used above are stated on pp. 309--310 of A. Hildebrand, \emph{The divisor function at consecutive integers}, Pacific J. Math. 129 (1987), 307--319, \url{https://msp.org/pjm/1987/129-2/pjm-v129-n2-p06-s.pdf}. The fixed auxiliary prime powers in this reconstruction implement the divisor-count balancing used in that method. See \url{https://www.erdosproblems.com/946}, checked 24 September 2026.
+
+This is a complete deduction relative to the two stated lemmas. Their proofs, Hildebrand's sharper logarithmic-logarithmic bound, and the conjectured exact asymptotic are not reproduced. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem 847}
+
+\paragraph{Statement and result.}
+Suppose an infinite \(A\subseteq\mathbb N\) has a fixed \(\epsilon>0\) such that every finite \(Y\subseteq A\) contains a three-term-progression-free subset of size at least \(\epsilon|Y|\). Must \(A\) be a finite union of progression-free sets? No. We give the finite-to-infinite construction from an explicitly stated finite theorem of Reiher, R\"odl, and Sales. All arithmetic progressions below are nonconstant.
+
+\paragraph{The external finite input.}
+Fix \(0<\mu<2/3\), for example \(\mu=1/2\). Theorem 1.7 of Reiher--R\"odl--Sales, specialized to alphabet size three, says that for every positive integer \(r\), there are a dimension \(d_r\) and a finite set \(X_r\subseteq\{0,1,2\}^{d_r}\) such that:
+\begin{enumerate}
+\item Every \(r\)-colouring of \(X_r\) contains a monochromatic combinatorial line: some nonempty set of coordinates varies simultaneously through \(0,1,2\), and all other coordinates stay fixed.
+\item Every \(Y\subseteq X_r\) contains \(Z\subseteq Y\) of size at least \(\mu|Y|\) containing no quasiline. A quasiline is a three-element set whose entries in each coordinate are either all equal or all distinct.
+\end{enumerate}
+Their partite-construction proof of this substantial finite theorem is the external dependency. We now prove the conversion to integers, the absence of interactions between different finite pieces, and both required infinite-set properties.
+
+\paragraph{Encoding the cube without carries.}
+Define
+\[
+ \phi_r(x_0,\ldots,x_{d_r-1})=
+ \sum_{j=0}^{d_r-1}x_j7^j,
+ \qquad B_r=\phi_r(X_r).
+\]
+This map is injective by uniqueness of base-seven expansions. It sends each combinatorial line to a three-term arithmetic progression: its common difference is \(\sum_{j\in J}7^j>0\), where \(J\) is the nonempty varying coordinate set. Thus every \(r\)-colouring of \(B_r\) contains a monochromatic progression.
+
+Conversely, suppose three distinct images satisfy \(\phi_r(x)+\phi_r(z)=2\phi_r(y)\). Then
+\[
+ \sum_j(x_j+z_j-2y_j)7^j=0,
+ \qquad -4\leq x_j+z_j-2y_j\leq4.
+\]
+Every coefficient must vanish. Indeed, if the largest nonzero coefficient had index \(h\), its contribution would have absolute value at least \(7^h\), while the sum of all lower contributions would be at most
+\(4(7^h-1)/6<7^h\), a contradiction. So \(x_j+z_j=2y_j\) for each coordinate. Within \(\{0,1,2\}\), such a coordinate triple is either constant or is \((0,1,2)\) in one direction or the other. Hence the three cube points form a quasiline.
+
+It follows that every subset of \(B_r\) has a progression-free subset of at least the fraction \(\mu\): pull back to \(X_r\), use the quasiline-free subset supplied by the theorem, and apply \(\phi_r\).
+
+\paragraph{Separating the finite pieces.}
+We translate the \(B_r\) inductively. Suppose the earlier pieces lie in \([1,M]\), and write \(W=\max B_r\). Choose an integer \(T>2(M+W+1)\), and put
+\(C_r=T+B_r\subseteq[T,T+W]\). For the first piece take any \(M\geq1\). The pieces are disjoint and positive.
+
+There is no progression meeting both \(C_r\) and an earlier piece. If its largest term is the only new term, the progression equation would put that term at most \(2M\), below \(T\). If its two largest terms are new, its smallest term would be at least \(2T-(T+W)=T-W>M\). Both alternatives are impossible. Every progression in the union of all pieces has a largest piece index, so the same argument shows that it is wholly contained in one piece.
+
+Set \(A=\bigcup_{r\geq1}C_r\). This is an infinite subset of \(\mathbb N\). If \(Y\subseteq A\) is finite, choose inside each \(Y\cap C_r\) a progression-free subset of size at least \(\mu|Y\cap C_r|\). Their union is progression-free because there are no mixed progressions, and its size is at least \(\mu|Y|\).
+
+If \(A\) had a partition into \(r\) progression-free sets, that partition would give an \(r\)-colouring of \(C_r\). The finite Ramsey property of \(B_r\), preserved by translation, would give a monochromatic progression, a contradiction. Thus no finite partition exists.
+
+\paragraph{Attribution and assessment.}
+The underlying finite theorem and the negative resolution are due to C. Reiher, V. R\"odl, and M. Sales, \emph{Colouring versus density in integers and Hales--Jewett cubes}, Theorem 1.7, \url{https://arxiv.org/abs/2311.08556}. The proof above is a complete deduction of the requested infinite counterexample relative to that explicitly stated input; it does not reproduce the input's partite construction. The source actually permits every \(\mu<2/3\); \(\mu=1/2\) already suffices here. See \url{https://www.erdosproblems.com/847}, checked 24 September 2026. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,57 @@
+\section*{Erd\H{o}s Problem \#780: disjoint edges in one colour}
+\subsection*{Statement and outcome}
+Let the \(r\)-subsets of \([n]\) be coloured with \(t\) colours. If
+\[
+n\geq kr+(t-1)(k-1),
+\]
+must there be \(k\) pairwise disjoint \(r\)-sets of one colour?
+Yes. We reconstruct a consensus-division proof for prime \(k\), then give an elementary product reduction and the sharp lower construction. Attempt status: solved relative to the explicitly stated consensus-division theorem.
+
+\subsection*{The topological input}
+We use the following consensus-division theorem for a prime \(p\). Given \(t\) real-valued functions on measurable subsets of \([0,1]\), each uniformly continuous for the metric
+\[
+d(E,F)=\mu(E\mathbin{\triangle}F),
+\]
+there is a partition into \(p\) pieces, each a union of intervals, with at most \((p-1)t\) cuts, such that every function takes the same value on every piece. The functions need not be additive measures. This theorem is an external input, not proved here.
+
+\subsection*{Prime number of disjoint edges}
+Suppose \(k=p\) is prime and the colouring is \(c:\binom{[n]}r\to[t]\). Divide \([0,1]\) into \(n\) equal open cells \(I_j=((j-1)/n,j/n)\), ignoring endpoints of measure zero. For each colour \(i\), define on \([0,1]^n\)
+\[
+u_i(x)=\max_{\substack{B\in\binom{[n]}r\\c(B)=i}}\ \min_{j\in B}x_j,
+\]
+with an empty maximum equal to zero. The finite maximum of these coordinate minima is \(1\)-Lipschitz for the supremum norm. For measurable \(E\), set
+\[
+x_j(E)=n\mu(E\cap I_j),\qquad v_i(E)=u_i(x(E)).
+\]
+Then \(|v_i(E)-v_i(F)|\leq n\mu(E\triangle F)\), so the theorem applies.
+
+Let \(P_1,\ldots,P_p\) be the resulting pieces. At most \((p-1)t\) open cells contain a cut. Every remaining cell lies, up to endpoints, wholly in a single piece. The hypothesis gives
+\[
+n-(p-1)t\geq p(r-1)+1.
+\]
+By pigeonhole some piece contains at least \(r\) whole cells, indexed by a set \(B\). If \(c(B)=i\), then \(v_i(P_s)=1\) for that piece, and equality of values gives \(v_i(P_j)=1\) for every \(j\). By the definition of the finite maximum, each \(P_j\) therefore contains full measure in all cells indexed by an \(r\)-set \(B_j\) of colour \(i\).
+The \(B_j\) are pairwise disjoint: a cell of positive measure cannot lie with full measure in two disjoint pieces. These are the required \(p\) edges.
+
+\subsection*{An elementary multiplication step}
+Denote the assertion for \(k\) by \(P(k)\), including all positive integers \(r,t\). Suppose \(P(a)\) and \(P(b)\) hold. Given a colouring of \(r\)-sets with
+\[
+n\geq ab\,r+(t-1)(ab-1),
+\]
+put \(R=ar+(t-1)(a-1)\). Colour each \(R\)-subset \(Y\) by one colour in which \(Y\) contains \(a\) disjoint original \(r\)-sets; this is possible by \(P(a)\). Now
+\[
+bR+(t-1)(b-1)=ab\,r+(t-1)(ab-1).
+\]
+By \(P(b)\), there are \(b\) pairwise disjoint \(R\)-sets bearing the same new colour. Their internal \(a\)-matchings together give \(ab\) pairwise disjoint original edges of that colour. Thus \(P(ab)\) follows. Factoring any \(k\geq2\) into primes proves the assertion; \(k=1\) is immediate.
+
+\subsection*{Sharpness}
+For
+\[
+n=kr-1+(t-1)(k-1),
+\]
+partition \([n]\) into \(X_1\) of size \(kr-1\), and \(X_2,\ldots,X_t\) each of size \(k-1\). Colour an \(r\)-set by the least \(i\geq2\) whose \(X_i\) it meets, if such an \(i\) exists; otherwise use colour 1.
+A matching of colour 1 lies in \(X_1\), too small for \(k\) disjoint \(r\)-sets. A matching of colour \(i\geq2\) has at most \(|X_i|=k-1\) members, since every edge meets \(X_i\) and the edges are disjoint. This proves the exact threshold.
+
+\subsection*{Attribution and scope}
+The result is the Alon--Frankl--Lov\'asz theorem. The prime-case reconstruction follows I. Haviv, \emph{The Chromatic Number of Kneser Hypergraphs via Consensus Division}, arXiv:2311.09016v2, Theorem 2.4 and Section 3, \url{https://arxiv.org/html/2311.09016v2}. The consensus-division theorem stated there is due to Filos-Ratsikas and collaborators. Its hypotheses, the discrete extraction, multiplication step and sharp colouring are all explicitly checked here. Statement checked at \url{https://www.erdosproblems.com/780} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

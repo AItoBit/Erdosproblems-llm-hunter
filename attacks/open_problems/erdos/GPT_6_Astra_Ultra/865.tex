@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 865: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and provenance}
+Does $|A|\ge5N/8+C$, for $A\subseteq[1,N]$, force distinct $a,b,c\in A$ with $a+b,a+c,b+c\in A$? Yes. We give a self-contained reconstruction of Ricky Cipollini's June 2026 proof, developed with GPT-5.5 Pro: \url{https://arxiv.org/abs/2606.29361}. Call a set with no such triple triple-free.
+
+\section*{A finite folding inequality}
+Let $B\subseteq\{1,\ldots,m-1\}$ have no distinct $x,y\in B$ with $x+y=m$ or $x+y\pmod m\in B$. Let $C(B)$ be the residues represented both by a distinct pair with sum below $m$ and by a distinct pair with sum above $m$. We claim
+\[
+ |B|-|C(B)|\le m/4+2. \tag{1}
+\]
+Induct on $|B|$; sizes zero and one are immediate. Reflection $b\mapsto m-b$ preserves the hypotheses and $|C(B)|$, so the two smallest elements $\alpha<\beta$ may be assumed to satisfy $\alpha+\beta<m$. If $\alpha+\beta\in C(B)$, deleting $\alpha$ removes this collision residue: every low representation of this smallest distinct-pair sum uses $\alpha$. It creates none, so induction proves (1).
+
+Otherwise consider, modulo $m$,
+\[
+ T_1=B,\quad T_2=-B,\quad T_3=(B-\alpha)\setminus\{0\},\quad
+ T_4=(\beta-B)\setminus\{0\}.
+\]
+Their sizes sum to $4|B|-2$, and their union avoids zero. The six pairwise intersections, in the order $12,13,14,23,24,34$, have sizes at most $1,1,2,1,1,2$. For $12$ the only possible exception to the distinct-pair rule is $m/2$; for $13$ it is $x=\alpha$; for $14$ the congruence $2x=\beta$ has at most two solutions. For $23$, $2u=\alpha$ has at most one solution in $B$: when $m$ is even its smaller solution is below $\alpha$. For $24$ the exception is $u=\beta$. Finally $T_3\cap T_4$ requires $b+b'=\alpha+\beta$ or $m+\alpha+\beta$. The former leaves only $(b,b')=(\beta,\alpha)$ after omitting zero; the latter requires $b=b'$, since a distinct pair would be a collision. Thus at most two occur.
+
+If $m$ is odd, intersection $12$ is empty. The union bound gives $4|B|\le m+9$ for even $m$ and $4|B|\le m+8$ for odd $m$. Integrality improves the even bound to $m+8$ also. This proves (1).
+
+For a pivot $h\in A$, put
+\[
+ X=A\cap[1,h-1],\quad Y=\{r\in[1,h-1]:h+r\in A\},\quad B=X\cap Y,
+ \quad E=[1,h-1]\setminus(X\cup Y).
+\]
+The set $B$ satisfies (1) modulo $h$: a forbidden pair would give the triple $x,y,h$. Moreover $C(B)\subseteq E$, because either a low or a high representation would give that same forbidden triple if the residue lay in $X$ or $Y$. Hence
+\[
+ |X|+|Y|=h-1+|B|-|E|\le5h/4+1-|E\setminus C(B)|.\tag{2}
+\]
+The case $h=1$ is immediate without using (1).
+
+\section*{Closing the induction}
+We prove for even $N=2H$ that $|A|\le5H/4+6$. If $A$ misses either $[1,H]$ or $[H,2H]$, the claim is immediate. Otherwise let
+\[
+ p=H-e=\max(A\cap[1,H]),\quad q=H+s=\min(A\cap[H,2H]).
+\]
+The open gap $(p,q)$ is empty of $A$.
+
+First suppose $s\le4e$, and use $h=q$. Every integer $r$ with $\max(p,2H-h)<r<h$ belongs to $E\setminus C(B)$: it has neither partner in $A$, while a high folded sum has residue at most $2(2H-h)-h<2H-h$. For $s\ge1$ this gives $s+\min(s,e)-1$ such residues. All of $A$, except $h$, is counted in $X,Y$, so (2) gives
+\[
+ |A|\le5H/4+s/4-\min(s,e)+3\le5H/4+3.
+\]
+If $s=0$, there are at most two endpoints $h,2h$ instead and the same final bound holds.
+
+Now suppose $s>4e$ and use $h=p$, $g=s+e$. If $g>h$, then $e<g/5$ and $H<6g/5$, so the empty gap gives $|A|\le2H-g+1<7H/6+1$. Otherwise set $t=g-1\le h-1$. For $r\le t$ the upper partner lies in the empty gap, so $B$ has no element at most $t$. Thus
+\[
+ I=[1,t]\setminus A\subseteq E\setminus C(B)
+\]
+(the low-sum condition rules out collisions here). Including the endpoints $h,2h$ and the tail of length $2e$, (2) gives
+\[
+ |A|\le5H/4+3e/4+3-|I|.\tag{3}
+\]
+If $e\le3$ this suffices. Otherwise apply strong induction to $A\cap[1,t]$, embedded in $[1,2\lceil t/2\rceil]$; this interval has smaller even endpoint than $2H$. We get
+\[
+ |I|\ge3t/8-53/8.
+\]
+Since $s\ge4e+1$, we have $t\ge5e$. The excess of the right side of (3) over $5H/4+6$ is at most $29/8+3e/4-3t/8\le29/8-9e/8<0$ for $e\ge4$. This completes induction. Embedding odd $N$ into $N+1$ proves the result, for example with any fixed $C>7$.
+
+For sharpness take $N=8M$ and $[M,2M]\cup[4M,8M]$, of size $5M+2$. Two distinct lower elements sum strictly between $2M$ and $4M$; two distinct upper elements sum above $8M$. Any three elements contain one of these pairs. Therefore the leading constant $5/8$ is optimal.
+
+\section*{Assessment}
+All inequalities needed for the asymptotic threshold are proved above. The recent paper is credited for the folding and induction strategy; no local Lean-kernel verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

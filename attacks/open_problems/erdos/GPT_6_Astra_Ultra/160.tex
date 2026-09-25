@@ -1,0 +1,38 @@
+\section*{Erd\H{o}s Problem 160: three colours on every four-term progression}
+\subsection*{Statement and outcome}
+Let $h(N)$ be the fewest colours needed on $[1,N]$ so that every nonconstant four-term arithmetic progression uses at least three colours. For $N\ge2$ we prove
+\[
+ h(N)\ge\frac{M}{r_3(M)},\quad M=\lfloor N/2\rfloor,
+ \qquad h(N)\le\left\lceil\sqrt{7e(16N+1)}\right\rceil,
+ \tag{1}
+\]
+where $r_3(M)$ is the largest size of a three-term-progression-free subset of $[1,M]$. These bounds do not determine the growth of $h$.
+
+\subsection*{A necessary three-term condition}
+If $a,a+d,a+2d\le M$ were all one colour, then
+$a+3d\le3M/2\le N$. Appending this point gives a four-term progression with at most two colours, a contradiction. Each restricted colour class therefore has size at most $r_3(M)$, proving (1)'s lower bound.
+
+More generally, a monochromatic triple $a,a+d,a+2d$ is impossible whenever it extends at either end within $[1,N]$. The only possible exceptions satisfy both $a\le d$ and $a+3d>N$. Thus one must not assert that entire colour classes on $[1,N]$ are three-term-free.
+
+The explicitly external Bloom--Sisask theorem gives $r_3(M)\le CM/(\log M)^{1+c}$ for absolute $c,C>0$, and hence $h(N)\gg(\log N)^{1+c}$. Their Theorem 1.1 is not proved here. The problem page records stronger subsequent bounds; these are partial arguments, not record claims.
+
+\subsection*{A local-lemma construction}
+Colour the integers independently and uniformly with $k$ colours. For each four-term progression $Q$, let $B_Q$ say that at most two colours occur. Then
+\[
+ \mathbb P(B_Q)=\frac{k+14\binom k2}{k^4}
+              =\frac{7k-6}{k^3}\le\frac7{k^2}.
+\]
+There are $k$ constant assignments and $2^4-2=14$ assignments using a specified pair of colours.
+A fixed integer lies in at most $4N$ progressions, by specifying its position and positive step. Each bad event consequently shares variables with fewer than $16N$ others. It is independent of the entire collection of events on disjoint variables.
+
+Here is the local lemma needed for completeness. If event probabilities are at most $p$, dependency degree is at most $D$, and $ep(D+1)\le1$, all events can be avoided. Set $x=1/(D+1)$, so $x(1-x)^D\ge1/(e(D+1))$. Induction on the size of a conditioning set proves
+$\mathbb P(B_i\mid\text{specified other events fail})\le x$.
+Split that set into neighbours and non-neighbours of $i$. Independence bounds the numerator by $p$ after conditioning on non-neighbours, and the induction hypothesis bounds the conditional probability of failure of the at most $D$ neighbours from below by $(1-x)^D$. This proves the induction step; multiplying the positive conditional failure probabilities proves the conclusion. The case $D=0$ is immediate.
+
+Use $D=16N$ and the value of $k$ in (1). This proves $h(N)=O(\sqrt N)$. The trivial upper bound $N$ can be substituted when smaller.
+
+\subsection*{Assessment and attribution}
+The old local \texttt{gpt\_pro\_5.2/160.tex} observes that any union of two colours is four-term-free. Its repeated $1,2,3$ witness through $12$ is invalid: positions $1,4,7,10$ all have colour $1$. No unchecked numerical table is retained. The optimal asymptotic remains unresolved in this attempt.
+Sources: \url{https://www.erdosproblems.com/160}; T. F. Bloom and O. Sisask, \emph{Breaking the logarithmic barrier in Roth's theorem on arithmetic progressions}, Theorem 1.1, \url{https://arxiv.org/abs/2007.03528}. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 25\%}

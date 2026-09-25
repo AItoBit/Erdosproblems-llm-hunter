@@ -1,0 +1,167 @@
+\section*{Erd\H{o}s Problem \#783: sieving with pairwise coprime moduli}
+\subsection*{Statement and scope}
+Fix \(C>0\). Among pairwise coprime sets \(A\subseteq\{2,\ldots,N\}\) with
+\(\mu(A):=\sum_{a\in A}1/a\leq C\), which minimize
+\[
+U_N(A):=\#\{m\leq N:a\nmid m\text{ for every }a\in A\}?
+\]
+The current editorial records Tao's asymptotic resolution. We reconstruct the reduction to prime moduli, including uniform error control, and obtain
+\[
+\min_A U_N(A)=\bigl(\rho(e^C)+o_C(1)\bigr)N. \tag{1}
+\]
+The Dickman function satisfies \(\rho(u)=1\) on \([0,1]\) and
+\(u\rho'(u)=-\rho(u-1)\) for \(u>1\). A suitable terminal interval of primes attains (1). We also verify a finite counterexample to exact terminal-prime optimality. Attempt status: unresolved for an exact description of the finite minimizing sets; the asymptotic value and an asymptotically optimal choice are established relative to the inputs stated next.
+
+\subsection*{External inputs}
+We use three classical analytic facts explicitly.
+\begin{enumerate}
+\item Hildebrand's prime-sieve lower bound, in the uniform form quoted as Theorem 1.2 of Tao's note: for sets \(P\) of primes with \(\mu(P)\leq C\),
+\[
+N^{-1}U_N(P)\geq\rho(e^{\mu(P)})-o_C(1),
+\]
+uniformly in \(P=P(N)\).
+\item The Dickman inequality \(\rho(u)\rho(v)\geq\rho(uv)\) for \(u,v\geq1\), stated and proved in Tao's Lemma 3.1. One formulation of its analytic basis is log-concavity of \(\rho\) on \([1,\infty)\).
+\item The prime-counting bound \(\pi(x)\ll x/\log x\), Mertens' estimate
+\(\sum_{p\leq x}1/p=\log\log x+B+o(1)\), and the fixed-parameter smooth-number asymptotic
+\(\Psi(N,N^{1/u})/N\to\rho(u)\).
+\end{enumerate}
+The prime-sieve theorem and Dickman facts are not reproved below. The passage from primes to arbitrary pairwise coprime moduli is.
+
+\subsection*{Two uniform elementary estimates}
+Write \(\sigma_N(A)=U_N(A)/N\). The union bound gives
+\[
+|\sigma_N(A)-\sigma_N(A')|\leq\mu(A\triangle A'). \tag{2}
+\]
+Every composite \(a\leq x\) has a prime factor at most \(\sqrt x\), and pairwise coprimality makes these chosen factors distinct. Thus
+\[
+\#\{a\in A:a\leq x,\ a\text{ composite}\}\leq\pi(\sqrt x)\leq\sqrt x.
+\]
+By summing over dyadic intervals,
+\[
+\sum_{\substack{a\in A,\ a>z\\a\ {\rm composite}}}\frac1a
+\leq\sum_{j\geq0}\frac{\sqrt{2^{j+1}z}}{2^jz}
+\ll z^{-1/2}. \tag{3}
+\]
+We may therefore discard all sufficiently large composite moduli at uniformly small cost. Also
+\[
+|A\cap[2,x]|\leq\pi(x)+\sqrt x\ll x/\log x\quad(x\geq3). \tag{4}
+\]
+
+\subsection*{Truncated inclusion--exclusion, including its rounding error}
+For an integer \(r\geq1\), define
+\[
+T_{N,r}(A)=\sum_{j=0}^r(-1)^j
+ \sum_{\substack{a_1<\cdots<a_j\in A\\a_1\cdots a_j\leq N}}
+ \frac1{a_1\cdots a_j},
+\]
+where the empty product contributes 1. For fixed \(C,r\), uniformly over \(\mu(A)\leq C\),
+\[
+\sigma_N(A)=T_{N,r}(A)
+ +O\left(\frac{C^{r+1}}{(r+1)!}\right)
+ +O_{C,r}\left(\frac1{\log N}\right). \tag{5}
+\]
+
+To prove this, the two successive Bonferroni sums sandwich the exact indicator of avoiding all divisors. Pairwise coprimality means that being divisible by \(a_1,\ldots,a_j\) is equivalent to divisibility by their product. Averaging over \([1,N]\) gives the corresponding terms
+\(N^{-1}\lfloor N/(a_1\cdots a_j)\rfloor\).
+The difference between consecutive truncations is at most the sum of reciprocal products of \(r+1\) distinct moduli, at most \(C^{r+1}/(r+1)!\).
+
+It remains to bound the accumulated floor errors for \(j\leq r\). Fix the first \(j-1\) moduli and their product \(D\); for \(j=1\) take \(D=1\). If a final modulus \(a_j\) exists, then \(X=N/D\geq N^{1/j}\), because all the earlier moduli are at most \(a_j\leq X\). By (4), the number of possible final moduli is
+\[
+\ll \frac{X}{\log X}\leq \frac{jN}{D\log N}.
+\]
+Summing over the earlier moduli bounds the number of degree-\(j\) floor errors by
+\[
+\ll \frac{jN}{\log N}\frac{C^{j-1}}{(j-1)!}.
+\]
+Divide by \(N\) and sum over \(1\leq j\leq r\) to obtain (5). This avoids an unjustified error proportional to \(2^{|A|}/N\).
+
+\subsection*{Separating small moduli from large primes}
+Suppose \(A=A_1\sqcup A_2\), where \(A_1\subseteq[2,z_-]\) and \(A_2\) consists of primes greater than \(z_+\), with \(2<z_-<z_+\) and \(z_-^r\leq N\). Then
+\[
+T_{N,r}(A)=T_{N,r}(A_1)T_{N,r}(A_2)
++O\left(\sum_{j=r+1}^{2r}\frac{C^j}{j!}\right)
++O\left(e^C\frac{r\log z_-}{\log z_+}\right). \tag{6}
+\]
+Here and below constants may depend on the fixed bound \(C\).
+
+Indeed, terms in the product of truncations with total degree greater than \(r\) give the first error. At total degree at most \(r\), the only extra terms have total product greater than \(N\), while the product of the small moduli and the product of the large primes separately are at most \(N\). Such a term has a largest prime \(p>z_+\). Fix its other factors; write their small-factor product as \(D_s\leq z_-^r\) and their large-factor product as \(D_\ell\). Then
+\[
+\frac{N}{D_sD_\ell}<p\leq\frac N{D_\ell}.
+\]
+Intersecting with \(p>z_+\) confines \(p\) to an interval above \(z_+\) whose endpoint ratio is at most \(z_-^r\). The prime-counting bound, summed over dyadic subintervals, gives
+\[
+\sum_{\text{such }p}\frac1p
+\ll \frac{r\log z_-}{\log z_+}.
+\]
+Summing reciprocal products of the other factors costs at most
+\(\sum_{j=0}^{r-1}C^j/j!\leq e^C\). This proves (6).
+
+For the small set, the condition \(z_-^r\leq N\) makes the product cutoff redundant. Expanding the finite Euler product therefore gives
+\[
+T_{N,r}(A_1)=\prod_{a\in A_1}(1-1/a)
+ +O\left(\sum_{j>r}\frac{C^j}{j!}\right). \tag{7}
+\]
+
+\subsection*{Parameter choices and the uniform lower bound}
+Fix an error tolerance \(\varepsilon>0\). Choose \(r\) so large, depending only on \(C,\varepsilon\), that the factorial tails above and \(C/r+e^C/r\) are at most \(O_C(\varepsilon)\). Choose \(z_0>2\) so large that the right side of (3) is at most \(\varepsilon\). Discard those composite moduli, and define the fixed sequence
+\[
+z_j=z_0^{\,r^{2j}}\qquad(0\leq j\leq r).
+\]
+One of the \(r\) intervals \((z_{j-1},z_j]\) contains reciprocal mass at most \(C/r\). Discard its moduli using (2), and put \(z_-=z_{j-1}\), \(z_+=z_j\). What remains is \(A_1\cup A_2\) as in (6), with
+\(\log z_+ =r^2\log z_-\). Every threshold here is fixed before \(N\to\infty\); for sufficiently large \(N\), all satisfy \(z_-^r\leq N\).
+
+Equations (2), (5)--(7), with (5) also applied to \(A_2\), yield
+\[
+\sigma_N(A)
+=\left(\prod_{a\in A_1}(1-1/a)\right)\sigma_N(A_2)
+ +O_C(\varepsilon)+o_{C,\varepsilon}(1). \tag{8}
+\]
+The prime-sieve input applies uniformly to \(A_2\), so the right side is at least the product in (8) times \(\rho(e^{\mu(A_2)})\), up to the same error.
+
+For \(a\geq2\), \(e^{1/a}<2\), and the Dickman equation on \([1,2]\) gives \(\rho(e^{1/a})=1-1/a\). Repeated use of the Dickman inequality gives
+\[
+\left(\prod_{a\in A_1}(1-1/a)\right)\rho(e^{\mu(A_2)})
+\geq\rho(e^{\mu(A_1)+\mu(A_2)})
+\geq\rho(e^C),
+\]
+because \(\rho\) is decreasing. Thus \(\sigma_N(A)\geq\rho(e^C)-O_C(\varepsilon)-o_{C,\varepsilon}(1)\), uniformly in the original \(A\). Taking \(N\) large and then \(\varepsilon\) small proves the lower bound in (1), and justifies taking a minimum over \(A=A(N)\).
+
+\subsection*{An exactly admissible prime tail}
+For large \(N\), let \(q_N\) be the \emph{largest} prime \(q\leq N\) for which
+\(\sum_{q\leq p\leq N}1/p>C\), and take
+\[
+P_N=\{p\text{ prime}:q_N<p\leq N\}.
+\]
+Equivalently, add primes in descending order and stop just before the budget would be exceeded. Then
+\[
+\mu(P_N)\leq C<\mu(P_N)+1/q_N.
+\]
+The threshold \(q_N\to\infty\), since a bounded threshold would leave a diverging reciprocal prime sum. Hence \(\mu(P_N)=C+o(1)\). Mertens' estimate gives
+\[
+\log\log N-\log\log q_N=C+o(1),\qquad
+q_N=N^{e^{-C}+o(1)}.
+\]
+An integer avoids \(P_N\) exactly when all its prime factors are at most \(q_N\). Thus \(U_N(P_N)=\Psi(N,q_N)\), and the fixed-parameter smooth-number theorem gives
+\[
+U_N(P_N)=\bigl(\rho(e^C)+o(1)\bigr)N.
+\]
+For the slightly moving parameter \(\log N/\log q_N\to e^C\), this follows by sandwiching between two fixed nearby parameters and using continuity of \(\rho\). This proves the matching upper bound with the budget satisfied exactly.
+
+\subsection*{A finite obstruction and the remaining question}
+At \(N=30,C=1\), the terminal prime tail is
+\[
+A_0=\{5,7,11,13,17,19,23,29\}.
+\]
+Its reciprocal sum is \(754911236/1078282205<1\), but adjoining 3 would give \(3343015913/3234846615>1\). It leaves exactly
+\(\{1,2,3,4,6,8,9,12,16,18,24,27\}\) uncovered.
+The alternative
+\[
+A_1=\{3,5,7,11,13,17,19,23\}
+\]
+has reciprocal sum \(111429982/111546435<1\) and leaves only
+\(\{1,2,4,8,16,29\}\) uncovered. Thus the prime-tail rule is not an exact optimizer for every finite \(N,C\). This is a finite exception, not a refutation of (1) or of any eventual classification with fixed \(C\). No exact classification of all finite minimizers is supplied.
+
+\subsection*{Attribution}
+The prime reduction and separated-scale argument reconstruct T. Tao, \emph{Sieving by coprime numbers}, version dated 22 February 2026, \url{https://terrytao.wordpress.com/wp-content/uploads/2026/02/erdos783-3.pdf}. The exact \(N=30\) example appeared in the local earlier GPT attempts and has been checked independently here. Hildebrand's prime theorem is explicitly cited through Tao's Theorem 1.2; see also Granville--Soundararajan, \emph{The number of unsieved integers up to \(x\)}, \url{https://arxiv.org/abs/math/0308009}. Statement checked at \url{https://www.erdosproblems.com/783} on 24 September 2026. The estimate below reflects the exact-optimizer question still missing, despite a complete relative proof of the asymptotic interpretation. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 90\%}

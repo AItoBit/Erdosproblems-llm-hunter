@@ -1,0 +1,55 @@
+\section*{Erd\H{o}s Problem 1025}
+
+\paragraph{Statement and result.}
+Let \(f:\binom{[n]}2\to[n]\) satisfy \(f(\{x,y\})\notin\{x,y\}\). A set \(P\subseteq[n]\) is free if \(f(\{x,y\})\notin P\) for every pair from \(P\). Let \(g(n)\) be the minimum, over such functions, of the maximum size of a free set. For \(n\geq3\), we prove
+\[
+ \frac{n+1}{2\sqrt n}\leq g(n)\leq2\lceil\sqrt n\rceil-1,
+\]
+where the lower inequality can of course be rounded upward. In particular, \(g(n)=\Theta(\sqrt n)\). Both arguments are supplied in full.
+
+\paragraph{An elementary lower bound.}
+Associate to \(f\) the 3-uniform hypergraph with edges
+\[
+ \{x,y,f(\{x,y\})\},\qquad \{x,y\}\in\binom{[n]}2.
+\]
+The condition on \(f\) makes each an actual three-element set. Different pairs can produce the same edge; after removing repetitions the number of edges is at most \(\binom n2\).
+A set is independent in this hypergraph if and only if it is free for \(f\): a violation in either definition is precisely one of these triples inside the set.
+
+Select each vertex independently with probability \(p=n^{-1/2}\). Let \(X\) be the number selected and \(Y\) the number of edges whose three vertices were selected. Delete one vertex from each such edge, skipping edges already destroyed. At most \(Y\) vertices are deleted, and the remaining set is free. Its size is at least \(X-Y\), whose expectation satisfies
+\[
+ \mathbb E(X-Y)\geq np-\binom n2p^3
+ =\sqrt n-\frac{n-1}{2\sqrt n}
+ =\frac{n+1}{2\sqrt n}. \tag{1}
+\]
+Some selection achieves at least this expectation. This is the probabilistic deletion argument behind Spencer's lower bound, specialized to this problem.
+
+\paragraph{A grid function for every order.}
+Put \(q=\lceil\sqrt n\rceil\), and choose any \(n\)-element subset \(M\subseteq[q]\times[q]\). Identify \(M\) bijectively with \([n]\).
+For two points \((a,b),(c,d)\in M\) with \(a<c\), define
+\[
+ f(\{(a,b),(c,d)\})=(a,d)
+ \quad\text{if }b\ne d\text{ and }(a,d)\in M. \tag{2}
+\]
+Whenever (2) applies, its image differs from both inputs: its second coordinate differs from \(b\), and its first differs from \(c\). For all other pairs, including equal first coordinates, choose any element of \(M\) different from the two inputs, for instance the first one in a fixed ordering. Such an element exists because \(n\geq3\). Thus the function is completely defined on all unordered pairs and satisfies the required avoidance condition.
+
+\paragraph{Why every free set gives a forest.}
+For \(P\subseteq M\), form a bipartite incidence graph with row vertices \(r_1,\ldots,r_q\), column vertices \(s_1,\ldots,s_q\), and an edge \(r_as_b\) exactly when \((a,b)\in P\).
+Suppose it has a cycle. Choose on that cycle a row vertex \(r_a\) with the smallest row label. Its two neighbors along the cycle are distinct columns \(s_b,s_d\). The other row vertex adjacent to \(s_d\) along the cycle has a label \(c>a\). Therefore
+\[
+ (a,b),\ (c,d),\ (a,d)\in P,
+ \qquad a<c,\qquad b\ne d.
+\]
+The last point belongs to \(M\), so rule (2) applies and sends the pair of the first two points to the third. This contradicts freeness.
+
+Thus the incidence graph of any free \(P\) is a forest. A forest on \(2q\) vertices has at most \(2q-1\) edges: each nonempty tree component has one fewer edge than vertices, as follows by removing leaves inductively, and summing over components gives the assertion. Its edges are exactly the points of \(P\). Hence
+\[
+ |P|\leq2q-1=2\lceil\sqrt n\rceil-1. \tag{3}
+\]
+This applies directly to our arbitrary \(n\)-point grid subset. No unproved monotonicity in \(n\), or extension from square orders by padding, is needed. Equations (1) and (3) prove the claimed order.
+
+\paragraph{Attribution and assessment.}
+The general set-mapping construction is presented in Section 2 of D. Conlon, J. Fox, and B. Sudakov, \emph{Short proofs of some extremal results II}, Journal of Combinatorial Theory B 121 (2016), 173--196, \url{https://arxiv.org/abs/1507.00547}, especially Theorem 2.1 and its following modification. Their paper notes that the one-valued pair case was independently solved earlier by F\"uredi. The forest argument above verifies the two-coordinate specialization and its extension to arbitrary orders. Source statement: \url{https://www.erdosproblems.com/1025}, checked 24 September 2026.
+
+This proves the full order-of-magnitude estimate with explicit constants. It does not claim an exact value of \(g(n)\) or an optimal leading constant. No external extremal theorem, novelty, or local Lean verification is being claimed.
+
+\textbf{Completion rate estimate: 100\%.}

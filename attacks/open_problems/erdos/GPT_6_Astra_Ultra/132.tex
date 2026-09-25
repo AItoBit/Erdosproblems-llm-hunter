@@ -1,0 +1,36 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 132: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For $n$ distinct planar points, call a positive distance rare if it occurs between at least one and at most $n$ unordered pairs. Must there be two rare distances, and must their number tend to infinity with $n$? Source: \url{https://www.erdosproblems.com/132}.
+The source explicitly distinguishes the four-point exception from the intended question for larger sets. We verify the exception and prove growing lower bounds for collinear and concyclic configurations. The general large-$n$ question remains unresolved.
+
+\section*{The four-point exception}
+Take
+\[
+ (0,0),\quad(1,0),\quad(1/2,\sqrt3/2),\quad(1/2,-\sqrt3/2).
+\]
+Exactly five pairs have distance $1$; the remaining pair has distance $\sqrt3$. Thus at $n=4$ the first distance is not rare and the second is the only rare one. This does not address an assertion restricted to $n\ge5$ or the limiting question.
+
+\section*{Points on a line}
+For any fixed positive distance $d$, orient an edge from the smaller coordinate to the larger one. Each vertex has at most one incoming and at most one outgoing edge. There are no directed or undirected cycles: a largest vertex in an undirected cycle would need two distinct neighbours at coordinate exactly $d$ below it. The distance graph is consequently a disjoint union of paths and has at most $n-1$ edges. Every occurring distance is therefore rare.
+The distances from the leftmost point to the other $n-1$ points are distinct. Thus a collinear configuration has at least $n-1$ rare distances, and equally spaced points show this number can be exact.
+
+\section*{Points on one circle}
+Assume the circle has positive radius. For a fixed positive $d$ and a point $p$ on the circle, its possible distance-$d$ neighbours lie at the intersection of that circle with the circle of radius $d$ centred at $p$. The two circles are distinct, so there are at most two such neighbours. Summing degrees, a fixed distance occurs at most $n$ times and is rare.
+From one fixed point, the other $n-1$ points can supply each distance at most twice. There are therefore at least
+\[
+ \left\lceil\frac{n-1}{2}\right\rceil
+\]
+rare distances. A regular $n$-gon attains this count: the distances correspond to separations $1,\ldots,\lfloor n/2\rfloor$ around the polygon.
+
+\section*{Assessment and provenance}
+The small exception from the GPT-Pro-5.2 draft is preserved with its correct scope. The line and circle arguments prove divergence in two classes, but they do not cover arbitrary planar point sets, where a fixed-distance graph can have much higher degrees. In particular, appending arbitrary points to the four-point example can introduce new rare distances and supplies no asymptotic counterexample. No general resolution is claimed.
+
+\textbf{Completion rate estimate: 20\%.}
+\end{document}

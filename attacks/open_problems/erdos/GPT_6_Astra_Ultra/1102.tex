@@ -1,0 +1,87 @@
+\section*{Erd\H{o}s Problem 1102: optimal densities under squarefree translation conditions}
+\subsection*{Statement and precise scope}
+Let $\mathrm{SF}$ be the positive squarefree integers, of density $\delta=6/\pi^2$. Property $P$ means that $(n+A)\cap\mathrm{SF}$ is finite for every positive $n$. Property $Q$ means that infinitely many $n$ satisfy $n+a\in\mathrm{SF}$ for every $a\in A$ with $a<n$; the membership $a\in A$ is implicit in the source's wording.
+
+We prove that $P$ forces density zero, with arbitrarily slow decay, and that the optimal density for $Q$ is $\delta$. The $P$ argument and the $Q$ upper bound are reconstructed fully. The sharp $Q$ example is reconstructed from an explicitly stated finite construction lemma of van Doorn--Tao, Proposition 12 in \url{https://arxiv.org/abs/2512.01087v2}. That sieve lemma is an external input. This is an exposition of their known resolution.
+
+\subsection*{Property $P$ forces density zero}
+Suppose $A$ has positive upper density $\eta$. We show that for some fixed $h\ge1$, infinitely many $a\in A$ have $a+h$ squarefree.
+Fix a large integer $C$. For every integer $a$, the proportion of $h\in[1,H]$ for which no $p^2$, $p\le C$, divides $a+h$ is
+\[
+ \prod_{p\le C}(1-p^{-2})+O_C(H^{-1}),
+\]
+by counting the allowed residue classes modulo $\prod_{p\le C}p^2$. The product is at least $\delta>0$. Primes $C<p\le\sqrt H$ exclude at most
+\[
+ \sum_{C<p\le\sqrt H}(H/p^2+1)\le H/(C-1)+\sqrt H
+\]
+additional choices. Choose $C$ large, then $H$ large, to leave at least $cH$ choices uniformly in $a$, for an absolute $c>0$.
+
+There are arbitrarily large $N\ge H$ with $|A\cap[N]|\ge\eta N/2$. Thus at least $c\eta NH/2$ pairs $(a,h)\in(A\cap[N])\times[H]$ survive all primes up to $\sqrt H$. Pairs spoiled by larger primes are at most
+\[
+ H\sum_{\sqrt H<p\le\sqrt{2N}}\left\lfloor\frac{2N}{p^2}\right\rfloor
+ \ll N\sqrt H.
+\]
+Indeed each spoiled value $a+h\le2N$ arises from at most $H$ pairs. Choosing the fixed $H$ still larger in terms of $\eta$ leaves $\gg\eta NH$ squarefree pairs for arbitrarily large $N$. Their $a$-coordinates cannot belong to a fixed finite set. One of the finitely many shifts $h\le H$ therefore works infinitely often. This contradicts $P$.
+
+\subsection*{Arbitrarily slow zero-density decay}
+Let $f:\mathbb N\to\mathbb N$ tend to infinity. Write $p_1<p_2<\cdots$ for the primes and $W_k=\prod_{i\le k}p_i^2$, with $W_0=1$. Choose increasing thresholds $L_k$ such that $f(j)\ge W_k$ whenever $j\ge L_k$. Let $k(j)$ increase to infinity so slowly that $j\ge L_{k(j)}$; take $k(j)=0$ before the first threshold.
+
+Starting with $a_0=0$, choose $a_j$ as the least integer greater than $a_{j-1}$ satisfying
+\[
+ a_j\equiv-i\pmod{p_i^2}\qquad(1\le i\le k(j)).
+\]
+The Chinese remainder theorem gives $a_j-a_{j-1}\le W_{k(j)}$. Since $k(j)$ is nondecreasing,
+\[
+ a_j\le jW_{k(j)}\le jf(j).
+\]
+For each fixed $n$, all sufficiently late $a_j$ satisfy $p_n^2\mid a_j+n$, so the sequence has $P$. Combined with the preceding density-zero result, this proves the sharp qualitative growth statement $a_j/j\to\infty$, with no prescribed divergent rate.
+
+\subsection*{The sharp upper bound for $Q$}
+A set with $Q$ omits at least one residue class modulo every prime square. If it met all $p^2$ classes, choose finitely many representatives from $A$; for every sufficiently large $n$, one of those representatives $a<n$ satisfies $a\equiv-n\pmod{p^2}$, preventing $n+a$ from being squarefree.
+
+For a finite collection of primes, the Chinese remainder theorem now bounds the upper density of $A$ by the product of the allowed fractions. Letting the collection grow gives
+\[
+ \overline d(A)\le\prod_p(1-p^{-2})=\delta.
+\]
+Only finitely many congruence conditions are counted at each stage, so no interchange of an infinite sieve and a density limit is being assumed.
+
+\subsection*{Finite input for an optimal $Q$ example}
+Here is the exact external input, van Doorn--Tao Proposition 12. For $0<\varepsilon<1$ and every sufficiently large integer $n$ depending on $\varepsilon$, there are arbitrarily large integers $n'$ such that
+\[
+ n'+a\in\mathrm{SF}\quad(a\in\mathrm{SF},\ a\le n)
+ \tag{3}
+\]
+and, uniformly for $n\le R\le n'$,
+\[
+ |\{a\le R:a\in\mathrm{SF},\ n'+a\in\mathrm{SF}\}|
+ \ge(\delta-C\varepsilon)R
+ \tag{4}
+\]
+for an absolute $C$. The proof of this finite sieve lemma is not supplied here.
+
+Choose $n_1<n_2<\cdots$ recursively, applying (3)--(4) with $\varepsilon=1/(k+1)$ to $(n_k,n_{k+1})$. At each stage choose $n_{k+1}$ large enough for the next application and $n_{k+1}\ge(k+1)n_k$. Define
+\[
+ A=\bigcup_{k\ge1}\{a\in\mathrm{SF}:n_k<a\le n_{k+1},\
+                                      n_{k+1}+a\in\mathrm{SF}\}.
+\]
+For $a\in A$ with $a<n_{k+1}$, either $a\le n_k$, when (3) applies, or $a$ belongs to the current block. Thus every $n_{k+1}$ witnesses $Q$.
+
+We check density at every intermediate cutoff. Let $n_k\le R\le n_{k+1}$ and $k\ge2$. The candidate set in (4) is retained in $A$ except possibly for points at most $n_{k-1}$ and the squarefree points at most $n_k$ rejected by the preceding block. The latter number is
+\[
+ |\mathrm{SF}\cap[n_k]|-
+ |\{a\le n_k:a,n_k+a\in\mathrm{SF}\}|=o(n_k),
+\]
+using (4) for $(n_{k-1},n_k)$ and the elementary squarefree estimate
+$|\mathrm{SF}\cap[x]|=\delta x+O(\sqrt x)$.
+Consequently
+\[
+ |A\cap[R]|\ge(\delta-O(1/k))R-o(n_k)-n_{k-1}
+             =(\delta-o(1))R,
+\]
+uniformly in that interval, because $n_{k-1}/n_k\le1/k$. Since $A\subset\mathrm{SF}$, the matching upper bound follows. Hence $d(A)=\delta$.
+
+\subsection*{Assessment}
+The main growth-rate questions for $P$ and $Q$ are answered, relative only to the explicit finite lemma (3)--(4) for the sharp $Q$ construction and standard squarefree counting. In particular no sparse-growth necessity for $Q$ is asserted. The auxiliary $P'$ and $P'_\infty$ variants in the editorial, and whether $2^j\pm1$ or $j!\pm1$ have $P$, are separate questions; the cited source lists the latter as separate unsettled questions.
+Sources: \url{https://www.erdosproblems.com/1102}; W. van Doorn and T. Tao, \emph{Growth rates of sequences governed by the squarefree properties of their translates}, Sections 3--4.1, \url{https://arxiv.org/abs/2512.01087v2}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

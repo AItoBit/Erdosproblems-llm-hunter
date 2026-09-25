@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 172: simultaneous finite sums and products}
+\subsection*{Statement and outcome}
+For a finite $A\subset\mathbb N$, let $\operatorname{FS}(A)$ and
+$\operatorname{FP}(A)$ consist respectively of sums and products over nonempty subsets, with no repeated elements. The question asks whether every finite colouring admits arbitrarily large $A$ for which their union has one colour.
+
+We prove the assertion for eventually periodic colourings and for a class of simultaneous prime-valuation colourings. For arbitrary colourings we prove a canonical reduction to a finite list of colours indexed by subset size. Making that list one colour remains unresolved in this attempt.
+
+\subsection*{Eventually periodic colourings}
+Suppose $c(n+q)=c(n)$ for all $n\ge N_0$. All sufficiently large multiples of $q$ then have a common colour. Choose any desired number of distinct multiples of $q$ at least $\max(N_0,2)$. Every nonempty sum and product is again such a multiple, so the whole union has this colour. This includes the simpler monochromatic-ideal observation in the old local attempt.
+
+\subsection*{Simultaneous valuation colourings}
+Let $P$ be a finite nonempty set of primes, and let the colour of $n$ depend only on the tuple
+$(v_p(n)\bmod m_p)_{p\in P}$, for fixed positive integers $m_p$.
+Put $M=\operatorname{lcm}_{p\in P}m_p$, $B=\prod_{p\in P}p$, and choose
+\[
+ A=\{B^{M},B^{2M},\ldots,B^{rM}\}.
+\]
+For a nonempty subset $S$ of the exponents, its sum factors as
+$B^{Mj_0}(1+\sum_{j\in S,\ j>j_0}B^{M(j-j_0)})$,
+where $j_0=\min S$. The parenthesis is one modulo every $p\in P$.
+Thus each $p$-valuation of this sum is exactly $Mj_0$.
+The valuation of the corresponding product is $M\sum_{j\in S}j$.
+All these valuations are zero modulo their respective $m_p$.
+Hence all sums and products have the colour assigned to the zero tuple.
+Distinct valuations are essential here: unrestricted sums of terms of equal valuation could introduce cancellation.
+
+\subsection*{A reduction valid for every finite colouring}
+Fix a target size $r$. There is an infinite set $B\subset\mathbb N$ and colours
+$\gamma_j,\delta_j$, $1\le j\le r$, such that every $j$-subset $S\subset B$ satisfies
+\[
+ c\left(\sum_{s\in S}s\right)=\gamma_j,\qquad
+ c\left(\prod_{s\in S}s\right)=\delta_j.
+ \tag{1}
+\]
+Apply the infinite Ramsey theorem successively for $j=1,\ldots,r$, colouring each $j$-subset by the ordered pair of displayed colours and passing to an infinite homogeneous subset. Later restrictions preserve earlier properties.
+
+Here the needed Ramsey theorem itself follows by induction on uniformity. The case of singletons is infinite pigeonhole. For a colouring of $j$-subsets, recursively choose vertices $v_i$ and nested infinite tails so that the colour of $\{v_i\}\cup T$, for $(j-1)$-subsets $T$ of the new tail, is a fixed colour $\eta_i$; the induction hypothesis supplies that tail. Infinitely many $\eta_i$ agree. The corresponding $v_i$ form a homogeneous set, since the least-indexed member determines the colour of every $j$-subset. This proves the input and hence (1).
+
+Any $r$ distinct members of $B$ now have sums and products whose colours depend only on cardinality. But there are up to $2r-1$ independent entries in this profile, since only $\gamma_1=\delta_1$ is automatic. Ramsey homogeneity does not assert that these entries agree. This is the exact gap in trying to turn (1) into the desired conclusion.
+
+\subsection*{Why clearing rational denominators is insufficient}
+If a rational set $A$ has common denominator dividing $D$, replacing it by $DA$ changes a subset sum to $D\sum A'$ but a product of $j$ elements to $D^j\prod A'$. An arbitrary integer colouring need not preserve colours under any of these different dilations. Thus the rational analogue reported on the problem page does not transfer merely by clearing denominators.
+
+\subsection*{Assessment and attribution}
+The old \texttt{gpt\_pro\_5.2/172.tex} handled parity and a monochromatic ideal. Those are included in the proved periodic special case; the valuation construction and cardinality-profile reduction give further explicit partial results. Source and literature context: \url{https://www.erdosproblems.com/172}. No external sums-and-products theorem is invoked as a proof, and no novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

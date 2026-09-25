@@ -1,0 +1,99 @@
+\section*{Erd\H{o}s Problem \#365: consecutive powerful numbers and their count}
+\subsection*{1. The two questions must be separated}
+The precise first question is whether, whenever $n,n+1$ are powerful,
+at least one must be a square. Its answer is known to be no.
+The second asks whether
+\[
+ Q(X)=\#\{n\le X:n,n+1\text{ are powerful}\}
+       \le(\log X)^{O(1)}.
+\]
+We prove the first answer, an explicit infinite family of nonsquare
+counterexamples, and an $O(\log X)$ upper bound after fixing the two
+squarefree kernels. Uniformly controlling all kernels remains
+unresolved, so this is not a full solution to the two-part problem.
+
+\subsection*{2. Golomb's counterexample and an explicit infinite continuation}
+The factorizations
+\[
+ 12167=23^3,\qquad12168=8\cdot39^2=2^3\,3^2\,13^2
+\]
+show that both integers are powerful and neither is a square.
+We can continue this same example indefinitely.
+Start with $x_0=1,y_0=39$, and set
+\[
+ x_{j+1}=24335x_j+624y_j,\qquad
+ y_{j+1}=949026x_j+24335y_j.                       \tag{1}
+\]
+To verify the constants, let
+$\lambda=24335+3588\sqrt{46}$. Exact calculation gives
+$24335^2-46\cdot3588^2=1$, and multiplication yields
+\[
+ (4y_j+23x_j\sqrt{46})\lambda
+       =4y_{j+1}+23x_{j+1}\sqrt{46}.
+\]
+The norm identity therefore preserves
+\[
+ 8y_j^2-23^3x_j^2=1.
+\]
+The positive integer coordinates strictly increase in (1). Hence
+\[
+ n_j=23^3x_j^2,\qquad n_j+1=8y_j^2
+\]
+are infinitely many consecutive powerful pairs.
+Their respective $23$-adic and $2$-adic exponents are
+$3+2v_{23}(x_j)$ and $3+2v_2(y_j)$, both odd, so neither number
+can be a square.
+The explicit multiplication formula also gives
+$n_j\asymp\lambda^{2j}$, and consequently $Q(X)\gg\log X$.
+This lower bound is compatible with the proposed polylogarithmic upper bound.
+
+\subsection*{3. A logarithmic upper bound for each fixed pair of kernels}
+Every powerful number has a unique expression $b^3u^2$ with
+$b$ squarefree. Indeed, the primes occurring to odd exponent form
+$b$, and the remaining exponents are even and nonnegative.
+Fix squarefree $b,c\ge1$ and consider solutions
+\[
+ c^3v^2-b^3u^2=1,\qquad u,v\ge1.                 \tag{2}
+\]
+This is exactly the restriction to consecutive powerful numbers
+with these two kernels. For a solution, put
+$\theta=\sqrt{b^3/c^3}$. Then
+\[
+ \frac vu=\sqrt{\theta^2+\frac1{c^3u^2}}>\theta,
+ \qquad
+ 0<\frac vu-\theta
+   <\frac1{2\sqrt{b^3c^3}\,u^2}.                 \tag{3}
+\]
+If $u_1<u_2$ are two solution denominators, their ratios $v_i/u_i$
+strictly decrease as $u_i$ increases. The positive integer
+$v_1u_2-v_2u_1$ is at least $1$. Therefore (3) gives
+\[
+ \frac1{u_1u_2}
+ \le\frac{v_1}{u_1}-\frac{v_2}{u_2}
+ <\frac1{2\sqrt{b^3c^3}\,u_1^2},
+ \quad\text{so}\quad
+ u_2>2(bc)^{3/2}u_1.                             \tag{4}
+\]
+The denominators thus grow geometrically. Since $b^3u^2\le X$ implies
+$u\le\sqrt X$, equation (2) has $O_{b,c}(\log X)$ solutions below $X$.
+For $b=c=1$ there are no positive consecutive squares anyway.
+No structural theorem about Pell equations is needed for this bound.
+
+\subsection*{4. Assessment and provenance}
+The unresolved step is to sum (4) over kernels that grow with $X$.
+There can be up to $X^{1/3}$ choices for each squarefree kernel
+before the equation is imposed; a bound for each fixed equation
+does not produce the required uniform polylogarithmic total.
+The first subquestion is completely disproved, but the counting
+question remains unresolved in this attempt.
+
+Source: \texttt{https://www.erdosproblems.com/365}, checked 2026-09-25,
+which attributes the displayed seed to Golomb and the existence of
+infinitely many nonsquare pairs to Walker.
+The previous GPT Pro 5.2 and 5.4 attempts were checked; the latter
+correctly separated the counting question. Formula (1) is a fully
+verified Pell-unit continuation of Golomb's seed, offered as a
+reconstruction rather than a novelty claim. No formal verification
+or independent proof of the proposed counting bound is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

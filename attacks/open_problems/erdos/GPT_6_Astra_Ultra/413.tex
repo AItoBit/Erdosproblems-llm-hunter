@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 413: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Writing $\omega(m)$ for the number of distinct prime divisors, are there infinitely many integers $N$ such that $m+\omega(m)\le N$ for every positive $m<N$? Does this hold with $\omega(m)$ replaced by $\epsilon\omega(m)$ for some fixed $\epsilon>0$? Source: \url{https://www.erdosproblems.com/413}.
+
+The exact-barrier question remains unresolved here. The relaxed question is already answered by Lau's theorem. We state that external input precisely, derive the relaxed conclusion without losing the last offset, and prove that every fixed relaxed-barrier set has density zero. This replaces the earlier GPT-5.2 speculation with proved statements; no novelty is claimed.
+
+\section*{Finite windows and a necessary condition}
+Let $p_j$ be the $j$th prime and put
+\[
+ w(X)=\max\{j:p_1\cdots p_j\le X\}.
+\]
+Unique factorization shows that $\omega(m)\le w(X)$ for every $m\le X$: the least integer with $j$ distinct prime factors is the product of the first $j$ primes. Consequently the exact-barrier condition at $N$ can be verified by checking only
+\[
+ \omega(N-d)\le d\quad (1\le d<w(N-1)). \tag{1}
+\]
+All larger offsets are automatic, including equality at $d=w(N-1)$. Empty windows are interpreted as having no conditions. This is an exact finite test for each proposed $N$, not a proof that the test succeeds infinitely often.
+
+For $N>2$, the offset $d=1$ requires $\omega(N-1)\le1$, so $N-1$ must be a prime power. More generally an $\epsilon$-barrier requires
+\[
+ \omega(N-1)\le \lfloor1/\epsilon\rfloor. \tag{2}
+\]
+
+\section*{Density zero for every fixed coefficient}
+For each fixed integer $K\ge0$, the set of integers with at most $K$ distinct prime factors has natural density zero. Here is a short proof. For a fixed prime cutoff $y$, set
+\[
+ S_y(m)=\sum_{p\le y}1_{p\mid m},\qquad \mu_y=\sum_{p\le y}1/p.
+\]
+On a complete residue system modulo $\prod_{p\le y}p$, the Chinese remainder theorem makes the divisibility indicators independent, with means $1/p$. Therefore the mean of $S_y$ is $\mu_y$ and its variance is at most $\mu_y$. Chebyshev's inequality gives, when $\mu_y>K$,
+\[
+ \operatorname{dens}\{m:S_y(m)\le K\}
+ \le\frac{\mu_y}{(\mu_y-K)^2}. \tag{3}
+\]
+The density on the left exists because this set is periodic. Since $S_y(m)\le\omega(m)$, (3) bounds the upper density of $\{m:\omega(m)\le K\}$. Euler's divergence of the prime reciprocal sum makes $\mu_y\to\infty$, proving the assertion. By (2), the set of $\epsilon$-barriers has density zero for each fixed $\epsilon>0$. In particular existence of infinitely many relaxed barriers is compatible only with a sparse set, not positive density.
+
+\section*{The precise external theorem and the endpoint shift}
+Lau, \emph{On the number of prime factors of consecutive integers}, Theorem 1.3, version 2 of 24 June 2026, proves that there is an absolute $C>0$ and infinitely many integers $n$ with
+\[
+ \omega(n-k)\le\Omega(n-k)\le C\log k
+ \quad\hbox{for every integer }1<k<n. \tag{4}
+\]
+Primary source: \url{https://arxiv.org/abs/2604.15042v2}. The sieve and concentration argument establishing (4) is an imported theorem; it is not reproduced or formally verified in this attempt.
+
+The restriction $k>1$ matters. One cannot simply substitute $k=1$ in (4). Instead put $N=n-1$ and, for $1\le m<N$, write $d=N-m\ge1$. Then $k=n-m=d+1$ is in the valid range of (4). Since $2^d\ge d+1$ for every positive integer $d$, induction or the binomial theorem gives
+\[
+ \omega(m)\le C\log(d+1)\le C(\log2)d.
+\]
+Taking $\epsilon=1/(C\log2)$ proves
+\[
+ m+\epsilon\omega(m)\le m+d=N
+ \quad(1\le m<N).
+\]
+The infinitely many $n$ in (4) give infinitely many distinct $N$. This proves the second assertion relative to the explicitly stated preprint theorem.
+
+Also choose a fixed $K\ge2$ so large that $C\log k\le k$ for every integer $k\ge K$. At each original endpoint $n$ in (4), one then has $m+\omega(m)\le n$ for every $1\le m\le n-K$. This verifies the known weakened first assertion. It leaves the final $K-1$ offsets unchecked.
+
+\section*{The dynamical implication and remaining gap}
+If exact barriers were unbounded, every orbit of $T(m)=m+\omega(m)$ starting at $m\ge2$ would meet every barrier above its start. Indeed the orbit strictly increases, while the barrier condition prevents a jump from below the barrier to above it. Hence any two such orbits would eventually merge. The fixed point $1$ must be excluded from this implication.
+
+Neither the density-zero argument nor (4) supplies the missing exact coefficient at the last few offsets. The relaxed question is reconstructed from an external theorem; infinitely many exact barriers and the unconditional merging conclusion remain unresolved by this attempt.
+
+\textbf{Completion rate estimate: 50\%.}
+\end{document}

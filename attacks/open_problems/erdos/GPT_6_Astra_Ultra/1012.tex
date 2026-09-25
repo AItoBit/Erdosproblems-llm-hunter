@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 1012}
+
+\paragraph{Statement and result.}
+For \(k\geq0\), how large must \(n\) be to guarantee that
+\[
+ e(G)\geq B(n,k)+1,\qquad
+ B(n,k)=\binom{n-k-1}{2}+\binom{k+2}{2},
+\tag{1}
+\]
+forces a cycle of length \(n-k\)? Relative to Woodall's theorem, we prove that every meaningful order \(n\geq k+3\) works. In particular \(f(k)\leq k+3\); there is no additional large-order restriction once the requested cycle has at least three vertices. The explicit external theorem is stated below, and the parameter reflection and sharpness argument are supplied.
+
+\paragraph{The external cycle theorem.}
+Woodall's theorem says that if \(h\geq0\), \(n\geq2h+3\), and
+\[
+ e(G)\geq\binom{n-h-1}{2}+\binom{h+2}{2}+1,
+\tag{2}
+\]
+then \(G\) contains cycles of every length from \(3\) through \(n-h\). We use this substantial theorem as an external input. Its exact hypotheses are restated as Theorem 8 in B. Li and B. Ning, \emph{Stability of Woodall's theorem and spectral conditions for large cycles}, \url{https://www.combinatorics.org/ojs/index.php/eljc/article/view/v30i1p39}. The original source is D. R. Woodall, \emph{Sufficient conditions for circuits in graphs}, \url{https://doi.org/10.1112/plms/s3-24.4.739}.
+
+For \(n\geq2k+3\), take \(h=k\) in (2), immediately obtaining every cycle through length \(n-k\). It is important not to mistake the hypothesis \(n\geq2k+3\) of this form of the theorem for a necessary restriction in the original question.
+
+\paragraph{Reflect the parameter to handle the other orders.}
+Suppose \(k+3\leq n\leq2k+2\), and put
+\[
+ h=n-k-3.
+\]
+Then \(h\geq0\), and
+\[
+ n-(2h+3)=2k+3-n\geq1.
+\]
+Thus Woodall's order hypothesis is satisfied. Its edge threshold is exactly the same as (1), because
+\[
+ n-h-1=k+2,\qquad h+2=n-k-1.
+\]
+The conclusion supplies cycles through length
+\[
+ n-h=k+3\geq n-k.
+\]
+In particular the required \(C_{n-k}\) exists. This covers every remaining order where \(n-k\geq3\).
+
+\paragraph{Conventions for very small orders.}
+For \(n\leq k+2\), the requested length is at most two and is not the length of a simple cycle. Under the usual convention that these instances are declared vacuous, no extra threshold is needed at all: one may write \(f(k)=1\) if graph orders and thresholds are positive, or \(f(k)=0\) if zero is allowed. One way to make this convention explicit is to set \(\binom{a}{2}=0\) for integer \(a<2\) in (1). Then its right-hand side is at least \(\binom{k+2}{2}+1>\binom n2\) whenever \(n\leq k+2\), so no graph satisfies the edge hypothesis. The substantive assertion above avoids this convention issue by working with \(n\geq k+3\).
+
+\paragraph{Why the edge threshold is sharp in the large-order range.}
+For \(n\geq2k+3\), form two complete graphs of orders \(n-k-1\) and \(k+2\), sharing exactly one vertex and with no edges between their other vertices. Their union has
+\[
+ (n-k-1)+(k+2)-1=n
+\]
+vertices and exactly \(B(n,k)\) edges.
+
+Any simple cycle lies entirely in one clique. If it used vertices of both cliques, it would have to pass through their unique shared cut vertex twice. Both clique orders are smaller than \(n-k\): this is immediate for the first, and follows from \(n\geq2k+3\) for the second. Hence there is no \(C_{n-k}\). The extra edge required in (1) is therefore necessary for every order in that range.
+
+At \(k=0\) the example is a clique on \(n-1\) vertices with a pendant vertex; at \(k=1\) it is a clique on \(n-2\) vertices joined at one vertex to a triangle. These recover the familiar Hamiltonian and almost-Hamiltonian threshold obstructions.
+
+\paragraph{Attribution and assessment.}
+Woodall supplies the cycle theorem; the parameter reflection is also noted by Cambie at \url{https://www.erdosproblems.com/forum/thread/1012}. The current statement is \url{https://www.erdosproblems.com/1012}, checked 24 September 2026. This is a complete deduction relative to the explicitly stated external theorem, including every meaningful parameter range and the sharp large-order examples. The proof of Woodall's theorem itself is not reproduced, and no novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

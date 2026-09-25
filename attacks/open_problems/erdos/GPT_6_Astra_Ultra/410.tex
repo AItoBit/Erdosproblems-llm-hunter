@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 410: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and correction}
+For every $n\ge2$, must $\sigma^{\circ k}(n)^{1/k}\to\infty$? Source: \url{https://www.erdosproblems.com/410}. The answer remains unresolved here. The earlier GPT-5.2 draft used $n=1$ as a purported disproof, but the current statement explicitly excludes it. We replace that argument with growth bounds and a precise sufficient condition along an orbit.
+
+Put $x_0=n$ and $x_{j+1}=\sigma(x_j)$. Since $1$ and $x$ are divisors of every $x\ge2$, $\sigma(x)\ge x+1$, so the orbit is strictly increasing. This alone says nothing about divergence of its $k$th root.
+
+\section*{A uniform quadratic lower bound}
+We claim that for every $x\ge2$,
+\[
+ \sigma^{\circ2}(x)\ge x+\sqrt x. \tag{1}
+\]
+For even $x\ge4$, the divisors $1,x/2,x$ give $\sigma(x)\ge1+3x/2\ge x+\sqrt x$. For an odd square $x\ge9$, the divisors $1,\sqrt x,x$ give the same conclusion. In either case another application of $\sigma$ only increases the value.
+
+For odd nonsquare $x$, $\sigma(x)$ is even. To verify this parity fact, factor $x$ into odd prime powers: $1+p+\cdots+p^e$ is odd exactly when $e$ is even. At least one exponent is odd, so one factor is even. Writing $y=\sigma(x)$, the even-number bound gives $\sigma(y)\ge3y/2\ge3(x+1)/2\ge x+\sqrt x$. Finally $\sigma^{\circ2}(2)=4$ checks the remaining case.
+
+For $u\ge2$, $\sqrt{u+\sqrt u}\ge\sqrt u+1/3$, as follows by squaring. Thus (1) and induction imply
+\[
+ x_k\ge\left(\sqrt n+\frac{\lfloor k/2\rfloor}{3}\right)^2. \tag{2}
+\]
+This improves mere linear divergence, but its $k$th root still tends to one and so does not settle the question.
+
+\section*{An elementary upper growth envelope}
+For every $m$, pairing each divisor with its complementary divisor gives
+\[
+ \frac{\sigma(m)}m=\sum_{d\mid m}\frac1d\le H_m\le1+\log m.
+\]
+Set $L_k=\log x_k$. Then
+\[
+ L_{k+1}\le L_k+\log(1+L_k). \tag{3}
+\]
+Choose $C\ge\max(4,\log n)$. For $t\ge2$ the elementary inequality $1+Ct\log t\le t^C$ holds: it follows first for $C=4$ from $\log t\le t/2$, and $t^C/C$ increases for $C\ge4$. Starting with $L_0\le2C\log2$, (3) proves inductively
+\[
+ L_k\le C(k+2)\log(k+2),
+ \qquad x_k\le\exp\big(C(k+2)\log(k+2)\big). \tag{4}
+\]
+Indeed the next increment is at most $C\log(k+2)$, which fits inside the increase of the right side. The upper envelope (4) permits a divergent $k$th root, but does not force one.
+
+\section*{A sufficient prime-frequency criterion}
+The exact telescoping identity is
+\[
+ \frac{\log x_k}{k}
+ =\frac{\log n}{k}+\frac1k\sum_{j=0}^{k-1}\log\frac{\sigma(x_j)}{x_j}. \tag{5}
+\]
+The desired assertion is equivalent to divergence of the average on the right. Having some large individual ratios does not imply that average diverges.
+
+For each prime $p$, let $d_p(k)=k^{-1}\#\{0\le j<k:p\mid x_j\}$. The divisor-sum product formula gives, for every finite prime cutoff $Y$,
+\[
+ \frac1k\sum_{j<k}\log\frac{\sigma(x_j)}{x_j}
+ \ge\sum_{p\le Y}d_p(k)\log(1+1/p). \tag{6}
+\]
+If there were a constant $\delta>0$ with $\liminf_k d_p(k)\ge\delta$ for every prime $p$, taking the lower limit in (6), and then $Y\to\infty$, would prove the desired divergence. Here $\sum_p\log(1+1/p)=\infty$ follows from Euler's divergence of $\sum_p1/p$; the difference of the two summands is absolutely summable.
+
+\section*{Remaining gap}
+Bounds (2)--(4), identity (5), and criterion (6) are proved. No lower-frequency assertion of the stated strength is established for these orbits. They could have long portions with small abundancy ratios, and the present estimates do not rule that out. This is the gap for the stated domain $n\ge2$; the fixed point at one is irrelevant to it. No numerical orbit is offered as a proof of asymptotic growth.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

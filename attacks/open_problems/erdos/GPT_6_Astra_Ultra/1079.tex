@@ -1,0 +1,77 @@
+\section*{Erd\H{o}s Problem 1079}
+
+\paragraph{Statement and result.}
+For fixed \(r\geq4\), suppose an \(n\)-vertex graph \(G\) has at least \(\operatorname{ex}(n;K_r)\) edges. We prove that every maximum-degree vertex \(v\), of degree \(d\), satisfies
+\[
+ e(G[N(v)])\geq\operatorname{ex}(d;K_{r-1}),
+ \qquad d\geq\left(1-\frac1{r-1}\right)n-\frac{r-1}{4n}.
+ \tag{1}
+\]
+Thus \(d\gg_r n\) as required. When \(e(G)>\operatorname{ex}(n;K_r)\), the first inequality is strict. The non-strict statement includes the Tur\'an graph; it does not need to exclude that graph.
+
+\paragraph{Balanced multipartite edge counts.}
+Write \(t_s(n)\) for the number of edges of the complete \(s\)-partite graph whose part sizes differ by at most one; empty parts are permitted. For part sizes \(b_1,\ldots,b_s\) summing to \(n\), the edge count is
+\[
+ \frac12\left(n^2-\sum_i b_i^2\right).
+\]
+If \(b_i\geq b_j+2\), transferring one vertex from the former part to the latter reduces the square sum. Repeating proves that \(t_s(n)\) is the maximum over complete \(s\)-partite graphs of order \(n\).
+
+In particular, for any \(0\leq d\leq n\), adjoining an independent part of size \(n-d\) to a balanced \((s-1)\)-partite graph on \(d\) vertices gives
+\[
+ t_{s-1}(d)+d(n-d)\leq t_s(n). \tag{2}
+\]
+
+\paragraph{A maximum-degree inequality.}
+Take any graph \(G\), a maximum-degree vertex \(v\), and let
+\[
+ A=N(v),\quad |A|=d,\qquad B=V(G)\setminus A,\quad |B|=n-d.
+\]
+The vertex \(v\) itself lies in \(B\). Every vertex of \(B\) has degree at most \(d\), so
+\[
+ e(A,B)+2e(B)=\sum_{b\in B}\deg(b)\leq d(n-d).
+\]
+Consequently
+\[
+ e(G)=e(A)+e(A,B)+e(B)
+ \leq e(A)+d(n-d)-e(B)
+ \leq e(A)+d(n-d). \tag{3}
+\]
+No independence assumption on \(B\) has been made.
+
+\paragraph{An accompanying proof of Tur\'an's formula.}
+We prove inductively on \(s\) that every \(K_{s+1}\)-free graph has at most \(t_s(n)\) edges. For \(s=1\), a \(K_2\)-free graph has no edges. For the induction step, the graph on \(A=N(v)\) is \(K_s\)-free. The induction hypothesis, (3), and (2) give
+\[
+ e(G)\leq t_{s-1}(d)+d(n-d)\leq t_s(n).
+\]
+The balanced complete \(s\)-partite graph has no \(K_{s+1}\) and attains that count. Hence
+\(\operatorname{ex}(n;K_{s+1})=t_s(n)\).
+
+\paragraph{The required neighbourhood and its size.}
+Now put \(s=r-1\). From (3), the assumed edge count, and (2),
+\[
+ e(A)\geq e(G)-d(n-d)
+ \geq t_s(n)-d(n-d)
+ \geq t_{s-1}(d).
+\]
+If the hypothesis has \(e(G)>t_s(n)\), the same chain has a strict inequality, proving the strengthened assertion.
+
+For completeness, write \(n=sq+a\), where \(0\leq a<s\). The balanced part sizes give
+\[
+ t_s(n)=\frac12\left(1-\frac1s\right)n^2
+             -\frac{a(s-a)}{2s}.
+\]
+Since a maximum degree is at least the average degree,
+\[
+ d\geq\frac{2e(G)}n\geq
+ \left(1-\frac1s\right)n-\frac{a(s-a)}{sn}
+ \geq\left(1-\frac1s\right)n-\frac{s}{4n}.
+\]
+This is (1), and proves the needed positive linear lower bound for sufficiently large \(n\).
+
+\paragraph{Equality and attribution.}
+For \(G=T_s(n)\), a maximum-degree vertex lies in a smallest part. Its neighbourhood is a balanced complete \((s-1)\)-partite graph, so equality in the first part of (1) holds. Thus the page's exception involving the Tur\'an graph pertains to strict variants, not the literal non-strict inequality.
+
+The dense-neighbourhood result is due to Bollob\'as--Thomason, and the maximum-degree strengthening to J. A. Bondy, \emph{Large dense neighbourhoods and Tur\'an's theorem}, \url{https://doi.org/10.1016/0095-8956(83)90012-6}. The publisher's abstract states the strict maximum-degree version. Source statement: \url{https://www.erdosproblems.com/1079}, checked 24 September 2026. All edge-count inequalities and the needed Tur\'an formula are proved above; no external extremal theorem, novelty, or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

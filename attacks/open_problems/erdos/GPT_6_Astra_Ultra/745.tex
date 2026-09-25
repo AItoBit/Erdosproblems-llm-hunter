@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 745: the second-largest component at criticality}
+\subsection*{1. Literal statement and a source discrepancy}
+The displayed problem asks about the size $L_2$ of the second-largest component of $G(n,1/n)$. Its editorial says $L_2\ll\log n$. That assertion is incompatible with the displayed critical model: the logarithmic second component belongs to the strictly supercritical regime $G(n,c/n)$ with fixed $c>1$.
+For the literal model we prove the following precise exponent-scale description, without importing a random-graph component theorem: for every fixed $\epsilon>0$,
+\[
+ \mathbb P\bigl(n^{2/3-\epsilon}\le L_2\le L_1\le n^{2/3+\epsilon}\bigr)\longrightarrow1. \tag{1}
+\]
+Here rounding integer thresholds does not change the conclusion. In particular $L_2=n^{2/3+o(1)}$ with high probability and cannot be $O(\log n)$ with high probability. The finer known limiting distribution of $n^{-2/3}L_2$ is not reconstructed below.
+\subsection*{2. Exact tree-component expectations}
+Let $T_j$ count components that are trees on exactly $j$ vertices. Cayley's formula gives $j^{j-2}$ labeled trees; it follows, for $j\ge2$, that
+\[
+ \mathbb E T_j=\binom nj j^{j-2}n^{-(j-1)}
+ (1-1/n)^{j(n-j)+\binom j2-j+1}. \tag{2}
+\]
+The exponent excludes every edge to the exterior and every internal edge not in the chosen tree. Cayley's formula itself follows from the Pr\"ufer-code bijection between labeled trees and sequences of length $j-2$ over their $j$ labels.
+Uniformly for $j\to\infty$ with $j=o(n^{2/3})$, Stirling's formula and $\log(1-u)=-u+O(u^2)$ give
+\[
+ \mathbb E T_j=\frac{n}{\sqrt{2\pi}\,j^{5/2}}
+ \exp\!\left(O\left(\frac1j+\frac jn+\frac{j^3}{n^2}\right)\right). \tag{3}
+\]
+To check the cancellation underlying (3), write $\binom nj=(n)_j/j!$. The logarithm of $(n)_j/n^j$ is $-j(j-1)/(2n)+O(j^3/n^2)$. The absent-edge exponent in (2) is $jn-j^2/2-3j/2+1$, so its logarithmic contribution is $-j+j^2/(2n)+O(j/n+j^3/n^2)$. Stirling contributes $+j$ after extracting $n/(\sqrt{2\pi}j^{5/2})$. Both the linear $j$ terms and the potentially large $j^2/(2n)$ terms cancel.
+\subsection*{3. Many moderately large tree components}
+It suffices to prove the lower bound for $0<\epsilon<2/3$. Put $k=\lfloor n^{2/3-\epsilon}\rfloor$ and $X=\sum_{j=k}^{2k}T_j$. Equation (3) implies
+\[
+ \mu:=\mathbb E X\asymp nk^{-3/2}\longrightarrow\infty. \tag{4}
+\]
+For two distinct components of sizes $i,j$, the vertex sets must be disjoint. The exact ratio of their ordered joint expectation to $(\mathbb ET_i)(\mathbb ET_j)$ is
+\[
+ R_{i,j}=\frac{(n-i)_j}{(n)_j}(1-1/n)^{-ij}. \tag{5}
+\]
+The falling-factorial ratio enforces disjoint vertex sets; the last factor corrects for the $ij$ absent edges between them, which would otherwise be counted twice. For $i=j$, the same identity describes the factorial moment $\mathbb E[T_i(T_i-1)]$.
+For $k\le i,j\le2k$, logarithmic expansion yields
+\[
+ \log R_{i,j}
+ =\sum_{h=0}^{j-1}\log\left(1-\frac{i}{n-h}\right)-ij\log(1-1/n)
+ =O\left(\frac{ij(i+j)}{n^2}\right)=o(1),
+\]
+uniformly, because $k^3/n^2\to0$. Summing (5) gives $\mathbb E[X(X-1)]=(1+o(1))\mu^2$. Thus $\operatorname{Var}(X)=o(\mu^2)+\mu$, and Chebyshev's inequality shows $X\ge2$ with probability tending to one. There are therefore at least two components of size at least $k$.
+To obtain the exact threshold $n^{2/3-\epsilon}$ in (1), apply this conclusion with $\epsilon/2$; its integer lower bound eventually exceeds the requested real threshold.
+\subsection*{4. A branching-process upper bound}
+Explore the component of a fixed vertex breadth first. Each processed vertex tests independent Bernoulli$(1/n)$ edges to as-yet undiscovered vertices, at most $n$ trials. Pad each step with fresh independent trials to obtain an independent Binomial$(n,1/n)$ offspring count. The exploration queue is dominated by the corresponding Galton--Watson queue, so the component size is dominated by its total progeny $T$.
+This branching process becomes extinct almost surely. Its generating function $F(s)=(1-1/n+s/n)^n$ has $F(1)=F'(1)=1$ and, for $n\ge2$, is strictly convex, hence $F(s)>s$ for $0\le s<1$. The extinction probability, the increasing limit of the finite-generation extinction probabilities, is a fixed point of $F$, and is consequently $1$.
+The elementary cyclic-queue identity gives
+\[
+ \mathbb P(T=t)=\frac1t\mathbb P\bigl(\operatorname{Bin}(nt,1/n)=t-1\bigr). \tag{6}
+\]
+Here is the needed justification. Condition on $t$ offspring counts summing to $t-1$, and subtract one from each. Their integer increments are at least $-1$ and sum to $-1$. Exactly one of the $t$ cyclic starting positions has nonnegative partial sums up to time $t-1$: start just after the first minimum of the partial sums before the final step. Earlier partial sums are strictly above that minimum, which verifies the wrapped portion as well. These are precisely the queues that first die at step $t$. The conditional distribution is invariant under cyclic rotation, proving the factor $1/t$.
+Stirling's formula for binomial point probabilities gives an absolute bound
+\[
+ \mathbb P\bigl(\operatorname{Bin}(nt,1/n)=t-1\bigr)\le C t^{-1/2}
+\]
+uniformly for $n\ge2$ and $t\ge1$ (the variance is $t(1-1/n)\ge t/2$; the usual maximum point-mass bound is $C/\sqrt{\text{variance}}$). By (6) and extinction,
+\[
+ \mathbb P(T\ge K)\le C'K^{-1/2}. \tag{7}
+\]
+The expected number of graph vertices lying in components of size at least $K$ is at most $C'nK^{-1/2}$. Existence of one such component contributes at least $K$ vertices to this count, so Markov's inequality gives
+\[
+ \mathbb P(L_1\ge K)\le C'nK^{-3/2}.
+\]
+Taking $K$ of order $n^{2/3+\epsilon}$ proves the upper bound in (1).
+\subsection*{5. Sources and exact limitation}
+Sources: \url{https://www.erdosproblems.com/745}; D. Aldous, \emph{Brownian excursions, critical random graphs and the multiplicative coalescent}, Ann. Probab. 25 (1997), 812--854, \url{https://doi.org/10.1214/aop/1024404421}. Aldous's result gives the finer joint limit through ranked excursion lengths of reflected Brownian motion with parabolic drift; that theorem is context, not an input to (1).
+\textbf{UNRESOLVED at the finer distributional level in this attempt:} the critical exponent $2/3$ for the second component is completely proved, and the displayed editorial's logarithmic claim is disproved for its literal model. The nondegenerate limiting distribution and its tail estimates have not been proved here. The estimate measures coverage of the broad request to describe the second-largest component; it does not mean that the known critical theory is unsettled.
+\textbf{Completion rate estimate: 80\%.}

@@ -1,0 +1,65 @@
+\section*{Erd\H{o}s Problem 861}
+
+\paragraph{Statement and result.}
+Let \(f(N)\) be the largest size of a Sidon subset of \([1,N]\), and \(A(N)\) the number of all such subsets. A set is Sidon when equal sums of two elements, with repetitions allowed, come only from the same unordered pair. Is \(A(N)/2^{f(N)}\to\infty\)? Is \(A(N)=2^{(1+o(1))f(N)}\)? The answers are yes and no. We reconstruct the explicit Saxton--Thomason counting construction and prove
+\[
+ \log_2 A(N)\geq(\gamma-o(1))\sqrt N,
+ \qquad \gamma=\tfrac12\log_2 5>1.16,
+ \qquad f(N)=(1+o(1))\sqrt N.
+\tag{1}
+\]
+
+\paragraph{A modular Sidon set.}
+Let \(p\) be an odd prime, choose a generator \(g\) of \(\mathbb F_p^\times\), and put \(q=p(p-1)\). For \(i=0,\ldots,p-2\), let \(s_i\in[1,q]\) be the unique integer with
+\[
+ s_i\equiv i\pmod{p-1},\qquad s_i\equiv g^i\pmod p.
+\]
+Existence and uniqueness follow from the Chinese remainder theorem. The resulting \(S\) has \(p-1\) elements and is Sidon modulo \(q\).
+
+To verify this, suppose \(s_i+s_j\equiv s_k+s_l\pmod q\). Reduction modulo \(p-1\) gives \(i+j\equiv k+l\), and hence \(g^ig^j=g^kg^l\). Reduction modulo \(p\) gives \(g^i+g^j=g^k+g^l\). Thus the two unordered pairs of field elements are the roots, with multiplicity, of the same quadratic polynomial. They agree, and injectivity of the powers \(g^i\) gives \(\{i,j\}=\{k,l\}\), as required. This also handles repeated summands.
+
+\paragraph{Five choices for every residue.}
+For each \(s\in S\), independently choose either to omit it or to include exactly one of
+\[
+ s,\quad s+q,\quad s+2q,\quad s+3q.
+\]
+Each choice gives a Sidon subset of \([1,4q]\). Indeed, an equality of two pair sums reduces modulo \(q\) to equality of the unordered residue pairs in \(S\). Since at most one lift of each residue was chosen, the original unordered integer pairs are then equal as well. Different choices give different subsets. Consequently
+\[
+ A(4p(p-1))\geq5^{p-1}.
+\tag{2}
+\]
+
+We use the prime number theorem in the explicit form that the largest prime at most \(x\) is \((1-o(1))x\). For any large \(N\), choose the largest odd prime with \(4p(p-1)\leq N\). Then \(p=(1/2-o(1))\sqrt N\). Embedding the sets from (2) into \([1,N]\) proves the counting bound in (1) for every sufficiently large order, not just for a subsequence.
+
+\paragraph{The maximum-size estimate.}
+The same modular construction, without the four lifts, gives a Sidon set of size \(p-1\) in \([1,p(p-1)]\). Choosing a prime \(p=(1-o(1))\sqrt N\) with \(p(p-1)\leq N\) proves \(f(N)\geq(1-o(1))\sqrt N\).
+
+For the reverse bound, let \(a_1<\cdots<a_s\) be Sidon in \([1,N]\), and take \(h=\lfloor N^{1/4}\rfloor\). If \(s\leq h\), the desired bound is immediate. Otherwise consider all positive differences
+\[
+ a_{i+j}-a_i\qquad(1\leq j\leq h,\ 1\leq i\leq s-j).
+\]
+They are distinct: equality of two positive differences would yield equal pair sums, and the Sidon property forces identical ordered difference pairs. There are \(K=hs-h(h+1)/2\) such differences, so their sum is at least \(K(K+1)/2\). For a fixed \(j\), telescoping bounds their sum by \(jN\). Therefore
+\[
+ K(K+1)\leq Nh(h+1),\qquad
+ s\leq\frac{h+1}{2}+\sqrt N\sqrt{1+1/h}
+ =\sqrt N+O(N^{1/4}).
+\tag{3}
+\]
+This proves the remaining part of (1).
+
+\paragraph{Both questions follow.}
+From (1),
+\[
+ \log_2\frac{A(N)}{2^{f(N)}}
+ \geq(\gamma-1-o(1))\sqrt N\longrightarrow\infty.
+\]
+Thus the first ratio tends to infinity. Also
+\[
+ \liminf_{N\to\infty}\frac{\log_2A(N)}{f(N)}\geq\gamma>1,
+\]
+which contradicts the second proposed asymptotic. Determining the optimal exponential constant is not required for these two answers.
+
+\paragraph{Attribution and assessment.}
+The five-choice counting argument is from D. Saxton and A. Thomason, \emph{Hypergraph containers}, the lower-bound construction for Sidon sets: \url{https://warwick.ac.uk/fac/cross_fac/dimap/events/pcc2012/downloads/containers.pdf}; published-paper record \url{https://arxiv.org/abs/1204.6595}. Its modular input is Ruzsa's construction, proved explicitly above. The size estimate is the classical Erd\H{o}s--Tur\'an difference argument. The prime number theorem and existence of a primitive root modulo a prime are the standard external inputs. See \url{https://www.erdosproblems.com/861}, checked 24 September 2026. No claim of the optimal counting constant, novelty, or local Lean verification is made.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem \#777: comparable pairs of subsets}
+\subsection*{The three questions}
+For \(\mathcal F\subseteq2^{[n]}\), let \(m=|\mathcal F|\) and \(e(\mathcal F)\) count unordered pairs of distinct comparable members. The questions ask:
+\begin{enumerate}
+\item Does \(m\leq(2-\varepsilon)2^{n/2}\) force \(e(\mathcal F)<2^n\) for large \(n\)?
+\item Does \(e(\mathcal F)\geq c m^2\) force \(m=O_c(2^{n/2})\)?
+\item For every \(\varepsilon>0\), is there a \(\delta>0\) such that \(e(\mathcal F)>m^{2-\delta}\) forces \(m<(2+\varepsilon)^{n/2}\)?
+\end{enumerate}
+The answers are yes, no, yes. We give a complete explicit counterexample to the second, and deductions for the first and third from precisely stated published inputs. Attempt status: solved relative to those inputs.
+
+\subsection*{First question: few triangles and a sharp coefficient}
+We use the following external lemma of Alon--Das--Glebov--Sudakov (Lemma 3.1, \(k=2\)): for every \(\gamma>0\) and all sufficiently large \(n\), the comparability graph of any family of size \(m\geq2^{n/2}\) has at most \(\gamma\binom m3\) triangles. We also use the triangle-removal lemma: a graph with \(o(m^3)\) triangles can be made triangle-free by deleting \(o(m^2)\) edges. The estimates are uniform over these families.
+
+A triangle-free graph on \(m\) vertices has at most \(m^2/4\) edges. Indeed, for each edge \(uv\), the disjointness of the two neighbourhoods gives \(d(u)+d(v)\leq m\). Summing over edges and using Cauchy--Schwarz gives \(4e^2/m\leq\sum_vd(v)^2\leq me\), hence the assertion.
+Therefore, uniformly when \(m\geq2^{n/2}\),
+\[
+e(\mathcal F)\leq\frac{m^2}{4}+o(m^2). \tag{1}
+\]
+If \(m<2^{n/2}\), the elementary estimate \(e< m^2/2<2^{n-1}\) already suffices. Otherwise, under \(m\leq(2-\varepsilon)2^{n/2}\), (1) gives
+\[
+e(\mathcal F)\leq\left(\frac{(2-\varepsilon)^2}{4}+o(1)\right)2^n<2^n.
+\]
+This argument handles both parities of \(n\); it does not assume the existence of two equal-dimensional integer cubes.
+
+\subsection*{Second question: an explicit thickened pair of cubes}
+Take \(n=2r\) and split the ground set into \(L,R\), each of size \(r\). Define
+\[
+\mathcal F_1=\{A\cup S:A\subseteq L,\ S\subseteq R,\ |S|\leq1\},\qquad
+\mathcal F_2=\{(L\setminus T)\cup B:T\subseteq L,\ |T|\leq1,\ B\subseteq R\}.
+\]
+Their intersection has \((r+1)^2\) elements, so for \(\mathcal F=\mathcal F_1\cup\mathcal F_2\),
+\[
+m=2(r+1)2^r-(r+1)^2,\qquad m/2^{n/2}\sim2r\longrightarrow\infty. \tag{2}
+\]
+
+For fixed \(T,S\), the containment \(A\cup S\subseteq(L\setminus T)\cup B\) holds precisely when \(A\cap T=\varnothing\) and \(S\subseteq B\). Thus the number of such ordered containment pairs, including equality, is
+\[
+\left(\sum_{|T|\leq1}2^{r-|T|}\right)
+\left(\sum_{|S|\leq1}2^{r-|S|}\right)
+=(1+r/2)^2\,4^r.
+\]
+Subtracting the \((r+1)^2\) equality cases, we obtain
+\[
+e(\mathcal F)\geq(1+r/2)^2\,4^r-(r+1)^2. \tag{3}
+\]
+Every strict containment here represents a distinct unordered edge, since its orientation from the smaller set to the larger is unique. From (2)--(3),
+\[
+\liminf_{r\to\infty}\frac{e(\mathcal F)}{m^2}\geq\frac1{16}.
+\]
+In particular \(e(\mathcal F)\geq m^2/32\) for all sufficiently large \(r\), contradicting the proposed \(O_c(2^{n/2})\) conclusion for a fixed \(c=1/32\).
+
+\subsection*{Third question: making the quantifiers explicit}
+The external Alon--Frankl estimate, quoted with its explicit \(k=1\) constants in the primary paper below, is
+\[
+m=2^{(1/2+\alpha)n},\quad \alpha>0
+\quad\Longrightarrow\quad
+e(\mathcal F)<4m^{\,2-\alpha^2/2}. \tag{4}
+\]
+It is enough to consider \(0<\varepsilon<2\); proving a smaller positive \(\varepsilon\) also implies the conclusion for a larger one. Set
+\[
+a=\tfrac12\log_2(2+\varepsilon)-\tfrac12>0,\qquad \delta=a^2/4.
+\]
+If \(m\geq(2+\varepsilon)^{n/2}\), then
+\(\alpha=\log_2(m)/n-1/2\geq a\). Equation (4) implies
+\[
+e(\mathcal F)<4m^{2-a^2/2}\leq m^{2-\delta}
+\]
+for sufficiently large \(n\), since \(m^{a^2/4}\to\infty\). The contrapositive is precisely the third assertion.
+
+\subsection*{Attribution and dependencies}
+The thickened-cube construction and estimate (4) are Alon--Frankl's. The source read here is N. Alon, S. Das, R. Glebov and B. Sudakov, \emph{Comparable pairs in families of sets}, Section 1.1, Lemma 3.1 and Section 2, \url{https://www.cs.tau.ac.il/~nogaa/PDFS/compairs4.pdf}. The triangle-sparseness lemma, triangle-removal lemma and (4) are explicitly external; the counting, graph bound and all three deductions are supplied above. Statement checked at \url{https://www.erdosproblems.com/777} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

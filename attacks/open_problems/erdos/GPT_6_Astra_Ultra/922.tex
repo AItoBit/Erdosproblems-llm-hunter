@@ -1,0 +1,90 @@
+\section*{Erd\H{o}s Problem \#922: a hereditary independence condition}
+\subsection*{Statement and scope}
+Let \(k\geq0\) be an integer. Suppose every induced subgraph \(H\) of a finite graph \(G\) satisfies
+\[
+ \alpha(H)\geq \frac{|V(H)|-k}{2}. \tag{1}
+\]
+Must \(\chi(G)\leq k+2\)?
+The known answer is yes, by Folkman. This attempt proves the sharpness, the case \(k=0\), a structural lemma used in the known proof, and precise restrictions on a minimal counterexample. It does not reconstruct the full final argument for arbitrary \(k\).
+
+\subsection*{Sharpness and the zero case}
+The complete graph \(K_{k+2}\) satisfies (1): every nonempty induced subgraph has \(h\leq k+2\) vertices and independence number \(1\), so \(1\geq(h-k)/2\). Its chromatic number is \(k+2\), so the claimed constant cannot improve.
+
+If \(k=0\), an odd cycle on \(2r+1\) vertices would induce a graph with independence number at most \(r\), even if there are extra chords. This contradicts (1). Thus \(G\) has no odd cycle and is bipartite, proving the assertion in this case.
+
+There is also a direct quantitative, albeit weaker, bound for general \(k\).
+Repeatedly remove a maximum independent set while more than \(k+1\) vertices remain. If the current order is \(h\), the next order is at most \(\lfloor(h+k)/2\rfloor\). Thus the excess over \(k\) is at least halved at each step. If \(n=|V(G)|>k+1\), after at most
+\(\lceil\log_2(n-k)\rceil\) steps there are at most \(k+1\) vertices left. Using one colour for each removed set and separate colours on the remainder proves
+\[
+ \chi(G)\leq k+1+\lceil\log_2(n-k)\rceil. \tag{2}
+\]
+The logarithmic term in (2) has not been eliminated by this greedy argument.
+
+\subsection*{A maximum-independent-set core lemma}
+We prove a useful lemma of Hajnal in the form employed by Bonamy and collaborators:
+if \(\alpha(F)>|V(F)|/2\), some vertex of \(F\) belongs to every maximum independent set.
+
+Induct on the number of edges. An isolated vertex belongs to every maximum independent set, so that case is immediate.
+If \(F\) is disconnected, a component has independence number greater than half its order; the result in that component implies the result in \(F\).
+We may therefore assume \(F\) is connected and has an edge.
+
+If an edge \(e\) satisfies \(\alpha(F-e)=\alpha(F)\), apply induction to \(F-e\); every maximum independent set of \(F\) is also maximum in \(F-e\).
+Otherwise every edge is independence-critical:
+\(\alpha(F-e)=\alpha(F)+1\).
+
+Choose a vertex \(x\) occurring in the largest number of maximum independent sets. It occurs in at least one. Set \(F'=F-N[x]\).
+Then
+\[
+ \alpha(F')=\alpha(F)-1,\qquad |V(F')|\leq |V(F)|-2,
+\]
+so \(\alpha(F')>|V(F')|/2\). Induction supplies a vertex \(y\) in all maximum independent sets of \(F'\).
+Every maximum independent set of \(F\) containing \(x\) consequently contains \(y\).
+By the maximal choice of the frequency of \(x\), the two families of maximum sets containing \(x\) and containing \(y\) are equal.
+
+Take a neighbour \(z\) of \(x\). Since \(xz\) is independence-critical, \(F-xz\) has an independent set \(J\) of size \(\alpha(F)+1\), necessarily containing both \(x,z\).
+Then \(I=J\setminus\{z\}\) is maximum in \(F\), and \(x\) is the only neighbour of \(z\) in \(I\).
+Replacing \(x\) by \(z\) gives another maximum independent set, containing \(y\) and omitting \(x\), a contradiction.
+This proves the lemma, including the critical-edge case.
+
+\subsection*{The potential and a restriction on counterexamples}
+For an induced subgraph \(H\), including the empty one, put
+\[
+ \rho(H)=|V(H)|-2\alpha(H)+2,\qquad
+ f(G)=\max_{H\text{ induced in }G}\rho(H).
+\]
+Condition (1) says \(f(G)\leq k+2\). The general assertion would follow from
+\[
+ \chi(G)\leq f(G). \tag{3}
+\]
+
+Suppose \(G\) is a counterexample to (3) of smallest order.
+Every proper induced subgraph satisfies (3).
+For a partition of \(V(G)\) into two nonempty parts \(X,Y\), choose induced witnesses \(H_X,H_Y\) attaining \(f(G[X]),f(G[Y])\).
+Any independent set in their union restricts to independent sets on each side; hence
+\[
+ \rho(G[V(H_X)\cup V(H_Y)])
+ \geq \rho(H_X)+\rho(H_Y)-2.
+\]
+It follows that
+\[
+ f(G)\geq f(G[X])+f(G[Y])-2,
+ \qquad
+ \chi(G)\geq\chi(G[X])+\chi(G[Y])-1. \tag{4}
+\]
+The second inequality uses integrality, \(\chi(G)>f(G)\), and minimality on the two sides.
+
+Also, \(G\) is connected and vertex-critical: for every vertex \(v\),
+\[
+ \chi(G-v)\leq f(G-v)\leq f(G)<\chi(G).
+\]
+Consequently \(\delta(G)\geq\chi(G)-1\), by extending a colouring across any vertex of smaller degree.
+These statements sharply limit a possible counterexample, but (4) alone does not exclude one.
+
+\subsection*{Attribution and remaining gap}
+The core lemma is reconstructed from the argument in Bonamy et al., \emph{A short proof of a theorem of Folkman}, Electronic Journal of Combinatorics 27(1) (2020), P1.56, Proposition 4. The potential and minimal-counterexample approach also come from that paper. No novelty is claimed.
+Sources: \url{https://www.erdosproblems.com/922};
+\url{https://perso.limos.fr/~vilimouz/papers/Folkman.pdf};
+\url{https://www.combinatorics.org/ojs/index.php/eljc/article/download/v27i1p56/pdf/}.
+The cited paper proves the complete theorem, but citing that conclusion is not the completion claimed here. This attempt still needs a rigorous structural argument ruling out the minimal counterexample, including the reductions and the final odd-cycle analysis. Attempt status: unresolved. The estimate reflects the proved case, auxiliary lemma, and reductions, rather than a fraction of a verified complete proof.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

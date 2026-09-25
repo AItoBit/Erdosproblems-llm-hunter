@@ -1,0 +1,68 @@
+\section*{Erd\H{o}s Problem 814}
+
+\paragraph{Statement and scope of the attempt.}
+The general proof remains unresolved in this write-up; the underlying problem is known to be solved.
+For fixed \(k\geq2\) and \(n\geq k-1\), suppose an \(n\)-vertex graph has at least
+\[
+ (k-1)(n-k+2)+\binom{k-2}{2}+1
+ =(k-1)n-\binom{k}{2}+2
+\tag{1}
+\]
+edges. Must it have an induced subgraph of minimum degree at least \(k\) on at most \((1-c_k)n\) vertices, for some \(c_k>0\)? The question is known to have an affirmative answer by Sauermann. This attempt proves the full case \(k=2\), a proper-subgraph conclusion for every \(k\), and a further case with bounded maximum degree. It does not reconstruct the general linear-saving argument.
+
+\paragraph{The peeling bound.}
+A graph is \((k-1)\)-degenerate if every nonempty subgraph has a vertex of degree at most \(k-1\). Repeatedly deleting such vertices gives, for \(N\geq k-1\),
+\[
+ e(H)\leq(k-1)(N-k+1)+\binom{k-1}{2}
+ =(k-1)N-\binom{k}{2}.
+\tag{2}
+\]
+Indeed, charge at most \(k-1\) edges to each of the first \(N-k+1\) deleted vertices, and at most \(\binom{k-1}{2}\) to the remaining vertices. Thus any graph exceeding (2) has a nonempty subgraph of minimum degree at least \(k\); taking the induced graph on the same vertices preserves that property.
+
+\paragraph{One vertex can always be saved.}
+Suppose a graph satisfying (1) has no proper induced subgraph of minimum degree at least \(k\). By (2), the whole graph must have minimum degree at least \(k\). Its minimum degree cannot exceed \(k\), because if every degree were at least \(k+1\), deleting any vertex would leave minimum degree at least \(k\).
+
+Choose a vertex \(v\) of degree exactly \(k\). By the assumption, \(G-v\) is \((k-1)\)-degenerate. Therefore
+\[
+ e(G)=e(G-v)+k
+ \leq(k-1)(n-1)-\binom{k}{2}+k
+ =(k-1)n-\binom{k}{2}+1,
+\]
+contradicting (1). Hence some such induced subgraph has at most \(n-1\) vertices. The value \(1/n\) obtained for the removed fraction is not a constant depending only on \(k\), so this does not settle the full problem.
+
+\paragraph{Why the extra edge is necessary.}
+Take a cycle of length \(\ell=n-k+2\geq3\), a clique on \(k-2\) vertices, and all edges between them. There are
+\[
+ (k-1)\ell+\binom{k-2}{2}
+ =(k-1)n-\binom{k}{2}+1
+\]
+edges, one fewer than in (1). Every cycle vertex has degree exactly \(k\). An induced subgraph of minimum degree at least \(k\) containing a cycle vertex must contain both of its cycle neighbours and all clique vertices. Repetition around the cycle forces the whole graph. A subgraph containing only clique vertices has minimum degree at most \(k-3\). Thus no proper subgraph works. For \(k=2\), this construction is simply a cycle.
+
+\paragraph{The complete case \(k=2\).}
+Now (1) says \(e(G)\geq n+1\). Some connected component has at least two more edges than a spanning tree. Keep a spanning tree and two additional edges, and then prune leaves. The resulting connected graph has minimum degree at least two and exactly two independent cycles. Suppressing degree-two vertices gives one of three possibilities: two cycles meeting at one vertex; two disjoint cycles joined by a path; or three internally disjoint paths with the same endpoints (a theta graph). To see that this list is exhaustive, the pruned graph satisfies
+\(\sum_v(d(v)-2)=2\), so it has either one degree-four vertex or two degree-three vertices; all other vertices have degree two.
+
+In either two-cycle case, the two cycle lengths sum to at most \(n+1\), so one has length at most \((n+1)/2\). In the theta case, let the three path lengths be \(a,b,c\). Their union has \(a+b+c-1\leq n\) vertices, and the shortest of its three cycles has length at most
+\[
+ \min(a+b,a+c,b+c)\leq\frac{2(a+b+c)}3
+ \leq\frac{2(n+1)}3.
+\]
+Thus in every case there is a cycle of length at most \(2(n+1)/3\). The edge assumption is impossible for \(n\leq3\). For \(n=4\), the integral cycle length is at most three; for \(n\geq5\), \(2(n+1)/3\leq4n/5\). The graph induced on the cycle vertices has minimum degree at least two, even if there are chords. We have proved the requested conclusion with
+\[
+ c_2=1/5.
+\]
+This uniform value is sharp when all admissible orders are included: \(K_{2,3}\) has five vertices and six edges, and its smallest subgraph of minimum degree two has four vertices.
+
+\paragraph{A bounded-degree case for general \(k\).}
+If, in addition, \(\delta(G)\geq k+1\) and \(\Delta(G)\leq D\), greedily choose a set \(S\) whose distinct vertices have distance at least three. A vertex has at most \(1+D+D(D-1)=D^2+1\) vertices within distance two, so we may ensure
+\(|S|\geq n/(D^2+1)\). Every vertex outside \(S\) has at most one neighbour in \(S\). Consequently
+\[
+ \delta(G-S)\geq k,
+ \qquad |V(G-S)|\leq\left(1-\frac1{D^2+1}\right)n.
+\]
+In particular this supplies a constant removed fraction whenever \(D\) is bounded in terms of \(k\). The general hypothesis allows many degree-\(k\) vertices and arbitrarily large maximum degree, so this argument has a genuine limitation.
+
+\paragraph{Attribution, remaining gap, and assessment.}
+The extremal wheel and the peeling argument are classical parts of the Erd\H{o}s--Faudree--Rousseau--Schelp problem. L. Sauermann proved the full theorem with \(c_k=\Omega(k^{-3})\): \emph{A proof of a conjecture of Erd\H{o}s, Faudree, Rousseau and Schelp on subgraphs of minimum degree \(k\)}, \url{https://arxiv.org/abs/1705.09979}. Her colouring and deletion argument is not supplied here. The missing step is a deletion of \(c_kn\) vertices under (1) alone for general \(k\geq3\), without the additional degree assumptions. See \url{https://www.erdosproblems.com/814}, checked 24 September 2026. This is partial proof reconstruction of a solved problem, not a claim of a new solution; no local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 65\%.}

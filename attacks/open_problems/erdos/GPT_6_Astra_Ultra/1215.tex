@@ -1,0 +1,83 @@
+\section*{Erd\H{o}s Problem 1215: unit-circle zeros can force arbitrarily long paths}
+\subsection*{Statement and endpoint convention}
+For polynomials $P$ with $P(0)=1$ and all zeros on $|z|=1$, can a universal constant bound the length of a path from $0$ to the unit circle along which $|P|<1$? As usual, the initial endpoint is excepted from the strict inequality, since $|P(0)|=1$. We disprove the intended assertion, even with the weaker requirement $|P|\le1$. The known negative answer is due to Mac Lane. We reconstruct the approximation and labyrinth argument explicitly.
+
+\subsection*{Approximating exponentials by polynomials with unit-circle zeros}
+We first prove a useful approximation fact. For every polynomial
+$h(z)=\sum_{m=1}^M c_mz^m$ with $h(0)=0$, there are polynomials $P_d$, of arbitrarily large integer degrees $d$, with $P_d(0)=1$, all zeros on the unit circle, and
+\[
+ P_d(z)\longrightarrow e^{h(z)}
+ \quad\text{uniformly on every closed disk }|z|\le r<1.
+ \tag{1}
+\]
+Define a positive density on $[0,2\pi]$ by
+\[
+ w_d(t)=\frac1{2\pi}\left(d-2\operatorname{Re}
+                       \sum_{m=1}^M mc_me^{imt}\right),
+\]
+taking $d>2\sum m|c_m|+1$. Its total mass is $d$. Put
+$W_d(t)=\int_0^t w_d(v)\,dv$, and choose
+\[
+ t_j=W_d^{-1}(j-\tfrac12)\quad(1\le j\le d),\qquad
+ P_d(z)=\prod_{j=1}^d(1-ze^{-it_j}).
+\]
+All the required root and normalization conditions hold.
+
+For $|z|\le r<1$, use the analytic logarithm
+\[
+ G_z(t)=\log(1-ze^{-it})=-\sum_{m\ge1}\frac{z^me^{-imt}}m.
+\]
+Its first two derivatives in $t$ are uniformly bounded in $z$. Orthogonality of the exponentials gives exactly
+\[
+ \int_0^{2\pi}G_z(t)w_d(t)\,dt=h(z).
+ \tag{2}
+\]
+Indeed, the constant part of $w_d$ integrates to zero, its $m$th Fourier moment is $-mc_m$ for $m\le M$, and all higher moments vanish.
+
+Let $\tau_d=W_d^{-1}$ on $[0,d]$. Since $w_d\asymp d$ and $w_d'=O_h(1)$,
+\[
+ \tau_d'=O_h(d^{-1}),\qquad \tau_d''=O_h(d^{-3}).
+\]
+Thus $(G_z\circ\tau_d)''=O_{h,r}(d^{-2})$. The midpoint-rule error on each unit interval is $O_{h,r}(d^{-2})$; summing $d$ intervals and using (2) yields
+\[
+ \sum_{j=1}^dG_z(t_j)=h(z)+O_{h,r}(d^{-1}).
+\]
+Exponentiation proves (1). This supplies the required approximation with roots constrained to the circle, rather than invoking unconstrained polynomial approximation for $P$.
+
+\subsection*{A forbidden spiral}
+Fix $0<a<b<1$ and a positive integer $k$. The simple compact arc
+\[
+ \Gamma_k=\left\{t\exp\left(2\pi i k\frac{t-a}{b-a}\right):
+                      a\le t\le b\right\}
+\]
+winds $k$ times between the two circles. Its complement, and the complement of $\Gamma_k\cup\{0\}$, are connected.
+The Runge polynomial approximation theorem applies to the function equal to $0$ near the isolated point $0$ and equal to $3$ near $\Gamma_k$. Approximate it closely by a polynomial $g$, and put $h=g-g(0)$. Then $h(0)=0$ and, for example,
+$\operatorname{Re}h>2$ on $\Gamma_k$.
+By (1), for sufficiently large $d$ the associated polynomial satisfies
+\[
+ |P_d(z)|>2\qquad(z\in\Gamma_k).
+ \tag{3}
+\]
+The use of Runge here concerns the unrestricted auxiliary polynomial $h$; the preceding lemma supplies the separate circle-root restriction on $P_d$.
+
+\subsection*{Every admissible path has large length}
+Let a continuous path start at $0$ and reach $|z|=1$, with $|P_d|\le1$ throughout. By (3) it avoids $\Gamma_k$. Take its first time reaching radius $b$, and its last preceding time at radius $a$. The intervening segment lies in the closed annulus $a\le|z|\le b$. Write it in polar coordinates with a continuous lifted argument $\theta$.
+
+On that segment the continuous real function
+\[
+ \theta-2\pi k\frac{|z|-a}{b-a}
+\]
+never belongs to $2\pi\mathbb Z$, because membership would put the path on $\Gamma_k$. It consequently stays within one interval between consecutive multiples of $2\pi$. Its change has magnitude less than $2\pi$, whereas the second term changes by $2\pi k$. Therefore the net change in $\theta$ is greater than $2\pi(k-1)$.
+If the path is rectifiable, its length is at least
+\[
+ a\,\operatorname{Var}(\theta)\ge2\pi a(k-1).
+\]
+This follows either from arc-length parametrization and $|d\theta|\le|dz|/a$, or by polygonal approximation in the annulus. A nonrectifiable path already has infinite length.
+
+Since $k$ is arbitrary, no universal length bound exists. One may also choose $b$ arbitrarily small before choosing $k$: arbitrarily large length can be forced inside any prescribed neighborhood of the origin.
+
+\subsection*{Assessment and sources}
+The unit-circle-root approximation lemma and the winding-length obstruction are proved; the sole approximation theorem imported is Runge's standard polynomial theorem. The argument addresses the nontrivial endpoint convention, not just the formal exclusion of $0$ from a strict sublevel set. Cohen's known existence of some admissible path is compatible with the absence of a uniform length bound.
+Sources: \url{https://www.erdosproblems.com/1215}; G. R. Mac Lane, \emph{On a conjecture of Erd\H{o}s, Herzog, and Piranian}, Michigan Math. J. 2 (1953/54), 147--148, \url{https://doi.org/10.1307/mmj/1028989918}; P. Erd\H{o}s, F. Herzog and G. Piranian, \emph{Polynomials whose zeros lie on the unit circle}, Duke Math. J. 22 (1955), 347--351. The negative result is known; no novelty or formal-verification claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

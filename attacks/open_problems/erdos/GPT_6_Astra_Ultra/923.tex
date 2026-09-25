@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem \#923: triangle-free subgraphs of high chromatic number}
+\subsection*{Statement and result}
+For every positive integer \(k\), does there exist \(f(k)\) such that \(\chi(G)\geq f(k)\) forces a triangle-free subgraph with chromatic number at least \(k\)?
+Yes. We reconstruct R\"odl's argument and supply the auxiliary triangle-free construction explicitly. All subgraphs here may omit edges; the assertion does not require an induced subgraph.
+
+\subsection*{A product bound for edge partitions}
+If \(E(G)=E_1\sqcup\cdots\sqcup E_q\) and \(G_i=(V(G),E_i)\), then
+\[
+\chi(G)\leq\prod_{i=1}^q\chi(G_i). \tag{1}
+\]
+Indeed, give each vertex the tuple of its colours in proper colourings of the \(G_i\). Every edge belongs to one \(E_i\), so its endpoints differ in that coordinate.
+
+\subsection*{Clique or triangle-free subgraph}
+Fix \(k\geq3\), and define
+\[
+T_2=2,\qquad T_m=(k-1)^{T_{m-1}-1}+1\quad(m\geq3).
+\]
+We prove by induction on \(m\) that \(\chi(G)\geq T_m\) implies either \(K_m\subseteq G\), or a triangle-free subgraph of chromatic number at least \(k\). For \(m=2\), a graph of chromatic number at least two has an edge.
+
+Suppose the assertion holds for \(m-1\), and \(G\) contains no \(K_m\). Order its vertices. For each \(v\), let \(L_v\) be the graph induced by its neighbours preceding \(v\). This graph contains no \(K_{m-1}\). If \(\chi(L_v)\geq T_{m-1}\) for some \(v\), the induction hypothesis gives the required triangle-free subgraph inside \(L_v\).
+
+Otherwise put \(q=T_{m-1}-1\), and choose a proper \(q\)-colouring \(c_v\) of each \(L_v\), allowing unused colours. Assign the edge \(uv\), where \(u<v\), to class \(c_v(u)\).
+Each edge-class graph is triangle-free: in a triangle \(u<w<v\), its two edges at the largest vertex \(v\) have different labels, since \(u,w\) are adjacent in \(L_v\).
+If all \(q\) classes had chromatic number at most \(k-1\), (1) would give
+\(\chi(G)\leq(k-1)^q=T_m-1\), a contradiction. This completes the induction.
+
+\subsection*{An explicit triangle-free graph with chromatic number \(k\)}
+Starting from \(M_2=K_2\), apply the Mycielski construction. For a graph \(H\) on vertices \(v_1,\ldots,v_s\), introduce shadows \(u_1,\ldots,u_s\) and one vertex \(w\). Retain the edges of \(H\); join \(u_i\) to \(v_j\) whenever \(v_iv_j\in E(H)\); join \(w\) to every shadow, and add no other edges.
+
+If \(H\) is triangle-free, so is the new graph. A triangle through \(w\) would require an edge between shadows. A triangle with exactly one shadow projects to a triangle of \(H\), and a triangle with two shadows is impossible.
+
+If \(\chi(H)=h\), copying the original colours to the shadows and using a new colour on \(w\) gives \(h+1\) colours. To show \(h\) colours impossible, suppose such a colouring exists, with \(w\) assigned colour \(h\). Every shadow then avoids colour \(h\). Recolour each original vertex \(v_i\) of colour \(h\) with the colour of \(u_i\). The recoloured vertices form an independent set before recolouring, and the edges \(u_iv_j\) ensure that no new conflict occurs with an unchanged neighbour \(v_j\). This would colour \(H\) with \(h-1\) colours, a contradiction.
+
+Consequently \(M_k\) is triangle-free, has chromatic number \(k\), and has
+\[
+s_k=3\cdot2^{k-2}-1
+\]
+vertices, by the recurrence \(s_{h+1}=2s_h+1\).
+
+\subsection*{Completion of the proof}
+Take \(f(k)=T_{s_k}\). A graph of chromatic number at least \(f(k)\) either already contains the desired triangle-free subgraph, or contains \(K_{s_k}\). In the latter case retain inside that clique precisely the edges of \(M_k\). This is the required subgraph. The cases \(k=1,2\) use \(f(1)=1,f(2)=2\). If chromatic number exactly \(k\) is desired, delete vertices until a minimal subgraph with chromatic number at least \(k\) remains; deleting one vertex reduces chromatic number by at most one.
+
+\subsection*{Attribution and scope}
+This is a complete reconstruction of V. R\"odl, \emph{On the chromatic number of subgraphs of a given graph}, Proceedings of the AMS 64 (1977), 370--371, \url{https://doi.org/10.1090/S0002-9939-1977-0469806-4}, with the Mycielski input also proved. The full original text was read in a reprint when the publisher PDF was unavailable. Statement checked at \url{https://www.erdosproblems.com/923} on 24 September 2026. No optimal bound on \(f\), novelty, or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

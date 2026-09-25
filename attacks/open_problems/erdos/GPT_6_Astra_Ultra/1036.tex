@@ -1,0 +1,91 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1036: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and source}
+Yes. For each fixed $c>0$ there is $\beta(c)>0$ such that every sufficiently large $n$-vertex graph with no clique or independent set larger than $c\log n$ has at least $2^{\beta(c)n}$ pairwise nonisomorphic induced subgraphs. We reconstruct Shelah's proof from \emph{Erd\H{o}s and R\'enyi conjecture}, \url{https://arxiv.org/abs/math/9707226}, with the separation and counting steps expanded. The proof below uses only elementary Ramsey bounds and probability; it does not import the desired exponential theorem.
+
+Use base-two logarithms. Increase the given constant slightly, and choose
+\[
+ L=\lceil C\log n\rceil
+\]
+so that the hypothesis forbids homogeneous $L$-sets. Here and below ``homogeneous'' means complete or independent. Choose a fixed integer $k\ge2$ sufficiently large that
+\[
+ \frac Ck\log\bigl(e(k+2)\bigr)<\frac13.
+\]
+For all sufficiently large $n$, the elementary Ramsey bound gives
+\[
+ R(L,\lceil L/k\rceil)\le n^{1/2}.\tag{1}
+\]
+Indeed $R(s,t)\le\binom{s+t-2}{t-1}$ follows by induction using a vertex and its neighbours and non-neighbours. With $t=\lceil L/k\rceil$, the binomial bound $\binom ab\le(ea/b)^b$ bounds its base-two logarithm by $(L/k+1)\log(e(k+2))$, which is less than $(\log n)/2$ eventually. The same estimate holds with the two arguments exchanged. Set
+\[
+ m=R(k,k),\qquad \alpha=\beta=\frac1{8m}.
+\]
+Suppose, towards a contradiction, that the number $I(G)$ of induced isomorphism types is less than $2^{\beta n}$.
+
+\section*{A small set detects large differences of neighbourhoods}
+Choose a random set $A$ by selecting each vertex independently with probability $p=\alpha/(2\log n)$. With probability at least $1/2$,
+\[
+ |A|\le\alpha n/\log n.\tag{2}
+\]
+This is Markov's inequality. Write $N(x)$ for the full neighbourhood of $x$, and put
+\[
+ D=\frac8\alpha(\log n)^2.
+\]
+For a pair $x,y$ with $|N(x)\mathbin\triangle N(y)|>D$, the probability that $A$ misses this symmetric difference is at most
+\[
+ (1-p)^D\le e^{-pD}=e^{-4\log_2n}\le n^{-4}.
+\]
+A union bound over fewer than $n^2$ pairs makes the probability of any failure less than $n^{-2}$. Thus we can fix $A$ satisfying (2) and such that
+\[
+ N(x)\cap A=N(y)\cap A
+ \quad\Longrightarrow\quad
+ |N(x)\mathbin\triangle N(y)|\le D.\tag{3}
+\]
+Partition $V(G)\setminus A$ into $\ell$ classes by these neighbourhood patterns into $A$.
+
+\section*{Too many patterns would already give exponentially many types}
+Choose one fixed representative from each class. For each subset of the representatives, take its induced graph together with all of $A$, and mark the vertices of $A$ by distinct fixed names. Two different representative subsets give different marked isomorphism types: an isomorphism fixing the marked vertices must preserve the adjacency pattern into $A$, and those patterns distinguish the representatives. Thus there are $2^\ell$ such marked types.
+
+Each unmarked induced isomorphism type has at most $n^{|A|}$ ways to place these distinct marks. Consequently
+\[
+ 2^\ell\le I(G)n^{|A|}<2^{(\beta+\alpha)n},
+ \qquad \ell<\frac n{4m}.\tag{4}
+\]
+This is a count of marked isomorphism types, rather than labelled vertex subsets; the distinction is needed for (4).
+
+\section*{Pack homogeneous blocks and remove conflicts}
+Within each class greedily choose disjoint homogeneous sets $B_i$ of size $k$ until fewer than $m$ vertices remain. The definition of $m$ permits another choice whenever at least $m$ vertices remain. The unused vertices outside $A$ number less than $m\ell<n/4$. Also $|A|<n/4$ eventually. Thus the number $b$ of chosen blocks satisfies
+\[
+ b\ge n/(2k).\tag{5}
+\]
+Select a base vertex $x_i\in B_i$. Make a directed conflict $i\to j$, for distinct blocks, when $B_j$ meets $N(x_i)\triangle N(x)$ for some $x\in B_i$. By (3), the union of these differences has at most $(k-1)D$ vertices. Disjointness of the blocks therefore bounds each outdegree by $(k-1)D$.
+
+The underlying undirected conflict graph has average degree at most $2(k-1)D$, so it has an independent set of at least
+\[
+ \frac{b}{2(k-1)D+1}
+\tag{6}
+\]
+vertices. For completeness, uniformly order a graph's vertices and keep a vertex when it precedes all its neighbours. The kept set is independent and its expected size is $\sum_v1/(d(v)+1)$, at least the order divided by one plus the average degree, by Cauchy--Schwarz. This proves (6).
+
+Retain at least half of the blocks in (6) so that they are all cliques, or all independent sets. The number $q$ retained satisfies
+\[
+ q\ge\frac{n}{4k(2(k-1)D+1)}\gg_c\frac n{(\log n)^2}>\sqrt n
+\tag{7}
+\]
+eventually. Between any two retained blocks $B_i,B_j$, adjacency is constant: lack of $i\to j$ makes every $x\in B_i$ have the same adjacency to a fixed $y\in B_j$ as $x_i$ does; lack of $j\to i$ makes that last adjacency equal to the adjacency between $x_i,x_j$.
+
+\section*{The final asymmetric Ramsey contradiction}
+Apply (1) to the $q$ base vertices. If the retained blocks are cliques, either the bases contain an independent $L$-set, or they contain a clique of size $\lceil L/k\rceil$. In the second case replace each base by its entire block. Constant complete adjacency between blocks gives a clique of size at least $k\lceil L/k\rceil\ge L$. If the blocks are independent sets, exchange the words clique and independent and use the symmetric version of (1). Each case contradicts the hypothesis. Hence the assumption $I(G)<2^{\beta n}$ was impossible, proving the claimed exponential lower bound.
+
+\section*{Assessment}
+All counting and selection arguments are supplied, including the conversion from neighbourhood patterns to unlabelled types and the removal of asymmetric conflicts. The constants depend only on the initial homogeneous-set bound, and the proof applies for all sufficiently large $n$. This is an expanded reconstruction of Shelah's known solution.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

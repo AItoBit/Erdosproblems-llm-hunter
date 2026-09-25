@@ -1,0 +1,37 @@
+\section*{Erd\H{o}s Problem 196: finite avoidance and the missing enumeration condition}
+
+\subsection*{1. Statement and scope}
+Must every permutation $\pi:\mathbb N\to\mathbb N$ contain a monotone four-term arithmetic progression as a subsequence? This remains unresolved. We prove the unavoidable three-term result, construct arbitrarily large finite three-term avoiders, and give a correct compactness criterion that includes the necessary bound on each entry's position. This repairs a genuine gap in the earlier draft's infinite-extension argument.
+
+\subsection*{2. A triple is forced in every infinite enumeration}
+Let $x=\pi(1)$ and take the first later entry $y>x$. The number $2y-x$ is larger than $y$, so it was not among the entries preceding $y$, all of which are at most $x$. It occurs later because the enumeration contains every positive integer. Hence $x,y,2y-x$ form an increasing three-term progression in subsequence order. This is the elementary Davis--Entringer--Graham--Simmons argument.
+
+For context, the established five-term avoiding construction is an explicit external input here: Adenwalla's Theorem 1 gives an enumeration of $\mathbb Z$ with no monotone five-term progression. Its positive subsequence is an enumeration of $\mathbb N$ with the same avoidance property. The subsequence is indexed in increasing original indices, which is legitimate because the original enumeration is indexed by $\mathbb N$. Thus three is unavoidable and five is avoidable; that does not decide four.
+
+\subsection*{3. Every finite set has a three-term avoiding order}
+For a finite integer set, place its even elements first and its odd elements second, recursively ordering each class after dividing by two (and subtracting one before dividing for odd elements). Singleton classes terminate the recursion; more generally translate a class by its minimum before splitting if necessary, so each nontrivial recursion reduces its integer diameter.
+
+To verify avoidance, take a proposed three-term progression $a,a+d,a+2d$. If $d$ is odd, its endpoints have the same parity and its middle term has the opposite parity. The middle therefore cannot occur between the endpoints in the concatenated order. If $d$ is even, all three are in one parity class, and division by two produces a smaller instance. Repeating eventually reaches the odd-difference case, since $d\ne0$. This proves the assertion.
+
+In particular every $[1,n]$ has an order avoiding monotone triples and hence avoiding quadruples. There cannot be a finite $n$ for which every permutation of $[1,n]$ forces a monotone quadruple. Any proof of the infinite four-term assertion must use more than such a finite obstruction.
+
+\subsection*{4. What an infinite branch actually gives}
+Consider the tree of finite avoiding orders on $[1,n]$, joined by restriction. It is finitely branching. A branch gives a coherent total order on $\mathbb N$: for each pair, its relative order eventually stays fixed. It does not automatically give an enumeration of order type $\omega$.
+
+For example, the compatible orders $(n,n-1,\ldots,1)$ give the reverse order, which has no first element and cannot be listed in increasing order by natural-number positions. This example illustrates the missing order-type condition, rather than being an avoiding order. In the present avoidance problem the tree has nodes at every depth by Section 3, so a branch does exist, even for triples; Section 2 proves that it cannot be an enumeration of $\mathbb N$. Thus the missing condition is substantive, not merely a technical choice of indexing.
+
+\subsection*{5. A correct criterion with prescribed finite position bounds}
+Fix a forbidden length $k\ge3$. An avoiding enumeration of $\mathbb N$ exists if and only if there is a function $b:\mathbb N\to\mathbb N$ such that, for every $n$, there is a $k$-avoiding order $\sigma_n$ of $[1,n]$ in which every $a\le n$ has rank at most $b(a)$.
+
+The forward direction follows by taking finite restrictions of an actual enumeration and choosing $b(a)$ to be the original position of $a$; restriction can only decrease a rank.
+
+Conversely consider all finite avoiding orders satisfying these bounds. The family is closed under restriction, since avoidance is hereditary and ranks cannot increase when entries are removed. It is a finitely branching tree with a node at every depth. Choose an infinite branch, by repeatedly taking a child with descendants at arbitrarily large depths. It gives a total order in which each $a$ has at most $b(a)-1$ predecessors: any larger finite collection of predecessors would already violate the bound at a sufficiently large finite level.
+
+A countable infinite total order in which every element has finitely many predecessors has order type $\omega$. Indeed, below any chosen element there is a finite nonempty initial set containing a least element. Remove that least element and repeat; each given element must be reached after its finitely many predecessors. This lists all the integers in the induced order. Any forbidden progression in the resulting enumeration would already occur in one finite restriction, a contradiction. This proves the criterion.
+
+The unknown issue for $k=4$ is the existence of such a single position-bound function, not the existence of separate finite avoiders of every size. Without position bounds, the compactness argument loses exactly the condition needed for a permutation.
+
+Sources: \url{https://www.erdosproblems.com/196}; Davis--Entringer--Graham--Simmons, Facts 1 and 3, \url{https://doi.org/10.4064/aa-34-1-81-90}; Adenwalla, Theorem 1, \url{https://arxiv.org/abs/2211.04451}, for the declared five-term upper example. No novel resolution is claimed.
+
+\textbf{Completion rate estimate: 30\%.}
+

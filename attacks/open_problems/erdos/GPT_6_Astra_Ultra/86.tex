@@ -1,0 +1,54 @@
+\section*{Erd\H{o}s Problem 86: square-free subgraphs of the hypercube}
+
+\subsection*{1. Statement and scope}
+Write $F(n)$ for the largest number of edges in a $C_4$-free subgraph of the hypercube $Q_n$, and $\rho_n=F(n)/(n2^{n-1})$. The conjecture is $\rho_n\to1/2$. We prove that the limit exists, that it lies between $1/2$ and $1/\sqrt2$, and construct an explicit positive correction of order $1/n$ above one half. These elementary estimates do not reach the sharper published upper bound, and the conjecture remains unresolved.
+
+\subsection*{2. Faces and a monotone density sequence}
+A four-cycle in a cube flips each coordinate an even number of times. Simplicity excludes using only one coordinate, so exactly two coordinates are flipped twice. Thus every four-cycle is a square face. There are $\binom n2 2^{n-2}$ such faces and each edge lies in $n-1$ of them. Since a square-free subgraph has at most three selected edges on each face,
+\[
+ \rho_n\le3/4\qquad(n\ge2).\tag{1}
+\]
+More generally, fix $2\le m\le n$ and restrict to each $m$-dimensional face. Every restriction has at most $F(m)$ edges. There are $\binom nm2^{n-m}$ faces, and each cube edge belongs to $\binom{n-1}{m-1}$ of them. Consequently
+\[
+ F(n)\binom{n-1}{m-1}\le F(m)\binom nm2^{n-m},
+ \qquad\rho_n\le\rho_m.\tag{2}
+\]
+The normalized extremal densities therefore form a nonincreasing nonnegative sequence and have a limit. This fact alone does not identify the limit.
+
+\subsection*{3. A two-step-walk upper bound}
+In a square-free cube subgraph $H$, every two distinct vertices have at most one common neighbor. A two-step path in a cube joins vertices at Hamming distance two. There are $2^{n-1}\binom n2$ unordered pairs at that distance, so
+\[
+ \sum_{v\in Q_n}\binom{\deg_H(v)}2\le2^{n-1}\binom n2.
+\]
+Include all $2^n$ cube vertices, even if isolated. If $\bar d=2e(H)/2^n$, Cauchy--Schwarz on their degrees gives
+\[
+ \bar d(\bar d-1)\le\binom n2,
+ \qquad
+ \rho_n\le\frac{1+\sqrt{1+2n(n-1)}}{2n}
+ =\frac1{\sqrt2}+O(1/n).\tag{3}
+\]
+Together with (1), this improves the elementary asymptotic constant from $3/4$ to $1/\sqrt2$; it is not claimed to improve the published bounds.
+
+\subsection*{4. Half the edges, plus a matching}
+For $n\ge2$, retain all cube edges whose endpoint of larger Hamming weight has odd weight. Every square has weights $r,r+1,r+1,r+2$ and retains exactly two adjacent edges, so this graph $H_0$ has no square. Also
+\[
+ e(H_0)=\sum_{j\ \mathrm{odd}}j\binom nj=n2^{n-2},
+\]
+by $j\binom nj=n\binom{n-1}{j-1}$ and the equal even/odd binomial sums for $n-1\ge1$.
+
+The omitted-edge graph also has $n2^{n-2}$ edges and maximum degree at most $n$. Greedily choose an edge and remove all edges meeting either endpoint. Each choice removes at most $2n-1$ edges, so it produces a matching $M$ with
+\[
+ |M|\ge\frac{n2^{n-2}}{2n-1}.
+\]
+Add $M$ to $H_0$. In each face the two previously omitted edges are adjacent; a matching cannot contain both. Thus no square is completed. We have proved
+\[
+ \rho_n\ge\frac12+\frac1{2(2n-1)}\qquad(n\ge2).\tag{4}
+\]
+Rounding the matching size up only strengthens this bound. For $n=1$, the separate exact value is $F(1)=1$; the half-layer binomial identity is not valid at that exceptional dimension.
+
+\subsection*{5. Assessment and attribution}
+Equations (2)--(4) establish existence of a limiting density in $[1/2,1/\sqrt2]$ and a uniform finite-dimensional improvement over the basic half-layer construction. What remains is to force the limit down to $1/2$. Counting pairs of cube neighbors still loses information about overlapping faces. These are elementary reconstructions extending the earlier GPT-5.2 partial arguments; the better bounds recorded on the problem page are context, not reproduced theorems.
+Source: \url{https://www.erdosproblems.com/86}.
+
+\textbf{Completion rate estimate: 30\%.}
+

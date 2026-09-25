@@ -20,7 +20,7 @@ Most current attempts are by GPT Pro 5.2.
 
 ### For Erdos Problem Attempts
 
-1. **File Location**: Place your TeX file in `attacks/erdos/<MODEL_NAME>/`.
+1. **File Location**: Place your TeX file in `attacks/open_problems/erdos/<MODEL_NAME>/`.
 2. **File Naming**: Use the problem number as the filename (e.g., `x.tex`). If it already exists, use `x_v2.tex`.
 3. **Recommended Content Format**: If possible, follow the structure used in existing attempts:
    - Formal statement

@@ -1,0 +1,42 @@
+\section*{Erd\H{o}s Problem 1141: a small composite witness coprime to \(n\)}
+
+\paragraph{Statement and scope.}
+For every fixed positive integer \(a\), only finitely many positive integers \(n\) have \(n-ak^2\) prime for every positive integer \(k\) satisfying \((k,n)=1\) and \(ak^2<n\). Taking \(a=1\) answers problem 1141 negatively.
+This reconstructs the known Pollack-based resolution attributed to an internal OpenAI model in \url{https://arxiv.org/abs/2604.06609}; see \url{https://www.erdosproblems.com/1141}. It does not determine the largest admissible \(n\).
+
+\paragraph{Producing a small prime obstruction.}
+We use Pollack's Theorem 1.3 from \emph{Bounds for the first several prime character nonresidues}, \url{https://arxiv.org/abs/1508.05035}: for fixed \(\varepsilon,A>0\), every quadratic Dirichlet character modulo sufficiently large \(M\) has at least \((\log M)^A\) primes \(p\leq M^{1/4+\varepsilon}\) with value \(1\). Only the nonprincipal case is needed.
+If \(an\) is not a square, use the nonprincipal Kronecker character
+\[
+ \chi(t)=(4an/t),\qquad M=4an,\qquad \varepsilon=1/16.
+\]
+It yields an odd prime \(p\nmid an\) with \(p=O_a(n^{5/16})\) and \((an/p)=1\). Therefore \(ak^2\equiv n\pmod p\) has a nonzero root \(r\) modulo \(p\): multiplying this congruence by \(a\) reduces it to the residue class \(an\).
+
+If \(an\) is a square, choose instead an odd prime \(p\nmid an\) among the first \(\omega(an)+1\) odd primes. Bertrand's postulate gives \(p\leq2^{O(\omega(an))}=n^{o(1)}\), and again the congruence has a nonzero root. The estimate \(\omega(n)=o(\log n)\) follows from \(n\geq(\omega(n)+1)!\).
+
+\paragraph{Making the root coprime to \(n\).}
+Choose \(1\leq r<p\) representing the root, and let \(s=\omega(n)\). Put \(T=2^{2s+1}\).
+For every squarefree divisor \(d\) of \(n\), the condition
+\(d\mid r+pt\) specifies one residue class of \(t\) modulo \(d\), since \(p\nmid n\).
+Inclusion--exclusion therefore counts
+\[
+ \#\{0\leq t<T:(r+pt,n)=1\}
+ =T\frac{\varphi(n)}n+E,\qquad |E|\leq2^s.
+\]
+Because \(\varphi(n)/n=\prod_{q\mid n}(1-1/q)\geq2^{-s}\), this count is at least \(2^s>0\). Select a valid \(t\), and set \(k=r+pt\).
+Then
+\[
+ (k,n)=1,\qquad 1\leq k<pT,\qquad ak^2\equiv n\pmod p.
+\]
+Moreover \(T=n^{o(1)}\), so in the nonprincipal case
+\[
+ ak^2\leq a p^2T^2=O_a(n^{5/8+o(1)})=o(n);
+\]
+the bound is even smaller in the principal case.
+For all sufficiently large \(n\), it follows that \(ak^2<n\) and \(n-ak^2>p\). Thus \(n-ak^2\) is a positive multiple of \(p\) greater than \(p\), and is composite.
+
+This supplies an admissible counterexample \(k\) for every sufficiently large \(n\), rather than merely for a density-one subsequence. Constants and the final threshold may depend on the fixed \(a\), which is precisely the required quantifier order.
+
+\paragraph{Completion estimate.}
+The general finiteness theorem is proved relative to Pollack's explicitly stated established input, with the coprimality adjustment proved here.
+\textbf{COMPLETION: 100\%}

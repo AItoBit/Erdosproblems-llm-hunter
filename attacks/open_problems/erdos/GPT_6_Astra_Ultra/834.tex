@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem 834: two notions of criticality}
+\subsection*{1. The two precise questions}
+The phrase ``3-critical 3-uniform hypergraph'' has two relevant meanings. Under transversal criticality, $\tau(H)=3$ and $\tau(H-e)=2$ for every edge; under chromatic criticality, $\chi(H)=3$ and deleting any edge or vertex permits a proper two-colouring. The minimum-degree requirement is $\delta(H)\ge7$. Li's resolution gives a negative answer to the first interpretation and a positive answer to the second. Both are reconstructed below; no hypergraph theorem is imported without proof.
+\subsection*{2. Transversal criticality forces degree at most six}
+For every edge $e$, choose a two-element transversal $T_e$ of $H-e$. It is disjoint from $e$, since otherwise it would meet all edges and contradict $\tau(H)=3$. For distinct edges $e,f$ we have $e\cap T_f\ne\varnothing$.
+Randomly order the union of all vertices. The event that all three members of $e$ precede both members of $T_e$ has probability $1/\binom53=1/10$. Events corresponding to distinct $e,f$ are disjoint: choose $x\in e\cap T_f$ and $y\in f\cap T_e$. The event for $e$ requires $x$ before $y$, while that for $f$ requires $y$ before $x$. Summing the probabilities proves $|E(H)|\le10$.
+Moreover $|V(H)|\ge5$, since any two vertices meet every triple on a ground set of at most four vertices (with the smaller cases immediate). Therefore
+\[
+ \delta(H)\le\frac{3|E(H)|}{|V(H)|}\le6.
+\]
+The bound is sharp: the complete 3-graph on five vertices has ten edges and degree six. Its transversal number is three, and after deleting a triple its complementary pair meets every remaining edge. This proves the negative answer in the transversal sense.
+\subsection*{3. Li's explicit chromatic example}
+Use vertex set $\{1,\ldots,9\}$. Write $abc$ for $\{a,b,c\}$ and take the following 22 edges:
+\[
+\begin{array}{rrrrrr}
+123&129&138&146&148&149\\
+157&158&159&167&236&237\\
+249&259&267&348&358&367\\
+468&469&578&579.
+\end{array}                                               \tag{1}
+\]
+Direct incidence counting gives degree sequence $(10,7,7,7,7,7,7,7,7)$.
+To prove that two colours do not suffice, colour vertex $1$ red and let $Z$ be the red vertices among $2,\ldots,9$. The edges through $1$ make $Z$ an independent set in the graph with edges
+\[
+ 23,29,38,46,48,49,57,58,59,67.                           \tag{2}
+\]
+Such an independent set has size at most three. If it contains $8$, it avoids $3,4,5$ and can choose at most two more vertices, because the remaining candidates contain the disjoint edges $29,67$. The same argument applies if it contains $9$, using the edges $38,67$. If it contains neither, the edge $23$ and the path $4,6,7,5$ permit at most $1+2$ vertices. Thus at least five vertices among $2,\ldots,9$ are blue.
+Every five-element subset $S$ of those eight vertices contains an edge not using $1$. Put $A=\{2,3,6,7\}$; all its triples occur in (1). If $S$ avoids $8,9$, it contains at least three members of $A$. If it contains $8$ but not $9$, avoiding three members of $A$ forces $4,5\in S$ and exactly two members of $A$. The triples $348,358,468,578$ then exclude $3,6,7$, leaving only $2$, a contradiction. The case with $9$ but not $8$ uses $249,259,469,579$ and is identical with $2,3$ interchanged.
+Finally, if $8,9\in S$, put $T=S\setminus\{8,9\}$. If $T\subseteq A$, it is an edge. Otherwise $T$ contains $4$ or $5$. If $4\in T$, avoiding edges excludes $2,3,6$, forcing $T=\{4,5,7\}$ and hence the edge $578$. If $5\in T$, it excludes $2,3,7$, forcing $T=\{4,5,6\}$ and hence $468$. This proves the assertion in every case. The blue vertices therefore contain a monochromatic edge, ruling out a two-colouring.
+\subsection*{4. Explicit criticality certificates}
+In the following table, colour the listed set $B$ blue and its complement red. The named edge $e$ is the unique monochromatic edge. Every entry can be checked directly against the 22-edge list (1); the offline verification also checks every entry and all $2^9$ two-colourings.
+\[
+\begin{array}{c|c@{\qquad}c|c}
+e&B&e&B\\\hline
+123&6789&129&3456\\
+138&2456&146&2789\\
+148&3569&149&2568\\
+157&2689&158&3479\\
+159&2478&167&2345\\
+236&1789&237&1689\\
+249&1356&259&1347\\
+267&1345&348&1256\\
+358&1247&367&1245\\
+468&1379&469&1278\\
+578&1369&579&1268
+\end{array}                                               \tag{3}
+\]
+Thus deleting any edge makes the hypergraph two-colourable. Deleting a vertex $v$ also does: choose an incident edge $e$, take its certificate, and restrict the colouring to $H-v$, which is a subhypergraph of $H-e$. Finally three colours suffice: start with any certificate in (3) and recolour one vertex of its monochromatic edge with a third colour. No other edge becomes monochromatic, and the chosen edge is repaired. Combined with the previous section this proves $\chi(H)=3$, with both kinds of deletion criticality and minimum degree seven.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/834}; R. Li, \emph{On an Erd\H{o}s--Lov\'asz problem: 3-critical 3-graphs of minimum degree 7}, \url{https://arxiv.org/abs/2512.24850}. The example and certificates are Li's. The random-order set-pairs argument is the standard Bollob\'as proof, included here in the precise needed case.
+\textbf{SOLVED under both specified interpretations.} The negative degree bound and the positive 9-vertex construction are completely verified. This is a reconstruction of known results, not a claim of novelty or proof-assistant verification.
+\textbf{Completion rate estimate: 100\%.}

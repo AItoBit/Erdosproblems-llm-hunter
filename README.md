@@ -9,7 +9,7 @@ A collection of attempts by advanced Large Language Models (LLMs) to solve [Erdo
 
 This project documents and tracks LLM attempts to solve challenging open mathematical problems. The website automatically updates when new TeX files are added to the repository.
 
-The Erdos index includes all **1,221 problems** in the saved collaborative database. The [expanded GPT_6_Astra_Ultra collection](attacks/erdos/GPT_6_Astra_Ultra/) covers all **642 unresolved database entries**, including 433 attributed imports. Its 50 former statement-only entries now contain individual partial mathematical attempts with explicit remaining gaps and completion estimates. Reused work retains its original model attribution and unverified completion claims; the Models column labels its Astra collection membership separately. The directly checked official tags page reports 635 unresolved; the collection preserves the broader database scope. Only `.tex` writeups are published from this collection; working notes, manifests, and verification reports are kept outside the repository.
+The Erdos index and the [GPT_6_Astra_Ultra collection](attacks/open_problems/erdos/GPT_6_Astra_Ultra/) cover all **1,221 problem numbers** in the saved collaborative database, including resolved problems. New and revised writeups state their proved results, remaining gaps, external theorem dependencies, and numerical completion estimates. The collection still includes attributed imports awaiting individual review; complete file coverage does not imply that every proof claim has been verified. Reused work retains its original model attribution, and reviewed replacements preserve that provenance. Only `.tex` writeups are published from this collection; working notes, manifests, source snapshots, and verification reports are kept outside the repository.
 
 ### Problem Sources
 
@@ -37,8 +37,8 @@ Only the most advanced frontier LLMs with demonstrated mathematical reasoning ca
 ```
 Erdosproblems-llm-hunter/
 ├── attacks/
-│   ├── erdos/<model>/      # Numbered Erdos TeX attempts
 │   └── open_problems/
+│       ├── erdos/<model>/  # Numbered Erdos TeX attempts
 │       ├── <model>/        # Ranked attempts named <problemId>.tex
 │       └── mo/<model>/     # Existing MathOverflow TeX attempts
 ├── lists/

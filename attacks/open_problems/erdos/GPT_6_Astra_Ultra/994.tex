@@ -1,0 +1,77 @@
+\section*{Erd\H{o}s Problem 994: a fixed measurable counterexample}
+\subsection*{Statement and attribution}
+The intended Khintchine conjecture asks whether, for each fixed measurable $E\subset(0,1)$, the averages
+$N^{-1}\sum_{n\le N}1_E(\{n\alpha\})$ converge to $\lambda(E)$ for almost every $\alpha$.
+This is false. We reconstruct a counterexample through the finite transference argument of Quas--Wierdl, \emph{Rates of divergence of nonconventional ergodic averages}, Section 5, which gives another route to Marstrand's 1970 result.
+The transference lemma below is an explicit external input, obtained from the multiparameter Rokhlin tower theorem; the small-set construction and its assembly are proved here. No novelty is claimed.
+
+The stronger literal order \emph{for almost all $\alpha$, for all $E$} fails trivially: for each irrational $\alpha$ take its countable orbit as $E$. That observation does not produce a single counterexample set independent of $\alpha$, and is not the argument used below.
+
+\subsection*{The precise finite transference input}
+Here is the indicator-function form of the copying argument in the proof of Quas--Wierdl Lemma 5.1.
+Let finitely many positive integers $n$ be specified, and let the primes dividing them be $p_1,\ldots,p_d$.
+Choose $M>0$ such that
+$M,\log p_1,\ldots,\log p_d$ are linearly independent over $\mathbb Q$.
+For a measurable $H\subset\mathbb R/M\mathbb Z$, finitely many averages over those integers, and $\eta>0$, there exists measurable $E\subset[0,1)$ such that
+\[
+ \lambda(E)\le |H|/M+\eta,
+\]
+and every lower bound for the normalized measure of a joint event involving those averages of
+$1_H(y-\log n\bmod M)$ transfers to the corresponding averages of
+$1_E(nx\bmod1)$ with a loss of at most $\eta$.
+
+The relevant point is that this input preserves indicators, not just arbitrary $L^p$ functions. In the source proof, the commuting actions $x\mapsto p_ix\bmod1$ and $y\mapsto y-\log p_i\bmod M$ are represented on finite Rokhlin towers of the same rectangular shape. Copying the values $0,1$ level by level gives a $0,1$ function. For any fixed finite set of times, the proportion of levels whose required translates leave the tower tends to zero as its side length grows; the uncovered error sets also tend to zero. On all other levels the specified averages agree exactly. This explains the stated finite-event form and the two error terms. The existence of these towers is the external part, as in Lemma 5.1.
+
+\subsection*{A small set causing a large maximal average}
+Fix integers $J\ge3$ and $K\ge\max(12,2J+4)$.
+Choose
+\[
+ (J+K+1)\log2<M<(J+K+2)\log2
+\]
+outside the countable rational span of the logarithms of primes at most $2^{J+K}$.
+Set $H=[0,2\log2)$ in the circle of circumference $M$.
+For $J\le j<J+K$ and $y\in[j\log2,(j+1)\log2)$, all integers
+\[
+ \lceil e^y/4\rceil\le n\le2^j
+\]
+satisfy $0\le y-\log n\le2\log2$, apart from irrelevant endpoints.
+There are at least $2^{j-1}-1\ge3\cdot2^{j-3}$ of them. Therefore
+\[
+ \frac1{2^j}\sum_{n\le2^j}1_H(y-\log n\bmod M)\ge\frac38.
+\]
+The union of these $K$ disjoint $y$-intervals has normalized measure
+$K\log2/M\ge2/3$, while $|H|/M\le2/K$.
+Apply finite indicator transference with $\eta=1/K$ and the $K$ averages just specified. We obtain a measurable $E_{J,K}\subset[0,1)$ with
+\[
+ \lambda(E_{J,K})\le3/K,\qquad
+ \lambda\left\{x:\max_{J\le j<J+K}
+ \frac1{2^j}\sum_{n\le2^j}1_{E_{J,K}}(\{nx\})\ge3/8\right\}\ge1/2.
+ \tag{1}
+\]
+Only finitely many times occur in each application, which is essential to the transference step.
+
+\subsection*{One fixed set, infinitely many late failures}
+For $m\ge1$, take $J_m=m+3$ and choose an integer $K_m$ large enough for (1) and for
+$3/K_m\le2^{-m-5}$.
+Let $E_m=E_{J_m,K_m}$ and set
+$E=(\bigcup_{m\ge1}E_m)\setminus\{0\}$.
+Then $E\subset(0,1)$ and $\lambda(E)\le1/32$.
+Let $B_m$ be the event in (1). Its measure is at least $1/2$, so
+\[
+ \lambda(\limsup_mB_m)
+ =\lim_{r\to\infty}\lambda\left(\bigcup_{m\ge r}B_m\right)\ge1/2.
+\]
+No independence of these events is needed.
+For every irrational $x$ in this limsup, infinitely many $m$ supply an index
+$N=2^j\ge2^{J_m}$ for which the average of $1_{E_m}(\{nx\})$ is at least $3/8$.
+The same is true for $E$, since $E_m\setminus\{0\}\subset E$ and an irrational orbit never visits $0$.
+These indices tend to infinity. Hence on a set of measure at least $1/2$,
+\[
+ \limsup_{N\to\infty}\frac1N\sum_{n\le N}1_E(\{nx\})\ge\frac38>\lambda(E).
+\]
+This disproves the intended fixed-set conjecture.
+
+\subsection*{Conclusion and external-dependency scope}
+The counterexample is complete relative to the stated finite Rokhlin transference input. A proof of the underlying multiparameter tower theorem is not supplied, and no claim of an elementary proof independent of ergodic theory is made. Sources: \url{https://www.erdosproblems.com/994}; J. M. Marstrand, \url{https://doi.org/10.1112/plms/s3-21.3.540}; A. Quas and M. Wierdl, Section 5 and the proof of Lemma 5.1, \url{https://web.uvic.ca/~aquas/papers/paper24.pdf}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

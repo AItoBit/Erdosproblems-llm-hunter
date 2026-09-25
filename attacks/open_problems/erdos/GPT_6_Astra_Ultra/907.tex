@@ -1,0 +1,106 @@
+\section*{Erd\H{o}s Problem 907: continuous differences}
+
+\paragraph{Statement and approach.}
+If \(f:\mathbb R\to\mathbb R\) has continuous differences
+\(\Delta_t f(x)=f(x+t)-f(x)\) for every \(t>0\), then
+\(f=g+H\), where \(g\) is continuous and \(H\) is additive.
+We prove the reduction to a precise measurable-cocycle
+theorem and then supply the regularity argument.
+The cocycle theorem is an explicit external dependency.
+
+\paragraph{From separate continuity to a measurable defect.}
+Negative shifts cause no difficulty, since
+\(\Delta_{-t}f(x)=-\Delta_t f(x-t)\).
+Define
+\[
+ D(x,y)=f(x+y)-f(x)-f(y).
+\]
+For fixed \(y\), this is continuous in \(x\); symmetry
+gives continuity in \(y\) for fixed \(x\).
+To check joint measurability without assuming \(f\)
+itself measurable, put
+\[
+ D_j(x,y)=D(2^{-j}\lfloor2^jx\rfloor,y).
+\]
+Each \(D_j\) is Borel measurable: it is defined on
+countably many Borel vertical strips by continuous
+functions of \(y\). Separate continuity gives
+\(D_j(x,y)\to D(x,y)\) at every point. Hence \(D\)
+is jointly Borel, in particular Lebesgue measurable.
+
+\paragraph{The precise external theorem.}
+Theorem 5 of M. Laczkovich,
+\emph{Functions with measurable differences},
+Acta Math. Acad. Sci. Hungar. 35 (1980), 217--235,
+states that if \(f(x+y)-f(x)-f(y)\) is jointly
+Lebesgue measurable, then \(f=u+H\), with \(u\)
+Lebesgue measurable and \(H\) additive.
+We apply exactly this theorem. It makes no preliminary
+measurability assumption on \(f\).
+Its proof, which builds on the weak difference-property
+theorem, is not assumed to have been reproduced here.
+Every difference of \(u=f-H\) is continuous, because
+\(\Delta_tu=\Delta_tf-H(t)\).
+
+\paragraph{A measurable function with continuous differences is continuous.}
+We prove the needed regularity assertion.
+Let \(x_j\to0\) be any sequence, and set
+\[
+ c_j=u(x_j)-u(0),\qquad
+ E_j(t)=u(t+x_j)-u(t)-c_j.
+\]
+For fixed \(t\),
+\[
+ E_j(t)=\Delta_tu(x_j)-\Delta_tu(0)\longrightarrow0.
+\]
+The measurable functions \(E_j\) therefore converge
+to zero in measure on \([0,1]\).
+Also translation continuity in measure gives
+\[
+ u(t+x_j)-u(t)\longrightarrow0
+ \quad\text{in measure on }[0,1].
+\tag{1}
+\]
+It follows that the constant functions \(c_j\) tend to
+zero in measure, and hence \(c_j\to0\) as real numbers.
+Thus \(u\) is continuous at zero.
+For every fixed \(a\),
+\[
+ u(a+x_j)-u(a)
+ =u(x_j)-u(0)+\Delta_au(x_j)-\Delta_au(0)\longrightarrow0,
+\]
+so \(u\) is continuous everywhere. Taking \(g=u\)
+proves the desired decomposition.
+
+Here (1) requires only that \(u\) be finite and
+Lebesgue measurable. One direct proof is to approximate
+its restriction to \([-1,2]\), outside a set of arbitrarily
+small measure, by a continuous function, using Lusin's
+theorem and extension from a compact set.
+For small \(x_j\), both \(t\) and \(t+x_j\) lie in that
+interval. The exceptional sets have arbitrarily small
+total measure, and the continuous approximation has
+uniformly small translation differences.
+
+\paragraph{The ambiguity is exactly linear.}
+If \(f=g_1+H_1=g_2+H_2\) are two such decompositions,
+then \(H_1-H_2=g_2-g_1\) is both continuous and additive.
+Its value on rational \(q\) is \(q(H_1-H_2)(1)\);
+density of the rationals gives the same formula
+for all reals. Thus the only ambiguity is moving a
+linear function between the two summands.
+
+\paragraph{Attribution and assessment.}
+The original resolution is de Bruijn's 1951 theorem:
+\url{https://pure.tue.nl/ws/files/4316577/597498.pdf}.
+The later measurable-cocycle input was checked directly
+on page 229 of Laczkovich's original paper, archived in
+\url{https://real-j.mtak.hu/7443/1/MTA_ActaMathHung_35.pdf}.
+See also \url{https://www.erdosproblems.com/907},
+checked 24 September 2026.
+This is a complete deduction relative to that explicit
+input and standard measure theory, not a claim of a
+new proof without external dependencies or of Lean verification.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

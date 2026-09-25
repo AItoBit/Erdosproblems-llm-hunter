@@ -1,0 +1,83 @@
+\section*{Erd\H{o}s Problem 1050}
+
+\paragraph{Statement and result.}
+The series
+\[
+ S=\sum_{j=1}^{\infty}\frac1{2^j-3}
+\]
+is irrational. Its first two terms cancel, and the remaining terms form an absolutely convergent positive series. We reconstruct the integer-linear-form argument in Borwein's proof, with its Pad\'e approximation estimates explicitly identified as external inputs.
+
+\paragraph{The approximation input.}
+Put \(L(x)=\sum_{j\geq1}x/(2^j-x)\), away from its poles. Borwein's Pad\'e construction supplies polynomials \(Q_N,P_N\), both of degree at most \(N\), with the following properties. For \(N\geq2\), put
+\[
+ D_N=\prod_{k=\lfloor N/2\rfloor}^{N}(2^k-1).
+\]
+Then \(Q_N\in\mathbb Z[x]\), \(D_NP_N\in\mathbb Z[x]\), and there are absolute constants \(C_1,C_2>0\), independent of \(N\), such that
+\[
+ |Q_N(x)|\leq C_1\,2^{N^2}\quad(-1\leq x\leq1),
+ \tag{1}
+\]
+\[
+ 0<\left|L(x)-\frac{P_N(x)}{Q_N(x)}\right|
+ \leq C_2\,\frac{|x|^{2N}}{2^{N(N+1)}}
+ \quad(0<|x|\leq1).
+ \tag{2}
+\]
+In particular the quotients in (2) are defined. These are the denominator, size, and nonzero-error properties used in the proof of Theorem 4 on pages 257--258 of Borwein's paper; (2) is its Theorem 3. We do not reprove the underlying Pad\'e theory.
+There is a sign inconsistency in the scanned statement of Theorem 1(b): its printed plus sign in the denominator-clearing product is incompatible even with \(N=3\). Here \(D_N\) uses the minus factors in the proof of Theorem 4. Only their absolute values enter the estimates.
+
+\paragraph{Moving to a small argument.}
+For \(N\geq2\), set \(x_N=3/2^N\) and
+\[
+ R_N=\sum_{j=1}^{N}\frac3{2^j-3}.
+\]
+Changing index in the absolutely convergent tail gives the exact identity
+\[
+ L(3)-R_N=L(x_N).
+ \tag{3}
+\]
+Applying (2) at \(x_N\) therefore gives
+\[
+ 0<
+ \left|L(3)-R_N-\frac{P_N(x_N)}{Q_N(x_N)}\right|
+ \leq C_2\,9^N\,2^{-3N^2-N}.
+ \tag{4}
+\]
+
+\paragraph{Clearing all denominators.}
+Let
+\[
+ B_N=\prod_{j=1}^{N}(2^j-3),\qquad T_N=B_ND_N,
+\]
+and define
+\[
+ V_N=2^{N^2}T_NQ_N(x_N),\qquad
+ U_N=2^{N^2}T_N\bigl(Q_N(x_N)R_N+P_N(x_N)\bigr).
+\]
+Both are integers. Indeed, evaluating a degree-at-most-\(N\) integral polynomial at \(3/2^N\) requires at most the denominator \(2^{N^2}\); \(D_N\) clears the coefficients of \(P_N\), while \(B_N\) clears \(R_N\). No factor in \(B_ND_N\) is zero.
+The elementary product estimates give
+\[
+ |B_N|\leq2^{N(N+1)/2},\qquad
+ D_N\leq2^{\,3N^2/8+N+1},
+\]
+and hence, with room to spare,
+\[
+ |T_N|\leq2^{\,7N^2/8+2N+1}.
+ \tag{5}
+\]
+Multiplying (4) by \(2^{N^2}|T_NQ_N(x_N)|\) and using (1), (5), we obtain
+\[
+ 0<|V_NL(3)-U_N|
+ \leq 2C_1C_2\,9^N\,2^{-N^2/8+N}
+ \longrightarrow0.
+ \tag{6}
+\]
+The negative quadratic exponent dominates the linear terms.
+
+\paragraph{Irrationality and assessment.}
+If \(L(3)=a/b\) with integers \(a,b\), \(b\geq1\), the quantity
+\(b(V_NL(3)-U_N)\) would be a nonzero integer. Its absolute value could not tend to zero, contradicting (6). Thus \(L(3)\), and therefore \(S=L(3)/3\), is irrational.
+This is a complete proof relative to the explicitly stated Pad\'e input, not a new independent derivation of that input. The denominator arithmetic, small-argument shift, and irrationality deduction are included. Primary source: P. B. Borwein, \emph{On the irrationality of \(\sum 1/(q^n+r)\)}, Journal of Number Theory 37 (1991), 253--259, \url{https://www.cecm.sfu.ca/~pborwein/PAPERS/P51.pdf}; statement: \url{https://www.erdosproblems.com/1050}. Sources checked 24 September 2026. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

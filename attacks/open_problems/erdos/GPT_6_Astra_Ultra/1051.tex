@@ -1,0 +1,80 @@
+\section*{Erd\H{o}s Problem 1051}
+
+\paragraph{Statement and result.}
+Let \(a_1<a_2<\cdots\) be positive integers and suppose
+\(\liminf_{n\to\infty}a_n^{1/2^n}>1\).
+Then
+\[
+ S=\sum_{n=1}^{\infty}\frac1{a_na_{n+1}}
+\]
+is irrational. We give an elementary proof under exactly this stated hypothesis.
+
+\paragraph{Growth and record indices.}
+There are \(c>0\) and \(n_0\) such that
+\(\log a_n\geq c2^n\) for \(n\geq n_0\).
+Fix a real number
+\[
+ \frac{1+\sqrt5}{2}<\gamma<2.
+\]
+The sequence \(b_i=(\log a_i)/\gamma^i\) is unbounded, so it has record indices \(j\) tending to infinity, with
+\(b_i\leq b_j\) for every \(i\leq j\). At such an index, put \(A=a_j\). Then
+\[
+ a_i\leq A^{\gamma^{i-j}}\quad(1\leq i\leq j).
+ \tag{1}
+\]
+In particular,
+\[
+ \prod_{i=1}^{j-2}a_i\leq A^{1/(\gamma(\gamma-1))},
+ \qquad
+ \prod_{i=1}^{j-1}a_i\leq A^{1/(\gamma-1)}.
+ \tag{2}
+\]
+These follow by extending the relevant finite geometric sums to infinite sums.
+
+\paragraph{A uniform bound for the far tail.}
+For sufficiently large \(j\), let
+\[
+ J=\left\lceil\log_2\!\left(\frac{\log A}{c}\right)\right\rceil.
+\]
+Since \(\log A\geq c2^j\), we have \(J\geq j\). Monotonicity gives \(a_n\geq A\) for \(n\geq j\), while for \(r\geq1\),
+\[
+ a_{J+r}\geq\exp(c2^{J+r})\geq A^{2^r}.
+\]
+Consequently, once \(A\geq2\),
+\[
+ \sum_{n=j}^{\infty}\frac1{a_na_{n+1}}
+ \leq\sum_{n=j}^{\infty}\frac1{a_n^2}
+ \leq\frac{J+1}{A^2}+\sum_{r=1}^{\infty}A^{-2^{r+1}}
+ \leq\frac{J+2}{A^2}.
+ \tag{3}
+\]
+Here \(J=O_c(1+\log\log A)\), and the last geometric comparison is deliberately loose.
+
+\paragraph{An integer that would tend to zero.}
+Suppose \(S=p/q\) with integers \(p\) and \(q\geq1\). For a record index \(j\geq3\), set
+\[
+ D_j=\prod_{i=1}^{j-1}a_i,\qquad
+ S_{j-2}=\sum_{i=1}^{j-2}\frac1{a_i a_{i+1}}.
+\]
+Every denominator in \(S_{j-2}\) divides \(D_j\); hence
+\(qD_j(S-S_{j-2})\) is a positive integer. On the other hand, separating off its first tail term and using (2)--(3), we obtain
+\[
+\begin{split}
+ 0<D_j(S-S_{j-2})
+ &\leq
+ \frac{\prod_{i=1}^{j-2}a_i}{A}
+ +\frac{(J+2)D_j}{A^2}\\
+ &\leq
+ A^{1/(\gamma(\gamma-1))-1}
+ +(J+2)A^{1/(\gamma-1)-2}.
+\end{split}
+\]
+Both exponents are negative: the first because
+\(\gamma(\gamma-1)>1\), and the second because \(\gamma>3/2\).
+As \(A\to\infty\) through record indices, the right side tends to zero, even with the \(O(\log\log A)\) factor. This contradicts the positive-integer lower bound \(qD_j(S-S_{j-2})\geq1\), and proves irrationality.
+
+\paragraph{Scope and attribution.}
+The proof establishes the stated sufficient condition without imposing divisibility on the \(a_n\). It does not assert irrationality for every increasing sequence: for example \(a_n=n\) gives a telescoping rational sum. Barreto, Kang, Kim, Kova\v{c} and Zhang prove substantially stronger irrationality criteria in their 2026 work, including a threshold involving the golden ratio; their paper attributes the original resolution to the Aletheia research agent. Their theorem is background here, not an input to the argument above. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1051} and \url{https://arxiv.org/abs/2601.21442}. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

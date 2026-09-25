@@ -1,0 +1,72 @@
+\section*{Erd\H{o}s Problem 396: carry barriers and explicit certificates}
+\subsection*{Statement and outcome}
+For every $k\ge0$, must some $n>k$ satisfy
+\[
+ D_k(n):=\prod_{i=0}^k(n-i)\ \bigm|\ \binom{2n}{n}?
+\]
+We prove exact valuation criteria and structural barriers, and give fully checkable witnesses through $k=4$. The arbitrary-$k$ existence question remains unresolved. Source: \url{https://www.erdosproblems.com/396}. The older local draft left even $k=2$ without a witness; the candidates below are recorded in \url{https://oeis.org/A375077} and are independently verified here. No minimality claim or new computational record is made.
+
+\subsection*{Exact valuations and an exponential size barrier}
+Counting multiples of $p,p^2,\ldots$ in a factorial proves
+\[
+ v_p\binom{2n}{n}
+ =\sum_{j\ge1}\left(\left\lfloor\frac{2n}{p^j}\right\rfloor
+              -2\left\lfloor\frac n{p^j}\right\rfloor\right). \tag{1}
+\]
+Each summand is $0$ or $1$. Thus the desired divisibility is exactly the system
+\[
+ \sum_{i=0}^k v_p(n-i)\le v_p\binom{2n}{n}
+ \quad\hbox{for every prime dividing }D_k(n). \tag{2}
+\]
+No other primes need checking.
+
+For $p=2$, summing the binary expansion gives $v_2(n!)=n-s_2(n)$, where $s_2$ counts the one-bits. As $s_2(2n)=s_2(n)$, (1) becomes $v_2\binom{2n}{n}=s_2(n)$. Since
+\[
+ D_k(n)=(k+1)!\binom n{k+1},
+\]
+any witness must satisfy $s_2(n)\ge v_2((k+1)!)$. An integer with at least $r$ one-bits is at least $2^r-1$. Hence
+\[
+ n\ge2^{\,k+1-s_2(k+1)}-1. \tag{3}
+\]
+This is an exponential necessary lower bound up to a polynomial factor; it is not an existence construction.
+
+If $n=p^a$ for an odd prime, (1) is zero: for $j\le a$ the quotient $n/p^j$ is integral, and for $j>a$ one has $p^j>2n$. Thus even $n\mid\binom{2n}{n}$ fails. For $n=2^a$, its binary valuation is $1$, so only $a=1$ can work. Apart from $n=1$, the only prime-power witness for $k=0$ is therefore $n=2$.
+
+\subsection*{A prime near the endpoint is impossible}
+Suppose $n>3k$ and one of $n,n-1,\ldots,n-k$ is a prime $p$. Then $2n/3<p\le n$, so $\lfloor2n/p\rfloor-2\lfloor n/p\rfloor=0$. For $n\ge5$, $p^2>2n$, and all higher terms in (1) vanish. Therefore, for $n\ge5$ with $n>3k$, every entry of a successful block must be composite. Long composite blocks alone remain far from sufficient, because (2) must hold at all their prime powers.
+
+\subsection*{An explicit proof for $k=2$ and further witnesses}
+For $n=2480$,
+\[
+ D_2(n)=2^5\cdot3\cdot5\cdot7\cdot31\cdot37\cdot59\cdot67.
+\]
+Evaluating the finite sums (1) gives respectively the exponents
+\[
+ \begin{array}{c|rrrrrrrr}
+ p&2&3&5&7&31&37&59&67\\\hline
+ v_p(D_2)&5&1&1&1&1&1&1&1\\
+ v_p\binom{4960}{2480}&5&4&3&1&1&1&1&1
+ \end{array}
+\]
+so (2) proves this witness with no large-binomial rounding.
+For $k=3,n=8178$, the corresponding complete lists are
+\[
+ \begin{array}{c|rrrrrrrrrrr}
+ p&2&3&5&7&13&17&29&37&47&73&109\\\hline
+ v_p(D_3)&5&2&2&1&1&1&1&1&1&1&1\\
+ v_p\binom{2n}{n}&10&5&3&2&1&1&1&1&1&1&1
+ \end{array}
+\]
+and for $k=4,n=45153$ they are
+\[
+ \begin{array}{c|rrrrrrrrrrrrrr}
+ p&2&3&5&7&13&17&23&29&43&83&151&163&173&277\\\hline
+ v_p(D_4)&6&3&2&1&1&1&1&1&1&1&1&1&1&1\\
+ v_p\binom{2n}{n}&6&5&3&3&2&1&1&2&1&1&1&1&1&1
+ \end{array}
+\]
+Every displayed lower row dominates its upper requirement. Finally $k=0,n=1$ and $k=1,n=2$ are immediate, covering all five cases claimed.
+
+\subsection*{Remaining gap}
+The valuation identities and all finite certificates are exact. They provide no uniform way to make the binomial valuations dominate the combined valuations of arbitrarily many consecutive factors. The known theorem treating a single shifted divisor, and the density-one theorem for factors $n+i$ with positive $i$, do not give this simultaneous negative-shift product. No such inference is used here.
+\textbf{Completion rate estimate: 35\%.}

@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem 122: concentration of the values $n+f(n)$}
+\subsection*{Statement and a corrected quantifier}
+Which arithmetic functions $f$ have the following property: for every admissible positive length function $F$ with $F(n)/f(n)\to0$ for almost all integers $n$, the ratios
+\[
+ \frac{\#\{n\ge1:n+f(n)\in(x,x+F(x))\}}{F(x)}
+\]
+are unbounded along a sequence of $x$ tending to infinity? Here almost all refers to a set of natural density one. The ratio is $F/f$, not $f/F$. The reversed ratio in the earlier GPT-5.2 attempt changed the problem.
+
+We give a broad obstruction and reconstruct the known unbounded-fibre theorem for $f=\omega$, conditional on an explicitly stated analytic lemma. Neither result classifies $f$ or proves the assertion for every admissible $F$; the problem is unresolved here. Source: \url{https://www.erdosproblems.com/122}.
+
+\subsection*{An obstruction even for slowly growing functions}
+Suppose $f:\mathbb N\to\mathbb N$ tends to infinity and the integer-valued map $T(n)=n+f(n)$ has fibres of size at most $B$. An interval of real length $L$ contains at most $\lceil L\rceil$ integers, so
+\[
+ \#\{n:T(n)\in(x,x+L)\}\le B\lceil L\rceil. \tag{1}
+\]
+Choose $F(x)=\sqrt{f(\max(1,\lfloor x\rfloor))}$. Then $F(n)/f(n)\to0$ pointwise, $F(x)\to\infty$, and (1) bounds the desired ratio by $B(1+1/F(x))$. Thus the requested property fails for this $f$, independently of any convention about very short intervals.
+
+In particular, every nondecreasing integer-valued $f$ tending to infinity fails, since $T$ is strictly increasing. An example growing more slowly than every positive power of $\log n$ is
+$f(n)=\lceil\log\log(n+e^e)\rceil$. Slow growth alone is therefore insufficient; substantial oscillation or large fibres matter.
+
+\subsection*{The analytic input for $\omega$}
+The following is Lemma 2 of Erd\H{o}s, Pomerance and S\'ark\"ozy, \emph{On locally repeated values of certain arithmetic functions, IV}, Ramanujan J.\ 1 (1997), 227--241:
+\url{https://math.dartmouth.edu/~carlp/PDF/paper112.pdf}.
+There are absolute constants $C,X_0$ such that, for $X\ge X_0$, $P\le X^{1/2}$, and every integer $h$, more than $X/(2P)$ integers $m\le X$ in the residue class $h\bmod P$ satisfy
+\[
+ |\omega_P(m)-\log\log X|<C\sqrt{\log\log X}, \tag{2}
+\]
+where $\omega_P$ counts prime divisors not dividing $P$. This uniform variance estimate is an external input, not proved here. We also use the prime number theorem in the standard form $p_j\sim j\log j$. The remainder is the authors' CRT and pigeonhole argument, with endpoint losses made explicit.
+
+\subsection*{Reconstruction of the unbounded-fibre conclusion}
+Set $t=\lfloor\frac15\sqrt{\log X/\log\log X}\rfloor$. For $0\le i\le t$, take disjoint consecutive blocks $\mathcal P_i$ of $t-i$ primes, starting after all primes at most $t$, and let $P$ be their product. The number of selected primes is $t(t+1)/2$; the prime number theorem gives
+\[
+ \log P=(1/50+o(1))\log X.
+\]
+In particular $t<P\le X^{1/2}$ for large $X$. The Chinese remainder theorem gives a residue $r\bmod P$ with $r+i\equiv0\pmod p$ for every $p\in\mathcal P_i$. Since all these primes exceed $t$, no prime of $\mathcal P_j$ divides $r+i$ when $i\ne j$. Thus for every $n\equiv r\bmod P$,
+\[
+ \omega(n+i)=(t-i)+\omega_P(n+i). \tag{3}
+\]
+
+For each $i$, (2) supplies more than $X/(2P)$ suitable positive integers $m\equiv r+i\bmod P$. Discarding $m\le i$ loses at most one, because $i<P$. The remaining $m$ give positive bases $n=m-i\le X$ satisfying (2). For large $X$, each $i$ supplies more than $X/(3P)$ such bases. There are at most $X/P+1\le2X/P$ possible bases in total, so some base $n$ has more than $(t+1)/6$ good indices $i$.
+
+For these indices, (2)--(3) place every $(n+i)+\omega(n+i)$ in the interval centred at $n+t+\log\log X$ of radius $C\sqrt{\log\log X}$. This interval contains at most $2C\sqrt{\log\log X}+1$ integers. Hence some integer $y\le X+\log X/\log2$ has
+\[
+ \#\{m:m+\omega(m)=y\}
+ \gg\frac{\sqrt{\log X}}{\log\log X}. \tag{4}
+\]
+The right side tends to infinity. Such $y$ must also tend to infinity, since a fixed $y$ has at most $y$ positive preimages. This proves the known unbounded-fibre result relative to (2) and the prime number theorem.
+
+\subsection*{Remaining gap}
+Equation (4) gives large concentrations at selected values. The problem quantifies over every admissible $F$, whose exceptional values may include those selected locations. Turning (4) into that universal assertion, or classifying other arithmetic functions, requires further control not supplied by this proof.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

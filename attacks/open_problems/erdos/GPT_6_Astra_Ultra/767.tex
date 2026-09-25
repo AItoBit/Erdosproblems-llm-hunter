@@ -1,0 +1,38 @@
+\section*{Erd\H{o}s Problem \#767: many chords at one cycle vertex}
+\subsection*{Statement and scope}
+Let \(g_k(n)\) be the maximum number of edges in an \(n\)-vertex simple graph with no cycle having \(k\) chords incident to one vertex of that cycle. For fixed positive \(k\), is
+\[
+g_k(n)=(k+1)n-(k+1)^2
+\]
+for all sufficiently large \(n\)?
+Jiang proved that the equality holds for \(n\geq3k+3\). This attempt proves the exact proposed lower bound and an upper bound differing from it by only a constant depending on \(k\):
+\[
+(k+1)n-(k+1)^2\leq g_k(n)
+\leq(k+1)n-\frac{(k+1)(k+2)}2 \qquad(n\geq2k+2). \tag{1}
+\]
+Attempt status: unresolved. The additive constant in the upper bound is the remaining issue.
+
+\subsection*{The extremal candidate}
+Take \(K_{k+1,n-k-1}\). It has exactly the number of edges proposed. Any cycle alternates between the two parts and contains at most \(k+1\) vertices from each part. A cycle vertex therefore has at most \(k+1\) neighbours on the cycle, two of which are its cycle neighbours. Hence it has at most \(k-1\) incident chords. This proves the lower bound, including the case in which the chosen vertex is in the smaller part.
+
+\subsection*{A longest-path obstruction}
+Every nonempty subgraph of a graph avoiding the forbidden configuration has a vertex of degree at most \(k+1\). Suppose instead that some subgraph has minimum degree at least \(k+2\), and take a longest simple path \(v_1,\ldots,v_\ell\) in it. All neighbours of \(v_1\) lie on this path. Let \(v_j\) be the neighbour with largest index. Then
+\[
+v_1v_2\cdots v_jv_1
+\]
+is a cycle containing all neighbours of \(v_1\). Besides its two cycle edges, \(v_1\) has at least \(k\) chords to vertices of this cycle, a contradiction. Extra chords elsewhere cause no difficulty: the forbidden configuration is a subgraph, not an induced cycle with exactly \(k\) chords.
+
+Thus the graph is \((k+1)\)-degenerate. Delete a vertex of degree at most \(k+1\) repeatedly until \(k+1\) vertices remain. Those remaining vertices span at most \(\binom{k+1}{2}\) edges. Therefore
+\[
+e(G)\leq(k+1)(n-k-1)+\binom{k+1}{2}
+=(k+1)n-\frac{(k+1)(k+2)}2,
+\]
+proving (1). In particular the leading coefficient is fully established:
+\(g_k(n)=(k+1)n+O_k(1)\).
+
+\subsection*{The precise gap}
+The two proved bounds differ by \(k(k+1)/2\). The degeneracy argument alone cannot close this gap: it does not use enough structure of the final small core or of vertices deleted at degree \(k+1\). Thus an asymptotic leading coefficient does not establish the requested exact eventual formula. Jiang's theorem is cited as the known resolution, not substituted for that missing argument.
+
+The primary publisher abstract of T. Jiang, \emph{A note on a conjecture about cycles with many incident chords}, J. Graph Theory 46 (2004), 180--182, explicitly gives the threshold \(3k+3\): \url{https://doi.org/10.1002/jgt.10179}. Statement checked at \url{https://www.erdosproblems.com/767} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

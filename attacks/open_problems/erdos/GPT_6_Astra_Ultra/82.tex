@@ -1,0 +1,39 @@
+\section*{Erd\H{o}s Problem 82: induced regular subgraphs and the logarithmic barrier}
+\subsection*{1. Statement and scope}
+Let $F(n)$ be the largest integer such that every $n$-vertex graph contains a regular induced subgraph of order at least $F(n)$. Must $F(n)/\log n\to\infty$? We supply an explicit logarithmic bound with a secondary logarithmic term, prove the inverse-parameter formulation, and identify classes where the requested scale follows. The unrestricted assertion remains unresolved.
+
+\subsection*{2. A refined elementary Ramsey lower bound}
+The usual neighbourhood recurrence $R(s,t)\le R(s-1,t)+R(s,t-1)$, with boundary values one, gives $R(k,k)\le\binom{2k-2}{k-1}$ by induction and Pascal's identity. For completeness the recurrence follows by fixing a vertex: either its neighbour set has size at least $R(s-1,t)$ or its non-neighbour set has size at least $R(s,t-1)$; then adjoining the vertex extends the appropriate homogeneous set.
+For $r\ge1$,
+\[
+ \frac{\binom{2r}{r}}{4^r}
+ =\prod_{j=1}^r\left(1-\frac1{2j}\right)
+ \le\exp\left(-\tfrac12\sum_{j=1}^r\frac1j\right)
+ \le\frac1{\sqrt{r+1}}.
+\]
+The last inequality uses $\sum_{j=1}^r1/j\ge\log(r+1)$. Consequently $R(k,k)\le4^{k-1}/\sqrt k$. Put $L=\log_4 n$ and $k=\lfloor L+\tfrac12\log_4 L\rfloor$ for $n\ge16$. Then $L\ge2$, $k\ge L-1\ge L/2$, and
+\[
+ \frac{4^{k-1}}{\sqrt k}\le\frac n4\sqrt{\frac Lk}<n.
+\]
+Every graph therefore has a clique or independent set of size $k$, both regular as induced subgraphs. This proves
+\[
+ F(n)\ge\left\lfloor\log_4 n+\tfrac12\log_4\log_4 n\right\rfloor\quad(n\ge16). \tag{1}
+\]
+The extra term diverges, but (1) still has a fixed leading logarithmic coefficient and does not prove the question.
+
+\subsection*{3. The precise inverse formulation}
+Let $G(k)$ be the least order forcing an induced regular subgraph of order at least $k$. Restricting a larger graph to any $G(k)$ vertices shows
+\[
+ F(n)\ge k\quad\Longleftrightarrow\quad n\ge G(k). \tag{2}
+\]
+This makes the conjecture equivalent to $\log G(k)=o(k)$. To check the asymptotic quantifiers, first assume $F(n)/\log n\to\infty$. For any $\eta>0$ set $n=\lceil e^{\eta k}\rceil$. For large $k$, $F(n)\ge(2/\eta)\log n\ge k$, so $G(k)\le n$ and $\limsup\log G(k)/k\le\eta$. Conversely, if $\log G(k)=o(k)$, fix $C>0$ and take $k=\lceil C\log n\rceil$. For all large $n$, $\log G(k)\le k/(2C)<\log n$, so (2) gives $F(n)\ge C\log n$. Since $C$ is arbitrary, the ratio diverges.
+
+\subsection*{4. A restricted positive range and a failed shortcut}
+If a graph has maximum degree $\Delta$, a greedy independent-set algorithm repeatedly chooses a vertex and deletes it and its at most $\Delta$ neighbours. It produces an independent set of at least $n/(\Delta+1)$ vertices. The same statement applied to the complement gives a clique when the original graph has at most $\Delta$ non-neighbours at each vertex. Thus any sequence of graphs with either of these two degree parameters $o(n/\log n)$ has induced regular subgraphs of size $\omega(\log n)$.
+Equal degrees in the whole graph are not enough: in the five-vertex path, the three internal vertices all have degree two, but induce a three-vertex path of degrees $1,2,1$. Hence selecting a large equal-degree class by pigeonholing does not prove regularity after restriction.
+
+\subsection*{5. Assessment and attribution}
+The refined Ramsey estimate, inverse equivalence and degree-restricted result are proved. For general graphs, an argument beyond complete or empty induced subgraphs is still needed. No exhaustive enumeration or claim about the best currently known upper bounds is made. This is a checked extension of the earlier GPT-5.2 partial attempts, with all arguments needed for the stated bounds included.
+Source: \url{https://www.erdosproblems.com/82}.
+
+\textbf{Completion rate estimate: 15\%.}

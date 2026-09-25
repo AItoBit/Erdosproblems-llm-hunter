@@ -1,0 +1,95 @@
+\section*{Erd\H{o}s Problem \#366: an ordered pair with different fullness}
+\subsection*{1. The exact orientation of the question}
+The displayed question asks whether there is a positive integer $n$
+such that $n$ is $2$-full and $n+1$ is $3$-full.
+The familiar pairs
+\[
+ (8,9),\qquad(12167,12168)=(23^3,2^3\,3^2\,13^2)
+\]
+have the opposite orientation: the smaller number is $3$-full,
+the larger only $2$-full. They answer an unoriented version but
+not the displayed ordered question. This attempt keeps that
+distinction, proves an exhaustive parametrization and local sieve,
+and establishes conditional finiteness. The existence question
+with the displayed orientation remains unresolved.
+
+\subsection*{2. Unique parametrization of $3$-full integers}
+A positive integer is $3$-full if and only if it has the unique form
+\[
+ N=a^3b^4c^5,\quad a,b,c\ge1,\quad
+ b,c\text{ squarefree},\quad\gcd(b,c)=1.            \tag{1}
+\]
+For an exponent $e\ge3$, use $e=3q$ if $e\equiv0\pmod3$,
+$e=3q+4$ if $e\equiv1\pmod3$, and $e=3q+5$ if
+$e\equiv2\pmod3$. In the latter two cases put the prime in $b$
+or $c$ respectively. All resulting $q$ are nonnegative, and
+the residue of $e$ makes the choice unique. Primes may also divide $a$.
+Thus the number of $3$-full integers up to $X$ is at most
+\[
+ X^{1/3}\sum_{b\ge1}b^{-4/3}\sum_{c\ge1}c^{-5/3}
+ =O(X^{1/3}).                                    \tag{2}
+\]
+The two convergent series justify this bound without any assumption
+on the distribution of prime factors.
+
+Enumerating exactly the triples in (1) up to $10^{10}$ gives $8348$
+distinct $3$-full integers. Independently generating the $214122$
+$2$-full integers in this range as $u^2v^3$ with $v$ squarefree,
+then intersecting the two lists after a shift, gives:
+\[
+ \begin{array}{c|l}
+ \text{condition, with both terms at most }10^{10}
+      &\text{smaller terms found}\\ \hline
+ n\text{ is }2\text{-full},\ n+1\text{ is }3\text{-full}&\varnothing\\
+ n\text{ is }3\text{-full},\ n+1\text{ is }2\text{-full}&8,\ 12167
+ \end{array}
+\]
+This is only a finite certificate. In particular it cannot establish
+that the first line is empty without the stated cutoff.
+
+\subsection*{3. Exact local restrictions}
+Modulo $p^3$, exclude residues with $v_p(n)=1$ and those with
+$v_p(n+1)=1$ or $2$. The respective counts are
+$p(p-1)$ and $p(p-1)+(p-1)$. The sets are disjoint, since a prime
+cannot divide both consecutive integers. Exactly
+\[
+ p^3-2p^2+p+1
+\]
+residues survive this necessary local test. For $p=2$ they are
+$n\equiv0,4,7\pmod8$. For any finite set of primes, the Chinese
+remainder theorem gives the product of these counts modulo the
+product of their cubes. These local conditions are necessary,
+not sufficient, since other primes remain untested.
+
+\subsection*{4. Conditional finiteness from $abc$}
+Assume that for each $\varepsilon>0$, coprime $a+b=c$ satisfy
+$c\le C_\varepsilon\operatorname{rad}(abc)^{1+\varepsilon}$.
+For a candidate $n$,
+\[
+ \operatorname{rad}(n)\le n^{1/2},\qquad
+ \operatorname{rad}(n+1)\le(n+1)^{1/3}.
+\]
+Applying the conjecture with $a=n,b=1,c=n+1$ gives
+\[
+ n+1\le C_\varepsilon
+       \big(n^{1/2}(n+1)^{1/3}\big)^{1+\varepsilon}
+ \le C_\varepsilon(n+1)^{5(1+\varepsilon)/6}.
+\]
+Choose $\varepsilon<1/5$. Then $n$ is bounded, so only finitely many
+such oriented pairs can exist under $abc$. The same proof applies
+with the orientations exchanged. It does not prove that the
+displayed orientation has a single example or has no examples.
+
+\subsection*{5. Assessment and provenance}
+Neither the unique parametrization, the finite sieve, nor conditional
+finiteness resolves existence. The missing step is an unconditional
+construction with the correct orientation, or a uniform exclusion.
+
+Source: \texttt{https://www.erdosproblems.com/366}, checked 2026-09-25;
+the page itself flags ambiguity in the original source.
+The earlier GPT Pro 5.2 attempt was checked. All unconditional
+ingredients here are proved explicitly; $abc$ is an assumption
+only in the labeled conditional section.
+No novelty or formal Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

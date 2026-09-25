@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 874: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and input}
+For $A\subseteq[1,N]$ let $S_r(A)$ be its sums of $r$ distinct elements. Call $A$ admissible if $S_r(A)\cap S_s(A)=\varnothing$ for $r\ne s$. We prove that the maximal size $k(N)$ satisfies $k(N)\sim2\sqrt N$. Our explicit external input is the structural Theorem 2 quoted by Deshouillers and Freiman in \emph{On an additive problem of Erd\H{o}s and Straus, 2}, Ast\'erisque 258 (1999), \url{https://archive.numdam.org/item/AST_1999__258__141_0.pdf}. We do not assume their final extremal bound.
+
+The structural input says that if an admissible $A\subseteq[1,N]$ has $|A|>1.96\sqrt N$ and $N$ is sufficiently large, there are $C\subseteq A$, an integer $q\ge1$, and a fixed-cardinality subset-sum set of $C$ containing an arithmetic progression $J$ of at least $3N^{5/6}$ terms with difference $q$, such that
+\[
+ |C|\le10^5N^{5/12},\qquad B=A\setminus C
+ \text{ lies in a progression of difference }q\text{ with at most }N^{7/12}\text{ terms}.\tag{1}
+\]
+We derive the required sharp leading constant from this more structural statement.
+
+\section*{The interval lower bound, including rounding}
+Let $A=\{N-k+1,\ldots,N\}$. Its $r$-term sums form the entire integer interval
+\[
+ [rN-rk+r(r+1)/2,\quad rN-r(r-1)/2].\tag{2}
+\]
+To verify absence of gaps, subtract the smallest possible ordered $r$-tuple; the resulting weakly increasing $r$ entries lie between $0$ and $k-r$, and can have every total from $0$ to $r(k-r)$ (write the total as $r$ times a quotient plus a remainder).
+
+The lower endpoint for $r+1$ minus the upper endpoint for $r$ is
+\[
+ N+1-(r+1)(k-r).
+\]
+Thus successive sum intervals are disjoint exactly when $N\ge\max_{1\le r<k}(r+1)(k-r)=\lfloor(k+1)^2/4\rfloor$ (with the size-one case immediate). Ordered disjointness of adjacent intervals implies pairwise disjointness of all of them. If $N\in[m^2,m^2+m)$ one can take $k=2m-1$; if $N\in[m^2+m,(m+1)^2)$ one can take $k=2m$. Therefore $k(N)\ge2\sqrt N-O(1)$.
+
+\section*{Using the progression structure for an upper bound}
+Let $A$ be maximal. The lower bound permits (1), and $b=|B|\ge2\sqrt N-O(N^{5/12})$. Any fixed-cardinality subset sums of the ordered set $B$ can be linked from their minimum to their maximum by successively incrementing an index by one. Each step is at most the span of $B$, hence less than $qN^{7/12}$. Adding the long progression $J$ fills every possible lattice gap. Consequently $S_t(B)+J$ is a complete arithmetic-progression interval of difference $q$ for every $1\le t\le b$.
+
+The intervals $S_t(B)+J$ and $S_{t+q}(B)+J$, when defined, lie in the same residue class modulo $q$. They are disjoint by admissibility, because $J$ consists of sums of a fixed number of elements of $C$ and $B\cap C=\varnothing$. Their smallest elements have the natural order: adding $q$ positive elements increases the minimum sum. Thus
+\[
+ \max S_t(B)<\min S_{t+q}(B).\tag{3}
+\]
+There is no assumption here that all of $A$ lies in the residue class of $B$.
+
+From the spacing of $B$ we have $q(b-1)\le N-1$. In view of its lower bound this implies $q\le(1/2+o(1))\sqrt N<b-2$. Put $t=\lfloor(b-q)/2\rfloor$ and $b'=2t+q\in\{b-1,b\}$. Use the first $b'$ elements $b_1<\cdots<b_{b'}$ of $B$, and set $z=b_{t+q}$. Inequality (3), applied to the indicated subsets, gives
+\[
+ tz+q\frac{t(t+1)}2
+ \le\sum_{i=t+q+1}^{2t+q}b_i
+ <\sum_{i=1}^{t+q}b_i
+ \le(t+q)z-q\frac{(t+q)(t+q-1)}2.
+\]
+Also $z+tq\le N$. Rearranging yields
+\[
+ N>t^2+2tq+(q^2-q)/2
+   =\frac{b'^2+2b'q-q^2-2q}{4}\ge\frac{b'^2}{4},
+\]
+where the last inequality uses $q\le2b'-2$, certainly true for large $N$. Hence $b<2\sqrt N+1$, and (1) gives
+\[
+ |A|\le2\sqrt N+1+10^5N^{5/12}=2\sqrt N+o(\sqrt N).
+\]
+Together with the construction this proves the requested asymptotic.
+
+\section*{Assessment}
+The interval construction and the deduction of the sharp leading constant are fully proved; the deep progression-structure theorem is explicitly imported. The source proves a stronger exact large-$N$ extremal formula, whose sharper classification is not claimed here.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

@@ -1,0 +1,84 @@
+\section*{Erd\H{o}s Problem 1128: a colouring with no infinite monochromatic box}
+
+\paragraph{Statement and scope.}
+There is a two-colouring of \(\omega_1^3\) with no monochromatic product of three countably infinite sets. Transporting this colouring by bijections gives the negative answer for any three sets of cardinality \(\aleph_1\).
+The result is due to Prikry--Mills (1978), as recorded at \url{https://www.erdosproblems.com/1128}.
+We reconstruct the colouring and its verification from the coherent-rank method in the proof source
+\url{https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1128.lean}.
+The rank-existence lemma stated next is an explicit external input. No local Lean compilation is claimed.
+
+\paragraph{The precise rank input.}
+There is a map \(\rho:[\omega_1]^2\to\mathbb N\), written \(\rho(x,z)\) for \(x<z\), such that, with \(\rho(x,x)=0\),
+\[
+ \rho(x,z)\leq\max\{\rho(x,y),\rho(y,z)\},\qquad
+ \rho(x,y)\leq\max\{\rho(x,z),\rho(y,z)\}
+ \quad(x<y<z),
+\]
+and \(\{x\leq z:\rho(x,z)\leq m\}\) is finite for every \(z,m\).
+These are precisely the source's \texttt{rho\_triangle} and \texttt{rhoSmall\_finite} lemmas.
+For clarity, their construction uses a cofinal ladder \(C_z\subset z\) with \(C_z\cap x\) finite for every \(x<z\), and the recursive prescription
+\[
+ \rho(x,z)=\max\left\{
+ |C_z\cap x|,\ 
+ \rho(x,\min(C_z\setminus x)),\
+ \max_{v\in C_z\cap x}\rho(v,x)\right\}.
+\]
+Here \(C_z\setminus x\) means the ladder points at least \(x\), and a maximum over the empty set is zero. At successors one may take the singleton predecessor ladder. The two triangle inequalities and local finiteness of this recursion, proved in the cited source, are the portion imported here.
+
+\paragraph{Injective ordered keys.}
+Let \(B_m(x)=\{v\leq x:\rho(v,x)\leq m\}\), \(\nu_m(x)=|B_m(x)|\), and define a lexicographically ordered key
+\[
+ K_z(x)=(\rho(x,z),\nu_{\rho(x,z)}(x))\in\mathbb N\times_{\rm lex}\mathbb N
+ \quad(x<z).
+\]
+If \(x<y\) and \(\rho(x,y)\leq m\), the first triangle inequality shows \(B_m(x)\subset B_m(y)\); the inclusion is proper because \(y\) is in the second set only. Hence \(\nu_m(x)<\nu_m(y)\).
+It follows that \(x\mapsto K_z(x)\) is injective. Indeed equality of its first components, say \(m\), implies \(\rho(x,y)\leq m\) by the second triangle inequality, and the second components then differ.
+Every initial segment of the keys at a fixed \(z\) has finite preimage, by local finiteness of \(\rho\).
+
+We also need the coherence rule
+\[
+ x<y<z,\quad K_z(y)<K_z(x)
+ \quad\Longrightarrow\quad K_y(x)=K_z(x).                 \tag{1}
+\]
+In fact \(\rho(y,z)<\rho(x,z)\): equality of these first components would force the opposite strict order of the second components, as just proved.
+The two triangle inequalities now give \(\rho(x,y)=\rho(x,z)\), which proves (1).
+
+\paragraph{The colouring.}
+On triples with pairwise distinct coordinates, give colour zero according to the following rule:
+\[
+ \begin{array}{c|c}
+ \text{largest coordinate}&\text{condition for colour zero}\\ \hline
+ a&K_a(b)<K_a(c)\\
+ b&K_b(c)<K_b(a)\\
+ c&K_c(a)<K_c(b).
+ \end{array}
+\]
+Otherwise give colour one. Triples with coincident coordinates may be coloured arbitrarily.
+Cyclically permuting the coordinates preserves the colour; interchanging two coordinates reverses it.
+
+\paragraph{Excluding a monochromatic box.}
+Any three infinite subsets contain disjoint strictly increasing sequences, by taking increasing subsequences in turn and avoiding the finitely many points already used. Restrict a supposed monochromatic box to such sequences \(A,B,C\). Their suprema \(\alpha,\beta,\gamma\) are countable limit ordinals, with every point in each sequence strictly below its supremum.
+Interchanging two coordinates if necessary reduces to colour zero.
+
+If one supremum is uniquely largest, cyclically label it \(\alpha\). Choose \(a\in A\) above both other suprema. Colour zero would give \(K_a(b)<K_a(c)\) for all \(b\in B,c\in C\). Fixing \(c\) contradicts the finite-preimage property of initial segments of keys.
+
+If exactly two suprema are equal and maximal, a cyclic relabelling makes \(\alpha=\beta>\gamma\). Choose \(a\in A\) above \(\gamma\), then \(b\in B\) above \(a\). All \(c\in C\) lie below \(a<b\), and colour zero gives \(K_b(c)<K_b(a)\) for every \(c\), the same finiteness contradiction.
+
+Finally suppose all three suprema coincide. Among configurations \(a<c<b\) with \(a\in A,c\in C,b\in B\), choose one minimizing \(K_b(c)\) in the well-order \(\mathbb N\times_{\rm lex}\mathbb N\). Such configurations exist by common cofinality.
+Choose successively
+\[
+ b<a'<c'<b',\qquad a'\in A,\ c'\in C,\ b'\in B.
+\]
+The three colour-zero conditions and (1) give
+\[
+ \begin{aligned}
+ K_{b'}(c')&<K_{b'}(a')=K_{c'}(a')\\
+           &<K_{c'}(b)=K_{a'}(b)\\
+           &<K_{a'}(c)=K_b(c).
+ \end{aligned}
+\]
+This contradicts minimality, since \(a'<c'<b'\) is another eligible configuration. All cases have been excluded.
+
+\paragraph{Completion estimate.}
+The full counterexample and verification are reconstructed relative to the explicitly stated coherent-rank existence lemma; that lemma is supplied by the cited proof source.
+\textbf{COMPLETION: 100\%}

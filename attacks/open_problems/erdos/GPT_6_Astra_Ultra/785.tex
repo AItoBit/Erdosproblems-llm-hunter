@@ -1,0 +1,126 @@
+\section*{Erd\H{o}s Problem 785: the surplus of exact additive complements}
+
+\paragraph{Statement and claim.}
+Let infinite \(A,B\subseteq\mathbb N\) satisfy
+\(A+B\supseteq[N_0,\infty)\cap\mathbb N\) and
+\(A(x)B(x)\sim x\). Then \(A(x)B(x)-x\longrightarrow\infty\).
+We reconstruct Ruzsa's stronger bound
+\[
+ A(x)B(x)-x\geq(1-o(1))\frac{a^*(x)}{A(x)},\qquad
+ a^*(x)=\max(A\cap[1,x]),
+                                                               \tag{1}
+\]
+after interchanging \(A,B\) if necessary.
+Source: I. Z. Ruzsa, \emph{Exact additive complements},
+\url{https://arxiv.org/abs/1510.00812}, Section 2.
+See \url{https://www.erdosproblems.com/785}.
+The external input is Narkiewicz's dichotomy, stated as
+Theorem 1.1 of that paper:
+\[
+ A(2x)/A(x)\to1,\qquad B(2x)/B(x)\to2
+                                                               \tag{2}
+\]
+in one fixed ordering of the two sets.
+
+\paragraph{Consequences of the dichotomy.}
+By iteration and monotonicity, for every fixed \(c>0\),
+\(A(cx)/A(x)\to1\), uniformly when \(c\) stays in a compact
+subinterval of \((0,\infty)\).
+Together with exactness, this gives \(B(cx)/B(x)\to c\),
+uniformly for \(0\leq c\leq1\); uniformity near zero follows
+by monotonicity and then letting a fixed small \(c\) tend to zero.
+Iteration of \(A(2x)\leq2^\varepsilon A(x)\), valid for
+sufficiently large \(x\), also gives \(A(x)=x^{o(1)}\).
+Finally
+\[
+ \sum_{\substack{a\in A\\a\leq t}}a=o(tA(t)).                   \tag{3}
+\]
+Indeed, the terms below \(\eta t\) contribute at most
+\(\eta tA(t)\), and the others at most
+\(t(A(t)-A(\eta t))=o(tA(t))\); then let \(\eta\to0\).
+
+\paragraph{Comparing repeated sums and differences.}
+For finite sets \(U,V\), let
+\(\sigma(s)=|\{(u,v)\in U\times V:u+v=s\}|\) and
+\(\delta(d)=|\{(u,v)\in U\times V:v-u=d\}|\).
+Counting equal-sum quadruples in two ways gives
+\[
+ \sum_s\sigma(s)^2=\sum_d\delta(d)^2,\qquad
+ \sum_s\sigma(s)=\sum_d\delta(d)=|U||V|.
+\]
+Since \(\sigma(s)\leq |U|\),
+\[
+ \sum_d(\delta(d)-1)_+
+ \leq \sum_d\delta(d)(\delta(d)-1)
+ \leq |U|\sum_s(\sigma(s)-1)_+.                                \tag{4}
+\]
+
+\paragraph{The surplus decomposition.}
+It suffices initially to consider integer \(x\).
+Put \(a=A(x)\), \(t=a^*(x)\), \(U=A\cap[1,x]\), and
+\(V=B\cap[1,x]\).
+Let \(r\) be the number of positive integers at most \(x\)
+missing from \(A+B\), so \(r=O(1)\).
+Let \(y=\sum_s(\sigma(s)-1)_+\) and
+\(z=|(U+V)\cap(x,\infty)|\). Positivity of the summands gives
+\[
+ E:=A(x)B(x)-x=y+z-r.                                         \tag{5}
+\]
+The sums \(t+b\), with \(x-t<b\leq x\), are distinct and exceed
+\(x\), so \(z\geq B(x)-B(x-t)\).
+
+If \(t\geq x/2\), uniform regular variation of \(B\) gives
+\[
+ z\geq(t/x-o(1))B(x)=(1-o(1))t/a.
+\]
+Since \(a=A(t)=t^{o(1)}\), the quantity \(t/a\) tends to infinity;
+the bounded term \(r\) in (5) is negligible.
+
+\paragraph{The case \(t<x/2\).}
+Set \(V'=B\cap[1,x-t]\), and use \(\sigma',\delta'\) for
+its sum and difference counts with \(U\).
+Because there is no element of \(A\) in \((t,x]\),
+\[
+ A(a'+t)=A(t)=a\qquad(a'\in U).
+\]
+Uniformly for arguments at least \(t\), exactness gives
+\(B(a'+t)=(1+o(1))(a'+t)/a\), as \(t\to\infty\).
+By (3),
+\[
+ \#\{(a',b)\in U\times V':b-a'\leq t\}
+ \leq\sum_{a'\in U}B(a'+t)=(1+o(1))t.
+\]
+All remaining differences lie in the interval
+\([t+1,x-t-1]\), of length less than \(x-2t\).
+For any fixed \(\varepsilon>0\) and sufficiently large \(x\),
+their repeated multiplicities therefore total at least
+\[
+ aB(x-t)-x+(1-\varepsilon)t.
+\]
+Apply (4) to \(U,V'\), and note that its repeated sums
+contribute to \(y\). We get
+\[
+ y\geq B(x-t)-\frac{x-(1-\varepsilon)t}{a}.
+\]
+Adding the bound for \(z\) and using (5) yields
+\[
+ E+r\geq \frac{E+(1-\varepsilon)t}{a},
+ \qquad
+ E\geq\frac{(1-\varepsilon)t-ar}{a-1}.                          \tag{6}
+\]
+Both \(a\) and \(t\) tend to infinity, while
+\(a=t^{o(1)}\) and \(r=O(1)\).
+Thus \(ar=o(t)\), and (6), followed by
+\(\varepsilon\to0\), proves (1) in this case as well.
+
+\paragraph{Conclusion.}
+For real \(x\), replace \(x\) by \(\lfloor x\rfloor\);
+the counting functions and \(a^*(x)\) are unchanged and
+the surplus changes by less than one.
+Since \(t/A(t)\to\infty\), equation (1) proves the
+asserted divergence for all real \(x\to\infty\).
+This is a full reconstruction relative to Narkiewicz's
+stated dichotomy, not a new proof of that external theorem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

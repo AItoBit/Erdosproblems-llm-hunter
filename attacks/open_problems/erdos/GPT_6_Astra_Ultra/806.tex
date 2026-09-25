@@ -1,0 +1,75 @@
+\section*{Erd\H{o}s Problem 806}
+
+\paragraph{Statement and result.}
+If \(A\subseteq\{1,\ldots,n\}\) and \(|A|\leq\sqrt n\), must there be an integer set \(B\) with \(A\subseteq B+B\) and \(|B|=o(\sqrt n)\)? Yes. We reconstruct the small-universal-set argument of Alon, Bukh, and Sudakov and obtain
+\[
+ |B|=O\!\left(\frac{\sqrt n\log\log n}{\log n}\right).
+\]
+All logarithms in the proof are natural. The estimates concern sufficiently large \(n\); the remaining finite range can be covered by increasing the absolute constant.
+
+\paragraph{A universal set for a short interval.}
+Work first in the cyclic group \(G=\mathbb Z/n\mathbb Z\). Put
+\[
+ m=\lceil\sqrt n(\log n)^2\rceil,\qquad
+ X=\{0,\ldots,m-1\},\qquad
+ k=\left\lfloor\frac{\log n}{40\log\log n}\right\rfloor.
+\]
+For large \(n\), \(1\leq k\leq m<n/2\), and \(|X+X|\leq2m\). We will find \(U\subseteq X+X\) such that every subset of \(X\) of size at most \(k\) has a translate contained in \(U\).
+
+Choose each element of \(X+X\) independently with probability
+\[
+ p=\left(\frac{2k^3\log m}{m}\right)^{1/k}.
+\]
+Here \(p<1\) for large \(n\). Fix a \(k\)-element set \(S\subseteq X\). The sets \(x+S\), indexed by \(x\in X\), lie in \(X+X\). If \((x+S)\cap(y+S)\ne\varnothing\), then \(y-x\in S-S\). Each index therefore conflicts with at most \(k^2-1\) other indices. Greedily selecting and discarding conflicts gives at least \(m/k^2\) pairwise disjoint translates. Their containment events are independent, so
+\[
+ \Pr(\text{no translate of }S\text{ is contained in }U)
+ \leq(1-p^k)^{m/k^2}
+ \leq\exp(-2k\log m)=m^{-2k}.
+\]
+There are at most \(m^k\) choices of \(S\). Thus the probability that some \(S\) fails is at most \(m^{-k}\). On the other hand,
+\(\mathbb E|U|\leq2mp\), and Markov's inequality gives
+\(\Pr(|U|>4mp)\leq1/2\). Since \(m^{-k}<1/2\), one choice has both properties. Sets smaller than \(k\) can be extended to \(k\)-element subsets of \(X\), so they also have the required translate.
+
+The resulting set is very small. Writing \(L=\log n\), we have
+\[
+ \log m=\tfrac12L+2\log L+o(1),\qquad
+ \frac{\log m}{k}=(20+o(1))\log L,
+ \qquad
+ \frac{\log(2k^3\log m)}{k}=o(1).
+\]
+Consequently
+\[
+ |U|\leq4mp=\sqrt n\,L^{-18+o(1)}
+ =o(\sqrt n/L).
+\tag{1}
+\]
+
+\paragraph{Covering the ambient group.}
+Choose independently
+\(s=\lceil2n\log n/m\rceil\) uniform elements \(y_1,\ldots,y_s\) of \(G\). A fixed element is missed by every \(y_i+X\) with probability \((1-m/n)^s\). Hence the expected number of uncovered elements is at most
+\[
+ n\exp(-sm/n)\leq n^{-1}<1.
+\]
+Some choice therefore covers \(G\), and \(s=O(\sqrt n/\log n)\).
+
+Assign each element of \(A\), reduced modulo \(n\), to its first covering translate. This partitions \(A\) into sets \(A_i\subseteq y_i+X\). Split each nonempty \(A_i\) into pieces \(T_{ij}\) of size at most \(k\). There are at most
+\[
+ \sum_i\left\lceil\frac{|A_i|}{k}\right\rceil
+ \leq\frac{|A|}{k}+s
+ =O\!\left(\frac{\sqrt n\log\log n}{\log n}\right)
+\tag{2}
+\]
+pieces. By universality, for each piece there is an element \(g_{ij}\in G\) such that \(T_{ij}\subseteq g_{ij}+U\). Thus
+\[
+ B_0=U\cup\{g_{ij}\}
+ \quad\hbox{satisfies}\quad A\subseteq B_0+B_0\quad\text{in }G,
+\]
+with the desired size bound by (1)--(2).
+
+\paragraph{Returning to integers.}
+Represent the residues of \(B_0\) by a set \(P\subseteq\{1,\ldots,n\}\), and put \(B=P\cup(P-n)\). If \(a\in A\), there are \(u,v\in P\) with \(u+v\equiv a\pmod n\). Since \(2\leq u+v\leq2n\) and \(1\leq a\leq n\), either \(u+v=a\) or \(u+v=a+n\). In the latter case \((u-n)+v=a\). Therefore \(A\subseteq B+B\) over the integers and \(|B|\leq2|B_0|\). Finally \(\log\log n/\log n\to0\), proving the requested little-oh bound.
+
+\paragraph{Attribution and assessment.}
+This is a reconstruction of the universal-set and covering method in N. Alon, B. Bukh, and B. Sudakov, \emph{Discrete Kakeya-type problems and small bases}, Theorems 1.2 and 1.4 and Section 3, \url{https://arxiv.org/abs/0711.1604}; author manuscript: \url{https://web.math.princeton.edu/~nalon/PDFS/dkakeya2.pdf}. The statement and historical lower bound are recorded at \url{https://www.erdosproblems.com/806}, checked 24 September 2026. The proof above establishes the upper bound without assuming a small-basis theorem. It does not claim a new result or local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

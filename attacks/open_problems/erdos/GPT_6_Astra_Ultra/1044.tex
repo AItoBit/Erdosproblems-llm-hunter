@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1044: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Which infimum is determined}
+For the infimum over all positive degrees, the answer is
+\[
+ \boxed{\inf_f\ \max_{U\text{ a component of }\{|f|<1\}}
+                 \operatorname{length}(\partial U)=2.}
+\tag{1}
+\]
+Here $f$ is monic and all its roots lie in the closed unit disk. Degree is allowed to vary. Determining the minimum separately at every fixed degree is a different, stronger question, and is not asserted below.
+
+We reconstruct the proof in Quanyu Tang, \emph{On Erd\H{o}s Problem \#1044}, Sections 2--4, \url{https://raw.githubusercontent.com/QuanyuTang/erdos-problem-1044/main/On_Erd%C5%91s_Problem_1044.pdf}. A diameter theorem of Pommerenke is explicitly retained as an external input. We give the boundary-length step in a form that counts geometric boundary length without counting overlapping parametrized arcs twice.
+
+\section*{A boundary-length lemma}
+Let $U$ be a bounded connected open set whose boundary is a finite union of rectifiable analytic arcs. Then
+\[
+ \operatorname{length}(\partial U)\ge2\operatorname{diam}(\overline U).
+\tag{2}
+\]
+To see this, project onto a direction parallel to a pair of diameter-realizing points of $\overline U$. The projection of $U$ is an interval whose length is its diameter. For almost every coordinate in this interval, the corresponding perpendicular line meets $U$ in a nonempty bounded open set. Its first and last endpoints are two distinct points of $\partial U$. The one-dimensional projection formula on the boundary arcs gives
+\[
+ \operatorname{length}(\partial U)
+ \ge\int\#\{\partial U\text{ on the perpendicular line at }t\}\,dt
+ \ge2\operatorname{diam}(\overline U).
+\]
+One can obtain the first inequality directly by dividing the arcs at projection-critical points and integrating $|dx|\le ds$; endpoints and intersections form a set of zero arclength and can be counted once. For polynomial sublevel components the boundary is a compact real algebraic curve, hence has the required finite rectifiable-arc decomposition. The diameter of the closure also equals the diameter of the boundary: a diameter-realizing point in the interior could be moved slightly away from its partner.
+
+Every component of $\{|f|<1\}$ contains a root. Otherwise $\log|f|$ would be harmonic in that bounded component with boundary value zero, contrary to its strictly negative interior values. In particular there are at most $\deg f$ components.
+
+\section*{The one external diameter input}
+We use the following consequence of Pommerenke, \emph{On metric properties of complex polynomials}, Michigan Math. J. 8 (1961), Theorem 3, \url{https://doi.org/10.1307/mmj/1028998561}, in the form invoked in Tang's proof of Theorem 4.3:
+\begin{quote}
+If a monic polynomial has all roots in the closed unit disk and $|f(0)|<1$, then the component of $\{|f|<1\}$ containing zero has diameter strictly greater than one.
+\end{quote}
+Only this weak consequence is imported, not the desired arclength conclusion. For maximum root modulus $r>0$, the more precise piecewise diameter bounds imply it; when $r=0$, the polynomial is $z^n$ and the diameter is two directly. Tang's cited use of Pommerenke is the source checked for this input; an independent proof of the diameter theorem is not provided here.
+
+If $|f(0)|<1$, apply this input and (2) to get a component with boundary length greater than two. The only remaining possibility is $|f(0)|=1$, since the product of the root moduli is at most one. Equality forces every root to have modulus one. The nonconstant harmonic function $\log|f|$ near zero has value zero there, so every neighbourhood of zero contains a point of $\{|f|<1\}$. There are only finitely many components; hence zero belongs to the boundary of one component $U$.
+
+That component contains a root $a$ with $|a|=1$. Since $a$ is an interior point of $U$, the set $U$ contains a point $b$ with $|b|>1$. Thus the maximum of $|z|$ on $\overline U$, attained on $\partial U$, is strictly greater than one. Together with $0\in\partial U$ this gives $\operatorname{diam}(\overline U)>1$. Equation (2) again gives boundary length greater than two. We have proved a strict lower bound for each individual polynomial, and hence a lower bound of two for the infimum.
+
+\section*{An explicit sequence approaching two}
+Take $f_n(z)=z^n-1$. Its roots have modulus one and its strict unit sublevel set has $n$ congruent petals. The closure of the petal containing the positive real root has the polar boundary
+\[
+ z=\rho(\theta)e^{i\theta},\qquad
+ \rho(\theta)=(2\cos(n\theta))^{1/n},\qquad
+ -\frac\pi{2n}\le\theta\le\frac\pi{2n}.
+\]
+The endpoints are both zero. Differentiating gives
+\[
+ \sqrt{\rho^2+(\rho')^2}
+ =2(2\cos(n\theta))^{1/n-1}.
+\]
+Consequently every petal boundary has length
+\[
+ L_n=\frac{2^{1/n}}n B\left(\frac1{2n},\frac12\right),\qquad
+ B(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\,dt.
+\tag{3}
+\]
+For $0<a\le1/2$,
+\[
+ B(a,1/2)=\frac1a+
+ \int_0^1t^{a-1}\bigl((1-t)^{-1/2}-1\bigr)\,dt
+ =\frac1a+O(1).
+\]
+The remainder is uniformly bounded: near zero the parenthesized factor is $O(t)$, and near one it is integrable, while $t^{a-1}$ is bounded there. Substituting $a=1/(2n)$ in (3) yields $L_n\to2$. This proves the matching upper bound in (1). The global infimum is approached but not attained, by the strict lower bound already proved.
+
+\section*{Assessment}
+The global degree-varying infimum and its nonattainment are proved relative to the stated Pommerenke diameter input. The length computation and passage to the infimum are supplied. No optimality assertion is made for $z^n-1$ at every fixed $n$.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

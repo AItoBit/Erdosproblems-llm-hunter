@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 411: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For $g(n)=n+\varphi(n)$, determine all $n,r$ for which $g^{\circ(k+r)}(n)=2g^{\circ k}(n)$ for all sufficiently large $k$. Source: \url{https://www.erdosproblems.com/411}. We reduce the question exactly to cycles of a map on odd parts, prove the known two-step families, and rule out several cases. The classification of all possible cycles remains unresolved here.
+
+The valid doubling arguments in the earlier GPT-5.2 attempt are retained. Its inequality $\varphi(x)\le x/2$ for arbitrary $x$ with any prime divisor was false; only even $x$ always satisfy that bound. No such inequality is used below.
+
+\section*{Parity and propagation of one identity}
+For $x>2$, $\varphi(x)$ is even, by pairing reduced residues. Hence odd starting values greater than one remain odd forever and cannot satisfy a doubling identity. The orbits of $1$ and $2$ enter the odd value $3$ and are also excluded. Every even start $n\ge4$ stays even.
+
+For even $x$, the product formula gives $\varphi(2x)=2\varphi(x)$, and therefore $g(2x)=2g(x)$. Consequently, if an even $x\ge4$ satisfies $g^{\circ r}(x)=2x$ once, then
+\[
+ g^{\circ(k+r)}(x)=2g^{\circ k}(x)\quad(k\ge0). \tag{1}
+\]
+This follows by applying $g$ repeatedly and using evenness at each step. Thus the eventual question asks whether an even orbit reaches a solution of the single equation. The case $r=1$ is impossible: $\varphi(x)<x$ for $x>1$, while the exceptional equality at $x=1$ does not persist.
+
+\section*{The normalized odd-part dynamics}
+Write an even integer as $x=2^a u$, $a\ge1$, $u$ odd. Then
+\[
+ g(x)=2^{a-1}\bigl(2u+\varphi(u)\bigr).
+\]
+Define
+\[
+ b(u)=v_2(2u+\varphi(u)),\qquad
+ H(u)=\frac{2u+\varphi(u)}{2^{b(u)}},\qquad
+ d(u)=b(u)-1. \tag{2}
+\]
+The update is exactly $(a,u)\mapsto(a+d(u),H(u))$. For odd $u>1$, $b(u)\ge1$, so $d(u)\ge0$. The sole exceptional odd part is $u=1$, with $H(1)=3$ and $d(1)=-1$. An actual orbit from an even start at least four never leaves the even numbers, including at this step.
+
+Suppose $u_0,\ldots,u_{h-1}$ form a cycle of $H$ of least period $h$, and let $w=\sum_{j<h}d(u_j)$. Taking the initial exponent $a$ large enough makes all intermediate terms even. After one cycle the integer is multiplied by $2^w$. Since $g(x)>x$ for all $x$, necessarily $w\ge1$.
+
+We now obtain an exact criterion: an even starting value at least four has an eventual $r$-step doubling law if and only if its $H$-orbit enters a cycle of least period $r$ and total weight one. For necessity, doubling returns to the same odd part, so the eventual odd-part period $h$ divides $r$. The total exponent increase over $r$ steps is $(r/h)w=1$. Both factors are positive integers, forcing $r=h$ and $w=1$. For sufficiency, a cycle of weight one doubles the integer after its period, and (1) propagates the identity.
+
+This removes the arbitrary power of two from the search and specifies the exact obstruction; it is not an assumed classification of $H$-cycles.
+
+\section*{Three explicit weight-one cycles}
+Direct totient evaluations give
+\[
+ 1\xrightarrow{\ d=-1\ }3\xrightarrow{\ d=2\ }1,
+ \qquad
+ 5\xrightarrow{\ d=0\ }7\xrightarrow{\ d=1\ }5,
+ \qquad
+ 35\xrightarrow{\ d=0\ }47\xrightarrow{\ d=1\ }35.
+\]
+For example $2\cdot35+\varphi(35)=94=2\cdot47$, and $2\cdot47+\varphi(47)=140=4\cdot35$. Therefore the two-step law holds from the start for
+\[
+ n=2^a\ (a\ge2),\qquad
+ n=2^a u\ (a\ge1,\ u\in\{3,5,7,35,47\}).
+\]
+The least representatives are $4,6,10,14,70,94$.
+
+For $r=2$, expanding $g(g(x))$ shows that the equation is exactly
+\[
+ \varphi(x)+\varphi(x+\varphi(x))=x.
+\]
+Any solution is even and at least four: $1,2$ fail directly, and for odd $x>1$ the left side is even. Thus its full propagation follows from (1).
+
+\section*{Remaining gap}
+The listed cycles and all their permitted powers of two are proved solutions. Other odd parts could enter them, or other weight-one cycles could exist; neither possibility is excluded in general. In a cycle avoiding one, every weight is nonnegative, so a weight-one cycle has exactly one step with $b(u)=2$ and all others with $b(u)=1$. This structural restriction still does not classify those cycles. Bounded searches cannot supply that missing exclusion.
+
+\textbf{Completion rate estimate: 45\%.}
+\end{document}

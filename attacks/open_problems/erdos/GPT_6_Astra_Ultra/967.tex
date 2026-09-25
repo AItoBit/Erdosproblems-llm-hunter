@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 967: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and result}
+The proposed nonvanishing of $1+\sum a_j^{-1-it}$ for every increasing sequence $a_j>1$ with $\sum1/a_j<\infty$ is false. For each fixed real $t\ne0$ we construct an infinite such sequence with sum $-1$. The proof reconstructs Fredy Yip's elementary argument in \emph{On a problem of Erd\H{o}s and Ingham}, \url{https://arxiv.org/abs/2512.16528}, with the noninteger block endpoints and infinitude checked explicitly.
+
+\section*{A finite approximation block}
+Write $K=1+|1+it|$. Given a nonzero complex target $c$ and an integer cutoff $N$, choose a real $x$ as large as desired with $x^{-it}=c/|c|$. This is possible because $-t\log x$ makes arbitrarily many full turns. Impose also $x\ge N$, $x^{-1}\le|c|^2$, and $x|c|\ge3$. Put $s=\lfloor x|c|\rfloor$ and
+\[
+ S=[x,x+s)\cap\mathbb Z.
+\]
+An interval of integer length $s$ of this half-open form has exactly $s$ integer points, even when $x$ is nonintegral. For $g(u)=u^{-1-it}$, $|g'(u)|=|1+it|u^{-2}$ on positive reals. Every selected integer is at distance less than $s$ from $x$, so
+\[
+ \left|\sum_{n\in S}n^{-1-it}-s x^{-1-it}\right|
+ \le |1+it|s^2/x^2\le |1+it||c|^2.
+\]
+Also $sx^{-1-it}$ has the direction of $c$ and its modulus differs from $|c|$ by at most $1/x\le|c|^2$. Hence
+\[
+ \left|c-\sum_{n\in S}n^{-1-it}\right|\le K|c|^2,
+ \qquad \sum_{n\in S}\frac1n<|c|.\tag{1}
+\]
+For the strict inequality, there are at least three selected integers; at least one exceeds $x$, so their reciprocal sum is strictly less than $s/x\le|c|$. In particular the block sum has modulus strictly smaller than $|c|$.
+
+\section*{An absolutely convergent iterative construction}
+Set $\lambda=-1$, $r=(2K)^{-1}$, and let $\lambda_j$ be the residual after the first $j-1$ blocks, initially $\lambda_1=\lambda$. Choose $c_j$ in the direction of $\lambda_j$ with modulus $\min(|\lambda_j|,r)$, and apply (1) with a cutoff exceeding every previously used integer and at least two. Let its finite set be $S_j$ and its sum be $b_j$. Then
+\[
+ |\lambda_{j+1}|=|\lambda_j-b_j|
+ \le|\lambda_j|-|c_j|+K|c_j|^2
+ \le|\lambda_j|-\tfrac12|c_j|.\tag{2}
+\]
+While $|\lambda_j|>r$, it decreases by at least $r/2$, so after finitely many steps it is at most $r$. Subsequently (2) gives $|\lambda_{j+1}|\le|\lambda_j|/2$.
+
+No residual is zero: (1) gives $|b_j|<|c_j|\le|\lambda_j|$, so $b_j\ne\lambda_j$. Thus every step adds a nonempty block, and the blocks are disjoint and ordered by construction. Their union $S$ is infinite. The finite initial stage and the later geometric decay imply
+\[
+ \sum_{n\in S}\frac1n\le\sum_j|c_j|<\infty.
+\]
+The complex series is therefore absolutely convergent. Its partial sums at block endpoints are $\lambda-\lambda_{j+1}\to\lambda=-1$, proving that its full sum is $-1$. Enumerating $S$ increasingly produces the required $a_j$.
+
+\section*{Assessment}
+This is a complete counterexample construction for every nonzero $t$, and uses no external number-theoretic conjecture. At $t=0$ all terms are positive, so nonvanishing holds there. The substantially different finite-sequence nonvanishing question is not settled by this construction.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

@@ -1,0 +1,74 @@
+\section*{Erd\H{o}s Problem 948}
+
+\paragraph{Statement and result.}
+Is there a function \(f:\mathbb N\to\mathbb N\) and a finite number \(k\geq2\) such that every \(k\)-colouring admits a strictly increasing sequence \(a_1<a_2<\cdots\) with \(a_n<f(n)\) for infinitely many \(n\), whose nonempty finite sums omit a colour? No. We reconstruct the known stronger negative result: for every \(f\), there is a colouring \(c_f:\mathbb N\to\mathbb N\) such that every sequence obeying that growth condition has finite sums of every positive-integer colour.
+
+The construction is credited to GPT Pro, prompted by Liam Price. The discussion on the problem page includes a sketch by Thomas Bloom. We supply the tail and separation details needed to turn that sketch into a complete proof. The sequence is one fixed infinite sequence throughout; it is not allowed to depend on a finite truncation parameter.
+
+\paragraph{The scale function and colouring.}
+Replace \(f\) by the nondecreasing integer majorant
+\[
+ F(t)=\max\{2,t,f(1),\ldots,f(t)\}.
+\]
+For every integer \(h\geq0\), set
+\[
+ G(h)=h+2+\left\lceil\log_2 F(2^{h+2})\right\rceil.
+\]
+Then \(G\) is nondecreasing and \(G(h)\geq h\).
+
+For a positive integer \(m\), let \(D(m)\) be the finite nonempty set of positions of the ones in its binary expansion, with the units digit in position zero. Cover this set greedily as follows. Let \(h_1=\min D(m)\), cover all positions in \([h_1,G(h_1)]\), then let \(h_2\) be the first remaining position and cover \([h_2,G(h_2)]\), and continue until none remain. Each step removes at least one position, so this terminates. Define \(c_f(m)\) to be its number of steps. This defines a positive-integer colour for every \(m\).
+
+\paragraph{A block sum with high valuation and colour one.}
+Suppose \((a_i)\) is strictly increasing and \(a_n<f(n)\) for infinitely many \(n\). Fix a discarded initial segment length \(M\geq0\) and a desired binary-position bound \(B\geq0\). We claim that there is a nonempty interval of indices \(I\subseteq\{M+1,M+2,\ldots\}\) such that, with \(m=\sum_{i\in I}a_i\) and \(s=v_2(m)\),
+\[
+ s>B,\qquad D(m)\subseteq[s,G(s)],\qquad c_f(m)=1. \tag{1}
+\]
+Choose a sufficiently large good index \(n\), meaning \(a_n<f(n)\), so that \(n\geq2M+2\) and
+\(h=\lfloor\log_2 n\rfloor-1>B\). We have
+\[
+ 2^{h+1}\leq n<2^{h+2},\qquad n-M\geq2^h.
+\]
+Take the first \(2^h\) terms after index \(M\), and consider their \(2^h+1\) initial partial sums, including zero. Two of those sums are congruent modulo \(2^h\). Their positive difference is the sum of a nonempty consecutive block \(I\) of these indices and is divisible by \(2^h\). It is positive because all \(a_i\) are positive. Thus \(s=v_2(m)\geq h>B\).
+
+All indices used are at most \(n\), so monotonicity of \((a_i)\) gives
+\[
+ 0<m\leq n a_n<n f(n)
+ \leq 2^{h+2}F(2^{h+2})\leq2^{G(h)}.
+\]
+Consequently every occupied binary position of \(m\) lies between \(s\) and \(G(h)\). Since \(s\geq h\) and \(G\) is nondecreasing, \(G(h)\leq G(s)\). This proves (1). Notice that the choice of a large good index is still possible after discarding any finite initial segment; no unproved growth bound for a reindexed tail is being used.
+
+\paragraph{Separated blocks produce every colour.}
+Apply (1) repeatedly to construct disjoint successive index intervals \(I_1,I_2,\ldots\). Put
+\[
+ m_j=\sum_{i\in I_j}a_i,\qquad s_j=v_2(m_j).
+\]
+After choosing \(I_j\), take \(M=\max I_j\) and \(B=G(s_j)\) in the next application. This ensures
+\[
+ D(m_j)\subseteq[s_j,G(s_j)],\qquad s_{j+1}>G(s_j). \tag{2}
+\]
+For any \(r\geq1\), the integer
+\[
+ b_r=m_1+\cdots+m_r
+ =\sum_{i\in I_1\cup\cdots\cup I_r}a_i
+\]
+is a finite sum of distinct terms of the original sequence. The binary supports in (2) are disjoint, so adding the \(m_j\) causes no carries. The occupied positions of \(b_r\) are exactly their union.
+
+The greedy covering of \(D(b_r)\) first starts at \(s_1\) and covers the entire first support, while leaving all later supports untouched by (2). Its next start is exactly \(s_2\), and the same statement repeats. There are exactly \(r\) covering steps. Hence
+\[
+ c_f(b_r)=r\qquad\text{for every }r\geq1.
+\]
+Thus the finite-sums set contains every positive-integer colour.
+
+\paragraph{The finite-colour question follows.}
+For any given \(k\geq2\), define
+\[
+ c_{f,k}(m)=1+\bigl((c_f(m)-1)\bmod k\bigr).
+\]
+Every sequence satisfying the growth condition has finite sums of colours \(1,\ldots,k\), because it already has a sum of each corresponding colour under \(c_f\). Therefore its finite-sums set omits no colour. This gives a counter-colouring for every proposed pair \((f,k)\), which is the full negation of the original assertion.
+
+The construction concerns nonempty finite sums of positive integers. If the problem also includes the empty sum or asks for a colouring of all integers, assigning colours arbitrarily to zero and the negative integers does not affect the obstruction on the positive finite sums.
+
+\paragraph{Attribution and assessment.}
+See \url{https://www.erdosproblems.com/948} and \url{https://www.erdosproblems.com/forum/thread/948}, checked 24 September 2026. Price posted the disproof on 21 June 2026; Bloom's 6 July 2026 explanation describes the greedy binary-support colouring used here. The older sentence in the editorial calling the question open is superseded by its later resolution paragraph and discussion. Every mathematical ingredient in the proof above is elementary and supplied explicitly: majorization, the pigeonhole block, valuation separation, absence of carries, and finite-colour reduction. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem 89: distinct distances and the remaining logarithmic gap}
+
+\subsection*{1. Statement and scope}
+For $P\subset\mathbb R^2$ with $|P|=n$, let $D(P)$ be the number of distinct positive distances between its points. The question asks whether
+\[
+ D(P)\gg n/\sqrt{\log n}
+\]
+holds uniformly as $n\to\infty$. This remains unresolved. We prove elementary global and pinned-distance estimates, reconstruct the deduction of the known $n/\log n$ bound from a precisely stated Guth--Katz input, and explain a limitation of that deduction. The deep input is attributed, not reproved or claimed as new.
+
+\subsection*{2. Two anchors and pinned distances}
+Write $d(p)=|\{|p-x|:x\in P\setminus\{p\}\}|$. Fix distinct anchors $p,q\in P$. Each other point lies at the intersection of a circle centered at $p$ and a circle centered at $q$, with one of $d(p)$ and $d(q)$ possible radii respectively. Two such circles have at most two common points: subtracting their equations gives a line, and a line meets a circle in at most two points. Therefore
+\[
+ n-2\le2d(p)d(q)\qquad(p\ne q).\tag{1}
+\]
+In particular,
+\[
+ D(P)\ge\sqrt{(n-2)/2}.
+\]
+For $n\ge3$, at most one anchor can have $d(p)<\sqrt{(n-2)/2}$, since two would contradict (1). Hence we also obtain the pinned average bound
+\[
+ \sum_{p\in P}d(p)\ge(n-1)\sqrt{(n-2)/2}.\tag{2}
+\]
+These estimates require no incidence theorem, but their exponent is below what the problem requires.
+
+\subsection*{3. The ordered energy identity and the known theorem}
+For each positive distance $r$ occurring in $P$, put
+\[
+ m_r=|\{(a,b)\in P^2:|a-b|=r\}|.
+\]
+The pairs are ordered, so $\sum_r m_r=n(n-1)$. The number of ordered quadruples with a common nonzero distance is exactly
+\[
+ Q(P)=|\{(a,b,c,d)\in P^4:|a-b|=|c-d|>0\}|=\sum_r m_r^2.
+\]
+Cauchy--Schwarz gives the exact inequality
+\[
+ D(P)\ge\frac{n^2(n-1)^2}{Q(P)}.\tag{3}
+\]
+The external theorem used here is Guth--Katz, Proposition 2.2: there is an absolute constant $C$ such that every planar $n$-point set with $n\ge2$ satisfies
+\[
+ Q(P)\le Cn^3\log n.\tag{4}
+\]
+Its hypotheses and ordered, nonzero-distance convention agree with our definition. Substitution into (3) yields
+\[
+ D(P)\ge\frac{(n-1)^2}{Cn\log n}\gg\frac n{\log n}.\tag{5}
+\]
+Thus the remaining factor in the general lower bound is $\sqrt{\log n}$.
+
+There is a useful caution about trying to close this gap by (3) alone. Guth--Katz also state that their energy bound (4) is sharp up to constants for square grids. Consequently a proposed universal improvement $Q(P)=O(n^3\sqrt{\log n})$ would itself be false. The desired distance bound needs additional information about distance multiplicities, or another argument; the failure of this stronger energy estimate is not a counterexample to the distance conjecture.
+
+\subsection*{4. Complete bounds in two structured cases}
+If all points lie on a line, an extreme point sees $n-1$ different distances, so $D(P)\ge n-1$. If all lie on one circle, fix $p\in P$. Every positive-radius circle centered at $p$ intersects the carrier circle in at most two points. The circles cannot coincide because the carrier contains $p$, whereas a positive-radius circle centered at $p$ does not. Therefore
+\[
+ d(p)\ge\left\lceil\frac{n-1}{2}\right\rceil.
+\]
+Both structured cases have a linear lower bound. Neither argument applies to arbitrary configurations.
+
+\subsection*{5. Assessment and sources}
+The anchor-product inequality, its pinned-average consequence, the energy identity, and the structured cases are proved here. The best general estimate included is (5), conditional only on the explicitly imported, established Guth--Katz theorem. Its proof is a major external dependency. No argument establishes the requested logarithmic improvement.
+
+Sources: \url{https://www.erdosproblems.com/89}; L. Guth and N. H. Katz, \emph{On the Erd\H{o}s distinct distance problem in the plane}, Proposition 2.2 and the discussion following it, \url{https://arxiv.org/abs/1011.4105}.
+
+\textbf{Completion rate estimate: 30\%.}
+

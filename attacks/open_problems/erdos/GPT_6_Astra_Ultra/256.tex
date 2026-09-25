@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 256: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $f(n)$ be the infimum of $\max_{|z|=1}\prod_{i=1}^n|1-z^{a_i}|$ over positive integers $a_1\le\cdots\le a_n$. Estimate its growth; in particular, can $\log f(n)\gg n^c$ hold for some $c>0$? Source: \url{https://www.erdosproblems.com/256}.
+
+We prove elementary bounds and reconstruct the analytic transfer from a nonnegative cosine polynomial to a small product. With the explicit Belov--Konyagin input below, this disproves the power lower bound. The broader sharp-growth question remains unresolved here, so this attempt is partial. This replaces the earlier GPT-5.2 draft's full-solution label for only the particular subquestion. No novelty is claimed.
+
+\section*{An elementary lower bound}
+Write $P(z)=\prod_i(1-z^{a_i})=\sum_j c_jz^j$. Its zero at $1$ has multiplicity exactly $n$. It must have at least $n+1$ nonzero coefficients: otherwise, if its $r\le n$ nonzero exponents were $j_1,\ldots,j_r$, the equations
+\[
+ \sum_{v=1}^r c_{j_v}j_v(j_v-1)\cdots(j_v-\ell+1)=0
+ \quad(0\le\ell<r)
+\]
+would force all coefficients to vanish. Their matrix is invertible, since the falling-factorial polynomials have degrees $0,\ldots,r-1$ with leading coefficient one and evaluation at distinct $j_v$ is a Vandermonde system.
+All nonzero $c_j$ are integers. Parseval's identity, obtained by integrating the finite Fourier expansion, gives
+\[
+ \max_{|z|=1}|P(z)|^2\ge\frac1{2\pi}\int_0^{2\pi}|P(e^{it})|^2dt
+ =\sum_j c_j^2\ge n+1.
+\]
+Thus $f(n)\ge\sqrt{n+1}$. This elementary bound is weaker than known general estimates; no improvement is asserted.
+
+For comparison, $f(1)=2$, and the explicit pair $(1,2)$ gives
+\[
+ f(2)\le\max_t8\sin^2(t/2)|\cos(t/2)|=\frac{16}{3\sqrt3}.
+\]
+Indeed the maximum of $(1-u)\sqrt u$ on $0\le u\le1$ occurs at $u=1/3$. Combining tuples shows $f(n+m)\le f(n)f(m)$, by taking tuples arbitrarily near their infima. This provides an elementary exponential upper bound better than $2^n$, but not the sharp scale.
+
+\section*{A proved transfer from cosine polynomials}
+Suppose nonnegative integers $b_1,\ldots,b_d$ satisfy $\sum_j b_j=n$ and
+\[
+ A+\sum_{j=1}^d b_j\cos(jt)\ge0\quad(t\in\mathbb R).
+\]
+For $0<r<1$, the absolutely convergent logarithmic Fourier series yields
+\[
+ \sum_j b_j\log|1-r e^{ijt}|
+ =-\sum_{\ell\ge1}\frac{r^\ell}{\ell}\sum_j b_j\cos(j\ell t)
+ \le A\log\frac1{1-r}.
+\]
+Also $|1-r e^{iu}|^2=(1-r)^2+r|1-e^{iu}|^2$, so
+\[
+ \log\prod_j|1-e^{ijt}|^{b_j}
+ \le-\frac n2\log r+A\log\frac1{1-r}. \tag{1}
+\]
+At a zero of the product the inequality holds by continuity. For $n\ge2$, choose $r=1-1/n$. Since $-\log(1-1/n)\le1/(n-1)$, (1) is at most $1+A\log n$. Thus
+\[
+ \log f(n)\le1+A\log n. \tag{2}
+\]
+The positive exponents in the required tuple are simply $j$ repeated $b_j$ times; repetitions are permitted by the problem.
+
+\section*{Explicit external input and what it settles}
+Belov and Konyagin prove the existence, for each $n\ge3$, of such a cosine polynomial with $A\ll(\log n)^3$. This is their $K_Z^{\downarrow}(n)$ upper bound in \emph{An estimate of the free term of a non-negative trigonometric polynomial with integer coefficients}, Izvestiya: Mathematics 60 (1996), 1123--1182; primary theorem statement: \url{https://www.mathnet.ru/eng/im95}. Its long construction is an external dependency, not a proof supplied here.
+
+Substitution into the proved transfer (2) gives $\log f(n)\ll(\log n)^4$. For any fixed $c>0$, write $u=\log n$; $u^4e^{-cu}\to0$, for example by comparing the exponential series with its fifth term. Consequently no lower bound $\log f(n)\gg n^c$ can hold. This particular negative answer is complete relative to the named cosine-polynomial theorem.
+
+\section*{Remaining gap}
+The elementary lower bound and the polylogarithmic upper bound leave a substantial range for the true growth of $f(n)$. Determining that growth, and reconstructing the deep external cosine-polynomial construction if a fully self-contained upper bound is desired, are not achieved here. Sampling a polynomial on a finite angular grid only gives a lower bound for its maximum; the older draft's sampled values are therefore replaced by the exact two-factor calculation.
+
+\textbf{Completion rate estimate: 50\%.}
+\end{document}

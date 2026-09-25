@@ -1,0 +1,41 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 129: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $R(n;3,r)$ be the least $N$ such that every $r$-colouring of the edges of $K_N$ has an $n$-vertex subset missing a monochromatic triangle in at least one colour. The proposed bound is $R(n;3,r)<C(r)^{\sqrt n}$.
+For this literal definition we prove instead $R(n;3,r)=\exp(\Theta_r(n))$ for every fixed $r\ge2$. This reconstructs the objection attributed to Antonio Gir\~ao on \url{https://www.erdosproblems.com/129}. The site's conjectural status does not change the explicit definition being checked. No different intended question is resolved here.
+
+\section*{An edge-disjoint triangle packing}
+Put $m=\lfloor n/3\rfloor$ and take three disjoint classes labelled by $\mathbb Z/m\mathbb Z$. For every pair $(a,b)$ take the triangle $(a,b,a+b)$. There are $m^2$ triangles. An edge between the first two classes determines $(a,b)$; between the first and third it determines $b$; between the second and third it determines $a$. Thus no edge is repeated.
+
+Colour edges independently and uniformly in $r$ colours. For a fixed colour, each packed triangle is monochromatic in it with probability $r^{-3}$, and these events are independent. Consequently a fixed $n$-set misses some colour's triangle with probability at most
+\[
+ r(1-r^{-3})^{\lfloor n/3\rfloor^2}.
+\]
+Let $b=-\log(1-r^{-3})>0$ and $N=\lfloor\exp(bn/32)\rfloor$.
+For $n\ge12$, $\lfloor n/3\rfloor\ge n/4$. A union bound over the $n$-sets gives
+\[
+ \mathbb P(\text{some such set misses a colour})
+ \le rN^n\exp(-bn^2/16)
+ \le r\exp(-bn^2/32)<1
+\]
+for sufficiently large $n$. Therefore a colouring exists in which every $n$-set contains a triangle of every colour, and $R(n;3,r)>N$. This already contradicts every proposed $C(r)^{\sqrt n}$ upper bound.
+
+\section*{A matching exponential upper order}
+For completeness, the usual multicolour Ramsey bound follows by induction: if the desired monochromatic clique sizes are $n_1,\ldots,n_r$, then $r^{n_1+\cdots+n_r}$ vertices suffice. The case where one $n_i=1$ is immediate. Otherwise select a vertex; one colour $j$ has at least $r^{n_1+\cdots+n_r-1}$ neighbours. Apply induction there with $n_j$ decreased by one. Either another desired clique is already obtained, or the colour-$j$ clique extends using the selected vertex.
+Taking every $n_i=n$ gives a monochromatic $K_n$ on at most $r^{rn}$ vertices. Since $r\ge2$, it misses triangles of every other colour. Hence
+\[
+ \lfloor e^{bn/32}\rfloor<R(n;3,r)\le r^{rn}
+\]
+for all sufficiently large $n$.
+
+\section*{Assessment and provenance}
+The literal bound is completely disproved and its exponential order established. The earlier GPT-Pro-5.2 draft's triangle-packing argument is retained with explicit constants, integer rounding and the matching upper order; the original draft remains separately attributed. All arguments above are elementary, and no novelty is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+\end{document}

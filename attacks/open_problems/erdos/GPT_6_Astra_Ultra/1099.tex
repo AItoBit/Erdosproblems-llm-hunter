@@ -1,0 +1,75 @@
+\section*{Erd\H{o}s Problem 1099: power sums of consecutive divisor ratios}
+\subsection*{Statement and scope}
+For the ordered divisors $1=d_1<\cdots<d_{\tau(n)}=n$, put
+\[
+ h_\alpha(n)=\sum_{i=1}^{\tau(n)-1}\left(\frac{d_{i+1}}{d_i}-1\right)^\alpha.
+\]
+The question is whether $\liminf_{n\to\infty}h_\alpha(n)<\infty$ for every $\alpha>1$. Vose proved this in \emph{Integers with consecutive divisors in small ratio}, J. Number Theory 19 (1984), 233--238, \url{https://doi.org/10.1016/0022-314X(84)90107-0}. We do not reconstruct his sufficient construction. We prove a universal lower bound, clarify the critical exponent, and derive the auxiliary sum-of-ratios consequence. The existence assertion remains unresolved in this attempt.
+
+\subsection*{Refining a multiplicative partition decreases the cost}
+If $a<b<c$ are positive reals and $\alpha\ge1$, write $u=b/a-1$, $v=c/b-1$. Then
+\[
+ c/a-1=u+v+uv\ge u+v,\qquad (u+v)^\alpha\ge u^\alpha+v^\alpha.
+\]
+Consequently inserting $b$ between $a,c$ cannot increase the sum of powered relative gaps. Repeated insertion proves this for any finite refinement.
+
+Let $m=\lfloor\sqrt n\rfloor$. Refine the divisor list by the positive real numbers
+\[
+ 1,2,\ldots,m,\quad n/m,n/(m-1),\ldots,n.
+\]
+This list already contains every original divisor: one of $d,n/d$ is at most $\sqrt n$ and is an integer. Delete the repeated central point if $n=m^2$. The ratios in its two halves are $(j+1)/j$, in reverse orders, and its middle ratio is $n/m^2$. Thus
+\[
+ \boxed{h_\alpha(n)\ge
+ 2\sum_{j=1}^{m-1}\frac1{j^\alpha}
+ +\left(\frac n{m^2}-1\right)^\alpha.}
+ \tag{1}
+\]
+This is a comparison with a refinement by real numbers, not an assertion that all the inserted numbers divide $n$.
+
+In particular, for $\alpha>1$,
+\[
+ \liminf_{n\to\infty}h_\alpha(n)\ge2\zeta(\alpha).
+\]
+For $\alpha=1$, (1) grows like $\log n$. For $0<\alpha<1$, the elementary inequality $(e^t-1)^\alpha\ge t$ for all sufficiently small positive $t$, together with $(e^t-1)^\alpha/t$ having a positive infimum on $(0,\infty)$, gives $h_\alpha(n)\gg_\alpha\sum_i\log(d_{i+1}/d_i)=\log n$. Alternatively, the following exact identity immediately handles the endpoint $\alpha=1$:
+\[
+ \sum_i\log(d_{i+1}/d_i)=\log n.
+\]
+Thus the restriction $\alpha>1$ is necessary. The positive infimum just used follows from the ratio tending to infinity both as $t\downarrow0$ and as $t\to\infty$, and continuity in between.
+
+\subsection*{A necessary abundance of divisors}
+For $\alpha>1$, let $u_i=d_{i+1}/d_i-1$. Since $\log(1+u_i)\le u_i$, H\"older's inequality gives
+\[
+ \log n\le\sum_i u_i
+ \le(\tau(n)-1)^{1-1/\alpha}h_\alpha(n)^{1/\alpha}.
+\]
+Any sequence with $h_\alpha(n)\le H$ must therefore satisfy
+\[
+ \tau(n)-1\ge H^{-1/(\alpha-1)}
+                 (\log n)^{\alpha/(\alpha-1)}.
+ \tag{2}
+\]
+Prime powers alone cannot work: $h_\alpha(p^a)=a(p-1)^\alpha\to\infty$. Nor does a uniformly bounded largest divisor ratio by itself suffice; it controls each summand but not their number.
+
+\subsection*{The auxiliary sum of ratios}
+Carefully retaining the $\tau(n)-1$ gaps, define
+\[
+ E(n)=\sum_{i=1}^{\tau(n)-1}\frac{d_{i+1}}{d_i}-\tau(n)-\log n.
+\]
+Then
+\[
+ E(n)=\sum_i\bigl(u_i-\log(1+u_i)\bigr)-1.
+\]
+For $u\ge0$,
+\[
+ 0\le u-\log(1+u)=\int_0^u\frac t{1+t}\,dt\le\frac{u^2}{2}.
+\]
+It follows that
+\[
+ -1\le E(n)\le\frac12h_2(n)-1.
+\]
+So a bounded sequence for the main question at $\alpha=2$ indeed gives the finite-liminf assertion about $E(n)$. The formula also prevents an off-by-one error in the unpowered sum.
+
+\subsection*{Assessment}
+The lower bound (1), the necessity of $\alpha>1$, the divisor-count obstruction (2), and the auxiliary implication are proved. What is missing is a sequence whose entire logarithmic divisor mesh has uniformly bounded powered cost, including its long central region. Neither numerical examples nor the refinement lower bound supplies such a sequence. Vose's theorem is correctly attributed as the known affirmative answer, not inserted as a proof of our missing construction. Source statement: \url{https://www.erdosproblems.com/1099}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

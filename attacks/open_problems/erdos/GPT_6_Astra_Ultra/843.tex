@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 843: monochromatic sums of distinct squares}
+\subsection*{1. Statement and declared external theorem}
+In every two-colouring of the positive squares, must every sufficiently large integer be a monochromatic sum of distinct squares? Yes. We use Conlon--Fox--Pham's polynomial Ramsey-completeness theorem in its general form, and verify the ordinary-completeness hypothesis constructively for squares.
+The external theorem, Theorem 1.2 of their paper, says: if the sequence of values of a real polynomial $P$ of degree $d$ is complete (every sufficiently large integer is a sum of distinct terms), then for every integer $r\ge2$ it has an $r$-Ramsey-complete subsequence $B$ with
+\[
+ |B\cap[1,X]|\le C(d)r(\log X)^2
+\]
+for sufficiently large $X$, with the harmless small-$X$ convention absorbed into the bound. Ramsey completeness means that every $r$-colouring permits monochromatic representations of all sufficiently large integers. The proof of this deep polynomial theorem is external; its completeness hypothesis and its deduction for the present problem are handled below.
+\subsection*{2. A finite certificate for ordinary completeness}
+Let $S_k=1^2+\cdots+k^2=k(k+1)(2k+1)/6$. The subset sums of $1^2,\ldots,10^2$ contain the entire interval
+\[
+ [129,256]=[129,S_{10}-129].                              \tag{1}
+\]
+Here is a short exact certificate, given as a recurrence rather than a list of 128 representations. For a nonnegative integer $B$, bit $j$ is one precisely when $j$ is represented. Starting at $B_0=1$, compute
+\[
+ B_k=B_{k-1}\mathbin{\mathrm{OR}}(2^{k^2}B_{k-1})\quad(1\le k\le10).
+\]
+The resulting integer satisfies
+\[
+ \left\lfloor B_{10}/2^{129}\right\rfloor\bmod2^{128}=2^{128}-1.             \tag{2}
+\]
+Both the certificate and its verification use only integer arithmetic. Equivalently, the following complete finite check verifies (2):
+\begin{verbatim}
+B = 1
+for k in range(1, 11):
+    B = B | (B << (k*k))
+assert ((B >> 129) & ((1 << 128)-1)) == (1 << 128)-1
+\end{verbatim}
+The recurrence is exact by induction: a subset either omits $k^2$, or includes it together with a subset of the previous distinct squares. This establishes the meaning of every bit and makes (2) a reproducible finite mathematical certificate, not a numerical approximation.
+\subsection*{3. Extending the certificate to every large integer}
+Suppose the subset sums through $k^2$ contain $[129,S_k-129]$. By adding or omitting $(k+1)^2$, the next subset sums contain both
+\[
+ [129,S_k-129]\quad\hbox{and}\quad
+ [129+(k+1)^2,S_{k+1}-129].
+\]
+These integer intervals overlap or touch if
+\[
+ S_k-257\ge(k+1)^2.                                     \tag{3}
+\]
+At $k=10$, the left side is $128$ and the right side is $121$. If the difference in (3) is nonnegative at $k$, its increase at $k+1$ is
+\[
+ (k+1)^2-\big((k+2)^2-(k+1)^2\big)=k^2-2>0.
+\]
+Thus (3) holds for every $k\ge10$. Induction proves coverage of $[129,S_k-129]$ for all such $k$. Since $S_k\to\infty$, every integer at least $129$ is a sum of distinct positive squares. This proves the required ordinary completeness without assuming a Waring theorem or allowing repeated squares.
+\subsection*{4. Applying the polynomial theorem}
+Apply the stated external theorem to $P(t)=t^2$ and $r=2$. It supplies a subsequence $B$ of the positive squares that is two-Ramsey-complete. Given an arbitrary two-colouring of all squares, restrict it to $B$. Every sufficiently large integer then has a monochromatic representation using distinct elements of $B$, hence distinct squares of the original colouring. This is exactly the desired conclusion.
+The same argument works for any fixed number $r$ of colours and gives a representing subsequence with only $O_r((\log X)^2)$ elements up to $X$. The threshold for ``sufficiently large'' may depend on the colouring; no uniform threshold is silently assumed. Ordinary completeness alone would not justify a monochromatic conclusion; that is precisely the role of the declared polynomial Ramsey theorem.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/843}; D. Conlon, J. Fox and H. T. Pham, \emph{Subset sums, completeness and colorings}, Theorem 1.2, \url{https://arxiv.org/abs/2104.14766}. Their theorem provides the substantive Ramsey step; the finite square certificate and interval-extension proof above verify its hypothesis independently.
+\textbf{SOLVED relative to the explicitly stated polynomial Ramsey-completeness theorem.} The square-specific completeness certificate, its infinite extension, and the colouring deduction are complete. No independent proof of that external theorem, novelty, or proof-assistant verification is claimed.
+\textbf{Completion rate estimate: 100\%.}

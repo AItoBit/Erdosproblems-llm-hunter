@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 884: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and current resolution}
+For a finite increasing set $D$ define
+\[
+ S(D)=\sum_{a,b\text{ consecutive in }D}\frac1{b-a},\qquad
+ T(D)=\sum_{a<b\text{ in }D}\frac1{b-a}.
+\]
+Is $T(\operatorname{div}n)/(1+S(\operatorname{div}n))$ bounded independently of $n$? No. We reconstruct the multiscale part of Daniel Larsen's unconditional proof, \url{https://raw.githubusercontent.com/Larsen-Daniel/Erdos-884/main/884.pdf}. The one-scale prime-packet estimate is explicitly imported below. This distinguishes the current result from Tao's earlier conditional proof, \url{https://terrytao.wordpress.com/wp-content/uploads/2025/09/erdos-884.pdf}.
+
+\section*{Precisely stated prime-packet input}
+Write $f(t)=\log_*t$, the number of iterated natural logarithms needed to reach at most one. Corollary 2.4 and its proof in Larsen's paper supply, for every sufficiently large $t$, a set $B(t)$ of primes in $[t,2t]$, with product $m(t)$, such that
+\[
+ k(t):=|B(t)|=o\left(\frac{\log t}{\log\log t}\right),\quad
+ \operatorname{diam} B(t)\le\log^2t,\quad
+ T(B(t))\gg\frac1{f(t)},\quad
+ S(\operatorname{div}m(t))\ll\frac1{\log\log t}.\tag{1}
+\]
+The constants are absolute. This input is unconditional: its source uses the prime number theorem, an upper-bound Brun sieve, and Tao's real-rooted-polynomial gap lemma. We do not import the multiscale conclusion.
+
+For context, the prime selection has $k\asymp\log t/(f(t)\log\log t)$ points separated by $\gg\log t$ in an interval of length $H\ll k\log t$. Its neighboring-prime contribution is $O(k/\log t)$; the nonprime-divisor contribution is $O(1/\log\log t)$ by the source's polynomial lemma. Its energy is at least $\gg k^2\log k/H$. This last assertion has a short elementary proof: for each $1\le d\le k/2$, the sum of the $k-d$ distances $b_{i+d}-b_i$ is at most $dH$, so Cauchy--Schwarz gives reciprocal sum at least $(k-d)^2/(dH)$. Summing in $d$ gives the claimed logarithm. These facts explain both bounds in (1); the polynomial gap estimate itself remains a declared external input.
+
+\section*{Products across widely separated scales}
+Choose large $t_0$ and put $t_{j+1}=\exp(t_j)$. Let $B_j=B(t_j)$, $m_j=\prod_{p\in B_j}p$, and $n_R=\prod_{j=0}^R m_j$. Prime packets are disjoint. A divisor $d$ of $n_R$ has unique components $d^{(j)}\mid m_j$; let $v_j(d)$ be the number of primes used in that component. Put $k_j=|B_j|$ and $w_j=\operatorname{diam}B_j$.
+
+We record uniform scale bounds, all following from (1) and the exponential recursion:
+\[
+ \sum_{j< i}k_j\log(2t_j)=o(\log t_i),\quad
+ \sum_{j>i}\frac{k_jw_j}{t_j}=o((2t_i)^{-k_i}),\quad
+ 4^{\sum_{j\le\ell}k_j}=t_\ell^{o(1)}.\tag{2}
+\]
+For example the first sum is dominated by $O((\log t_{i-1})^2)$, whereas $\log t_i=t_{i-1}$. For the second, its first term is at most a fixed power of $t_i$ times $\exp(-t_i)$, whereas $(2t_i)^{-k_i}=\exp(-o((\log t_i)^2))$; later terms decay still faster. The third uses $k_\ell=o(\log t_\ell)$. Increasing $t_0$ absorbs all finite initial qualifications.
+
+Consider consecutive divisors $d_1<d_2$ of $n_R$, and let $\ell$ be the largest active packet, meaning $d_1^{(\ell)}d_2^{(\ell)}>1$. There are two types of exceptional pairs.
+
+First suppose the vectors $v(d_1),v(d_2)$ differ, and let $i$ be the largest coordinate where they differ. Up to exchanging the two divisors, the logarithm of the component ratio at $i$ is at least $\log t_i-O(k_iw_i/t_i)$. At larger coordinates equal counts give logarithmic ratios of absolute value at most $k_jw_j/t_j$. At smaller coordinates use the first bound of (2). Thus the total logarithmic ratio has absolute value at least $\frac12\log t_i$. The larger divisor is at least $t_\ell$, so $d_2-d_1\gg t_\ell$.
+
+Second suppose all counts agree, let $i$ be the smallest coordinate with different components, and suppose $i<\ell$. The two integer components at $i$ are distinct and at most $(2t_i)^{k_i}$, so their logarithmic ratio has absolute value at least $c(2t_i)^{-k_i}$. The smaller-coordinate ratios are zero and the higher-coordinate errors are negligible by (2). Both divisors are at least $t_\ell$, giving
+\[
+ d_2-d_1\gg t_\ell(2t_i)^{-k_i}.
+\]
+For $i<\ell$, the reciprocal extra factor $(2t_i)^{k_i}$ is $t_\ell^{o(1)}$, since $t_i\le\log t_\ell$.
+
+There are at most $4^{\sum_{j\le\ell}k_j}=t_\ell^{o(1)}$ ordered divisor pairs whose largest active packet is $\ell$. The total contribution of both exceptional types is therefore at most
+\[
+ \sum_{\ell=0}^R t_\ell^{-1+o(1)}=O(1),\tag{3}
+\]
+with a bound independent of $R$.
+
+All remaining consecutive pairs have identical components below some $i$, different components at $i$, and no higher components. They are $au,av$, where $a\mid n_{i-1}$ and $u,v\mid m_i$. Necessarily $u,v$ are consecutive divisors of $m_i$, since any intermediate divisor would give an intermediate divisor of $n_R$. Their contribution is at most
+\[
+ \left(\sum_{a\mid n_{i-1}}\frac1a\right)S(\operatorname{div}m_i).
+\]
+The factor is uniformly bounded, even by two after increasing $t_0$: it is
+$\prod_{j<i}\prod_{p\in B_j}(1+1/p)\le\exp(\sum_j k_j/t_j)$.
+Together with (3), this proves
+\[
+ S(\operatorname{div}n_R)\le O(1)+2\sum_{i=0}^R S(\operatorname{div}m_i).\tag{4}
+\]
+
+\section*{Accumulating enough energy}
+Prime pairs from different packets are distinct pairs of divisors, so
+\[
+ T(\operatorname{div}n_R)\ge\sum_{i=0}^R T(B_i)=:U_R.
+\]
+Since $f(t_i)=f(t_0)+i$, (1) shows $U_R\gg\sum_{i\le R}(f(t_0)+i)^{-1}\to\infty$. Moreover
+\[
+ \frac{S(\operatorname{div}m_i)}{T(B_i)}
+ \ll\frac{f(t_i)}{\log\log t_i}\longrightarrow0.
+\]
+For any $\varepsilon>0$, split the sum at a fixed index beyond which this ratio is at most $\varepsilon$. The finite initial part divided by $U_R$ vanishes, and the tail is at most $\varepsilon$. Thus (4) implies $S(\operatorname{div}n_R)=o(U_R)$, and
+\[
+ \frac{T(\operatorname{div}n_R)}{1+S(\operatorname{div}n_R)}\ge
+ \frac{U_R}{1+o(U_R)}\longrightarrow\infty.
+\]
+
+\section*{Assessment}
+The negative answer is fully deduced from the exact unconditional packet estimate (1). The proof above supplies the cross-packet gap control, the uniform error sum, and the divergent energy needed to overcome the denominator's constant one. The packet's polynomial-divisor estimate is credited and explicitly external; no prime-tuples conjecture is assumed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

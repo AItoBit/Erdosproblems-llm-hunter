@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1166: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and input}
+Almost surely, only $O((\log n)^2)$ different sites have ever been favourites by time $n$. We prove the maximum-local-time upper bound directly, and give the deterministic record-level argument converting a bound on simultaneous favourites to a bound on all historical favourites.
+
+The one deep input is Hao--Li--Okada--Zheng, \emph{Favorite Sites for Simple Random Walk in Two and More Dimensions}, Theorem 1.1, \url{https://arxiv.org/abs/2409.00995}: for planar simple random walk, almost surely $\limsup_n|F(n)|=3$, hence $|F(n)|\le3$ eventually. Their theorem concerns dimension two. T\'oth's earlier three-favourite theorem concerned dimension one, so we do not attribute the planar input to that earlier paper.
+
+\section*{An elementary lower bound on the return-time tail}
+Let $S_n$ be simple symmetric nearest-neighbour walk on $\mathbb Z^2$, let $u_j=\mathbb P(S_j=0)$, and let $q_j$ be the probability of no positive return to zero by time $j$. Rotating coordinates to $(X+Y,X-Y)$ turns the two coordinate processes into independent one-dimensional simple walks. Consequently
+\[
+ u_{2j}=\left(\frac{\binom{2j}{j}}{4^j}\right)^2\le\frac1{j+1},
+ \qquad u_{2j+1}=0.
+\tag{1}
+\]
+The binomial inequality follows by induction: the squared ratio of consecutive normalized central binomial coefficients is $(2j+1)^2/(4(j+1)^2)\le(j+1)/(j+2)$. In particular $u_j\le2/(j+1)$ and
+\[
+ G_N:=\sum_{j=0}^N u_j\le2(1+\log(N+1)).
+\]
+Decompose a walk according to its last visit to zero before time $4m$. The Markov property gives the exact renewal identity
+\[
+ 1=\sum_{j=0}^{4m}u_jq_{4m-j}.
+\]
+For $j\le3m$, monotonicity gives $q_{4m-j}\le q_m$. The other $m$ terms have total at most $2m/(3m+1)<2/3$, by (1). Therefore
+\[
+ q_m\ge\frac1{3G_{4m}}
+ \ge\frac1{6(1+\log(4m+1))}
+ \ge\frac1{24\log m}\qquad(m\ge3).
+\tag{2}
+\]
+This quantitative tail bound is obtained without invoking a local-time limit theorem.
+
+\section*{A summable bound for excessive local time}
+Write $T_N=\max_x f_N(x)$. Once the walk first reaches a site, its successive positive return gaps there are independent with the return-time law, by the strong Markov property. If it visits that site at least $k$ times before time $N$, then the next $k-1$ return gaps are all at most $N$. Its conditional probability is at most $(1-q_N)^{k-1}$.
+
+Every site visited by time $N$ is first visited at one of $N+1$ times. Applying the same conditional bound at each such time and taking a union bound gives
+\[
+ \mathbb P(T_N\ge k)\le(N+1)(1-q_N)^{k-1}
+ \le(N+1)\exp\left(-\frac{k-1}{24\log N}\right).
+\tag{3}
+\]
+Choose $k=\lceil120(\log N)^2\rceil+1$. The right side is at most $2N^{-4}$ for $N\ge3$, so its sum over all integer $N$ is finite. Borel--Cantelli proves
+\[
+ T_N=O((\log N)^2)\qquad\text{almost surely, eventually}.\tag{4}
+\]
+
+\section*{Favourites can accumulate only within a record-level plateau}
+This part is deterministic for any walk. The integer $T_n$ is nondecreasing and increases by at most one in a step. During a time interval on which $T_n=m$ is fixed, the set $F(n)$ can only grow: a visit to a site already at level $m$ would raise the maximum to $m+1$ and end the interval, while another site can enter $F(n)$ by reaching level $m$. No existing favourite disappears before the interval ends.
+
+Work on an outcome where the planar three-favourite theorem holds after a finite random time $n_0$. For each value of the maximum encountered between $n_0$ and $N$, all the sites that are favourites during that part of its plateau belong to its last favourite set before $N$ or before the next increase. That set has size at most three. There are at most $T_N$ such levels. All earlier favourite sites belong to a finite random set $C_0$. Hence
+\[
+ \left|\bigcup_{k\le N}F(k)\right|\le |C_0|+3T_N.
+\tag{5}
+\]
+This reasoning includes a plateau straddling $n_0$ and the final plateau truncated at $N$; neither requires the next record time to have occurred. Combining (4) and (5) proves the claimed almost-sure logarithmic-square bound.
+
+\section*{Assessment}
+The return estimate, maximum-local-time bound, and record-level counting are proved. The only imported probabilistic result is eventual at-most-three simultaneous favourites for planar walk. The conclusion is pathwise eventual, not merely an expectation or high-probability bound.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

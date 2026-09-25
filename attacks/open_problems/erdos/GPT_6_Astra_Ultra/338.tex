@@ -1,0 +1,45 @@
+\section*{Erd\H{o}s Problem 338: restricted additive order}
+\subsection*{Statement and scope}
+The restricted order of $A\subset\mathbb N$ is the least $t$ such that every sufficiently large integer is a sum of at most $t$ distinct elements. The problem asks when it exists, how it compares with ordinary order, and what robustness under finite deletions implies.
+
+We completely characterize the family consisting of all multiples of a modulus together with finitely many exceptions, and give a density condition guaranteeing restricted order at most two. The general characterization and finite-deletion questions are unresolved here. Source: \url{https://www.erdosproblems.com/338}. This retains Bateman's valid example from the earlier GPT-5.2 attempt, but replaces its inaccurate account of the remaining questions.
+
+\subsection*{An exact modular criterion}
+Let $q\ge2$, let $F$ be a finite set of positive integers none divisible by $q$, and put $A=q\mathbb N\cup F$. For each residue $r\bmod q$, define
+\[
+ c_r=\min\{j:r\text{ is a sum of }j\text{ residues from }F
+                  \text{ with repetition}\},
+\]
+and
+\[
+ s_r=\min\{|E|:E\subset F,\ \sum_{e\in E}e\equiv r\pmod q\}.
+\]
+An unavailable minimum is infinite; the empty sum gives $c_0=s_0=0$. Then
+\[
+ \operatorname{ord}(A)=1+\max_r c_r,\qquad
+ \operatorname{ord}_{\rm restricted}(A)=1+\max_r s_r, \tag{1}
+\]
+with infinity interpreted as absence of a finite order.
+
+For the upper bounds, choose for each residue a minimizing multiset or subset from $F$. For every sufficiently large $n$ in that residue, subtract its fixed sum and use the remaining positive multiple of $q$ as one additional summand. In the restricted case that extra summand is distinct from all chosen elements because none of them is divisible by $q$.
+
+For the lower bounds, a representation with at most $t$ summands of a sufficiently large integer must use an element of $q\mathbb N$: a sum of at most $t$ members of the fixed finite set $F$ is bounded. Removing all multiples of $q$ leaves at most $t-1$ members of $F$ with the required residue, counted with or without repetition as appropriate. This proves (1).
+
+In particular ordinary order is finite precisely when $\gcd(q,F)=1$. Indeed the nonnegative sums of residues of $F$ form the subgroup they generate in the finite cyclic group: an inverse of any residue is a nonnegative multiple of it. Restricted order is finite precisely when the subset sums of the actual finite set $F$ cover every residue modulo $q$.
+
+\subsection*{Examples and exact comparisons}
+With $F=\{1\}$ and $q=h\ge3$, we have $\max c_r=h-1$, so the ordinary order is exactly $h$. The only restricted residues are zero and one, so no restricted order exists. This is Bateman's example, with its exact ordinary order verified. For $q=2$ the same set has both orders two.
+
+For another explicit separation, take $q=7$, $F=\{1,2,3\}$. Every residue is a sum of at most two elements of $F$ with repetition, and not all are single residues, so the ordinary order is three. Subset sums cover $0,\ldots,6$; residue six needs all three elements, while the other residues need at most two. Thus the restricted order is exactly four.
+
+\subsection*{A sufficient density hypothesis}
+Suppose $\underline d(A)>1/2$. Choose $1/2<\delta<\underline d(A)$. For all sufficiently large $n$, let $E=A\cap[1,n-1]$; then $|E|\ge\delta(n-1)$. The reflected set $n-E$ lies in the same interval and has the same size, so
+\[
+ |E\cap(n-E)|\ge2|E|-(n-1)\ge(2\delta-1)(n-1)>1.
+\]
+At most one point is $n/2$. Some other point $a$ in the intersection therefore gives $n=a+(n-a)$ with two distinct elements of $A$. Thus the restricted order is at most two. It is one exactly when $A$ contains every sufficiently large integer.
+
+\subsection*{Remaining gap}
+The modular criterion is exact for the specified class, but that class has essential finite exceptions: deleting all of $F$ leaves only multiples of $q$. It therefore does not answer the questions where every finite deletion remains a basis, with or without a uniform order. General bases outside the density hypothesis are likewise not characterized here.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

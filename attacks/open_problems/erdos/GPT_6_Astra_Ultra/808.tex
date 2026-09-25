@@ -1,0 +1,79 @@
+\section*{Erd\H{o}s Problem 808}
+
+\paragraph{Statement and result.}
+The strong sum-product conjecture asks whether, for every fixed \(c,\epsilon>0\), a graph \(G\) on an \(n\)-element set \(A\subset\mathbb N\), having at least \(n^{1+c}\) edges, must satisfy
+\[
+ \max(|A+_GA|,|A\cdot_GA|)\geq n^{1+c-\epsilon}
+\]
+for all sufficiently large \(n\). Here sums and products are taken only over the edges. This is false. We reconstruct a prime-restricted version of the construction of Alon, Ruzsa, and Solymosi, and give explicit fixed choices \(c=1/2\), \(\epsilon=1/12\) for which it fails at arbitrarily large orders.
+
+\paragraph{The rational vertex set.}
+Let \(M\) tend through the positive integers. Let \(\mathcal P\) be the primes in \((M,M^4]\), and write \(P=|\mathcal P|\). We use the classical prime-counting estimate
+\[
+ P=\Theta(M^4/\log M).
+\tag{1}
+\]
+The elementary Chebyshev bounds for \(\pi(x)\) suffice for (1); no estimate for primes in a short interval is needed.
+
+Let \(\mathcal C=\{(v,w):1\leq v,w\leq M,\ \gcd(v,w)=1\}\), with \(C=|\mathcal C|\). We have
+\[
+ M^2/4\leq C\leq M^2.
+\tag{2}
+\]
+Indeed, every noncoprime pair is divisible in both coordinates by some integer \(d\geq2\), so their number is at most
+\(M^2\sum_{d=2}^{\infty}d^{-2}\leq3M^2/4\), using
+\(\sum_{d=2}^{\infty}d^{-2}\leq1/4+\int_2^\infty t^{-2}\,dt\).
+
+Define
+\[
+ A_0=\left\{\frac{pw}{v}:p\in\mathcal P,\ (v,w)\in\mathcal C\right\}.
+\]
+These representations are unique. The displayed fraction is reduced because \(p>M\geq v\) and \(\gcd(v,w)=1\). Its denominator determines \(v\), and its numerator has exactly one prime factor greater than \(M\), namely \(p\); the remaining factor determines \(w\). Consequently
+\[
+ n:=|A_0|=CP=\Theta(M^6/\log M).
+\tag{3}
+\]
+
+\paragraph{The edges and their number.}
+For each \((v,w)\in\mathcal C\) and \(p,q\in\mathcal P\), connect
+\[
+ a=\frac{pw}{v},\qquad b=\frac{qv}{w},
+\]
+unless \(a=b\). Uniqueness of vertex representations shows that this description produces every oriented edge exactly once. Equality \(a=b\) forces \(v=w=1\) and \(p=q\): the reduced denominators must agree, after which coprimality gives \(v=w=1\). Thus precisely \(P\) of the \(CP^2\) ordered descriptions are loops. Reversing an edge corresponds to \((v,w,p,q)\mapsto(w,v,q,p)\), so the simple graph has
+\[
+ e(G)=\frac{CP^2-P}{2}
+ =\Theta(M^{10}/(\log M)^2).
+\tag{4}
+\]
+
+\paragraph{Few sums and products.}
+Along every edge,
+\[
+ ab=pq\leq M^8,\qquad
+ a+b=\frac{pw^2+qv^2}{vw}.
+\]
+The product is a positive integer, so there are at most \(M^8\) possible products. For a sum, the numerator is a positive integer at most \(2M^6\) and the denominator is at most \(M^2\). Counting numerator-denominator pairs, even before reducing fractions, gives
+\[
+ |A_0+_GA_0|\leq2M^8,\qquad
+ |A_0\cdot_GA_0|\leq M^8.
+\tag{5}
+\]
+Let \(D\) be a common multiple of \(1,\ldots,M\), and replace \(A_0\) by \(A=DA_0\subset\mathbb N\). This preserves distinct vertices and edges. Sums are multiplied by \(D\), and products by \(D^2\), so both cardinalities in (5) are unchanged.
+
+\paragraph{A strict contradiction with fixed parameters.}
+Since \(n\leq M^6\), (4) implies
+\[
+ \frac{e(G)}{n^{3/2}}\gg\frac{M}{(\log M)^2}\longrightarrow\infty.
+\]
+Thus eventually \(e(G)\geq n^{1+c}\) for \(c=1/2\). On the other hand, (3) and (5) give
+\[
+ \frac{\max(|A+_GA|,|A\cdot_GA|)}{n^{17/12}}
+ \ll\frac{(\log M)^{17/12}}{M^{1/2}}
+ \longrightarrow0.
+\]
+Because \(17/12=1+1/2-1/12\), the asserted lower bound fails with \(\epsilon=1/12\). The orders \(n\) tend to infinity by (3), which is sufficient to refute a statement asserted for every sufficiently large order.
+
+\paragraph{Attribution and assessment.}
+The reciprocal-denominator construction is due to N. Alon, I. Ruzsa, and J. Solymosi, \emph{Sums, products and ratios along the edges of a graph}, Theorem 3, \url{https://arxiv.org/abs/1802.06405}. Restricting their rough integers to primes makes the representation and counting steps transparent while retaining the needed exponents. The statement is recorded at \url{https://www.erdosproblems.com/808}, checked 24 September 2026. The classical prime-counting bound (1) is an explicit external input; the construction and the disproof are established above. No new counterexample or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

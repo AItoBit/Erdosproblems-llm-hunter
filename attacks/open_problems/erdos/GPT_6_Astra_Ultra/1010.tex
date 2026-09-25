@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 1010}
+
+\paragraph{Statement and scope.}
+If \(0\leq t<\lfloor n/2\rfloor\), does every graph with \(\lfloor n^2/4\rfloor+t\) edges contain at least \(t\lfloor n/2\rfloor\) triangles? The known answer is yes. This write-up proves the sharp bound for all sufficiently large \(n\), relative to the Lov\'asz--Simonovits structural theorem stated below. It also proves the bound, for every order, for graphs containing a spanning complete bipartite graph with both parts nonempty. The unrestricted finite orders not covered by the asymptotic structural theorem remain unresolved in this write-up.
+
+\paragraph{Exact calculation when all cross edges are present.}
+Suppose \(V(G)=A\cup B\), \(|A|=a\geq b=|B|\geq1\), and every edge between the parts is present. Write
+\[
+ h=e(G)-ab.
+\]
+Each edge inside \(A\) gives \(b\) triangles with third vertex in \(B\), and each edge inside \(B\) gives \(a\) triangles with third vertex in \(A\). These classes of triangles are disjoint, and any wholly internal triangles add to their number. Thus
+\[
+ T(G)\geq b h.
+\tag{1}
+\]
+
+If \(n=2r\), put \(a=r+j,b=r-j\), \(0\leq j\leq r-1\). Since \(ab=r^2-j^2\), we have \(h=t+j^2\), and
+\[
+ b h-tr=j\bigl(j(r-j)-t\bigr)\geq0.
+\]
+For \(j=0\) this is zero. For \(1\leq j\leq r-1\), the concave quadratic \(j(r-j)\) is at least \(r-1\), while the integer \(t<r\) is at most \(r-1\).
+
+If \(n=2r+1\), put \(a=r+1+j,b=r-j\), \(0\leq j\leq r-1\). Then \(h=t+j(j+1)\), and
+\[
+ b h-tr=j\bigl((j+1)(r-j)-t\bigr)\geq0.
+\]
+For \(j\geq1\), the expression \((j+1)(r-j)\) is at least \(r\) on this integer range, whereas \(t<r\). The empty ranges for small \(r\) cause no exception. Together with (1), these calculations prove the requested bound in the stated graph class.
+
+\paragraph{The examples attain equality.}
+Start with \(K_{\lceil n/2\rceil,\lfloor n/2\rfloor}\), and add a star with \(t\) edges inside the larger part. There is space for this star because \(t<\lfloor n/2\rfloor\). Its edges create no wholly internal triangles, and each gives exactly \(\lfloor n/2\rfloor\) cross-part triangles. The graph consequently has exactly \(t\lfloor n/2\rfloor\) triangles. Any general lower bound larger than the proposed one is impossible.
+
+\paragraph{An external structural theorem proves the large-order case.}
+We use the \(p=3,d=2\) case of Theorem 3 in Lov\'asz--Simonovits, \emph{On the number of complete subgraphs of a graph II}. It says that there are fixed \(\delta>0,n_0\) such that, for \(n\geq n_0\) and
+\[
+ e=\lfloor n^2/4\rfloor+t,\qquad 0<t<\delta n^2,
+\]
+there exists a graph minimizing the triangle count at that order and edge count which belongs to their class \(U_1(n,e)\). Such a graph is obtained from a complete bipartite graph on the full vertex set by adding triangle-free edges within one part.
+
+This structural assertion is an external input, not proved here. Its hypotheses apply uniformly to all \(0<t<\lfloor n/2\rfloor\) once
+\[
+ n\geq n_0,\qquad n>1/(2\delta).
+\]
+Apply the exact calculation above to that minimizing graph. Every graph of the same order and size then has at least \(t\lfloor n/2\rfloor\) triangles. The case \(t=0\) is immediate. This proves the full claimed inequality for all sufficiently large orders, with no restriction to a special host graph at those orders.
+
+\paragraph{A general elementary bound without the structural input.}
+For any \(m\)-edge graph, an edge \(uv\) has at least \(d(u)+d(v)-n\) common neighbours. Summing over edges yields
+\[
+ 3T(G)\geq\sum_vd(v)^2-nm\geq4m^2/n-nm,
+ \quad\text{so}\quad
+ T(G)\geq\frac{m(4m-n^2)}{3n}.
+\]
+For even \(n\) and \(m=n^2/4+t\), this gives
+\(T(G)\geq nt/3+4t^2/(3n)\). It illustrates why this elementary degree argument by itself is weaker than the desired \(nt/2\) in the linear-excess range.
+
+\paragraph{Remaining gap and attribution.}
+The primary structural theorem is available at \url{https://renyi.hu/~miki/LovSimBirk.pdf}. The current statement and historical resolution by Lov\'asz--Simonovits and Nikiforov--Khadzhiivanov are recorded at \url{https://www.erdosproblems.com/1010}, checked 24 September 2026. The cited asymptotic structural theorem does not by itself settle every finite order, and no finite verification up to its unspecified threshold is claimed. Completing a proof valid for all \(n\) is the remaining gap here. The equality construction and algebraic minimization above are proved explicitly; no novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 85\%}

@@ -1,0 +1,85 @@
+\section*{Erd\H{o}s Problem 1024}
+
+\paragraph{Statement and result.}
+Let \(f(n)\) be the minimum independence number of a linear 3-uniform hypergraph on \(n\) vertices. Here linear means that two different edges intersect in at most one vertex. We prove the known order
+\[
+ f(n)=\Theta(\sqrt{n\log n}).
+\]
+For the lower bound we state the general Duke--Lefmann--R\"odl independence theorem precisely. For the upper bound we give the random construction and every dependency estimate in an application of the asymmetric local lemma. Neither external lemma is being claimed as proved here.
+
+\paragraph{A simple bound requiring no deep theorem.}
+Linearity implies that each pair belongs to at most one edge, so
+\(3e(H)\leq\binom n2\). Retain each vertex independently with probability \(p\), and delete one vertex from each surviving edge. The remaining set is independent and has expected size at least
+\[
+ pn-p^3e(H)\geq pn-p^3n^2/6.
+\]
+For example, \(p=n^{-1/2}\) gives an independent set of size at least \(5\sqrt n/6\). This supplies the elementary square-root baseline and explains the additional logarithmic gain needed below.
+
+\paragraph{The explicit input for the sharp lower order.}
+Duke, Lefmann, and R\"odl's theorem states, for fixed uniformity \(r\geq3\), that a linear \(r\)-uniform hypergraph on \(n\) vertices of average degree \(d\), for sufficiently large \(d\), has an independent set of size
+\[
+ c_r n\left(\frac{\log d}{d}\right)^{1/(r-1)}. \tag{1}
+\]
+Their formulation uses average degree \(t^{r-1}\); replacing \(t\) by \(d^{1/(r-1)}\) gives (1), after changing the constant. Absence of their 2-cycles is exactly the linearity condition used here.
+
+For triples, the pair bound gives \(d=3e(H)/n\leq(n-1)/2<n\). Above a fixed threshold greater than \(e\), the function \((\log d)/d\) is decreasing. Thus (1) implies
+\(\alpha(H)\geq c\sqrt{n\log n}\).
+If \(d\) is below that fixed threshold, the preceding sampling argument with a sufficiently small fixed \(p>0\) instead gives \(\alpha(H)\geq c'n\), which is more than needed for large \(n\). This proves the lower bound uniformly, including sparse hypergraphs.
+
+\paragraph{The local lemma in the form used for the upper bound.}
+Suppose events \(E_i\) have a dependency graph, meaning each event is independent of every collection of events outside its neighbors and itself. If numbers \(0<x_i<1\) satisfy
+\[
+ \Pr(E_i)\leq x_i\prod_{j\sim i}(1-x_j), \tag{2}
+\]
+then with positive probability no event occurs. This is the standard asymmetric Lov\'asz local lemma. We now verify (2) explicitly, rather than replacing local dependence by a union bound.
+
+\paragraph{The random triples and the two kinds of bad events.}
+Take each 3-subset of \([n]\) independently as an edge with probability
+\[
+ p=\frac{\gamma}{n},\qquad \gamma=\frac1{100}.
+\]
+Put \(s=\lceil100\sqrt{n\log n}\rceil\), and consider sufficiently large \(n\), so that \(6\leq s<n\). There are two types of bad events:
+\begin{itemize}
+\item For each pair of distinct triples meeting in two vertices, event \(A\) says both were selected; its probability is \(p^2\).
+\item For each \(s\)-set \(S\), event \(B_S\) says it contains no selected triple. With \(L=\binom s3\), its probability is \((1-p)^L\leq e^{-pL}\).
+\end{itemize}
+Avoiding all events of the first kind gives linearity; avoiding all events of the second kind gives \(\alpha(H)<s\). Join events in the dependency graph whenever they use a common triple-selection variable. Disjoint collections of variables are independent, which verifies the required dependency property.
+
+\paragraph{Counting dependencies.}
+A fixed triple belongs to exactly \(3(n-3)\) pairs of triples meeting in two vertices. Hence an \(A\)-event has at most \(6n\) neighbors of type \(A\), and a \(B_S\)-event has at most \(3nL\) such neighbors. Both types have at most
+\(Q=\binom ns\) neighbors of type \(B\). These upper bounds may count an event more than once, which only makes the lower estimates for the products more conservative.
+
+Assign the parameters
+\[
+ x_A=2p^2,\qquad x_B=e^{-pL/2}.
+\]
+We first check \(Qx_B=o(1)\). For \(s\geq6\), \(L\geq s^3/12\), and thus
+\[
+ \log(Qx_B)
+ \leq s\log(en/s)-\frac{\gamma s^3}{24n}
+ \leq s\log n-\frac{100}{24}s\log n
+ \longrightarrow-\infty. \tag{3}
+\]
+Here \(s\geq100\sqrt{n\log n}\) and \(s\geq e\) were used. Also \(pL\to\infty\), and both assigned parameters are eventually at most \(1/2\).
+
+\paragraph{Checking both local-lemma inequalities.}
+For \(0\leq x\leq1/2\), \(1-x\geq e^{-2x}\). For an \(A\)-event, the right side of (2) is therefore at least
+\[
+ 2p^2\exp\{-2(6n\cdot2p^2+Qx_B)\}.
+\]
+Since \(np^2=\gamma^2/n\to0\) and (3) holds, this is at least \(p^2\) for sufficiently large \(n\), as required.
+
+For a \(B_S\)-event, the right side is at least
+\[
+ \exp\{-pL/2-2(3nL\cdot2p^2+Qx_B)\}
+ =\exp\{-(1/2+12\gamma)pL-2Qx_B\}.
+\]
+Because \(1/2+12\gamma=0.62<1\), \(pL\to\infty\), and \(Qx_B\to0\), this is at least \(e^{-pL}\). It therefore also dominates \(\Pr(B_S)\). All conditions of the local lemma are verified.
+
+A realization with no bad event exists. It is a linear 3-uniform hypergraph on exactly \(n\) vertices with
+\(\alpha(H)<\lceil100\sqrt{n\log n}\rceil\). No deletion or subsequent padding changes its vertex count. This proves the upper bound and completes the estimate for \(f(n)\).
+
+\paragraph{Attribution and assessment.}
+The order of magnitude was first established by Phelps and R\"odl, as recorded at \url{https://www.erdosproblems.com/1024}, checked 24 September 2026. The lower-bound input used here is R. A. Duke, H. Lefmann, and V. R\"odl, \emph{On uncrowded hypergraphs}, Random Structures \& Algorithms 6 (1995), 209--212, \url{https://doi.org/10.1002/rsa.3240060208}; its publisher abstract states the average-degree formulation. The upper proof is a standard two-event local-lemma construction with explicit constants and dependency counts. This is a complete deduction relative to (1) and the stated local lemma, not a reconstruction of the deeper independence theorem, a new-result claim, or local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

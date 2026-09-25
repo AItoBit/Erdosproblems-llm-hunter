@@ -1,0 +1,87 @@
+\section*{Erd\H{o}s Problem 1071}
+
+\paragraph{Statement and convention.}
+Both questions have affirmative answers: there is a finite maximal collection of pairwise disjoint open unit segments in the closed unit square, and there is a region admitting a countably infinite maximal such collection. Here a segment is a rotated and translated copy of \((0,1)\). An endpoint of one segment may lie in the interior of another: the endpoint itself is absent from the former. The stronger convention allowing closed segments to meet only at common endpoints is a different question.
+
+\paragraph{Five interior segments.}
+Set
+\[
+ c=\cos15^\circ=\frac{\sqrt6+\sqrt2}{4},\qquad
+ s=\sin15^\circ=\frac{\sqrt6-\sqrt2}{4}.
+\]
+Let \(O=(0,0)\), \(V=(c,s)\), \(W=(s,c)\), and write
+\(\sigma(x,y)=(y,x)\). The triangle \(OVW\) is equilateral of side one, since \(c^2+s^2=1\) and \(c-s=1/\sqrt2\).
+We construct a unit chord \(XY\) through \(V\), with
+\[
+ X=(x,0),\qquad Y=(1,y),\qquad
+ y=\frac{s(1-x)}{c-x}.
+ \tag{1}
+\]
+There is a choice with
+\[
+ .95<x<.955,\qquad .8<y<1,\qquad (1-x)^2+y^2=1.
+ \tag{2}
+\]
+Here are explicit existence bounds. The radical formulas give
+\(.965<c<.966\) and \(.258<s<.260\). At \(x=.95\), equation (1) gives
+\[
+ .8<y<\frac{13}{15},
+ \qquad (1-x)^2+y^2<1.
+\]
+At \(x_0=(c-s)/(1-s)\) it gives \(y=1\) and hence
+\((1-x_0)^2+y^2>1\). The same bounds give
+\(.95<x_0<.955<c\). The function \(y(x)\) is continuous and strictly increasing on this interval, so the intermediate value theorem supplies (2). Moreover \(X,V,Y\) are collinear, with \(V\) strictly between \(X,Y\).
+
+Take the following five open segments:
+\[
+ OV,\quad OW,\quad VW,\quad XY,\quad \sigma X\,\sigma Y.
+ \tag{3}
+\]
+All have length one and lie in the open square. They are pairwise disjoint. The chord \(XY\) meets the first and third supporting sides only at their omitted endpoint \(V\), and is separated from \(OW\) by the bounds \(x>.95>s\); the reflected statements hold for the other chord. The two chords themselves do not meet in the square: their supporting lines meet on the diagonal at coordinate
+\[
+ z=\frac{xy}{x+y-1}>1,
+\]
+because \(x+y-1>0\) and \(xy-(x+y-1)=(1-x)(1-y)>0\).
+
+\paragraph{Why these segments block the interior.}
+Their arrangement partitions the square into the following six closed polygonal cells, with disjoint interiors:
+\[
+\begin{array}{lll}
+ \operatorname{conv}(O,V,W),&
+ \operatorname{conv}(O,V,X),&
+ \operatorname{conv}(O,W,\sigma X),\\
+ \operatorname{conv}(X,(1,0),Y),&
+ \operatorname{conv}(\sigma X,(0,1),\sigma Y),&
+ \operatorname{conv}(V,Y,(1,1),\sigma Y,W).
+\end{array}
+ \tag{4}
+\]
+This partition follows directly by first cutting along the two disjoint boundary-to-boundary chords, then along the three equilateral-triangle sides in the remaining region. The only vertices inside the open square are \(V,W\); crucially, \(V\) belongs to the open chord \(XY\), and \(W\) to its reflected chord. Thus every boundary between cells inside the open square is covered by (3), including its interior vertices.
+
+Each cell has diameter one, and every pair at distance one consists of endpoints of a segment already in (3). For the first cell, these are its three sides. For the next four triangular cells, respectively the unique longest sides are \(OV,OW,XY,\sigma X\,\sigma Y\): their other sides are strictly shorter than one by (2) and the bounds on \(c,s\).
+For the last pentagon the only unit vertex pair is \(V,W\). All other vertex pairs are strictly closer: the coordinate bounds give, for the pairs involving \(V\) or \(W\), squared distances at most
+\[
+ .17^2+.75^2<1;
+\]
+the pairs among \(Y,(1,1),\sigma Y\) have squared distances at most \(2(.2)^2<1\). These bounds also cover the reflected pairs.
+
+We use the elementary fact that the diameter of a finite convex hull is attained between vertices. More precisely, any unit-distance pair in a polygon whose vertex distances are all at most one must itself be a pair of vertices: write both points as convex combinations of vertices, apply the triangle inequality to their difference, and use strict convexity of the Euclidean norm in the equality case. Equality forces all contributing differences to be the same unit vector, so neither convex combination can use two different vertices.
+
+An open unit segment contained in the open square and avoiding (3) must lie in a single cell interior, since it is connected and cannot cross a covered cell boundary. Its closure would be a unit segment in that cell. By the preceding diameter analysis it would have to coincide with one of the existing sides, contradicting avoidance. Therefore (3) blocks every unit segment in the open square.
+
+\paragraph{The finite maximal family in the closed square.}
+Add the four open boundary sides of the square to (3), obtaining nine disjoint open unit segments. An open segment in the closed square either lies on a boundary side or has all its points in the open square. Indeed, if an interior point of a straight segment has a coordinate equal to \(0\) or \(1\), convexity forces that coordinate to be constant along the segment. In the boundary case a unit segment equals the corresponding open side; in the other case the preceding argument blocks it. No further disjoint open unit segment can therefore be added.
+
+\paragraph{A countably infinite maximal family in a convex region.}
+Take the closed half-strip
+\[
+ R=[0,\infty)\times[0,1].
+\]
+In each unit square \([j,j+1]\times[0,1]\), \(j=0,1,2,\ldots\), put a translated copy of the nine-segment construction. Retain each shared vertical boundary segment only once. The result is a countably infinite pairwise disjoint family of unit segments.
+Any proposed further open unit segment in \(R\) lying on \(y=0\) or \(y=1\) intersects the existing horizontal boundary segments, which leave only the integer vertices uncovered. Otherwise every point of the proposed segment has \(0<y<1\). It cannot cross any line \(x=j\), because the entire portion with \(0<y<1\) is an existing vertical segment. Connectedness therefore confines it to a single unit square, where the finite construction already blocks it. The infinite family is maximal. The region used is connected and convex; it is not necessary for the second question to use a bounded region.
+
+\paragraph{Attribution and assessment.}
+The finite construction reconstructs the equilateral-triangle example recorded with the problem, using the coordinates also present in the public formalization. The half-strip deduction proves the second question as stated. Alexeev and Howe have stronger constructions with a countably infinite maximal family inside the unit square itself; that stronger assertion is not needed here. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1071} and the public proof source \url{https://github.com/plby/lean-proofs/blob/main/src/latest/ErdosProblems/Erdos1071.lean}. The geometric argument above is supplied directly; the Lean source was inspected but not locally compiled. No novelty is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

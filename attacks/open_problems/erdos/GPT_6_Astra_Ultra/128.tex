@@ -1,0 +1,42 @@
+\section*{Erd\H{o}s Problem 128: a sparse half in a triangle-free graph}
+\subsection*{Statement and scope}
+Must every triangle-free $n$-vertex graph have a set of $\lfloor n/2\rfloor$ vertices spanning at most $n^2/50$ edges? This is equivalent to the contrapositive formulation on \url{https://www.erdosproblems.com/128}. The assertion is unresolved here.
+
+We retain the valid averaging framework of the earlier GPT-5.2 attempts, supply a complete minimization for the balanced five-cycle example, and prove a restricted affirmative case. The minimization explicitly permits redistribution between nonadjacent fractional coordinates, a step missing from the earlier rounding argument. These are known elementary bounds and examples, not a new solution.
+
+\subsection*{A universal bound with denominator 16}
+For a triangle-free graph with $m$ edges, the endpoints $u,v$ of an edge have disjoint neighbourhoods, so $d(u)+d(v)\le n$. Sum over edges and apply Cauchy--Schwarz:
+\[
+ \frac{4m^2}{n}\le\sum_v d(v)^2
+ =\sum_{uv\in E}(d(u)+d(v))\le nm.
+\]
+Thus $m\le n^2/4$ (also true for $m=0$).
+
+For $n\ge2$, a uniformly random $q$-set, $q=\lfloor n/2\rfloor$, has expected induced edge count
+\[
+ m\frac{q(q-1)}{n(n-1)}\le\frac m4.
+\]
+Some such set therefore has at most $n^2/16$ edges. The case $n=1$ is immediate. In particular the desired denominator-50 conclusion holds whenever $m\le2n^2/25$. It also holds with zero edges whenever the graph has an independent set of size $q$, for example if some vertex has degree at least $q$, since a triangle-free neighbourhood is independent.
+
+\subsection*{Exact minimization in a five-cycle blow-up}
+Take five equal vertex classes of size $t$, join consecutive classes completely around a cycle, and put no other edges. This graph has $n=5t$ vertices and is triangle-free. If a chosen set takes $x_i$ vertices from class $i$, its edge count is
+\[
+ \sum_{i=0}^4x_ix_{i+1},\qquad 0\le x_i\le t
+\]
+with cyclic indices. We prove that if $\sum x_i\ge5t/2$, this sum is at least $t^2/2$.
+
+Scale to $u_i=x_i/t$. The objective $\Phi(u)=\sum u_i u_{i+1}$ is coordinatewise nondecreasing, so it suffices to minimize it on $[0,1]^5$ with $\sum u_i=5/2$. A minimizer exists by compactness. If two coordinates $u_i,u_j$ are fractional, replace them by $u_i+s,u_j-s$, keeping all others fixed. On the feasible interval of $s$, the objective is linear when $i,j$ are nonadjacent and a concave quadratic with coefficient $-1$ on $s^2$ when they are adjacent. Its minimum on that interval is attained at an endpoint. Thus at least one of the two coordinates can be made zero or one without increasing the objective.
+
+Repeating leaves at most one fractional coordinate. The sum constraint then forces two coordinates equal to one, one equal to $1/2$, and the others zero. If the two ones are adjacent, they contribute one. If they are nonadjacent, the half-coordinate must be adjacent to at least one of them, since the five-cycle has no independent three-set. Its contribution is at least $1/2$. Therefore $\Phi\ge1/2$ in all cases.
+
+For even $t$, equality occurs at
+\[
+ (x_0,x_1,x_2,x_3,x_4)=(t,0,t,0,t/2).
+\]
+The selected set has exactly $n/2$ vertices and exactly
+$t^2/2=n^2/50$ edges; every set with at least $n/2$ vertices has at least this many. Taking arbitrarily large even $t$ proves that a universal upper bound strictly smaller than $n^2/50$ is impossible.
+
+\subsection*{Remaining gap}
+The sharp example is fully verified, but the universal argument only guarantees denominator 16. Sparse graphs with at most $2n^2/25$ edges and graphs with a sufficiently large independent set are settled by the elementary estimates above. Triangle-free graphs outside these classes require a stronger selection argument.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

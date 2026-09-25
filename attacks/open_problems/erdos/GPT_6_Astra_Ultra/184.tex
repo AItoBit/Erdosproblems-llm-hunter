@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 184: long-cycle deletion and the linear lower barrier}
+
+\subsection*{1. Statement and scope}
+Must the edges of every $n$-vertex graph be partitionable into $O(n)$ simple cycles and single edges? We give a complete elementary $O(n\log n)$ decomposition and an exact family needing $4(n-3)/3$ parts. The linear upper-bound conjecture remains unresolved. The current $O(n\log^*n)$ theorem recorded on the problem page is stronger than the upper bound reconstructed here; no new upper order is claimed.
+
+\subsection*{2. Finding a cycle long enough for the current edge count}
+Let a graph on at most $n$ vertices have $e>n$ edges. It has a nonempty subgraph of minimum degree at least $e/n$. To see this, repeatedly delete a vertex of degree strictly below $e/n$, where this threshold refers to the original $e,n$. If all vertices were deleted, summing the degrees at their deletion times would count every edge exactly once and give a total strictly below $n(e/n)=e$, a contradiction.
+
+In the remaining subgraph let $v_1,\ldots,v_s$ be a longest path and let its minimum degree be $\delta$. Every neighbour of $v_s$ lies on the path. If $v_i$ is its earliest neighbour, the $\delta$ distinct neighbours imply $i\le s-\delta$. Since $\delta\ge2$, the edge $v_sv_i$ and the path segment form a simple cycle of length
+\[
+ s-i+1\ge\delta+1>e/n.\tag{1}
+\]
+Thus whenever more than $n$ edges remain, there is a cycle longer than the current edge count divided by $n$.
+
+\subsection*{3. A complete logarithmic decomposition}
+Repeatedly remove a cycle supplied by (1), stopping once at most $n$ edges remain; use those remaining edges as singleton parts. All removed cycles and leftover edges are edge-disjoint and cover the graph.
+
+Group the removals into phases in which the current edge count lies in
+\[
+ (2^j n,2^{j+1}n]\qquad(j\ge0).
+\]
+Every removal in such a phase deletes more than $2^j$ edges. If there are $r$ removals in that phase, the first $r-1$ leave the count above its lower endpoint, so
+\[
+ (r-1)2^j<2^{j+1}n-2^jn=2^jn.
+\]
+Hence $r\le n$. There are at most $1+\lceil\log_2 n\rceil$ phases, since the initial graph has at most $\binom n2$ edges. Including the at most $n$ single edges, the number of parts is at most
+\[
+ n\bigl(2+\lceil\log_2 n\rceil\bigr)\qquad(n\ge2).\tag{2}
+\]
+Empty and one-vertex graphs are immediate exceptions with zero parts.
+
+\subsection*{4. Why a coefficient larger than one is necessary}
+Consider $K_{3,m}$, on $n=m+3$ vertices. Let a decomposition use $s$ single-edge parts and $c$ cycles. Each vertex of the size-$m$ class has odd degree three, whereas cycles use an even number of its incident edges. It must therefore meet at least one singleton edge. Each singleton meets just one vertex of this class, so $s\ge m$.
+Every simple cycle in $K_{3,m}$ has length at most six. Consequently
+\[
+ 6c\ge3m-s,\qquad
+ c+s\ge\frac{3m-s}{6}+s\ge\frac{4m}{3}.\tag{3}
+\]
+If $3\mid m$, this bound is attained. Partition the large class into triples $\{b_1,b_2,b_3\}$; writing the small class as $\{a_1,a_2,a_3\}$, take the cycle
+$a_1b_1a_2b_2a_3b_3a_1$ for each triple. In its $K_{3,3}$ block the three unused edges form a matching and are taken singly. Each triple therefore costs four parts, for exactly $4m/3$ in total.
+
+Thus the edge-disjoint version cannot always use merely $n-1$ parts. This does not contradict a conjecture allowing overlaps, which is a different covering problem.
+
+\subsection*{5. Assessment}
+The logarithmic decomposition, the odd-degree obstruction and the exact examples at $3\mid m$ are proved. Removing the logarithmic overhead in the upper bound is the missing step. A maximal cycle packing leaving a forest does not by itself do that: the number of packed cycles also needs control. The earlier draft's obsolete best-bound attribution is not repeated; current context is taken from \url{https://www.erdosproblems.com/184}.
+
+\textbf{Completion rate estimate: 30\%.}
+

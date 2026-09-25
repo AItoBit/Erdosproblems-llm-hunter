@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1179: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $G$ be any finite abelian group of order $N$. For a uniformly chosen $k$-element subset $A$, let $F_A(g)$ count subsets of $A$ with sum $g$, including the empty subset. For every fixed $0<\epsilon<1$ we prove that, uniformly over $G$, with probability tending to one,
+\[
+ |F_A(g)-2^k/N|\le\epsilon 2^k/N\quad\hbox{for all }g\in G
+\]
+provided
+\[
+ k=\log_2N+O_\epsilon\left(\frac{\log N\log\log\log N}{\log\log N}\right).
+\tag{1}
+\]
+The proof reconstructs the moment bound and repeated exceptional-set reduction of Erd\H{o}s--Hall, \emph{Probabilistic methods in group theory II}, \url{https://users.renyi.hu/~p_erdos/1976-34.pdf}. The constants below are deliberately coarse. Only elementary finite-group character orthogonality and probability inequalities are used as standard inputs; all group-uniform estimates are proved.
+
+\section*{A counting lemma for binary relations}
+Suppose $\nu$ distinct vectors in $\{0,1\}^m$ prescribe $\nu$ homogeneous equations in $m$ elements of an arbitrary abelian group $H$ of order $N$. The number of simultaneous solutions is at most
+\[
+ N^{m-\log_2\nu}.\tag{2}
+\]
+To see this, choose a maximal set $J$ of coordinate positions such that no nonzero relation with coefficients in $\{-1,0,1\}$, supported on $J$, follows by integer linear combination from the prescribed equations. For each coordinate $i\notin J$, maximality gives such a relation supported on $J\cup\{i\}$. Its coefficient at $i$ must be $1$ or $-1$, since otherwise it would contradict the defining property of $J$. Thus the coordinate at $i$ is determined by those in $J$. There are at most $N^{|J|}$ solutions.
+
+Moreover, the projections of the $\nu$ original binary vectors onto the coordinates outside $J$ are all distinct. Equality of two projections would give, by subtraction, a prohibited nonzero relation supported on $J$. Hence $\nu\le2^{m-|J|}$, proving (2). The argument works even in groups with abundant torsion because the coefficients used for determination are $\pm1$.
+
+\section*{A preliminary uniform upper bound}
+First choose independent uniform elements $X_1,\ldots,X_Q$ of $G$, with $Q=\lfloor\log_2N\rfloor$. Let $R(g)$ count their $2^Q$ indexed subset sums, with repeated chosen elements still counted by their distinct indices. For every positive integer $m$,
+\[
+ \mathbb E\left[\frac1N\sum_g R(g)^m\right]\le 2^{2^m}.\tag{3}
+\]
+Here is the full moment computation. Character inversion gives
+\[
+ R(g)=\frac1N\sum_{\chi\in\widehat G}\overline{\chi(g)}
+                  \prod_{i=1}^Q(1+\chi(X_i)).
+\]
+Multiplying $m$ copies, averaging over $g$, and then over the independent $X_i$, gives
+\[
+ \mathbb E\left[\frac1N\sum_gR(g)^m\right]
+ =N^{-m}\sum_{\chi_1\cdots\chi_m=1}\nu(\chi_1,\ldots,\chi_m)^Q,
+\]
+where $\nu$ is the number of binary vectors $e$ with $\prod_j\chi_j^{e_j}=1$. All these terms are nonnegative, so discard the product restriction. There are at most $2^{2^m}$ possible exact relation patterns. For a pattern containing $\nu$ binary relations, (2), applied in $\widehat G$, bounds its number of tuples by $N^{m-\log_2\nu}$. Finally $\nu^Q\le N^{\log_2\nu}$, so each pattern contributes at most one after division by $N^m$. This proves (3).
+
+For large $N$, put
+\[
+ m=\left\lfloor\frac{\log\log N}{2\log2}\right\rfloor,
+ \qquad B=\exp\left(\frac{4\log N}{\log\log N}\right).
+\]
+If $\max_gR(g)>B$, then $\sum_gR(g)^m>B^m$. Thus (3) and Markov's inequality give
+\[
+ \mathbb P(\max_gR(g)>B)\le N2^{2^m}B^{-m}=o(1).\tag{4}
+\]
+Indeed the logarithm of the last bound is
+$[1-2/\log2+o(1)]\log N$, which tends to minus infinity.
+
+Normalize any indexed subset-sum count after $k$ samples by $u(g)=N2^{-k}R_k(g)$; its average is one. Appending any fixed new elements averages translates of $u$, so cannot increase its maximum. On the good event in (4), the initial normalized maximum is at most $2B$. Set
+\[
+ t=\lceil\log_2(2B)\rceil;
+\]
+then every later normalized count is bounded by $2^t$, and $t=O(\log N/\log\log N)$.
+
+\section*{Obtaining a small first exceptional set}
+For independent uniform samples and every $k$, character orthogonality also gives the exact variance identity
+\[
+ \mathbb E\left[\frac1N\sum_g(u(g)-1)^2\right]=(N-1)2^{-k}.\tag{5}
+\]
+For each nonprincipal character $\chi$, independence contributes
+$\mathbb E|1+\chi(X)|^2=2$ at each step; Parseval applied to the normalized convolution yields (5).
+
+Let $L=\log_2N$, and, for sufficiently large $N$, define
+\[
+ r=\left\lceil\log_2(L/t)\right\rceil+2,
+ \qquad\delta=\epsilon/(2r),
+ \qquad s=t+\left\lceil\log_2(4/\delta)\right\rceil.
+\]
+Then $r=O(\log\log\log N)$, and $s\le3t/2$ for all sufficiently large $N$. Append $6t$ samples to the original $Q$, obtaining $u_1$. For
+$H_1=\{g:|u_1(g)-1|>\delta\}$, (5) gives
+\[
+ \mathbb E|H_1|\le N\delta^{-2}2^{1-6t}.
+\]
+Consequently
+\[
+ \mathbb P(|H_1|>N2^{-5t})\le2\delta^{-2}2^{-t}=o(1).\tag{6}
+\]
+This estimate is unconditional, so it can be combined with (4) by a union bound without assuming independence of the two good events.
+
+\section*{Squaring the exceptional density}
+Suppose at stage $j$ that $0\le u_j\le2^t$ and
+\[
+ H_j=\{g:|u_j(g)-1|>j\delta\},\qquad |H_j|=h.
+\]
+Append $s$ fresh independent samples $Y_1,\ldots,Y_s$. For each binary vector $e\in\{0,1\}^s$, write $Z_e=\sum_i e_iY_i$ and define
+\[
+ D(g)=\#\{e:g-Z_e\in H_j\}.
+\]
+The new normalized count is the average of $u_j(g-Z_e)$ over all $e$. If $D(g)\le1$, the ordinary terms deviate from one by at most $j\delta$, and the single exceptional term contributes at most $(2^t+1)/2^s\le\delta$. Therefore
+\[
+ H_{j+1}\subseteq\{g:D(g)\ge2\}.\tag{7}
+\]
+For distinct binary vectors $e,f$, the difference $Z_e-Z_f$ is uniform in $G$: condition on all but a coordinate where $e_i-f_i=\pm1$. Hence
+\[
+ \mathbb E\sum_g D(g)(D(g)-1)=2^s(2^s-1)h^2/N.
+\]
+To justify the $h^2/N$ factor, sum over $g$ and over the two points of $H_j$; the necessary difference has probability $1/N$. No joint independence of the $2^s$ translations is required. From (7),
+\[
+ \mathbb E(|H_{j+1}|\mid\text{past})\le2^{2s-1}h^2/N.\tag{8}
+\]
+Put $d_1=5t$ and $d_{j+1}=2d_j-4t$, so $d_j=4t+2^{j-1}t$. If $h\le N2^{-d_j}$, Markov applied to (8) bounds the conditional probability that $|H_{j+1}|>N2^{-d_{j+1}}$ by
+\[
+ 2^{2s-4t-1}\le2^{-t-1}.
+\]
+Combining (4), (6), and these $r-1$ conditional bounds, all stages succeed with probability $1-o(1)$. The definition of $r$ gives $d_r>L$, so $|H_r|\le N2^{-d_r}<1$. It follows that $H_r$ is empty and
+\[
+ |u_r(g)-1|\le r\delta=\epsilon/2\quad\text{for every }g.
+\]
+The total number of independent samples is
+\[
+ k=Q+6t+(r-1)s
+ =\log_2N+O_\epsilon\left(\frac{\log N\log\log\log N}{\log\log N}\right),
+\]
+as claimed. Appending further samples preserves an already valid uniform relative-error bound by averaging translates.
+
+\section*{Passing to subsets and the matching lower bound}
+For this $k=O(\log N)$, the probability of any collision among the independent samples is at most $k(k-1)/(2N)=o(1)$. Conditional on no collisions, their unordered set is a uniformly random $k$-element subset of $G$, and indexed subsets correspond exactly to subsets of that set. Since an event of unconditional probability $1-o(1)$ still has conditional probability $1-o(1)$ after conditioning on an event of probability $1-o(1)$, the proved estimate transfers to $F_A$.
+
+Conversely, relative error less than one forces every $F_A(g)$ to be positive. There are only $2^k$ subsets, so $2^k\ge N$. Together with (1) this gives
+\[
+ g_\epsilon(N)=(1+o_\epsilon(1))\log_2N.
+\]
+All estimates are independent of the structure of $G$. This is a complete reconstruction of the known method, with no novelty claim.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

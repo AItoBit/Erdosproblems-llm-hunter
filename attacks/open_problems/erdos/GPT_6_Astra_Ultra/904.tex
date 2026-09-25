@@ -1,0 +1,94 @@
+\section*{Erd\H{o}s Problem 904: a clique of large degree sum}
+
+\paragraph{Statement and conventions.}
+Let \(n\geq r\geq2\) and \(m\geq t_r(n)\).
+For every \(n\)-vertex graph with \(m\) edges there is an
+\(r\)-clique whose degree sum is at least \(2rm/n\).
+The natural condition \(n\geq r\) is necessary to speak
+of an \(r\)-clique. We reconstruct the greedy proof of
+Bollob\'as and Nikiforov.
+
+\paragraph{Greedy choices and their degree bound.}
+Choose \(v_1\) of maximum degree. After choosing a clique
+\(v_1,\ldots,v_i\), choose \(v_{i+1}\) of maximum degree
+in its common neighbourhood, stopping if that set is empty.
+Write \(d_i=d(v_i)\); thus \(d_1\geq d_2\geq\cdots\).
+For any available prefix \(v_1,\ldots,v_q\), partition
+the vertices into the successive losses from the common
+neighbourhoods, and a final common neighbourhood:
+\[
+ V_i=\bigcap_{j<i}N(v_j)\setminus N(v_i)\ (i<q),
+ \qquad V_q=\bigcap_{j<q}N(v_j).
+\]
+The empty intersection in \(V_1\) is the whole vertex set.
+Every vertex of \(V_i\) has degree at most \(d_i\), and
+\(|V_i|\leq n-d_i\) for \(i<q\). Consequently
+\[
+ 2m\leq nd_q+\sum_{i<q}(d_i-d_q)(n-d_i).
+\tag{1}
+\]
+
+\paragraph{The greedy clique has enough vertices.}
+Suppose a first index \(q\) satisfies
+\(\sum_{i\leq q}d_i\leq(q-1)n\).
+Put \(k_i=n-d_i\) for \(i<q\), \(K=\sum_{i<q}k_i\),
+and \(k_q=n-K\). Minimality gives \(K<n\), so all \(k_i\)
+are positive integers and their sum is \(n\).
+Also \(d_q\leq K\). Substituting in (1) gives
+\[
+ 2m\leq\sum_{i<q}(n-k_i)k_i+d_qk_q
+ \leq n^2-\sum_{i=1}^q k_i^2
+ =2\sum_{i<j}k_ik_j\leq2t_q(n).
+\tag{2}
+\]
+The last inequality follows by balancing the integer
+part sizes: moving one vertex from a part at least two
+larger than another increases the number of cross pairs.
+
+If the greedy process stops after \(k<r\) choices, its
+common neighbourhood is empty. The union bound on the
+complements gives
+\(\sum_{i\leq k}d_i\leq(k-1)n\), so an index \(q\leq k\)
+as above exists. But \(t_q(n)<t_r(n)\) for \(q<r\leq n\):
+splitting any part of size at least two increases the
+number of cross pairs. This contradicts (2).
+Thus at least \(r\) choices exist.
+
+Moreover, if \(S_r=\sum_{i\leq r}d_i<(r-1)n\), choose
+the first such non-strict crossing \(q\leq r\).
+Again \(q<r\) is impossible; if \(q=r\), then
+\(d_q<K\), and the positive factor \(k_q\) makes (2)
+strict, also contradicting \(m\geq t_r(n)\).
+We have proved \(S_r\geq(r-1)n\).
+
+\paragraph{The average-degree conclusion.}
+Apply (1) with \(q=r\), expand, and then use
+\(d_r\leq S_r/r\) and Cauchy--Schwarz:
+\[
+ \begin{split}
+ 2m
+ &\leq nS_r-\sum_{i=1}^r d_i^2
+             +d_r(S_r-(r-1)n)\\
+ &\leq nS_r-\frac{S_r^2}{r}
+             +\frac{S_r}{r}(S_r-(r-1)n)
+ =\frac{nS_r}{r}.
+ \end{split}
+\]
+The substitution for \(d_r\) has the correct direction
+because its coefficient was proved nonnegative.
+Hence \(S_r\geq2rm/n\), as required.
+
+\paragraph{Attribution and assessment.}
+The proof follows the greedy algorithm and estimates in
+B. Bollob\'as and V. Nikiforov, \emph{The sum of degrees
+in cliques}, \url{https://arxiv.org/abs/math/0410218},
+Theorems 1 and 2, with the threshold argument written
+directly using integer part sizes.
+The statement is recorded at
+\url{https://www.erdosproblems.com/904}, checked
+24 September 2026. No resolution theorem is assumed
+without proof above, and no new discovery or local
+Lean verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

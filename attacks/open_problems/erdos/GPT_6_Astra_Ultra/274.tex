@@ -1,0 +1,54 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 274: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Can a group be partitioned into more than one coset of pairwise different sizes? For infinite groups the standard Herzog--Sch\"onheim formulation uses pairwise distinct subgroup indices. We study finite partitions $G=\bigsqcup_{i=1}^r a_iH_i$ with finite indices $d_i=[G:H_i]$ and show why distinct indices are impossible in several cases. The general assertion is unresolved here. Source: \url{https://www.erdosproblems.com/274}.
+
+We extend the earlier GPT-5.2 prime-power counting argument, including a reduction that applies even when $G$ is infinite. The arguments for cyclic quotients and small numbers of parts are included in full; deeper results about all subnormal subgroups are not imported as supplied proofs.
+
+\section*{Finite-index partitions reduce to finite quotients}
+The core $N_i=\bigcap_{g\in G}gH_ig^{-1}$ is the kernel of the action on $G/H_i$, so it is normal of finite index at most $d_i!$. Thus $N=\bigcap_iN_i$ is normal of finite index and lies in every $H_i$. Each coset $a_iH_i$ is a union of $N$-cosets. Passing to $G/N$ preserves the disjoint partition and every index $d_i$. Conversely a finite quotient's coset partition lifts to $G$ with the same indices.
+
+In particular counting in this quotient proves
+\[
+ \sum_{i=1}^r\frac1{d_i}=1. \tag{1}
+\]
+In a nontrivial partition every $d_i\ge2$. This reduction requires finite indices; it makes no unsupported claim about a core of finite index for arbitrary infinite-index subgroups.
+
+\section*{Prime-power indices and a coprimality obstruction}
+If all indices are powers of the same prime $p$, write $d_i=p^{e_i}$ and $E=\max e_i\ge1$. Multiplying (1) by $p^E$ and reducing modulo $p$ shows
+\[
+ \#\{i:e_i=E\}\equiv0\pmod p.
+\]
+The largest index therefore occurs at least $p$ times. This includes every finite $p$-group, and also every infinite group partition whose finite indices are powers of one prime.
+
+Two disjoint cosets cannot have coprime finite indices. It suffices to work in the finite quotient above. If $[G:H]=d$ and $[G:K]=e$ with $\gcd(d,e)=1$, then $[G:H\cap K]$ is divisible by both $d,e$ and is at most $de$. The upper bound follows from the injection of $G/(H\cap K)$ into $G/H\times G/K$. Thus $[G:H\cap K]=de$ and
+\[
+ |HK|=\frac{|H||K|}{|H\cap K|}=|G|.
+\]
+Consequently $HK=G$. For any left cosets $aH,bK$, write $a^{-1}b=hk$ with $h\in H,k\in K$; then $ah=bk^{-1}$ belongs to their intersection.
+
+These facts settle partitions with two or three parts. Two distinct integers at least two cannot satisfy (1) for two terms. For three distinct indices $d_1<d_2<d_3$, (1) forces $d_1=2$ and then $d_2=3,d_3=6$: if $d_1\ge3$ the reciprocal sum is at most $1/3+1/4+1/5<1$, while after $d_1=2$, $d_2\ge4$ gives at most $1/4+1/5<1/2$. The candidate $(2,3,6)$ is excluded by the coprimality obstruction. This also illustrates why the Egyptian-fraction identity alone is insufficient.
+
+\section*{All finite cyclic groups}
+For $G=\mathbb Z/N\mathbb Z$, an index-$d_i$ coset is precisely one residue class $a_i\pmod{d_i}$, where $d_i\mid N$ and $0\le a_i<d_i$. The partition identity is the polynomial equality
+\[
+ \sum_i z^{a_i}\sum_{j=0}^{N/d_i-1}z^{jd_i}
+ =\sum_{j=0}^{N-1}z^j. \tag{2}
+\]
+Let $D=\max d_i>1$ and take a primitive $D$th root of unity $\zeta$. The right side vanishes. Every term with $d_i<D$ also vanishes, since $\zeta^{d_i}\ne1$ and $\zeta^N=1$. Terms with $d_i=D$ equal $(N/D)\zeta^{a_i}$. Thus (2) implies
+\[
+ \sum_{i:d_i=D}\zeta^{a_i}=0.
+\]
+There must be at least two such terms. Hence the largest index repeats in every nontrivial cyclic coset partition. This also proves the assertion for finite partitions of $\mathbb Z$ into finite-index cosets by taking $N$ to be the least common multiple of the indices.
+
+\section*{Remaining gap}
+The reductions and special cases above do not treat a general finite noncyclic group with mixed-prime indices and at least four parts. The full subgroup structure imposes constraints beyond (1), but these elementary arguments do not show that one of the indices must repeat in that remaining case. No general resolution or improvement of the known subnormal case is claimed.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

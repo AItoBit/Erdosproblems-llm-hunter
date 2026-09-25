@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 984: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and the finite input}
+There is a red--blue colouring of the positive integers such that every monochromatic arithmetic progression with positive common difference, first term $a$ and length $k$ satisfies $k=a^{o(1)}$ uniformly as $a\to\infty$. We reconstruct the interval argument recorded by Zach Hunter in \url{https://www.erdosproblems.com/forum/thread/984}.
+
+The external input is Ben Green's Theorem 1.1, \emph{New lower bounds for van der Waerden numbers}, \url{https://arxiv.org/abs/2102.01543}: there is an absolute constant $C$ such that, for all sufficiently large $N$, $[N]$ can be coloured with no blue three-term progression and no red progression of length
+\[
+ K(N)=\left\lceil\exp\!\left(C(\log N)^{3/4}(\log\log N)^{1/4}\right)\right\rceil.
+\]
+Increase $K$ at finitely many small arguments, and then take its monotone majorant, so that this holds for every positive $N$, $K(N)\ge3$, and still $K(N)=N^{o(1)}$. The deep finite theorem is explicitly assumed; the passage to one infinite colouring is proved below.
+
+\section*{The infinite colouring}
+Partition the positive integers into $I_t=[100^t,100^{t+1})\cap\mathbb Z$, $t\ge0$. On each interval translate a finite colouring from the input. On even intervals forbid blue three-term progressions and red $K(|I_t|)$-term progressions; on odd intervals interchange the two colours. Thus any monochromatic progression contained in $I_t$ has fewer than $K(|I_t|)$ terms, and two consecutive intervals forbid three-term progressions in opposite colours.
+
+Let $P=\{a+jd:0\le j<k\}$ be a monochromatic progression, $d\ge1$, and put $L=a+(k-1)d\in I_T$. Assume first that $k>40001$. If $a<100^{T-2}$, necessarily $T\ge3$, and $P$ traverses the entirety of both $I_{T-2}$ and $I_{T-1}$. But
+\[
+ d<\frac{100^{T+1}}{40000}=\frac14\,100^{T-1},
+\]
+while the smaller of these two intervals has length $99\cdot100^{T-2}>3d$. An interval of length greater than $3d$ traversed by an arithmetic progression contains at least three consecutive terms of that progression. Hence $P$ contains a three-term progression in each of two consecutive intervals, one of which forbids its colour. This contradiction proves
+\[
+ a\ge100^{T-2}. \tag{1}
+\]
+
+If $T\ge1$, at most $(k-1)/100+1$ terms of $P$ are below $100^{T-1}$. Indeed, when $a$ is below this cutoff,
+\[
+ \frac{100^{T-1}-a}{L-a}\le\frac{100^{T-1}}L\le\frac1{100},
+\]
+and counting equally spaced points adds at most one. All remaining terms lie in $I_{T-1}\cup I_T$, so one of these intervals contains at least $k/3$ terms. Their intersection with $P$ is again an arithmetic progression. For $T=0$ every term is in $I_0$, and the same conclusion is immediate. Let $I_t$ be the selected interval. By (1),
+\[
+ |I_t|=99\cdot100^t\le99\cdot100^T\le990000a.
+\]
+The finite forbidden-progression property therefore gives
+\[
+ k<3K(\lceil990000a\rceil). \tag{2}
+\]
+Combining this with the discarded bounded-length case yields a uniform bound by $\max(40001,3K(\lceil990000a\rceil))$.
+
+\section*{Quantifiers and assessment}
+Since multiplying the argument of $K$ by a fixed constant preserves $K(a)=a^{o(1)}$, equation (2) means that for every $\varepsilon>0$ there is $a_0(\varepsilon)$ such that every monochromatic progression beginning at $a\ge a_0$ has $k\le a^\varepsilon$. The construction also bounds all lengths beginning at any fixed $a$. Thus the desired single colouring and its uniform asymptotic assertion are fully proved relative to Green's stated finite theorem.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

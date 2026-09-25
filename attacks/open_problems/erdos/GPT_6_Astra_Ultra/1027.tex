@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1027: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and the exact external input}
+For every fixed $c>0$ and all sufficiently large $n$, an $n$-uniform family $\mathcal F$ with $|\mathcal F|\le c2^n$ has at least $\eta_c2^{|X|}$ proper two-colourings of $X=\bigcup\mathcal F$, for some $\eta_c>0$. Taking $B$ to be one colour class gives exactly the sets requested: each edge meets $B$ and its complement.
+
+We reconstruct Koishi Chan's adaptive-exposure proof at \url{https://www.erdosproblems.com/forum/thread/1027}, keeping the factors in the residual weights explicit. The external input is Beck's nonuniform property-B theorem: for every $C>0$ there is an integer $R$ such that every finite hypergraph with minimum edge size at least $R$ and
+\[
+ \sum_e2^{-|e|}\le C
+\]
+has a proper two-colouring. This is the consequence $f(R)\to\infty$ proved by Beck, and strengthened in Linyuan Lu's Theorem 1, \emph{On a problem of Erd\H{o}s and Lov\'asz on coloring non-uniform hypergraphs}, \url{https://people.math.sc.edu/lu/papers/propertyB.pdf}. The nonuniform theorem is assumed; the positive proportion of colourings is proved below.
+
+\section*{Weights are conditional probabilities}
+Choose $R\ge2$ for $C=4c$, set $w=2^{-R}$, and let $\tau=w/4$. Assume $n$ is large enough that $2^{-n}<\tau$. For a partial red--blue colouring, give each original edge the weight
+\[
+ W_e=\tfrac12\mathbb P(e\text{ is monochromatic after an independent fair completion}\mid\text{the partial colouring}).
+\]
+Thus a completely uncoloured edge has weight $2^{-n}$. An edge with both colours already visible has weight zero. An edge with at least one coloured vertex, all those vertices of one colour, and $f$ uncoloured vertices has weight $2^{-f-1}$. A fully coloured monochromatic edge has weight $1/2$.
+
+Let $W=\sum_eW_e$. Revealing any presently uncoloured vertex with an independent fair colour preserves the conditional expectation of every edge weight, even if the choice of vertex depends on the preceding history. Therefore $W$ is a nonnegative martingale and initially $W\le c$. An individual edge weight can increase by at most a factor of two in one exposure, including the first exposure in that edge.
+
+\section*{Expose the least constrained vertex first}
+Fix a deterministic order for tie-breaking. For every uncoloured vertex $v$, define its vertex weight to be $\max_{e\ni v}W_e$. Repeatedly reveal the uncoloured vertex of minimum vertex weight. Stop as soon as
+\[
+ W>2c,\qquad \max_eW_e\ge\tau,\qquad\text{or every vertex is coloured}.
+\]
+The stopping time $T$ is bounded by $|X|$, so elementary bounded optional stopping gives $\mathbb EW_T=W_0\le c$. Hence
+\[
+ \mathbb P(W_T>2c)\le\frac12.
+\tag{1}
+\]
+Call a stopping history good if $W_T\le2c$. On every good history either all vertices were coloured or the edge-weight threshold caused the stop.
+
+In the latter case let $v$ be the last revealed vertex. Immediately before its exposure some edge containing $v$ had weight at least $\tau/2$, because an edge now crossing the threshold can at most double. Since $v$ had minimum vertex weight, every then-uncoloured vertex belongs to some edge of weight at least $\tau/2$. At that preceding time $W\le2c$, so there are at most $4c/\tau$ such edges. Each contains at most $\log_2(2/\tau)$ uncoloured vertices, as follows from either of the weight formulas above. Therefore at most
+\[
+ K_c:=\left\lceil\frac{4c}{\tau}\log_2\frac2\tau\right\rceil
+\tag{2}
+\]
+vertices are left uncoloured at a good stop. The same bound is automatic when all vertices are coloured.
+
+\section*{Every good history has a proper completion}
+If all vertices are coloured, a monochromatic edge would have weight $1/2>2\tau$. This is impossible: before the final exposure all edge weights were below $\tau$, and afterwards they are below $2\tau$. Thus this colouring is already proper.
+
+Otherwise discard edges which already show both colours, and from every remaining edge remove its coloured vertices. The resulting residual hypergraph may have repeated edges; deleting repetitions only decreases its weight sum. An uncoloured edge retains weight $2^{-|e|}=W_e$; a partially coloured monochromatic edge has residual weight $2^{-|e|}=2W_e$. At the stop every original weight is at most $2\tau$, so each residual weight is at most $4\tau=w$. The residual edge sizes are consequently at least $R$, and their total weights sum to at most $2W_T\le4c$. Beck's stated theorem supplies a proper colouring of the residual hypergraph. It properly completes every original edge, including those which had only one colour visible, since a nonmonochromatic residual edge contributes both colours.
+
+\section*{Convert extendibility into a counting bound}
+After the adaptive exposure stops, complete all unrevealed vertices independently and fairly. This procedure produces a uniform full colouring of $X$: it merely reveals independent fair bits in a history-dependent order. On a good history at most $K_c$ bits remain and at least one completion is proper. Its conditional probability of being proper is therefore at least $2^{-K_c}$. Equation (1) gives
+\[
+ \mathbb P(\text{full colouring is proper})\ge2^{-K_c-1}.
+\]
+Thus one can take $\eta_c=2^{-K_c-1}>0$, independently of $n$ and $|X|$. An empty family is immediate and needs no algorithm.
+
+\section*{Assessment}
+The adaptive counting argument, bounded stopping, number of remaining vertices and residual extension are complete relative to the explicitly stated nonuniform property-B theorem. In particular the residual weights can be twice the conditional-probability weights; that factor is included in the thresholds. No new property-B theorem is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

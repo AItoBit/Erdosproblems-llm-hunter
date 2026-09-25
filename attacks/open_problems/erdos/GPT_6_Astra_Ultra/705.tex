@@ -1,0 +1,116 @@
+\section*{Erd\H{o}s Problem 705: large girth and unit distances}
+
+\paragraph{Statement and status of this reconstruction.}
+The question asks whether sufficiently large girth forces a
+finite planar unit-distance graph to be \(3\)-colourable,
+with an edge required \emph{if and only if} the distance is one.
+The problem page records O'Donnell's negative resolution:
+\url{https://www.erdosproblems.com/705}.
+We reconstruct the graph-theoretic part of his construction
+in detail. We use his published embedding theorem for its
+stated, weaker edge-preserving conclusion, and explicitly
+leave the faithful-embedding step unresolved in this attempt.
+This distinction is about the scope verified here, not a
+claim that the recorded problem is still open.
+
+\paragraph{Sources and the geometric qualification.}
+The primary source inspected is P. O'Donnell,
+\emph{High girth unit-distance graphs}, Rutgers Ph.D. thesis
+(1999), Sections 1.2 and 1.7, Theorems 25--28:
+\url{https://jayyhk.github.io/papers/odonnell1999.pdf}.
+Its definition of a proper unit-distance embedding requires
+distinct points and unit length for every edge.
+That definition alone does not require nonedges to have
+length different from one. The discussion at
+\url{https://www.erdosproblems.com/forum/thread/705}
+accepts the negative resolution and also mentions this
+faithfulness issue.
+We do not infer the missing converse just from the word
+proper or from the statement of Theorem 28.
+
+\paragraph{An explicit graph construction from a hypergraph.}
+Choose an odd integer \(k\geq5\) and an integer \(g>k/3\),
+with \(g\geq3\).
+Use the established Erd\H{o}s--Hajnal theorem giving a finite
+\(k\)-uniform hypergraph \(\mathcal H\) of Berge girth at
+least \(g\) which is not weakly \(3\)-colourable.
+Weak colouring means that no hyperedge is monochromatic.
+This existence theorem is an external combinatorial input,
+stated as Theorem 25 in the cited thesis.
+
+Start with one independent foundation vertex for each vertex
+of \(\mathcal H\). For every hyperedge
+\(E=\{v_1,\ldots,v_k\}\), introduce a fresh cycle
+\(u_{E,1},\ldots,u_{E,k}\) of length \(k\), and add the matching
+edges \(v_i u_{E,i}\).
+Cycles belonging to different hyperedges have disjoint new
+vertices; foundation vertices may belong to several hyperedges.
+Call the resulting graph \(G\).
+
+\paragraph{Its chromatic number is exactly four.}
+In any putative \(3\)-colouring of \(G\), the foundation
+vertices give a \(3\)-colouring of \(\mathcal H\). Some
+hyperedge \(E\) is monochromatic, say in colour one.
+Every vertex of its attached cycle is adjacent to a
+foundation vertex of colour one, so that odd cycle would
+have to use just colours two and three, a contradiction.
+Hence \(\chi(G)\geq4\).
+Conversely, give every foundation vertex one colour and
+properly colour every attached odd cycle with three
+other colours. This proves \(\chi(G)=4\).
+
+\paragraph{Its girth is exactly \(k\).}
+An attached cycle shows that the girth is at most \(k\).
+Consider any other simple cycle \(C\).
+If it has no foundation vertex, it lies wholly in one
+attached cycle and hence has length \(k\).
+Otherwise, between consecutive foundation vertices on
+\(C\) there is a path inside a single attached cycle,
+including the two matching edges. This path has at least
+three edges.
+
+Project these successive paths to the incidence graph of
+\(\mathcal H\), replacing each by
+foundation vertex--hyperedge--foundation vertex.
+Consecutive hyperedges in this projected closed walk are
+different: at a fixed foundation vertex there is only one
+matching edge into each particular attached cycle, so
+using the same hyperedge immediately twice would repeat
+that matching edge in the simple cycle \(C\).
+The foundation vertices on \(C\) are also distinct.
+Thus the projected closed walk has no immediate reversal.
+It contains a cycle in the incidence graph, whose length
+is at least \(2g\) by the Berge-girth assumption.
+If \(C\) has \(t\) foundation vertices, its projection
+has length \(2t\), so \(t\geq g\) and
+\(|C|\geq3t\geq3g>k\).
+This proves the girth assertion without assuming that
+all projected hyperedges are distinct.
+
+\paragraph{What the external embedding result supplies.}
+Choose \(\mathcal H\) vertex-minimal among hypergraphs with
+these properties. Deleting any one foundation vertex makes
+its remaining hypergraph weakly \(3\)-colourable.
+O'Donnell's embedding construction uses this colouring and
+four small regions of the plane, then attaches the odd
+cycles and removes coincidences. The geometric lemmas and
+Theorem 28 give distinct planar points realizing every
+specified edge at distance one. This geometric existence
+is an external input, not established by the colouring
+and girth arguments above.
+
+\paragraph{Remaining gap for the displayed stronger convention.}
+To turn this into a complete proof of the stated
+if-and-only-if version, one must verify a realization in
+which every unspecified vertex pair has distance different
+from one, or otherwise control all additional unit edges.
+Simply adding every missing unit edge can introduce short
+cycles and destroys the proved girth bound.
+The source's removal of coincident vertices alone does not
+address that issue. Accordingly the faithful geometric
+step remains unresolved in this reconstruction, even
+though the abstract construction and its one-way
+unit-distance realization have the properties proved above.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 65\%}

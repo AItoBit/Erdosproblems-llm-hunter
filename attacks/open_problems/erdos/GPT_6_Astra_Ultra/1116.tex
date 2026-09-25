@@ -1,0 +1,153 @@
+\section*{Erd\H{o}s Problem 1116: separating every pair of value counts}
+\subsection*{Statement and scope}
+For a meromorphic function, let $n(r,a)$ count solutions of $f(z)=a$ in $|z|<r$, with multiplicity; $n(r,\infty)$ counts poles. We construct a meromorphic function for which
+\[
+ \limsup_{r\to\infty}\frac{n(r,a)}{n(r,b)}=\infty
+ \qquad(a\ne b,\ a,b\in\widehat{\mathbb C}).
+\]
+This answers the meromorphic alternative, even including the value $\infty$. Toppila proved this and the stronger entire-function version for finite values. The construction below reconstructs the separated zero--pole cluster mechanism; no novelty is claimed. It does not reconstruct the entire-function refinement.
+
+\subsection*{Normalized clusters}
+Choose positive integers
+\[
+ t_n\ge n^2\left(1+\sum_{j<n}t_j\right),
+\]
+and a sequence of angles $\theta_n$ which visits every open arc infinitely often. For large radii $R_n$, to be chosen inductively, set
+\[
+ \phi_{nk}=\frac{k}{n^2t_n},\qquad
+ a_{nk}=R_ne^{i\phi_{nk}}\quad(1\le k\le t_n).
+\]
+All zeros in the $n$th cluster thus have exactly the same modulus, but are mutually far apart when $R_n$ is large. Define
+\[
+ B_n(z)=\prod_{k=1}^{t_n}
+ \frac{1-z/a_{nk}}{1-z/(a_{nk}+\delta_n)},\qquad
+ F_n(z)=z\prod_{j\le n}B_j(z),
+\]
+where $|\delta_n|=1$. If $F_{n-1}$ is already chosen, write
+\[
+ A_n=\lim_{z\to\infty}\frac{F_{n-1}(z)}z
+     =\prod_{\substack{j<n\\k\le t_j}}\left(1+\frac{\delta_j}{a_{jk}}\right),
+ \qquad
+ \delta_n=e^{i(\theta_n+\arg A_n)}.
+\]
+Require $R_n>10R_{n-1}$, $R_n>10$, and $t_n/R_n\le2^{-n}/100$.
+The estimate $|\log(1+w)|\le2|w|$ for $|w|\le1/2$ shows that $A_n$ converges to a nonzero $A$ and
+\[
+ 0.9<|A_n|<1.1.
+ \tag{1}
+\]
+None of the specified zeros or poles cancel: within a cluster the anchor separation can exceed ten, and different clusters occupy disjoint annuli.
+
+\subsection*{The local estimates that choose the radii}
+Here $n,t_n,F_{n-1},\delta_n$ are fixed while $R=R_n\to\infty$. Uniformly on $R/2\le|z|\le2R$,
+$F_{n-1}(z)/z\to A_n$.
+For $z=a_{nk}+u/R$ with $|u|\le100n$, the $k$th factor is
+\[
+ \left(1+\frac{\delta_n}{a_{nk}}\right)
+ \frac{-u/R}{\delta_n-u/R},
+\]
+and all the other factors tend uniformly to one. Consequently, uniformly in $k$ and this $u$-disk,
+\[
+ F_n(a_{nk}+u/R)
+   =-\frac{A_ne^{i\phi_{nk}}}{\delta_n}u+o(1).
+ \tag{2}
+\]
+There are only finitely many anchors at this stage, so all these estimates can be imposed simultaneously.
+
+We also claim, after increasing $R$,
+\[
+ |F_n(z)|>2n
+ \quad\text{on }R/2\le|z|\le2R
+ \text{ outside }\bigcup_k\{|z-a_{nk}|<100n/R\}.
+ \tag{3}
+\]
+At a pole the assertion means infinite modulus. To verify it, first consider the disks $|z-a_{nk}|\le2$. All factors other than the $k$th tend uniformly to one there, while
+\[
+ \left|\frac{a_{nk}-z}{a_{nk}+\delta_n-z}\right|
+ \ge\frac{|z-a_{nk}|}{3}.
+\]
+Also $|F_{n-1}(z)|=(|A_n|+o(1))R$ there. This proves (3) in those disks, outside the smaller disks. Elsewhere choose a nearest anchor. Its unnormalized factor has modulus at least $2/3$, and all other factors tend uniformly to one because the anchor separations tend to infinity. The normalizing factors tend to one too. Thus the whole product has modulus at least $1/2$, and $|F_{n-1}(z)|\ge(0.9-o(1))R/2$, which proves (3).
+
+Choose $R_n$ so that the error in (2) is less than $1/(10n)$ and (3) holds. Rouch\'e's theorem then says that for every $|w|\le n$ there is exactly one $w$-point, counted with multiplicity, in each disk
+\[
+ D_{nk}=\{|z-a_{nk}|<100n/R_n\}.
+\]
+On the inner circle $|z|=R_n/2$, (3) permits a homotopy from $F_n-w$ to $F_n$. The argument principle gives exactly
+\[
+ N_{n-1}=1+\sum_{j<n}t_j
+ \tag{4}
+\]
+$w$-points inside that circle, since precisely the earlier zeros and poles lie there.
+
+\subsection*{Preserving the estimates in the infinite product}
+For any fixed compact disk, the normalized factors satisfy
+\[
+ \log B_n(z)=O(t_n|z|/R_n^2)\qquad(R_n\to\infty).
+ \tag{5}
+\]
+At each stage there are only finitely many earlier annuli to protect. We therefore further enlarge $R_n$ to make the logarithm of $B_n$ uniformly as small as desired on all of them and on $|z|\le n$.
+
+More explicitly, after stage $j$ choose $\eta_j>0$ so small that multiplication by any analytic, zero-free factor with $|\log h|<\eta_j$ on $|z|\le2R_j$ preserves (3) with lower bound $j$, preserves the Rouch\'e inequalities on the small and inner circles, and makes the error in (2) at most $1/j$. Such a choice exists by the strict margins, compactness of $|w|\le j$, and the bounded values of $F_j$ on the small disks. For every later stage $n>j$ impose
+\[
+ \sup_{|z|\le2R_j}|\log B_n(z)|<2^{-n}\eta_j.
+\]
+These are finitely many conditions at stage $n$, all attainable by (5). Also impose $|\log B_n(z)|<2^{-n}$ on $|z|\le n$.
+
+It follows that
+\[
+ f(z)=z\prod_{n\ge1}B_n(z)
+\]
+converges locally uniformly away from its specified poles to a meromorphic function. The tails are zero-free; its zeros and poles are exactly those specified. All the counting conclusions (3)--(4) hold for $f$, with the relaxed bound $n$, and its unique $w$-point in $D_{nk}$ satisfies, uniformly for $|w|\le n$,
+\[
+ R_n(z_{nk}(w)-a_{nk})
+ =-\frac{\delta_n w}{A_ne^{i\phi_{nk}}}+O(1/n).
+ \tag{6}
+\]
+The constants in this error can be absolute by (1). This diagonal choice is essential: uniform convergence on each fixed disk alone would not guarantee the later annular counting assertions.
+
+\subsection*{Every ordered pair of finite values}
+For fixed $w$, expanding the modulus in (6) gives, uniformly in $k$,
+\[
+ \begin{split}
+ R_n\bigl(|z_{nk}(w)|-R_n\bigr)
+ &=-\frac{\operatorname{Re}(e^{i\theta_n}e^{-2i\phi_{nk}}w)}
+             {|A_n|}+O(1/n)\\
+ &=-\frac{\operatorname{Re}(e^{i\theta_n}w)}{|A_n|}+o(1).
+ \end{split}
+ \tag{7}
+\]
+Here $\max_k|\phi_{nk}|\le1/n^2$, and $R_n$ may be enlarged to absorb the elementary quadratic error in the modulus expansion.
+
+Fix distinct finite $a,b$. Infinitely many $n$ satisfy
+$\operatorname{Re}(e^{i\theta_n}(a-b))>\varepsilon$ for some fixed $\varepsilon>0$. For all sufficiently large such $n$, (7) puts every new $a$-point strictly inside every new $b$-point in radial order. Choose $r$ strictly between their moduli. There are no other $a$- or $b$-points in this annulus, so
+\[
+ n(r,a)=N_{n-1}+t_n,\qquad n(r,b)=N_{n-1}.
+\]
+Their ratio is at least $1+n^2$. The selected radii tend to infinity. The ordered choice of $a,b$ was arbitrary, so the assertion also holds with the two values reversed.
+
+\subsection*{Pairs involving infinity}
+The new poles have moduli
+\[
+ |a_{nk}+\delta_n|
+ =R_n+\operatorname{Re}(\delta_ne^{-i\phi_{nk}})+O(1/R_n).
+\]
+Because $A_n\to A\ne0$ and $\theta_n$ visits every arc infinitely often, infinitely many $n$ have $\operatorname{Re}\delta_n>3/4$, and infinitely many have $\operatorname{Re}\delta_n<-3/4$.
+For each fixed finite $w$, (6) places all its new points at distance $o(1)$ in modulus from $R_n$.
+
+In the first subsequence, choose $r=R_n+1/4$. It includes the $t_n$ new $w$-points and no new poles. Thus
+\[
+ \frac{n(r,w)}{n(r,\infty)}
+ \ge\frac{t_n}{\sum_{j<n}t_j}\longrightarrow\infty.
+\]
+In the second subsequence choose $r=R_n-1/4$. It includes all new poles and none of the new $w$-points, giving
+\[
+ \frac{n(r,\infty)}{n(r,w)}
+ \ge\frac{t_n}{N_{n-1}}\ge n^2.
+\]
+All denominators are positive for sufficiently large $n$. This completes the meromorphic construction for every ordered pair on the sphere.
+
+\subsection*{Assessment and sources}
+The meromorphic existence assertion is proved, using only standard compact convergence, the argument principle and Rouch\'e's theorem. The radii are chosen by explicit finite families of asymptotic inequalities, not by assuming the target counting property. The stronger entire-function construction is known but is not supplied here.
+Sources: \url{https://www.erdosproblems.com/1116}; S. Toppila, \emph{On the counting function for the $a$-values of a meromorphic function}, Ann. Acad. Sci. Fenn. Ser. A I Math. 2 (1976), 565--572, Theorems 2--3 and their proofs, \url{https://www.acadsci.fi/mathematica/Vol02/vol02pp565-572.pdf}. This is a reconstruction of a known resolution, not a new solution claim.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

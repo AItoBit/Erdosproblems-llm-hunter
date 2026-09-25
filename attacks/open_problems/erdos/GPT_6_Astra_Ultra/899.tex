@@ -1,0 +1,106 @@
+\section*{Erd\H{o}s Problem 899: two substantial cases of difference growth}
+
+\paragraph{Statement and scope.}
+Let \(A\subseteq\mathbb N\) be infinite, with
+\(A(N)=|A\cap[1,N]|=o(N)\), and put
+\(D(N)=|(A-A)\cap[1,N]|\).
+The general theorem, due to Ruzsa, asserts
+\(\limsup D(N)/A(N)=\infty\).
+The general proof remains unresolved in this write-up.
+We prove the assertion for sets of positive upper
+Banach density and for every lacunary sequence.
+The first case includes very sparse unions of long,
+densely occupied intervals; the second includes sets
+with large multiplicative gaps.
+
+\paragraph{Positive upper Banach density forces many differences.}
+Suppose there are intervals \(I_j\subset\mathbb Z\),
+with lengths tending to infinity, such that
+\(|A\cap I_j|/|I_j|\to\delta>0\).
+If \(A+t_1,\ldots,A+t_k\) are pairwise disjoint translates,
+then on the same intervals
+\[
+ |(A+t_i)\cap I_j|=|A\cap I_j|+O(|t_i|).
+\]
+Dividing their total by \(|I_j|\) gives \(k\delta\leq1\).
+Consequently a greedy family of pairwise disjoint
+translates terminates after finitely many steps,
+at shifts \(t_1,\ldots,t_k\).
+Its maximality says that every translate \(A+t\)
+meets some \(A+t_i\), so
+\[
+ \mathbb Z=\bigcup_{i=1}^k((A-A)+t_i).
+\tag{1}
+\]
+The sign is harmless because \(A-A\) is symmetric.
+
+Let \(C=\max_i|t_i|\).
+Covering the integers \(C+1,\ldots,N-C\) by (1)
+uses differences in \([1,N]\), and therefore
+\[
+ N-2C\leq kD(N).
+\]
+Since \(A(N)=o(N)\), this proves the stronger conclusion
+\(D(N)/A(N)\to\infty\) in this case.
+In particular, if \(A\) contains intervals of arbitrarily
+large length, then in fact \(A-A=\mathbb Z\).
+Positive upper Banach density does not imply positive
+ordinary density, so the case is compatible with the
+hypothesis of the problem.
+
+\paragraph{Lacunary sets have quadratically many distinct differences.}
+First suppose \(b_1<b_2<\cdots\) and \(b_{i+1}\geq3b_i\).
+For fixed \(j\geq2\), the \(j-1\) differences \(b_j-b_i\),
+\(i<j\), are distinct and lie in
+\[
+ [2b_j/3,b_j).
+\]
+The intervals for different \(j\) are disjoint: the
+next one starts at least at \(2b_j>b_j\).
+Thus the first \(s\) terms have at least
+\(\binom s2\) distinct positive differences, all at
+most \(b_s\).
+
+Now let \(A=\{a_1<a_2<\cdots\}\) satisfy
+\(a_{i+1}\geq(1+\epsilon)a_i\), for fixed \(\epsilon>0\).
+Choose \(h\) with \((1+\epsilon)^h\geq3\).
+Among \(a_1,\ldots,a_k\), one residue class of indices
+modulo \(h\) has at least \(\lceil k/h\rceil\) members.
+They form a 3-lacunary subsequence, so
+\[
+ D(a_k)\geq\binom{\lceil k/h\rceil}{2},
+ \qquad A(a_k)=k.
+\]
+Hence
+\[
+ \frac{D(a_k)}{A(a_k)}
+ \geq\frac1k\binom{\lceil k/h\rceil}{2}
+ \longrightarrow\infty.
+\]
+Every such sequence has \(A(N)=O_\epsilon(\log N)\),
+so it satisfies the required zero-density hypothesis.
+
+\paragraph{A useful exact model.}
+For \(A=\{3^j:j\geq0\}\), the differences of its first
+\(k\) terms are all distinct by the preceding intervals.
+Thus the quadratic lower bound is attained by the
+finite initial segment's difference count.
+For the full infinite set, later terms can only add
+differences; they cannot invalidate the lower bound.
+This distinction is important because \(D(N)\) counts
+differences from all of \(A\), not only \(A\cap[1,N]\).
+
+\paragraph{Attribution and remaining gap.}
+The full resolution is recorded at
+\url{https://www.erdosproblems.com/899}, checked
+24 September 2026. A historical discussion is
+C. L. Stewart, \emph{On difference sets of sets of integers},
+\url{https://www.numdam.org/item/SDPP_1977-1978__19_1_A4_0/}.
+The arguments above are elementary special-case proofs.
+They do not handle general sets of zero upper Banach
+density which have no fixed lacunarity ratio.
+No claim is made to have proved Ruzsa's theorem in that
+remaining regime, or to have run Lean verification.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 55\%}

@@ -1,0 +1,40 @@
+\section*{Erd\H{o}s Problem 1091: a bounded number of cycle diagonals}
+\subsection*{1. The two questions}
+The first question asks whether every $K_4$-free graph with chromatic number four contains an odd cycle with two diagonals. This is Voss's known affirmative theorem; its proof is not reconstructed here. The second asks whether the guaranteed number of diagonals tends to infinity when every subgraph on at most $r$ vertices is three-colourable. We give a full negative answer to this second question.
+For every $m\ge1$ we construct a $K_4$-free graph $G_m$ on $20m+31$ vertices with chromatic number four, all proper subgraphs three-colourable, and at most ten diagonals in every cycle. This reconstructs Section 4 of Alexeev--Putterman--Sawhney--Sellke--Valiant, \emph{Short proofs in combinatorics, probability and number theory II}, \url{https://arxiv.org/abs/2604.06609}. The paper attributes the construction to an internal OpenAI model and the stronger degeneracy verification to the human authors. No novelty is claimed.
+
+\subsection*{2. The graph}
+Take disjoint pentagons $S_0,\ldots,S_m$, each with cyclic labels $a,b,c,d,e$. Join $S_i[c]$ to $S_{i+1}[a]$ for $0\le i<m$. Attach a new leaf pentagon by a single edge at each of the following positions:
+\[
+ S_0:\ a,b,d,e;\qquad S_i:\ b,d,e\ (1\le i<m);\qquad S_m:\ b,c,d,e.
+\]
+For each attached pentagon designate its endpoint of the attaching edge as its attachment vertex. Add one extra vertex $v$, adjacent to the other four vertices of every leaf pentagon and to no other vertices. There are $m+1$ spine pentagons and $3m+5$ leaves, hence $20m+31$ vertices in total. Every vertex except $v$ has degree exactly three. The graph $G_m-v$ is connected and consists of pentagons joined according to a tree by bridge edges.
+There is no triangle in $G_m-v$, since every cycle there lies in one pentagon. Consequently a $K_4$ cannot avoid $v$, and cannot contain $v$ either, since its other three vertices would form a triangle in $G_m-v$.
+
+\subsection*{3. Four colours are necessary}
+Suppose a three-colouring exists and write $\alpha$ for the colour of $v$. The four nonattachment vertices of any leaf form a path on four vertices and cannot use $\alpha$. They alternate between the other two colours, so the path's endpoints have different colours. Its attachment vertex, adjacent to both endpoints, must therefore have colour $\alpha$. Every spine vertex with a leaf attached consequently avoids $\alpha$.
+In a pentagon, if $a,b,d,e$ avoid $\alpha$, they form the four-vertex path $b,a,e,d$. Its endpoints $b,d$ have different colours, forcing $c$ to have colour $\alpha$. Applying this to $S_0$ gives $S_0[c]=\alpha$, whence $S_1[a]\ne\alpha$. Inductively, the three leaf attachments on each internal spine pentagon and the preceding spine edge force
+\[
+ S_i[c]=\alpha\quad(0\le i<m),\qquad S_m[a]\ne\alpha.
+\]
+But the four vertices $b,c,d,e$ of $S_m$ all avoid $\alpha$ and form a four-vertex path. Its endpoints have different colours, forcing $S_m[a]=\alpha$, a contradiction.
+
+\subsection*{4. Every proper subgraph is two-degenerate}
+We prove that no nonempty proper subgraph $H$ has minimum degree at least three. If it did, it would contain a vertex other than $v$. Since every such vertex has degree exactly three in $G_m$, all its neighbours and incident edges would belong to $H$. Connectivity of $G_m-v$ propagates this conclusion to every vertex of $G_m-v$. The neighbours of $v$ then force $v$ and every edge incident to it into $H$ as well. Thus $H=G_m$, a contradiction.
+Every nonempty subgraph of a proper $H$ is again proper, so successive deletion of a vertex of degree at most two gives a two-degeneracy ordering. Greedy colouring in reverse order uses three colours. Finally $G_m-v$ is three-colourable, and assigning a fourth colour to $v$ shows $\chi(G_m)=4$.
+
+\subsection*{5. Counting every possible diagonal}
+A cycle avoiding $v$ lies inside one pentagon and has no diagonals. For a cycle $C$ containing $v$, deleting $v$ leaves a simple path $P$ in $G_m-v$ whose endpoints are nonattachment vertices of leaves. A bridge cannot be traversed twice by a simple path. Thus the visited pentagon blocks form a path in the block tree.
+There is one exceptional case worth treating separately: if the two endpoints lie in the same leaf, $P$ stays in that leaf. The induced graph on that leaf and $v$ has only nine edges, so such a cycle has at most $9-3=6$ diagonals.
+Otherwise the path has two distinct leaf blocks at its ends and a segment of spine blocks between them. In each end leaf, $P$ is a rim path from the attachment vertex to one vertex adjacent to $v$. At most three internal vertices of this path contribute diagonals to $v$. At most one further diagonal is possible within the pentagon: the unused rim edge joining the path's endpoints. Thus each leaf contributes at most four.
+In a spine block strictly between the two end spine blocks, the rim path runs from $a$ to $c$. These vertices are not adjacent in the pentagon, so there is no internal diagonal. Each end spine block contributes at most one unused endpoint edge; if the two ends coincide there is just one such block, and the bound of two remains valid. There are no diagonals between distinct blocks: their only connecting edges are bridges, and any such edge whose endpoints lie on $P$ must itself belong to $P$. Vertex $v$ has no spine neighbours. All diagonals have therefore been counted, giving
+\[
+ \#\{\text{diagonals of }C\}\le4+4+1+1=10.
+\]
+
+\subsection*{6. Consequence and remaining scope}
+For any $r$, choose $m$ with $20m+31>r$. All subgraphs on at most $r$ vertices are proper and three-colourable, whereas every cycle has at most ten diagonals. A function tending to infinity cannot be guaranteed. The quantitative second question is completely disproved, including every-subgraph criticality and the same-leaf cycle case. The proof of the separate two-diagonal theorem of Voss remains an external known result, so this attempt is not a complete reconstruction of both questions.
+The first-part proof obligation is unresolved in this attempt, although the theorem itself is known.
+Source statement: \url{https://www.erdosproblems.com/1091}.
+
+\textbf{Completion rate estimate: 85\%.}

@@ -1,0 +1,43 @@
+\section*{Erd\H{o}s Problem 997: prime rotations are never well-distributed}
+\subsection*{Statement and source}
+For every real $\alpha$, we prove that $(\{\alpha p_j\})$ is not well-distributed: there are arbitrarily long consecutive blocks and intervals whose counting error is a fixed positive proportion of the block length.
+The known solution is credited on the problem page to an internal OpenAI model and uses Banks--Freiberg--Turnage-Butterbaugh, \emph{Consecutive primes in tuples}, arXiv:1311.7003v3. We reconstruct the admissible tuple and the consecutive-prime reduction. The deep external input is the Maynard--Tao theorem for admissible affine forms, stated in Section 1 of that paper. No novelty is claimed.
+
+\subsection*{External prime input}
+For every $m\ge2$ there is $k_m$ such that an admissible family of $k\ge k_m$ distinct affine forms $a_jn+b_j$, with positive leading coefficients and nonproportional pairs, takes at least $m$ prime values simultaneously for infinitely many $n$. Admissibility means that no prime divides the product of all forms for every residue class of $n$.
+
+\subsection*{An admissible tuple whose phases cluster}
+Rational $\alpha$ is immediate: all fractional parts lie in a finite grid, so some fixed interval of positive length contains none of them.
+Now let $\alpha$ be irrational, fix any $m\ge2$, and choose $k\ge k_m$.
+Let $Q$ be the product of the primes at most $k$. Since $\alpha Q$ is irrational, the fractional parts of its positive multiples are dense. Choose distinct positive integers
+\[
+ h_1<\cdots<h_k,\qquad Q\mid h_j,\qquad \{\alpha h_j\}\in(0,1/10).
+\]
+The forms $n+h_j$ are admissible. If a prime $\ell\le k$, all shifts are zero modulo $\ell$, so a nonzero residue of $n$ avoids divisibility. If $\ell>k$, at most $k<\ell$ forbidden residues occur.
+
+\subsection*{Forcing actual consecutive primes}
+This is the elementary CRT step in Banks--Freiberg--Turnage-Butterbaugh.
+For each integer $t\in[h_1,h_k]\setminus\{h_1,\ldots,h_k\}$ choose a different prime $q_t>h_k+1$.
+Set $W=\prod_tq_t$ and choose $a$ by the Chinese remainder theorem with
+$a+t\equiv0\pmod{q_t}$. Consider
+\[
+ L_j(u)=Wu+a+h_j.
+\]
+For primes dividing $W$, no $L_j$ vanishes modulo that prime, because
+$h_j-t$ is nonzero and has modulus less than $q_t$.
+For primes not dividing $W$, multiplication by $W$ is invertible, and admissibility follows from the original tuple. The forms have positive leading coefficient and are pairwise nonproportional.
+
+By the stated theorem, infinitely many sufficiently large $u$ produce at least $m$ primes among the $L_j(u)$.
+All other integers in the interval
+$[Wu+a+h_1,Wu+a+h_k]$ are composite: each has a prescribed divisor $q_t$, and for large $u$ exceeds that divisor.
+Thus all primes in this interval belong to the tuple. Any $m$ successive primes in the interval are also $m$ consecutive primes in the global prime sequence.
+
+\subsection*{The discrepancy obstruction}
+The fractional parts of these $m$ consecutive primes after multiplication by $\alpha$ all lie in a translate, on the circle, of the arc $(0,1/10)$.
+Its complement has length $9/10$ and meets $[0,1)$ in at most two intervals. One component has length at least $9/20$ and contains no point of the block. Shrinking it slightly gives a usual interval $I$ of length at least $2/5$ with zero block count. Its discrepancy is therefore at least $2m/5$.
+Since $m$ was arbitrary, the defining well-distribution inequality fails, for example at $\epsilon=1/3$. The interval may depend on the block, as allowed by the uniform quantifiers in that definition.
+
+\subsection*{Conclusion and verification scope}
+This proves the assertion for every real $\alpha$, using the explicit Maynard--Tao input. Ordinary equidistribution of irrational prime rotations is compatible with the failure of this stronger condition. Sources: \url{https://www.erdosproblems.com/997} and \url{https://arxiv.org/abs/1311.7003}. No local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,62 @@
+\section*{Erd\H{o}s Problem 177: one colouring controlling every common difference}
+
+\subsection*{1. Statement and scope}
+Seek one function $f:\mathbb N\to\{-1,1\}$ for which sums on every finite arithmetic progression of difference $d$ are bounded by a function $h(d)$, and determine the best growth of such a bound. We construct a single function with the explicit estimate
+\[
+ \sup_{a,s\ge1}\left|\sum_{j=0}^{s-1}f(a+jd)\right|
+ \le\frac{L_d}{d}\le4(d-1)!\qquad(d\ge1).\tag{1}
+\]
+This reconstructs the classical factorial-scale existence phenomenon. It does not match the much stronger polynomial bounds recorded on the problem page, and the optimal-growth question remains unresolved.
+
+\subsection*{2. Balanced nested words}
+A word is a finite list of signs, indexed from one. Start with $W_0=(1)$ and $L_0=1$. Given $W_{m-1}$ of length $L_{m-1}$, set
+\[
+ q_m=\frac{m}{\gcd(m,L_{m-1})},\qquad
+ X_m=\underbrace{W_{m-1}\cdots W_{m-1}}_{q_m\text{ copies}},
+ \qquad W_m=X_m(-X_m).
+\]
+Here $-X_m$ changes every sign. Its length is
+\[
+ L_m=2\operatorname{lcm}(m,L_{m-1}).\tag{2}
+\]
+We claim that $L_m$ is divisible by each $1\le d\le m$ and that, in $W_m$, the signs at positions in each fixed residue class modulo $d$ sum to zero.
+
+Inductively, for $d<m$, every copy of $W_{m-1}$ or its negative has zero sum in each such residue, and its length is divisible by $d$. Concatenation preserves this. For $d=m$, the length of $X_m$ is divisible by $m$. Corresponding positions of $X_m$ and $-X_m$ therefore belong to the same residue class and cancel. This proves the claim, including the base case $W_1=(1,-1)$.
+
+Every $W_m$ begins with $W_{m-1}$, and the lengths tend to infinity. They consequently specify one infinite sign sequence $f$. For each fixed $d$, all later words, and hence this entire sequence, are concatenations of copies of $W_d$ and $-W_d$ in blocks of length $L_d$.
+
+\subsection*{3. Uniform control for arbitrary starts and lengths}
+Fix $d$ and one of these aligned blocks. A progression of difference $d$ uses positions of one residue modulo $d$. There are exactly $L_d/d$ such positions in a full block, with equal numbers of positive and negative signs by the construction. Thus a full block contributes zero, and the absolute sum on any segment of this residue word is at most $L_d/(2d)$: it cannot contain more positive or negative signs than the entire balanced word does.
+
+A finite progression intersects a string of full blocks and at most two partial end blocks. Its absolute sum is therefore at most $L_d/d$. A progression inside just one block obeys the stronger half-sized bound, so it causes no exception. This proves the first inequality in (1), for all starting points and all lengths, using the same $f$ simultaneously for every $d$.
+
+\subsection*{4. An explicit factorial estimate}
+The recurrence (2) gives the exact formula
+\[
+ L_d=2^d\operatorname{lcm}\{j:1\le j\le d,\ j\text{ odd}\}.\tag{3}
+\]
+To check this, the odd part evolves by taking the least common multiple with the odd part of $d$. The exponent of two increases by one at every stage: for $d\ge2$ we have $v_2(d)\le d-1$, so the previous factor $2^{d-1}$ already contains the two-part of $d$. The case $d=1$ starts with $L_1=2$.
+
+Bounding the least common multiple by the product of the odd integers gives
+\[
+ \frac{L_d}{d}
+ \le\frac{2^{\lceil d/2\rceil}}{\lfloor d/2\rfloor!}(d-1)!
+ \le4(d-1)!.
+\]
+For the last inequality, if $r\ge1$ then $r!\ge2^{r-1}$; use $d=2r$ and $d=2r+1$ separately, and check $d=1$ directly. This establishes (1) with a uniform numerical constant.
+
+\subsection*{5. Necessary qualifications and the missing improvement}
+No periodic sign sequence can work for every $d$: for a period $p$, its values on $a,a+p,a+2p,\ldots$ are constant, giving unbounded sums. Our construction uses nested finite words rather than a fixed period. Similarly, assigning a different alternating sequence to each $d$ does not solve the simultaneous requirement.
+
+Van der Waerden's theorem, used here only as a standard external input, implies that the discrepancy cannot be bounded by one constant for all $d$: a monochromatic progression of length exceeding that constant contradicts it. More precisely, the nondecreasing envelope
+\[
+ H(D)=\max_{1\le d\le D}\sup_{a,s\ge1}\left|\sum_{j=0}^{s-1}f(a+jd)\right|
+\]
+must tend to infinity for any function whose individual suprema are finite. This argument by itself does not give a rate, or justify replacing envelope growth by a pointwise lower estimate at every difference.
+
+The current literature records a bound $d^{8+\varepsilon}$ due to Beck, stronger than (1); that theorem is not reproduced here. The construction above supplies a complete simultaneous bound and corrects the earlier draft's dependence of the colouring on $d$. Determining the optimal smaller growth remains the gap.
+
+Source: \url{https://www.erdosproblems.com/177}. The factorial-scale result is classical (Cantor, Erd\H{o}s, Schreiber and Straus); no novelty is claimed for this reconstruction.
+
+\textbf{Completion rate estimate: 40\%.}
+

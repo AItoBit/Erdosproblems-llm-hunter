@@ -1,0 +1,103 @@
+\section*{Erd\H{o}s Problem 1115: a slowly growing function forcing long asymptotic paths}
+\subsection*{Statement and result proved}
+A rectifiable path to infinity is understood to be locally rectifiable; its total length is necessarily infinite. For an entire function $f$, let $\ell(r)$ be the length of its asymptotic path inside $|z|<r$. We construct a nonconstant entire function of order zero such that
+\[
+ \log M(r,f)=O((\log r)^3)
+ \quad\text{and}\quad
+ \limsup_{r\to\infty}\frac{\ell(r)}r=\infty
+\]
+for every path on which $f(z)\to\infty$. Thus finite order does not guarantee a path with $\ell(r)=O(r)$.
+
+This is a reconstruction of the spiral-obstacle method of Gol'dberg--Eremenko, \emph{On asymptotic curves of entire functions of finite order}, Section 1, \url{https://www.math.purdue.edu/~eremenko/dvi/as-curves.pdf}. Their sharper result permits any prescribed divergent factor in place of the extra $\log r$ above. We prove the displayed, sufficient order-zero counterexample and do not claim that sharper growth estimate.
+
+\subsection*{Polynomial spiral obstacles}
+For an integer $k\ge1$ let
+\[
+ \Gamma_k=\{t\exp(2\pi i k(t-2)):2\le t\le3\}.
+\]
+This is a simple compact spiral, disjoint from the unit disk. The union of the closed unit disk and this arc has connected complement. Runge's polynomial approximation theorem, applied to the function equal to one near the disk and zero near the arc, produces a polynomial $P_k$ with
+\[
+ P_k(0)=1,\qquad |P_k(z)-1|<\tfrac12\ (|z|\le1),\qquad
+ |P_k(z)|\le\tfrac12\ (z\in\Gamma_k).
+ \tag{1}
+\]
+To obtain the exact normalization at zero, first approximate with sufficiently small error and then divide by the value at zero.
+For a constant $C_k\ge1$ depending only on this polynomial,
+\[
+ \log M(t,P_k)\le
+ \begin{cases}C_kt,&0\le t\le1,\\
+ C_k\log(et),&t\ge1.
+ \end{cases}
+ \tag{2}
+\]
+The first bound follows from $P_k(0)=1$ and the finite coefficient sum; the second from its degree and coefficient sum. Also the branch of $\log P_k$ vanishing at zero is $O_k(|z|)$ in a sufficiently small disk. Runge's theorem is the external complex-approximation input.
+
+\subsection*{Choosing scales and exponents}
+We inductively choose $R_k>e^2$, with $R_k>4R_{k-1}$, and positive integers $q_k$. Write
+\[
+ F_{k-1}(z)=\prod_{j<k}P_j(z/R_j)^{q_j}.
+\]
+This is a polynomial, so for constants $D_{k-1},B_{k-1}$ already fixed,
+\[
+ \log M(3R,F_{k-1})\le D_{k-1}\log R+B_{k-1}\qquad(R\ge e^2).
+\]
+Take $q_k$ to be the least positive integer such that
+\[
+ q_k\log2\ge D_{k-1}\log R_k+B_{k-1}+k+2.
+ \tag{3}
+\]
+For fixed previous choices, $q_k=O_k(\log R_k)$. We can therefore make $R_k$ sufficiently large that
+\[
+ C_kq_k\le2^{-k}(\log R_k)^2,\qquad
+ \sup_{|z|\le3R_{k-1}}|q_k\log P_k(z/R_k)|\le2^{-k}.
+ \tag{4}
+\]
+For $k=1$, replace $3R_0$ by one. The first requirement follows because a quadratic power of $\log R_k$ eventually dominates its linear power; the second because $\log R_k/R_k\to0$. This establishes the induction without mutually incompatible requirements.
+
+The product $f=\prod_{k\ge1}P_k(z/R_k)^{q_k}$ converges uniformly on compact sets: on any fixed disk, its sufficiently late logarithmic factors satisfy the summable bound (4). Its limit is entire and $f(0)=1$.
+On the obstacle $R_k\Gamma_k$, (1) and (3) give $|F_k|\le e^{-k-2}$. Every subsequent factor is controlled there by (4), since $3R_k\le3R_{j-1}$ for $j>k$. Thus
+\[
+ |f(z)|\le e^{-k-2+\sum_{j>k}2^{-j}}<1
+ \qquad(z\in R_k\Gamma_k).
+ \tag{5}
+\]
+In particular the function is nonconstant.
+
+\subsection*{Growth estimate at every radius}
+Let $L=\log r\ge2$ and $S_k=\log R_k\ge2$. For $R_k\le r$, (2)--(4) bound the $k$-th logarithmic contribution by
+\[
+ 2^{-k}S_k^2(1+L-S_k)\le2^{-k}L^3.
+\]
+For $R_k>r$, they bound it by
+\[
+ 2^{-k}S_k^2e^{L-S_k}\le2^{-k}L^2.
+\]
+The last inequality holds because $s^2e^{-s}$ decreases for $s\ge2$ and $S_k>L$. Summing both classes gives $\log M(r,f)\le2L^3$. Consequently
+\[
+ \limsup_{r\to\infty}\frac{\log\log M(r,f)}{\log r}=0.
+\]
+The construction therefore meets the finite-order hypothesis, despite placing obstacles at arbitrarily large scales.
+
+\subsection*{Every asymptotic path must wind}
+If $f(z)\to\infty$ along a path, that path eventually avoids $|f|\le1$ and hence all the remote obstacles (5). Its modulus tends to infinity because $f$ is bounded on compact sets.
+
+For large $k$, choose a portion of the path crossing from radius $2R_k$ to radius $3R_k$ and confined to that annulus: take the first crossing of the outer boundary and the last preceding crossing of the inner boundary. Let $\theta$ be a continuous argument along this portion. The function
+\[
+ h=\theta-2\pi k(|z|/R_k-2)
+\]
+avoids $2\pi\mathbb Z$, since equality would mean intersection with the obstacle. Its continuous values therefore stay in a single interval of length $2\pi$. Between the two endpoints this forces
+\[
+ |\Delta\theta|>2\pi(k-1).
+\]
+The length of a rectifiable curve with $|z|\ge2R_k$ is at least $2R_k$ times the total variation of its argument. Thus
+\[
+ \ell(3R_k)\ge4\pi(k-1)R_k,\qquad
+ \frac{\ell(3R_k)}{3R_k}\ge\frac{4\pi(k-1)}3\longrightarrow\infty.
+\]
+Endpoint inclusion in the open disk defining $\ell$ changes no length. If a path fails local rectifiability, it cannot be a counterexample to this lower bound either.
+
+\subsection*{Assessment}
+The proposed universal linear length bound is disproved by an explicit inductive construction with order zero and a quantified maximum-modulus bound. The standard theorem that a nonconstant entire function has an asymptotic path to infinity ensures this is not a vacuous obstruction; we do not reprove that general path-existence theorem. The stronger arbitrarily-slow-factor refinement in the cited paper is outside the displayed result.
+Source statement: \url{https://www.erdosproblems.com/1115}. No novelty or local formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

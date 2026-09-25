@@ -1,0 +1,75 @@
+\section*{Erd\H{o}s Problem 991: equidistribution of logarithmic energy minimizers}
+\subsection*{Statement and attribution}
+Suppose $p_1,\ldots,p_n\in S^2$ maximize $\prod_{i<j}|p_i-p_j|$.
+We prove that their spherical cap discrepancy is $o(n)$.
+This qualitative fact is classical potential theory; it is discussed, with quantitative improvements, by Brauchart and by Marzo--Mas. The proof below supplies the compactness, uniqueness, and uniform-cap steps rather than assuming the desired equidistribution. It claims no novelty and does not claim their quantitative decay rates.
+
+\subsection*{A positive expansion of the logarithmic kernel}
+Let $\sigma$ be normalized surface area and put
+\[
+ K(x,y)=\log\frac2{|x-y|},\qquad
+ T(x,y)=\frac{1+x\cdot y}{2},\qquad
+ K_L(x,y)=\frac12\sum_{k=1}^{L}\frac{T(x,y)^k}{k}.
+\]
+The nonnegative kernels $K_L$ increase pointwise to $K$, with $K(x,x)=+\infty$.
+For fixed $x$, $T(x,y)$ is uniform on $[0,1]$, so
+\[
+ \iint K\,d\sigma\,d\sigma
+ =\frac12\sum_{k\ge1}\frac1{k(k+1)}=\frac12.
+ \tag{1}
+\]
+For any probability measure $\mu$ on the sphere, set $\eta=\mu-\sigma$.
+Expansion of $(1+x\cdot y)^k$ into monomials shows
+\[
+ Q_k(\eta)=\iint T(x,y)^k\,d\eta(x)d\eta(y)\ge0.
+\]
+Every term is a positive coefficient times the square of a real polynomial moment. The potential of each $T^k$ under $\sigma$ is constant, namely $1/(k+1)$. Therefore, by monotone convergence applied separately to the positive measures,
+\[
+ \iint K\,d\mu\,d\mu
+ =\frac12+\frac12\sum_{k\ge1}\frac{Q_k(\eta)}{k}\ge\frac12.
+ \tag{2}
+\]
+If equality holds, every $Q_k$ is zero. The monomial-square expansion then shows that $\eta$ annihilates every monomial, and hence every polynomial. Polynomials restricted to the sphere are uniformly dense in its continuous functions by the Stone--Weierstrass theorem. Thus $\eta=0$. We have proved that $\sigma$ is the unique energy-minimizing probability measure, including measures whose energy is infinite.
+
+\subsection*{Discrete optimality and weak limits}
+Maximizing the distance product is equivalent to minimizing
+$\mathcal E_n=\sum_{i\ne j}K(p_i,p_j)$.
+A maximum exists by compactness, and it has distinct points because some configuration has positive product. If $n$ independent uniform points are chosen, (1) gives expected energy $n(n-1)/2$. Consequently the minimizing configuration satisfies
+\[
+ \mathcal E_n\le n(n-1)/2.
+\]
+Let $\mu_n=n^{-1}\sum_i\delta_{p_i}$. Although its full energy is infinite due to the diagonal, each fixed truncated energy obeys
+\[
+ \iint K_L\,d\mu_n\,d\mu_n
+ \le\frac{\mathcal E_n}{n^2}+\frac{K_L(x,x)}n
+ \le\frac12+\frac{H_L}{2n}.
+ \tag{3}
+\]
+Here $K_L(x,x)=H_L/2$ is independent of $x$.
+Any subsequence has a further weakly convergent subsequence, because the sphere is compact. If its limit is $\mu$, continuity of $K_L$ passes (3) to
+$\iint K_L\,d\mu\,d\mu\le1/2$. Letting $L\to\infty$ and using (2) forces $\mu=\sigma$.
+Every subsequential limit is therefore $\sigma$, so $\mu_n$ converges weakly to $\sigma$.
+
+\subsection*{Why the supremum over caps also converges}
+Weak convergence alone is pointwise on fixed continuity sets, so a final uniformity argument is necessary.
+Write $C(z,t)=\{x:x\cdot z\ge t\}$, $z\in S^2$, $t\in[-1,1]$.
+Fix $\delta>0$ and take finite $\delta$-nets for $z$ and $t$.
+For any $(z,t)$ choose a net pair $(z',t')$ with
+$|z-z'|\le\delta$ and $|t-t'|\le\delta$. Then
+\[
+ C(z',t'+2\delta)\subseteq C(z,t)\subseteq C(z',t'-2\delta).
+\]
+Thresholds outside $[-1,1]$ mean the empty or full sphere. These are finitely many comparison caps, and each boundary has $\sigma$-measure zero, including the endpoint singletons.
+Their empirical measures converge simultaneously to their areas.
+The areas of the two comparison caps differ by at most $2\delta$, since
+$\sigma(C(z,u))=(1-u)/2$ on $[-1,1]$.
+Sandwiching and then letting $\delta\downarrow0$ gives
+\[
+ \sup_C|\mu_n(C)-\sigma(C)|\longrightarrow0.
+\]
+Multiplication by $n$ proves the requested $o(n)$ discrepancy.
+
+\subsection*{Conclusion and sources}
+The proof is complete using standard compactness of probability measures and Stone--Weierstrass; the required energy uniqueness was proved explicitly. Sources: \url{https://www.erdosproblems.com/991}; J. S. Brauchart, \emph{Optimal logarithmic energy points on the unit sphere}, Math. Comp. 77 (2008), 1599--1613, \url{https://doi.org/10.1090/S0025-5718-08-02085-1}; J. S. Brauchart, D. P. Hardin and E. B. Saff, \emph{The next-order term for optimal Riesz and logarithmic energy asymptotics on the sphere}, \url{https://doi.org/10.1090/conm/578/11483}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

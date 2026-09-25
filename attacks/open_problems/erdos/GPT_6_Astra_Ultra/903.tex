@@ -1,0 +1,131 @@
+\section*{Erd\H{o}s Problem 903: the first gap in block-design sizes}
+
+\paragraph{Statement and convention.}
+Let \(v=p^2+p+1\), where \(p\geq2\) is a prime power.
+A pairwise balanced design consists of blocks of size
+at least two, with each pair of distinct points in exactly
+one block. If its number \(b\) of blocks exceeds \(v\),
+then \(b\geq v+p\).
+The usual size-at-least-two convention matters: freely
+adjoining singleton blocks would make the displayed
+assertion false.
+
+\paragraph{An explicit external structural input.}
+We use the large-block lemma from Erd\H{o}s, Fowler,
+S\'os and Wilson, \emph{On 2-designs}, Lemma 1:
+in the range \(v=p^2+p+1\), \(v<b<v+p\), every block
+has size at most \(p+1\).
+The lemma is proved in their wider small-excess range,
+apart from the near-pencil case; a near pencil has
+exactly \(v\) blocks and so is excluded here.
+We retain this large-block lemma as an external dependency.
+The incidence-rank argument which finishes the theorem
+is supplied below.
+
+For completeness, its small case \(p=2\) needs no input.
+A block of size \(\ell=4\) or 5 on seven points requires
+at least
+\[
+ 1+\ell(7-\ell)-\binom{7-\ell}{2}=10
+\]
+blocks: start with the pairs between the block and its
+complement, and observe that combining \(k\) outside
+points into one other block saves \(k-1\leq\binom k2\)
+blocks. Outside pairs can be used only once.
+A block of size six forces the near pencil, with seven
+blocks, and a block of size seven forces a single block.
+Thus no large-block exception has \(7<b<9\).
+
+\paragraph{Basic consequences of the block-size bound.}
+Suppose \(v<b<v+p\), for a contradiction.
+Let \(r_x\) be the number of blocks containing point \(x\).
+Counting the other \(v-1=p(p+1)\) points along these
+blocks gives \(r_x\geq p+1\). Equality holds precisely
+when all blocks through \(x\) have size \(p+1\).
+Some point has degree \(p+1\). Otherwise all \(r_x\geq p+2\).
+If every block had size at most \(p\), counting incidences
+would give \(bp\geq v(p+2)\), impossible for \(b<v+p\).
+So there would be a block of size \(p+1\); the distinct
+blocks meeting it would number at least
+\[
+ 1+(p+1)(p+1)=p^2+2p+2>v+p,
+\]
+again impossible.
+
+\paragraph{A projection matrix detects a regular block.}
+Let \(N\) be the \(v\)-by-\(b\) incidence matrix, and put
+\[
+ D=\operatorname{diag}(r_x-1),\quad
+ a_T=\sum_{x\in T}\frac1{r_x-1},\quad
+ \alpha=\frac1{1+a_V}.
+\]
+The pair condition gives \(NN^{\mathsf T}=D+J\).
+Since \(D\) is positive definite, \(N\) has rank \(v\).
+Direct multiplication verifies
+\[
+ (D+J)^{-1}=D^{-1}-\alpha D^{-1}JD^{-1}.
+\]
+Thus
+\[
+ Q=I-N^{\mathsf T}(D+J)^{-1}N
+\]
+is the orthogonal projection onto the kernel of \(N\),
+and has rank \(b-v\).
+
+Choose a point \(x_0\) with \(r_{x_0}=p+1\), and let
+\({\cal F}\) be its \(p+1\) incident blocks.
+Distinct members intersect exactly in \(x_0\).
+The principal submatrix indexed by \({\cal F}\) is
+\[
+ Q_{\cal F}=\operatorname{diag}(\beta_A:A\in{\cal F})
+                 -\frac1pJ+\alpha(a_Aa_B)_{A,B\in{\cal F}},
+ \quad
+ \beta_A=1-\sum_{x\in A\setminus\{x_0\}}\frac1{r_x-1}.
+\]
+Each \(\beta_A\geq0\), since there are at most \(p\)
+summands, each at most \(1/p\).
+If they were all positive, the diagonal matrix plus
+the positive semidefinite last matrix would have rank
+\(p+1\). Subtracting the rank-one matrix \(J/p\)
+could lower the rank by at most one. Hence
+\[
+ p\leq\operatorname{rank}Q_{\cal F}
+       \leq\operatorname{rank}Q=b-v<p,
+\]
+a contradiction. Some \(\beta_A=0\), forcing \(|A|=p+1\)
+and \(r_x=p+1\) for every \(x\in A\).
+
+\paragraph{Finishing the contradiction and attaining the bound.}
+Every block meeting this \(A\) has size \(p+1\).
+Their number is
+\[
+ 1+\sum_{x\in A}(r_x-1)=1+(p+1)p=v.
+\]
+They already cover
+\(v\binom{p+1}{2}=\binom v2\) distinct pairs.
+No additional block of size at least two can exist.
+Thus \(b=v\), the final contradiction.
+
+The bound is attained. In a projective plane of order \(p\),
+replace one line \(L\) by the \(p+1\) blocks
+\[
+ L\setminus\{z\},\qquad \{z,x\}\ (x\in L\setminus\{z\}),
+\]
+where \(z\in L\). Each pair on \(L\) still appears once,
+and all other pairs are unaffected.
+The number of blocks becomes \(v-1+(p+1)=v+p\).
+The standard finite-field projective-plane construction
+supplies the starting design for every prime-power \(p\).
+
+\paragraph{Attribution and assessment.}
+The rank proof follows the algebraic proof of Theorem 2
+in the original paper:
+\url{https://users.renyi.hu/~p_erdos/1985-22.pdf}.
+See \url{https://www.erdosproblems.com/903}, checked
+24 September 2026. The result is complete relative to
+the explicitly retained large-block lemma (and the
+standard projective-plane construction for sharpness).
+No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

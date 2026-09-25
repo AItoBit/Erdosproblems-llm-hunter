@@ -1,0 +1,47 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 957: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and known resolution}
+For $n$ distinct planar points, let $s$ count unordered pairs at the smallest distance and $t$ count those at the largest distance. The question asks whether $st\le(9/8+o(1))n^2$. Dumitrescu proved the stronger bound $st\le9n^2/8+O(n)$ in \emph{A Product Inequality for Extreme Distances}, \url{https://doi.org/10.4230/LIPIcs.SoCG.2019.30}. The following is a partial reconstruction: it proves a uniform $3n^2/2$ bound, and the requested constant whenever at most half the points are diameter endpoints. The remaining geometric charging argument is not claimed here.
+
+\section*{Contact degrees and extreme points}
+Rescale so that the minimum distance is one. Around a fixed point, any two unit-distance neighbours have angular separation at least $60^\circ$: otherwise their distance, $2\sin(\theta/2)$ for the smaller angle, would be less than one. Thus every vertex in the shortest-distance graph has degree at most six.
+
+A strict vertex of the convex hull has degree at most three. All directions towards the other points lie in a sector of angle strictly less than $180^\circ$. Four unit neighbours, in their angular order inside that sector, would have three intervening gaps each at least $60^\circ$, which is impossible. For a collinear configuration the two hull endpoints have degree at most one, so the weaker degree-three bound still holds.
+
+Every endpoint of a diameter is a strict hull vertex. To see this without a generic-position assumption, suppose $x=\sum_j\lambda_j x_j$ is a convex combination of distinct other points, with positive weights summing to one. For any $y$,
+\[
+ \sum_j\lambda_j|x_j-y|^2-|x-y|^2
+ =\sum_j\lambda_j|x_j-x|^2>0.
+\]
+Therefore $|x-y|$ cannot be the maximum pairwise distance. Let $d$ be the number of diameter endpoints. The degree sum gives
+\[
+ 2s\le3d+6(n-d),\qquad s\le3n-\frac32d. \tag{1}
+\]
+This remains valid if some additional hull vertices are not diameter endpoints, since we merely used the weaker bound six on those vertices.
+
+\section*{The diameter input and product bound}
+We explicitly use the classical planar diameter theorem of Hopf--Pannwitz: a set of $d$ planar points determines at most $d$ pairs at its largest distance. Apply it to the subset of diameter endpoints; it has the same diameter, and contains every diameter pair, so $t\le d$. This standard external input is also the inequality (1) in Dumitrescu's proof; it is not being deduced just from planarity.
+
+Combining it with (1),
+\[
+ st\le \left(3n-\frac32d\right)d\le\frac32n^2,
+\]
+since the quadratic is increasing for $0\le d\le n$. More precisely, if $d\le n/2$, the same monotonicity gives
+\[
+ st\le\left(3n-\frac34n\right)\frac n2=\frac98n^2.
+\]
+Thus the full conjectured constant already follows in this substantial range, and any configuration needing further work must have more than half its points incident to diameters.
+
+\section*{Remaining gap and assessment}
+For $d>n/2$, (1) is insufficient: maximizing its right-hand product genuinely gives $3n^2/2$, not $9n^2/8$. Dumitrescu's proof uses the near-flat hull geometry and a charging argument for degree-three diameter endpoints to obtain the additional savings. That argument has not been reconstructed in this attempt. The problem has a known affirmative resolution, but this attempt is unresolved for the remaining range. The estimate measures the proved progress here, rather than the status of the published theorem.
+
+\textbf{Completion rate estimate: 55\%.}
+
+\end{document}

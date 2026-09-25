@@ -1,0 +1,89 @@
+\section*{Erd\H{o}s Problem \#364: three consecutive powerful integers}
+\subsection*{1. Statement and scope}
+A positive integer is powerful, or $2$-full, when every prime exponent
+in it is either zero or at least two. Are there any three consecutive
+positive powerful integers? We prove structural restrictions,
+reconstruct the infinite family of consecutive pairs, and give the
+precise conditional consequence of $abc$. An exact finite search is
+included as a bounded check, not as an answer to the infinite question,
+which remains unresolved.
+
+\subsection*{2. Unique parametrization and an exhaustive search}
+Every powerful integer has a unique expression
+\[
+ n=a^2b^3,\qquad a,b\ge1,\quad b\text{ squarefree}.
+\]
+For each odd positive prime exponent $e$, place that prime once in
+$b$ and $(e-3)/2$ times in $a$; for an even exponent use $e/2$ copies
+in $a$. This construction is forced by parity and proves uniqueness.
+There is no requirement that $a$ and $b$ be coprime.
+In particular the number of powerful integers at most $X$ is at most
+\[
+ \sum_{b\le X^{1/3}}\left\lfloor\sqrt{X/b^3}\right\rfloor
+ \le \sqrt X\sum_{b\ge1}b^{-3/2}.
+\]
+Enumerating precisely the squarefree $b\le X^{1/3}$ and
+$1\le a\le\lfloor\sqrt{X/b^3}\rfloor$ therefore gives an exhaustive
+finite algorithm, with no factorization heuristic.
+For $X=10^{10}$ the exact enumeration contains $214122$ integers.
+Checking membership of $n,n+1,n+2$ finds no triple all of whose
+members lie in $[1,X]$. This computation makes no claim about larger
+integers and is far smaller than published computational searches.
+
+\subsection*{3. Local obstructions and an infinite family of pairs}
+Four consecutive integers cannot all be powerful, because one has
+residue $2$ modulo $4$. If $m-1,m,m+1$ are powerful, this also shows
+that the center satisfies $m\equiv0\pmod4$.
+Residues $3,6$ modulo $9$ are impossible for a powerful integer,
+so examining the three consecutive residues gives
+\[
+ m\equiv0,1,8\pmod9.
+\]
+The two odd neighbors cannot both be squares: two positive squares
+differing by $2$ would give $(v-u)(v+u)=2$, which is impossible for
+positive integers $u<v$. Thus at least one neighbor has a nontrivial
+squarefree cube factor in the parametrization above.
+
+These restrictions do not prevent consecutive \emph{pairs}.
+Starting at $(x_1,y_1)=(3,1)$, define
+\[
+ x_{j+1}=3x_j+8y_j,\qquad y_{j+1}=x_j+3y_j.
+\]
+Direct expansion preserves $x_j^2-8y_j^2=1$, and both coordinates
+increase. Hence $8y_j^2$ and $8y_j^2+1=x_j^2$ give infinitely many
+distinct powerful pairs. Every prime exponent in the first number
+is even except possibly that of $2$, which is $3+2v_2(y_j)$ and
+therefore at least three.
+
+\subsection*{4. What the $abc$ conjecture would actually imply}
+Assume the usual $abc$ conjecture: for every $\varepsilon>0$ there is
+$C_\varepsilon$ such that coprime positive $a+b=c$ satisfy
+$c\le C_\varepsilon\operatorname{rad}(abc)^{1+\varepsilon}$.
+If $m-1,m,m+1$ are powerful, each obeys
+$\operatorname{rad}(u)\le\sqrt u$. Apply the conjecture to
+\[
+ (m^2-1)+1=m^2.
+\]
+The summands are coprime, and
+\[
+ \operatorname{rad}\big((m^2-1)m^2\big)
+ =\operatorname{rad}\big((m-1)m(m+1)\big)
+ \le\sqrt{(m-1)m(m+1)}<m^{3/2}.
+\]
+It follows that $m^2\le C_\varepsilon m^{3(1+\varepsilon)/2}$.
+Taking $\varepsilon<1/3$ bounds $m$.
+Thus $abc$ implies only finitely many such triples, not that there
+are none. No use of this conjecture is made in the unconditional
+results or the finite search.
+
+\subsection*{5. Assessment and references}
+The remaining obligation is an unconditional existence proof or an
+obstruction valid for every candidate center. The congruences,
+parametrization, and conditional finiteness do not provide it.
+Source: \texttt{https://www.erdosproblems.com/364}, checked 2026-09-25,
+which records Mahler's Pell observation and the conditional $abc$
+consequence. The prior GPT Pro 5.2 argument was checked; its
+parametrization and elementary obstruction are reconstructed here.
+No novelty or formal Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

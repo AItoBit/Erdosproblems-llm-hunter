@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem 85: minimum degree and four-cycle-free extensions}
+
+\subsection*{1. Statement and scope}
+Let $d(n)$ be the largest possible minimum degree of a $C_4$-free graph on $n$ vertices, so the problem's forcing threshold is $f(n)=d(n)+1$. The question whether $f(n+1)\ge f(n)$ eventually remains unresolved. We prove comparison inequalities and an exact criterion for adjoining a new vertex without changing the old edges. The criterion exposes the obstruction to a natural extension argument.
+
+\subsection*{2. Universal comparisons and the degree bound}
+Deleting one vertex lowers minimum degree by at most one and cannot create a four-cycle. Consequently
+\[
+ d(n+1)\le d(n)+1,\qquad f(n+1)\le f(n)+1.\tag{1}
+\]
+This bounds upward jumps; it is not the required lower bound on the next value. Disjoint unions give another useful comparison:
+\[
+ d(n+m)\ge\min\{d(n),d(m)\},\qquad d(tn)\ge d(n)\quad(t\ge1),\tag{2}
+\]
+because cycles stay within components and the minimum degree of a union is the smaller component minimum.
+
+In a $C_4$-free graph, two distinct vertices have at most one common neighbor. Counting unordered pairs of neighbors by their middle vertex gives
+\[
+ \sum_v\binom{\deg(v)}2\le\binom n2.
+\]
+Thus $d(n)(d(n)-1)\le n-1$, and
+\[
+ f(n)\le1+\left\lfloor\frac{1+\sqrt{4n-3}}2\right\rfloor.\tag{3}
+\]
+Triangles are allowed throughout; no triangle-free assumption has slipped into this count.
+
+\subsection*{3. The exact extension condition}
+Given a $C_4$-free graph $G$, form an auxiliary graph $J$ on its vertices: distinct $u,v$ are adjacent in $J$ precisely when they have a common neighbor in $G$. Adjoin a new vertex $x$ to $G$ and join it to a set $S\subseteq V(G)$. The enlarged graph is $C_4$-free if and only if $S$ is independent in $J$.
+
+Indeed, every new four-cycle must contain $x$, and has the form $x-u-w-v-x$, where $u,v\in S$ share the old neighbor $w$. Conversely any such common neighbor produces this cycle; all four vertices are distinct because $G$ is simple. No other kind of new four-cycle is possible. In particular, if $\delta(G)\ge d$ and $\alpha(J)\ge d$, choose $S$ of size $d$. The new vertex has degree $d$, all old degrees do not decrease, and this gives an $(n+1)$-vertex example of minimum degree at least $d$.
+
+If $G$ has maximum degree $\Delta$, each vertex has at most $\Delta(\Delta-1)$ neighbors in $J$, by counting two-step walks with a different endpoint. Greedily choosing a vertex and deleting it and its neighbors in $J$ produces an independent set of size at least
+\[
+ \frac{n}{1+\Delta(\Delta-1)}.
+\]
+Hence the sufficient quantitative condition
+\[
+ n\ge d\bigl(1+\Delta(\Delta-1)\bigr)\tag{4}
+\]
+proves that this particular $G$ can be extended while preserving minimum degree $d$.
+
+Condition (4) is inadequate near the extremal scale $d\asymp\sqrt n$: even when $\Delta\asymp d$, its right side has order $d^3$. The exact independent-set criterion may hold without (4), but there is no proof that every extremal graph has the required independent set in $J$. Also, failure to extend a particular extremal graph would not disprove monotonicity: a different graph on $n+1$ vertices might work.
+
+\subsection*{4. An explicit nontrivial example}
+The graph whose vertices are the ten two-element subsets of $\{1,2,3,4,5\}$, adjacent when disjoint, is three-regular. Two distinct vertices sharing one element have just one common neighbor, the complementary two-element set; disjoint vertices have none. It is therefore $C_4$-free. This proves $d(10)\ge3$, and (3) gives $d(10)\le3$, so $f(10)=4$. Equation (2) consequently gives $f(10t)\ge4$ for every positive integer $t$, without asserting any interpolation between these orders.
+
+\subsection*{5. Assessment and attribution}
+The comparisons, sharp integer form of the elementary degree bound, auxiliary-graph extension criterion, and ten-vertex example are fully proved. Eventual monotonicity, or a sequence of downward jumps, is not established. This replaces earlier GPT-5.2 attempts with checked arguments and an explicit extension obstruction; their unverified exhaustive-search claims are not adopted.
+Source: \url{https://www.erdosproblems.com/85}.
+
+\textbf{Completion rate estimate: 25\%.}
+

@@ -1,0 +1,126 @@
+\section*{Erd\H{o}s Problem 803: dense graphs without dense balanced subgraphs}
+
+\paragraph{Statement and claim.}
+There are no absolute constants \(D\) and \(\varepsilon>0\)
+forcing every sufficiently large graph with \(N\log N\)
+edges to have a \(D\)-balanced \(m\)-vertex subgraph with
+\(\varepsilon m\log m\) edges, for every prescribed \(m\).
+We reconstruct Alon's layered random counterexample:
+\emph{Problems and results in extremal combinatorics, II},
+Proposition 2.1,
+\url{https://www.cs.tau.ac.il/~nogaa/PDFS/extremalII1.pdf}.
+See \url{https://www.erdosproblems.com/803}.
+All logarithms in this proof are base two.
+
+\paragraph{The layered random graph.}
+Let \(n=2^{2k}\), with \(k\) arbitrarily large.
+Take a class \(A\) of \(n\) vertices, and, for each
+\(4\leq i\leq k\), eight disjoint classes \(B_{i,j}\),
+\(1\leq j\leq8\), of size \(n/2^i\).
+Each vertex of \(A\) independently chooses one uniform
+neighbour in every \(B_{i,j}\); there are no other edges.
+Put \(B=\bigcup B_{i,j}\) and \(N=n+|B|<2n\).
+Every vertex in \(A\) has degree \(8(k-3)\), so
+\[
+ e(G)=8n(k-3)\geq2n\log(2n)\geq N\log N
+\]
+for \(k\geq7\). Every layer has at least \(\sqrt n\) vertices.
+
+\paragraph{A uniform sparsity property for the large layers.}
+For each \(1\leq m\leq n\), set
+\(r=\lceil4\sqrt{\log m}+16\rceil\).
+With positive probability the following holds simultaneously
+for all these \(m\): if \(A'\subseteq A\), \(B'\subseteq B\)
+have size at most \(m\), and \(B'\) uses only layers of size
+at least \(m2^r\), then they span fewer than \(mr\) edges.
+
+To prove this, pad the two candidate sets to size \(m\);
+vertices outside the eligible layers can be treated as
+isolated for this counting purpose. Each side has a universe
+of at most \(n\) vertices, after adding isolated placeholders
+if necessary. Thus there are at most \(\binom nm^2\) choices.
+For a proposed set of \(mr\) edges, its probability is zero
+if a vertex of \(A\) is required to choose two neighbours
+in the same layer. Otherwise the choices are independent,
+and its probability is at most both \(n^{-mr/2}\) and
+\((m2^r)^{-mr}\).
+If \(mr>m^2\) the bad event is impossible.
+In the remaining cases its probability is at most
+\[
+ \binom nm^2\binom{m^2}{mr}
+ \min\{n^{-mr/2},(m2^r)^{-mr}\}.                               \tag{1}
+\]
+
+If \(m\leq n^{1/4}\), use the first bound and
+\(\binom ab\leq(ea/b)^b\).
+The harmless factors \(e^{2m}(e/r)^{mr}m^{-2m}\)
+are at most one since \(r\geq16\). Expression (1) is at most
+\[
+ n^{2m}m^{mr}n^{-mr/2}
+ \leq n^{2m-mr/4}\leq n^{-2m}.
+\]
+If \(m>n^{1/4}\), the second bound in (1) is at most
+\[
+ n^{2m}2^{-mr^2}\leq n^{-2m},
+\]
+since \(r^2\geq16\log m>4\log n\).
+The total failure probability is less than
+\(\sum_{m\geq1}n^{-2m}<2/n^2\).
+Fix a realization satisfying the asserted property.
+
+\paragraph{Bounding every balanced subgraph.}
+Let \(H\subseteq G\) have \(m\) vertices, average degree \(d\),
+and maximum degree at most \(Dd\), where \(D\geq1\) is fixed.
+If \(d=0\), there is nothing to prove.
+Split its vertices in \(B\) according to layer size.
+The total number of vertices in all layers of size at most
+\(m/(64D)\) is at most
+\[
+ 8\cdot2\frac{m}{64D}=\frac{m}{4D}
+\]
+by the geometric series. Edges incident with these vertices
+number at most \(md/4\).
+
+There are at most \(r+\log(64D)+2\) possible layer indices
+with sizes between \(m/(64D)\) and \(m2^r\).
+For each of the eight copies of an index, each vertex of
+\(A\cap V(H)\) contributes at most one edge.
+The middle layers therefore contribute at most
+\[
+ 8m\bigl(r+\log(64D)+2\bigr).
+\]
+The larger layers contribute fewer than \(mr\) edges by
+the sparsity property. If \(m>n\), there are no such layers,
+so this bound remains valid without invoking that property.
+Since \(e(H)=md/2\), we conclude
+\[
+ \frac{md}{2}\leq\frac{md}{4}
+       +8m\bigl(r+\log(64D)+2\bigr)+mr,
+\]
+and hence
+\[
+ d\leq36\bigl(4\sqrt{\log m}+\log(64D)+19\bigr).                \tag{2}
+\]
+A \(D\)-balanced subgraph satisfies
+\(\Delta(H)\leq D\delta(H)\leq Dd\), so (2) applies to it.
+
+\paragraph{The quantifier contradiction.}
+Given proposed absolute constants \(D,\varepsilon>0\),
+replace \(D\) by \(\max(D,1)\) and choose a fixed sufficiently
+large \(m\) such that
+\[
+ 18\bigl(4\sqrt{\log m}+\log(64D)+19\bigr)<\varepsilon\log m.
+\]
+The graphs above have arbitrarily large orders \(N\) and
+at least \(N\log N\) edges. Yet every \(D\)-balanced
+\(m\)-vertex subgraph has, by (2), fewer than
+\(\varepsilon m\log m\) edges.
+This is exactly the negation of the proposed assertion.
+Changing the logarithm base changes only constants.
+Notice that the bound on the edge count includes a term
+of order \(m\log D\); treating \(D\) as fixed is sufficient
+for the disproof, and no uniform additive \(O(\log D)\)
+edge bound is inferred here.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

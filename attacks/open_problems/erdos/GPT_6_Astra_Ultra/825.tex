@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 825: sufficiently abundant numbers are semiperfect}
+\subsection*{1. Statement and current resolution}
+Write $\sigma(n)=\sum_{d\mid n}d$ and $\ell(n)=\sigma(n)/n$. A positive integer is semiperfect if it is a sum of distinct proper divisors. The question asks whether some absolute $C$ makes $\ell(n)>C$ sufficient for semiperfectness. Larsen has answered yes. This attempt gives the full deduction from his stronger rough-number theorem, with the deep input explicitly delimited, and proves an independent elementary divisor-packing criterion.
+\subsection*{2. External rough-number input}
+We use Larsen's Theorem 1: for every $\varepsilon>0$ there exists $L$ such that an integer $v$ with no prime factor less than $L$ and $\ell(v)>2+\varepsilon$ is semiperfect. The multi-scale selection and circle-method proof of this theorem is external here. This is stronger than the requested conclusion on a restricted class of integers; the removal of that restriction is the following complete argument.
+First, semiperfectness passes to every multiple. If $v=\sum_{d\in D}d$, where $D$ consists of distinct proper divisors of $v$, then
+\[
+ av=\sum_{d\in D}ad
+\]
+uses distinct proper divisors of $av$.
+Choose $L$ for $\varepsilon=1$, and put
+\[
+ M=\prod_{p<L}\left(1-\frac1p\right)^{-1},\qquad C=3M.
+\]
+This is a finite absolute constant. Factor any $n$ as $uv$, where $u$ contains exactly its prime-power factors with primes below $L$. Then $\gcd(u,v)=1$ and divisor factorization gives
+\[
+ \ell(n)=\ell(u)\ell(v),\qquad
+ \ell(u)=\prod_{p^a\Vert u}\left(1+\frac1p+\cdots+\frac1{p^a}\right)\le M.
+\]
+Hence $\ell(n)>C$ implies $\ell(v)>3$. Larsen's theorem makes $v$ semiperfect, and scaling makes $n$ semiperfect. This proves the original existence assertion. Neither an explicit numerical value of $L$ nor the proposed sharp value $C=3$ follows from this deduction.
+\subsection*{3. A proved elementary packing criterion}
+The following explains a substantial family in which the representation can be constructed without the external theorem. Suppose
+\[
+ n=\prod_{i=1}^t p_i^{a_i},\quad p_1<\cdots<p_t,
+ \qquad p_i\le1+\sigma\left(\prod_{j<i}p_j^{a_j}\right)\quad(1\le i\le t).       \tag{1}
+\]
+Then every integer between $0$ and $\sigma(n)$ is a sum of distinct divisors of $n$.
+To prove this, start with $n=1$, whose divisors represent $0,1$. Suppose the divisors of $m$ represent every integer in $[0,S]$, where $S=\sigma(m)$, and add a new prime power $p^a$ with $p\le S+1$. Divisors split into disjoint blocks $p^j\operatorname{Div}(m)$, $0\le j\le a$. Suppose the first $j$ blocks represent $[0,S(1+p+\cdots+p^{j-1})]$. By selecting independently in block $j$, they then represent every interval
+\[
+ [p^jb,\ p^jb+S(1+p+\cdots+p^{j-1})],\quad b=0,1,\ldots,S.
+\]
+Successive intervals touch or overlap because
+\[
+ S(1+p+\cdots+p^{j-1})\ge(p-1)(1+p+\cdots+p^{j-1})=p^j-1.
+\]
+Their union is the full required interval through $S(1+p+\cdots+p^j)$. This proves the induction and (1).
+For completeness, if a sorted positive list $d_1<\cdots<d_s$ has all subset sums from $0$ to its total, then $d_1=1$ and
+\[
+ d_i\le1+\sum_{j<i}d_j.                                  \tag{2}
+\]
+Otherwise the integer $1+\sum_{j<i}d_j$ is a gap. Conversely, (2) implies interval coverage by the same overlap induction. Applied to the divisors of a number satisfying (1), removing the largest divisor $n$ leaves a list still satisfying (2). Therefore its proper divisors represent every integer through $\sigma(n)-n$. Whenever $\sigma(n)\ge2n$, they represent $n$ in particular. This supplies an exact constructive special case of the problem.
+\subsection*{4. Why mere abundance is insufficient}
+For $n=70$, the proper divisors sum to $74$. If a subset summed to $70$, its complementary subset would sum to $4$. No subset of $\{1,2,5,7,10,14,35\}$ sums to $4$: the only entries at most $4$ are $1,2$, whose total is $3$. Thus $70$ is not semiperfect despite $\ell(70)=144/70>2$. In particular the existence proof cannot simply replace the rough-number input by the condition $\ell(n)>2$.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/825}; D. Larsen, \emph{Sufficiently abundant numbers are pseudoperfect}, Theorem 1, \url{https://github.com/Larsen-Daniel/Erdos-825/blob/main/825.pdf}. The older local GPT-5.2 attempt was also read; its elementary odd-weird-divisor observation does not supply the now-known unconditional theorem.
+\textbf{SOLVED relative to Larsen's explicitly imported rough-number theorem.} The reduction to arbitrary integers, the divisor-packing criterion and the obstruction at $70$ are fully proved. The completion estimate concerns this proof with its stated external dependency, not an independent reproduction of Larsen's analytic argument, a sharp constant, or a new discovery.
+\textbf{Completion rate estimate: 100\%.}

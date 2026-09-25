@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 326: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Current statement and scope}
+Does there exist a minimal asymptotic basis $A=\{a_1<a_2<\cdots\}\subset\mathbb N$ of order two such that $a_k/k^2\to c\ne0$? Here every sufficiently large integer must be the sum of two elements of $A$, with repetitions allowed, and removing any element must destroy this property. Source: \url{https://www.erdosproblems.com/326}.
+
+The earlier GPT-5.2 draft instead asked whether every basis has an irregular subbasis. That is not the current statement. We prove a necessary restriction $0<c\le\pi/8$, an exact unique-representation criterion for minimality, and consequences at the endpoint. Existence or nonexistence of the requested basis remains unresolved here. These are partial deductions, not a new solution or a reconstruction of Cassels' nonminimal example.
+
+\section*{Basic count and the sharper regular-growth restriction}
+Write $A(x)=|A\cap[1,x]|$. If every integer from $N_0$ to $x$ is represented, then
+\[
+ x-O(1)\le\frac{A(x)(A(x)+1)}2.
+\]
+In particular $A(x)\ge(\sqrt2-o(1))\sqrt x$. At $x=a_k$ this gives $\limsup a_k/k^2\le1/2$. Any nonzero limit is positive.
+
+Now assume $a_k\sim ck^2$ with $c>0$. Let
+\[
+ R(x)=\#\{(i,j):a_i+a_j\le x\}
+\]
+count ordered pairs. We claim
+\[
+ R(x)\sim\frac{\pi}{4c}x. \tag{1}
+\]
+For any $0<\eta<c$, all but finitely many indices satisfy $(c-\eta)j^2\le a_j\le(c+\eta)j^2$. Pairs involving one of the exceptional indices contribute $O_\eta(\sqrt x)$, since $A(x)=O(\sqrt x)$. For the other pairs, sandwich $R(x)$ between the lattice counts
+\[
+ \#\{i,j\ge1:i^2+j^2\le x/(c+\eta)\}
+ \quad\hbox{and}\quad
+ \#\{i,j\ge1:i^2+j^2\le x/(c-\eta)\},
+\]
+up to $O_\eta(\sqrt x)$. The count in a quarter disk of radius $T$ is $\pi T^2/4+O(T)$: unit squares give inner and outer disks whose radii differ by at most $\sqrt2$. Dividing by $x$, taking limits and then letting $\eta\downarrow0$ proves (1).
+
+Let $r_A(n)$ count unordered representations $n=a_i+a_j$ with $i\le j$. The diagonal pairs number $A(x/2)=O(\sqrt x)$, so (1) implies
+\[
+ \sum_{n\le x}r_A(n)\sim\frac{\pi}{8c}x. \tag{2}
+\]
+A basis has $r_A(n)\ge1$ for all sufficiently large $n$. Therefore $\pi/(8c)\ge1$, proving the sharper necessary condition
+\[
+ 0<c\le\frac\pi8. \tag{3}
+\]
+
+\section*{An exact criterion for minimality}
+For an asymptotic basis $A$, the following condition is equivalent to minimality:
+\[
+ \text{for each }a\in A\text{, infinitely many }n\text{ have the unique unordered representation }n=a+b,\ b\in A. \tag{4}
+\]
+If $A\setminus\{a\}$ is not a basis, infinitely many arbitrarily large integers have no representation in that set. Since $A$ is a basis, each of these has a representation, and every representation must contain $a$. Its other summand is necessarily $n-a$, so the unordered representation is unique. This proves necessity. Conversely, every integer specified in (4) becomes unrepresented when $a$ is removed, so no single element can be removed. Every proper subset misses some $a$, and consequently cannot be a basis either.
+
+For a fixed $a$, the witnesses in (4) up to $x$ number at most $A(x-a)=O(\sqrt x)$ under regular growth. Thus minimality can depend on infinitely many witnesses of density zero. More generally, deleting a fixed finite set $F\subset A$ creates at most $|F|A(x)=O_F(\sqrt x)$ new failures up to $x$, because any lost representation uses an element of $F$. Such a deletion still represents a density-one set, but this does not make it an asymptotic basis, which requires only finitely many failures.
+
+\section*{The endpoint and the remaining gap}
+If $c=\pi/8$, (2) says the cumulative unordered representation count is $x+o(x)$. Since every sufficiently large integer has at least one representation,
+\[
+ \#\{n\le x:r_A(n)\ge2\}=o(x).
+\]
+So almost every integer would have exactly one representation. This does not contradict (4): minimality requires witnesses for each fixed element, not a positive density of such witnesses.
+
+The averaging restriction (3) and the exact criterion (4) are both necessary, but neither constructs a basis satisfying both nor proves that they are incompatible. The known existence of a regularly growing basis without the minimality requirement does not remove this gap. No thinning argument preserving all sufficiently large representations is supplied here.
+
+\textbf{Completion rate estimate: 30\%.}
+\end{document}

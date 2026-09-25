@@ -1,0 +1,46 @@
+\section*{Erd\H{o}s Problem 394: least starting points of divisible products}
+\subsection*{Statement and outcome}
+Let $t_k(n)$ be the least positive $m$ with $n\mid m(m+1)\cdots(m+k-1)$. The questions concern a logarithmic saving in $\sum_{n\le x}t_2(n)$ and whether the corresponding sum for $k+1$ is little-oh of that for $k$. We derive an exact CRT description, a factor-two improvement of the elementary mean upper bound, and precise prime-power obstructions. Both requested asymptotic assertions remain unresolved here. Source: \url{https://www.erdosproblems.com/394}.
+
+\subsection*{The complete residue description for two factors}
+For $n=\prod_{j=1}^r p_j^{e_j}>1$, the coprimality of $m,m+1$ implies
+\[
+ n\mid m(m+1)\quad\Longleftrightarrow\quad
+ m\equiv0\ \hbox{or}\ -1\pmod{p_j^{e_j}}\quad(1\le j\le r). \tag{1}
+\]
+CRT gives exactly $2^r$ distinct roots modulo $n$. The smallest positive representative, counting the zero residue as $n$, is $t_2(n)$. Equivalently, split $n=ab$ with $\gcd(a,b)=1$, assign $a\mid m$ and $b\mid m+1$, and solve the resulting two congruences. Thus only unitary divisors, not all arbitrary divisors, describe these choices.
+
+For a prime power, (1) has only the roots $0,n-1$, so
+\[
+ t_2(p^e)=p^e-1. \tag{2}
+\]
+If $n$ has at least two distinct primes, there is a root $r$ other than $0,n-1$. Its reflected residue $n-1-r$ is also a root, since their two consecutive factors are negatives of those for $r$. Both lie in $[1,n-2]$. The smaller proves
+\[
+ t_2(n)\le\frac{n-1}{2}\qquad(\omega(n)\ge2). \tag{3}
+\]
+This improves the trivial $n-1$ bound but does not yield a factor tending to zero when $\omega(n)$ grows. Merely having $2^{\omega(n)}$ roots does not make them evenly spaced: for example $t_2(30)=5>30/2^3$.
+
+\subsection*{Mean bounds and the persistent prime obstruction}
+Use the prime number theorem as an explicit standard external input. It gives $\pi(x)=o(x)$. Prime powers with exponent at least two number $O(\sqrt x\log x)$, so all prime powers together number $o(x)$. Their total contribution is at most $x\,o(x)=o(x^2)$. Summing (3), and treating $n=1$ separately, gives
+\[
+ \sum_{n\le x}t_2(n)\le\left(\frac14+o(1)\right)x^2. \tag{4}
+\]
+At primes the contribution is $p-1$. Partial summation and the same prime number theorem give
+\[
+ \sum_{p\le x}(p-1)\sim\frac{x^2}{2\log x},
+ \qquad
+ \sum_{n\le x}t_2(n)\ge(1+o(1))\frac{x^2}{2\log x}. \tag{5}
+\]
+For the first asymptotic, write $\sum_{p\le x}p=x\pi(x)-\int_2^x\pi(t)\,dt$ and use $\int_2^x t/\log t\,dt\sim x^2/(2\log x)$. The error in replacing $\pi(t)$ is controlled uniformly after a fixed sufficiently large lower cutoff.
+
+Bound (4) is much weaker than Erd\H{o}s--Hall's known $o(x^2)$ theorem recorded on the problem page. It is a proved elementary refinement of the older local draft, not a record or a reconstruction of that theorem.
+
+\subsection*{More factors and the remaining obstacle}
+The same starting point remains valid after another factor is appended, so $t_{k+1}(n)\le t_k(n)$. If $p\ge k$ is prime, at most one member of an interval of $k$ consecutive integers is divisible by $p$. Consequently
+\[
+ t_k(p^e)=p^e-k+1. \tag{6}
+\]
+Indeed the one multiple of $p$ must contain the entire power $p^e$, and the earliest possible interval ends at $p^e$. More generally, when every prime of $n$ is at least $k$, its roots are exactly the $k^{\omega(n)}$ CRT choices $m\equiv-i\pmod{p^e}$, $0\le i<k$.
+
+For every fixed $k$, prime contributions alone therefore give the same lower scale $x^2/(2\log x)$ for $\sum t_k(n)$. This does not disprove the proposed little-oh comparisons, because the full sums may be much larger than their prime contributions. The unresolved step is to control the locations of the least CRT roots on average, with increasing $k$; their count and the pointwise monotonicity do not supply that control.
+\textbf{Completion rate estimate: 30\%.}

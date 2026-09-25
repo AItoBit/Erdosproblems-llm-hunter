@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1185: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and construction}
+Given $\delta>0$ and $k\ge3$, must there be an $m=m(\delta,k)$ such that, for all sufficiently large $N$, every $A,B\subseteq\{1,\ldots,N\}$ with $|A|\ge\delta N$ and $|B|\ge m$ has a nonconstant $k$-term arithmetic progression in $A$ with difference in $B-B$?
+
+The assertion is false already for $k=3$, and hence for every $k\ge3$. We construct an infinite set $B$ and a set $A$ of natural density $1/50$ such that no nonconstant three-term progression in $A$ has difference in $B-B$. Passing to finite intervals then disproves the exact quantifiers in the question.
+
+The known negative result is attributed to Furstenberg's \emph{Recurrence in ergodic theory and combinatorial number theory} at \url{https://www.erdosproblems.com/1185}. The following quadratic-phase construction supplies a direct proof. Its only distribution input, quadratic equidistribution, is justified below.
+
+\section*{The elementary distribution fact}
+Fix an irrational real $\theta$, for example $\sqrt2$. The pairs
+\[
+ (\{n\theta\},\{n^2\theta\})\quad(n\ge1)
+\]
+are equidistributed in the unit square. By the Weyl criterion it suffices to show that, for every nonzero integer pair $(h_1,h_2)$,
+\[
+ \frac1N\sum_{n\le N}e^{2\pi i\theta(h_1n+h_2n^2)}\longrightarrow0.
+\tag{1}
+\]
+If $h_2=0$, this is a bounded geometric sum divided by $N$. Otherwise, for every fixed positive shift $s$, the correlation of the summands at $n+s$ and $n$ is a linear exponential sum with irrational frequency $2h_2s\theta$, and its normalized limit is zero. The van der Corput inequality, obtained by averaging $H$ shifted sums and applying Cauchy--Schwarz, bounds the limsup of the squared absolute value in (1) by $O(1/H)$. Let $H\to\infty$. This proves (1), and the one-coordinate sequence $\{n^2\theta\}$ is equidistributed as well.
+
+\section*{Choose an infinite set with controlled squared differences}
+Construct $b_1<b_2<\cdots$ recursively so that
+\[
+ \left|\{\theta b_i^2\}-\frac18\right|<\frac1{1000},
+ \qquad
+ 0<\{\theta b_i\}<\frac1{100\max\{1,b_{i-1}\}}.
+\tag{2}
+\]
+For $i=1$ put $b_0=1$. At each step the required pair lies in a fixed nonempty open rectangle in the unit square. Equidistribution supplies arbitrarily large choices, so the recursion continues indefinitely.
+
+For $i>j$, write $u_i=\{\theta b_i^2\}$ and $v_i=\{\theta b_i\}$. Modulo an integer,
+\[
+ \theta(b_i-b_j)^2\equiv u_i+u_j-2b_jv_i.
+\]
+The representative on the right lies strictly between
+\[
+ \frac14-\frac2{1000}-\frac2{100}=0.228
+ \quad\text{and}\quad
+ \frac14+\frac2{1000}=0.252.
+\tag{3}
+\]
+In particular, for every nonzero $d\in B-B$, where $B=\{b_i:i\ge1\}$,
+\[
+ \|2\theta d^2\|_{\mathbb R/\mathbb Z}>0.45.
+\tag{4}
+\]
+The sign of $d$ is irrelevant because it is squared.
+
+\section*{A positive-density set excludes those differences}
+Let
+\[
+ A=\{n\ge1:\|\theta n^2\|_{\mathbb R/\mathbb Z}<1/100\}.
+\]
+By (1), its natural density is $2/100=1/50$. If $a,a+d,a+2d$ all belonged to $A$, the second-difference identity
+\[
+ \theta(a+2d)^2-2\theta(a+d)^2+\theta a^2=2\theta d^2
+\]
+and the triangle inequality for distance to an integer would give
+\[
+ \|2\theta d^2\|_{\mathbb R/\mathbb Z}<\frac4{100}.
+\]
+This contradicts (4) whenever $d\in(B-B)\setminus\{0\}$.
+
+\section*{Return to the finite formulation}
+Fix $\delta=1/100$ and let $m$ be any positive integer. For every sufficiently large $N$, the set $A_N=A\cap[1,N]$ has size at least $\delta N$, while $B_N=\{b_1,\ldots,b_m\}$ lies in $[1,N]$ and has size $m$. The preceding argument excludes a three-term progression in $A_N$ with nonzero difference in $B_N-B_N$. It also excludes any longer such progression by taking its first three terms. Thus for this single fixed $\delta$ no choice of $m$ works, even when $N$ is allowed to be arbitrarily large.
+
+\section*{Assessment}
+The density, infinite recursion, second-difference obstruction, and finite-quantifier passage are all established. The argument uses standard Weyl and van der Corput criteria, with the required exponential-sum cancellation supplied explicitly.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

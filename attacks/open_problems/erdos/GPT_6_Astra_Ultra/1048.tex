@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1048: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and counterexample}
+The proposed conclusion is false for every fixed $1<r<2$. For all sufficiently large $n$, take
+\[
+ f_n(z)=z^n-r^n.
+\]
+Its roots all have modulus exactly $r$. We prove that its unit lemniscate has exactly $n$ connected components, each of diameter at most
+\[
+ \frac{2}{n(r^n-1)^{(n-1)/n}}\longrightarrow0. \tag{1}
+\]
+In particular every component eventually has diameter smaller than the fixed positive number $2-r$, contradicting the required existence of a component with diameter greater than $2-r$.
+
+This is Pommerenke's counterexample as recorded at \url{https://www.erdosproblems.com/1048}, based on \emph{On metric properties of complex polynomials}, \url{https://doi.org/10.1307/mmj/1028998561}. We prove the component and diameter assertions explicitly.
+
+\section*{Separate inverse branches}
+The disk $D=\{w:|w-r^n|<1\}$ does not contain zero, because $r^n>1$. It lies in the right half-plane, so the principal logarithm is holomorphic on a neighborhood of its closure. Its $n$ root branches are
+\[
+ g_j(w)=\exp\!\left(\frac{\log w+2\pi i j}{n}\right),
+ \qquad j=0,\ldots,n-1.
+\]
+Every solution of $z^n=w$ is one of these, and their images $U_j=g_j(D)$ are disjoint: equality of two image points first forces the same $w$, then the same $n$th root of unity. Each $g_j$ is injective and holomorphic with nonzero derivative, so $U_j$ is connected and open. Their union is exactly $\{|f_n|<1\}$. A finite disjoint union of these open sets has them as its connected components, since each one is also relatively closed in that union. Each contains its corresponding root $re^{2\pi i j/n}$.
+
+\section*{Uniform diameter control}
+For every $w\in D$,
+\[
+ |g_j'(w)|=\frac1{n|w|^{(n-1)/n}}
+ \le\frac1{n(r^n-1)^{(n-1)/n}}.
+\]
+The disk is convex. Integrating the derivative along the segment between $w_1,w_2\in D$ gives
+\[
+ |g_j(w_1)-g_j(w_2)|
+ \le\frac{|w_1-w_2|}{n(r^n-1)^{(n-1)/n}}
+ \le\frac2{n(r^n-1)^{(n-1)/n}},
+\]
+proving (1). For example, once $r^n\ge2$ the right side is at most $4/(nr^{n-1})$, which tends to zero. The same argument on the closed disk bounds the closed components too; their branch images remain disjoint there.
+
+\section*{Boundary of the result and assessment}
+The construction uses $r>1$ precisely to keep the root disk away from zero and to make the inverse branches contract exponentially. It does not contradict the affirmative results recorded for $0<r\le1$. At $r=1$, the disk touches zero and the limiting closed petals meet there; estimate (1) no longer applies. A counterexample in the allowed range $1<r<2$ is sufficient to settle the stated universal question negatively, and that counterexample is fully established here. No stronger classification for the other parameter range is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

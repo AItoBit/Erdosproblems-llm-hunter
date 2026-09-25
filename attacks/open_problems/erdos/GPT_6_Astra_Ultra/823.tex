@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 823: ratios within a divisor-sum fiber}
+\subsection*{1. Statement and declared input}
+Given $\alpha\ge1$, find positive integers $n_j,m_j$ with $\sigma(n_j)=\sigma(m_j)$ and $n_j/m_j\to\alpha$. We reconstruct Pollack's affirmative proof. Its explicitly external deep input is the bounded-prime-clusters theorem for affine forms: there is an absolute integer $K\ge2$ such that every admissible collection of $K$ distinct, pairwise nonproportional integral affine forms with positive leading coefficients has two forms simultaneously prime for infinitely many positive integer arguments. This is the Maynard form of the Zhang--Maynard theorem, stated as Proposition 1 in Pollack's paper. Admissible means that no prime divides the product of the forms for every integer argument.
+The divergence of the sum of reciprocals of the primes is the only other standard input. All fiber constructions and the passage to arbitrary ratios are proved below.
+\subsection*{2. Approximating abundancy logarithms}
+Fix a finite forbidden prime set $\mathcal P$. The positive numbers $\log(1+1/p)$ for primes $p\notin\mathcal P$ tend to zero and have divergent sum. Given $t>0$ and $\eta>0$, discard enough primes that every remaining summand is less than $\eta$, then add successive summands until their sum first reaches $t$. The resulting squarefree product $A$, avoiding $\mathcal P$, satisfies
+\[
+ t\le\log\frac{\sigma(A)}A<t+\eta.                \tag{1}
+\]
+We can also require all primes used to exceed any prescribed bound. In particular $A$, and hence $\sigma(A)$, can be arbitrarily large. This lets us choose a finite list of such $A$'s with distinct divisor sums, which will ensure that the affine forms below really are distinct.
+For finite $\mathcal P$ let $L_{\mathcal P}$ be the closure in $\mathbb R$ of
+\[
+ \left\{\log\frac mn:\ \sigma(m)=\sigma(n),\quad
+ \gcd\left(mn,\prod_{p\in\mathcal P}p\right)=1\right\}.
+\]
+\subsection*{3. A difference in every $K$-point set}
+We claim that for any real numbers $t_1<\cdots<t_K$, some positive difference $t_b-t_a$ belongs to $L_{\mathcal P}$. Translate all $t_i$ by the same constant so that they are positive. For each integer $j$, use (1) to choose squarefree $A_{i,j}$ avoiding $\mathcal P$ with
+\[
+ \log(\sigma(A_{i,j})/A_{i,j})\longrightarrow t_i
+\]
+and with $\sigma(A_{1,j}),\ldots,\sigma(A_{K,j})$ distinct. The forms
+\[
+ \sigma(A_{i,j})X-1\qquad(1\le i\le K)
+\]
+are admissible: at $X=0$ their product is $(-1)^K$. Their determinants are nonzero because their leading coefficients are distinct. The declared prime-clusters theorem therefore supplies a pair $a_j<b_j$ and a positive $u_j$ such that
+\[
+ p_j=\sigma(A_{a_j,j})u_j-1,\qquad
+ q_j=\sigma(A_{b_j,j})u_j-1
+\]
+are primes larger than $j$, every $A_{i,j}$, and every forbidden prime. We may impose these lower bounds because the theorem gives infinitely many arguments. Multiplicativity now gives the exact identity
+\[
+ \sigma(p_jA_{b_j,j})=(p_j+1)\sigma(A_{b_j,j})
+ =(q_j+1)\sigma(A_{a_j,j})=\sigma(q_jA_{a_j,j}).
+\]
+Both arguments avoid $\mathcal P$. A fixed pair $(a,b)$ occurs infinitely often. Along that subsequence,
+\[
+ \log\frac{q_jA_{a,j}}{p_jA_{b,j}}
+ =\log\frac{\sigma(A_{b,j})/A_{b,j}}{\sigma(A_{a,j})/A_{a,j}}+o(1)
+ \longrightarrow t_b-t_a.
+\]
+This proves the claim. The $o(1)$ is justified by $p_j,q_j\to\infty$, through replacing each prime by that prime plus one.
+\subsection*{4. Building an arbitrary target by coprime small steps}
+Let $T=\log\alpha$. For any $\varepsilon>0$, apply the claim to the $K$ points $0,\varepsilon/K,\ldots,(K-1)\varepsilon/K$. For every finite forbidden prime set there is an actual fiber ratio with logarithm in
+\[
+ \left(\frac{\varepsilon}{2K},\varepsilon\right).             \tag{2}
+\]
+Indeed one of the indicated differences belongs to the closure, and a sufficiently close actual ratio lies in this open interval.
+Choose pairs $(a_i,b_i)$ with equal divisor sums and logarithms in (2), successively forbidding every prime dividing any earlier $a_jb_j$. Thus different pairs have pairwise coprime supports. Their logarithms are positive and bounded below, so their partial sums eventually reach $T$. At the first such index $J$,
+\[
+ T\le\sum_{i=1}^J\log(a_i/b_i)<T+\varepsilon.
+\]
+Set $n=\prod_{i=1}^Ja_i$, $m=\prod_{i=1}^Jb_i$. Coprimality across pairs, rather than any unwarranted general multiplicativity, gives
+\[
+ \sigma(n)=\prod_i\sigma(a_i)=\prod_i\sigma(b_i)=\sigma(m).
+\]
+The ratio lies in $[\alpha,\alpha e^\varepsilon)$. Taking $\varepsilon=1/j$ gives the requested sequence. For $\alpha=1$ one may simply take $n_j=m_j=1$. Inverting ratios also covers any positive target below one.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/823}; P. Pollack, \emph{Remarks on fibers of the sum-of-divisors function}, Section 2, author manuscript \url{https://www.pollack-math.net/preimages-maier3.pdf}, published DOI \url{https://doi.org/10.1007/978-3-319-22240-0_18}. The affine-form prime theorem is imported as explicitly stated above; its analytic proof is not reproduced.
+\textbf{SOLVED relative to the declared prime-clusters input.} The density lemma, exact equal-divisor-sum construction, admissibility and distinctness checks, and coprime accumulation argument are fully supplied. This reconstructs Pollack's known solution and claims no new result or local formal verification.
+\textbf{Completion rate estimate: 100\%.}

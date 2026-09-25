@@ -1,0 +1,80 @@
+\section*{Erd\H{o}s Problem 1114: critical points of an equally spaced polynomial}
+\subsection*{Statement and normalization}
+The source has an indexing inconsistency: $N+1$ distinct roots require degree $N+1$, not $N$. We use
+\[
+ F_N(x)=\prod_{j=0}^{N}(x-j),\qquad N\ge1.
+\]
+Every polynomial with distinct equally spaced real roots reduces to this one by a nonzero scalar and an affine change of variable. Let $\beta_j\in(j,j+1)$, $0\le j<N$, be the roots of $F_N'$. The assertion is that their consecutive gaps increase as one moves away from the midpoint $N/2$.
+B\'alint proved this theorem in 1960, and Lorch later gave generalizations. The full monotonicity comparison is unresolved in this attempt; the results below prove strict mesh expansion, symmetry, endpoint localization and the first nontrivial comparison.
+
+\subsection*{Unique critical point in each unit interval}
+Away from the roots of $F_N$,
+\[
+ \frac{F_N'(x)}{F_N(x)}=S_N(x):=\sum_{i=0}^N\frac1{x-i},\qquad
+ S_N'(x)=-\sum_{i=0}^N\frac1{(x-i)^2}<0.
+\]
+On $(j,j+1)$ the function decreases continuously from $+\infty$ to $-\infty$. It has exactly one zero, which is simple because $S_N'$ never vanishes. These are all $N$ zeros of $F_N'$, and
+\[
+ \beta_{N-1-j}=N-\beta_j
+\]
+by the identity $S_N(N-x)=-S_N(x)$.
+
+\subsection*{Every derivative gap strictly exceeds the original spacing}
+A useful telescoping identity is
+\[
+ S_N(x+1)-S_N(x)=\frac1{x+1}-\frac1{x-N}>0
+ \qquad(0<x<N).
+\]
+For $0\le j<N-1$, the point $\beta_j+1$ lies in $(j+1,j+2)$ and satisfies $S_N(\beta_j+1)>0$. Since $S_N$ decreases to zero at $\beta_{j+1}$ in that interval,
+\[
+ \beta_{j+1}>\beta_j+1.
+ \tag{1}
+\]
+Writing $\beta_j=j+t_j$, we have $0<t_0<t_1<\cdots<t_{N-1}<1$. In particular
+\[
+ 1<\beta_{j+1}-\beta_j<2.
+\]
+After rescaling, every derivative gap is larger than the original arithmetic-progression spacing. This strict statement is stronger than Rolle interlacing alone, but does not yet order two different derivative gaps.
+
+\subsection*{Endpoint localization and the total excess}
+For $N\ge2$, write $H_N=\sum_{j=1}^N1/j$. The leftmost critical point obeys
+\[
+ \frac1{\beta_0}=\sum_{j=1}^N\frac1{j-\beta_0}.
+\]
+Since $0<\beta_0<1$,
+\[
+ H_N\le\sum_{j=1}^N\frac1{j-\beta_0}\le\frac{H_N}{1-\beta_0},
+\]
+where the last comparison follows from $j-\beta_0\ge j(1-\beta_0)$. Consequently
+\[
+ \frac1{H_N+1}\le\beta_0\le\frac1{H_N},
+ \qquad \beta_0\sim\frac1{\log N}.
+\]
+Symmetry now gives the exact sum of all excess gaps:
+\[
+ \sum_{j=0}^{N-2}\bigl(\beta_{j+1}-\beta_j-1\bigr)
+ =1-2\beta_0\longrightarrow1.
+\]
+Thus the positive mesh increments have bounded total mass even though their number increases.
+
+\subsection*{The first nontrivial outward comparison}
+For degree five, translate the roots to $-2,-1,0,1,2$. Then
+\[
+ F(x)=x(x^2-1)(x^2-4),\qquad F'(x)=5x^4-15x^2+4.
+\]
+Its zeros are $-v,-u,u,v$, where
+\[
+ u^2=\frac{15-\sqrt{145}}{10},\qquad
+ v^2=\frac{15+\sqrt{145}}{10}.
+\]
+The central gap is $2u$ and the two outer gaps are $v-u$. Since $\sqrt{145}>12$,
+\[
+ v^2-9u^2=\sqrt{145}-12>0.
+\]
+Hence $v-u>2u$, proving the asserted strict outward increase in this first case with different central and outer gaps. Lower degrees have no unequal outward comparison after symmetry.
+
+\subsection*{Remaining gap and sources}
+The general assertion requires comparing $t_{j+2}-t_{j+1}$ with $t_{j+1}-t_j$ on one side of the centre. Equation (1) proves positivity of these increments, not their monotonicity, and the bounded total excess does not repair this missing step. No general proof is claimed here.
+Sources: \url{https://www.erdosproblems.com/1114}; E. B\'alint, \emph{Proof of a conjecture of P. Erd\H{o}s}, Mat. Lapok (1960), 33--40; L. Lorch, \emph{Some monotonicity properties of polynomials with equally spaced zeros}, Acta Math. Acad. Sci. Hungar. 27 (1976), 293--300. The proved statements are elementary and use neither cited theorem as a premise.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

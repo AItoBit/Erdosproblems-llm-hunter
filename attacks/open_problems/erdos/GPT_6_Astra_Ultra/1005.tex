@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 1005}
+
+\paragraph{Statement and scope.}
+In the Farey sequence \(F_n\), write every fraction in lowest terms. Let \(f(n)\) be the largest integer such that any two terms at index distance at most \(f(n)\) satisfy
+\((a-c)(b-d)\geq0\), where their fractions are \(a/b,c/d\). The known answer is \(f(n)=(1/4+o(1))n\). Here we prove the upper bound
+\[
+ f(n)\leq\lfloor n/4\rfloor+5\qquad(n\geq8)
+\tag{1}
+\]
+and a uniform density estimate that excludes small denominators from any extremal inversion. The matching lower bound remains unresolved in this write-up.
+
+\paragraph{Reduce to counting fractions between an inverted pair.}
+For \(a/b<c/d\), a violation of similar ordering necessarily means \(a<c\) and \(b>d\). The opposite sign pattern is incompatible with \(a/b<c/d\). If \(r\) Farey terms lie strictly between a violating pair, its index distance is \(r+1\). Thus \(f(n)\) is the minimum of these intervening counts.
+
+Every violating pair contains the elementary interval
+\[
+ I_{a,b}=\left(\frac ab,\frac{a+1}{b-1}\right),
+\tag{2}
+\]
+because \(c\geq a+1\) and \(d\leq b-1\). Its length is
+\[
+ |I_{a,b}|=\frac{a+b}{b(b-1)}\geq\frac1{b-1}.
+\tag{3}
+\]
+Also \(a+1\leq c\leq d\leq b-1\), so (2) is within \([0,1]\). Consecutive Farey terms cannot be inverted: the reduced form of \(c/b\) would lie strictly between \(a/b\) and \(c/d\) and have denominator at most \(b\leq n\).
+
+\paragraph{An explicit inversion near one half.}
+Set \(m=\lfloor n/4\rfloor\geq2\) and take
+\[
+ L=\frac{2m-1}{4m},\qquad U=\frac{2m}{4m-1}.
+\]
+Both are reduced fractions in \(F_n\), with increasing numerators and decreasing denominators, and \(L<U\). Let \(p/q\in F_n\cap(L,U)\), and put \(e=q-2p\). Cross multiplication gives
+\[
+ q>2me,\qquad q>-(4m-1)e,\qquad q\leq4m+3.
+\tag{4}
+\]
+Since \(m\geq2\), these force \(-1\leq e\leq2\).
+
+If \(e=1\), then \(q\) is odd and \(2m<q\leq4m+3\), giving at most \(m+2\) possibilities. Each \(q\) determines \(p\).
+If \(e=0\), reducedness forces \(p/q=1/2\), giving one possibility.
+If \(e=-1\), (4) forces the odd denominator \(q\) to be \(4m+1\) or \(4m+3\), giving at most two possibilities.
+Finally \(e=2\) would force the even denominator \(q=4m+2\) and numerator \(p=2m\), which are not coprime. Therefore the interval contains at most \(m+5\) Farey terms, proving (1).
+
+\paragraph{A uniform count in an arbitrary interval.}
+For an open interval \(I=(u,v)\subseteq[0,1]\) of length \(\lambda\), let \(P_n(I)\) count the reduced \(p/q\in I\) with \(1\leq q\leq n\). M\"obius inversion gives
+\[
+ P_n(I)=\sum_{d\leq n}\mu(d)
+       \sum_{r\leq n/d}\#\{s\in\mathbb Z:ur<s<vr\}.
+\]
+The inner cardinality is \(\lambda r+O(1)\), with an absolute constant independent of the interval. Writing \(M_d=\lfloor n/d\rfloor\), we obtain
+\[
+ P_n(I)=\frac{\lambda}{2}
+       \sum_{d\leq n}\mu(d)M_d(M_d+1)+O(n\log n)
+       =\frac{3}{\pi^2}\lambda n^2+O(n\log n),
+\tag{5}
+\]
+uniformly for all \(I\). The last step uses
+\(M_d(M_d+1)=(n/d)^2+O(n/d)\),
+\(\sum_{d\leq n}1/d=O(\log n)\), and
+\(\sum_{d\geq1}\mu(d)/d^2=6/\pi^2\). All errors remain uniform as the interval varies with \(n\).
+
+Combining (2)--(5), every inverted pair whose left denominator is \(b\) has at least
+\[
+ \frac{3n^2}{\pi^2(b-1)}-C n\log n
+\tag{6}
+\]
+intervening terms, for an absolute \(C\). In particular, if \(b=o(n/\log n)\), the intervening count divided by \(n\) tends to infinity. More quantitatively, comparing (6) with (1) shows that a pair attaining \(f(n)\) must have \(b\gg n/\log n\). This reduces the difficult lower-bound problem to large-denominator intervals, where the error in (5) is too large to recover the constant \(1/4\).
+
+\paragraph{Remaining gap and attribution.}
+The near-half inversion and the elementary-interval reduction follow the approach in the current solution linked at \url{https://www.erdosproblems.com/1005}, checked 24 September 2026. The page attributes the asymptotic lower bound to Cipollini and GPT-5.5, following van Doorn's upper bound; its proof repository is \url{https://github.com/mrricky22/erdos-1005-lean}. The proof above establishes the upper bound and density reduction directly. It does not reproduce the uniform primitive-progression and totient-increment analysis required for the lower bound. No local Lean build or novelty is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 55\%}

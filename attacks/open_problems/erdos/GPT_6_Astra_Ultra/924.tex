@@ -1,0 +1,55 @@
+\section*{Erd\H{o}s Problem \#924: an edge-Ramsey graph with no larger clique}
+\subsection*{Statement and result}
+For every \(k\geq2\) and \(\ell\geq3\), there is a \(K_{\ell+1}\)-free graph whose every \(k\)-colouring of the edges contains a monochromatic \(K_\ell\).
+We reconstruct a partite construction. The external inputs are the finite Ramsey theorem and the finite Hales--Jewett theorem; the graph construction, embeddings, and clique preservation are proved below.
+
+\subsection*{The one word theorem used}
+The finite Hales--Jewett theorem says that for any finite nonempty alphabet \(\Sigma\) and positive integer \(k\), some integer \(d\) has this property: every \(k\)-colouring of \(\Sigma^d\) admits a monochromatic combinatorial line. Such a line is specified by a nonempty set \(J\subseteq[d]\) of variable positions and fixed letters outside \(J\); its words put the same letter \(\sigma\in\Sigma\) at every position of \(J\), as \(\sigma\) varies.
+This theorem is used as an external input, not reproved.
+
+\subsection*{An induced bipartite partite lemma}
+Let \(B\) be a bipartite graph with specified parts \(U,V\), containing at least one edge. There is a bipartite graph \(C\), with specified parts, such that every \(k\)-edge-colouring of \(C\) has a monochromatic induced copy of \(B\) respecting the two parts.
+
+Use \(\Sigma=E(B)\), where an edge is written as its ordered pair \((u,v)\in U\times V\), and choose \(d\) by Hales--Jewett. Give \(C\) parts \(U^d,V^d\), joining \(\mathbf u\) to \(\mathbf v\) exactly when \(u_iv_i\in E(B)\) for every coordinate \(i\).
+Edges of \(C\) are in bijection with words of \(\Sigma^d\).
+A monochromatic line with variable positions \(J\) and fixed edges \((u_i,v_i)\) gives maps
+\[
+u\longmapsto\mathbf u(u),\quad
+\mathbf u(u)_i=\begin{cases}u&i\in J,\\u_i&i\notin J,\end{cases}
+\qquad
+v\longmapsto\mathbf v(v),\quad
+\mathbf v(v)_i=\begin{cases}v&i\in J,\\v_i&i\notin J.\end{cases}
+\]
+The nonempty variable set makes both maps injective. Their images are adjacent exactly when \(uv\in E(B)\), so this is an induced part-respecting copy, including any isolated vertices of \(B\). Its edges are precisely the line's edges and hence all have one colour.
+
+\subsection*{Making one pair of parts monochromatic}
+Suppose \(F\) is a graph with specified independent parts \(V_1,\ldots,V_q\), and fix a pair \(a<b\) for which the bipartite slice \(B=F[V_a\cup V_b]\) has an edge.
+Construct \(C\) for this slice by the preceding lemma, using its parts as parts \(a,b\).
+For every induced part-respecting embedding of \(B\) into \(C\), glue a fresh copy of \(F\) along exactly that embedded slice. All its other vertices are new and private to that copy, placed in their original labelled parts; give no edges between private vertices of different copies.
+
+The resulting graph \(F^+\) is finite and \(q\)-partite. Every edge-colouring of \(F^+\) restricts to one on \(C\), hence supplies a monochromatic embedded \(B\). The corresponding attached copy of \(F\) has all edges between its parts \(a,b\) of one colour.
+
+Moreover,
+\[
+\omega(F^+)\leq\max\{2,\omega(F)\}. \tag{1}
+\]
+A clique entirely in \(C\) has at most two vertices. Any clique containing a private vertex must lie in that vertex's attached copy: it has no neighbours among other copies' private vertices, and its neighbours in \(C\) belong to its own glued slice. Since that slice was embedded \emph{induced}, the edges in the attached copy are exactly those of \(F\). This proves (1). If a slice has no edges, the step can simply be omitted.
+
+\subsection*{Iterating over all pairs}
+Let \(q\) be a finite \(k\)-colour Ramsey number for \(K_\ell\). Build a \(q\)-partite graph \(F_0\) by taking one disjoint copy of \(K_\ell\) for each \(\ell\)-subset of \([q]\), assigning its vertices to those labelled parts.
+Then \(\omega(F_0)=\ell\). In particular every pair of parts has at least one edge.
+
+List the \(\binom q2\) pairs of part labels. Starting from \(F_0\), perform the preceding construction for each pair, obtaining \(F_1,\ldots,F_{\binom q2}\).
+By (1), every one of these graphs has clique number at most \(\ell\).
+
+Now colour the edges of the last graph arbitrarily. The final construction step gives a part-respecting copy of the preceding graph on which the final pair of parts is monochromatic. Inside that copy apply the preceding step, and continue backwards. Restriction to a smaller part-respecting copy preserves every monochromatic-pair property already acquired.
+We obtain a copy of \(F_0\) such that, for each pair of labels \(a,b\), all its edges between those parts share a colour \(c(a,b)\).
+
+These colours define an edge-colouring of the complete graph on \([q]\). By the choice of \(q\), some \(\ell\)-subset \(L\subseteq[q]\) has all its pair colours equal. The designated \(K_\ell\) in \(F_0\) for that very label set \(L\) is then monochromatic.
+Thus the last constructed graph has the required edge-Ramsey property and contains no \(K_{\ell+1}\).
+
+\subsection*{Attribution and scope}
+This is the standard partite method of J. Ne\v{s}et\v{r}il and V. R\"odl, associated with their \emph{The Ramsey property for graphs with forbidden complete subgraphs} (1976) and \emph{Simple proof of the existence of restricted Ramsey graphs by means of a partite construction}, Combinatorica 1 (1981), 199--202, \url{https://link.springer.com/content/pdf/10.1007/BF02579274.pdf}. The finite Hales--Jewett input is the theorem of A. W. Hales and R. I. Jewett, \emph{Regularity and positional games}, Transactions of the AMS 106 (1963), 222--229.
+The proof above makes explicit why gluing along an \emph{induced} bipartite slice cannot create a forbidden clique. It gives existence with finite, unoptimized sizes. Statement checked at \url{https://www.erdosproblems.com/924} on 24 September 2026. No novelty or local formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

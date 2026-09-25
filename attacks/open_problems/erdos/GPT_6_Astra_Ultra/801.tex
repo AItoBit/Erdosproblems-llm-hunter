@@ -1,0 +1,96 @@
+\section*{Erd\H{o}s Problem 801: a small set with many edges}
+
+\paragraph{Statement and claim.}
+For every sufficiently large \(n\), if an \(n\)-vertex graph
+has independence number at most \(\sqrt n\), then some
+set of at most \(\sqrt n\) vertices spans
+\(\Omega(\sqrt n\log n)\) edges.
+We reconstruct Alon's proof, allowing the non-strict
+independence hypothesis in the displayed question:
+\url{https://web.math.princeton.edu/~nalon/PDFS/indrams1.pdf},
+Section 3. See \url{https://www.erdosproblems.com/801}.
+The external input is the Ajtai--Koml\'os--Szemer\'edi
+triangle-free independence estimate: a triangle-free
+\(v\)-vertex graph of average degree \(d\geq2\) has an
+independent set of size at least \(c(v/d)\log d\),
+for an absolute \(c>0\).
+
+\paragraph{Two direct sampling cases.}
+Put \(m=\lfloor\sqrt n\rfloor\), and let \(\bar d\) be the
+average degree of \(G\). If \(\bar d\geq\sqrt n\log n\),
+a uniform \(m\)-vertex subset spans an expected
+\[
+ e(G)\frac{\binom m2}{\binom n2}
+ =\Omega(\sqrt n\log n)
+\]
+edges, so one such subset suffices.
+Otherwise at least \(n/2\) vertices have degree at most
+\(2\sqrt n\log n\). Let \(G'\) be their induced graph,
+so its maximum degree obeys that bound.
+
+Suppose a neighbourhood in \(G'\) spans at least
+\(\sqrt n(\log n)^3\) edges.
+If the neighbourhood has at most \(m\) vertices it already
+works. If it is larger, its order is at most
+\(2\sqrt n\log n\), and a uniform \(m\)-subset has expected
+edge count at least a constant times
+\[
+ \sqrt n(\log n)^3
+ \frac{n}{n(\log n)^2}
+ =\sqrt n\log n.
+\]
+Again the assertion follows.
+
+\paragraph{Removing triangles after random sampling.}
+We may now assume every neighbourhood in \(G'\) spans
+fewer than \(\sqrt n(\log n)^3\) edges.
+Each triangle is counted in three neighbourhoods, so
+\(G'\) has at most \(n^{3/2}(\log n)^3\) triangles.
+Independently retain each vertex with probability
+\(p=n^{-2/5}\).
+The expected retained vertex count minus the retained
+triangle count is at least
+\[
+ \frac n2p-n^{3/2}(\log n)^3p^3
+ =\frac12n^{3/5}-n^{3/10}(\log n)^3
+ \geq\frac14 n^{3/5}
+\]
+for large \(n\).
+Some sample attains this lower bound.
+Remove one vertex from each of its triangles, and then
+discard extra vertices if needed.
+We obtain a triangle-free induced subgraph \(J\) of order
+\(v=\lfloor n^{3/5}/4\rfloor\).
+
+\paragraph{The independence bound forces enough edges.}
+Write \(d\) for the average degree of \(J\).
+First, the elementary bound \(\alpha(J)\geq v/(d+1)\)
+and \(\alpha(J)\leq\alpha(G)\leq\sqrt n\) show
+\[
+ d+1\geq v/\sqrt n=\Omega(n^{1/10}).
+\]
+Thus \(d\geq2\) and \(\log d\geq c_1\log n\) for large \(n\).
+The cited triangle-free theorem then gives
+\[
+ \sqrt n\geq\alpha(J)\geq c\frac vd\log d,
+ \qquad d\geq c_2n^{1/10}\log n.
+\]
+Finally choose a uniform \(m\)-subset of \(V(J)\).
+Its expected edge count is
+\[
+ \frac{vd}{2}\frac{\binom m2}{\binom v2}
+ =\Omega\left(\frac{dm^2}{v}\right)
+ =\Omega(\sqrt n\log n).
+\]
+Some subset therefore has the required number of edges.
+
+\paragraph{Scope.}
+All reductions, sampling arguments, and the transfer back
+to a set of at most \(\sqrt n\) vertices are proved above.
+The full assertion uses only the explicitly stated
+triangle-free independence theorem as a substantial
+external input; the conclusion is not claimed for tiny
+\(n\) where the asymptotic notation has no intended force.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

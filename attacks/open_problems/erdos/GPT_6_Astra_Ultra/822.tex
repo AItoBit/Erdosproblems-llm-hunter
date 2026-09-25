@@ -1,0 +1,74 @@
+\section*{Erd\H{o}s Problem 822: the image of $n+\varphi(n)$}
+\subsection*{1. Statement and status of this attempt}
+Does $\{n+\varphi(n):n\ge1\}$ have positive lower density? Gabdullin, Iudelevich and Luca proved that it does. This attempt proves a lower bound of order $X/\log X$, constructs a positive-density family of structured inputs, and derives its exact collision equation with two degenerate cases excluded. The remaining averaged collision bound is not proved here. Thus this is a partial reconstruction of an already settled problem, not a claim that the problem itself lacks a solution.
+We use the prime number theorem, including its standard uniform consequence for prime counts on intervals $[T/2,T]$ when $T$ tends to infinity, and Mertens' fixed-power-interval estimate $\sum_{X^a<p\le X^b}1/p\to\log(b/a)$ for fixed $0<a<b$.
+\subsection*{2. A rigorous image lower bound}
+If $p$ is prime, $p+\varphi(p)=2p-1$. These outputs are distinct. Therefore, writing $V(X)$ for the number of image values at most $X$,
+\[
+ V(X)\ge\pi((X+1)/2)\sim\frac{X}{2\log X}.                \tag{1}
+\]
+The order in (1) is insufficient for positive lower density. The following construction explains how the known method obtains many more inputs while exposing exactly the obstruction to counting their outputs.
+\subsection*{3. A structured set of linearly many inputs}
+Let $X$ tend to infinity. Choose
+\[
+ 1\le h\le X^{1/60},\qquad
+ X^{1/15}<r\le X^{1/12},\qquad
+ X^{7/20}<q\le X^{11/30},
+\]
+where $r,q$ are prime, and put $m=hrq$. Then $m\le X^{7/15}$. The scales are disjoint: $r>h$, and $q>hr$. Hence $q$ is the largest prime factor of $m$, $r$ the largest of $m/q$, and the triple $(h,r,q)$ is recovered uniquely from $m$.
+For each such $m$, choose any prime
+\[
+ \frac{X}{2m}<p\le\frac Xm,
+\]
+and put $n=mp$. For sufficiently large $X$, $p>2X^{7/15}\ge2m$ because $p>\tfrac12X^{8/15}$. In particular $p$ is the unique largest prime factor of $n$, so $n$ determines $p,m,h,r,q$ uniquely. All these $n$ lie in $(X/2,X]$.
+Let $\mathcal M$ be the set of these $m$ and $\mathcal A$ the resulting inputs $n$. Unique factorization and the prime reciprocal estimates give
+\[
+ \sum_{m\in\mathcal M}\frac1m
+ =\left(\sum_{h\le X^{1/60}}\frac1h\right)
+  \left(\sum_{X^{1/15}<r\le X^{1/12}}\frac1r\right)
+  \left(\sum_{X^{7/20}<q\le X^{11/30}}\frac1q\right)
+ \gg\log X.                                             \tag{2}
+\]
+The two prime sums tend respectively to $\log(5/4)$ and $\log(22/21)$, both positive. The prime number theorem gives, uniformly for these $m$,
+\[
+ \pi(X/m)-\pi(X/(2m))\gg\frac{X}{m\log X}.
+\]
+This uniformity follows because every argument is at least a fixed positive power of $X$, so the relative PNT error is uniformly small. Summing with (2) and using uniqueness proves
+\[
+ |\mathcal A|\gg X.                                      \tag{3}
+\]
+Thus there are linearly many highly structured inputs. This is a count of inputs, and must not be mistaken for a count of distinct outputs.
+\subsection*{4. Exact output collisions}
+Since $p\nmid m$, multiplicativity gives
+\[
+ n+\varphi(n)=(m+\varphi(m))p-\varphi(m).                 \tag{4}
+\]
+Two inputs $mp,m'p'$ collide precisely when
+\[
+ (m+\varphi(m))p-(m'+\varphi(m'))p'
+       =\varphi(m)-\varphi(m').                          \tag{5}
+\]
+If $m=m'$, this forces $p=p'$. If $p=p'$, rearrangement gives
+\[
+ p(m-m')+(p-1)(\varphi(m)-\varphi(m'))=0.
+\]
+Thus $p-1$ divides $m-m'$. Since $|m-m'|<p-1$ at these scales, it follows that $m=m'$. A nontrivial collision therefore changes both the large prime and its cofactor.
+There is a further useful exclusion. If $\varphi(m)=\varphi(m')$, equation (5) becomes $up=u'p'$ with $u=m+\varphi(m)$ and $u'=m'+\varphi(m')$. Both $u,u'$ are smaller than both $p,p'$. If the primes were distinct, divisibility by $p$ would force $p\mid u'$, impossible. Hence $p=p'$ and the collision is trivial. Every nontrivial collision in this family has $\varphi(m)\ne\varphi(m')$.
+\subsection*{5. The precise remaining gap}
+For a subset $\mathcal B\subseteq\mathcal A$, let
+\[
+ E(\mathcal B)=\#\{(n,n')\in\mathcal B^2:
+                 n+\varphi(n)=n'+\varphi(n')\}.
+\]
+If $r(v)$ counts representations from $\mathcal B$, then Cauchy--Schwarz proves
+\[
+ \#\{n+\varphi(n):n\in\mathcal B\}
+ \ge\frac{(\sum_vr(v))^2}{\sum_vr(v)^2}
+ =\frac{|\mathcal B|^2}{E(\mathcal B)}.                  \tag{6}
+\]
+Consequently it would suffice, for every large $X$, to select $|\mathcal B|\gg X$ with $E(\mathcal B)\ll X$. All its outputs are at most $2X$, so (6) would then give a uniform positive lower density.
+The known proof makes additional smooth-part and totient-divisibility restrictions on $m$, retains linearly many inputs, and bounds (5) by a carefully averaged Selberg sieve. In particular, merely noting that (5) is linear in $p,p'$ does not control the cumulative gcd and singular factors when summing over the cofactors. That averaged bound, and the associated filtering, are the missing steps here; no bound $E(\mathcal A)\ll X$ has been established in this attempt.
+\subsection*{6. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/822}; M. R. Gabdullin, V. V. Iudelevich and F. Luca, \emph{Numbers of the form $k+f(k)$}, J. Number Theory 262 (2024), 58--85, Section 5, \url{https://arxiv.org/abs/2306.16035}. The structured scales and collision approach are adapted from their proof; this text does not claim to replace its sieve argument.
+\textbf{UNRESOLVED in this reconstruction.} The image lower bound (1), the positive-density input construction, collision exclusions and exact second-moment criterion are proved. A linear bound for the filtered collision count is the first essential gap. The estimate measures proof coverage, not the probability of a new solution.
+\textbf{Completion rate estimate: 45\%.}

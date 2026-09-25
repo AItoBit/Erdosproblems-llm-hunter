@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 130: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $A\subset\mathbb R^2$ be infinite, with no three collinear and no four concyclic. Join points at positive integer distance. How large can its chromatic and clique numbers be; can its chromatic number be infinite? Source: \url{https://www.erdosproblems.com/130}.
+We prove a countable upper bound for the chromatic number, exclude infinite cliques by an explicit algebraic argument, and construct an infinite example with both numbers equal to four. The central infinite-chromatic question remains unresolved in this attempt.
+
+\section*{Countable degree and finite cliques}
+For a fixed point and a fixed positive integer radius, at most three neighbours lie on the corresponding circle. Thus each vertex has countable degree. Its connected component is countable, being the union over all finite lengths of the reachable vertices. Assign distinct natural-number colours within each component, and reuse the colours across components. This gives $\chi\le\aleph_0$, even if $A$ itself is uncountable.
+
+Here is the classical finite-clique obstruction in algebraic form. Take three noncollinear clique points, translate the first to $0$, and denote the others by $u_1,u_2$. Set $d_i=|u_i|$, positive integers. For any further clique point $x$, put $r=|x|$ and $k_i=|x-u_i|-r$. Each $k_i$ is an integer in $[-d_i,d_i]$. Squaring the distance equalities gives
+\[
+ -2x\cdot u_i=2k_i r+k_i^2-|u_i|^2\qquad(i=1,2).
+\]
+Because $u_1,u_2$ are linearly independent, a fixed pair $(k_1,k_2)$ forces $x=v+wr$ for fixed vectors $v,w$. The equation $|x|^2=r^2$ is a polynomial of degree at most two in $r$. It cannot vanish identically: that would imply $v=0$, $|w|=1$, and $k_i^2=|u_i|^2$, while the linear equations give $w\cdot u_i=-k_i$. Equality in Cauchy--Schwarz would then force both $u_i$ parallel to $w$, a contradiction. Thus there are at most two possible points for each $(k_1,k_2)$, and the entire clique has size at most
+\[
+ 2(2d_1+1)(2d_2+1).
+\]
+The bound depends on the chosen distances and is not a uniform bound on clique size. Cliques with fewer than three points are already finite. This reconstructs the Anning--Erd\H{o}s obstruction recorded on the source page without importing its proof.
+
+\section*{An infinite disjoint union of four-cliques}
+The four points
+\[
+ (-3,0),\quad(3,0),\quad(0,4),\quad(0,-4)
+\]
+have distances $5,6,8$, hence form a $K_4$. No three are collinear. If they lay on a circle, symmetry of each opposite pair would force its centre to be $(0,0)$, but the two radii would be $3$ and $4$, which is impossible.
+
+Inductively place rigid copies of this configuration, avoiding all cross-copy integer distances and all mixed collinear triples and concyclic quadruples. The details of simultaneous avoidance matter. At a finite stage choose an orientation such that no difference between two new vertices is parallel to any difference between two old vertices; only finitely many orientations are excluded. Vary the translation $t\in\mathbb R^2$.
+Each mixed collinearity condition excludes a line in the translation plane. A concyclicity condition involving three old and one new vertex, or three new and one old vertex, excludes a circle. For two of each, write the old pair as $0,u$ and the new pair as $t,t+v$, absorbing fixed translations. The four-point circle determinant, up to sign, is
+\[
+ \det\begin{pmatrix}
+ u_1&u_2&|u|^2\\
+ t_1&t_2&|t|^2\\
+ v_1&v_2&2t\cdot v+|v|^2
+ \end{pmatrix}.
+\]
+It is a nonzero polynomial: at $t=sv$ its quadratic coefficient is $\det(u,v)|v|^2\ne0$. Thus its zero set has empty interior. Coincident old and new vertices exclude finitely many translations. Finally, each forbidden integer distance from an old to a new vertex excludes one circle, giving only countably many further closed sets with empty interior.
+The Baire category theorem says these sets cannot fill the translation plane, or any prescribed nonempty open region in it. Choose an allowed translation and continue. At each stage all configurations of mixed triples and quadruples, including two-new/two-old ones, have been covered.
+The countable union has the required general position and its integer-distance graph is exactly a disjoint union of $K_4$'s, so $\chi=\omega=4$.
+
+\section*{Remaining gap and provenance}
+These results do not bound finite clique sizes uniformly or construct graphs of unbounded finite chromatic number. The earlier GPT-Pro-5.2 draft's generic-triangle placement omitted mixed constraints; the simultaneous polynomial-avoidance argument above supplies them and gives a four-clique example. Baire's theorem is the only external existence theorem used in that construction. No resolution of the main question is claimed.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

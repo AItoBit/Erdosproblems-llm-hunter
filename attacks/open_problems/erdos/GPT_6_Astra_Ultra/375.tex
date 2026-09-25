@@ -1,0 +1,41 @@
+\section*{Erd\H{o}s Problem 375: matching obstructions in a composite interval}
+\subsection*{Statement and outcome}
+Grimm's conjecture asks whether a block $n+1,\ldots,n+k$ of composite integers admits distinct primes $p_i\mid n+i$. We prove the conjecture for $k\le4$, and identify the precise form of an inclusion-minimal obstruction for general $k$. The arbitrary-length assertion remains unresolved. Source: \url{https://www.erdosproblems.com/375}. This extends the older local proof for $k\le3$; its unverified computation claims are not retained.
+
+\subsection*{The matching criterion and its minimal obstructions}
+For each index $i$ let $P_i$ be the finite set of primes dividing $n+i$. Distinct representatives exist exactly when
+\[
+ \left|\bigcup_{i\in I}P_i\right|\ge |I|\quad\hbox{for every set of indices }I. \tag{1}
+\]
+Here is the needed matching theorem. Take a matching with the largest possible number of indices. If an index remains unmatched, explore alternating paths starting there: from an index traverse any incidence edge to a prime, and from a matched prime traverse its matching edge back to an index. A reachable unmatched prime would augment the matching, impossible. Thus all reachable primes are matched to distinct reachable indices other than the starting index. Conversely every other reachable index is obtained this way. All neighbours of reachable indices have been explored, so their union has one fewer element than the set of reachable indices, contradicting (1). The reverse implication of (1) is immediate for any matching.
+
+If (1) fails, choose an inclusion-minimal failing set $I$, of size $r$. A singleton cannot fail. Removing any one index gives at least $r-1$ primes, while the full union has at most $r-1$; hence the full union has exactly $r-1$ primes. None occurs in just one of these $r$ integers, since removing that integer would leave at most $r-2$ primes. Every prime therefore divides two different block entries, so divides their nonzero difference and is at most $k-1$.
+
+Thus every minimal obstruction consists entirely of $(k-1)$-smooth integers and uses exactly one fewer prime than integers, each prime occurring at least twice. In particular, any entry having a prime factor at least $k$ lies in no such obstruction.
+
+\subsection*{Why four consecutive composites always work}
+Suppose $k\le4$ and a minimal obstruction exists. Its primes are in $\{2,3\}$, so $r\le3$. If $r=2$, both integers are powers of one prime. Distinct composite powers of $2$ differ by at least $4$; distinct composite powers of any odd prime differ by still more. They cannot both occur in an interval of diameter at most $3$.
+
+It remains that $k=4,r=3$, with both $2$ and $3$ occurring in at least two of the selected integers. The two multiples of $3$ must be the first and last entries, at distance $3$. The even entries are either positions $1,3$ or positions $2,4$. The three selected entries must be the union of these two pairs of positions.
+
+In the first case write the four entries as $N,N+1,N+2,N+3$ with $N$ even. The selected entries are $N,N+2,N+3$. Their prime union is $\{2,3\}$, so
+\[
+ N+2=2^a,\quad N+3=3^b,\qquad a,b\ge2.
+\]
+If $a=2$ the equation $3^b=5$ is impossible. Otherwise reducing $3^b-2^a=1$ modulo $8$ shows that $b$ is even. Therefore
+\[
+ (3^{b/2}-1)(3^{b/2}+1)=2^a.
+\]
+The two even powers of $2$ differ by $2$, so are $2$ and $4$. This forces $b=2,a=3,N=6$, but the omitted entry $N+1=7$ is prime, contrary to the hypothesis.
+
+In the second case $N$ is odd, and the selected entries are $N,N+1,N+3$. Now $N=3^b,N+1=2^a$ with $a,b\ge2$. Reduction of $2^a-3^b=1$ modulo $3$ makes $a$ even. The two odd factors
+\[
+ (2^{a/2}-1)(2^{a/2}+1)=3^b
+\]
+are coprime, so one must be $1$. This gives $a=2,b=1$, contradicting compositeness. Both cases are excluded. Consequently (1) holds and the required primes exist for $k\le4$.
+
+\subsection*{A further usable certificate and the gap}
+For arbitrary $k$, one can remove every entry having a prime factor at least $k$, assigning such a factor immediately: it divides no other entry in the original block. Matching the remaining entries is sufficient, and the minimal-obstruction argument shows it is also the only possible difficulty. All their prime factors are below $k$.
+
+Counting the distinct primes in the full product alone is insufficient: (1) must hold for every subcollection. For longer blocks, several small primes can be distributed across a much larger smooth subcollection, and the two-power arguments above no longer exclude every obstruction. The deep logarithmic-range theorems recorded on the problem page are not reconstructed here, and no claim of a new range or a general resolution is made.
+\textbf{Completion rate estimate: 35\%.}

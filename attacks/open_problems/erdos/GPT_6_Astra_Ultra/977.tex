@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 977: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and explicit external input}
+Let $P(m)$ denote the largest prime factor of $m$. We prove
+\[
+ \frac{P(2^n-1)}n\longrightarrow\infty.
+\]
+The deep input is Stewart's Theorem 1.2, \emph{On divisors of Lucas and Lehmer numbers}, Acta Mathematica 211 (2013), \url{https://doi.org/10.1007/s11511-013-0105-y}. In the specialization needed here, there is $p_0$ such that for every prime $p>p_0$ and integer $n\ge2$,
+\[
+ v_p(2^n-1)<p\exp\!\left(-\frac{\log p}{52\log\log p}\right)\log2+v_p(n). \tag{1}
+\]
+We assume this precise $p$-adic logarithm estimate, rather than the paper's final largest-prime-factor theorem. We reconstruct the remaining argument with a slightly weaker numerical constant, which suffices for the question.
+
+\section*{Cyclotomic size}
+Let $\Phi_n$ be the $n$th cyclotomic polynomial. The factorization of $2^n-1$ and M\"obius inversion give
+\[
+ \log\Phi_n(2)=\varphi(n)\log2+
+ \sum_{d\mid n}\mu(n/d)\log(1-2^{-d}).
+\]
+The absolute value of the error is at most the finite absolute constant $C_0=\sum_{d\ge1}|\log(1-2^{-d})|$. An elementary lower bound for the totient is enough:
+\[
+ \frac n{\varphi(n)}
+ =\prod_{p\mid n}(1+1/p)\prod_{p\mid n}(1-1/p^2)^{-1}
+ \le\zeta(2)\sum_{d\mid n}\frac1d
+ <2(1+\log n).
+\]
+Consequently, for an absolute $c>0$ and all sufficiently large $n$,
+\[
+ \log\Phi_n(2)\ge c\frac n{\log n}. \tag{2}
+\]
+
+\section*{Which primes divide the cyclotomic factor?}
+For an odd prime $p$, put $d=\operatorname{ord}_p(2)$ and $A=v_p(2^d-1)$. The elementary lifting identity gives
+\[
+ v_p(2^j-1)=0\ (d\nmid j),\qquad
+ v_p(2^{du}-1)=A+v_p(u).
+\]
+M\"obius inversion therefore yields
+\[
+ v_p(\Phi_n(2))=
+ \begin{cases}
+ A,&n=d,\\
+ 1,&n=dp^a\text{ for some }a\ge1,\\
+ 0,&\text{otherwise}.
+ \end{cases} \tag{3}
+\]
+For clarity, when $d\mid n$, write $n=dm$; the divisors of $n$ divisible by $d$ are exactly $du$ with $u\mid m$. Thus the valuation is $\sum_{u\mid m}\mu(m/u)(A+v_p(u))$. For $m>1$ the constant part cancels, and the remaining divisor sum is one precisely for a positive power of $p$, proving (3).
+
+In the second case, $d\mid p-1$, so every prime factor of $d$ is smaller than $p$. Hence this exceptional $p$ is the largest prime factor of $n$ and occurs in $\Phi_n(2)$ only once. Every other prime divisor satisfies $d=n$, and consequently $p\equiv1\pmod n$, $p\ge n+1$ and $p\nmid n$. Equation (2) also shows that these latter primes must exist for large $n$, since the exceptional factor contributes at most $\log n$ to the logarithm.
+
+\section*{Balancing the valuations}
+Put $P=P(\Phi_n(2))$. Suppose, seeking a contradiction for arbitrarily large $n$, that
+\[
+ P\le n\exp\!\left(\frac{\log n}{106\log\log n}\right). \tag{4}
+\]
+There are at most $P/n$ possible primes $p\le P$ congruent to one modulo $n$. For each of them, (1) applies once $n>p_0$, and $v_p(n)=0$. Since $n\le p\le P$, their contributions satisfy
+\[
+ v_p(\Phi_n(2))\log p
+ \le P(\log P)(\log2)
+ \exp\!\left(-\frac{\log n}{52\log\log P}\right).
+\]
+Including the possible exceptional prime from (3), we obtain
+\[
+ \log\Phi_n(2)
+ \le\log n+\frac{P^2}n(\log P)(\log2)
+ \exp\!\left(-\frac{\log n}{52\log\log P}\right). \tag{5}
+\]
+Under (4), $\log\log P=(1+o(1))\log\log n$. Since $2/106=1/53<1/52$, a fixed $\eta>0$ exists such that the second term in (5) is at most
+\[
+ n(\log P)(\log2)\exp\!\left(-\eta\frac{\log n}{\log\log n}\right)
+ =o(n/\log n).
+\]
+The first term is also $o(n/\log n)$, contradicting (2). We have proved, for all sufficiently large $n$,
+\[
+ P(2^n-1)\ge P(\Phi_n(2))>
+ n\exp\!\left(\frac{\log n}{106\log\log n}\right).
+\]
+The exponential factor tends to infinity, giving the desired limit.
+
+\section*{Assessment}
+The full claimed limit is established relative to the stated external valuation theorem. The cyclotomic lower bound, exceptional-prime classification, prime count and final comparison are proved here. Stewart's sharper constant $104$ is not claimed by this reconstruction, and no assertion about the separate factorial variant is needed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

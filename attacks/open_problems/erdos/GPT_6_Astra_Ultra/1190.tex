@@ -1,0 +1,80 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1190: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and the asymptotic answer}
+Write $L(x)=\exp(\sqrt{\log x\log\log x})$ for sufficiently large $x$. The answer is
+\[
+ \epsilon_m=L(m)^{-1+o(1)}.
+\tag{1}
+\]
+We interpret $\epsilon_m$ as a supremum over finite admissible families: a maximum is not automatically attained. For example, when $m=1$, the pairwise disjoint classes $2^{j-1}\pmod{2^j}$, $1\le j\le J$, have reciprocal sum $1-2^{-J}$, so the supremum is one although every individual such packing has sum strictly less than one. This distinction has no effect on the large-$m$ estimate (1).
+
+The sharp counting input is the resolution of Problem \#202, with the de la Bret\`eche--Ford--Vandehey construction for its lower bound. The complete spread-theoretic reduction is written in \url{https://www.ulam.ai/research/erdos1190.pdf}; the companion attempt for \#202 reconstructs its counting proof. Here we declare that counting theorem as an external input and prove both transfers to the reciprocal sum, including the uniform tail estimate and removal of small moduli.
+
+\section*{The exact input and admissibility}
+Let $F(x)$ be the largest possible number of distinct moduli $q\le x$ whose residue classes can be chosen pairwise disjoint. The imported theorem says
+\[
+ F(x)=xL(x)^{-1+o(1)}.\tag{2}
+\]
+Equivalently, for every fixed $\eta>0$ and all sufficiently large $x$,
+\[
+ xL(x)^{-1-\eta}\le F(x)\le xL(x)^{-1+\eta}.
+\tag{3}
+\]
+Pairwise disjointness is inherited by every subfamily, so (3) applies to the number of moduli below any cutoff within a given packing. For context, the Chinese remainder theorem says that classes $a\pmod q$ and $b\pmod r$ are disjoint exactly when $a\not\equiv b\pmod{\gcd(q,r)}$.
+
+Every finite admissible reciprocal sum is at most one. Indeed, in one period equal to the least common multiple of its moduli, the occupied residue classes are disjoint and occupy exactly that reciprocal fraction of the period. If the moduli are distinct and all greater than one, equality is impossible. Otherwise their classes would cover every nonnegative integer, giving
+\[
+ \sum_i\frac{z^{a_i}}{1-z^{q_i}}=\frac1{1-z},\qquad0\le a_i<q_i.
+\]
+Let $Q$ be the unique largest modulus, multiply by $1-z^Q$, and approach a primitive $Q$-th root of unity. Every term except the $Q$ term tends to zero, as does the right side, but that term tends to a nonzero root of unity. This contradiction proves strictness for finite families; it does not incorrectly infer strictness for their supremum.
+
+\section*{Upper bound by summation over the tail}
+Fix $0<\eta<1$ and put $a=1-\eta$. For a finite admissible family of moduli greater than $m$, let $A(t)$ count its members at most $t$, and let $X$ be its largest modulus. Partial summation and (3) give, for sufficiently large $m$,
+\[
+ \sum_q\frac1q
+ =\frac{A(X)}X+\int_m^X\frac{A(t)}{t^2}\,dt
+ \le L(m)^{-a}+\int_m^\infty\frac{dt}{tL(t)^a}.
+\tag{4}
+\]
+The first term uses monotonicity of $L$ and $A(X)\le F(X)$.
+
+Put $M=\log m$ and $\Phi(u)=\sqrt{u\log u}$. On $2^jM\le u\le2^{j+1}M$, one has $\Phi(u)\ge2^{j/2}\Phi(M)$. Thus the integral in (4) is at most
+\[
+ M\sum_{j\ge0}2^j\exp(-a2^{j/2}\Phi(M))
+ \le C_a M e^{-a\Phi(M)}.
+\tag{5}
+\]
+For the last inequality, factor out the $j=0$ exponential; the remaining series is uniformly bounded for large $M$, since $2^{j/2}$ grows faster than $j$. Since $\log M=o(\Phi(M))$, equations (4)--(5), uniformly over all finite families, yield
+\[
+ \epsilon_m\le L(m)^{-1+\eta+o(1)}.
+\]
+
+\section*{Lower bound: keep enough moduli above $m$}
+Set $x=mL(m)^2$. Then
+\[
+ \log x=\log m+2\sqrt{\log m\log\log m},
+ \qquad L(x)=L(m)^{1+o(1)}.\tag{6}
+\]
+By (2), choose an admissible family of $F(x)$ moduli at most $x$. It satisfies
+\[
+ F(x)=xL(x)^{-1+o(1)}=mL(m)^{1+o(1)},
+\]
+which is larger than $2m$ eventually. Remove all moduli at most $m$; at most $m$ are removed. Every remaining modulus is at most $x$, so its reciprocal is at least $1/x$. The surviving packing therefore has reciprocal sum at least
+\[
+ \frac{F(x)-m}{x}\ge\frac{F(x)}{2x}
+ =L(x)^{-1+o(1)}=L(m)^{-1+o(1)}.
+\]
+This is a genuine finite admissible family for every large $m$, not an infinite packing limit. Combining it with the upper bound for arbitrary $\eta>0$ proves (1).
+
+\section*{Assessment}
+Both directions of the counting-to-reciprocal transfer are complete. The sharp theorem (2), including its spread-theoretic upper bound and BFV lower construction, is the declared external dependency. The treatment of supremum, strict finite density, and the uniform infinite tail avoids assuming more than that theorem provides.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

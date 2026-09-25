@@ -1,0 +1,112 @@
+\section*{Erd\H{o}s Problem 927}
+
+\paragraph{Statement and result.}
+Let \(g(N)\) be the maximum number of different orders of maximal cliques in a graph on \(N\) vertices. Is
+\(g(N)=N-\log_2N-\log_*N+O(1)\)? Here ``clique'' must mean \emph{maximal} complete subgraph, as in the original papers; counting arbitrary complete subgraphs would instead give \(g(N)=N\). Spencer disproved the proposed formula by proving
+\[
+ g(N)=N-\log_2N+O(1).
+\]
+We reconstruct his construction with a flexible final block, obtaining the slightly unoptimized bounds
+\[
+ N-\log_2N-5<g(N)\leq N-\lfloor\log_2N\rfloor
+ \quad\text{for all sufficiently large }N. \tag{1}
+\]
+All logarithms below have base two.
+
+\paragraph{Upper bound.}
+In any graph realizing \(g=g(N)\) distinct maximal-clique orders, a largest clique \(C\) has at least \(g\) vertices. A maximal clique \(K\) is determined by \(S=K\setminus C\): its intersection with \(C\) consists of every vertex of \(C\) adjacent to all of \(S\). Indeed, any omitted such vertex could be added to \(K\). Thus there are at most \(2^{N-|C|}\leq2^{N-g}\) maximal cliques, so
+\(g\leq2^{N-g}\). Put \(l=\lfloor\log N\rfloor\). For \(N\geq2\), if \(g\geq N-l+1\), then
+\[
+ g\geq2^l-l+1>2^{l-1}\geq2^{N-g},
+\]
+a contradiction. The strict middle inequality holds for every integer \(l\geq1\). This proves the upper bound.
+
+\paragraph{Small auxiliary parameters.}
+Fix an integer \(r\geq32\). Put \(r_0=r\), and recursively let \(r_i\geq2\) be the least integer for which
+\[
+ 2^{r_i}+r_i-2\geq r_{i-1},
+\]
+stopping at \(r_s=2\). Set
+\[
+ A_0(r)=1+\sum_{i=1}^s(2^{r_i}+r_i-1),\qquad
+ l=\lfloor r/2\rfloor.
+\]
+The elementary bounds needed below are
+\[
+ 1+\sum r_i\leq r-l,\qquad A_0(r)\leq4r,
+ \qquad 5r\leq2^l. \tag{2}
+\]
+Here are details to avoid relying on asymptotic notation for these choices. If \(m=\lceil\log r\rceil\), then \(r_1\leq m\), \(s\leq m-1\), and \(\sum r_i\leq2m\). The last assertion follows inductively from the fact that the next term after an integer \(x\geq6\) is at most \(\lfloor x/2\rfloor\), with \(x=2,3,4,5\) checked directly. Minimality of \(r_i\) gives
+\(2^{r_i}+r_i-1<2r_{i-1}-r_i+5\), whence
+\[
+ A_0(r)<2r+\sum r_i+5s-3\leq2r+7m-8\leq4r.
+\]
+Finally \(2m+1\leq r-l\) and \(5r\leq2^l\) for \(r\geq32\), by their values at the first dyadic intervals and monotonicity on subsequent intervals. These prove (2).
+
+\paragraph{Graph construction.}
+Choose integers \(A,w\) satisfying
+\[
+ A_0(r)\leq A\leq5r,\qquad 1\leq w\leq2^{r-1}.
+\]
+Let \(d_i=2^{i-1}\) for \(1\leq i<r\), and \(d_r=w\), and put \(T=\sum d_i\). Take disjoint core blocks \(C_i\) of size \(d_i+1\), another core block \(C_*\) of size \(A\), selectors \(y_1,\ldots,y_r,y_*\), and a vertex \(z\). Make all core vertices mutually adjacent and all selectors mutually adjacent. A vertex of \(C_i\) is adjacent to every selector except \(y_i\). No vertex of \(C_*\) is adjacent to \(y_*\).
+
+By (2), among \(y_{l+1},\ldots,y_r\) we can label distinct selectors
+\(w_{ij}\), \(1\leq i\leq s,1\leq j\leq r_i\), and \(w_*\).
+Partition \(A_0(r)\) vertices of \(C_*\) into blocks \(V_{ij}\) of size \(2^{j-1}+1\) and a singleton \(\{v_*\}\). Call these the original vertices of \(C_*\); the other \(A-A_0(r)\) vertices are extra vertices.
+
+Every selector other than these labelled \(w\)'s and \(y_*\) is adjacent to all of \(C_*\). Among labelled selectors and original vertices, add exactly the edges from \(w_{ij}\) to \(V_{ij'}\) with \(j'\ne j\), and the edge \(w_*v_*\). Every extra vertex is adjacent to all \(y_i\), including the labelled selectors. Finally, make \(z\) adjacent exactly to the labelled selectors and the original vertices of \(C_*\). This explicitly includes the triangle \(z,w_*,v_*\). No other edges are added.
+
+There are
+\[
+ B=T+r+A\quad\text{core vertices},\qquad
+ N=T+2r+A+2\quad\text{vertices in total}. \tag{3}
+\]
+We next exhibit maximal cliques of every order from 3 through \(B\).
+
+\paragraph{Middle and large orders.}
+For any subset \(S\subseteq\{1,\ldots,r\}\), take
+\[
+ \{y_*\}\cup\{y_i:i\in S\}\cup\bigcup_{i\notin S}C_i.
+\]
+This is maximal: the opposite choice in every pair \((y_i,C_i)\) is blocked, and \(y_*\) blocks both \(C_*\) and \(z\). Its order is \(T+r+1-\sum_{i\in S}d_i\). The first \(r-1\) weights represent all integers from 0 to \(2^{r-1}-1\); adjoining \(w\leq2^{r-1}\) gives all subset sums from 0 to \(T\). Thus these cliques have every order in \([r+1,B-A+1]\).
+
+For \(S\subseteq\{1,\ldots,l\}\), instead take
+\[
+ C_*\cup\{y_i:i\in S\}\cup\bigcup_{i\notin S}C_i.
+\]
+All selected selectors are unlabelled and so adjacent to \(C_*\). The opposite choices are again blocked, \(y_*\) is blocked by \(C_*\), and \(z\) is blocked by either \(y_1\) or \(C_1\). These maximal cliques have orders \(B-\sum_{i\in S}2^{i-1}\). Since \(A\leq2^l\), they include every order in \([B-A+1,B]\).
+
+\paragraph{Small orders.}
+For a fixed \(i\), choose a nonempty proper subset \(S\subset\{1,\ldots,r_i\}\) and take
+\[
+ \{z\}\cup\{w_{ij}:j\in S\}\cup\bigcup_{j\notin S}V_{ij}.
+\]
+It contains both a labelled selector and an original core vertex from group \(i\), so any further neighbor of \(z\) outside this group is blocked. Within the group every unchosen selector is blocked by its own \(V\)-block and every omitted \(V\)-block by its own selector. It is therefore maximal. Its order is
+\[
+ 2^{r_i}+r_i-\sum_{j\in S}2^{j-1}.
+\]
+Consequently every order in \([r_i+2,2^{r_i}+r_i-1]\) occurs. The recursion defining \(r_i\) makes these intervals overlap or meet consecutively, reaching from 4 through at least \(r+1\). The explicitly specified triangle \(z,w_*,v_*\) is maximal and supplies order 3. We have proved
+\[
+ g(N)\geq B-2=N-r-4. \tag{4}
+\]
+
+\paragraph{Fitting every sufficiently large number of vertices.}
+Given \(N\), let \(q=\lceil\log N\rceil\), with \(q\geq33\). If
+\[
+ N\geq2^{q-1}+2q+A_0(q)+2,
+\]
+take \(r=q\), \(A=A_0(r)\), and
+\(w=N-2^{r-1}-2r-A-1\). These choices satisfy \(1\leq w\leq2^{r-1}\), since \(N\leq2^q\), and (3) holds.
+
+Otherwise take \(r=q-1\). In this case \(N>2^r\), and
+\(w_0=N-2^{r-1}-2r-A_0(r)-1\) is positive. If \(w_0\leq2^{r-1}\), take \(w=w_0,A=A_0(r)\). If \(w_0>2^{r-1}\), take
+\[
+ w=2^{r-1},\qquad A=N-2^r-2r-1.
+\]
+Then \(A>A_0(r)\), while the defining upper bound on \(N\) gives
+\(A<A_0(r+1)+3\leq4r+7\leq5r\). Thus every case meets the construction's requirements and has exactly \(N\) vertices. Since \(r\leq\lceil\log N\rceil<\log N+1\), (4) proves the lower bound in (1).
+
+\paragraph{Scope and attribution.}
+This is an exposition adapting J. H. Spencer, \emph{On cliques in graphs}, Israel Journal of Mathematics 9 (1971), 419--421, \url{https://doi.org/10.1007/BF02771457}. The original paper proves a slightly sharper constant. The unbounded \(\log_*N\) term in the proposed asymptotic is therefore false. Source statement: \url{https://www.erdosproblems.com/927}, checked 24 September 2026. The proof above includes the construction and its interpolation to all sufficiently large \(N\); no new result or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

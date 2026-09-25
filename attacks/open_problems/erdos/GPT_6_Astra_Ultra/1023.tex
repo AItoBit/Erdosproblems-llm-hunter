@@ -1,0 +1,72 @@
+\section*{Erd\H{o}s Problem 1023}
+
+\paragraph{Statement and result.}
+Let \(F(n)\) be the largest size of a family \(\mathcal F\subseteq2^{[n]}\) in which no member is the union of other members. The union may involve any number of other members, rather than just two. We prove
+\[
+ F(n)=(1+o(1))\binom n{\lfloor n/2\rfloor}
+ \sim\sqrt{\frac2\pi}\,\frac{2^n}{\sqrt n}.
+\]
+Thus the constant asked for is \(\sqrt{2/\pi}\). The proof uses the stronger arbitrary-union hypothesis directly through a witness element and a random maximal chain.
+
+\paragraph{A witness in every nonempty member.}
+For every nonempty \(A\in\mathcal F\), choose
+\[
+ x_A\in A\setminus\bigcup\{B\in\mathcal F:B\subsetneq A\}. \tag{1}
+\]
+Such an element exists: otherwise \(A\) would be exactly the union of its proper submembers from the family, contrary to the assumption. In particular,
+\[
+ B\in\mathcal F,\quad B\subsetneq A
+ \quad\Longrightarrow\quad x_A\notin B. \tag{2}
+\]
+If the empty set belongs to the family under the convention that only nonempty unions are forbidden, remove it temporarily. This changes the size by at most one and does not affect the asymptotic result.
+
+\paragraph{A chain estimate in a central band.}
+Let \(1\leq L<U\leq n\), and put
+\(\mathcal F_0=\{A\in\mathcal F:L\leq|A|\leq U\}\).
+Choose a uniformly random permutation of \([n]\), and let \(C_j\) be the set of its first \(j\) entries, so \(C_0\subset\cdots\subset C_n\) is a random maximal chain. Let \(K\) be the number of members of \(\mathcal F_0\) on this chain. Then
+\[
+ \mathbb E K=\sum_{A\in\mathcal F_0}\binom n{|A|}^{-1}. \tag{3}
+\]
+For a fixed \(A\in\mathcal F_0\) of size \(a\), conditional on \(C_a=A\), the set \(C_L\) is a uniform \(L\)-subset of \(A\). If the chain has another member \(B\in\mathcal F_0\) strictly below \(A\), then \(C_L\subseteq B\), and (2) forces \(x_A\notin C_L\). Therefore
+\[
+ \Pr(\text{a member of }\mathcal F_0\text{ lies below }A\mid C_a=A)
+ \leq\frac{a-L}{a}\leq\varepsilon:=\frac{U-L}{L}. \tag{4}
+\]
+For a chain with \(K\) hits, exactly \(K-1\) hits have a lower hit when \(K>0\), and none do when \(K=0\). Summing (4) over \(A\) and using (3) gives
+\[
+ \mathbb E K-\Pr(K>0)\leq\varepsilon\mathbb E K.
+\]
+Thus, whenever \(\varepsilon<1\),
+\[
+ \sum_{A\in\mathcal F_0}\binom n{|A|}^{-1}
+ =\mathbb E K\leq\frac1{1-\varepsilon}. \tag{5}
+\]
+Every binomial coefficient is at most \(\binom n{\lfloor n/2\rfloor}\), so
+\[
+ |\mathcal F_0|\leq\frac1{1-\varepsilon}
+                       \binom n{\lfloor n/2\rfloor}. \tag{6}
+\]
+
+\paragraph{Discarding the tails.}
+Take \(w=\lceil\sqrt{n\log n}\rceil\),
+\(L=\lfloor n/2\rfloor-w\), and \(U=\lceil n/2\rceil+w\).
+For sufficiently large \(n\), these are valid ranks and
+\(\varepsilon=O(\sqrt{\log n/n})=o(1)\).
+There are at most
+\[
+ 2^n\,2\exp(-2w^2/n)\leq 2^{n+1}/n^2 \tag{7}
+\]
+subsets outside the band. To justify this usual binomial tail estimate, if \(Z\) is the sum of \(n\) independent fair bits, then
+\(\mathbb E e^{s(Z-n/2)}=(\cosh(s/2))^n\leq e^{ns^2/8}\).
+Markov's inequality with \(s=4w/n\), and the corresponding negative value, yields (7).
+
+Stirling's formula gives
+\(\binom n{\lfloor n/2\rfloor}\sim\sqrt{2/\pi}\,2^n/\sqrt n\), so (7) is negligible compared with the middle layer. Combining it with (6) proves the required asymptotic upper bound.
+
+\paragraph{The matching lower bound.}
+Take all subsets of size \(\lfloor n/2\rfloor\). If another member is contained in one of them, equality of cardinalities would force it to be the same member. Consequently a union of other members cannot equal a given member: every set in such a union would have to be contained in it. This middle-layer family is admissible and has exactly the required binomial size.
+
+\paragraph{Attribution and scope.}
+The known asymptotic resolution is recorded at \url{https://www.erdosproblems.com/1023}, checked 24 September 2026, including Hunter's deduction from the stronger two-union-free extremal theorem in Problem 447. The proof above instead uses the arbitrary-union condition in this question to obtain (1); that witness condition is not available for a general family forbidding only unions of two members. No improvement to Problem 447 is being asserted. Every combinatorial step is supplied, with Stirling's formula as the standard analytic input. This is an exposition of the known answer, with no novelty or local Lean verification claimed.
+
+\textbf{Completion rate estimate: 100\%.}

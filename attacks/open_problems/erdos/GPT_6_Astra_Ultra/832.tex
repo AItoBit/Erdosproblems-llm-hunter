@@ -1,0 +1,39 @@
+\section*{Erd\H{o}s Problem 832: edge counts versus hypergraph chromatic number}
+\subsection*{1. Statement and scope of the disproof}
+The proposed assertion is that, for every fixed $r\ge3$ and all sufficiently large $k$, every $r$-uniform hypergraph with chromatic number $k$ has at least $\binom{(r-1)(k-1)+1}{r}$ edges, with the specified complete hypergraph as the only equality case. Alon disproved this. We reconstruct a disproof with the single fixed uniformity $r=100$ and arbitrarily large $k$, using a precisely stated Tur\'an covering estimate. This is enough to refute the universal assertion; it makes no claim to settle the separate large-$k$ case $r=3$.
+\subsection*{2. Explicit external input}
+Write $T(N,s,r)$ for the minimum number of $r$-sets on an $N$-element ground set needed so that every $s$-set contains one of them. We use the Frankl--R\"odl covering estimate quoted in the proof of Alon's Proposition 1:
+\[
+ T(N,r+1,r)\le q_r\binom Nr,\qquad
+ q_r=\frac{\log r}{\log r-1}\frac1{\lfloor r/\log r\rfloor}.       \tag{1}
+\]
+Only $r=100$ and $N\ge101$ are used, so small-parameter conventions in this estimate are irrelevant. This combinatorial covering theorem is the external input, not a theorem already asserting the requested chromatic counterexample.
+\subsection*{3. From covers to arbitrarily high chromatic number}
+Take $N=r(k-1)+1$ and let $E$ be the covering family supplied by (1). In a colouring of the resulting hypergraph with $k-1$ colours, some colour class has at least $r+1$ vertices, by the pigeonhole principle. That class contains an edge of $E$, and the colouring is improper. Hence $\chi(H)\ge k$ while
+\[
+ |E(H)|\le q_r\binom{r(k-1)+1}{r}.                         \tag{2}
+\]
+There is no issue in obtaining chromatic number exactly $k$. Delete vertices one at a time until the chromatic number first reaches $k$. Deleting a vertex reduces the chromatic number by at most one, because a colouring of the remaining hypergraph extends by assigning the deleted vertex a new colour. The resulting induced subhypergraph has chromatic number $k$ and no more edges than (2).
+For fixed $r$, as $k\to\infty$,
+\[
+ \frac{\binom{r(k-1)+1}{r}}
+ {\binom{(r-1)(k-1)+1}{r}}
+ \longrightarrow\left(\frac r{r-1}\right)^r.              \tag{3}
+\]
+At $r=100$, the inequalities $4<\log100<5$ imply
+\[
+ q_{100}<\frac{4}{3}\frac1{20}=\frac1{15}.
+\]
+Also $(100/99)^{100}<\exp(100/99)<4$. Thus the limiting ratio between the bound (2) and the conjectured lower bound is less than $4/15<1$. For every sufficiently large $k$, (2) is strictly smaller than the proposed minimum. These are counterexamples at one fixed uniformity and arbitrarily large chromatic number, so the ``$k$ sufficiently large in terms of $r$'' qualification does not rescue the conjecture.
+\subsection*{4. A matching-order elementary lower bound}
+The failure concerns the leading constant, rather than the power $k^r$. Here is Alon's recolouring argument with its parameters proved explicitly. For $k\ge r+1$, put
+\[
+ b=\left\lfloor\frac{k-1}{r}\right\rfloor,\qquad a=k-1-b.
+\]
+If an $r$-uniform hypergraph has at most $(r-1)b a^{r-1}$ edges, colour its vertices independently with $a$ colours. Each edge is monochromatic with probability $a^{1-r}$, so some colouring has at most $(r-1)b$ monochromatic edges. Choose one vertex from each such edge, producing a set $S$ of at most $(r-1)b$ vertices. Recolour $S$ using $b$ new colours, each used at most $r-1$ times.
+No edge entirely in $S$ can be monochromatic, because no new colour occurs $r$ times. An edge meeting both $S$ and its complement uses old and new colours. An edge disjoint from $S$ was not originally monochromatic, by the choice of $S$. Thus this is a proper $(a+b)=(k-1)$-colouring.
+Consequently chromatic number at least $k$ forces more than $(r-1)b a^{r-1}=\Omega_r(k^r)$ edges. The complete $r$-graph on $(r-1)(k-1)+1$ vertices gives the opposite $O_r(k^r)$ bound. This verifies the correct order of magnitude alongside the counterexample.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/832}; N. Alon, \emph{Hypergraphs with high chromatic number}, Graphs Combin. 1 (1985), 387--389, Propositions 1--2, \url{https://web.math.princeton.edu/~nalon/PDFS/Publications/Hypergraphs%20with%20high%20chromatic%20number.pdf}. Formula (1) is the Frankl--R\"odl theorem explicitly quoted on printed page 388.
+\textbf{SOLVED as a disproof of the universal assertion, relative to (1).} The fixed-uniformity counterexamples, exact-chromatic-number reduction and elementary order-of-growth lower bound are fully derived. The covering theorem's proof and the separate $r=3$ problem are not claimed as contributions of this attempt.
+\textbf{Completion rate estimate: 100\%.}

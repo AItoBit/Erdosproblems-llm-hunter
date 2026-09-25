@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 244: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For fixed real $C>1$, put $S_C=\{p+\lfloor C^j\rfloor:p\text{ prime},\ j\ge0\}$. Must $S_C$ have positive lower asymptotic density? We prove a uniform-in-$x$ weaker bound
+\[
+ |S_C\cap[1,x]|\gg_C \frac{x}{\log\log x}, \tag{1}
+\]
+an exact first-moment asymptotic, and the positive-density conclusion when a positive integer power of $C$ is an integer. The assertion for every real base is unresolved here. Source: \url{https://www.erdosproblems.com/244}.
+
+These extend the earlier GPT-5.2 first-moment observations. External inputs are the prime number theorem, the classical Mertens upper product bound, and the following Selberg upper sieve estimate, stated as Lemma 2.3 in Ding's primary paper \url{https://arxiv.org/abs/2503.22700v5}:
+\[
+ \#\{p\le x:p,\ p+d\text{ prime}\}
+ \ll \frac{x}{(\log x)^2}W(d),\qquad
+ W(d)=\prod_{p\mid d}\left(1+\frac1p\right), \tag{2}
+\]
+uniformly for the nonzero integer differences $|d|\le x$ used below and all large $x$. No proof of the sieve input is claimed here. Ding's almost-every-base theorem is context, not used to infer a result at every fixed base.
+
+\section*{Counting representations and identifying the missing estimate}
+Let $A$ be the set of distinct integers $\lfloor C^j\rfloor$. The successive floors are distinct for all sufficiently large $j$, since $(C-1)C^j>1$. Thus
+\[
+ K(x):=|A\cap[1,x]|=\frac{\log x}{\log C}+O_C(1).
+\]
+Let $r_x(n)=\#\{a\in A:n-a\text{ is prime}\}$ for $n\le x$. The first moment is
+\[
+ R(x)=\sum_{n\le x}r_x(n)=\sum_{a\in A,\ a\le x}\pi(x-a)
+ \sim\frac{x}{\log C}. \tag{3}
+\]
+For the upper bound, use $K(x)\pi(x)$. For any fixed $0<\delta<1$, retain only $a\le\delta x$ and bound every summand below by $\pi((1-\delta)x)$. Since $K(\delta x)\sim\log x/\log C$, the lower limit of $R(x)/x$ is at least $(1-\delta)/\log C$. Letting $\delta$ decrease to zero proves (3).
+
+Expanding the second moment, its diagonal contribution is $R(x)$. A pair $a<b$ contributes only prime pairs of difference $b-a$, so (2) gives
+\[
+ E(x):=\sum_{n\le x}r_x(n)^2
+ \le R(x)+O\left(\frac{x}{\log^2x}
+       \sum_{a<b\le x\atop a,b\in A}W(b-a)\right). \tag{4}
+\]
+In particular the concrete condition $\sum_{a<b\le x}W(b-a)=O_C(\log^2x)$ would give $E(x)=O_C(x)$, and Cauchy--Schwarz with (3) would prove positive lower density. This identifies a sufficient arithmetic correlation estimate, rather than assuming independence of the shifts.
+
+\section*{An unconditional weaker conclusion from the sieve}
+For $1\le d\le x$, split the prime divisors in $W(d)$ at $y=\log(3x)$. Mertens' classical bound gives
+\[
+ \prod_{p\le y}(1+1/p)\le\prod_{p\le y}(1-1/p)^{-1}\ll\log y.
+\]
+There are at most $\log d/\log y$ prime factors of $d$ larger than $y$. Their product contribution is at most
+\[
+ \exp\left(\frac{\log d}{y\log y}\right)=O(1).
+\]
+Therefore $W(d)\ll\log\log(3x)$ uniformly. Substituting this and $K(x)=O_C(\log x)$ into (4) gives $E(x)\ll_C x\log\log x$. Finally
+\[
+ |S_C\cap[1,x]|\ge\frac{R(x)^2}{E(x)}\gg_C\frac{x}{\log\log x},
+\]
+which proves (1). This lower bound tends to zero after division by $x$ and does not answer the problem.
+
+\section*{A dense family of bases and the remaining gap}
+Romanoff's theorem is the further explicit external input that $\{p+a^j\}$ has positive lower density for each integer $a\ge2$. If $C^q=a$ is an integer for some positive integer $q$, then $\lfloor C^{qj}\rfloor=a^j$, so $S_C$ contains that set and has positive lower density. Such bases are dense in $(1,\infty)$: for any $t>1$, $(\lfloor t^q\rfloor)^{1/q}\to t$.
+
+Density at a dense family of bases supplies no uniform bound or continuity that passes to its limits. The missing part is a sufficiently strong correlation estimate for every fixed $C$, such as the condition following (4). The trivial upper bound $|S_C\cap[1,x]|\le R(x)$ also shows that, when $C>e$, upper density is at most $1/\log C<1$; positivity would not mean density one. No numerical experiment is used as evidence of a proof.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

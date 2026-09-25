@@ -1,0 +1,94 @@
+\section*{Erd\H{o}s Problem 897: an explicit slowly growing counterexample}
+
+\paragraph{Statement and result.}
+An additive function means a function on positive integers
+with \(f(ab)=f(a)+f(b)\) when \(\gcd(a,b)=1\).
+We construct a positive such function, for \(n\geq2\), satisfying
+\[
+ \frac{f(p^k)}{\log(p^k)}\longrightarrow\infty
+ \quad(p^k\longrightarrow\infty),
+ \qquad
+ \frac{f(n+1)-f(n)}{\log n}\longrightarrow0,
+ \qquad
+ \frac{f(n+1)}{f(n)}\longrightarrow1.
+\]
+Thus both proposed infinite-limsup conclusions are false.
+The construction makes precise the slowly growing weights
+credited to Erd\H{o}s and discussed by Wirsing; no novelty is claimed.
+
+\paragraph{A slowly varying weight on prime powers.}
+For real \(x>0\), let \(L(x)\) be the least nonnegative
+integer \(j\) such that applying the natural logarithm \(j\)
+times to \(x\) gives a number at most one. In particular,
+\(L(x)=0\) for \(x\leq1\), and
+\[
+ L(x)=1+L(\log x)\quad(x>1).
+\]
+Set \(g(x)=\sqrt{L(x)+1}\). This is nondecreasing,
+unbounded, and \(g(x)=O(\sqrt{\log x})\) as \(x\to\infty\).
+For all sufficiently large \(x\), if \(t=\sqrt{\log x}\), then
+\(t\geq\log\log x\), whence
+\[
+ L(t)\geq L(x)-2,\qquad
+ 0\leq g(x)-g(t)
+ \leq\sqrt{L(x)+1}-\sqrt{L(x)-1}\longrightarrow0.
+\tag{1}
+\]
+The jumps of \(L\) occur at the iterated-exponential thresholds
+and these thresholds eventually have gaps greater than one.
+Hence \(L(n+1)-L(n)\in\{0,1\}\) for all sufficiently large
+integers \(n\), and \(g(n+1)-g(n)\to0\).
+
+\paragraph{Definition and a uniform approximation.}
+Put \(f(1)=0\), and, using the exact prime-power factors of \(n\), define
+\[
+ f(n)=\sum_{p^k\parallel n}g(p^k)\log(p^k).
+\]
+Unique prime factorization proves additivity on coprime arguments.
+Also \(f(p^k)/\log(p^k)=g(p^k)\to\infty\).
+We claim
+\[
+ f(n)=g(n)\log n+o(\log n).
+\tag{2}
+\]
+Indeed \(\sum_{p^k\parallel n}\log(p^k)=\log n\).
+Split this sum at \(t=\sqrt{\log n}\).
+The factors exceeding \(t\) contribute at most
+\((g(n)-g(t))\log n=o(\log n)\) to the nonnegative error
+\(g(n)\log n-f(n)\), by (1).
+There are at most \(\lfloor t\rfloor\) remaining factors,
+each with logarithm at most \(\log t\). Their contribution
+is at most \(g(n)t\log t=o(\log n)\).
+For the last estimate one may use
+\(L(n)=1+L(\log n)=O(\log\log n)\), which follows from
+\(L(y)=O(\log y)\). Thus the error bound is uniform over
+all factorizations of \(n\), proving (2).
+
+\paragraph{Consecutive differences and ratios.}
+The main term in (2) satisfies
+\[
+ \frac{g(n+1)\log(n+1)-g(n)\log n}{\log n}
+ =g(n+1)-g(n)
+  +g(n+1)\frac{\log(1+1/n)}{\log n}\longrightarrow0.
+\]
+Subtracting (2) at \(n\) and \(n+1\) gives the asserted
+limit zero for the normalized difference.
+Furthermore \(f(n)/\log n=g(n)+o(1)\to\infty\), so
+\[
+ \frac{f(n+1)}{f(n)}
+ =1+\frac{f(n+1)-f(n)}{f(n)}\longrightarrow1.
+\]
+The ratio assertion concerns \(n\geq2\), where the denominator
+is positive; \(f(1)=0\) causes no limiting difficulty.
+
+\paragraph{Sources and scope.}
+Current statement and historical attribution:
+\url{https://www.erdosproblems.com/897}, checked 24 September 2026.
+All estimates needed for this counterexample were proved above.
+It addresses ordinary additive functions; it does not assert
+the same result under the extra restrictions of strong or
+complete additivity suggested in the historical discussion.
+No local Lean verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

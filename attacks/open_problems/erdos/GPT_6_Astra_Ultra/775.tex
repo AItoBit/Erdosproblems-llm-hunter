@@ -1,0 +1,76 @@
+\section*{Erd\H{o}s Problem \#775: distinct maximal-clique sizes in a triple system}
+\subsection*{Statement and outcome}
+Can a three-uniform hypergraph on \(n\) vertices have maximal complete vertex sets of \(n-O(1)\) distinct sizes? Here a clique means an inclusion-maximal complete vertex set.
+No. We reconstruct the three-uniform case of Gao's proof: for every fixed integer \(C\geq0\), there is a finite bound \(N(C)\) such that a hypergraph with at least \(n-C\) distinct maximal-clique sizes has \(n\leq N(C)\). Attempt status: solved.
+
+\subsection*{Encoding maximal cliques in a tree}
+Choose one maximal clique of each distinct size, and order them as
+\[
+X_0,X_1,\ldots,X_{r-1},\qquad |X_0|>|X_1|>\cdots>|X_{r-1}|.
+\]
+If \(r\geq n-C\), then
+\[
+|X_i|\geq r-i\geq n-C-i. \tag{1}
+\]
+They are an antichain under inclusion: two distinct maximal complete sets cannot contain one another.
+
+We construct a rooted tree on indices, in increasing order. Set
+\(A_0=X_0\), \(B_0=V\setminus X_0\).
+To insert \(i>0\), start at the root \(u=0\). If some existing child \(w\) of \(u\) has
+\[
+X_w\cap B_u=X_i\cap B_u,
+\]
+move to that child and repeat. Children have distinct such labels, so the choice is unique. If no such child exists, attach \(i\) to \(u\) and set
+\[
+A_i=A_u\cap X_i,\qquad B_i=A_u\setminus A_i. \tag{2}
+\]
+The definition uses the \emph{parent's} \(A_u\). All parents precede their children.
+
+Consider any root path \(y_0=0,y_1,\ldots,y_s\), and put
+\(S_j=X_{y_j}\cap B_{y_{j-1}}\) for \(j\geq1\). Direct induction on the routing rule gives
+\[
+V=A_{y_j}\sqcup B_{y_j}\sqcup\cdots\sqcup B_{y_0},\qquad
+X_{y_j}=A_{y_j}\sqcup S_1\sqcup\cdots\sqcup S_j. \tag{3}
+\]
+Indeed, a later clique routed through \(y_i\) has the same trace \(S_i\) on \(B_{y_{i-1}}\); its trace on the remaining parent set is exactly (2). In particular all the \(S_i\) are pairwise disjoint. Each \(S_j\) is nonempty, since otherwise (3) would give \(X_{y_j}\subseteq X_{y_{j-1}}\), violating maximality.
+
+\subsection*{A path cannot have three edges}
+Suppose \(y_0,y_1,y_2,y_3\) is a root path. Let
+\[
+U=X_{y_2}\cup X_{y_3}=A_{y_2}\sqcup S_1\sqcup S_2\sqcup S_3.
+\]
+Inside \(U\), the following four sets are pairwise disjoint:
+\[
+A_{y_2}\setminus A_{y_3},\qquad S_3,\qquad S_2,\qquad S_1. \tag{4}
+\]
+Every triple in \(U\) misses at least one of these four sets. If it misses the first, it lies in \(X_{y_3}\); if it misses the second, it lies in \(X_{y_2}\). If it misses \(S_2\), it lies in \(X_{y_1}\), since \(S_3\subseteq B_{y_2}\subseteq A_{y_1}\) and \(A_{y_2}\subseteq A_{y_1}\). If it misses \(S_1\), it lies in \(X_{y_0}=A_0\), since \(S_2\subseteq B_{y_1}\subseteq A_0\) and \(S_3,A_{y_2}\subseteq A_0\). Thus every triple in \(U\) is a hyperedge.
+
+It follows that \(U\) is complete and contains the distinct maximal cliques \(X_{y_2},X_{y_3}\), a contradiction. Therefore the tree has depth at most two. The argument explicitly uses the disjoint sets (4); no Helly assertion for arbitrary overlapping sets is required.
+
+\subsection*{Degree bounds and a finite recurrence}
+Children of a vertex \(i\) have distinct nonempty labels in \(B_i\). Since \(B_i\cap X_i=\varnothing\), equation (1) gives \(|B_i|\leq C+i\). Consequently
+\[
+\deg_T(0)\leq2^C-1,\qquad
+\deg_T(i)\leq1+(2^{C+i}-1)=2^{C+i}\quad(i>0). \tag{5}
+\]
+Here the extra one is the parent edge.
+
+We now bound the total size of any such depth-two tree without using an external tree theorem. Let \(d\leq2^C\) be the number of root children, with indices \(a_1<\cdots<a_d\). If \(d>0\), then \(a_1=1\), so its degree is at most \(D_1=2^{C+1}\).
+Every vertex preceding child \(a_j\), other than the root, belongs to one of the first \(j-1\) child subtrees. Since the tree has depth two, the size of a child subtree equals its degree. Inductively define
+\[
+D_j=2^{\,C+1+\sum_{i<j}D_i}\qquad(1\leq j\leq2^C),
+\]
+with the empty sum zero. Then
+\[
+a_j\leq1+\sum_{i<j}D_i,\qquad \deg_T(a_j)\leq D_j.
+\]
+Hence
+\[
+r=|V(T)|\leq1+\sum_{j=1}^{2^C}D_j=:M(C).
+\]
+Combined with \(r\geq n-C\), this yields \(n\leq M(C)+C\). The recurrence is enormous but finite for each fixed \(C\), which is exactly what rules out an \(n-O(1)\) spectrum.
+
+\subsection*{Attribution and scope}
+The clique-routing construction and bounded-depth idea are due to J. Gao, \emph{On cliques in hypergraphs}, arXiv:2510.14804v2, Section 2, \url{https://arxiv.org/html/2510.14804v2}. The proof above specializes the argument to triples, supplies a direct finite recurrence, and spells out the disjoint-block argument needed in the depth bound. It does not claim sharp growth for the missing number of sizes. Statement checked at \url{https://www.erdosproblems.com/775} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

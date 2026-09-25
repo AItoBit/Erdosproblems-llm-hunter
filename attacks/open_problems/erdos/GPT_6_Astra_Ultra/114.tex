@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 114: lengths of polynomial lemniscates}
+\subsection*{Statement and scope}
+For a monic degree-$n$ polynomial $p$, is the length of $\{z:|p(z)|=1\}$ maximal at $p(z)=z^n-1$? The assertion for every $n$ is unresolved in this write-up. We prove the maximization within the entire translated binomial family and compute its value, including the constant term in its asymptotic expansion.
+
+This develops the valid length integral from the earlier GPT-5.2 attempt. Current statement: \url{https://www.erdosproblems.com/114}. Tao proves the full assertion for all sufficiently large degrees in \url{https://arxiv.org/abs/2512.12455}; that theorem is context, not an input to the restricted proof below. No novelty is claimed.
+
+\subsection*{The inverse-image length formula}
+Translation of the variable does not affect length, so consider $p(z)=z^n-c$. For $n>1$ put $s=1-1/n\in(0,1)$. On the level curve, $z^n=c+e^{it}$. Away from the finitely many singular parameters, each of the $n$ inverse branches has speed
+\[
+ \frac1n |c+e^{it}|^{1/n-1}.
+\]
+Summing branch lengths gives
+\[
+ L_n(c)=\int_0^{2\pi}|c+e^{it}|^{-s}\,dt. \tag{1}
+\]
+This counts each smooth arc once; the branch singularity when $|c|=1$ is integrable because $s<1$. Individual branches need not return to their initial values after one circuit; summing all branches is what justifies (1).
+
+Rotation of $t$ shows that (1) depends only on $r=|c|$. For $0\le r<1$, the binomial series and termwise integration, justified by absolute uniform convergence for each fixed $r<1$, give
+\[
+ L_n(r)=2\pi\sum_{j=0}^\infty
+ \left(\frac{(s/2)_j}{j!}\right)^2 r^{2j}. \tag{2}
+\]
+Indeed expand $(1+r e^{it})^{-s/2}$ and its conjugate; only equal indices survive integration. All coefficients are positive, so $L_n(r)$ strictly increases on $[0,1)$.
+
+For $r>1$, factoring out $r$ gives
+\[
+ L_n(r)=r^{-s}L_n(1/r)
+ =2\pi\sum_{j=0}^\infty
+ \left(\frac{(s/2)_j}{j!}\right)^2 r^{-s-2j}, \tag{3}
+\]
+which strictly decreases. Continuity at $r=1$ follows by dominated convergence: for $r\in[1/2,3/2]$,
+\[
+ |r+e^{it}|^2=(r-1)^2+4r\cos^2(t/2)\ge2\cos^2(t/2),
+\]
+and $|\cos(t/2)|^{-s}$ is integrable. Equations (2)--(3) prove that the unique maximizing modulus is $|c|=1$. Thus the proposed extremizer is correct throughout the family $(z-a)^n-c$.
+
+\subsection*{Exact length and a justified asymptotic}
+At $c=1$, (1) yields
+\[
+ L_n(1)=2^{1/n}B\left(\frac1{2n},\frac12\right), \tag{4}
+\]
+where $B$ is the beta integral. For $\epsilon\downarrow0$,
+\[
+ B(\epsilon,\tfrac12)-\frac1\epsilon
+ =\int_0^1 t^{\epsilon-1}\big((1-t)^{-1/2}-1\big)\,dt
+ =2\log2+O(\epsilon). \tag{5}
+\]
+The limit integral is $2\log2$, by $u=\sqrt{1-t}$. The error estimate follows from $|t^\epsilon-1|\le\epsilon|\log t|$ and the integrability of
+$t^{-1}|\log t|((1-t)^{-1/2}-1)$ at both endpoints. Combining (4)--(5) with
+$2^{1/n}=1+(\log2)/n+O(n^{-2})$ gives
+\[
+ L_n(1)=2n+4\log2+O(n^{-1}).
+\]
+For $n=1$, every monic linear polynomial has a unit-circle lemniscate of length $2\pi$.
+
+\subsection*{Remaining gap}
+The positive-coefficient comparison uses the two-term form of the polynomial. It supplies no upper bound for a general monic polynomial in the degrees not covered by the cited large-degree theorem. That is the missing comparison for the full question.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

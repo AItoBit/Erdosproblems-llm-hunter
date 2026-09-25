@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 1216: transitive subtournaments and the fourteen-vertex threshold}
+\subsection*{Statement and scope}
+Let $f(n)$ be the largest integer such that every tournament on $n$ vertices contains a transitive subtournament of that order. The proposed identity is $f(n)=\lfloor\log_2n\rfloor+1$.
+We prove the elementary lower bound, a probabilistic upper bound, and $f(7)=3$. We then derive the known improved general lower bound from Reid--Parker's fourteen-vertex theorem, whose finite classification proof is an explicit external input. That classification remains unresolved in this attempt; the known disproof is not presented as a new self-contained classification.
+
+\subsection*{The greedy lower bound}
+Write $R(k)$ for the least order forcing a transitive $k$-vertex tournament. In any tournament of order $2R(k)$, some vertex has outdegree at least $R(k)$, because the average outdegree is $(2R(k)-1)/2$ and degrees are integers. Its outneighborhood contains a transitive $k$-set, and adjoining the vertex as a source gives a transitive $(k+1)$-set. Thus
+\[
+ R(k+1)\le2R(k).
+\]
+Starting from $R(1)=1$ gives $R(k)\le2^{k-1}$. Choosing $k=\lfloor\log_2n\rfloor+1$ proves the stated lower bound.
+
+\subsection*{The factor-two probabilistic upper bound}
+Orient every edge independently with probability $1/2$ in either direction. A specified $k$-set has $2^{\binom k2}$ possible tournaments, exactly $k!$ of which are transitive, one for each linear ordering. Hence the expected number of transitive $k$-sets is
+\[
+ \binom nk\,\frac{k!}{2^{\binom k2}}
+ <\frac{n^k}{2^{k(k-1)/2}}
+ \quad(2\le k\le n).
+\]
+If $k=\lceil2\log_2n\rceil+1\le n$, this expectation is less than one, so some tournament contains no transitive $k$-set. If $k>n$, the bound below is trivial. Therefore for $n\ge2$,
+\[
+ f(n)\le\min\{n,\lceil2\log_2n\rceil\}.
+\]
+This supplies the logarithmic order of magnitude, not the exact proposed formula.
+
+\subsection*{A complete seven-vertex example}
+On $\mathbb Z/7\mathbb Z$, orient $u\to v$ when
+$v-u\in\{1,2,4\}$. Exactly one direction is chosen because the negatives are $\{6,5,3\}$.
+The outneighbors of $0$ are $1,2,4$, and they form the directed cycle
+$1\to2\to4\to1$. Translation shows that every vertex has a cyclic, rather than transitive, three-vertex outneighborhood.
+A transitive four-vertex tournament would have a source whose other three vertices form a transitive triple inside its outneighborhood. This is impossible. Thus this tournament contains no transitive four-set. The greedy lower bound gives a transitive triple in every seven-vertex tournament, proving $f(7)=3$.
+
+\subsection*{The published threshold and its consequences}
+The exact external input is:
+\[
+ \text{Every tournament on fourteen vertices contains a transitive five-set.}
+ \tag{1}
+\]
+Reid and Parker also constructed the unique thirteen-vertex tournament without a transitive five-set. Their primary abstract states both assertions; the exhaustive structural proof of (1) is not supplied here.
+
+Already (1) contradicts the proposed identity at $n=14$, since
+$f(14)\ge5>4=\lfloor\log_2 14\rfloor+1$.
+Applying the proved doubling recurrence repeatedly to $R(5)\le14$ gives
+\[
+ R(5+j)\le14\cdot2^j\qquad(j\ge0).
+\]
+Consequently, for every $n\ge14$,
+\[
+ f(n)\ge5+\left\lfloor\log_2(n/14)\right\rfloor
+       =\left\lfloor\log_2n+4-\log_27\right\rfloor.
+ \tag{2}
+\]
+The floor functions matter: (2) improves the original integer lower bound at infinitely many orders, including $14\cdot2^j$, but by itself is not a proof of strict improvement at every individual $n\ge14$. For example, at $n=16$ both displayed integer bounds are five. We therefore do not repeat an overbroad reading of the source's phrase about all larger orders.
+
+\subsection*{Assessment and sources}
+The greedy bound, random construction, exact seven-vertex example and propagation (2) are proved. The negative answer follows from the precise external threshold (1), but its decisive finite classification is not reconstructed; this is the substantial gap reflected in the estimate.
+Sources: \url{https://www.erdosproblems.com/1216}; K. B. Reid and E. T. Parker, \emph{Disproof of a conjecture of Erd\H{o}s and Moser on tournaments}, J. Combin. Theory 9 (1970), 225--238, \url{https://doi.org/10.1016/S0021-9800(70)80061-8}; R. Stearns, \emph{The voting problem}, Amer. Math. Monthly 66 (1959), 761--763. No novelty or exhaustive fourteen-vertex verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 70\%}

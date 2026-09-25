@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1047: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and explicit counterexample}
+No. Let
+\[
+ f(z)=z^6-z,\qquad c=\frac{291}{500},\qquad r=\frac{137}{200}.
+\tag{1}
+\]
+The polynomial has six distinct roots. We prove that $\{|f|\le c\}$ has exactly six disjoint connected components and that the component containing zero is not convex. This uses the example attributed to the referee of Goodman's paper in \url{https://www.erdosproblems.com/1047}. The rational test points agree with the certificate in the linked Aristotle proof; all inequalities needed here are proved directly with rational bounds. No local Lean verification is claimed.
+
+\section*{Six separate components}
+The roots are zero and the fifth roots of unity. At a critical point $\zeta$, the identity $6\zeta^5=1$ gives
+\[
+ |f(\zeta)|=\frac56|\zeta|=5\,6^{-6/5}=:\kappa.
+\]
+The exact rational inequality
+\[
+ \left(\frac{291}{500}\right)^5<\frac{5^5}{6^6}
+\tag{2}
+\]
+shows that $c<\kappa$. Choose $d$ strictly between them. There are no critical values over the disk $D(0,d)$. A polynomial is a proper map, so its restriction over this disk is a six-sheeted covering without branch points. Since the disk is simply connected, there are six single-valued holomorphic inverse branches $g_j$ on it, with disjoint images. One can obtain these by continuing the six local inverses at zero: the absence of critical values permits continuation along every path, properness prevents escape to infinity, and the monodromy theorem makes the continuation independent of the path.
+
+Each set $g_j(\overline{D(0,c)})$ is compact and connected. They are pairwise disjoint and their union is exactly $\{|f|\le c\}$. A finite family of disjoint compact sets has positive mutual distances, so these are precisely its six connected components. This also checks the closed-sublevel-set convention of the question; components are not merely separated before taking closures.
+
+\section*{Two points in the central component}
+Let $\omega=e^{2\pi i/5}$. For $0\le t\le r$,
+\[
+ f(t)=t^6-t,\qquad f(t\omega)=\omega(t^6-t).
+\]
+The function $t-t^6$ is increasing on this interval because $6r^5<1$. Exact rational arithmetic gives
+\[
+ 6\left(\frac{137}{200}\right)^5<1,
+ \qquad
+ \frac{137}{200}-\left(\frac{137}{200}\right)^6
+ <\frac{291}{500}.
+\tag{3}
+\]
+Thus both segments $[0,r]$ and $[0,r\omega]$ lie in $\{|f|<c\}$. Their endpoints $r,r\omega$ belong to the same component as zero.
+
+\section*{Their midpoint is outside the entire sublevel set}
+Write
+\[
+ m=\frac r2(1+\omega)=R e^{i\pi/5},\qquad
+ R=r\cos(\pi/5)=\frac r4(1+\sqrt5).
+\]
+Since $m^5=-R^5$, we have $|f(m)|=R+R^6$. The rational lower bound $\sqrt5>559/250$ follows by squaring positive numbers. It gives
+\[
+ R>R_0:=\frac{110833}{200000},\qquad
+ R_0+R_0^6>\frac{291}{500}.\tag{4}
+\]
+The last inequality is again an exact integer comparison after multiplication by $200000^6$. For an easily checked margin it is enough to note that $R_0>554/1000$ and
+\[
+ \frac{554}{1000}+\left(\frac{554}{1000}\right)^6
+ >\frac{291}{500};
+\]
+its left side is greater than $0.5829$. Therefore $|f(m)|>c$. The midpoint of two points in the central component is outside that component, so it is not convex.
+
+\section*{Assessment}
+The maximal number of components, distinctness of the roots, strict separation of the closed components, and nonconvexity witness are all verified. The condition in the question means a level with as many components as distinct roots; our level is strictly below the first critical-value modulus and meets that condition. The standard inverse-function and monodromy principles are the only general complex-analytic inputs.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 323: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $1\le m\le k$ and let $f_{k,m}(x)$ count integers $0\le n\le x$ representable as a sum of $m$ nonnegative $k$th powers. Is $f_{k,k}(x)\gg_\epsilon x^{1-\epsilon}$ for every $\epsilon>0$? For $m<k$, is $f_{k,m}(x)\gg x^{m/k}$? Source: \url{https://www.erdosproblems.com/323}.
+
+The general questions are unresolved here. We prove the one-summand case, a recursive separated-sums lower bound for every $m$, and a precise sufficient second-moment condition for the diagonal question. This replaces the earlier GPT-5.2 bound whose written constant calculation lost a factor of two and which did not use the number of available summands.
+
+\section*{Elementary upper bound and the exact first case}
+Put $L=\lfloor x^{1/k}\rfloor$. Every representation can be put in nondecreasing order and all its entries lie in $[0,L]$. The number of such tuples is $\binom{L+m}{m}$, so
+\[
+ f_{k,m}(x)\le\binom{L+m}{m}=O_m(x^{m/k})\quad(x\ge1). \tag{1}
+\]
+For $m=1$ there are exactly $L+1$ values, proving the proposed order in that case. The case $k=1$ is also immediate.
+
+\section*{A recursive construction of disjoint blocks}
+For $k\ge2$, define
+\[
+ \beta_m=1-\left(1-\frac1k\right)^m.
+\]
+We prove, by induction on $m$, that for a constant $c_{k,m}>0$ and all sufficiently large $x$,
+\[
+ f_{k,m}(x)\ge c_{k,m}x^{\beta_m}. \tag{2}
+\]
+The base $m=1$ follows from the exact count. Suppose the assertion holds for $m-1$. Let $N=\lfloor(x/2)^{1/k}\rfloor$ and
+\[
+ y=\frac12(N/2)^{k-1}.
+\]
+For each integer $a$ with $\lceil N/2\rceil\le a\le N$, add $a^k$ to every value at most $y$ representable by $m-1$ powers. All resulting values lie in $[a^k,a^k+y]$ and are at most $x$ for sufficiently large $x$, since $N^k\le x/2$ and $y=O_k(x^{(k-1)/k})$.
+
+These intervals are pairwise disjoint. Indeed, for successive eligible $a$,
+\[
+ (a+1)^k-a^k\ge k a^{k-1}\ge k(N/2)^{k-1}>y.
+\]
+There are at least $N/2$ eligible integers. As $N\asymp_k x^{1/k}$ and $y\asymp_k x^{(k-1)/k}$, induction gives
+\[
+ f_{k,m}(x)\ge\frac N2 f_{k,m-1}(y)
+ \gg_{k,m}x^{1/k+(k-1)\beta_{m-1}/k}=x^{\beta_m}.
+\]
+This proves (2), with rounding absorbed only into fixed positive constants after the explicit disjointness inequalities. For example, the three-cube case gives exponent $19/27$, and each additional summand improves the bound. These are elementary estimates, weaker than known results in several cases, not claims of new records.
+
+\section*{The collision estimate that would bridge the gap}
+Let $r_{k,m}(n)$ count ordered nonnegative representations and set
+\[
+ T(x)=\sum_{n\le x}r_{k,m}(n),\qquad
+ E(x)=\sum_{n\le x}r_{k,m}(n)^2.
+\]
+A box of side $\lfloor(x/m)^{1/k}\rfloor$ supplies $T(x)\gg_{k,m}x^{m/k}$ tuples; the containing box of side $\lfloor x^{1/k}\rfloor$ gives the matching upper order. Cauchy--Schwarz over represented values gives
+\[
+ f_{k,m}(x)\ge\frac{T(x)^2}{E(x)}. \tag{3}
+\]
+Consequently $E(x)\ll_{k,m,\epsilon}x^{m/k+\epsilon}$ would imply $f_{k,m}(x)\gg x^{m/k-\epsilon}$. For $m=k$ this is exactly the sufficient Hypothesis $K^*$ second-moment scale recorded with Problem 322, and would answer the first question here. For $m<k$, removing every epsilon loss would require further control; (3) with an epsilon loss does not give the requested constant-order bound.
+
+\section*{Remaining gap}
+The separated intervals use smaller and smaller scales for the later summands, leading to $\beta_m<m/k$ when $m\ge2$. This construction cannot reach either target exponent merely by optimizing its fixed constants. Estimate (3) identifies the additional average collision control that would suffice; no such general sharp bound has been proved in this attempt. Finite counts are not substituted for that missing asymptotic argument.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

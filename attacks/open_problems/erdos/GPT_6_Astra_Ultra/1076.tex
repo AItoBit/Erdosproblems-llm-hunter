@@ -1,0 +1,71 @@
+\section*{Erd\H{o}s Problem 1076}
+
+\paragraph{The literal statement and a necessary distinction.}
+Let \(\mathcal F_k\) be all \(3\)-uniform hypergraphs on \(k\) vertices with \(k-2\) edges, as defined on the problem page. For this literal definition, the proposed asymptotic \(n^2/6\) is false. Already
+\[
+ \operatorname{ex}_3(n,\mathcal F_5)
+ =\left(\frac15+o(1)\right)n^2.
+ \tag{1}
+\]
+We prove (1) below, relative to the standard almost-perfect-matching theorem. The page's positive resolution concerns the stronger condition excluding all small configurations simultaneously. We explain that distinction at the end; merely citing a high-girth construction would not supply the missing upper bound for the displayed literal definition.
+
+\paragraph{The upper bound for the literal \(k=5\) problem.}
+An \(\mathcal F_5\)-free triple system has no three distinct edges whose union has at most five vertices, since unused vertices may be added to obtain five vertices when \(n\geq5\). A pair of vertices can consequently belong to at most two edges.
+Call two edges \(abc,abd\) sharing a pair a diamond. No edge belongs to two different diamonds: otherwise it and its two partners would have union of size at most five. The edges therefore partition into \(x\) diamonds and \(y\) single edges.
+The shadow of a diamond, consisting of the pairs contained in its edges, has five pairs; a single edge has three. Shadows of distinct blocks are disjoint, because a common pair would make two of their edges partners in a diamond. Thus
+\[
+ 5x+3y\leq\binom n2,\qquad
+ e(H)=2x+y\leq\frac25(5x+3y)
+ \leq\frac25\binom n2.
+ \tag{2}
+\]
+
+\paragraph{The external packing input.}
+We use this consequence of the Pippenger--Spencer theorem: a sequence of \(d\)-uniform \(D\)-regular hypergraphs, with fixed \(d\), \(D\to\infty\), and maximum pair-codegree \(o(D)\), has matchings covering a \(1-o(1)\) fraction of its vertices. Pair-codegree means the number of hyperedges containing two prescribed distinct vertices. Indeed their theorem gives an edge-colouring with \((1+o(1))D\) colours; one colour class has at least \((1-o(1))|V|/d\) edges. The proof of this general theorem is external.
+
+\paragraph{An induced-diamond packing.}
+Fix an integer \(r\geq3\), and take the complete \(r\)-partite graph \(K\) with \(m\) vertices in each class. Its order is \(N=rm\). Consider every induced copy of \(K_4\) minus one edge, with vertices \(a,b,c,d\), where \(a,b\) lie in two different classes and \(c,d\) lie in a third class. Its five edges are
+\[
+ ab,\ ac,\ ad,\ bc,\ bd.
+\]
+Form an auxiliary \(5\)-uniform hypergraph whose vertices are the edges of \(K\), and whose hyperedges are these five-edge copies.
+It is regular. A fixed cross-edge can be the central edge \(ab\) in
+\((r-2)\binom m2\) copies; it can be a peripheral edge in
+\(2(r-2)m(m-1)\) copies. Hence its degree is
+\[
+ D=\frac52(r-2)m(m-1).
+\]
+Two fixed distinct cross-edges determine at least three of a copy's four vertices, so their codegree is \(O_r(m)=o(D)\). The external theorem supplies edge-disjoint induced diamonds covering \((1-o(1))e(K)\) graph edges, and thus
+\[
+ (1-o(1))\frac{e(K)}5
+\]
+diamond blocks.
+Replace each chosen graph diamond by the two triples \(abc,abd\). This gives
+\[
+ e(H)=(1-o(1))\frac25 e(K)
+ =\left(1-o(1)\right)\frac{1-1/r}{5}N^2.
+ \tag{3}
+\]
+
+\paragraph{Checking the forbidden configuration.}
+Triples from distinct chosen blocks cannot share a pair, since their shadows belong to disjoint edge sets of \(K\). Three triples from three distinct blocks therefore have union size at least six: inclusion-exclusion gives at least \(9-3=6\).
+If two triples come from one block \(abc,abd\), their union has four vertices. A third triple from another block would have to meet these four vertices in at least two points to make a union of size at most five. Every such pair other than \(cd\) is a shadow edge of the first block and so cannot occur in the third triple. The remaining pair \(cd\) lies inside a single class of \(K\), whereas each constructed triple uses three different classes. That pair cannot occur either. This proves that \(H\) is \(\mathcal F_5\)-free.
+The induced condition on the packed graph diamonds is essential to this last check.
+
+\paragraph{Passing to all orders.}
+For arbitrary large \(n\), take \(m=\lfloor n/r\rfloor\) in (3) and add \(n-rm\) isolated vertices. For each fixed \(r\),
+\[
+ \liminf_{n\to\infty}
+ \frac{\operatorname{ex}_3(n,\mathcal F_5)}{n^2}
+ \geq\frac{1-1/r}{5}.
+\]
+Now let \(r\to\infty\), and combine with (2), to obtain (1). Even the fixed choice \(r=7\) gives asymptotic density \(6/35>1/6\), sufficient to refute the stated formula.
+
+\paragraph{What the high-girth resolution establishes.}
+If instead one excludes every \(\mathcal F_j\) for \(4\leq j\leq k\), then excluding \(\mathcal F_4\) makes the triple system linear: each vertex pair lies in at most one edge. It follows immediately that \(3e(H)\leq\binom n2\). The high-girth partial Steiner triple system theorem of Bohman--Warnke, and independently Glock--K\"uhn--Lo--Osthus, supplies matching lower bounds \((1/6-o(1))n^2\) for every fixed \(k\). Thus the simultaneous-forbidden-family version has the stated constant. Our literal \(k=5\) construction intentionally contains diamonds, which that stronger version forbids.
+
+\paragraph{Attribution and assessment.}
+The constant \(1/5\) for the \((5,3)\)-problem is known, including work of Glock; the reconstruction above is not claimed as new. The only substantial external input to its proof is the precise matching theorem stated above. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1076}; Pippenger--Spencer, \url{https://doi.org/10.1016/0097-3165(89)90074-5}; the primary discussion of the \((5,3)\) constant in \url{https://pikhurko.github.io/E/GlockJoosKimKuhnLichevPikhurko24pams.pdf}; and Bohman--Warnke, \url{https://arxiv.org/abs/1808.01065}. Completion refers to the literal displayed question and the stated correction, not a claim that the two formulations coincide. No local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

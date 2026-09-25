@@ -1,0 +1,55 @@
+\section*{Erd\H{o}s Problem 342: the Ulam sequence}
+\subsection*{Statement and scope}
+Start with $a_1=1,a_2=2$, and choose $a_{n+1}>a_n$ least with exactly one representation as a sum of two distinct earlier terms. The questions concern density, eventual periodicity of differences, and infinitely many pairs $a,a+2$.
+
+We prove explicit growth bounds and a necessary obstruction to every proposed eventual period. These questions remain unresolved here. This develops the valid infinitude observation of the earlier GPT-5.2 attempt and replaces unverified numerical claims with exact finite certificates. Source: \url{https://www.erdosproblems.com/342}.
+
+\subsection*{Infinitude and permanent uniqueness}
+Among sums of two distinct elements of a finite increasing set, the largest is uniquely the sum of its largest two elements. Consequently
+\[
+ a_{n+1}\le a_n+a_{n-1}\qquad(n\ge2), \tag{1}
+\]
+and the sequence is infinite. Every selected term greater than two has exactly one representation by distinct elements of the final sequence: all possible positive summands are smaller than that term, and were already decided when it was selected.
+
+More generally, for each integer $n>2$, membership in the final sequence is equivalent to having exactly one unordered representation $n=a+b$ with $a,b$ distinct members. Later, larger terms cannot change this count.
+
+\subsection*{Elementary quantitative bounds}
+Let $\varphi=(1+\sqrt5)/2$. Induction in (1), using $\varphi^2=\varphi+1$, gives $a_n\le\varphi^n$. Thus, for large $N$,
+\[
+ |A\cap[1,N]|\ge\left\lfloor\frac{\log N}{\log\varphi}\right\rfloor.
+\]
+For an upper bound take $n=a_k$, $k\ge3$, and let $B=A\cap[1,n-1]$, of size $k-1$. The sets $B,n-B$ lie in an interval of $n-1$ integers. Their intersection has at most three points: two from the unique distinct-summand pair, and possibly $n/2$. Therefore
+\[
+ 2(k-1)-(n-1)\le |B\cap(n-B)|\le3,
+\]
+so $k\le(n+4)/2$. Applying this at the last selected term at most $N$ gives
+\[
+ |A\cap[1,N]|\le N/2+2. \tag{2}
+\]
+In particular its upper asymptotic density is at most $1/2$.
+
+\subsection*{Necessary conditions for an eventual period}
+Suppose, provisionally, that membership is eventually periodic modulo some positive integer $p$, with nonempty tail residue set $R$. Then
+\[
+ R\cap(R+R)=\varnothing. \tag{3}
+\]
+Indeed if $r=r_1+r_2$ with all three residues in $R$, a sufficiently large selected integer in residue $r$ has arbitrarily many distinct unordered representations by tail terms in residues $r_1,r_2$. The number grows linearly with the integer, even if $r_1=r_2$, contradicting unique representation.
+
+In particular $0\notin R$. Moreover the entire sequence has at most one positive multiple of $p$. If distinct $u,v\in A$ were both multiples of $p$, take a sufficiently large selected $n$. Periodicity gives $n-u,n-v\in A$, and $n>2\max(u,v)$ makes
+\[
+ n=u+(n-u)=v+(n-v)
+\]
+two different unordered pairs of distinct summands. This is impossible.
+
+An eventual gap word with positive gaps $d_1,\ldots,d_\ell$ gives eventual membership period $p=d_1+\cdots+d_\ell$. Thus finding two Ulam numbers divisible by a proposed $p$ rigorously rules out any such eventual period, however late its proposed start.
+
+For example, the verified initial terms include
+\[
+ 1,2,3,4,6,8,11,13,16,18,26,28,36,38,47,48.
+\]
+The pairs $(1,2),(2,4),(3,6),(4,8),(6,18),(8,16)$ rule out membership periods $1,2,3,4,6,8$, respectively. These finite witnesses have an infinite consequence through the preceding lemma; they do not exclude every possible period.
+
+\subsection*{Remaining gap}
+The logarithmic lower bound and (2) leave the density question far apart. Condition (3) and the multiple obstruction constrain a hypothetical eventual period but do not rule out all moduli. The finite appearance of twin pairs likewise does not prove that infinitely many occur.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

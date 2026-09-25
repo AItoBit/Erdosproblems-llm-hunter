@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 863: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+For fixed $r\ge2$, compare the largest subsets of $[1,N]$ having at most $r$ unordered representations of any sum, and those having at most $r$ representations of any positive difference. Write these maxima $S_r(N),D_r(N)$, respectively; repeated summands are allowed in a sum representation. We reconstruct the strict separation proved by Boon Suan Ho with GPT-5.4 Pro in \url{https://boonsuan.github.io/erdos863.pdf}. This does not assume the existence of either limiting extremal constant.
+
+\section*{The difference upper bound}
+Let $|A|=M$ and $\Delta(d)=|\{(a,b)\in A^2:a-b=d\}|\le r$ for $d>0$. Counting all positive differences first gives $\binom M2\le r(N-1)$, hence $M=O_r(\sqrt N)$. Put $H=\lfloor N^{2/3}\rfloor$ and $w_x=|A\cap(x,x+H]|$, for integers $1-H\le x\le N-1$. Then
+\[
+ \sum_xw_x=MH,\qquad
+ \sum_x w_x(w_x-1)=2\sum_{d=1}^{H-1}(H-d)\Delta(d)\le rH(H-1).
+\]
+Cauchy--Schwarz, with $N+H-1$ windows, yields
+\[
+ M^2\le r(N+H-1)+\frac{M(N+H-1)}H=rN+o_r(N).
+\]
+Thus $\limsup D_r(N)/\sqrt N\le\sqrt r$.
+
+\section*{A layered sum construction}
+We use the classical Singer difference-set theorem as an explicit external input: for each prime power $q$, in the cyclic group of order $Q=q^2+q+1$ there is a set $C$ of size $q+1$ with every nonzero difference represented exactly once. Consequently any equality $c_1+c_2=c_3+c_4\pmod Q$ forces equality of the unordered pairs. Indeed, otherwise rearranging gives two different representations of a nonzero difference. This also covers repeated summands.
+
+Put $s=\lfloor r/2\rfloor$, $K=r+2s$ and
+\[
+ P=\{0,\ldots,r-1\}\cup\{r+s,\ldots,r+2s-1\}.
+\]
+Every integer has at most $r$ ordered representations as a sum of elements of $P$. Here is a verification. The first block added to itself has the usual triangular representation function bounded by $r$; the second block added to itself is bounded by $s$. Their supports are disjoint, and the latter support is disjoint from the cross-sum support. In the overlap of the first and cross supports, write the sum as $r+s+u$, where $0\le u\le r-s-2$. The number of ordered representations is
+\[
+ r-s-1-u+2\min(u+1,s)\le r.
+\]
+Outside this overlap the cross contribution alone is at most $2s\le r$.
+Choose representatives $0\le c<Q$ for $C$ and set
+\[
+ A=\{uQ+c+1:u\in P,\ c\in C\}\subseteq[1,KQ].
+\]
+For a fixed ordinary sum, reduction modulo $Q$ fixes its unordered residue pair. If the residues differ, orient them once and count ordered layer pairs; at most $r$ occur. If they coincide, the unordered layer-pair count is no larger than the ordered count. Therefore $A$ is valid and $|A|=(r+s)(q+1)$.
+
+The prime number theorem, used only to choose a prime $q\le\sqrt{N/K}-1$ with $q\sim\sqrt{N/K}$, gives
+\[
+ \liminf_{N\to\infty}\frac{S_r(N)}{\sqrt N}\ge\frac{r+s}{\sqrt{r+2s}}>\sqrt r,
+\]
+since $(r+s)^2-r(r+2s)=s^2>0$. Together with the window estimate this proves the requested asymptotic distinction, and in particular $c'_r<c_r$ whenever the two constants exist.
+
+\section*{Assessment}
+The separation is completely proved relative to the stated Singer and prime-number-theorem inputs. The source's construction and argument are being reconstructed, not claimed as new. Existence or exact values of the two extremal limits are outside the proved conclusion.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

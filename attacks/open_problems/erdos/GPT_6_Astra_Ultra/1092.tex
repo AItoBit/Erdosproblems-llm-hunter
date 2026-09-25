@@ -1,0 +1,53 @@
+\section*{Erd\H{o}s Problem 1092: local bipartization does not bound chromatic number}
+\subsection*{1. Precise target and outcome}
+For a graph $H$, let $d_r(H)$ be the least number of edges whose deletion makes it $r$-colourable. The proposed assertion is that a positive linear allowance $d_r(H)\le c_r|V(H)|$, imposed on every subgraph, forces $\chi(G)\le r+1$. We prove the following stronger negation: for every $\epsilon>0$ and integer $k\ge3$, there is a finite graph $G$ such that
+\[
+ \chi(G)=k,\qquad d_2(H)\le\epsilon|V(H)|\quad\text{for every subgraph }H\subseteq G.
+\]
+We reconstruct R\"odl's construction and its weighted argument from \emph{Nearly bipartite graphs with large chromatic number}, Combinatorica 2 (1982), 377--383, \url{https://doi.org/10.1007/BF02579434}, Sections 1.1--1.5. The one deep external input is the Kneser chromatic-number theorem: the graph of disjoint $n$-subsets of a $(2n+t)$-element set has chromatic number $t+2$.
+
+\subsection*{2. A symmetric graph with a small vertex deletion set}
+Fix $t=k-2$ and let $K=\operatorname{KG}(2n+t,n)$. Partition the underlying set into $X,Y$ with sizes $a=\lfloor(2n+t)/2\rfloor$, $b=\lceil(2n+t)/2\rceil$. Retain all $n$-sets $S$ satisfying either $|S\cap X|>a/2$ or $|S\cap Y|>b/2$. These two conditions cannot both hold, since $|S|=n<(a+b)/2$. The retained graph is bipartite: two sets in the first class intersect in $X$, and two in the second intersect in $Y$.
+The deleted set $B$ consists of $n$-sets for which
+\[
+ n-b/2\le |S\cap X|\le a/2.
+\]
+This interval contains $O_t(1)$ integers. For each possible $j$, the fraction of all vertices with $|S\cap X|=j$ is
+\[
+ \frac{\binom aj\binom b{n-j}}{\binom{2n+t}n}=O_t(n^{-1/2}).
+\]
+Indeed the two numerator binomial coefficients are each at most a constant times $2^a/\sqrt a$, respectively $2^b/\sqrt b$, while Stirling's formula gives $\binom{2n+t}n\gg_t2^{2n+t}/\sqrt n$. Hence $|B|/|V(K)|=:\eta_n\to0$ for fixed $t$.
+The permutations of the underlying set act transitively on $V(K)$. Thus, for any nonnegative weights $w(v)$, averaging over these permutations yields a translate $B'$ of $B$ with
+\[
+ \sum_{v\in B'}w(v)\le\eta_n\sum_{v\in V(K)}w(v).
+\]
+Deleting $B'$ still leaves a bipartite graph. This weighted conclusion, rather than just a small unweighted deletion set, is needed below.
+
+\subsection*{3. Splitting vertices while preserving $k$ colours}
+Order the vertices $v_1,\ldots,v_M$ of $K$. Process them in this order. The processed vertices form independent groups $U_i$, each mapping back to $v_i$; an unprocessed group still consists of its single original vertex. When processing $v_i$, let $W_i$ be its neighbours in earlier groups. If $|W_i|\le k-1$, leave it unchanged. Otherwise replace it by one new vertex $u_T$ for each $(k-1)$-subset $T\subset W_i$. Join $u_T$ to exactly $T$ among earlier vertices and to every later neighbour of $v_i$. There are no edges within the new group.
+At every stage the map to $K$ is a graph homomorphism, so the chromatic number is at most $k$. A splitting step cannot lower it. To verify this, suppose the new graph has an $r$-colouring with $r<k$. If $W_i$ uses all $r$ colours, choose one representative of each and extend to a $(k-1)$-subset $T$. Its new vertex $u_T$ sees every colour, a contradiction. Otherwise choose $T$ containing representatives of every colour actually used in $W_i$ and extend to size $k-1$. The colour of $u_T$ is absent from all of $W_i$ and from all later neighbours of $v_i$. Assigning this colour to the restored original vertex therefore gives an $r$-colouring before the step. Induction and the Kneser theorem prove that the final graph $K^*$ has chromatic number $k$.
+Every final vertex has at most $k-1$ neighbours in earlier groups. Later splitting operations do not change these earlier neighbours. Orienting each edge toward its earlier group therefore gives, for every subgraph $H$,
+\[
+ |E(H)|\le(k-1)|V(H)|.
+\]
+The construction is finite, however large the intermediate groups become.
+
+\subsection*{4. Converting weighted vertex deletion to edge deletion}
+Given any subgraph $H\subseteq K^*$, assign to a vertex $v_i$ of $K$ the weight
+\[
+ w(v_i)=\sum_{u\in U_i\cap V(H)}\deg_H(u).
+\]
+Their total is $2|E(H)|\le2(k-1)|V(H)|$. Choose the translate $B'$ supplied above, and remove all edges of $H$ incident to groups mapping into $B'$. The number removed is at most
+\[
+ \sum_{v_i\in B'}w(v_i)\le2\eta_n(k-1)|V(H)|.
+\]
+The remaining nonisolated graph maps to the bipartite graph $K-B'$, and hence is bipartite. Taking $n$ large enough that $2\eta_n(k-1)\le\epsilon$ proves the claimed property simultaneously for every $H$. The factor two comes from the sum of vertex degrees and has been included explicitly.
+
+\subsection*{5. All fixed $r$ and eventual linear budgets}
+For fixed $r\ge2$, take $k=r+2$. A bipartite graph is $r$-colourable, so $d_r(H)\le d_2(H)\le\epsilon|V(H)|$, while $\chi(K^*)>r+1$. This already disproves every uniform positive linear allowance.
+It also handles a proposed allowance $f_r(m)\ge cm$ only for $m\ge N$: take $0<\epsilon<\min(c,1/N)$. For $m<N$, the integer $d_r(H)$ is strictly less than one and hence zero; for $m\ge N$, it is at most $cm$. Thus all local conditions hold but the chromatic conclusion fails. This is the precise meaning of the failure of $f_r(n)\gg_r n$. No extra pointwise asymptotic for an ambiguously defined maximal function is needed.
+
+\subsection*{6. Assessment}
+The construction, its colouring obstruction, weighted averaging and every-subgraph edge estimate are proved here relative only to the stated Kneser theorem and standard Stirling estimates. This is an exposition of R\"odl's known disproof. Source statement: \url{https://www.erdosproblems.com/1092}.
+
+\textbf{Completion rate estimate: 100\%.}

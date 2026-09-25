@@ -1,0 +1,36 @@
+\section*{Erd\H{o}s Problem 173: exact obstructions in an alternating-strip colouring}
+\subsection*{Statement and outcome}
+The conjecture asks whether every two-colouring of $\mathbb R^2$ admits a monochromatic congruent copy of every triangle except possibly one congruence class. Congruence, not arbitrary scaling, is required.
+
+We analyse the colouring $c(x,y)=\lfloor y\rfloor\bmod2$ exactly enough to prove its standard equilateral obstruction, and to exhibit a monochromatic copy whenever at least one altitude is not an odd integer. This proves, in particular, that every right triangle occurs in this strip colouring. It does not control arbitrary plane colourings.
+
+\subsection*{A useful two-height criterion}
+Place one side of a triangle horizontally at height zero, with its third vertex at height $h>0$, the corresponding altitude. These two heights can be translated into strips of one colour if and only if $h$ is not an odd integer.
+To see sufficiency, reduce $h$ modulo two to $u\in[0,2)$. If $u<1$, translation zero already places both residues in $[0,1)$. If $u>1$, translate by $2-u$, placing the residues at $2-u$ and zero modulo two, again in $[0,1)$. If $u=1$, every vertical translate puts the two heights in opposite-coloured strips.
+
+Consequently any triangle with an altitude not in $\{1,3,5,\ldots\}$ has a monochromatic copy. The minimum-altitude-less-than-one observation from the previous local attempt is a special case, but no smallness assumption is needed here.
+
+\subsection*{The forbidden equilateral triangle}
+Let $E$ be equilateral of side $s=2/\sqrt3$, hence altitude one.
+In every orientation its vertical span is at least one. Indeed, its three undirected edge directions are spaced by $60^\circ$; some edge is within $30^\circ$ of vertical and has vertical projection at least $s\cos30^\circ=1$.
+
+On the other hand, if the vertex heights in increasing order are
+$y_1\le y_2\le y_3$, then
+\[
+ y_2-y_1\le1,\qquad y_3-y_2\le1. \tag{1}
+\]
+For example, with $A$ the lowest vertex and $B,C$ the other two, the first gap is the minimum of the upward projections of $B-A$ and $C-A$. This is at most the projection of their average
+$(B+C)/2-A$, a vector of length one. Apply the same argument downward from the highest vertex for the other gap.
+
+If all three vertices were in one strip, their span would be strictly less than one because the strips are half-open, contradicting the span bound. If they were in different strips of the same colour, some consecutive pair of heights would lie in different such strips. The gap between those two heights would be strictly greater than one: the lower height is below the end of its strip, while the next same-coloured strip starts one full unit later. This contradicts (1). Thus no congruent copy of $E$ is monochromatic, including placements on strip boundaries.
+
+\subsection*{Every right triangle occurs in this colouring}
+If either leg length is not an odd integer, use the two-height criterion, since the legs are altitudes. Otherwise write the two leg lengths as odd positive integers $a,b$. The third altitude is
+$h=ab/\sqrt{a^2+b^2}$. Now $a^2+b^2\equiv2\pmod8$, so it is not a square. Its square root is irrational, since a rational square root of an integer is an integer. Therefore $h$ is irrational, in particular not an odd integer, and the same criterion applies.
+
+\subsection*{Assessment and attribution}
+The earlier \texttt{gpt\_pro\_5.2/173.tex} established only that sufficiently small triangles fit into one strip. We retain the underlying projection idea with translations stated explicitly, prove the exact equilateral exclusion, and add the two-height criterion. These results leave possible strip-colouring exceptions among triangles whose three altitudes are odd integers; they do not show that only $E$ is exceptional.
+
+The stronger theorem that every right triangle occurs in \emph{every} two-colouring is Shader's Theorem 2, \emph{All Right Triangles Are Ramsey in $E^2$}, J. Combin. Theory A 20 (1976), 385--389, \url{https://www.cs.umd.edu/~gasarch/TOPICS/ERT/ShaderRightTri.pdf}. That primary paper was checked, but its full forcing argument is not reproduced or counted as proved here. Problem: \url{https://www.erdosproblems.com/173}. The general at-most-one-exception assertion remains unresolved in this attempt. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

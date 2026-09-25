@@ -1,0 +1,66 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 1148: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Every sufficiently large positive integer $n$ can be written
+\[
+ n=x^2+y^2-z^2,\qquad x,y,z\in\mathbb Z,\quad |x|,|y|,|z|\le\sqrt n.
+\]
+We reconstruct the open-patch and parity argument of Chojecki and GPT-5.4 Pro, \url{https://www.ulam.ai/research/erdos1148-full.pdf}. The deep input is equidistribution of indefinite integral binary quadratic forms, in the version for \emph{all nonsquare discriminants}, from Einsiedler--Lindenstrauss--Michel--Venkatesh, \emph{The distribution of closed geodesics on the modular surface, and Duke's theorem}, Theorem 2.3 and the duality following it, \url{https://arxiv.org/abs/1109.0413}. Its proof is an external dependency, not supplied here.
+
+\section*{The exact external consequence}
+Put $V=\{(A,B,C)\in\mathbb R^3:B^2-4AC=1\}$. For any fixed nonempty relatively open patch $\Omega\subset V$ with compact closure, and every sufficiently large nonsquare positive discriminant $D\equiv0,1\pmod4$, there is a primitive integral form $(a,b,c)$ of discriminant $D$ with
+\[
+ (a,b,c)/\sqrt D\in\Omega.\tag{1}
+\]
+Here the limiting measure on $V$ has positive density. To obtain (1) from equidistribution, choose a nonnegative continuous function of compact support inside $\Omega$, positive somewhere. Its limiting integral is positive, so its integral against the normalized counting measure on discriminant-$D$ forms is positive for every sufficiently large such $D$. The duality immediately after Theorem 2.3 gives precisely this counting formulation. The theorem is not restricted to fundamental discriminants. No effective threshold for $D$ is asserted.
+
+\section*{One patch works for all parity classes}
+Let
+\[
+ K=\{(A,B,C)\in V:|A-C|<1,\ |B|<1,\ |A+C|<1\}.
+\]
+The integral changes of variables
+\[
+ T(a,b,c)=(a,b+2a,a+b+c),\qquad
+ U(a,b,c)=(c,-b+2c,a-b+c)
+\]
+preserve $b^2-4ac$; this also follows by direct expansion. At the point
+\[
+ P=(2/5,-2/5,-21/40)
+\]
+one has
+\[
+ B^2-4AC=1,\quad
+ TP=(2/5,2/5,-21/40),\quad
+ UP=(-21/40,-13/20,11/40).
+\]
+For $P$ and $TP$, the three quantities $|A-C|,|B|,|A+C|$ are $37/40,2/5,1/8$. For $UP$ they are $4/5,13/20,1/4$. Thus all three points lie strictly inside $K$. By continuity there is a fixed relatively open neighborhood $\Omega$ of $P$, with compact closure, such that
+\[
+ \Omega\cup T\Omega\cup U\Omega\subset K.\tag{2}
+\]
+This explicit triple of margins is useful: it makes the parity correction compatible with the coordinate bounds.
+
+Apply (1) with $D=4n$, for a sufficiently large nonsquare $n$. Necessarily $b$ is even. If $a\equiv c\pmod2$, leave the form unchanged. If $a$ is odd and $c$ even, apply $T$: its first and third coefficients are both odd. If $a$ is even and $c$ odd, apply $U$: its first and third coefficients are again both odd. In each case the new middle coefficient remains even, the discriminant remains $4n$, and (2) puts the normalized new form $(a',b',c')/(2\sqrt n)$ in $K$.
+
+Define
+\[
+ x=(a'-c')/2,\qquad y=b'/2,\qquad z=(a'+c')/2.
+\]
+These are integers and
+\[
+ x^2+y^2-z^2=(b'^2-4a'c')/4=n.
+\]
+The three defining inequalities of $K$ give $|x|,|y|,|z|<\sqrt n$. Finally, if $n=s^2$, the representation $(x,y,z)=(s,0,0)$ handles that case directly. This proves the statement for every sufficiently large $n$, including nonsquare $n$ with arbitrarily large square factors.
+
+\section*{Result and dependency}
+The reduction, explicit patch, parity correction, and all integer-coordinate checks are complete. Equidistribution is the one deep external input; the representation is a reconstruction of the cited known argument, with no novelty or local formal-verification claim.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

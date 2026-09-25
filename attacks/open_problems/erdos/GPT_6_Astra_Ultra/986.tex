@@ -1,0 +1,118 @@
+\section*{Erd\H{o}s Problem 986: off-diagonal Ramsey numbers}
+\subsection*{Statement and attribution}
+For each fixed $s\ge3$, prove $R(s,k)\gg_s k^{s-1}/(\log k)^{c(s)}$.
+We reconstruct Brada\v{c}'s proof of the stronger bound
+\[
+ R(s,k)\gg_s \frac{k^{s-1}}{(\log k)^{2s-4}}
+\]
+from Section 2.5 of \emph{Off-diagonal Ramsey numbers}, arXiv:2605.28793v3.
+That version credits an internal OpenAI model for the final improvement of the exponent to $s-1$. The reconstruction below includes the geometric graph, its spectrum, the counting argument, and the sampling step. No novelty is claimed.
+
+\subsection*{The projective polarity graph}
+Fix $t=s-1\ge2$ and a power $q$ of $2$. The vertices of $G$ are the one-dimensional subspaces of $\mathbb F_q^{t+1}$; join $a,b$ when $a\perp b$ for the usual nondegenerate dot product. Loops are allowed at this intermediate stage. The graph is regular with
+\[
+ n=\frac{q^{t+1}-1}{q-1}\asymp q^t,\qquad
+ d=\frac{q^t-1}{q-1}\asymp q^{t-1}.
+\]
+Two different vertices have exactly $c=(q^{t-1}-1)/(q-1)$ common neighbors: their two independent linear equations cut out a $(t-1)$-dimensional vector subspace. If $A$ is the adjacency matrix, then
+$A^2=(d-c)I+cJ$, with $d-c=q^{t-1}$.
+Consequently, on the orthogonal complement of the constant vector, its eigenvalues have modulus
+$\lambda=q^{(t-1)/2}$. The usual decomposition of two indicator vectors into constant and orthogonal parts proves
+\[
+ \left|e_G(U,V)-\frac dn|U||V|\right|
+ \le\lambda\sqrt{|U||V|}.
+ \tag{1}
+\]
+Here edges between two sets are counted as ordered incidences, so (1) also applies to overlapping sets.
+
+\subsection*{A digraph with no transitive $s$-tournament}
+Let $D$ have as vertices the ordered pairs $(a,b)$ with $a\perp b$.
+Draw an arc $(a,b)\to(a',b')$ exactly when $a\perp b'$ and $a'\not\perp b$.
+It has $nd\asymp q^{2t-1}$ vertices and has neither loops nor opposite arcs.
+Suppose $(a_i,b_i)$, $1\le i\le t+1$, form a transitive tournament in that order.
+Choose nonzero vector representatives $x_i,y_i$. We have
+$x_i\cdot y_j=0$ for $i\le j$, and $x_{i+1}\cdot y_i\ne0$.
+Choose also $x_{t+2}$ with $x_{t+2}\cdot y_{t+1}\ne0$.
+In a nontrivial relation $\sum_jc_jy_j=0$, let $i$ be its smallest nonzero coefficient. Taking the dot product with $x_{i+1}$ kills all later terms and leaves a contradiction.
+Thus the $t+1$ vectors $y_j$ form a basis. But $x_1$ is orthogonal to all of them, another contradiction.
+
+\subsection*{Counting ordered tuples with no forward arcs}
+Call a sequence $(a_1,b_1),\ldots,(a_m,b_m)$ consistent if $a_i\perp b_i$, and if
+$a_i\perp b_j$ for $i<j$, then $a_j\perp b_i$.
+This is exactly a tuple with no forward arc in $D$. Repetitions are allowed for this upper bound.
+For a consistent prefix $\sigma$, define
+\[
+ W_\sigma(y)=\operatorname{span}\{b_i:a_i\perp y\},\quad
+ r_\sigma(y)=\dim W_\sigma(y),\quad
+ U_r=\{y:r_\sigma(y)\le r\},\quad Z_r=\{y:r_\sigma(y)=r\}.
+\]
+An extension $(a,b)$ must have $a\perp W_\sigma(b)$ and $a\perp b$.
+If $r=r_\sigma(b)\le t$, there are at most $2q^{t-r}$ possibilities for $a$, even after dropping the latter condition; if $r=t+1$ there are none.
+
+For each nonempty $U_r$, $0\le r\le t$, choose $\ell\le r$ with $|Z_\ell|$ maximal.
+Then $|Z_\ell|\ge |U_r|/(t+1)$ and $|Z_r|\le|Z_\ell|$.
+Call $b\in Z_r$ popular if it lies in at least $|Z_\ell|/(16q)$ of the spaces $W_\sigma(y)$, $y\in Z_\ell$.
+Each such space contains at most $2q^{\ell-1}$ projective points (zero when $\ell=0$), so there are at most $32q^\ell$ popular $b$.
+Mark extensions using them. For this $r$ there are at most
+$32q^\ell\cdot2q^{t-r}\le64q^t$ marked extensions.
+
+Call $a$ poor if $|N_G(a)\cap Z_\ell|\le |Z_\ell|/(8q)$, and write $P_r$ for these $a$.
+For sufficiently large $q$, $d/n\ge1/(4q)$.
+Combining the definition of poverty with (1) gives
+\[
+ |P_r||Z_\ell|\ll q^{t+1}.
+\]
+Since $|Z_r|\le|Z_\ell|$, another application of (1) gives
+\[
+ e_G(P_r,Z_r)\le\frac dn|P_r||Z_r|+
+ \lambda\sqrt{|P_r||Z_r|}\ll q^t.
+\]
+Mark all extensions with poor $a$, too. Summing over $r$ shows that each prefix has at most $h=C_tq^t$ marked children.
+
+For an unmarked extension $(a,b)$ with $b\in Z_r$, $a$ is not poor and $b$ is not popular. At least $|Z_\ell|/(16q)$ points $y\in Z_\ell$ satisfy both $a\perp y$ and $b\notin W_\sigma(y)$. Their span dimension rises from $\ell$ to $\ell+1$. No dimension decreases. Thus this extension reduces $|U_\ell|$ by a factor at most
+\[
+ 1-\frac1{16(t+1)q}.
+\]
+Initially every $|U_\ell|$ is at most $n\ll q^t$. For each fixed $\ell$, only $O_t(q\log q)$ such reductions can occur while the integer $|U_\ell|$ remains positive; once it is zero it cannot be chosen again. There are only $t+1$ possibilities for $\ell$. Therefore every path of extensions has at most
+$w=C'_tq\log q$ unmarked steps.
+
+The full number of children is at most $\Delta=nd\ll q^{2t-1}$. The number $F_k$ of consistent $k$-tuples is bounded by
+\[
+ F_k\le\sum_{i\le\min(w,k)}\binom{k}{i}\Delta^ih^{k-i}
+ \le2^kh^k\max(1,\Delta/h)^w
+ \le(C''_tq^t)^k
+ \tag{2}
+\]
+provided $k\ge C'''_tq(\log q)^2$. The last inequality follows since the logarithm of the extra factor is $O_t(w\log q)=O_t(q(\log q)^2)$, which is absorbed by a fixed exponential in $k$.
+
+\subsection*{From the digraph to a Ramsey graph}
+Order $V(D)$ uniformly at random. Join $u<v$ in an undirected graph $\Gamma$ if $D$ has the forward arc $u\to v$.
+Every clique in $\Gamma$ would be a transitive tournament in $D$, so $\Gamma$ is $K_s$-free.
+For a fixed $k$-set, its relative ordering is uniform among $k!$ possibilities.
+Summing over sets, the expected number $i_k(\Gamma)$ of independent $k$-sets is at most $F_k/k!$.
+Some order consequently gives
+\[
+ i_k(\Gamma)\le\left(\frac{eC''_tq^t}{k}\right)^k.
+\]
+Select each vertex independently with probability
+$p=k/(eC''_tq^t)$, which is at most $1$ for the parameters below.
+The expected value of the number of selected vertices minus the number of independent $k$-sets among them is at least $pnd-1$.
+Choose a realization attaining at least this value and delete one vertex from each surviving independent $k$-set. This leaves a $K_s$-free graph with independence number less than $k$ and at least
+\[
+ pnd-1\gg_t kq^{t-1}
+\]
+vertices. Deleting vertices cannot create a new independent $k$-set that was not already present.
+
+\subsection*{Choice of the field size and conclusion}
+For each sufficiently large $k$, choose the largest power of $2$ for which
+$C'''_tq(\log q)^2\le k$. Consecutive powers differ by $2$, so
+$q\asymp_t k/(\log k)^2$. In particular $p\le1$ for large $k$, since $t\ge2$.
+The preceding construction yields
+\[
+ R(s,k)\gg_s k\left(\frac{k}{(\log k)^2}\right)^{s-2}.
+\]
+Adjusting the positive constant covers the finitely many remaining $k\ge2$.
+All substantive counting steps have been reconstructed; the standard existence of finite fields and elementary spectral linear algebra are the background inputs. Sources:
+\url{https://www.erdosproblems.com/986} and \url{https://arxiv.org/abs/2605.28793v3}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

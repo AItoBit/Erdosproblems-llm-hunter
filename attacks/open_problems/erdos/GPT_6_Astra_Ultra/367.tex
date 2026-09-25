@@ -1,0 +1,112 @@
+\section*{Erd\H{o}s Problem \#367: full parts of consecutive integers}
+\subsection*{1. The two proposed bounds}
+Define
+\[
+ B_r(n)=\prod_{\substack{p^a\Vert n\\a\ge r}}p^a.
+\]
+For each fixed $k$, the main question is whether
+$\prod_{i=0}^{k-1}B_2(n+i)\le n^{2+o(1)}$.
+The stronger proposal is an $O_k(n^2)$ upper bound.
+We reconstruct van Doorn's counterexample to the stronger bound,
+using the explicit algebraic-integer computation given in Tao's
+discussion. It gives $\gg n^2\log n$ infinitely often for $k=3$.
+The main $n^{2+o(1)}$ question remains unresolved.
+
+\subsection*{2. Consecutive powerful numbers from a Pell recurrence}
+Let $\alpha=3+\sqrt8$, so $\alpha^{-1}=3-\sqrt8$.
+Write
+\[
+ \alpha^j=x_j+y_j\sqrt8,\qquad j\ge1.
+\]
+Multiplication by $\alpha$ proves inductively that $x_j,y_j$ are
+positive integers; conjugation gives $x_j^2-8y_j^2=1$.
+Set $n_j=8y_j^2$. Then
+\[
+ n_j+1=x_j^2,\quad
+ B_2(n_j)=n_j,\quad B_2(n_j+1)=n_j+1,
+\]
+and direct expansion gives
+\[
+ 4(n_j+2)=\alpha^{2j}+6+\alpha^{-2j}.             \tag{1}
+\]
+
+\subsection*{3. Force a growing full divisor of the third integer}
+In the ring $\mathbb Z[\sqrt8]$,
+\[
+ \alpha^{\pm3}=99\pm35\sqrt8
+       =-1+5(20\pm7\sqrt8).
+\]
+If $u=-1+5^t v$ with $t\ge1$, the binomial expansion of $u^5$
+shows $u^5\equiv-1\pmod{5^{t+1}}$:
+the linear term has factor $5^{t+1}$, and every term of degree
+at least two has at least this divisibility as well.
+Induction therefore gives
+\[
+ \alpha^{\pm3\cdot5^{t-1}}\equiv-1\pmod{5^t}.
+\]
+Choose the positive integer
+\[
+ j_t=\frac{3\cdot5^{t-1}-1}{2}.
+\]
+Substituting $2j_t=3\cdot5^{t-1}-1$ in (1) yields
+\[
+ 4(n_{j_t}+2)
+ \equiv-\alpha^{-1}+6-\alpha=0\pmod{5^t}.
+\]
+The congruence is in the quadratic-integer ring, and its left side
+is an ordinary integer. Divisibility of its integer coefficient,
+and invertibility of $4$ modulo $5^t$, give
+$5^t\mid n_{j_t}+2$ in $\mathbb Z$.
+For $t\ge2$, the prime $5$ therefore occurs in the full part and
+$B_2(n_{j_t}+2)\ge5^t$.
+
+Also $n_j<\alpha^{2j}$, so
+\[
+ \log n_{j_t}<3\cdot5^{t-1}\log\alpha,\qquad
+ 5^t>\frac5{3\log\alpha}\log n_{j_t}.
+\]
+As $t\to\infty$ the $n_{j_t}$ are distinct and tend to infinity.
+Consequently
+\[
+ \prod_{i=0}^2B_2(n_{j_t}+i)
+ \ge n_{j_t}(n_{j_t}+1)5^t
+ \gg n_{j_t}^2\log n_{j_t}.                       \tag{2}
+\]
+The first case $t=2$ has $j_t=7$ and $n_{j_t}=13051463048$.
+The infinite sequence, rather than one large numerical ratio,
+is what disproves an upper bound with an unspecified constant.
+
+\subsection*{4. Consequences and the higher-fullness wording}
+For $k=1,2$ one has trivially
+$\prod_{i<k}B_2(n+i)\le n(n+1)\le2n^2$.
+For every fixed $k\ge3$, the extra factors are at least $1$,
+so (2) disproves the stronger $O_k(n^2)$ proposal.
+Thus that proposal holds precisely for $k\le2$.
+
+The question also discusses $B_r$ for $r\ge3$. Its displayed wording
+with \emph{every} $\varepsilon>0$ cannot literally give an unbounded
+ratio to $n^{1+\varepsilon}$ for fixed $k$: always
+\[
+ \prod_{i<k}B_r(n+i)\le\prod_{i<k}(n+i)=O_k(n^k),
+\]
+so the ratio is bounded when $\varepsilon\ge k-1$.
+The nontrivial interpretation, also identified in the source discussion,
+asks for some positive $\varepsilon=\varepsilon(r,k)$.
+No proof of that interpretation for general $r,k$ is claimed here.
+
+\subsection*{5. Assessment and references}
+The logarithm in (2) is $n^{o(1)}$, so it is fully compatible with
+the main proposed upper bound. That bound is unresolved in this
+attempt, even though the stronger variant has been completely
+classified.
+
+Sources: \texttt{https://www.erdosproblems.com/367} and
+\texttt{https://www.erdosproblems.com/forum/thread/367}, checked
+2026-09-25. The latter contains van Doorn's construction and
+Tao's explicit congruence derivation of 20 November 2025.
+The previous GPT Pro 5.2 and 5.4 reconstructions were independently
+checked. The full argument is reproduced above with its scope
+separated from the main question; no novelty or formal Lean
+verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 70\%}

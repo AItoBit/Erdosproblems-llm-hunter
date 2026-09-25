@@ -1,0 +1,69 @@
+\section*{Erd\H{o}s Problem 1196: primitive sets with large least element}
+\subsection*{1. Statement and outcome}
+A set $A$ of positive integers is primitive if no two distinct members divide one another. For $A\subset[x,\infty)$, is
+\[
+ \sum_{a\in A}\frac1{a\log a}\le1+o(1)\qquad(x\to\infty)
+\]
+uniformly in $A$? Yes. We reconstruct the known von Mangoldt chain argument, using its invariant weight to obtain the explicit bound
+\[
+ \sum_{a\in A}\frac1{a\log a}\le\frac1{1-2/\log x}\qquad(x>e^2). \tag{1}
+\]
+This proves $1+O(1/\log x)$. The method is from Alexeev, Barreto, Li, Lichtman, Price, Shah, Tang and Tao; their paper explains its origin in GPT-5.4 Pro output. The invariant-weight formula is credited there to independent work of Will Sawin and Kevin Barreto. This exposition claims no novelty.
+
+\subsection*{2. An exactly invariant weight}
+Write $\Lambda(q)=\log p$ if $q=p^j$ for a prime $p$ and $j\ge1$, and zero otherwise. Unique factorization gives
+\[
+ \sum_{q\mid n}\Lambda(q)=\log n,\qquad
+ \sum_{q\ge2}\frac{\Lambda(q)}{q^s}=-\frac{\zeta'(s)}{\zeta(s)}\quad(s>1). \tag{2}
+\]
+The second identity follows by logarithmic differentiation of the absolutely convergent Euler product. Define
+\[
+ \nu(1)=1,\qquad
+ \nu(n)=\log n\int_1^\infty\frac{ds}{\zeta(s)n^s}\quad(n\ge2).
+\]
+These weights are positive and finite. For $n\ge2$, Tonelli's theorem, (2), and integration by parts show
+\[
+ \begin{split}
+ \sum_{q\ge2}\nu(nq)\frac{\Lambda(q)}{\log(nq)}
+ &=\int_1^\infty\frac{-\zeta'(s)}{\zeta(s)^2n^s}\,ds\\
+ &=\log n\int_1^\infty\frac{ds}{\zeta(s)n^s}=\nu(n). \tag{3}
+ \end{split}
+\]
+Both boundary terms $n^{-s}/\zeta(s)$ vanish. At $s\downarrow1$, this follows already from $\zeta(s)\ge\int_1^\infty t^{-s}dt=1/(s-1)$; at infinity it follows from $n\ge2$. For $n=1$, the same integral without $n^{-s}$ equals $[1/\zeta(s)]_1^\infty=1=\nu(1)$. Thus (3) holds for all positive integers $n$.
+
+\subsection*{3. A random divisibility chain and the antichain inequality}
+Start at $1$. From a current integer $n$, move to $nq$, $q\ge2$, with probability
+\[
+ P(n,nq)=\frac{\nu(nq)}{\nu(n)}\frac{\Lambda(q)}{\log(nq)}.
+\]
+Equation (3) says that these probabilities sum to one. The resulting infinite sequence strictly increases and each member divides every later one.
+
+The probability $h(m)$ that it ever visits $m$ equals $\nu(m)$. Prove this by induction on $m$. The assertion is true at $1$. For $m>1$, any visit has a unique preceding proper divisor $d$ of $m$; a preceding visit to $d$ has probability $h(d)$. Hence, using the induction hypothesis and (2),
+\[
+ h(m)=\sum_{\substack{d\mid m\\d<m}}h(d)P(d,m)
+ =\frac{\nu(m)}{\log m}\sum_{\substack{q\mid m\\q>1}}\Lambda(q)=\nu(m).
+\]
+A primitive set meets each such chain at most once. Taking expectations, with monotone convergence for infinite $A$, gives the exact inequality
+\[
+ \sum_{a\in A}\nu(a)\le1. \tag{4}
+\]
+No assertion of independence among different hitting events is needed.
+
+\subsection*{4. Comparison with the requested weight}
+The elementary integral bound $\zeta(1+t)\le1+1/t$ for $t>0$ implies
+\[
+ \frac1{\zeta(1+t)}\ge\frac{t}{1+t}\ge t-t^2.
+\]
+For $L=\log n$, substitute $s=1+t$ and integrate to obtain
+\[
+ \begin{split}
+ \nu(n)&=\frac{L}{n}\int_0^\infty\frac{e^{-Lt}}{\zeta(1+t)}\,dt\\
+ &\ge\frac{L}{n}\left(\frac1{L^2}-\frac2{L^3}\right)
+ =\frac1{n\log n}\left(1-\frac2{\log n}\right). \tag{5}
+ \end{split}
+\]
+The integrand lower bound remains valid when $t>1$, even though its right side is then negative. If $n\ge x>e^2$, (5) is at least $(1-2/\log x)/(n\log n)$. Combining with (4) proves (1), uniformly over all primitive $A$ in the tail. The requested result is therefore proved, without needing the prime number theorem or an unproved estimate on primitive sets. Basic integration, the Euler product for real $s>1$, and the standard construction of a countable-state Markov chain are the background tools.
+
+Sources: \url{https://www.erdosproblems.com/1196}; B. Alexeev et al., \emph{Primitive sets and von Mangoldt chains: Erd\H{o}s Problem \#1196 and beyond}, especially the invariant weight in Remark 2.8, \url{https://arxiv.org/abs/2605.00301}. No Lean verification was run for this text.
+
+\textbf{Completion rate estimate: 100\%.}

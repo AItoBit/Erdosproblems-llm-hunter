@@ -1,0 +1,50 @@
+\section*{Erd\H{o}s Problem 1022}
+
+\paragraph{Statement and answer.}
+Can constants \(c_t\to\infty\) guarantee property B for every finite family \(\mathcal F\) of sets of size at least \(t\), under the condition
+\[
+ |\{A\in\mathcal F:A\subseteq X\}|<c_t|X|
+ \quad\text{for every nonempty }X?
+\]
+No. For each \(t\geq2\) we construct a \(t\)-uniform family that is not two-colourable and satisfies the strict bound with \(c_t=2\). Thus any constants having the asserted implication must be less than two, so cannot tend to infinity.
+
+The nonempty qualification is essential: at \(X=\varnothing\), the literal strict inequality would read \(0<0\). It is also present in the formal statement linked in the discussion. The page's affirmative status heading is inconsistent with the negative mathematical answer explained in its editorial and comments. We prove the negative answer explicitly.
+
+\paragraph{A finite construction in three layers.}
+Put \(r=t-1\geq1\), and take a set \(\Gamma\) of \(3r\) vertices. For every ordered pair of disjoint \(r\)-subsets \(A,B\subseteq\Gamma\), introduce a fresh vertex \(v_{A,B}\) and the edges
+\[
+ A\cup\{v_{A,B}\},\qquad B\cup\{v_{A,B}\}.
+\]
+Let \(V\) be the set of all these fresh vertices. For every \(r\)-subset \(Q\subseteq\Gamma\) and \(r\)-subset \(R\subseteq V\), introduce another fresh vertex \(w_{Q,R}\) and the edges
+\[
+ Q\cup\{w_{Q,R}\},\qquad R\cup\{w_{Q,R}\}.
+\]
+Let \(W\) be this third layer, and let \(\mathcal F\) consist of precisely the displayed edges. All layers are disjoint, all edges have \(r+1=t\) vertices, and each fresh vertex is the distinguished last vertex of exactly two edges. The use of ordered pairs causes no repeated edges, because different pairs have different fresh vertices and \(A\cap B=\varnothing\).
+
+\paragraph{Why two colours are impossible.}
+Suppose the vertices were coloured red and blue without a monochromatic edge. If \(\Gamma\) had both an all-red \(r\)-set \(A\) and an all-blue \(r\)-set \(B\), then whichever colour \(v_{A,B}\) received would complete a monochromatic edge. Thus one colour occurs fewer than \(r\) times in \(\Gamma\). Interchanging colours, there are at least \(2r+1\) red vertices.
+
+Choose \(2r\) red vertices. Each of their ordered partitions into two \(r\)-sets \(A,B\) forces \(v_{A,B}\) to be blue. These vertices are distinct, and their number is \(\binom{2r}{r}\geq r\). Choose an all-blue \(r\)-set \(R\subseteq V\), and choose an all-red \(r\)-set \(Q\subseteq\Gamma\). Now \(w_{Q,R}\) again completes a monochromatic edge whichever colour it receives. This contradiction proves failure of property B.
+
+The family actually has chromatic number exactly three: colour \(\Gamma,V,W\) with three different colours. Every edge meets two different layers and so is nonmonochromatic.
+
+\paragraph{The strict local density bound.}
+Charge each edge to its distinguished fresh vertex in \(V\) or \(W\). Every vertex receives at most two charges, and the charged vertex belongs to the edge. This initially gives
+\(e_{\mathcal F}(X)\leq2|X|\). To obtain the strict inequality required in the question, order all vertices with \(\Gamma\) first, \(V\) next, and \(W\) last, using arbitrary orders within layers.
+
+For nonempty \(X\), let \(x\) be its earliest vertex. No edge contained in \(X\) can be charged to \(x\): a charged edge contains \(r\geq1\) vertices from an earlier layer, and a vertex of \(\Gamma\) receives no charges at all. Every other vertex of \(X\) receives at most two charges. Hence
+\[
+ e_{\mathcal F}(X)\leq2(|X|-1)<2|X|. \tag{1}
+\]
+The same estimate holds if \(X\) contains additional vertices outside the construction, by intersecting it with the vertex set (and treating the empty intersection separately). Thus (1) verifies every nonempty set in the hypothesis.
+
+Equivalently, deleting vertices in reverse layer order gives a degeneracy bound of two: each vertex, when deleted, is incident with at most its two own edges. The strict charge argument above directly checks the stated density condition and does not confuse that condition with an equivalent definition of degeneracy.
+
+\paragraph{Conclusion and attribution.}
+For each \(t\geq2\), this one family contradicts the proposed implication whenever \(c_t\geq2\). Consequently a sequence of constants with that implication cannot tend to infinity.
+
+The construction adapts KoishiChan's explicit example in the discussion, with the two sizes in the final step kept separate and the strict inequality checked:
+\url{https://www.erdosproblems.com/forum/thread/1022}.
+The prior general construction is D. R. Wood, \emph{Hypergraph Colouring and Degeneracy}, \url{https://arxiv.org/abs/1310.2972}. Source statement: \url{https://www.erdosproblems.com/1022}, checked 24 September 2026. The proof here is elementary and self-contained; neither Wood's theorem nor a local Lean verification is assumed. No novelty is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 91: uniqueness of distance-minimizing configurations}
+
+\subsection*{1. Statement and scope}
+Let $g(n)$ be the minimum number of distinct positive distances determined by $n$ planar points. The question asks whether, for every sufficiently large $n$, there are at least two configurations attaining $g(n)$ that are not similar. It remains unresolved. We establish small examples and give an exact finite algebraic formulation of the uniqueness question for each fixed $n$. We do not infer an eventual statement from the small examples.
+
+\subsection*{2. Existence and small orders}
+For fixed $n\ge2$, the set of attainable distance counts is a nonempty subset of $\{1,\ldots,\binom n2\}$. Its smallest integer is attained by definition. This elementary existence observation concerns a discrete objective; no compactness assertion about a space of shapes is needed.
+
+At most three planar points can have every pair at the same positive distance. Indeed, normalize two to $(0,0)$ and $(1,0)$. A third must be $(1/2,\sqrt3/2)$ or $(1/2,-\sqrt3/2)$. These two possible third points have mutual distance $\sqrt3$, so they cannot both belong to such a configuration. It follows that $g(3)=1$, with a unique similarity class, the equilateral triangle, and $g(n)\ge2$ for $n\ge4$.
+
+A square has distance set $\{1,\sqrt2\}$ after normalization. The four points
+\[
+ (0,0),\quad(1,0),\quad(1/2,\sqrt3/2),\quad(1/2,-\sqrt3/2)
+\]
+have distance set $\{1,\sqrt3\}$. Both configurations attain $g(4)=2$, and they are not similar because the ratio of their largest to smallest distance differs. A regular pentagon has just its side and diagonal lengths, so $g(5)=2$ as well. This last observation supplies an optimum, not a proof about how many optimal pentagon configurations exist.
+
+\subsection*{3. An exact polynomial formulation}
+Fix $n\ge2$ and a proposed number $s$ of distances. Enumerate the finitely many surjective maps
+\[
+ \pi:\binom{[n]}2\longrightarrow\{1,\ldots,s\}.
+\]
+For each map, introduce real point coordinates $(x_i,y_i)$ and squared distances $t_1,\ldots,t_s$, and impose
+\[
+ 1=t_1<t_2<\cdots<t_s,\qquad
+ (x_i-x_j)^2+(y_i-y_j)^2=t_{\pi(ij)}\quad(i<j),\tag{1}
+\]
+together with
+\[
+ x_1=y_1=y_2=0,\qquad x_2>0.\tag{2}
+\]
+Every solution is a configuration with exactly $s$ distances: positivity makes its points distinct, and surjectivity makes every $t_j$ occur. Conversely any such configuration can be scaled so that its smallest distance is one, translated to place its first point at the origin, and rotated so that its second point lies on the positive horizontal axis. Ordering its squared distances then gives a solution of one of these systems. Thus the least $s$ for which one system has a real solution is exactly $g(n)$.
+
+One must still quotient solutions by relabeling and congruence; different coordinates alone do not prove different shapes. This can be done exactly by distance matrices. Two normalized configurations are congruent if their full matrices of squared distances agree after a permutation of labels. To prove the nontrivial direction, subtract the first point and observe that
+\[
+ \langle p_i-p_1,p_j-p_1\rangle
+ =\frac{|p_i-p_1|^2+|p_j-p_1|^2-|p_i-p_j|^2}{2}.\tag{3}
+\]
+Equal distance matrices give equal Gram matrices. The map sending each first configuration vector to its counterpart is well-defined and inner-product preserving on their spans: any linear relation has squared norm zero in one span if and only if it does in the other. Extending this isometry between subspaces to an orthogonal map of $\mathbb R^2$ proves congruence, including a possible reflection. Since both minimum distances are one, similarity is now the same as congruence.
+
+Consequently, the existence of two optimal similarity classes for this fixed $n$ has the following precise formulation: find two solutions of the systems at $s=g(n)$ such that, for every permutation of labels, at least one corresponding squared distance differs. This is a finite collection of polynomial equalities and strict inequalities. We have not asserted that there are finitely many solutions or similarity classes; a polynomial system can have a continuum of solutions.
+
+\subsection*{4. What is missing}
+The formulation identifies the exact issue that a computation at one $n$ would have to settle, while the examples prove nonuniqueness at $n=4$ and uniqueness at $n=3$. There is no uniform construction of two optima for large $n$, and no proof that the distance-minimizing shapes eventually become nonunique. The algebraic formulation is a reduction, not a solution of that asymptotic question.
+
+Source: \url{https://www.erdosproblems.com/91}. All results asserted as established in this attempt are proved above; no classification of optimal configurations at larger orders is imported.
+
+\textbf{Completion rate estimate: 20\%.}
+

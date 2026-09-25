@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 1213: a reciprocal-sum obstruction to distinct interval sums}
+\subsection*{Statement and outcome}
+Let $a=a_1<\cdots<a_s$ be positive integers with $a_{i+1}-a_i\le K$, where $a,K\ge1$. Must sufficiently large $a_s$, depending only on $a,K$, force equal sums over two distinct nonempty intervals of indices? Yes. We give an elementary proof with the explicit, deliberately nonoptimal choice
+\[
+ m=\left\lceil(a+K)^2e^{48K+10}\right\rceil,\qquad
+ f(a,K)=a+K(2m-1).
+ \tag{1}
+\]
+Hegyv\'ari proved the stronger bound $f(a,K)\ll ae^{O(K)}$. Our proof establishes the requested existence, but does not recover that sharper dependence on $a$.
+
+\subsection*{Distinct integer sums have a limited reciprocal total}
+Suppose for contradiction that all sums over distinct intervals in the first $2m$ terms are different. Write
+\[
+ T=\sum_{j=1}^{2m}a_j.
+\]
+All these sums are distinct positive integers at most $T$. Therefore any chosen subcollection has reciprocal sum at most
+\[
+ H_T\le1+\log T.
+ \tag{2}
+\]
+The bounded-gap condition gives $a_j\le a+K(j-1)$ and hence, putting $A=a+K$,
+\[
+ T\le2ma+K(2m)(2m-1)/2\le4Am^2.
+ \tag{3}
+\]
+
+\subsection*{Many short intervals violate that limit}
+Put $l=\lceil\sqrt m\rceil$ and $L=\log m$. For every $l\le i\le m$ and $1\le h\le i$, take the interval
+$I_{i,h}=\{i,i+1,\ldots,i+h-1\}$. Its endpoint is at most $2m-1$, and these are distinct intervals. Since $i\ge\sqrt m\ge a$ and $K\ge1$,
+\[
+ \sum_{j\in I_{i,h}}a_j
+ \le h\bigl(a+K(i+h-2)\bigr)
+ \le h(a+2Ki)\le3Kih.
+\]
+Consequently their reciprocal sum is at least
+\[
+ \frac1{3K}\sum_{i=l}^{m}\frac{H_i}{i}.
+ \tag{4}
+\]
+For these $i$, $H_i\ge\log(i+1)\ge L/2$. Also
+\[
+ \sum_{i=l}^{m}\frac1i
+ \ge\log\frac{m+1}{l}\ge\frac L2-\log2,
+\]
+using $l\le2\sqrt m$. Thus (4) is at least
+\[
+ \frac{L(L-2\log2)}{12K}.
+ \tag{5}
+\]
+By (1), $L\ge48K+10$ and $\log A\le L/2$. The expression in (5) is strictly greater than $4L$, whereas (2)--(3) bound it above by
+\[
+ 1+\log4+\log A+2L\le1+\log4+\tfrac52L<3L.
+\]
+This contradiction proves that the first $2m$ terms have two equal interval sums. Positivity is important: it places every sum among the first $T$ positive integers, permitting (2).
+
+\subsection*{Returning from sequence length to the last term}
+If $a_s>f(a,K)$, the inequality $a_s\le a+K(s-1)$ implies $s>2m$. Apply the proved assertion to the first $2m$ terms. The intervals are distinct, as required; the statement does not demand that they be disjoint. If they overlap, cancellation of their common part also produces equal sums over the two nonempty separated end intervals, because positivity prevents one of the original intervals from properly containing the other.
+
+The argument explains why a direct count of interval sums is weak: both their number and their total range have quadratic scale. Weighting each interval by the reciprocal of its sum produces a quadratic logarithm, exceeding the available harmonic sum for a long enough bounded-gap sequence.
+
+\subsection*{Assessment and sources}
+The existence question is completely proved with (1). Optimizing the known bound or the exponential dependence on $K$ is outside this claim. Sources: \url{https://www.erdosproblems.com/1213}; N. Hegyv\'ari, \emph{On consecutive sums in sequences}, Acta Math. Hungar. 48 (1986), 193--200, \url{https://doi.org/10.1007/BF01949064}. The qualitative resolution is known; no novelty is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

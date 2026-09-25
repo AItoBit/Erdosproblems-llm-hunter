@@ -1,0 +1,211 @@
+\section*{Erd\H{o}s Problem 793: the second term for strongly primitive sets}
+
+\paragraph{Statement and claim.}
+Let \(F(n)\) be the largest size of \(A\subseteq[1,n]\cap\mathbb N\)
+such that \(a\nmid bc\) whenever \(a,b,c\in A\),
+\(a\ne b\), and \(a\ne c\). The factors \(b,c\) may coincide.
+Then
+\[
+ F(n)=\pi(n)+\left(\frac{27}{2}+o(1)\right)
+                    \frac{n^{2/3}}{(\log n)^2}.
+                                                               \tag{1}
+\]
+We reconstruct the AI-assisted argument published by
+Przemek Chojecki, \emph{The second term for strongly
+2-primitive sets},
+\url{https://www.ulam.ai/research/erdos793.pdf}.
+The attribution and current statement are at
+\url{https://www.erdosproblems.com/793}.
+The substantial external analytic input is the prime
+number theorem and its usual partial-summation consequences.
+The earlier GPT-5.2 file uses a different three-distinct-elements
+formulation; we retain the present statement, including \(b=c\).
+
+\paragraph{A private-factor lemma.}
+Suppose every \(a\in A\) has a chosen factorization \(a=uv\)
+with \(u,v\) in a common set \(B\). Regard \(\{u,v\}\)
+as a multiset, and let \(\mu_a(w)\) be its multiplicity.
+Some factor \(w\) of this multiset has
+\[
+ \mu_a(w)>\mu_{a'}(w)\quad\hbox{for every }a'\in A\setminus\{a\}.
+                                                               \tag{2}
+\]
+If \(u\ne v\) and this fails, choose another chosen
+factorization containing \(u\) and another containing \(v\).
+Their products \(b,c\ne a\) satisfy \(a\mid bc\), even if
+they coincide, a contradiction.
+If \(u=v\), multiplicity two is unique: another such
+factorization would have the same product \(a=u^2\).
+Selecting one factor satisfying (2) for each \(a\)
+gives an injection into \(B\), since two strict opposite
+multiplicity inequalities cannot both hold. Thus
+\[
+ |A|\leq|B|.                                                   \tag{3}
+\]
+
+\paragraph{An economical multiplicative basis.}
+Put \(y=n^{1/3}\), \(M=y/\log n\), and \(S=M^2\).
+Use the union of these four sets:
+\[
+ \begin{split}
+ B_0&=[1,n^{3/5}]\cap\mathbb N,\\
+ B_1&=\{p\text{ prime}:n^{3/5}<p\leq n\},\\
+ B_2&=\{pq:p,q\text{ prime},\ p,q\leq y\},\\
+ B_3&=\{qr:q,r\text{ prime},\ y<q\leq n^{2/5},\
+                                      r\leq n/q^2\}.
+ \end{split}                                                   \tag{4}
+\]
+Every integer \(m\leq n\) is a product of two members of this union.
+First note that every \(m\leq X\) factors into a number at
+most \(X^{2/3}\) and a factor which is either prime or at
+most \(X^{2/3}\).
+If a prime factor exceeds \(X^{1/3}\), take it as one factor.
+Otherwise multiply small prime factors until their product
+first exceeds \(X^{1/3}\); both it and the complementary
+factor are at most \(X^{2/3}\).
+The case \(m\leq X^{2/3}\) is immediate using \(1\).
+
+For \(m\leq n^{9/10}\), apply this observation with
+\(X=n^{9/10}\), obtaining factors in \(B_0\cup B_1\).
+For larger \(m\), a prime factor \(p>n^{2/5}\) gives
+\(m/p<n^{3/5}\), again finishing the factorization.
+We may therefore assume all prime factors are at most \(n^{2/5}\).
+
+Count, with multiplicity, those exceeding \(n^{1/5}\).
+If there are at most two, a divisor
+\(u\in[n^{2/5},n^{3/5}]\) is obtained by starting with
+the largest of them, or \(1\), and multiplying small factors.
+If there are two large factors, omit the other one:
+the available product still exceeds \(n^{1/2}\), so the
+crossing occurs. The last multiplier is at most \(n^{1/5}\).
+Thus both \(u,m/u\) lie in \(B_0\).
+If there are at least three, let \(p\geq q\geq r>n^{1/5}\)
+be the three largest, with multiplicity.
+For \(q\leq y\), use \(qr\in B_2\) and \(m/(qr)<n^{3/5}\).
+For \(q>y\), the inequalities
+\(r\leq n/(pq)\leq n/q^2\) give \(qr\in B_3\), and
+\(m/(qr)<n^{7/15}<n^{3/5}\).
+This proves the basis assertion.
+
+\paragraph{Counting the upper-bound basis.}
+Clearly
+\[
+ |B_0|+|B_1|=\pi(n)+o(S),\qquad
+ |B_2|=\binom{\pi(y)+1}{2}=(9/2+o(1))S.
+\]
+In \(B_3\), the factor \(q>y\) is unique because \(r<y\).
+For any fixed \(T>1\), the prime number theorem gives
+\[
+ \sum_{y<q\leq Ty}\pi(n/q^2)
+ =\left(9(1-1/T)+o(1)\right)S.                                \tag{5}
+\]
+Indeed, uniformly in that interval,
+\(\pi(n/q^2)=(3+o(1))n/(q^2\log n)\), while partial summation
+gives
+\(\sum_{y<q\leq Ty}q^{-2}
+ =(3+o(1))(1-1/T)/(y\log n)\).
+For the remaining range \(Ty<q\leq n^{2/5}\), the standard
+bounds \(\pi(z)\ll z/\log z\) and
+\(\sum_{q>z}q^{-2}\ll1/(z\log z)\) give \(O(S/T)\).
+Letting first \(n\to\infty\), then \(T\to\infty\),
+we obtain \(|B_3|=(9+o(1))S\).
+Equations (3)--(5) prove the upper half of (1).
+
+\paragraph{Linear triples supply the lower bound.}
+Suppose \(\mathcal H\) is a family of triples of distinct
+primes whose products are at most \(n\), with any two
+triples sharing at most one prime.
+Retain all primes at most \(n\) outside \(V(\mathcal H)\),
+and replace the used primes by the triple products.
+The resulting set is strongly \(2\)-primitive.
+A retained prime divides no other element.
+For a target triple product, each other triple product
+contains at most one of its three distinct primes;
+even two such products, including a repeated one, cannot
+supply all three. Retained primes supply none.
+The resulting cardinality is
+\[
+ \pi(n)-|V(\mathcal H)|+|\mathcal H|.                           \tag{6}
+\]
+
+\paragraph{Packing the prime triples in logarithmic bins.}
+Fix \(h>0\), put \(t=e^h\), and set
+\(\Delta_i=t^{i+1}-t^i\) for \(i\in\mathbb Z\).
+Consider cells \((i,j)\) with
+\[
+ i\leq j,\quad i+2j\leq-4,\quad k=-i-j-3.
+\]
+Then \(k>j\).
+Choose for now a fixed finite collection of these cells.
+For every occurring index \(r\), let \(P_r\) be the primes
+in \((yt^r,yt^{r+1}]\), of size
+\[
+ m_r=(3+o(1))M\Delta_r.
+\]
+Since \(\Delta_k\geq t\Delta_j\geq t\Delta_i\), for large
+\(n\) we have \(m_k\geq\max(m_i,m_j)\).
+
+For \(i<j\), properly edge-colour the complete bipartite
+graph between \(P_i,P_j\) with \(\max(m_i,m_j)\) colours,
+and label its colours by different primes in \(P_k\).
+For \(i=j\), properly edge-colour the complete graph on
+\(P_i\) with at most \(m_i\) colours and label them by primes
+in \(P_k\).
+These colourings can be constructed explicitly.
+For a bipartite graph, label both sides injectively in
+\(\mathbb Z/m\mathbb Z\), and use the difference of labels.
+For a complete graph of odd order \(m\), use colour
+\((a+b)/2\) modulo \(m\).
+For even \(m\), use vertices
+\(\{\infty\}\cup\mathbb Z/(m-1)\mathbb Z\), colour
+\(\{\infty,a\}\) by \(a\), and the other edges by
+\((a+b)/2\) modulo \(m-1\).
+
+An edge \(\{p,q\}\) with colour prime \(r\) becomes the
+triple \(\{p,q,r\}\).
+Its product is at most
+\(y^3t^{i+j+k+3}=n\).
+Within one cell no prime pair repeats, because each colour
+class is a matching.
+Across different cells, two shared bin indices determine
+the third index from their sum \(-3\); sorting determines
+the cell uniquely. If the shared primes occupy one bin,
+both cells must be the same diagonal cell.
+Thus all the triples together form a linear family.
+The number of triples, divided by \(M^2\), tends to
+\[
+ 9\sum_{\substack{(i,j)\text{ chosen}\\i<j}}\Delta_i\Delta_j
+ +\frac92\sum_{(i,i)\text{ chosen}}\Delta_i^2.                  \tag{7}
+\]
+Only finitely many bins are used, so the number of used
+primes is \(O(M)=o(S)\).
+
+\paragraph{The constant \(27/2\).}
+Over all allowed cells, the off-diagonal sum is
+\[
+ \sum_{j\leq-1}\Delta_j t^j+
+ \sum_{j\geq0}\Delta_j t^{-2j-3}
+ =\frac1{t+1}+t^{-2}.
+\]
+The diagonal half-sum is
+\[
+ \frac12\sum_{i\leq-2}\Delta_i^2
+ =\frac{t-1}{2t^2(t+1)}.
+\]
+Their sum is \(t^{-1}+\tfrac12t^{-2}\), tending to \(3/2\)
+as \(h\downarrow0\).
+Given \(\varepsilon>0\), first choose \(h\) small, and
+then a finite collection of cells whose positive weights
+make (7) greater than \(27/2-\varepsilon\).
+Only then let \(n\) grow.
+Equation (6) supplies sets of size
+\[
+ \pi(n)+(27/2-\varepsilon-o(1))S.
+\]
+Since \(\varepsilon\) is arbitrary, this matches the upper
+bound and proves (1). Keeping this order of the three
+choices avoids requiring a prime number theorem uniform
+over a growing collection of bins.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

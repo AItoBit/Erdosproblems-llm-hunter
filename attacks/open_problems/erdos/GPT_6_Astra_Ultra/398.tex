@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 398: bounded radical cases of Brocard's equation}
+\subsection*{Statement and scope}
+Are $n=4,5,7$ the only positive integers for which $n!+1=x^2$? Take $x>0$ without loss of generality. We prove finiteness whenever either $x-1$ or $x+1$ is $k$-free for a fixed $k\ge2$, determine the prime-power special case, and reconstruct conditional finiteness from $abc$. The unrestricted question remains unresolved. Source: \url{https://www.erdosproblems.com/398}. These are known types of restrictions, recorded there with attribution to Naciri and Overholt; they are not claimed as new results.
+
+\subsection*{Prime support and an elementary size comparison}
+For $n\ge2$, $x$ is odd and
+\[
+ (x-1)(x+1)=n!,\qquad \gcd(x-1,x+1)=2. \tag{1}
+\]
+Every prime factor of either neighbour of $x$ is therefore at most $n$. Put $R_n=\prod_{p\le n}p$. We have
+\[
+ R_n\le e^{4n\log2}. \tag{2}
+\]
+Indeed the product of primes in $(2^{j-1},2^j]$ divides $\binom{2^j}{2^{j-1}}\le2^{2^j}$. Sum their logarithms through the first power of two at least $n$ to get $\log R_n\le4n\log2$.
+
+If either neighbour is $k$-free, every prime exponent in it is at most $k-1$. Consequently
+\[
+ x-1\le R_n^{k-1}\le e^{4(k-1)n\log2}.
+\]
+For $n\ge4$, $x-1\ge\sqrt{n!}/2$, and integration gives $\log(n!)\ge n\log n-n+1$. Thus
+\[
+ \frac12n\log n-\frac12n-\log2
+ \le4(k-1)n\log2. \tag{3}
+\]
+In particular $n\ge2^{8k-6}$ is impossible: after substitution, the left side minus the right side is at least $n(\log2-1/2)-\log2>0$. This proves an explicit finite bound for each fixed $k$.
+
+For $k=2$ the bound is $n<1024$. The following exact-integer check, independently run offline, finds precisely $n=4,5,7$ among \emph{all} square solutions below that cutoff:
+\begin{verbatim}
+from math import isqrt
+f = 1
+solutions = []
+for n in range(1, 1024):
+    f *= n
+    r = isqrt(f + 1)
+    if r*r == f + 1:
+        solutions.append((n, r))
+assert solutions == [(4, 5), (5, 11), (7, 71)]
+\end{verbatim}
+All three have at least one squarefree neighbour ($6,10,70$, respectively). Combined with (3), this proves the full assertion restricted to solutions with a squarefree neighbour. The finite check is explicitly part of this restricted proof; it supplies no bound in the unrestricted problem.
+
+\subsection*{The prime-power-neighbour case}
+If $n\ge4$ and $x-1$ or $x+1$ is a prime power, it is $2^a$ with $a\ge2$. The other even neighbour has exactly one factor of two, so (1) implies $a+1=v_2(n!)$. The elementary digit identity $v_2(n!)=n-s_2(n)$ gives $a\le n-2$, and hence
+\[
+ x\le2^{n-2}+1\le2^{n-1}.
+\]
+But $9!>4^9$, and multiplication by each subsequent integer preserves $n!>4^n$ for $n\ge9$. Thus $x^2\le4^{n-1}<n!$, a contradiction. The exact check for $n\le8$ gives only the three known square solutions, and only $x=5$ has a prime-power neighbour. Therefore this special case consists exactly of $n=4$.
+
+\subsection*{What the $abc$ conjecture would imply}
+Assume explicitly that for every $\epsilon>0$ there is $C_\epsilon$ such that coprime positive $u,v$ with $u+v=w$ satisfy
+$w\le C_\epsilon\operatorname{rad}(uvw)^{1+\epsilon}$.
+This is a conjectural hypothesis. For a solution with $n\ge4$, set $u=(x-1)/2$ and $w=(x+1)/2$, so $u+1=w$ and $\operatorname{rad}(uw)\le R_n$. Taking $\epsilon=1$ gives
+\[
+ w\le C_1 e^{8n\log2}.
+\]
+On the other hand $w>\sqrt{n!}/2$, whose logarithm is at least $(n\log n-n)/2-\log2$. The two estimates contradict one another for all sufficiently large $n$. This proves the known finiteness consequence of $abc$, but gives neither an unconditional conclusion nor the claim that the three known values exhaust the conditional finite set.
+
+\subsection*{Remaining gap}
+A hypothetical new solution can have both neighbours divisible by arbitrarily high prime powers. Neither the fixed-$k$ radical argument nor the elementary prime-power classification controls that possibility. Removing the conjectural hypothesis in the final argument, or excluding all such unrestricted solutions, is not achieved here.
+\textbf{Completion rate estimate: 45\%.}

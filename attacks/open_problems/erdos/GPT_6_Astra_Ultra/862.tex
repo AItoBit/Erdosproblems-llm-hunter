@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem 862}
+
+\paragraph{Statement and result.}
+Let \(A_1(N)\) count the inclusion-maximal Sidon subsets of \([1,N]\). Is \(A_1(N)<2^{o(\sqrt N)}\)? Is \(A_1(N)>2^{N^c}\) for some fixed \(c>0\)? The first assertion is false and the second is true. We prove the stronger lower bound
+\[
+ A_1(N)\geq2^{(\gamma-1-o(1))\sqrt N},
+ \qquad \gamma=\tfrac12\log_2 5>1.16.
+\tag{1}
+\]
+Here maximal means that no further element of \([1,N]\) can be added while preserving the Sidon property; it does not mean maximum cardinality.
+
+\paragraph{Counting many Sidon sets explicitly.}
+We recall and prove the construction needed for the count. For an odd prime \(p\), let \(q=p(p-1)\) and choose a generator \(g\) of \(\mathbb F_p^\times\). By the Chinese remainder theorem choose \(s_i\in[1,q]\), \(0\leq i\leq p-2\), with
+\[
+ s_i\equiv i\pmod{p-1},\qquad s_i\equiv g^i\pmod p.
+\]
+The set \(S=\{s_i\}\) is Sidon modulo \(q\). Indeed, equality of two pair sums modulo \(q\) gives equal sums of the corresponding \(g\)-powers modulo \(p\), and equal sums of exponents modulo \(p-1\), hence equal products of the \(g\)-powers. The two pairs are therefore the roots of the same quadratic over \(\mathbb F_p\), so the unordered index pairs agree, also when an index is repeated.
+
+For each \(s\in S\), make one of five choices: omit it, or choose exactly one of \(s,s+q,s+2q,s+3q\). Every resulting subset of \([1,4q]\) is Sidon. An equality of integer pair sums first identifies the unordered residue pairs by modular Sidonicity, and then the actual pairs because only one lift of each residue has been selected. The choices produce \(5^{p-1}\) distinct subsets.
+
+Let \(A(N)\) count all Sidon subsets. Choosing the largest prime with \(4p(p-1)\leq N\), the prime number theorem gives \(p=(1/2-o(1))\sqrt N\). Consequently
+\[
+ A(N)\geq5^{p-1}=2^{(\gamma-o(1))\sqrt N}.
+\tag{2}
+\]
+
+\paragraph{No Sidon set is much larger than \(\sqrt N\).}
+Here is the elementary upper estimate needed to control how many subsets a single maximal set can contain. For a Sidon set \(a_1<\cdots<a_s\), all positive differences are distinct. If \(h<s\), the
+\(K=hs-h(h+1)/2\) differences \(a_{i+j}-a_i\), with \(1\leq j\leq h\), are distinct positive integers. Their sum is at least \(K(K+1)/2\), whereas telescoping for each \(j\) gives total sum at most \(Nh(h+1)/2\). Hence
+\[
+ s\leq\frac{h+1}{2}+\sqrt N\sqrt{1+1/h}.
+\]
+Take \(h=\lfloor N^{1/4}\rfloor\); the case \(s\leq h\) is immediate. We obtain the uniform estimate
+\[
+ s\leq\sqrt N+O(N^{1/4}).
+\tag{3}
+\]
+
+\paragraph{Passing from all sets to maximal sets.}
+Every Sidon subset of \([1,N]\) can be extended to an inclusion-maximal one: keep adding an admissible element until the finite ground set permits no further addition. Each maximal set \(M\) contains exactly \(2^{|M|}\) subsets, all Sidon. A subset may have several maximal extensions, but overcounting gives the valid inequality
+\[
+ A(N)\leq\sum_{M\text{ maximal}}2^{|M|}
+ \leq A_1(N)\,2^{\sqrt N+O(N^{1/4})}.
+\]
+Together with (2), this yields (1).
+
+In particular \(\liminf \log_2A_1(N)/\sqrt N\geq\gamma-1>0\), ruling out a subexponential \(2^{o(\sqrt N)}\) bound. Also, for every fixed \(0<c<1/2\), eventually \((\gamma-1-o(1))\sqrt N>N^c\). Thus the requested strict lower bound holds, for example with \(c=1/3\).
+
+\paragraph{Attribution and assessment.}
+The count in (2) is the Saxton--Thomason lower construction using Ruzsa's modular Sidon set; see \emph{Hypergraph containers}, \url{https://warwick.ac.uk/fac/cross_fac/dimap/events/pcc2012/downloads/containers.pdf} and \url{https://arxiv.org/abs/1204.6595}. The maximal-extension deduction is recorded at \url{https://www.erdosproblems.com/862}, checked 24 September 2026. The proof above supplies the construction, size bound and counting deduction, with the prime number theorem and primitive-root existence as explicit standard inputs. The database's Lean label concerns the existing result; no local Lean verification or novelty is claimed here.
+
+\textbf{Completion rate estimate: 100\%.}

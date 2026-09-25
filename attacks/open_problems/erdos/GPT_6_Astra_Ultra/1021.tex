@@ -1,0 +1,121 @@
+\section*{Erd\H{o}s Problem 1021}
+
+\paragraph{Statement and result.}
+Let \(G_k\) be the 1-subdivision of \(K_k\): its \(k\) branch vertices have one distinct degree-two subdivision vertex for each pair. For fixed \(k\geq3\), we reconstruct Janzer's bound
+\[
+ \operatorname{ex}(N,G_k)=O_k\left(N^{3/2-1/(4k-6)}\right). \tag{1}
+\]
+This answers the question affirmatively with \(c_k=1/(4k-6)\). The proof supplies the light-edge argument and all distinctness checks; an almost-regular reduction is stated as an external input. In particular, \(k=3\) gives exponent \(4/3\). The \(7/6\) side remark for \(C_6\) on the problem page is erroneous and is not used here; Janzer's primary paper explicitly gives \(\operatorname{ex}(N,C_6)=\Theta(N^{4/3})\).
+
+\paragraph{The one structural reduction.}
+We use the Conlon--Lee regularization lemma, stated as Lemma 6 in Janzer's paper. For each fixed \(0<\alpha<1\), there is a constant \(K=K(\alpha)\) such that, for large \(N\), a graph with at least \(C N^{1+\alpha}\) edges, \(C\geq1\), contains a bipartite graph on \(m\) vertices with
+\[
+ m\geq N^{\alpha(1-\alpha)/(2(1+\alpha))},\qquad
+ e\geq(C/10)m^{1+\alpha}.
+\]
+Its two parts \(A,B\) satisfy \(|B|/2\leq|A|\leq2|B|\), and its maximum degree is at most \(K\) times its minimum degree. This lemma is external. We will prove that such a graph contains \(G_k\) whenever, putting \(|B|=n\), its degrees lie in \([\delta,K\delta]\) with
+\[
+ \delta\geq c\,n^{\alpha},\qquad
+ \alpha=\frac{k-2}{2k-3}, \tag{2}
+\]
+for a sufficiently large constant \(c=c(k,K)\).
+
+\paragraph{Codegrees, light edges, and the heavy obstruction.}
+For \(u,v\in A\), let \(w(u,v)=|N(u)\cap N(v)|\). Put
+\[
+ h=\binom k2,\qquad M=k+1,\qquad D=32M^3.
+\]
+Call a pair light if \(1\leq w(u,v)<h\), and heavy if \(w(u,v)\geq h\). A clique of \(k\) heavy pairs immediately gives \(G_k\): process its \(h\) pairs in any order and choose a fresh common neighbor for each, since at most \(h-1\) choices are excluded at any step. Hence in a \(G_k\)-free graph the graph formed by heavy pairs is \(K_k\)-free.
+
+For \(U\subseteq A\), write
+\(W(U)=\sum_{\{u,v\}\subset U}w(u,v)\). Counting common neighbors in \(B\), followed by the mean-square inequality, shows that if \(\delta|U|\geq2n\), then
+\[
+ W(U)=\sum_{b\in B}\binom{|N(b)\cap U|}{2}
+ \geq\frac{\delta^2}{2n}\binom{|U|}{2}. \tag{3}
+\]
+Indeed, with \(S=\sum_b|N(b)\cap U|\geq\delta|U|\), the sum is at least \((S^2/n-S)/2\geq S^2/(4n)\), which is at least the right side of (3).
+
+\paragraph{Large total codegree forces many light pairs.}
+Suppose \(W(U)\geq8M^2n\). For each \(b\in B\) put \(q_b=|N(b)\cap U|\). Those with \(q_b<2(k-1)\) contribute at most \(2(k-1)^2n\leq W(U)/4\) to \(W(U)\). Thus the other vertices contribute at least \(W(U)/2\).
+
+On the \(q_b\) neighbors of any such vertex, every pair has positive codegree. The classical Tur\'an bound for the \(K_k\)-free heavy graph shows that at least
+\[
+ \binom{q_b}{2}-\left(1-\frac1{k-1}\right)\frac{q_b^2}{2}
+ \geq\frac{q_b^2}{4(k-1)}
+\]
+pairs are light. Summing these inequalities counts each light pair fewer than \(h\) times. Consequently the number of distinct light pairs in \(U\) is at least
+\[
+ \frac{W(U)}{4M^3}. \tag{4}
+\]
+The constant in (4) is deliberately weakened: the preceding estimates give \(W(U)/(4(k-1)(h-1))\), which is at least (4).
+
+Combining (3)--(4), whenever
+\[
+ |U|\geq8M n/\delta\quad\text{and}\quad |U|\geq2,
+\]
+the light graph on \(U\) has at least
+\[
+ \frac{\delta^2}{8M^3n}\binom{|U|}{2}
+ =4\rho\binom{|U|}{2}\quad\text{edges},
+ \qquad\rho=\frac{\delta^2}{Dn}. \tag{5}
+\]
+The size assumption ensures \(W(U)\geq\delta^2|U|^2/(8n)\geq8M^2n\), as needed.
+For sufficiently large \(n\), (2) and \(|A|\geq n/2\) let us apply (5) to \(A\). If \(4\rho>1\), (5) is already impossible. We may therefore assume \(0<\rho\leq1/4\).
+
+\paragraph{Choosing the branch vertices without triple collisions.}
+We construct \(u_1,\ldots,u_{k-1}\in A\) such that all their pairs are light, no vertex of \(B\) is adjacent to three of them, and their common light-neighbor set has size at least \(\rho^i|A|\) after \(i\) choices.
+
+Before choice \(i\), let \(U_0\) be the common light-neighbor set of the previous choices, with \(U_0=A\) when \(i=1\). Remove a vertex \(v\) if it shares a neighbor in \(B\) with some pair of previous choices. A previous light pair has fewer than \(h\) common neighbors, each of degree at most \(K\delta\). Therefore at most
+\[
+ \binom{i-1}{2}hK\delta \tag{6}
+\]
+vertices are removed.
+
+These deletions leave at least half of \(U_0\), for all sufficiently large \(n\). To see this uniformly for \(i\leq k-1\), use \(\rho\leq1\), \(|A|\geq n/2\), and (2):
+\[
+ \frac{|U_0|}{\delta}
+ \geq\frac{\rho^{k-2}n}{2\delta}
+ =\frac{\delta^{2k-5}}{2D^{k-2}n^{k-3}}
+ \gg n^{1/(2k-3)}\longrightarrow\infty. \tag{7}
+\]
+Write \(U\) for the remaining set. Choosing \(c\) sufficiently large also ensures
+\[
+ |U|\geq\frac{\rho^{k-2}n}{4}
+ =\frac{\delta^{2k-4}}{4D^{k-2}n^{k-3}}
+ \geq\frac{8Mn}{\delta}, \tag{8}
+\]
+since (8) is implied by
+\(c^{2k-3}\geq32M D^{k-2}\).
+The sets tend to infinity in size, so the other size condition in (5) also holds.
+
+By (5), some \(u_i\in U\) has at least
+\[
+ 4\rho(|U|-1)\geq2\rho|U|
+ \geq\rho|U_0|\geq\rho^i|A|
+\]
+light neighbors in \(U\). All of them are common light neighbors of the previous choices. The removal rule verifies the condition on three chosen vertices, so the induction proceeds.
+
+After \(k-1\) choices the remaining common light-neighbor set \(V\) has
+\[
+ \frac{|V|}{\delta}
+ \geq\frac{\rho^{k-1}n}{2\delta}
+ =\frac{\delta^{2k-3}}{2D^{k-1}n^{k-2}}
+ \geq\frac{c^{2k-3}}{2D^{k-1}}.
+\]
+Increase \(c\), if necessary, so that this exceeds \(\binom{k-1}{2}hK\). Removing the vertices sharing a common neighbor with a pair of chosen vertices, as in (6), leaves a choice of \(u_k\). All \(k\) vertices are distinct because a vertex is never its own light neighbor.
+
+Each pair of branch vertices now has a common neighbor in \(B\), and none of these neighbors can serve two different pairs: it would then be adjacent to at least three distinct branch vertices, which was excluded. Choosing one neighbor for each pair therefore gives distinct subdivision vertices. The two bipartition classes keep all subdivision vertices separate from all branch vertices. This is a copy of \(G_k\), the required contradiction.
+
+\paragraph{Transferring back to arbitrary graphs.}
+Apply the external reduction with the value \(\alpha\) in (2). In the resulting almost-regular graph, the minimum degree is at least
+\[
+ \frac{2e}{Km}\geq\frac{C}{5K}m^\alpha
+ \geq\frac{C}{5K}n^\alpha.
+\]
+Take \(C\geq5Kc\). Its order tends to infinity by the reduction's stated power bound, so the embedding argument applies. Thus every sufficiently large graph of edge count at least \(CN^{1+\alpha}\) contains \(G_k\). Since
+\(1+\alpha=3/2-1/(4k-6)\), this proves (1); enlarging the constant handles the finitely many small orders.
+
+\paragraph{Attribution and assessment.}
+This is a reconstruction of O. Janzer, \emph{Improved bounds for the extremal number of subdivisions}, Electronic Journal of Combinatorics 26(3) (2019), P3.3, especially Lemmas 6, 8, 10, Corollary 11, and the proof of Theorem 7 with \(s=1\): \url{https://doi.org/10.37236/8262}, \url{https://arxiv.org/abs/1809.00468}. The almost-regular reduction and the classical Tur\'an theorem are explicit external inputs. The codegree estimates, selection procedure, constants, injectivity, and transfer are provided above. Source statement: \url{https://www.erdosproblems.com/1021}, checked 24 September 2026. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

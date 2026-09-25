@@ -1,0 +1,54 @@
+\section*{Erd\H{o}s Problem 68: factorial-minus-one denominators}
+\subsection*{1. Statement and scope}
+Is $S=\sum_{n=2}^{\infty}(n!-1)^{-1}$ irrational? This attempt proves a sharp elementary tail enclosure and identifies an obstruction to the most direct denominator-clearing argument. Irrationality remains unresolved.
+
+\subsection*{2. Convergence, expansion and tail enclosure}
+Since $(n!-1)^{-1}\le2/n!$, the series converges. Expanding geometrically and using nonnegativity gives
+\[
+ S=\sum_{n\ge2}\sum_{j\ge1}\frac1{(n!)^j}
+  =\sum_{j\ge1}\sum_{n\ge2}\frac1{(n!)^j}.
+\]
+Let $s_N=\sum_{n=2}^N(n!-1)^{-1}$ and $T_N=S-s_N$. For $N\ge2$, the first omitted term and the factorial geometric-tail bound imply
+\[
+ \frac1{(N+1)!-1}<T_N\le
+ \frac{N+2}{(N+1)((N+1)!-1)}=:U_N. \tag{1}
+\]
+Indeed, for all $n\ge N+1$,
+$(n!-1)^{-1}\le(1-1/(N+1)!)^{-1}/n!$, and
+$\sum_{n\ge N+1}1/n!\le (N+2)/((N+1)(N+1)!)$.
+In particular $T_N=(1+O(1/N))/(N+1)!$. Equation (1) is a rational, rigorous enclosure, requiring no floating-point assertion about $S$.
+
+\subsection*{3. Consecutive denominators are coprime}
+For $D_n=n!-1$,
+\[
+ D_{n+1}-(n+1)D_n=n,
+ \qquad \gcd(D_n,n)=1,
+\]
+so $\gcd(D_n,D_{n+1})=1$. More generally, if $m<n$ and $P=(m+1)\cdots n$, then
+\[
+ \gcd(D_m,D_n)=\gcd(D_m,P-1),
+\]
+by subtracting $P D_m$ from $D_n$.
+Let $L_N=\operatorname{lcm}(D_2,\ldots,D_N)$. For $N\ge3$,
+\[
+ L_N\ge D_{N-1}D_N,
+ \qquad
+ L_N T_N>\frac{((N-1)!-1)(N!-1)}{(N+1)!-1}\longrightarrow\infty. \tag{2}
+\]
+Thus the natural multiplier which certainly clears the partial-sum denominators does not produce a small tail. If one additionally multiplies by a hypothetical rational denominator $q$, the tail is still not small. This rules out that particular adaptation of the usual proof of irrationality of $e$; it does not rule out a more selective multiplier or cancellation method.
+
+\subsection*{4. What reduced denominators would have to do}
+Write $s_N=A_N/B_N$ in lowest terms. If $S=p/q$ were rational, positivity of $T_N$ would imply
+\[
+ T_N=\frac{pB_N-qA_N}{qB_N}\ge\frac1{qB_N},
+ \quad\text{hence}\quad
+ B_N\ge\frac1{qU_N}
+ =\frac{(N+1)((N+1)!-1)}{q(N+2)}. \tag{3}
+\]
+Therefore proving $B_N/(N+1)!\to0$ along any subsequence would prove irrationality. No such subsequence is established here. The growth of $L_N$ in (2) does not by itself imply a lower bound of that size for $B_N$, because cancellation in the numerator can reduce the denominator. Keeping those two denominators distinct is essential.
+
+\subsection*{5. Assessment and attribution}
+The expansion, tail interval, gcd identities and the conditional test (3) are proved. They isolate the denominator-control gap but do not exclude any fixed rational $p/q$ for all possible $q$. This revises earlier GPT-5.2 partial attempts; the double-series observation is credited to Weisenberg on the problem page. No numerical search or irrationality claim is made.
+Source: \url{https://www.erdosproblems.com/68}.
+
+\textbf{Completion rate estimate: 10\%.}

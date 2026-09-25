@@ -1,0 +1,111 @@
+\section*{Erd\H{o}s Problem 937}
+
+\paragraph{Statement and result.}
+Are there infinitely many four-term arithmetic progressions of distinct, relatively prime powerful positive integers? A positive integer is powerful if every prime factor occurs to exponent at least two. The answer is yes, by Bajpai, Bennett, and Chan. We reconstruct an infinitude argument from their explicit elliptic curve and one of their points. The resulting four terms are pairwise coprime, so they satisfy either usual interpretation of ``relatively prime.''
+
+\paragraph{An elementary parametrization.}
+For coprime integers \(a,b\) of opposite parity put
+\[
+ N=(a^2-b^2+2ab)^2,\qquad d=4ab(b^2-a^2).
+\]
+Direct expansion gives
+\begin{align*}
+ N+d&=(a^2+b^2)^2,\\
+ N+2d&=(a^2-b^2-2ab)^2,\\
+ N+3d&=F(a,b):=a^4-8a^3b+2a^2b^2+8ab^3+b^4.
+\end{align*}
+It therefore suffices to find infinitely many such pairs with
+\[
+ F(a,b)=73^3c^2,\qquad c\in\mathbb Z. \tag{1}
+\]
+The finitely many ratios giving a zero term or \(d=0\) will be discarded. Each remaining term is powerful: the first three are squares, and the last has an odd exponent at 73 of at least three and even exponents at every other prime.
+
+\paragraph{Explicit elliptic-curve data.}
+Use the curve from Section 5.3 of Bajpai--Bennett--Chan:
+\[
+ E:\ y^2-128xy-3360y=x^3-2612x^2+149568x. \tag{2}
+\]
+Its discriminant is \(1428168938986930176\ne0\). For \(xy\ne0\), define
+\[
+ X=146x/y-2,\qquad Y=(x^3-149568x-3360y)/y^2.
+\]
+Substitution in (2) gives the polynomial identity
+\[
+ X^4-8X^3+2X^2+8X+1=73Y^2. \tag{3}
+\]
+In particular, this rational map sends rational points of \(E\), away from finitely many exceptional points, to the required quartic.
+
+Consider the rational points
+\[
+ P=(-976,-49344),\quad P_2=(-408,-30192),\quad
+ T=(-1176,-73584),\qquad Q=14P-8P_2+T.
+\]
+Here addition is the elliptic-curve group law, and \(2T=O\). Exact rational arithmetic verifies that \(Q\) is an ordinary point, its coordinates are nonzero, and
+\[
+ v_2(X(Q))=-1,\qquad
+ X(Q)\equiv109476\pmod{73^3}. \tag{4}
+\]
+The latter congruence is in \(\mathbb Z_{73}\). Moreover,
+\[
+ 109476^4-8(109476)^3+2(109476)^2+8(109476)+1
+ \equiv0\pmod{73^3}. \tag{5}
+\]
+These are finite rational/integer checks, not numerical approximations. As an additional check, writing \(X(Q)=a/b\) in lowest terms gives 282-digit integers \(a,b\), with \(a\) odd, \(v_2(b)=1\), and \(F(a,b)/73^3\) a positive integer square. This is the point displayed in the cited paper, rather than a claimed new small example.
+
+For reproducibility, the group-law computations in (4) use the following rational formulas on (2). Given \((x_1,y_1),(x_2,y_2)\), set
+\(\lambda=(y_2-y_1)/(x_2-x_1)\) for distinct abscissas, or
+\[
+ \lambda=\frac{3x_1^2-5224x_1+149568+128y_1}
+                    {2y_1-128x_1-3360}
+\]
+for doubling. With \(\nu=y_1-\lambda x_1\), their sum has
+\[
+ x_3=\lambda^2-128\lambda+2612-x_1-x_2,
+ \qquad y_3=(128-\lambda)x_3-\nu+3360.
+\]
+Negation sends \((x,y)\) to \((x,-y+128x+3360)\); a zero tangent denominator gives \(O\). These formulas, binary repeated doubling, and reduction of rational numbers to lowest terms suffice to check (4).
+
+\paragraph{An infinite-order point, with its justification.}
+The same doubling calculation gives
+\[
+ x(2P)=342763576/511225.
+\]
+Completing the square with \(V=y-64x-1680\) turns (2) into
+\[
+ V^2=x^3+1484x^2+364608x+2822400.
+\]
+The substitution \(U=9x+4452,\ W=27V\) gives a short Weierstrass equation \(W^2=U^3+AU+B\) with integer \(A,B\). At \(2P\),
+\[
+ U=5360845884/511225\notin\mathbb Z.
+\]
+The Lutz--Nagell theorem says that a rational torsion point on such an integral short Weierstrass equation has integer coordinates. Hence \(2P\), and therefore \(P\), has infinite order. This use of Lutz--Nagell is an explicitly stated external theorem; it avoids assuming a computer-certified Mordell--Weil basis.
+
+\paragraph{Preserving the local conditions infinitely often.}
+We use one other standard external fact about elliptic curves: \(E(\mathbb Q_p)\) is a compact topological group with open subgroups forming a neighborhood basis at \(O\). Each such open subgroup has finite index. These facts follow from the formal group near \(O\) and compactness of the projective curve.
+
+The rational function \(X\) is continuous near \(Q\) over both \(\mathbb Q_2\) and \(\mathbb Q_{73}\). Thus (4) gives open neighborhoods of \(Q\) on which respectively
+\[
+ v_2(X)=-1,\qquad X\equiv109476\pmod{73^3}. \tag{6}
+\]
+Choose open subgroups \(U_2\subset E(\mathbb Q_2)\) and \(U_{73}\subset E(\mathbb Q_{73})\) whose translates by \(Q\) lie in these neighborhoods. If \(M\) is a positive common multiple of their finite indices, then \(MnP\in U_2\cap U_{73}\) for every integer \(n\). Therefore all points
+\[
+ Q_n=Q+MnP\qquad(n\in\mathbb Z)
+\]
+satisfy (6). They are distinct because \(P\) has infinite order. The nonconstant rational function \(X\) on \(E\) has finite fibers, so it produces infinitely many different rational values \(a/b\), in lowest terms with \(b>0\).
+
+The first condition in (6) makes \(a\) odd and \(b\) even. The second makes \(73\nmid b\), and (5) implies \(73^3\mid F(a,b)\). Equation (3) gives
+\(F(a,b)=73z^2\) for a rational number \(z=b^2Y\). In fact \(z\) is an integer: if its reduced denominator is \(e\), then \(e^2\mid73\), forcing \(e=1\). The divisibility by \(73^3\) now implies \(73\mid z\), and hence (1).
+
+\paragraph{Primitivity, pairwise coprimality, and positivity.}
+Let \(A=a^2-b^2+2ab\). It is odd. Coprimality of \(a,b\) gives \(\gcd(A,a)=\gcd(A,b)=1\). If an odd prime divides both \(A\) and \(b^2-a^2\), it also divides \(2ab\), which is impossible. Thus \(\gcd(N,d)=1\).
+
+Suppose a prime \(p\) divided two terms \(N+id,N+jd\), with \(0\leq i<j\leq3\). Since \(\gcd(N,d)=1\), it would not divide \(d\). Since both terms are powerful, \(p^2\) would divide their difference \((j-i)d\), and hence divide \(j-i\in\{1,2,3\}\), impossible. Thus the four terms are pairwise coprime.
+
+Outside the finitely many zeros of the displayed square factors and of \(F(a,b)\), all four terms are positive. Discard also the finitely many ratios with \(d=0\). When \(d<0\), reverse the order of the progression. Finally, infinitely many ratios give infinitely many progressions: bounded quadruples would bound the square \((a^2+b^2)^2\), allowing only finitely many integer pairs \((a,b)\).
+
+\paragraph{Scope and attribution.}
+The affirmative resolution, curve, and seed point are due to P. Bajpai, M. A. Bennett, and T. H. Chan, \emph{Arithmetic progressions in squarefull numbers}, Section 5.3, \url{https://arxiv.org/abs/2302.03113}; the checked preprint is its February 2023 version. The local-neighborhood argument above proves infinitude from their seed. Lutz--Nagell and the stated facts about \(E(\mathbb Q_p)\) are external standard inputs; see J. S. Milne, \emph{Elliptic Curves}, the chapters on elliptic curves over \(\mathbb Q_p\) and \(\mathbb Q\), \url{https://www.jmilne.org/math/Books/ectext6.pdf}. Source statement: \url{https://www.erdosproblems.com/937}, checked 24 September 2026.
+
+This is a complete deduction relative to those standard elliptic-curve facts, with the finite seed calculations checked exactly. It does not claim a new theorem, a minimal quadruple, or local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

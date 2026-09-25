@@ -1,0 +1,56 @@
+\section*{Erd\H{o}s Problem 1105: constructive anti-Ramsey bounds}
+\subsection*{Statement and known results}
+Let $\mathrm{AR}(n,G)$ be the largest number of colours in an edge-colouring of $K_n$ without a rainbow $G$. The cycle question asks, for fixed $k\ge3$, whether
+\[
+ \mathrm{AR}(n,C_k)=\left(\frac{k-2}{2}+\frac1{k-1}\right)n+O_k(1).
+\]
+The path question, for $n\ge k\ge5$ and $\ell=\lfloor(k-1)/2\rfloor$, asks for the exact value
+\[
+ \max\left\{\binom{k-2}{2}+1,\
+ \binom{\ell-1}{2}+(\ell-1)(n-\ell+1)+\epsilon\right\},
+ \quad
+ \epsilon=\begin{cases}1&k\text{ odd},\\2&k\text{ even}.\end{cases}
+\]
+The current source attributes the cycle theorem to Montellano-Ballesteros--Neumann-Lara and the full path formula to Yuan's announced proof. Here we prove both proposed lower bounds and the exact triangle case. The matching general upper bounds remain unresolved in this attempt. This is exposition of known constructions, not a new resolution.
+
+\subsection*{Cycle lower bound, including the extra linear term}
+Partition the vertices into ordered blocks of size $k-1$, with one last smaller nonempty block if needed. Give every internal edge its own colour, all distinct across blocks. For each block except the last introduce one further colour; an edge between distinct blocks receives the colour of the earlier block.
+
+A cycle which visits more than one block uses at least two edges of the same colour: take the earliest block it visits, and look at the crossings into and out of it. Every such crossing has that block's colour. A rainbow cycle must therefore lie wholly inside a single block, and cannot have $k$ vertices.
+
+Writing $n=q(k-1)+s$, $0\le s<k-1$, the number of colours is
+\[
+ q\binom{k-1}{2}+\binom{s}{2}+q-1+\mathbf1_{s>0}.
+\]
+(The term for an absent last block is zero.) Since $s$ is bounded in terms of $k$, this is
+\[
+ \left(\frac{k-2}{2}+\frac1{k-1}\right)n+O_k(1).
+\]
+Colouring all cross-edges identically would lose the term $n/(k-1)$; the ordered-block rule is essential.
+
+\subsection*{Both competing path constructions}
+For the first bound, give the edges within a fixed $(k-2)$-vertex set distinct colours and all other edges one new colour. A rainbow path uses at most one edge not internal to that set. Any path on $k$ vertices has at least two such edges: it has at least two outside vertices, and these either require two connecting edges or lie in a consecutive outside segment together with a connecting edge. Thus there is no rainbow $P_k$, and the colouring uses $\binom{k-2}{2}+1$ colours.
+
+For the second bound choose $S$ of size $\ell-1$ and write $T=V(K_n)\setminus S$. Give every edge with at least one endpoint in $S$ a distinct colour. For odd $k$, colour all edges inside $T$ with a single additional colour. For even $k$, choose $t_0\in T$, colour its edges inside $T$ with one additional colour, and all remaining edges inside $T$ with another. Both colours occur because $|T|\ge4$ in the even case.
+
+In a path, the vertices in $T$ occur in at most $|S|+1=\ell$ runs. If the path has $k$ vertices, the number of its edges internal to $T$ is at least
+\[
+ |V(P)\cap T|-\ell\ge k-(\ell-1)-\ell=k-2\ell+1.
+\]
+This is two when $k=2\ell+1$ is odd and three when $k=2\ell+2$ is even. The available one or two colours inside $T$ force a repeated colour. The total number used is exactly
+\[
+ \binom{\ell-1}{2}+(\ell-1)(n-\ell+1)+\epsilon.
+\]
+Taking the better of the two constructions proves the entire conjectured path lower bound for every stated $(n,k)$.
+
+\subsection*{Exact triangle upper bound}
+A colouring without a rainbow triangle uses at most $n-1$ colours. Prove this by induction, including $n=1,2$. At a fixed vertex $v$, partition its neighbours into classes $V_1,\ldots,V_r$ according to the distinct incident colours $c_1,\ldots,c_r$. An edge between $V_i$ and $V_j$ must have colour $c_i$ or $c_j$, otherwise it completes a rainbow triangle with $v$. Every other colour occurs inside a class. Induction bounds the total by
+\[
+ r+\sum_{i=1}^r(|V_i|-1)=n-1.
+\]
+Conversely, colour the edge $ij$, $i<j$, by $i$. This uses $n-1$ colours and no rainbow triangle. Thus $\mathrm{AR}(n,C_3)=n-1$.
+
+\subsection*{Assessment and sources}
+The cycle leading coefficient and both exact path expressions are attained from below; the triangle case is fully proved. The difficult upper-bound arguments for general cycles and paths are not reproduced, so this is a partial attempt. Sources: \url{https://www.erdosproblems.com/1105}; Montellano-Ballesteros and Neumann-Lara, \emph{An anti-Ramsey theorem on cycles}, Graphs Combin. 21 (2005), 343--354; L.-T. Yuan, \emph{The anti-Ramsey number for paths}, \url{https://arxiv.org/abs/2102.00807}. The earlier local attempt supplied the triangle argument; the constructions here also address all general lower bounds.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 60\%}

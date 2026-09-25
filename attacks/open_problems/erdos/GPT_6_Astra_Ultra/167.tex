@@ -1,0 +1,33 @@
+\section*{Erd\H{o}s Problem 167: triangle packing and covering}
+\subsection*{Statement and outcome}
+Let $\nu(G)$ be the maximum number of pairwise edge-disjoint triangles, and let $\tau(G)$ be the fewest edges meeting every triangle. Tuza's conjecture is $\tau(G)\le2\nu(G)$.
+We prove the elementary factor-three bound, prove the full factor-two assertion whenever $\nu(G)=1$, extend that special case over independent triangle components, and verify both standard sharp examples. The general assertion remains unresolved in this attempt.
+
+\subsection*{Universal bounds}
+The union of the edges in a maximum triangle packing meets every triangle, since otherwise another triangle could be added. Thus
+\[
+ \nu(G)\le\tau(G)\le3\nu(G).
+\]
+The first inequality holds because each edge in a cover can meet at most one triangle of an edge-disjoint packing.
+Also $\tau(G)\le |E(G)|/2$: a random bipartition retains each edge as a crossing edge with probability $1/2$, so some bipartite subgraph has at least half the edges. This separate bound is useful for dense examples, but does not imply Tuza's inequality.
+
+\subsection*{The case of packing number one}
+Assume there is at least one triangle and every two triangles share an edge. If one edge belongs to all triangles, then $\tau=1$. Otherwise choose distinct triangles $abc$ and $abd$. There is a triangle avoiding $ab$. To meet both chosen triangles in edges, it must be $acd$ or $bcd$: the only compatible choices of one of $ac,bc$ and one of $ad,bd$ share respectively $a$ or $b$. Relabel $a,b$ if necessary, so the third triangle is $acd$.
+
+Every further triangle must meet all of $abc,abd,acd$ in edges. If it does not contain $a$, it must contain both $bc$ and $bd$, so is $bcd$. If it contains $a$, its other two vertices must be two of $b,c,d$, since otherwise it misses an edge of one of the three chosen faces. Thus every triangle is one of the four faces of this $K_4$.
+
+Two opposite edges, for example $ab$ and $cd$, meet all four faces. Hence $\tau\le2=2\nu$. This proves, more precisely, that a graph with $\nu=1$ either has a common triangle edge or has all its triangles within one $K_4$. In particular, a $K_4$-free graph with $\nu=1$ has $\tau=1$.
+
+\subsection*{A component extension and sharp examples}
+Form the auxiliary graph whose vertices are the triangles of $G$, joining two when they share an edge. Distinct components use disjoint sets of original edges; consequently both $\nu$ and $\tau$ add over these components. If each component is a clique, its packing number is one and the preceding proof gives Tuza's bound after summation. This includes arbitrarily many separated books and $K_4$ components.
+
+For $K_4$, every two triangles share an edge and no edge meets all four, so $(\nu,\tau)=(1,2)$.
+For $K_5$, two edge-disjoint triangles exist. Three would use nine of the ten edges; their union has even degree at every vertex, whereas deleting one edge from $K_5$ leaves two vertices of degree three. Thus $\nu(K_5)=2$.
+
+For completeness, a triangle-free graph with $n$ vertices and $e$ edges has at most $n^2/4$ edges: for each edge $uv$, the disjoint neighbourhoods give $d_u+d_v\le n$. Summing gives
+$\sum_vd_v^2\le ne$, whereas Cauchy gives $\sum_vd_v^2\ge4e^2/n$. Applied to $n=5$, at most six edges can remain. Deleting four edges to leave $K_{2,3}$ is possible, so $\tau(K_5)=4$.
+
+\subsection*{Assessment and attribution}
+The factor-three packing argument and the two sharp examples appeared in the old local \texttt{gpt\_pro\_5.2/167.tex}; they have been checked and the $K_5$ packing obstruction is now supplied explicitly. The pairwise-intersecting classification provides a further proved special case. It does not handle components whose triangles admit larger packings with complicated overlap. Source: \url{https://www.erdosproblems.com/167}. No claim of a new theorem or a general solution is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 30\%}

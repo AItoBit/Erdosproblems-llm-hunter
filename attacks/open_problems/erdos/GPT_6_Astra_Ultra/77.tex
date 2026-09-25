@@ -1,0 +1,43 @@
+\section*{Erd\H{o}s Problem 77: the exponential rate of diagonal Ramsey numbers}
+\subsection*{1. Statement and scope}
+Let $R(k)$ be the least order forcing a monochromatic $K_k$ in every two-colouring of complete-graph edges. Does $R(k)^{1/k}$ converge, and to what value? We reconstruct the classical exponential bounds and examine exactly what the natural graph-product construction proves. The existence of the limit remains unresolved. More recent upper bounds on its limsup, recorded on the problem page, are not reconstructed here.
+
+\subsection*{2. Elementary upper and lower bounds}
+For the asymmetric Ramsey numbers,
+\[
+ R(s,t)\le R(s-1,t)+R(s,t-1),\qquad R(1,t)=R(s,1)=1.
+\]
+To prove the recurrence, take a vertex in a colouring of the indicated order. Either its red neighbourhood has at least $R(s-1,t)$ vertices, or its blue neighbourhood has at least $R(s,t-1)$ vertices, because the two neighbourhood sizes sum to one less than the order. A homogeneous set there either already has the required size or gains one vertex by including the chosen vertex. Pascal's identity and induction give
+\[
+ R(s,t)\le\binom{s+t-2}{s-1},\qquad R(k)\le4^{k-1}.
+\]
+For the lower bound, take $N=\lfloor2^{k/2}\rfloor$ and colour edges independently and uniformly. The expected number of monochromatic $k$-sets is
+\[
+ 2\binom Nk2^{-\binom k2}
+ \le2\left(\frac{e\sqrt2}{k}\right)^k<1\qquad(k\ge9).
+\]
+Here $\binom Nk\le(eN/k)^k$, following from $k!\ge(k/e)^k$. A nonnegative integer random variable with expectation below one is zero for some outcome. Thus $R(k)>N$, and integrality implies $R(k)>2^{k/2}$. Consequently
+\[
+ \sqrt2\le\liminf R(k)^{1/k}\le\limsup R(k)^{1/k}\le4. \tag{1}
+\]
+
+\subsection*{3. What lexicographic products actually give}
+Choose graphs $G,H$ of orders $R(s)-1,R(t)-1$ with both clique and independence numbers at most $s-1,t-1$, respectively. Form $G[H]$: each vertex of $G$ is replaced by a copy of $H$, and two distinct copies are completely joined exactly when their vertices in $G$ are adjacent.
+A clique uses copies indexed by a clique of $G$, and inside each copy uses a clique of $H$. Conversely, maximum such choices attain the product. Thus $\omega(G[H])=\omega(G)\omega(H)$. The same reasoning with nonadjacent copies gives $\alpha(G[H])=\alpha(G)\alpha(H)$. Hence
+\[
+ R((s-1)(t-1)+1)>(R(s)-1)(R(t)-1). \tag{2}
+\]
+The clique parameter in (2) multiplies; it does not add. Therefore this construction does not supply an additive supermultiplicative or submultiplicative inequality to which the usual Fekete argument for $\log R(k)/k$ would apply. For example, two copies of the five-cycle construction give a $25$-vertex graph with clique and independence numbers at most four, a valid finite illustration of (2), without addressing the limiting rate.
+
+\subsection*{4. Monotonicity and exponential bounds are insufficient}
+For comparison define the increasing integer sequence
+\[
+ u_k=2^{\,2^{\lceil\log_2 k\rceil}}\qquad(k\ge1).
+\]
+It satisfies $2^k\le u_k\le4^k$. At $k=2^j$, $u_k^{1/k}=2$, whereas at $k=2^{j-1}+1$ the roots tend to four. Thus even monotonicity and fixed exponential bounds cannot alone prove root convergence. This auxiliary sequence is not a construction of Ramsey numbers or evidence of their nonconvergence; it identifies a missing logical ingredient in a proposed limit argument.
+
+\subsection*{5. Assessment and attribution}
+The bounds (1), product inequality (2), and the obstruction to the indicated shortcuts are proved. The missing step is a relation controlling the exponential rate across all large clique sizes, or upper and lower bounds with the same rate. This is a checked reconstruction and extension of earlier GPT-5.2 attempts, not a claim of new Ramsey bounds.
+Source: \url{https://www.erdosproblems.com/77}.
+
+\textbf{Completion rate estimate: 10\%.}

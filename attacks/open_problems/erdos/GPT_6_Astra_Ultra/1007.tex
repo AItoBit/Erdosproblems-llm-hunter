@@ -1,0 +1,31 @@
+\section*{Erd\H{o}s Problem 1007}
+
+\paragraph{Statement and answer.}
+The dimension of a finite simple graph is the least \(d\) admitting an injective placement of its vertices in \(\mathbb R^d\) in which adjacent vertices are distance one apart. Nonadjacent vertices may also be distance one apart. The smallest edge count for dimension four is \(\boxed{9}\), realized by \(K_{3,3}\). Up to adding isolated vertices, this is the only nine-edge example. We reconstruct the proof of House and Chaffee--Noble, including the elementary geometric ingredients.
+
+\paragraph{The obstruction and its four-dimensional realization.}
+Three distinct points \(a_1,a_2,a_3\) having a common point at distance one cannot be collinear: a line intersects a sphere in at most two points. If they are noncollinear in \(\mathbb R^3\), the equations
+\[
+ |x-a_1|^2=|x-a_2|^2=|x-a_3|^2=1
+\]
+put \(x\) on the intersection of two independent affine planes and a sphere. That intersection has at most two points. Thus three distinct vertices cannot all be adjacent to each of three other distinct vertices in a unit-distance representation in \(\mathbb R^3\). This excludes \(K_{3,3}\).
+
+In \(\mathbb R^4\), place one part on the circle of radius \(1/\sqrt2\) in the first two coordinate directions, and the other on the circle of the same radius in the last two directions. Choose three distinct points on each circle. Orthogonality gives squared distance \(1/2+1/2=1\) between every cross-part pair; the two circles are disjoint. Hence \(K_{3,3}\) has dimension exactly four and nine edges.
+
+\paragraph{Every graph with at most eight edges embeds in three dimensions.}
+Suppose otherwise, and choose a counterexample minimizing first its number of edges and then its number of vertices. It has no isolated vertex, since isolated vertices can be placed at unused points. It has no vertex of degree one: after embedding the smaller graph, a unit sphere about the neighbour has infinitely many unused points.
+
+Nor can it have a vertex \(v\) of degree two, with neighbours \(x,y\). Delete \(v\) and, if necessary, add \(xy\). This produces a graph with fewer edges, so it has an injective unit-distance representation in \(\mathbb R^3\). The unit spheres about \(x,y\), now distance one apart, meet in a circle of radius \(\sqrt3/2\). Place \(v\) at a point of that circle unused by the finitely many other vertices. Discarding the extra edge \(xy\), if it was added, gives the forbidden embedding of the original graph.
+
+The counterexample therefore has minimum degree at least three. Since it has at most eight edges, it has at most five vertices. Any graph on at most four vertices embeds by taking a subset of the vertices of a regular unit tetrahedron. A noncomplete graph on five vertices is a subgraph of \(K_5-e\). That latter graph embeds as a triangular bipyramid: take an equilateral unit triangle in the plane \(z=0\), and put its two apices above and below its centre at heights \(\sqrt{2/3}\). The centre-to-vertex distance of the triangle is \(1/\sqrt3\), so all nine required distances are one. Only the apex-to-apex edge is omitted. A graph with at most eight edges on five vertices is noncomplete, completing the contradiction.
+
+\paragraph{Uniqueness at nine edges.}
+Consider a nine-edge graph that does not embed in \(\mathbb R^3\), and discard its isolated vertices. The degree-one and degree-two reductions just proved apply again, because their reduced graphs have at most eight edges. Thus its minimum degree is three and it has at most six vertices. Five or fewer vertices are handled by the preceding tetrahedron and bipyramid constructions.
+
+On six vertices the graph is cubic. Its complement is a simple two-regular graph, hence either \(C_6\) or the union of two triangles. The complement of two triangles is \(K_{3,3}\). The complement of \(C_6\) is the triangular prism: the odd and even positions on the cycle form its two triangles, with a perfect matching between them. Place two congruent equilateral unit triangles in parallel planes distance one apart, matching corresponding vertices vertically. This is an injective unit-distance representation in \(\mathbb R^3\). Only \(K_{3,3}\) remains.
+
+\paragraph{Attribution and assessment.}
+House first established the result. The minimal-counterexample reduction above follows J. Chaffee and M. Noble, \emph{Dimension 4 and dimension 5 graphs with minimum edge set}, Theorems 6--7, \url{https://ajc.maths.uq.edu.au/pdf/64/ajc_v64_p327.pdf}. See \url{https://www.erdosproblems.com/1007}, checked 24 September 2026. The proof here supplies all geometric and graph-theoretic inputs needed for dimension four. No novelty or local Lean verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

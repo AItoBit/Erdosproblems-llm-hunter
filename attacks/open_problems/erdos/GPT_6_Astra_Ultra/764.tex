@@ -1,0 +1,80 @@
+\section*{Erd\H{o}s Problem \#764: bounded error in an additive convolution}
+\subsection*{Statement and outcome}
+Can \(A\subseteq\mathbb N\) and \(c>0\) satisfy
+\[
+S(N):=\sum_{j\leq N}1_A^{*3}(j)=cN+O(1)?
+\]
+Here the convolution counts ordered representations, with repetitions allowed. The answer is no. We prove the bounded-error assertion itself; stronger quantitative error estimates require further work and are not claimed. Attempt status: solved.
+
+\subsection*{Generating functions}
+Suppose instead that \(S(N)=cN+E_N\), where \(|E_N|\leq M\) for every \(N\geq0\), enlarging \(M\) to include any initial exceptions. Write
+\[
+F(z)=\sum_{a\in A}z^a,\qquad E(z)=\sum_{N\geq0}E_Nz^N.
+\]
+For \(|z|<1\), absolute convergence and the cumulative-sum identity give
+\[
+F(z)^3=\frac{cz}{1-z}+(1-z)E(z). \tag{1}
+\]
+This is valid whether the convention for \(\mathbb N\) includes zero. In particular, for real \(s\uparrow1\),
+\[
+F(s)^3=\frac{cs}{1-s}+O(1),\qquad
+(1-s)^{1/2}F(s)^{3/2}\longrightarrow\sqrt c. \tag{2}
+\]
+
+Fix a positive integer \(m\), and put \(H_m(z)=1+z+\cdots+z^{m-1}\). All integrals below are with respect to normalized angular measure \(d\theta/(2\pi)\), with \(z=re^{i\theta}\) and \(0<r<1\). Let
+\[
+J=\int |F(z)H_m(z)|^2,\qquad W=\int|H_m(z)|^2=\sum_{j=0}^{m-1}r^{2j}.
+\]
+The coefficient \(b_\ell\) of \(F H_m\) is a nonnegative integer. Thus \(b_\ell^2\geq b_\ell\), and Parseval gives
+\[
+J=\sum_\ell b_\ell^2r^{2\ell}
+ \geq\sum_\ell b_\ell r^{2\ell}=W F(r^2). \tag{3}
+\]
+
+Applying the power-mean inequality to the probability measure \(|H_m|^2\,d\theta/(2\pi W)\), we obtain
+\[
+I:=\int|F(z)|^3|H_m(z)|^2
+ \geq W\left(\frac JW\right)^{3/2}
+ \geq W F(r^2)^{3/2}. \tag{4}
+\]
+This weighted step is necessary: \(|F|^3\) is not the square modulus of the original generating function.
+
+\subsection*{The error gains a square root in the averaging length}
+Since \(|H_m(z)|\leq m\), the main term in (1) contributes at most
+\[
+cm^2\int\frac{d\theta/(2\pi)}{|1-re^{i\theta}|}
+=O_c\left(m^2\log\frac{2}{1-r}\right). \tag{5}
+\]
+For completeness, \(|1-re^{i\theta}|^2=(1-r)^2+4r\sin^2(\theta/2)\); for \(r\geq1/2\), integrating separately over \(|\theta|\leq1-r\) and its complement proves (5).
+
+By Cauchy--Schwarz and Parseval,
+\[
+\int |E(z)|\,|(1-z)H_m(z)^2|
+ \leq\left(\frac{M^2}{1-r^2}\right)^{1/2}
+       \left(\int|(1-z)H_m(z)^2|^2\right)^{1/2}
+ \leq\frac{M\sqrt{2m}}{\sqrt{1-r^2}}. \tag{6}
+\]
+Indeed,
+\[
+(1-z)H_m(z)^2=(1-z^m)H_m(z)
+=\sum_{j=0}^{m-1}z^j-\sum_{j=m}^{2m-1}z^j,
+\]
+so its squared coefficient norm is \(2m\). Combining (1), the lower estimate, (5) and (6) yields
+\[
+W F(r^2)^{3/2}
+\leq O_c\left(m^2\log\frac{2}{1-r}\right)
+ +\frac{M\sqrt{2m}}{\sqrt{1-r^2}}.
+\]
+Multiply by \(\sqrt{1-r^2}\) and let \(r\uparrow1\), keeping \(m\) fixed. Equation (2), \(W\to m\), and the vanishing of the logarithmic term imply
+\[
+m\sqrt c\leq M\sqrt{2m}.
+\]
+Choosing an integer \(m>2M^2/c\) is a contradiction. Thus no bounded-error example exists.
+
+\subsection*{Attribution and scope}
+
+R. C. Vaughan proved a substantially stronger result in \emph{On the addition of sequences of integers}, J. Number Theory 4 (1972), 1--16, \url{https://doi.org/10.1016/0022-314X(72)90008-X}. The proof above reconstructs only the bounded-error obstruction, using the classical generating-function method and an explicit weighted power-mean step; Vaughan's stronger theorem is not an input. The same argument, with exponent \(h/2\), proves the bounded-error impossibility for every integer \(h\geq2\).
+
+Statement checked at \url{https://www.erdosproblems.com/764} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

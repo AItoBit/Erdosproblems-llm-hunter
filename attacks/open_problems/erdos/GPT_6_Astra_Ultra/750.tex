@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 750: an arbitrary diverging independence error}
+\subsection*{1. Statement and outcome}
+Given $f:\mathbb N\to[0,\infty)$ with $f(m)\to\infty$, construct a graph of infinite chromatic number such that every $m$-vertex subgraph $F$ has
+\[
+ \alpha(F)\ge m/2-f(m).
+\]
+We reconstruct the affirmative May 2026 proof of Chojecki and GPT-5.5 Pro. In fact we establish the stronger conclusion that prescribed, arbitrarily slowly diverging numbers of vertex deletions make all finite subgraphs bipartite. The earlier local attempts prove a fixed proportional error, or one unspecified sublinear error; neither implication alone permits a prescribed $f$. The finite profile induction below supplies that missing quantifier.
+\subsection*{2. Construction and the external chromatic input}
+For a finite graph $H$ and $s\ge1$, define $M_s(H)$ on $\{0,\ldots,s-1\}\times V(H)$ and one apex $z$. Put a copy of $H$ on level zero; for every $uv\in E(H)$ put edges $(i,u)(i+1,v)$ and $(i,v)(i+1,u)$ between consecutive levels; join $z$ to every vertex on level $s-1$. There are no further edges.
+Let $\mathcal M_2=\{K_2\}$ and $\mathcal M_{r+1}=\{M_s(H):H\in\mathcal M_r, s\ge1\}$. We use Stiebitz's theorem, in precisely this recursive form:
+\[
+ H\in\mathcal M_r\quad\Longrightarrow\quad\chi(H)\ge r. \tag{1}
+\]
+The opposite bound follows inductively by giving all copies of a base vertex its base color and using one new color for the apex. The nontrivial lower bound (1), stated as Theorem 1.1 by M\"uller and Stehl\'ik, is our sole external graph-theoretic input. No assertion about arbitrary base graphs is substituted for it.
+Write $\operatorname{oct}(H)$ for the minimum number of vertices whose deletion makes $H$ bipartite.
+\subsection*{3. Two local facts}
+For $X\subseteq V(M_s(H))$, let $P$ be the set of base vertices having a copy in $X$, ignoring the apex. Then
+\[
+ \operatorname{oct}(M_s(H)[X])\le s\operatorname{oct}(H[P])+\mathbf1_{z\in X}. \tag{2}
+\]
+Indeed, delete all copies of a minimum odd-cycle transversal of $H[P]$ and also the apex if present. Color each remaining copy by the side of its base vertex in the surviving bipartite graph. All remaining edges join opposite sides.
+If $H[P]$ is already bipartite, any odd cycle of $M_s(H[P])$ must contain the apex. Removing that apex leaves an odd-length path between two vertices in level $s-1$. Every edge outside level zero changes the level by one, so a returning path with no level-zero edge has even length. An odd returning path must descend to zero, use an edge there, and return, requiring at least $2s-1$ edges. The original odd cycle therefore has length at least $2s+1$.
+\subsection*{4. Finite profiles by induction}
+We prove that for every nondecreasing unbounded $g:\mathbb N\to\mathbb N_0$ and every $r\ge2$ there is $H\in\mathcal M_r$ satisfying
+\[
+ \operatorname{oct}(H[X])\le g(|X|)\qquad(\varnothing\ne X\subseteq V(H)). \tag{3}
+\]
+The base $r=2$ uses $K_2$. Suppose the assertion holds for $r$. The zeros of $g$ form a finite initial segment; let its last index be $m_0$, or put $m_0=0$ if there are no zeros. Choose $s\ge2$ with $2s+1>m_0$ and set
+\[
+ h(t)=\max\left(0,\left\lfloor\frac{g(t)-1}{s}\right\rfloor\right).
+\]
+This function is again nondecreasing and unbounded. Apply the inductive hypothesis to obtain $H_0\in\mathcal M_r$ with profile $h$, and set $H=M_s(H_0)$.
+Take nonempty $X$, put $m=|X|$, and let $P$ be its projection. If $P=\varnothing$, $X$ consists only of the apex and (3) holds. Otherwise $|P|\le m$. If $g(m)\ge1$, (2) gives
+\[
+ \operatorname{oct}(H[X])\le s h(|P|)+1\le s h(m)+1\le g(m).
+\]
+If $g(m)=0$, then $h(|P|)=0$, so $H_0[P]$ is bipartite. An odd cycle in $H[X]$ would have to contain the apex and have at least $2s+1>m_0\ge m$ vertices, impossible. Thus (3) holds also in the zero-budget case. The chromatic number is $r+1$ by (1), completing the induction.
+\subsection*{5. Combining all chromatic numbers}
+Given $g$ as above, apply (3) for each $r\ge2$ to the profile
+\[
+ g_r(t)=\lfloor 2^{-r}g(t)\rfloor
+\]
+and obtain a finite graph $H_r$ of chromatic number $r$. Let $G$ be their disjoint union. It is countable and not colorable with any finite number of colors.
+For a finite vertex set $X$ of size $m$, put $X_r=X\cap V(H_r)$. Choosing the transversals separately gives
+\[
+ \operatorname{oct}(G[X])
+ \le\sum_{r:X_r\ne\varnothing}g_r(|X_r|)
+ \le\sum_{r\ge2}2^{-r}g(m)\le g(m).
+\]
+The monotonicity of $g$ is used here; there is no unwarranted additivity assumption on its values.
+Finally, for the prescribed possibly nonmonotone $f$, define
+\[
+ g(m)=\left\lfloor\inf_{t\ge m}2f(t)\right\rfloor.
+\]
+This is nonnegative, nondecreasing, unbounded, and at most $2f(m)$. Deleting at most $g(m)$ vertices from any induced $m$-vertex subgraph leaves a bipartite graph. Its larger color class has size at least $(m-g(m))/2\ge m/2-f(m)$. Deleting edges only increases independence number, so the same conclusion holds for every subgraph on those vertices.
+\subsection*{6. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/750}; P. Chojecki and GPT-5.5 Pro, \emph{Local odd-cycle transversals in generalized Mycielski graphs and an Erd\H{o}s problem on almost-half independent sets}, \url{https://www.ulam.ai/research/erdos750.pdf}; T. M\"uller and M. Stehl\'ik, \emph{Generalised Mycielski graphs and the Borsuk--Ulam theorem}, \url{https://arxiv.org/abs/1710.01072}.
+Nonnegativity of $f$ is the natural convention and is necessary to avoid trivial finite-size obstructions. The proof treats every finite size, including zero deletion budgets. This is a full reconstruction of the known affirmative argument relative to (1), not a new result or a claim to reprove Stiebitz's theorem.
+\textbf{SOLVED:} every prescribed nonnegative diverging error function is attained.
+\textbf{Completion rate estimate: 100\%.}

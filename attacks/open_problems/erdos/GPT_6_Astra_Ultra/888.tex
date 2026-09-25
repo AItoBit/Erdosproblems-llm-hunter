@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 888: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and provenance}
+Let $F(n)$ be the largest size of $A\subseteq[1,n]$ such that, whenever $a\le b\le c\le d$ belong to $A$ and $abcd$ is a square, one has $ad=bc$. Repetitions are permitted. We reconstruct the current order-of-magnitude resolution
+\[
+ F(n)\asymp\frac{n\log\log n}{\log n}
+\]
+from the April 2026 draft \emph{A square-product rigidity problem of Erd\H{o}s, S\'ark\"ozy and S\'os}, linked by the problem page, \url{https://www.ulam.ai/research/erdos888.pdf}. The graph and summation arguments are proved below; the standard prime estimates used are stated explicitly.
+
+\section*{The lower bound and the repetition convention}
+Take all primes and all squarefree semiprimes $pq$ with $p<q$, up to $n$. Four primes with square product occur in equal pairs, giving the required identity. For two primes and two semiprimes, either both pairs are repeated, or the numbers are $p,q,pr,qr$; their smallest and largest have the same product as the middle pair. Four semiprimes correspond to four loopless edges on prime vertices. Square product means every vertex has even degree. The multigraph is either a union of doubled edges or a four-cycle. In the latter case the values are $ux,uy,vx,vy$, and again the extreme product equals the middle product. An odd number of prime entries is impossible because the total number of prime factors counted with multiplicity would be odd. This proves rigidity, including repeated entries.
+
+Prime squares must not be included indiscriminately: for example $4,4,4,9$ have square product but $4\cdot9\ne4\cdot4$. The word squarefree above is essential.
+
+For the size lower bound, take $p\le n^{1/3}$ prime and $n/(2p)<q\le n/p$ prime. The prime number theorem gives $\gg n/(p\log n)$ choices for $q$, uniformly in this range, and $q>p$ for large $n$. Distinct pairs give distinct semiprimes. The prime reciprocal estimate $\sum_{p\le x}1/p=\log\log x+O(1)$ therefore gives $\gg n\log\log n/\log n$ elements.
+
+\section*{Reduction and an elementary colored-graph estimate}
+Write $G(n)$ for the maximum restricted to squarefree integers. Every integer is uniquely $k^2s$ with $s$ squarefree. For fixed $k$, dividing the elements of $A$ having this square part by $k^2$ preserves both ordering and the rigidity property. Hence
+\[
+ F(n)\le\sum_{k\le\sqrt n}G(\lfloor n/k^2\rfloor).\tag{1}
+\]
+If $G(x)\ll x\log\log x/\log x$, the range $k\le n^{1/3}$ in (1) is bounded by $O(n\log\log n/\log n)\sum k^{-2}$, and the remaining range is at most $n\sum_{k>n^{1/3}}k^{-2}=O(n^{2/3})$. It suffices to prove the squarefree estimate.
+
+A bipartite graph with sides $M\le N$, $e$ edges, and $c_4$ unlabelled rectangles satisfies
+\[
+ e\ll N+M\sqrt N+(MN)^{1/2}c_4^{1/4}.\tag{2}
+\]
+If $e$ exceeds a sufficiently large constant times $N+M\sqrt N$, convexity first gives at least $\gg e^2/N$ two-edge paths with endpoints on the $M$ side. Distributing these paths among its $\binom M2$ pairs and applying convexity again gives $c_4\gg e^4/(M^2N^2)$. Otherwise the first terms of (2) suffice.
+
+If $T$ such graphs share the same sides and no rectangle is complete in two colors, their rectangle counts sum to at most $\binom M2\binom N2$. Summing (2) and applying H\"older yields
+\[
+ \sum e\ll T(N+M\sqrt N)+T^{3/4}MN.\tag{3}
+\]
+
+\section*{Encoding integers by two largest primes}
+For squarefree $a$ with at least two prime factors, write $a=cpq$, where $p<q$ are its largest two primes. Fix dyadic intervals $X<p\le2X$, $Y<q\le2Y$, $X\le Y$. Color edge $pq$ by $c$. The possible squarefree cores satisfy
+\[
+ cXY\le n,\qquad P^+(c)<2X;
+\]
+put $T(X,Y)$ for their number. For $X=Y$, a random bipartition of the prime interval retains half the colored edges on average; choose a partition retaining at least this many. Thus we can use bipartite graphs throughout at only a constant loss.
+
+No rectangle is complete in two distinct core colors $c,d$. Otherwise, for four distinct endpoint primes $p,q,r,s$, the set contains $cpr,cqs,dps,dqr$. The endpoints divide neither core: they are all larger than every prime factor of both cores, because each color contains the whole rectangle. These four integers are distinct, their product is a square, and their three possible equal-product pairings would respectively imply $c=d$, $p=q$, or $r=s$. All are impossible. This contradicts rigidity.
+
+Let $L(x)=\log(2+x)$. The standard prime estimate $\pi(x)\ll x/L(x)$ bounds side sizes by $O(X/L(X))$, $O(Y/L(Y))$; swapping sides if necessary preserves these ordered bounds up to absolute constants. Therefore (3) bounds the block by
+\[
+ E(X,Y)\ll T\left(\frac Y{L(Y)}+\frac{X\sqrt Y}{L(X)\sqrt{L(Y)}}\right)
+       +T^{3/4}\frac{XY}{L(X)L(Y)}.\tag{4}
+\]
+We now sum all three terms, supplying the smooth-core estimates rather than leaving their uniformity implicit.
+
+\section*{The rectangle term}
+Since $T\le n/(XY)$, this term sums to at most
+\[
+ n^{3/4}\sum_{X\le Y,XY\le n}\frac{(XY)^{1/4}}{L(X)L(Y)}
+ \ll n\sum_{X\le\sqrt n}\frac1{L(X)L(n/X)}
+ \ll\frac{n\log\log n}{\log n}.\tag{5}
+\]
+All sums here and below are dyadic. The inner $Y$ sum is geometrically dominated by its final scale. For the last inequality put $X=2^j$: its denominator is comparable to $(j+1)(1+\log n-j\log2)$, and $j\le\frac12\log_2n$ gives a harmonic sum divided by $\log n$.
+
+\section*{The term linear in the larger side}
+Interchange the sum over cores and put $\rho(c)=\max(2,P^+(c))$. For fixed $c,X$, summing $Y/L(Y)$ up to $n/(cX)$ gives $\ll n/(cXL(n/(cX)))$. Since $X>P^+(c)/2$ and $X^2\le n/c$, the remaining geometric sum over $X$ is at most
+\[
+ \frac{C}{\rho(c)L(n/(c\rho(c)))}.
+\]
+Indeed write $X\asymp2^j\rho$; nonemptiness forces $2^j\ll\sqrt{n/(c\rho^2)}$, so the logarithmic denominator stays comparable to its value at the first scale, and $2^{-j}$ is summable. It remains to show
+\[
+ \sum_{c\rho(c)^2\le4n}\frac1{c\rho(c)L(n/(c\rho(c)))}\ll\frac1{\log n}.\tag{6}
+\]
+The core $1$ is immediate. For $c>1$ write $c=rd$, with $r$ prime and $d$ squarefree having all prime factors below $r$. The summand is $1/(dr^2L(n/(dr^2)))$ and $dr^3\le4n$.
+
+We use the standard consequences of prime estimates
+\[
+ \prod_{p<x}(1+1/p)\ll L(x),\qquad \prod_{p<x}p\le e^{C_0x}.\tag{7}
+\]
+For $r\le\eta\log n$, with $\eta$ sufficiently small, $d\le e^{C_0r}\le n^{1/3}$, so $L(n/(dr^2))\gg\log n$. Summing $1/d$ using (7) bounds these terms by $O(1/\log n)\sum_rL(r)/r^2=O(1/\log n)$. For $r>\eta\log n$, the cutoff gives $n/(dr^2)\ge r/4$, hence the denominator is $\gg L(r)$. Equation (7) cancels that factor, leaving $O(\sum_{r>\eta\log n}r^{-2})=O(1/\log n)$. This proves (6) and bounds this portion of (4) by $O(n/\log n)$.
+
+\section*{The remaining graph term}
+Discard $\sqrt{L(Y)}$ from its denominator and put
+\[
+ T_0(X)=|\{c\le n/X^2:c\text{ squarefree},\ P^+(c)<2X\}|.
+\]
+Since $T(X,Y)\le\min(T_0(X),n/(XY))$, splitting the dyadic $Y$ sum at $n/(XT_0(X))$ gives
+\[
+ \sum_Y\min(T_0(X),n/(XY))\sqrt Y\ll\sqrt{nT_0(X)/X}.
+\]
+Thus the whole term is at most
+\[
+ \sqrt n\sum_{X\le\sqrt n}\frac{\sqrt{XT_0(X)}}{L(X)}.\tag{8}
+\]
+For $X\ge(\log n)^4$, use $T_0(X)\le n/X^2$; the resulting geometric tail is $O(n/(\log n)^2)$. For smaller $X$, Rankin's elementary inequality $1_{c\le U}\le(U/c)^{3/4}$ gives
+\[
+ T_0(X)\le(n/X^2)^{3/4}\prod_{p<2X}(1+p^{-3/4})
+ \le n^{3/4+o(1)}X^{-3/2}.
+\]
+Here the standard partial-summation estimate $\sum_{p<x}p^{-3/4}\ll x^{1/4}/L(x)$ makes the product at most $\exp(O(\log n/\log\log n))=n^{o(1)}$, uniformly for $X<(\log n)^4$. Substitution in (8) gives $n^{7/8+o(1)}\sum_X X^{-1/4}/L(X)=o(n/\log n)$, because this dyadic series converges. Thus this final term is also $O(n/\log n)$.
+
+The squarefree element $1$ and the primes contribute only $O(n/\log n)$ additionally. Equations (4)--(8) prove $G(n)\ll n\log\log n/\log n$, and (1) completes the upper bound for arbitrary integers.
+
+\section*{Assessment}
+Both bounds and the full colored-rectangle reduction are proved relative only to the stated classical prime-number estimates (prime number theorem, reciprocal-prime estimate, and their elementary consequences). This reconstructs the cited recent resolution; the square-part reduction, repeated entries and uniform smooth-core cutoff are all included explicitly.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

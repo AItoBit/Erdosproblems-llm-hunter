@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 958: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and counting convention}
+Does a planar $n$-point configuration with $n-1$ distinct distances of multiplicities $1,2,\ldots,n-1$ have to consist of equally spaced points on a line or circle? No. Multiplicity must count unordered pairs for this intended question: the current page says ``ordered pairs'', but every positive-distance ordered multiplicity is even, so that literal convention cannot give a multiplicity one. The construction below answers the intended unordered formulation; its ordered multiplicities are twice the displayed values.
+
+Clemen, Dumitrescu and Liu give the arc-and-center family in \emph{On multiplicities of interpoint distances}, \url{https://arxiv.org/abs/2505.04283}. The discussion at \url{https://www.erdosproblems.com/forum/thread/958} also records a four-point example and formal verification. We prove the geometric assertions directly.
+
+\section*{A four-point certificate}
+Take
+\[
+ A=\{(0,0),(1,0),(0,1),(0,-1)\}.
+\]
+The six squared distances are $1,1,1,2,2,4$, so the three distances $1,\sqrt2,2$ have multiplicities $3,2,1$, respectively. The set is not collinear since $(1,0)$ lies off the line through the other three points. It is not contained in a circle because a circle meets a line in at most two points, whereas $(0,-1),(0,0),(0,1)$ are three distinct collinear members. Thus it belongs to neither proposed family.
+
+\section*{An arbitrarily large family without collinear triples}
+For any $m\ge3$ choose $0<\theta<\pi/(3(m-1))$ and take the origin together with the $m$ points
+\[
+ z_j=e^{ij\theta},\qquad 0\le j<m.
+\]
+Put $n=m+1$. Distances within the arc are
+\[
+ d_h=2\sin(h\theta/2),\qquad 1\le h<m.
+\]
+They are strictly increasing and strictly less than one, since $(m-1)\theta<\pi/3$. The distance $d_h$ occurs exactly $m-h$ times, from pairs whose indices differ by $h$. The origin contributes exactly $m$ additional pairs of distance one. Therefore there are $m=n-1$ distinct distances with multiplicities $1,\ldots,m$.
+
+No three arc points are collinear, because they lie on a circle. A line through the origin meets the circle at an antipodal pair, and the short arc contains no such pair; hence this configuration has no three collinear points at all. The $m\ge3$ arc points determine the unit circle uniquely, which does not contain the origin. Thus the full configuration is neither collinear nor concyclic, and again cannot be one of the proposed families.
+
+\section*{Assessment}
+The negative answer, a minimal explicit certificate, and an unbounded-size family are proved completely. The ordered/unordered discrepancy is stated rather than silently built into the multiplicity calculation.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

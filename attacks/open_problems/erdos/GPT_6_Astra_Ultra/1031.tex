@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1031: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+
+\section*{Statement and scope}
+Yes: for all sufficiently large $n$, every graph $G$ with $\omega(G),\alpha(G)\le10\log n$ contains an induced cycle on at least $c\log n$ vertices, for an absolute $c>0$. A cycle of length at least four is both nontrivial and regular of degree two. Thus the slightly stronger cycle conclusion suffices. Logarithm bases only change the constants; below all logarithms have base two.
+
+Pr\"omel and R\"odl proved the stronger logarithmic universality theorem in \emph{Non-Ramsey graphs are $c\log n$-universal}, JCTA 88 (1999), 379--384, \url{https://doi.org/10.1006/jcta.1999.2972}. We reconstruct its consequence quantitatively from the following two explicit inputs, as stated and used in Fox--Sudakov, \emph{Induced Ramsey-type theorems}, Section 1.1 and Theorem 1.1, \url{https://kam.mff.cuni.cz/~matousek/cla/fox-sudakov-induced-ramsey.pdf}. These structural theorems are external inputs, not independently established here.
+
+\section*{The structural inputs}
+There are absolute constants $A,a>0$ with these properties.
+\begin{enumerate}
+\item If an $N$-vertex graph has no induced copy of a specified $k$-vertex graph $H$, and $0<\varepsilon<1/2$, it has a vertex subset $W$ of size at least
+\[
+ |W|\ge 2^{-Ak(\log(1/\varepsilon))^2}N
+\tag{1}
+\]
+whose induced edge density is at most $\varepsilon$ or at least $1-\varepsilon$ (Fox--Sudakov).
+\item For each fixed $0<\varepsilon<1/4$ and all sufficiently large $M$ depending on $\varepsilon$, every graph of order $M$ and edge density at most $\varepsilon$ has a clique or independent set of size at least
+\[
+ \frac{a\log M}{\varepsilon\log(1/\varepsilon)}.
+\tag{2}
+\]
+This is the fixed-density-parameter form of the Erd\H{o}s--Szemer\'edi sparse-graph theorem. It applies equally to complements. The sufficiently-large-order qualification avoids asserting an impossible bound greater than $M$ at tiny orders or when a density parameter varies with $M$.
+\end{enumerate}
+The constants do not depend on $H,k,M,N$ or the density. In particular (1) remains valid when $k$ grows with $N$, which is essential here.
+
+\section*{Choose constants before the graph}
+Fix a constant $C>0$ and assume $\operatorname{hom}(G)\le C\log n$; the question corresponds to one fixed $C$ after converting its logarithm convention. Choose $0<\varepsilon<1/4$ so small that
+\[
+ \frac{a}{2\varepsilon\log(1/\varepsilon)}>C.
+\tag{3}
+\]
+This is possible because $\varepsilon\log(1/\varepsilon)\to0$. Put $L=\log(1/\varepsilon)$ and choose
+\[
+ \eta=\min\{1,(2AL^2)^{-1}\},\qquad
+ k=\lfloor\eta\log n\rfloor.
+\]
+For large $n$, $k\ge4$. Suppose $G$ omits any $k$-vertex induced graph $H$. By (1) it has a subset $W$ with
+\[
+ |W|\ge2^{-AkL^2}n\ge\sqrt n.
+\tag{4}
+\]
+Replacing $G[W]$ by its complement if necessary, its density is at most the fixed constant $\varepsilon$. By (4), $|W|$ tends to infinity, so (2) applies for sufficiently large $n$. Equations (2)--(4) give
+\[
+ \operatorname{hom}(G)\ge
+ \frac{a\log |W|}{\varepsilon\log(1/\varepsilon)}
+ \ge\frac{a\log n}{2\varepsilon\log(1/\varepsilon)}
+ > C\log n,
+\]
+also a contradiction. Hence $G$ contains every graph on $k$ vertices as an induced subgraph.
+
+\section*{Extract an explicitly nontrivial regular graph}
+Take $H=C_k$, the cycle of length $k\ge4$. The induced copy has exactly two neighbours per vertex, is connected, has edges, and is not complete. Its order satisfies
+\[
+ k\ge\tfrac12\eta\log n
+\]
+for sufficiently large $n$. This proves the requested $\Omega(\log n)$ conclusion with a constant independent of the particular graph. It also proves the stronger universality statement with constants depending only on $C$. The original hypothesis is nonvacuous: independent fair choices of edges give a graph with no homogeneous set of size $\lceil4\log n\rceil$, because its expected number of such sets is at most $2n^k2^{-\binom k2}=o(1)$.
+
+\section*{Assessment}
+The deduction, choice of constants, dependence on the growing target order, and nontrivial regular example are complete. The substantial imported ingredients are precisely (1) and (2); this is a reconstruction using established theorems, not a new independent proof of those theorems.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

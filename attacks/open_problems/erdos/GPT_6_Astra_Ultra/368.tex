@@ -1,0 +1,51 @@
+\section*{Erd\H{o}s Problem 368: a repaired St\o rmer argument}
+\subsection*{Statement and outcome}
+Let $F(n)$ be the largest prime factor of $n(n+1)$. The question is to estimate its growth, including the conjectural uniform scale $(\log n)^2$. We prove the explicit counting statement
+\[
+ \#\{n\ge1:F(n)\le y\}\le3^{\pi(y)}, \tag{1}
+\]
+and hence $F(n)\to\infty$. We also extract an almost-everywhere lower bound from (1). These do not settle the uniform quantitative question.
+
+The previous GPT-5.2 proof mishandled the last binomial term in its Pell argument, and the GPT-Pro-5.4 revision replaced that argument with a theorem citation. We supply the missing divisibility reasoning and the Pell structure here. This is a reconstruction of St\o rmer's classical theorem, not a new result; see Klazar's exposition, \url{https://kam.mff.cuni.cz/~klazar/stormer.pdf}, Theorems 1--2.
+
+\subsection*{The Pell lemma, with all index cases checked}
+For a fixed positive integer $d$, the equation $x^2-dy^2=1$ has at most one positive solution for which every prime dividing $y$ divides $d$.
+If $d$ is a square, factoring the left side proves that no positive solution exists. Otherwise suppose one exists, and let $a+b\sqrt d=\varepsilon>1$ be the smallest positive solution. Every positive solution $u=x+y\sqrt d$ is a power of $\varepsilon$: choose $j\ge0$ with $\varepsilon^j\le u<\varepsilon^{j+1}$. Then $v=u\varepsilon^{-j}$ has integer coefficients and norm one. If $v>1$, its coefficients
+\[
+ (v+v^{-1})/2,\qquad(v-v^{-1})/(2\sqrt d)
+\]
+are positive integers, and $v<\varepsilon$ contradicts minimality. Thus $v=1$.
+
+Write $a_j+b_j\sqrt d=\varepsilon^j$. Expansion shows $b_r\mid b_{rs}$, and $b_j=b c_j$ where
+\[
+ c_j=\sum_{\substack{1\le \ell\le j\\\ell\ \mathrm{odd}}}
+       \binom j\ell a^{j-\ell}b^{\ell-1}d^{(\ell-1)/2}. \tag{2}
+\]
+Suppose $b_j$ has only prime factors dividing $d$ and $j>1$. For a prime $p\mid j$, the divisor $c_p$ also has this property. Since $\gcd(a,d)=1$, reduction of (2) modulo any prime $q\mid c_p$ shows $q=p$; thus $c_p$ is a power of $p$ and $p\mid d$.
+
+If $p=2$, then $c_2=2a$, whose factor $a>1$ is coprime to $d$, a contradiction. If $p=3$, then
+\[
+ c_3=3a^2+b^2d=4a^2-1=(2a-1)(2a+1).
+\]
+The two odd factors are coprime and greater than one, so cannot both be powers of $3$.
+If $p\ge5$, every term after the first in (2) is divisible by $p^2$. For $3\le\ell<p$, the binomial coefficient supplies one $p$ and the positive power of $d$ another. For the final term $\ell=p$, the binomial coefficient is $1$, but $d^{(p-1)/2}$ itself supplies $p^2$. This is the missing endpoint check in the inherited proof. Consequently
+\[
+ c_p\equiv p a^{p-1}\not\equiv0\pmod{p^2}.
+\]
+Since $c_p$ is a power of $p$, it must equal $p$, whereas its positive first term is $p a^{p-1}>p$. Contradiction. Thus $j=1$, proving the lemma.
+
+\subsection*{Finitely many smooth consecutive pairs}
+Fix a finite prime set $S$ with $r$ members. If $n,n+1$ have all prime factors in $S$, then $2\in S$ and $(2n+1)^2-1=4n(n+1)$ is also $S$-smooth. In each prime exponent $e$ of this last integer, retain exponent $0$ if $e=0$, exponent $1$ if $e$ is odd, and exponent $2$ if $e>0$ is even. The remaining exponent is nonnegative and even. Hence
+\[
+ (2n+1)^2-dy^2=1,
+\]
+where $d$ has each prime exponent in $\{0,1,2\}$, and every prime of $y$ divides $d$. There are at most $3^r$ possible $d$, and the Pell lemma supplies at most one pair for each. This proves (1) on taking $S=\{p:p\le y\}$. For each fixed $y$ only finitely many $n$ have $F(n)\le y$, which is precisely the claimed limit.
+
+\subsection*{A density consequence and the remaining gap}
+Fix $0<c<1/\log3$ and put $y=c\log X\log\log X$. Using the prime number theorem $\pi(y)\sim y/\log y$ as an explicit external standard input, (1) gives
+\[
+ \#\{n\le X:F(n)\le c\log X\log\log X\}
+ \le X^{c\log3+o(1)}=o(X).
+\]
+Thus this lower scale holds for almost all $n\le X$. The estimate does not constrain the size of the largest exceptional $n$ for a fixed $y$; it cannot be inverted into that same lower bound for every $n$. The stronger uniform bounds and conjectures on the current page, \url{https://www.erdosproblems.com/368}, remain unresolved in this attempt. In particular neither the proposed $(\log n)^2$ uniform lower bound nor infinitely many values below $(\log n)^{2+\epsilon}$ is proved.
+\textbf{Completion rate estimate: 40\%.}

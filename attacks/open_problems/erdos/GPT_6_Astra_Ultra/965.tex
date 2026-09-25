@@ -1,0 +1,38 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 965: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and attribution}
+There is a two-colouring of $\mathbb R$ for which no uncountable $A\subseteq\mathbb R$ has all sums of two distinct members the same colour. Thus the question has a negative answer, already for $N=2$. We reconstruct the finite-support proof of Soukup and Weiss, \emph{Sums and anti-Ramsey colourings of $\mathbb R$}, \url{https://danieltsoukup.github.io/academic/finset_colouring.pdf}. The argument uses choice, a Hamel basis, and the standard uncountable $\Delta$-system lemma for finite sets. It does not assert the corresponding statement without choice.
+
+\section*{A colouring of finite subsets of the Cantor set}
+Write $X=2^\omega$, give it its lexicographic order $<$, and fix a well-order $\prec$ of $X$. For distinct $x,y$ let $\Delta(x,y)$ be their first differing coordinate. Colour an unordered pair by whether its lexicographic and well-order orientations agree. For a finite $F\subseteq X$ with $|F|\ge2$, choose a pair $\pi(F)$ maximizing $\Delta$, breaking ties by the lexicographic order of the ordered pairs $(\min(x,y),\max(x,y))$. Give $F$ the colour of $\pi(F)$. Colour sets of size at most one arbitrarily.
+
+We prove that for every uncountable family $\mathcal A$ of distinct finite subsets, the unions of two distinct members receive both colours. Thin to a family of cardinality $\aleph_1$ forming a $\Delta$-system with fixed root and common size $n$. There is a fixed finite level $L$ such that each member has exactly one point in each of $n$ fixed distinct length-$L$ cylinders: each individual finite set can be separated by some level, and there are only countably many finite cylinder patterns. Order these cylinders lexicographically. Write the member indexed by $\xi$ as $\{x^1_\xi,\ldots,x^n_\xi\}$. Each root coordinate is constant; each remaining coordinate is injective, since petals are disjoint. There is at least one nonconstant coordinate.
+
+We may reindex an uncountable subfamily by $\xi<\omega_1$ so that every nonconstant coordinate is strictly increasing in $\prec$. Here is the required thinning fact, to make this step explicit. Regard finitely many injective coordinate maps as ordinal-valued maps. For each successively, restrict to the values below the least ordinal $\beta$ containing uncountably many values. Every smaller initial segment then has only countably many preimages. This property persists under further uncountable restrictions. The relevant $\beta$ has cofinality $\omega_1$: it is the supremum of $\aleph_1$ values, and countable cofinality would give only countably many preimages. At each stage $\xi<\omega_1$, exclude the countably many preimages below all previously selected coordinate values and choose a remaining index. This constructs the stated simultaneous increasing enumeration.
+
+Now find uncountable index sets $\Gamma_0,\Gamma_1$ so that, for every nonconstant coordinate $k$, its values on these two sets lie in disjoint cylinders of some common finite length. This follows successively for the finitely many coordinates: an uncountable subset of Cantor space has uncountably many condensation points, since all noncondensation points are covered by countably many basic open sets each containing only countably many members. Choose distinct condensation points for the two current images, choose disjoint small cylinders, and restrict to their uncountable preimages.
+
+For $\xi\in\Gamma_0$, $\zeta\in\Gamma_1$, the number $\Delta(x^k_\xi,x^k_\zeta)=m_k\ge L$ is fixed for each nonconstant $k$. Pairs from different coordinates have $\Delta<L$, and a root coordinate contributes only one point to the union. Therefore $\pi(a_\xi\cup a_\zeta)$ is the pair in a fixed coordinate $k_*$: maximize $m_k$, and then choose the first cylinder in the lexicographic tie-break. Its lexicographic orientation is fixed by the two disjoint cylinders. Its well-order orientation, however, agrees with the order of $\xi,\zeta$. Both $\Gamma_i$ are unbounded in $\omega_1$, so some cross pairs have $\xi<\zeta$ and others have $\xi>\zeta$. The two resulting unions have different colours, proving the assertion.
+
+\section*{Transfer to real sums}
+Choose a Hamel basis $\{b_x:x\in X\}$ of $\mathbb R$ over $\mathbb Q$. Such an indexing exists: a basis has cardinality continuum, since a vector space over a countable field with infinite basis has the same cardinality as its basis. For $r\in\mathbb R$, let $\operatorname{supp}(r)$ be its finite set of nonzero basis coordinates, and colour $r$ by the finite-set colouring above.
+
+Given uncountable $A\subseteq\mathbb R$, only countably many reals have any particular finite support. We can therefore retain an uncountable subfamily with distinct supports, and apply the $\Delta$-system lemma. On the fixed finite root, thin further so that all rational coefficients are fixed and nonzero; there are only countably many possible coefficient vectors. For two retained distinct reals $r,s$, petal coordinates do not cancel, and each root coefficient becomes twice the fixed nonzero coefficient. Consequently
+\[
+ \operatorname{supp}(r+s)=\operatorname{supp}(r)\cup\operatorname{supp}(s).
+\]
+The proved finite-set assertion gives two sums of different colours. This is precisely the required obstruction.
+
+\section*{Assessment}
+The two-colour counterexample and its uncountable quantifier are fully established, relative only to the explicitly stated set-theoretic standard inputs. This is a reconstruction of an existing resolution, not a claim of a new colouring theorem.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

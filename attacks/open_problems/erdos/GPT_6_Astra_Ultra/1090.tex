@@ -1,0 +1,25 @@
+\section*{Erd\H{o}s Problem 1090: an entirely monochromatic line}
+\subsection*{1. Statement and input}
+For every integer $k\ge3$, we seek a finite set $A\subset\mathbb R^2$ such that every red--blue colouring admits a line containing at least $k$ points of $A$, with \emph{all} points of $A$ on that line having the same colour.
+The answer is affirmative. We reconstruct Zach Hunter's argument recorded at \url{https://www.erdosproblems.com/1090}. The external input is the finite Hales--Jewett theorem: for each alphabet size $k$ and number of colours $r$, there is an integer $N$ such that every $r$-colouring of $\{0,\ldots,k-1\}^N$ contains a monochromatic combinatorial line. Such a line fixes some coordinates and sets every remaining coordinate equal to the same variable $t\in\{0,\ldots,k-1\}$; the set of variable coordinates is nonempty.
+
+\subsection*{2. A projection with no accidental collinearities}
+Write $B=\{0,\ldots,k-1\}^N\subset\mathbb R^N$. We choose a linear map $L:\mathbb R^N\to\mathbb R^2$ which is injective on $B$ and preserves noncollinearity of all noncollinear triples in $B$.
+Here is a precise existence argument. The entries of a $2\times N$ matrix are real parameters. For each distinct pair $u,v\in B$, the bad condition $L(u-v)=0$ is contained in the zero set of the nonzero polynomial $\|L(u-v)\|^2$. For each noncollinear triple $u,v,w$, the bad condition is
+\[
+ \det\bigl(L(v-u),L(w-u)\bigr)=0.
+\]
+This determinant polynomial is nonzero: since $v-u,w-u$ are independent, a linear map can send them to the two standard coordinate vectors. There are only finitely many pairs and triples. The product of all their nonzero polynomials is nonzero, hence cannot vanish on every real matrix. A matrix where this product is nonzero has the required properties. In fact a rational matrix can be chosen, by continuity and density of rational matrices.
+
+\subsection*{3. The entire intersection is controlled}
+Set $A=L(B)$ and pull any two-colouring of $A$ back to $B$. Choose a monochromatic combinatorial line by Hales--Jewett. It has the form
+\[
+ C=\{u+t v:0\le t\le k-1,\ t\in\mathbb Z\},
+\]
+where the coordinates of $v$ are zero or one, at least one is one, and the variable coordinates of $u$ are zero. The affine line $u+\mathbb Rv$ intersects $B$ in exactly $C$: looking at any variable coordinate forces its parameter to be an integer between zero and $k-1$, while the fixed coordinates impose no additional possibilities.
+Its image is an affine line containing the $k$ distinct points $L(C)$, all of one colour. Suppose an extra point $L(z)$ of $A$ lay on that line, with $z\notin C$. Take two distinct points of $C$. They and $z$ are noncollinear in $\mathbb R^N$, by the preceding intersection calculation. Their images would be collinear, contrary to the choice of $L$. Thus the planar line meets $A$ in exactly those $k$ points.
+
+\subsection*{4. Assessment}
+The stronger exact-$k$ intersection assertion is proved relative to the stated Hales--Jewett theorem. The projection step checks the extra condition that every point on the selected line has the same colour, rather than merely finding a monochromatic subset on a possibly mixed line. The argument works for any fixed finite number of colours. No local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

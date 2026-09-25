@@ -1,0 +1,76 @@
+\section*{Erd\H{o}s Problem 187: a growing guaranteed length and logarithmic avoiding colourings}
+
+\subsection*{1. Statement and scope}
+For a two-colouring $c$ of $\mathbb Z$, let $L_c(d)$ be the supremum of the lengths of monochromatic progressions of positive difference $d$. We seek the best function $f$ for which every colouring has $L_c(d)\ge f(d)$ for infinitely many $d$. We construct an explicit, slowly growing guaranteed function using van der Waerden numbers, and prove that for every fixed $\varepsilon>0$ there is a colouring with
+\[
+ L_c(d)<(1+\varepsilon)\log_2(d+1)+O_\varepsilon(1)
+ \qquad\text{for every }d\ge1.\tag{1}
+\]
+These are partial bounds; determining the optimal guarantee remains unresolved. In particular the upper construction is chosen separately for each $\varepsilon$.
+
+\subsection*{2. A universal function tending to infinity}
+Let $W(k)$ be the finite two-colour van der Waerden number; existence is the explicit standard theorem used in this section. Define $Q_2=1$ and, successively,
+\[
+ Q_{k+1}=Q_kW(k)+1\qquad(k\ge2).
+\]
+Set $f(d)=k$ when $Q_k\le d<Q_{k+1}$. This defines a nondecreasing integer function tending to infinity.
+
+For any colouring and each $k$, restrict it to the points $Q_k,2Q_k,\ldots,W(k)Q_k$. Van der Waerden's theorem gives a monochromatic $k$-term progression with difference $d=Q_kr$, where $1\le r<W(k)$. Therefore
+\[
+ Q_k\le d<Q_{k+1},\qquad L_c(d)\ge k=f(d).
+\]
+These differences lie in disjoint intervals as $k$ varies, so there are infinitely many of them. At least one of the two colours supplies infinitely many of these witnesses, as required by the original formulation. This is a valid quantitative guarantee, although its thresholds grow very rapidly.
+
+\subsection*{3. The finite local lemma used for the upper construction}
+For finitely many events with a dependency graph, suppose numbers $0<x_E<1$ satisfy
+\[
+ \mathbb P(E)\le x_E\prod_{F\sim E}(1-x_F).\tag{2}
+\]
+Then some outcome avoids all events. Here the event $E$ is assumed independent of the entire collection of its nonneighbours.
+
+The proof is a conditional-probability induction. For any set $S$ of other events, one proves
+$\mathbb P(E\mid\bigcap_{F\in S}F^c)\le x_E$.
+Separate $S$ into neighbours and nonneighbours of $E$. Independence handles the latter; introducing the neighbour conditions divides by a probability at least their product of $1-x_F$, using the inductive inequalities for smaller conditioning sets. Formula (2) supplies the result. The argument also keeps all conditioning probabilities positive. Multiplying the successive probabilities of avoiding each event gives a positive probability of avoiding all of them.
+
+\subsection*{4. Summable weights for all common differences}
+Fix $\varepsilon>0$ and write
+\[
+ C=1+\varepsilon,\qquad a=\frac{1+\varepsilon/2}{1+\varepsilon}<1,
+ \qquad\ell_d=\lceil C\log_2(d+1)\rceil+K,
+ \qquad x_d=2^{-a\ell_d}.
+\]
+The integer $K$ will be chosen large enough. Since $aC=1+\varepsilon/2>1$, the series
+\[
+ S_K=\sum_{d\ge1}\ell_dx_d
+\]
+converges and tends to zero as $K\to\infty$. Explicitly it is at most
+\[
+ 2^{-aK}\sum_{d\ge1}
+ \frac{C\log_2(d+1)+K+1}{(d+1)^{1+\varepsilon/2}},
+\]
+and both the constant and logarithm-weighted series converge. Choose $K$ so that all $x_d\le1/2$, all $\ell_d\ge2/(1-a)$, and
+\[
+ S_K\le(1-a)\log 2/4.\tag{3}
+\]
+
+On a finite interval of integers, choose independent uniform red-blue colours. For each contained progression with difference $d$ and length $\ell_d$, let $E$ be the event that it is monochromatic. It has probability $2^{1-\ell_d}$. Events depending on disjoint point sets are independent. A specified point belongs to at most $\ell_e$ progressions of difference $e$ and length $\ell_e$, one for each possible position of the point in the progression. Thus, for an event of length $\ell_d$, the sum of the weights of its neighbours is at most $\ell_d S_K$. Since $\log(1-x)\ge-2x$ for $0\le x\le1/2$,
+\[
+ \prod_{F\sim E}(1-x_F)\ge e^{-2\ell_dS_K}
+ \ge2^{-(1-a)\ell_d/2}.
+\]
+On the other hand,
+\[
+ \frac{\mathbb P(E)}{x_d}=2^{1-(1-a)\ell_d}
+ \le2^{-(1-a)\ell_d/2},
+\]
+by the lower bound on $\ell_d$. This verifies (2) and provides a colouring avoiding every one of these bad progressions on the finite interval.
+
+\subsection*{5. Passing to all integers and interpreting the bound}
+Apply this to each interval $[-T,T]$. The avoiding colourings form a finitely branching tree under restriction, with a nonempty level for every $T$. An infinite branch exists: at each stage choose a child with descendants at arbitrarily large depths, which is possible because there are finitely many children. The compatible colourings on that branch define a colouring of all $\mathbb Z$. Any forbidden progression is finite and lies inside one of these intervals, so none occurs. Consequently $L_c(d)<\ell_d$, proving (1).
+
+The known result of Beck recorded on the problem page has a $(1+o(1))\log_2d$ upper bound. The construction above proves the fixed-$\varepsilon$ version with a complete local-lemma argument; it does not assert that a single colouring simultaneously attains all those $\varepsilon$ bounds. The guaranteed function in Section 2 and the logarithmic obstruction leave a substantial gap. No matching growing lower order near $\log d$ is proved.
+
+Source: \url{https://www.erdosproblems.com/187}. The logarithmic probabilistic approach is classical, and no novelty is claimed. The earlier draft's finite numerical checks and its incorrect assertion that only finitely many pairs of an infinite set can have bounded difference are not used.
+
+\textbf{Completion rate estimate: 40\%.}
+

@@ -1,0 +1,50 @@
+\section*{Erd\H{o}s Problem 393: factorial factors in a short interval}
+\subsection*{Statement and scope}
+For $n\ge2$, let $f(n)$ be the least positive span $m$ for which $n!$ is a product of distinct positive integers in $[A,A+m]$, with both endpoints $A$ and $A+m$ among the factors. How does $f(n)$ grow? We give exact structural reductions and a complete conditional proof that $f(n)\to\infty$ from the $abc$ conjecture. The unconditional growth question remains unresolved in this attempt. Source: \url{https://www.erdosproblems.com/393}. The conditional conclusion is known; Luca's more general primary theorem is at \url{https://web.math.pmf.unizg.hr/glasnik/vol_37/no2_04.html}. No novelty is claimed.
+
+\subsection*{Finite patterns and elementary constraints}
+For $n\ge3$, the factors $2,3,\ldots,n$ give $f(n)\le n-2$. In any admissible factorization the largest factor $A+m$ is at least $n$, since the product of distinct integers not exceeding $A+m$ is at most $(A+m)!$. There are at most $m+1$ factors, so also
+\[
+ A+m\ge(n!)^{1/(m+1)}. \tag{1}
+\]
+For fixed $m$, choose a subset $D\subseteq\{0,\ldots,m\}$ containing $0,m$. Every factorization of span $m$ has the exact form
+\[
+ n!=P_D(A),\qquad P_D(X)=\prod_{d\in D}(X+d). \tag{2}
+\]
+There are only $2^{m-1}$ patterns. This does not bound how large $A$ may be; it reduces the question to finitely many polynomial-factorial equations.
+
+In particular $f(n)=1$ exactly when $n!=A(A+1)$, equivalently $4n!+1$ is an odd square. For $m=2$ the only possible patterns are $A(A+2)$ and $A(A+1)(A+2)$. Thus $f(n)\le2$ has a direct exact test using these two equations and the span-one equation. Such tests are finite certificates at a fixed $n$, not proofs that a fixed span occurs only finitely often.
+
+\subsection*{An elementary radical bound}
+Write $\operatorname{rad}(r)$ for the product of its distinct prime factors, and $\vartheta(y)=\sum_{p\le y}\log p$. We need only
+\[
+ \vartheta(n)\le4n\log2. \tag{3}
+\]
+For each $j\ge1$, every prime in $(2^{j-1},2^j]$ divides the integer $\binom{2^j}{2^{j-1}}\le2^{2^j}$. Summing the resulting logarithmic bounds through $j=r$ gives $\vartheta(2^r)<2^{r+1}\log2$. Choose $r$ with $2^{r-1}<n\le2^r$ to obtain (3). Hence $\operatorname{rad}(n!)\le e^{4n\log2}$, with no prime number theorem needed.
+
+\subsection*{A conditional escape from every bounded span}
+Assume the $abc$ conjecture in its following explicit form: for every $\epsilon>0$ there is a constant $C_\epsilon$ such that coprime positive integers $u,v$ with $u+v=w$ satisfy
+\[
+ w\le C_\epsilon\operatorname{rad}(uvw)^{1+\epsilon}. \tag{ABC}
+\]
+This is a conjectural assumption, not an established theorem or an unconditional input.
+
+Fix a span $m$ and suppose (2) holds. Put $g=\gcd(A,m)$, $u=A/g$, $v=m/g$, $w=(A+m)/g$. These are positive, $u+v=w$, and $\gcd(u,v)=1$. Both endpoint factors divide $n!$, so every prime of $uw$ is at most $n$, while $v$ has only primes dividing $m$. Thus
+\[
+ \operatorname{rad}(uvw)\le \operatorname{rad}(m)\operatorname{rad}(n!).
+\]
+Apply (ABC) with $\epsilon=1$, and use $g\le m$ and (3):
+\[
+ A+m\le m C_1\operatorname{rad}(m)^2 e^{8n\log2}.
+\]
+On the other hand (1), and the elementary integral estimate
+$\log(n!)\ge\int_1^n\log t\,dt=n\log n-n+1$, give
+\[
+ \frac{n\log n-n+1}{m+1}\le \log(A+m)
+ \le8n\log2+O_m(1).
+\]
+This is impossible as $n\to\infty$ with $m$ fixed. For each $M$, the finitely many spans $1\le m\le M$ therefore all eventually disappear, proving $f(n)\to\infty$ under (ABC).
+
+\subsection*{Assessment and remaining gap}
+The previous local draft's valid upper bound and span-one test are retained, but its asserted exact small-value table is not assumed. The endpoint argument proves the known conditional divergence uniformly over every finite collection of spans. Its constant depends on the conjectural $abc$ constant and on the fixed span; no numerical unconditional cutoff is supplied. Without (ABC), neither finiteness of the solutions of $n!=A(A+1)$ nor the general divergence of $f(n)$ follows from these arguments. The known unconditional density estimates recorded on the source page are not proved here.
+\textbf{Completion rate estimate: 35\%.}

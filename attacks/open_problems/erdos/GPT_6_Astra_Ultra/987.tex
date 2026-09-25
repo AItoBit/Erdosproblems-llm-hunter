@@ -1,0 +1,85 @@
+\section*{Erd\H{o}s Problem 987: Fourier sums of an infinite sequence}
+\subsection*{Statement and scope}
+Write $e(t)=\exp(2\pi it)$ and
+\[
+ A_k=\limsup_{N\to\infty}\left|\sum_{j=0}^{N-1}e(kx_j)\right|.
+\]
+Must $\limsup_{k\to\infty}A_k=\infty$, and can nevertheless $A_k=o(k)$? Both answers are yes. This is a reconstruction of known arguments: the first part is Tao's finite-square argument in the problem discussion; the second is the binary scrambling construction of Alexeev, Putterman, Sawhney, Sellke and Valiant, Section 3 of \emph{Short proofs in combinatorics, probability and number theory II}, arXiv:2604.06609. That paper credits an internal OpenAI model for the construction. No novelty is claimed. The concentration estimate below uses the standard Hoeffding inequality for independent bounded real random variables.
+
+\subsection*{Unboundedness: keeping the order of quantifiers}
+Suppose instead that $A_k\le C$ for every $k\ge k_0$. For each finite $K$ choose $L=L(K)$ so large that all partial sums at frequencies $k_0\le k<K$ have modulus at most $C+1$ after time $L$. For any positive integer $m$, put $y_j=x_{L+j}$, $1\le j\le m$. The corresponding block sums have modulus at most $2(C+1)$ at those frequencies, while the trivial bound at every frequency is $m$. Expanding both sides gives the exact identity
+\[
+ \sum_{a,b=1}^{K}\left|\sum_{j=1}^{m}e((a-b)y_j)\right|^2
+ =
+ \sum_{i,j=1}^{m}\left|\sum_{a=1}^{K}e(a(y_i-y_j))\right|^2.
+\]
+The diagonal $i=j$ makes the right side at least $mK^2$. There are at most $(2k_0-1)K$ pairs on the left with $|a-b|<k_0$, and all other pairs contribute at most $4(C+1)^2$. Consequently
+\[
+ mK^2\le (2k_0-1)Km^2+4(C+1)^2K^2.
+\]
+First fix $m>4(C+1)^2$, then let $K\to\infty$. This is impossible. In particular, the argument concerns the required limsup in the number of terms, not merely one large finite sum.
+
+\subsection*{A random binary tree}
+Independently assign a fair bit $\eta_u$ to every finite binary word $u$, including the empty word. If $n=\sum_{i\ge0}d_i2^i$, define
+\[
+ x_n=\sum_{i\ge0}\frac{d_i\mathbin{\oplus}\eta_{d_0\cdots d_{i-1}}}{2^{i+1}}.
+\]
+For each fixed $n$ its scrambled digits are independent fair bits. Thus, almost surely, every $x_n$ belongs to $(0,1)$; the countable union of the endpoint exceptions has probability zero.
+
+For a word $w$ of length $r$, let $j_r(w)$ be the integer encoded by its first $r$ scrambled digits. The map $w\mapsto j_r(w)$ is a permutation of $\{0,\ldots,2^r-1\}$: the original digits can be recovered successively from the output. If $P$ supplies the remaining binary digits, write their scrambled fraction as $T_{w,P}$. The exponential sum over the aligned block $[P2^r,(P+1)2^r)$ is
+\[
+ B_{P,r}(k)=\sum_{|w|=r}e\left(\frac{k}{2^r}(j_r(w)+T_{w,P})\right).
+\]
+Conditional on all bits at depths below $r$, the variables $T_{w,P}$ for fixed $P$ are independent uniform random variables on $[0,1)$: their descendant trees are disjoint.
+
+\subsection*{A bound uniform over every block location}
+Put $b=\lceil\log_2(2k)\rceil$ and
+\[
+ \sigma_{r,b}=\min(2^{r/2},2^{b-r/2}),\qquad
+ t_{r,b}=A\sqrt{r+b}\,\sigma_{r,b}.
+\]
+We show that some choice of the bits satisfies $|B_{P,r}(k)|\le t_{r,b}$ simultaneously for all $P,r,k$.
+
+First fix $r,b$ and choose
+\[
+ h=\max\left(0,\left\lceil\log_2\frac{8\pi\,2^b}{t_{r,b}}\right\rceil\right).
+\]
+If $Q=P\bmod 2^h$, then $|T_{w,P}-T_{w,Q}|\le2^{-h}$. The Lipschitz bound for $e(t)$ therefore gives
+\[
+ |B_{P,r}(k)-B_{Q,r}(k)|\le2\pi k\,2^{-h}\le t_{r,b}/2.
+\]
+It suffices to control $2^h\le1+16\pi2^b/t_{r,b}$ locations, rather than infinitely many.
+
+For one such $Q$, set $R=2^r$, $\theta=2\pi k/R$, and $a=\mathbb E e^{i\theta U}$ for uniform $U$. Conditional on the short-prefix bits,
+\[
+ B_{Q,r}(k)=\sum_{|w|=r} Z_w,\qquad
+ Z_w=e(kj_r(w)/R)(e^{i\theta T_{w,Q}}-a).
+\]
+Indeed the subtracted means add to zero: the geometric sum over $j_r(w)$ vanishes unless $R\mid k$, and in that remaining case $a=0$. The variables $Z_w$ are centered and independent, with
+\[
+ |Z_w|\le C\min(1,2^{b-r}),\qquad
+ \sum_{|w|=r}|Z_w|_{\mathrm{bound}}^2\le C\sigma_{r,b}^2.
+\]
+Applying Hoeffding separately to real and imaginary parts and then removing the conditioning yields
+\[
+ \mathbb P\{|B_{Q,r}(k)|>t_{r,b}/2\}
+ \le4\exp(-cA^2(r+b)).
+\]
+There are at most $2^b$ frequencies on this scale. For $A\ge1$, the logarithm of
+$2^b(1+16\pi2^b/t_{r,b})$ is at most $C'(r+b)$: use
+$\log_2(1/\sigma_{r,b})\le r/2$. Hence the probability that any location or frequency fails on this scale is at most
+$C''\exp(-(cA^2-C')(r+b))$. Summing over $r\ge0,b\ge1$ gives less than one when $A$ is sufficiently large. A realization satisfying every bound, and the endpoint condition above, therefore exists.
+
+\subsection*{All partial sums}
+The interval $[0,N)$ is a disjoint union of aligned dyadic blocks, with at most one block of each length. Thus for our fixed realization
+\[
+ \left|\sum_{n<N}e(kx_n)\right|
+ \le A\sum_{r\ge0}\sqrt{r+b}\min(2^{r/2},2^{b-r/2})
+ \ll\sqrt b\,2^{b/2}\ll\sqrt{k\log(2k)}.
+\]
+To check the middle estimate, split at $r=b$: on either side the powers decay geometrically away from $b$, and $\sqrt{2b+j}\le\sqrt{2b}\sqrt{1+j}$ controls the upper tail. The bound is independent of $N$. Therefore $A_k\ll\sqrt{k\log(2k)}=o(k)$.
+
+\subsection*{Conclusion and verification scope}
+Both questions are proved, using only elementary identities and the stated concentration inequality. This does not claim the best universal lower-growth exponent. Sources: \url{https://www.erdosproblems.com/987}, \url{https://www.erdosproblems.com/forum/discuss/987}, and \url{https://arxiv.org/abs/2604.06609}. No local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

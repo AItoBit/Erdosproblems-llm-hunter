@@ -1,0 +1,88 @@
+\section*{Erd\H{o}s Problem 799: list colouring a typical graph}
+
+\paragraph{Statement and claim.}
+For \(G\sim G(n,1/2)\), with probability tending to one,
+\[
+ \chi_L(G)=O\left(\frac{n\log\log n}{\log n}\right)=o(n).
+\]
+We prove this using a random allocation of list colours
+and a reserve palette. The external graph-theoretic input
+is the classical ordinary-colouring bound
+\(\chi(G(n,1/2))=O(n/\log n)\) with probability tending to one.
+This bound, and its use in the known solution, are recorded
+in Section 4 of Alon's primary paper
+\emph{Choice numbers of graphs: a probabilistic approach},
+\url{https://www.cs.tau.ac.il/~nogaa/PDFS/choice.pdf}.
+See \url{https://www.erdosproblems.com/799}.
+
+\paragraph{A typical graph has small colour classes.}
+Let \(s=\lceil3\log_2 n\rceil\). By the first-moment bound,
+\[
+ \Pr(\alpha(G)\geq s)
+ \leq\binom ns2^{-\binom s2}\longrightarrow0.
+\]
+Together with the stated ordinary-colouring theorem,
+we may therefore fix a graph having a proper partition
+into \(r\leq K n/\log n\) independent classes, each of size
+at most \(s\). Necessarily \(r\geq n/s\).
+We will prove a list-colouring bound for every such graph,
+so there will be no union bound over assignments of lists.
+
+\paragraph{Allocating colours, including a reserve.}
+Fix arbitrary lists of
+\(k=\lceil16r\log s\rceil\) distinct colours at every vertex.
+Independently for each colour appearing anywhere in the
+lists, assign it to a reserve palette with probability \(1/2\),
+and to each of the \(r\) class palettes with probability \(1/(2r)\).
+These are disjoint palettes of colour names; the same colour
+has the same allocation at every vertex.
+Call a vertex bad if its list misses the palette belonging
+to its proper colour class.
+For every fixed vertex,
+\[
+ \Pr(\text{bad})=(1-1/(2r))^k\leq e^{-k/(2r)}
+ \leq s^{-8}.
+\]
+Thus the expected number of bad vertices is at most
+\(ns^{-8}\leq rs^{-7}\), and Markov's inequality gives
+\(\Pr(\text{at least }r\text{ bad vertices})\leq s^{-7}\).
+
+The number of reserve colours in any one list is
+\(\operatorname{Bin}(k,1/2)\).
+The elementary Chernoff bound gives
+\(\Pr(\text{fewer than }k/4\text{ reserve colours})\leq e^{-k/16}\).
+By the union bound, the probability of any such deficient
+list is at most \(ne^{-k/16}=o(1)\), since
+\(k\geq16(n/s)\log s\) and \(s=O(\log n)\).
+For sufficiently large \(n\), both desirable properties
+therefore hold simultaneously for some allocation:
+fewer than \(r\) bad vertices, and at least \(k/4\geq r\)
+reserve colours in every list.
+
+\paragraph{Completing the list colouring.}
+Every good vertex chooses a colour from its own class palette.
+Adjacent good vertices lie in different classes and use
+disjoint palettes, so this is proper.
+Colour the fewer than \(r\) bad vertices one at a time,
+using different reserve colours.
+Each has at least \(r\) available reserve colours in its list,
+and fewer than \(r\) have previously been used.
+These colours cannot conflict with good vertices because
+the reserve is disjoint from all class palettes.
+This gives a proper colouring from the originally arbitrary
+lists, proving \(\chi_L(G)\leq k\).
+
+\paragraph{Conclusion and scope.}
+Substituting \(r=O(n/\log n)\) and \(s=O(\log n)\) gives
+the claimed \(o(n)\) bound.
+The probability concerns the random graph; for every
+graph in the typical class, the deterministic conclusion
+holds for every assignment of lists.
+The sharper known order \(\Theta(n/\log n)\) is due to
+Alon--Krivelevich--Sudakov; it is not needed for the
+complete affirmative answer proved here.
+The only substantial external input in this reconstruction
+is the ordinary-colouring theorem, not a list-colouring theorem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

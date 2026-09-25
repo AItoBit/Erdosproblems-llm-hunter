@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 941}
+
+\paragraph{Statement and result.}
+Is every sufficiently large positive integer a sum of at most three powerful numbers? A positive integer is powerful if every prime dividing it has exponent at least two. The answer is yes, first proved by Heath-Brown. We reconstruct the deduction using Moroz's later quadratic-form theorem, explicitly isolating that analytic input and supplying the elementary cases, including the integers with a bounded odd part and an arbitrarily large power of four.
+
+\paragraph{Two precisely stated external inputs.}
+We use the classical three-squares theorem: a nonnegative integer is a sum of three integer squares if and only if it is not of the form \(4^j(8b+7)\), with \(j,b\geq0\).
+
+The second input is the following consequence of Moroz's Theorem 2. For any fixed prime \(q\equiv5\pmod8\), every sufficiently large integer \(n\equiv7\pmod8\) is represented by
+\[
+ n=x^2+y^2+q^3z^2,\qquad x,y,z\in\mathbb Z. \tag{1}
+\]
+Moroz proves a positive lower bound for its representation number using estimates for ternary quadratic forms. That analytic argument is external here. We use only \(q=5\), so (1) has the fixed coefficient 125 and a single fixed threshold \(N_0\).
+
+\paragraph{Why these forms give powerful summands.}
+Every nonzero integer square is powerful. So is \(125z^2\) when \(z\ne0\): its exponent at 5 is \(3+2v_5(z)\geq3\), and every other prime exponent is even. More generally, multiplying any powerful integer by an integer square preserves powerfulness. A zero coordinate contributes no summand; it is omitted rather than called a positive powerful number.
+
+\paragraph{The elementary cases.}
+If \(n\) is not of the excluded three-squares form, the first external input already represents it by at most three positive squares, after omitting zeros. This gives the desired representation.
+
+We also prove that every integer of the form
+\[
+ n=4^j m,\qquad j\geq1,\qquad m\text{ odd}, \tag{2}
+\]
+has the required representation, without an asymptotic threshold. Since \(v_2(2m)=1\), the integer \(2m\) is not excluded by the three-squares theorem. Write
+\[
+ 2m=u^2+v^2+w^2.
+\]
+Modulo four, precisely two of \(u,v,w\) are odd. Relabel so that \(u,v\) are odd and \(w\) is even. Then
+\[
+ m=\left(\frac{u+v}{2}\right)^2+
+   \left(\frac{u-v}{2}\right)^2+
+   2\left(\frac w2\right)^2. \tag{3}
+\]
+All displayed quantities in parentheses are integers. Multiplying (3) by \(4^j\) produces two squares and a term of the form
+\(2^{2j+1}t^2\). If this last term is nonzero, its exponent at 2 is at least three, while every odd prime has even exponent. Thus it too is powerful. This proves (2).
+
+\paragraph{Completing the residue-class argument.}
+The only integers not yet covered by the elementary cases are those with \(n\equiv7\pmod8\). Indeed, every excluded three-squares integer is \(4^j(8b+7)\); those with \(j\geq1\) are covered by (2), and the others have \(j=0\). If \(n\geq N_0\), equation (1) with \(q=5\) represents every remaining integer. Its nonzero summands are powerful by the earlier prime-exponent check.
+
+Therefore every \(n\geq N_0\) is a sum of at most three positive powerful integers. There is no uniformity problem involving the reduced odd part: the entire \(j\geq1\) case was settled independently in (2), so the analytic theorem is applied directly to the original integer \(n\), with one fixed threshold.
+
+\paragraph{Scope and attribution.}
+The original affirmative theorem is D. R. Heath-Brown's \emph{Ternary quadratic forms and sums of three square-full numbers}, S\'eminaire de Th\'eorie des Nombres, Paris 1986--87, pp. 137--163. The precise alternate input used here is B. Z. Moroz, \emph{On the representation of large integers by integral ternary positive definite quadratic forms}, Ast\'erisque 209 (1992), Theorem 2 on p. 276 and the following corollary: \url{https://www.numdam.org/article/AST_1992__209__275_0.pdf}. See also \url{https://www.erdosproblems.com/941}, checked 24 September 2026.
+
+This is a complete deduction relative to the stated three-squares and Moroz theorems. It supplies all residue cases and the prime-exponent checks, but does not reproduce the modular-form estimates behind (1), supply an effective numerical threshold, or claim a new result or local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

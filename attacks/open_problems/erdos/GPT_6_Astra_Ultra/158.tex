@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 158: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $A\subset\mathbb N$ be infinite and suppose each integer has at most two representations $a+b$ with $a,b\in A$, $a\le b$. Must
+\[
+ \liminf_{N\to\infty}\frac{|A\cap[1,N]|}{\sqrt N}=0?
+\]
+Source: \url{https://www.erdosproblems.com/158}.
+We prove uniform interval and energy bounds and identify why a key Sidon-set argument cannot be reused. The liminf assertion remains unresolved.
+
+\section*{Uniform interval bound}
+Take any interval of $L$ consecutive integers and let $B$ be its intersection with $A$, of size $m$. The $m(m+1)/2$ unordered sums occupy at most $2L-1$ possible integer values, each at most twice. Therefore
+\[
+ m(m+1)\le 8L-4,\qquad
+ m\le\frac{\sqrt{32L-15}-1}{2}.
+\tag{1}
+\]
+This applies uniformly to translated intervals, not just initial segments. More generally, representation bound $g$ gives $m(m+1)/2\le g(2L-1)$.
+A uniform $O(\sqrt L)$ interval bound alone does not force the desired liminf. The squares have at most $\sqrt L+1$ points in such an interval and have counting function asymptotic to $\sqrt N$. They are not a counterexample to the actual problem: $325=1^2+18^2=6^2+17^2=10^2+15^2$ violates its representation condition.
+
+\section*{An exact energy consequence}
+For any finite $B\subset A$ put
+\[
+ r(s)=\#\{b\le c:b,c\in B,\ b+c=s\},\quad
+ R(s)=\#\{(b,c)\in B^2:b+c=s\}.
+\]
+Let $\delta(s)$ indicate whether $s=2b$ for some $b\in B$. Then $R=2r-\delta$. When $\delta=0$, $R\in\{0,2,4\}$ and $R^2\le4R$; when $\delta=1$, $R\in\{1,3\}$ and $R^2\le4R-3$. Hence
+\[
+ E(B):=\sum_s R(s)^2\le4m^2-3m.\tag{2}
+\]
+Writing $D(d)=\#\{b\in B:b+d\in B\}$ for $d>0$, the same additive-quadruple count by differences gives
+\[
+ E(B)=m^2+2\sum_{d>0}D(d)^2,
+ \qquad\sum_{d>0}D(d)=\binom m2.
+\]
+It follows that
+\[
+ \sum_{d>0}D(d)^2\le3\binom m2,\qquad
+ \sum_{d>0}D(d)(D(d)-1)\le2\binom m2.
+\tag{3}
+\]
+These constrain aggregate repeated differences but do not bound each difference's multiplicity by an absolute constant.
+
+\section*{One difference really can repeat indefinitely}
+Consider
+\[
+ A_0=\{10^j,10^j+1:j\ge1\}.
+\]
+In a sum of two elements, the base-ten digits above the units place determine the unordered pair of exponents uniquely: they are two digits equal to one at distinct positions, or one digit equal to two at a repeated position. There are no carries. The units digit is $0,1$ or $2$. For distinct exponents there is one representation for units digit zero, at most two for digit one, and one for digit two; for equal exponents there is one of each kind. Thus every sum has at most two unordered representations.
+Yet the difference one occurs for every pair $(10^j,10^j+1)$. In a finite prefix containing $h$ such pairs, $D(1)=h$. Consequently the uniqueness-of-positive-differences step used for Sidon sets is false in the present setting. This example itself is sparse, with counting function $O(\log N)$, so it has liminf zero and does not resolve the question negatively.
+
+\section*{Assessment and provenance}
+The elementary pair count from the GPT-Pro-5.2 draft is made exact and uniform over intervals. The energy calculation and the repeated-difference example expose additional structure and a specific barrier. No unreproduced search table is used. A multiscale argument excluding positive square-root density at every sufficiently large cutoff, or a dense infinite construction, is still missing.
+
+\textbf{Completion rate estimate: 20\%.}
+\end{document}

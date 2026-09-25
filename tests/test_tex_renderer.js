@@ -166,14 +166,14 @@ assert.equal(context.window.MathJax.tex.macros.poly, tex`{\operatorname{poly}}`)
 assert.equal(context.window.MathJax.tex.macros.coloneqq, tex`{\mathrel{:=}}`);
 
 // Exercise the actual reported source, not only a synthetic copy.
-const problem3 = render(fs.readFileSync(path.join(root, 'attacks/erdos/GPT_6_Astra_Ultra/3.tex'), 'utf8'));
+const problem3 = render(fs.readFileSync(path.join(root, 'attacks/open_problems/erdos/GPT_6_Astra_Ultra/3.tex'), 'utf8'));
 assert.match(problem3, /Erdős Problem #3: independent continuation/);
 assert.match(problem3, /<code>3\.tex<\/code>/);
 assert.doesNotMatch(problem3, /\\texttt|\\#|&amp;nbsp;|\\textquotesingle/);
-const problem5 = render(fs.readFileSync(path.join(root, 'attacks/erdos/gpt_pro_5.2/5_v2.tex'), 'utf8'));
+const problem5 = render(fs.readFileSync(path.join(root, 'attacks/open_problems/erdos/gpt_pro_5.2/5_v2.tex'), 'utf8'));
 assert.match(problem5, /<h2>ROUND-4 OBJECTIVE<\/h2>/);
 assert.doesNotMatch(problem5, /\\(?:begin|end)\{(?:enumerate|itemize|theorem|lemma|proof)\}|\\item\b/);
-const problem642 = render(fs.readFileSync(path.join(root, 'attacks/erdos/gpt_pro_5.2/642.tex'), 'utf8'));
+const problem642 = render(fs.readFileSync(path.join(root, 'attacks/open_problems/erdos/gpt_pro_5.2/642.tex'), 'utf8'));
 assert.match(problem642, /<div class="definition"><strong>Construction:<\/strong>/);
 assert.match(problem642, /\\begin\{align\*\}[\s\S]*?E\(T_1\)&amp;:=[\s\S]*?\\end\{align\*\}/);
 assert.doesNotMatch(problem642, /\\(?:begin|end)\{construction\}/);
@@ -220,14 +220,14 @@ for (const source of [tableSource, tex`\[${tableSource}\]`, `$$${tableSource}$$`
     assert.doesNotMatch(table, /\\(?:begin|end|toprule|midrule|bottomrule)|@\{|lll/);
 }
 for (const fixture of ['244', '529', '530', '533', '535']) {
-    const result = render(fs.readFileSync(path.join(root, `attacks/erdos/gpt_pro_5.2/${fixture}.tex`), 'utf8'));
+    const result = render(fs.readFileSync(path.join(root, `attacks/open_problems/erdos/gpt_pro_5.2/${fixture}.tex`), 'utf8'));
     assert.match(result, /<table class="latex-table">/);
     assert.doesNotMatch(result, /\\(?:begin|end)\{tabular\}|\\(?:toprule|midrule|bottomrule)/);
 }
 const spacedRows = render(tex`\begin{tabular}{cc}A & B\\ \hline 1 & 2\\ \end{tabular}`);
 assert.equal((spacedRows.match(/<tr>/g) || []).length, 2);
 assert.equal((spacedRows.match(/<td /g) || []).length, 4);
-const problem529 = render(fs.readFileSync(path.join(root, 'attacks/erdos/gpt_pro_5.2/529.tex'), 'utf8'));
+const problem529 = render(fs.readFileSync(path.join(root, 'attacks/open_problems/erdos/gpt_pro_5.2/529.tex'), 'utf8'));
 const tables529 = [...problem529.matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/g)].map(match =>
     [...match[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map(row =>
         [...row[1].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/g)].map(cell => cell[1].trim())));

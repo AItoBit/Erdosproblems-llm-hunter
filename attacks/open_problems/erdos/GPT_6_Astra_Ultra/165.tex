@@ -1,0 +1,94 @@
+\section*{Erd\H{o}s Problem 165: the asymptotic constant in $R(3,k)$}
+\subsection*{Statement and outcome}
+The current problem asks for an asymptotic formula for $R(3,k)$, the least $n$ such that every graph on $n$ vertices contains a triangle or an independent $k$-set. This is not the sparse-ruler question appearing in the old local file with this number.
+
+We reconstruct Shearer's upper bound
+\[
+ R(3,k)\le(1+o(1))\frac{k^2}{\log k},
+ \tag{1}
+\]
+including the scalar estimates needed in its induction. We also give an elementary lower bound of order $(k/\log k)^{3/2}$. The latter is substantially weaker than the published $(1/2+o(1))k^2/\log k$ lower bound of Hefty--Horn--King--Pfender. Their construction is not reproduced or used as a proved-here result.
+
+\subsection*{The scalar weights}
+Define $f(0)=1$ and, for integers $d\ge1$,
+\[
+ f(d)=\frac{1+(d^2-d)f(d-1)}{d^2+1},
+ \qquad b_d=f(d-1)-f(d).
+ \tag{2}
+\]
+We need that $f$ decreases and that $b_d$ is nonnegative and nonincreasing.
+Induction gives $f(d)\ge1/(d+1)$: the recurrence applied to
+$f(d-1)\ge1/d$ gives $f(d)\ge d/(d^2+1)\ge1/(d+1)$.
+Then
+$b_d=((d+1)f(d-1)-1)/(d^2+1)\ge0$.
+
+For convexity, put $g_d=(3d+2)/(2d^2+6d+2)$. We have $f(0)=g_0$. Substituting $g_{d-1}$ into (2) gives
+$(3d-2)/(2d^2+2d-2)\ge g_d$, the cross-multiplied difference being $4d(d-1)\ge0$. Hence $f(d)\ge g_d$. For $d\ge2$, direct subtraction gives
+\[
+ b_d-b_{d+1}
+ =\frac{2(d^2+3d+1)f(d)-(3d+2)}
+ {d(d-1)(d^2+2d+2)}\ge0.
+\]
+The remaining comparison is $b_1=1/2\ge b_2=1/10$.
+
+There is also the exact identity
+\[
+ d f(d)-(d-1)f(d-1)
+ =\frac1d-\frac{1+d(d-1)f(d-1)}{d(d^2+1)}.
+ \tag{3}
+\]
+It first implies $d f(d)\le H_d$. For $d\ge2$, the subtracted term is at most
+$d^{-3}+H_{d-1}/d^2$, a summable sequence. Summing (3) proves
+\[
+ d f(d)=\log d+O(1). \tag{4}
+\]
+This uses a summable $O(\log d/d^2)$ error; an error strictly below $1/d^2$ is neither needed nor generally valid.
+
+\subsection*{Shearer's graph induction}
+For a triangle-free graph $G$, write $d_v=\deg(v)$ and
+$S(G)=\sum_v f(d_v)$. We prove $\alpha(G)\ge S(G)$ by induction on its order.
+Delete $i$ and its neighbours, leaving $H_i$. For a vertex $k$ at distance two from $i$, let
+$n_i(k)=|N(k)\cap N(i)|$. The gain available from choosing $i$ and then an independent set in $H_i$ is
+\[
+ L_i=1-f(d_i)-\sum_{j\in N(i)}f(d_j)
+ +\sum_{\operatorname{dist}(i,k)=2}
+       [f(d_k-n_i(k))-f(d_k)].
+\]
+It suffices that some $L_i\ge0$. Convexity of the scalar sequence gives
+$f(d_k-n_i(k))-f(d_k)\ge n_i(k)b_{d_k}$.
+Triangle-freeness ensures that all relevant two-edge paths end at distance two, so changing the order of summation yields
+\[
+ \sum_i\sum_{\operatorname{dist}(i,k)=2}
+ [f(d_k-n_i(k))-f(d_k)]
+ \ge\sum_k b_{d_k}\sum_{j\in N(k)}(d_j-1)
+ \ge\sum_k d_k(d_k-1)b_{d_k}.
+\]
+The last inequality follows edge by edge: the difference for an edge $jk$ is
+$(d_j-d_k)(b_{d_k}-b_{d_j})\ge0$.
+Consequently
+\[
+ \sum_i L_i\ge
+ \sum_i[1-(d_i+1)f(d_i)+d_i(d_i-1)b_{d_i}]=0
+\]
+by (2); degree-zero terms equal zero as well. Some $L_i$ is nonnegative, completing the induction.
+
+If $\alpha(G)<k$, every neighbourhood is independent, hence $\Delta(G)\le k-1$. Since $f$ decreases,
+$k>\alpha(G)\ge n f(k-1)$. Applying (4) gives (1).
+
+\subsection*{An elementary lower construction}
+For large $k$, let
+$N=\lfloor\frac18(k/\log k)^{3/2}\rfloor$ and $p=2\log k/k$.
+In $G(N,p)$ the expected number of triangles is at most
+$N^3p^3/6\le N/48$. Markov's inequality makes the probability of more than $N/2$ triangles at most $1/24$.
+Meanwhile the probability of an independent $k$-set is at most
+\[
+ \binom Nk(1-p)^{\binom k2}
+ \le\exp\bigl(k\log(eN/k)-p k(k-1)/2\bigr)=o(1).
+\]
+Thus some graph has no independent $k$-set and at most $N/2$ triangles. Delete one vertex from each triangle, removing at most $N/2$ vertices. The surviving induced graph is triangle-free, has at least $N/2$ vertices, and still has no independent $k$-set. This proves the stated weaker lower order.
+
+\subsection*{Assessment and attribution}
+The sharp upper argument is a reconstruction of Shearer's work, using the exposition in Section 5 of Harris--Hefty--Horn--King--Pfender, \url{https://arxiv.org/abs/2609.01782}, with the scalar estimates supplied explicitly. The current lower record is documented in \url{https://arxiv.org/abs/2510.19718}. Problem: \url{https://www.erdosproblems.com/165}. The unrelated contents of the old \texttt{gpt\_pro\_5.2/165.tex} have not been reused.
+The asymptotic leading constant, and even a reconstruction here of a matching-order lower bound, remain unresolved in this attempt. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

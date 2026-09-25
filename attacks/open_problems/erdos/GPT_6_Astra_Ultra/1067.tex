@@ -1,0 +1,50 @@
+\section*{Erd\H{o}s Problem 1067}
+
+\paragraph{Statement and result.}
+There is a graph of chromatic number \(\aleph_1\) having no uncountable infinitely connected subgraph. Here infinitely connected means that deleting any finite set of vertices leaves the graph connected. We reconstruct the elementary example of Bowler and Pitz, using their corrected second version.
+
+\paragraph{The tree and its graph.}
+Let \(T\) consist of all injective maps \(t:\alpha\to\mathbb N\), where \(\alpha<\omega_1\), such that \(\mathbb N\setminus\operatorname{im}(t)\) is infinite. Order these maps by initial-segment extension. If \(s\) has successor length, write \(s^-\) for its immediate predecessor and \(\ell(s)\) for its last value. For any \(t\in T\), set
+\[
+ A_t=\{s\leq t:\ s\hbox{ has successor length and }
+ \ell(s)=\min(\operatorname{im}(t)\setminus\operatorname{im}(s^-))\}.
+\]
+Join \(t\) to \(s^-\) for each \(s\in A_t\). All edges join comparable vertices of different lengths.
+
+\paragraph{Finite separators.}
+If \(s\leq u\), every neighbour of \(u\) strictly below \(s\) belongs to
+\(A_s^-:=\{a^-:a\in A_s\}\): a value that is the minimum of a longer tail is also the minimum of its shorter initial tail. If \(s\) has successor length, every value \(\ell(a)\), \(a\in A_s\), is at most \(\ell(s)\). These values are distinct, so \(|A_s^-|\leq\ell(s)<\infty\).
+
+The tree has no uncountable chain. Otherwise the lengths in such a chain would be unbounded in \(\omega_1\), and their union would inject \(\omega_1\) into \(\mathbb N\). Thus any uncountable set contains incomparable vertices \(t,t'\). At their first differing coordinate, let \(s\) be the corresponding successor initial segment of \(t\). Every edge exiting the cone \(\{u:u\geq s\}\) ends in \(A_s^-\), by comparability and the preceding minimum-tail observation. Hence \(A_s^-\) separates \(t\) from \(t'\). Neither endpoint belongs to this separator, since both have length at least that of \(s\), whereas its vertices have smaller length. Any subgraph containing both vertices therefore fails infinite connectivity after deleting this finite separator. In particular no uncountable subgraph is infinitely connected.
+
+\paragraph{An extension lemma for a putative countable colouring.}
+Suppose \(c:T\to\mathbb N\) were a proper colouring, where \(\mathbb N=\{1,2,\ldots\}\).
+For a successor-length \(t\), call \(u\) an increasing extension of \(t\) if \(u\geq t\) and every new value is greater than \(\ell(t)\). Equality is allowed. Call \(u\) a skipping extension if \(u>t\) and every new value exceeds the least unused integer greater than \(\ell(t)\).
+
+We claim that each successor-length \(t\) has a successor-length increasing extension \(u\) such that
+\[
+ c(w)>c(t^-)
+ \quad\hbox{for every skipping extension }w\hbox{ of }u.
+ \tag{1}
+\]
+If this failed for some \(t\), start with \(u_0=t\). Choose a skipping extension \(w_0\) of \(u_0\) with \(c(w_0)\leq c(t^-)\), and let \(b_0\) be its skipped integer. Append \(b_0\) to \(w_0\) to form \(u_1\). This is again a successor-length increasing extension of \(t\). Continue, obtaining \(w_i\) with colours at most \(c(t^-)\), and \(u_{i+1}=w_i{}^\frown b_i\). All these sequences still have infinitely many unused values, because adjoining a single value preserves that property.
+The integers \(b_i\) increase, and all values after the appended \(b_i\) exceed it. Thus, for \(i<j\), the successor prefix \(u_{i+1}\) lies in \(A_{w_j}\); its predecessor is \(w_i\). The vertices \(w_i\) therefore form an infinite clique using only finitely many colours, a contradiction. This proves (1).
+
+\paragraph{The final countable union.}
+Choose any successor-length \(t_0\). Given \(t_i\), choose \(u_i\) from (1). Let \(a_i<b_i\) be the two least unused integers greater than \(\ell(u_i)\), and define
+\[
+ t_{i+1}=u_i{}^\frown b_i.
+\]
+The sequence \(\widehat t=\bigcup_{i\geq0}t_i\) has countable ordinal length and is injective. Each \(a_i\) remains unused forever: all subsequent new values are greater than \(b_i>a_i\). Hence its complement is infinite and \(\widehat t\in T\). For every \(i\), \(\widehat t\) is a skipping extension of \(u_i\), so (1) gives
+\[
+ c(t_i^-)<c(\widehat t).
+ \tag{2}
+\]
+On the other hand, the vertices \(t_i^-\), \(i\geq1\), form an infinite clique. Indeed \(t_i\) is obtained by appending \(b_{i-1}\), and every later value exceeds \(b_{i-1}\); for \(j>i\), this makes \(t_i\in A_{t_j^-}\), and so \(t_i^-\) is adjacent to \(t_j^-\). They are distinct because the lengths strictly increase. This contradicts the finite bound on their colours in (2).
+There is consequently no countable proper colouring. Colouring a vertex by its ordinal length uses only \(\aleph_1\) colours and is proper, proving \(\chi(G)=\aleph_1\).
+
+\paragraph{Attribution and assessment.}
+This is a complete reconstruction of Bowler--Pitz, \emph{A note on uncountably chromatic graphs}, version 2 of 17 May 2024. The version matters: its corrected extension argument is used above. The proof uses ordinary ZFC set theory, including that a countable union of countable ordinals is countable, and no additional set-theoretic hypothesis. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1067} and \url{https://arxiv.org/html/2402.05984v2}. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

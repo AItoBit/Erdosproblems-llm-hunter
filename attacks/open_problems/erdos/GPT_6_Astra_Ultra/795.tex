@@ -1,0 +1,89 @@
+\section*{Erd\H{o}s Problem 795: sets with distinct subset products}
+
+\paragraph{Statement and claim.}
+Let \(g(n)\) be the largest size of \(A\subseteq[1,n]\cap\mathbb N\)
+whose subset products, including the empty product, are all distinct.
+The requested upper bound is true. We apply Raghavan's
+established upper theorem, verify its asymptotic implication,
+and reconstruct his explicit improvement to the lower bound.
+Source: R. Raghavan, \emph{Sharp Bounds for Sets with Distinct
+Subset Products}, Theorems 1.3--1.4 and Section 5,
+\url{https://arxiv.org/abs/2501.02695}, version 2.
+See \url{https://www.erdosproblems.com/795}.
+The \(x^{1/2}\) in the problem's displayed error is understood
+as \(n^{1/2}\), since \(n\) is its only size parameter.
+
+\paragraph{The external upper bound.}
+Theorem 1.3 of the cited version proves
+\[
+ g(n)=\pi(n)+\pi(\sqrt n)+O(n^{5/12}).                           \tag{1}
+\]
+This structural upper estimate is the main external input;
+its graph-pruning proof is not reproduced here.
+Because
+\[
+ \frac{n^{5/12}}{\sqrt n/\log n}=n^{-1/12}\log n\longrightarrow0,
+\]
+(1) gives precisely the asserted upper bound.
+The elementary set consisting of primes \(p\leq n\) and
+squares \(p^2\leq n\) already attains
+\(\pi(n)+\pi(\sqrt n)\): at each prime the selected exponent
+is \(0,1,2,\) or \(3\), and these four values uniquely determine
+which of \(p,p^2\) was used.
+
+\paragraph{A seven-element block on three primes.}
+Let \(p,q,r\) be distinct primes at most \(n^{1/3}\).
+All seven numbers
+\[
+ p^2q,\quad p^2r,\quad p^2,\quad qr,\quad p^3,\quad q^3,\quad r^3
+                                                               \tag{2}
+\]
+are at most \(n\).
+To prove their subset products distinct, subtract the exponent
+vectors of two putatively equal products.
+Let \(a,b,c,d,e,f,h\in\{-1,0,1\}\) be the resulting coefficients
+of the seven entries in (2).
+The \(q\)- and \(r\)-coordinates give
+\[
+ a+d+3f=0,\qquad b+d+3h=0.
+\]
+As \(|a+d|,|b+d|\leq2\), these force
+\(f=h=0\) and \(a=b=-d\).
+The \(p\)-coordinate becomes
+\[
+ -4d+2c+3e=0.
+\]
+Its parity forces \(e=0\), and then \(c=2d\).
+Since \(c,d\in\{-1,0,1\}\), we have \(c=d=0\), followed
+by \(a=b=0\). Every coefficient is zero, proving the claim.
+
+\paragraph{Combining independent prime blocks.}
+Partition the primes at most \(n^{1/3}\) into triples,
+leaving at most two ungrouped.
+For each triple use its seven-element block (2).
+For primes in \((n^{1/3},\sqrt n]\), use both \(p,p^2\);
+for primes above \(\sqrt n\), use just \(p\).
+Different blocks have disjoint prime supports.
+An equality between two global subset products restricts,
+prime by prime, to an equality within each block, which
+has just been proved impossible unless the subsets agree.
+Thus the construction has distinct subset products and size
+\[
+ \pi(n)-\pi(\sqrt n)
+ +2\bigl(\pi(\sqrt n)-\pi(n^{1/3})\bigr)
+ +7\left\lfloor\frac{\pi(n^{1/3})}{3}\right\rfloor
+ =
+ \pi(n)+\pi(\sqrt n)+\frac13\pi(n^{1/3})-O(1).                  \tag{3}
+\]
+This explains concretely why optimizing prime powers
+independently cannot describe all lower-order terms.
+
+\paragraph{Scope.}
+The requested upper estimate follows completely from the
+explicitly cited external theorem. The baseline lower bound
+and the stronger seven-element construction are fully
+verified here. No new proof of the structural upper theorem
+or novel extremal construction is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

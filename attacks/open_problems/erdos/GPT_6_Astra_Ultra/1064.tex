@@ -1,0 +1,85 @@
+\section*{Erd\H{o}s Problem 1064}
+
+\paragraph{Statement and result.}
+Write \(\varphi\) for Euler's totient. We prove that
+\(\varphi(n)>\varphi(n-\varphi(n))\) for a set of positive integers of natural density one, and that the reverse strict inequality occurs infinitely often. We restrict to \(n\geq2\), so the second totient has a positive argument.
+
+\paragraph{The number-theoretic input.}
+We use the following weak consequence of Luca--Pomerance, Lemma 2: for each fixed real \(Y\), almost every positive integer \(n\) satisfies
+\[
+ p\mid\varphi(n)\quad\hbox{for every prime }p\leq Y.
+ \tag{1}
+\]
+Here almost every means that the exceptional set has natural density zero. Their lemma is stronger, giving a growing range of prime powers dividing \(\varphi(n)\). This density input is external; the comparison argument below is supplied in full. One may alternatively obtain (1) by the divergence of the reciprocal primes congruent to \(1\pmod p\), followed by finite-prime sieving and a union over the finitely many \(p\leq Y\).
+
+\paragraph{Two elementary average estimates.}
+For \(n\geq2\), put
+\[
+ A(n)=\frac{\varphi(n)}n,\qquad
+ P_Y(n)=\prod_{\substack{p\mid n\\p\leq Y}}\left(1-\frac1p\right),
+ \qquad
+ T_Y(n)=\sum_{\substack{p\mid n\\p>Y}}\frac1p.
+\]
+The inequality \(1-\prod(1-u_i)\leq\sum u_i\), valid for \(0\leq u_i\leq1\), gives
+\[
+ 0\leq P_Y(n)-A(n)\leq T_Y(n).
+ \tag{2}
+\]
+For every \(X\geq1\),
+\[
+ \frac1X\sum_{n\leq X}T_Y(n)
+ \leq\sum_{p>Y}\frac1{p^2}=:\tau_Y,
+ \qquad \tau_Y\longrightarrow0.
+ \tag{3}
+\]
+Also the divisor identity
+\[
+ \frac n{\varphi(n)}
+ =\sum_{d\mid n}\frac{\mu(d)^2}{\varphi(d)}
+\]
+and positivity imply
+\[
+ \frac1X\sum_{n\leq X}\frac1{A(n)}
+ \leq\sum_{d=1}^{\infty}\frac{\mu(d)^2}{d\varphi(d)}
+ =\prod_p\left(1+\frac1{p(p-1)}\right)=:C<\infty.
+ \tag{4}
+\]
+In the averages define \(A(1)=1\). The product converges by comparison with \(\sum_{m\geq2}m^{-2}\). Therefore the upper density of \(A(n)<\eta\) is at most \(C\eta\), and by (3) the upper density of \(T_Y(n)>\eta^2/2\) is at most \(2\tau_Y/\eta^2\).
+
+\paragraph{Comparison outside a small exceptional set.}
+Assume (1), and set \(m=n-\varphi(n)=n(1-A(n))\).
+For each prime \(p\leq Y\), the congruence \(m\equiv n\pmod p\) shows that \(p\mid m\) if and only if \(p\mid n\). Thus
+\[
+ \frac{\varphi(m)}m\leq P_Y(n).
+\]
+It follows from (2) that
+\[
+\begin{split}
+ \frac{\varphi(n)-\varphi(m)}n
+ &\geq A(n)-(1-A(n))P_Y(n)\\
+ &=A(n)^2-(1-A(n))(P_Y(n)-A(n))\\
+ &\geq A(n)^2-T_Y(n).
+\end{split}
+ \tag{5}
+\]
+In particular the difference is positive whenever \(A(n)\geq\eta\) and \(T_Y(n)\leq\eta^2/2\).
+For every fixed \(\eta>0\) and fixed \(Y\), the upper density of the failure set is consequently at most
+\[
+ C\eta+\frac{2\tau_Y}{\eta^2};
+\]
+the additional exceptions to (1) have density zero. Given any \(\varepsilon>0\), first choose \(\eta\) with \(C\eta<\varepsilon/2\), then choose \(Y\) with \(2\tau_Y/\eta^2<\varepsilon/2\). The failure set has upper density zero. This proves the density-one assertion with the quantifiers in the required order.
+
+\paragraph{Infinitely many reverse inequalities.}
+For every integer \(k\geq1\), take \(n=15\cdot2^k\). Multiplicativity gives
+\[
+ \varphi(n)=4\cdot2^k,\qquad
+ n-\varphi(n)=11\cdot2^k,\qquad
+ \varphi(n-\varphi(n))=5\cdot2^k.
+\]
+These are infinitely many distinct strict reverse examples. For comparison, \(n=3\cdot2^k\) gives equality for every \(k\geq1\). Thus the density-one assertion cannot be strengthened to all sufficiently large integers.
+
+\paragraph{Attribution and assessment.}
+Luca and Pomerance prove a stronger result in \emph{On some problems of M\k{a}kowski--Schinzel and Erd\H{o}s concerning the arithmetical functions \(\varphi\) and \(\sigma\)} (2002), Theorem 3. The full proof here is relative only to the explicitly identified density-divisibility consequence of their Lemma 2. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1064} and \url{https://www.impan.pl/shop/en/publication/transaction/download/product/87975}. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

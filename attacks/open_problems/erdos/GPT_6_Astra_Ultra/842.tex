@@ -1,0 +1,53 @@
+\section*{Erd\H{o}s Problem 842: a cycle plus disjoint triangles}
+\subsection*{1. Statement and method}
+Let $G$ be the edge-disjoint union of a Hamiltonian cycle on $3n$ vertices and $n$ vertex-disjoint triangles. Prove $\chi(G)\le3$. We reconstruct Petrov's parity proof of the Fleischner--Stiebitz theorem. The needed parity lemma and polynomial evaluation identity are proved here; in fact the argument proves three-list-colourability.
+\subsection*{2. A parity lemma}
+Let a graph $F$ have its vertex set partitioned into independent sets $V_1,\ldots,V_n$ of odd size. Assume every vertex has an even number of neighbors in each other part. Then the number of transversals $U$, choosing one vertex from each part, for which $F[U]$ has all degrees even is odd.
+Choose $x_i\in V_i$. For each $i$ choose $y_i$ either equal to $x_i$ or a neighbor of $x_i$ among the selected vertices. For fixed $(x_i)$ the number of choices is
+\[
+ \prod_i(1+d_{F[U]}(x_i)),
+\]
+which is odd exactly when all the degrees are even. It therefore suffices to count these configurations modulo two.
+Draw an arrow $i\to j$ when $y_i=x_j\ne x_i$. This directed graph has outdegree at most one. Configurations with a directed cycle of length at least three pair off: choose the first such cycle according to a fixed order on its vertex sets and reverse its direction. Distinct cycles in an outdegree-one graph are disjoint, so this is a fixed-point-free involution.
+Now fix a nonempty arrow graph with no such cycle. Its underlying undirected graph is a forest: a longer undirected cycle would force every vertex on it to use its one outgoing arrow on the cycle and thus orient it cyclically. Choose a leaf $i$ in a nontrivial component, with neighbor $j$. Fix all $x_h$ except $x_i$. The allowable $x_i$ are precisely the neighbors of $x_j$ in $V_i$, an even number. Thus each such arrow graph contributes an even number of configurations. The empty arrow graph contributes $\prod_i|V_i|$, which is odd, proving the lemma.
+\subsection*{3. Chords and alternating endpoints}
+Place the Hamiltonian cycle's vertices on a circle. Form a graph whose vertices are the three sides of each added triangle, with two sides from different triangles adjacent when their chord interiors cross. Each part of three sides is declared independent. A fixed chord crosses an even number of sides of another triangle, because the closed triangle crosses the line through that chord an even number of times; all crossings lie inside the disk, hence on the chord. Distinct triangles have disjoint endpoints. The parity lemma applies.
+Consequently there are an odd number of ways to select one unoriented side of each triangle so that every selected side crosses an even number of the others. These selected sides form a matching of $2n$ endpoints around the circle. For one side, the parity of the number of endpoints strictly between its ends equals the parity of its crossing count: sides with both endpoints inside contribute two, and crossing sides contribute one. Its endpoints therefore occupy opposite parities in the circular order precisely when its crossing count is even. Thus an admissible selection admits exactly two alternating black--white colourings of all its endpoints, and every selected side joins opposite colours.
+\subsection*{4. A nonzero Laurent-polynomial coefficient}
+Label cycle vertices $x_1,\ldots,x_{3n}$, with $x_{3n+1}=x_1$, and triangle vertices $a_i,b_i,c_i$. Set
+\[
+ \Phi=\prod_{j=1}^{3n}(1-x_{j+1}/x_j)
+ \prod_{i=1}^n(1-a_i/b_i)(1-b_i/c_i)(1-c_i/a_i).
+\]
+For a triangle,
+\[
+ (1-a/b)(1-b/c)(1-c/a)
+ =a/c+c/b+b/a-c/a-b/c-a/b.                             \tag{1}
+\]
+Each term chooses an oriented side, with exponent $+1$ at one endpoint and $-1$ at the other. In the cycle product, a nonconstant monomial is obtained by selecting a nonempty proper subset of cycle edges. Its nonzero exponents occur at the boundaries of the resulting directed paths and alternate $+1,-1$ around the circle. Conversely any prescribed nonempty alternating pattern of these exponents determines exactly one selected edge subset: membership is constant between boundary vertices and flips at every boundary.
+It follows that a choice of triangle terms can contribute to the constant term of $\Phi$ exactly when its endpoint signs alternate. For each admissible unoriented selection from the previous section there are exactly two such choices. Their contributions have the same sign. One way to see this is to replace the selected factors by the complementary factors in the original expansion: every variable's exponent is negated, and the product of all the nonconstant ratios around the cycle and triangles equals one. There are $6n$ factors in total, so a subset and its complement have the same sign. Hence each admissible selection contributes either $2$ or $-2$.
+The number of selections is odd. Therefore
+\[
+ \operatorname{CT}(\Phi)\equiv2\pmod4,\qquad
+ \operatorname{CT}(\Phi)\ne0.                            \tag{2}
+\]
+\subsection*{5. Why a colouring exists}
+At each vertex choose any three distinct nonzero real numbers as its colour list. For a list $L=\{u,v,w\}$ define
+\[
+ \lambda_L(u)=\frac{vw}{(u-v)(u-w)},
+\]
+with the analogous formulas at $v,w$. Lagrange interpolation of $1,X,X^2$ evaluated at zero gives
+\[
+ \sum_{z\in L}\lambda_L(z)z^d=
+ \begin{cases}1&d=0,\\0&d=1,2.\end{cases}
+\]
+Every monomial of $\Phi$ has total exponent zero, with each individual exponent between $-2$ and $2$. A nonconstant monomial therefore has some positive exponent, equal to one or two. Summing its evaluations with the product of the above weights kills it in that coordinate. The constant monomial survives. Thus
+\[
+ \operatorname{CT}(\Phi)=
+ \sum_{z_j\in L_j}\Phi(z_1,\ldots,z_{3n})\prod_j\lambda_{L_j}(z_j).
+\]
+By (2) some grid point has $\Phi\ne0$. Every edge factor is then nonzero, so adjacent vertices receive different values. This proves list-colourability and, by giving every vertex the list $\{1,2,3\}$, the original assertion. Since triangles are present, the chromatic number is exactly three.
+\subsection*{6. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/842}; H. Fleischner and M. Stiebitz, \emph{A solution to a colouring problem of P. Erd\H{o}s}, Discrete Math. 101 (1992), 39--48; F. Petrov, \emph{General Parity Result and Cycle-plus-Triangles Graphs}, \url{https://arxiv.org/abs/1512.06205}. The proof follows Petrov's published reconstruction, with the matching-endpoint and interpolation steps expanded.
+\textbf{SOLVED in this reconstruction.} The parity count, coefficient calculation and evaluation argument are all supplied. No external colouring theorem, novelty claim or local formal verification is used.
+\textbf{Completion rate estimate: 100\%.}

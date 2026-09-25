@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 324: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Does an integer polynomial $f$ exist such that $f(a)+f(b)$ are distinct for all distinct unordered pairs of nonnegative indices $a<b$? Source: \url{https://www.erdosproblems.com/324}. We prove that no polynomial of degree at most two works, even after deleting any finite initial range of indices, and verify failures of the cubic and quartic monomials. Existence in higher degree remains unresolved here.
+
+The condition is stated on two-element index sets. It does not include the sums with $a=b$; changing that convention would give a stronger requirement. The older GPT-5.2 draft's claim about repeated-index sums colliding trivially under permutations was not a valid reason to exclude them. We use the precise $a<b$ convention throughout. No novelty is claimed for these obstructions.
+
+\section*{All linear and quadratic polynomials fail}
+For a linear polynomial $f(t)=At+B$, the identity
+\[
+ f(x)+f(x+3)=f(x+1)+f(x+2)
+\]
+holds for every nonnegative integer $x$. It includes constant polynomials and supplies distinct pairs arbitrarily far out.
+
+Now let $f(t)=At^2+Bt+D$ with $A\ne0$. Put
+\[
+ h=1+2|A|,\qquad
+ y=hx+\frac{h^2-1}{2}+\frac{B(h-1)}{2A}. \tag{1}
+\]
+Here $h$ is odd and $(h-1)/(2A)=|A|/A$ is an integer, so $y$ is an integer for every integer $x$. Since $h>1$, for all sufficiently large positive $x$ we have $y>x+h$. Direct subtraction gives
+\[
+ f(x+h)-f(x)=2Ahx+Ah^2+Bh,
+ \qquad f(y+1)-f(y)=2Ay+A+B.
+\]
+They are equal by (1). Rearranging yields
+\[
+ f(x)+f(y+1)=f(x+h)+f(y). \tag{2}
+\]
+All four indices are nonnegative and strictly ordered $x<x+h<y<y+1$. Thus (2) is a genuine collision between different permitted pairs. Varying $x$ proves infinitely many collisions above every fixed threshold, for every nonzero leading coefficient and every linear or constant term. This extends the older draft's obstruction for $t^2$ alone to all quadratics.
+
+\section*{Two higher-degree monomials also fail}
+The identities
+\[
+ 1^3+12^3=9^3+10^3=1729,
+\]
+\[
+ 59^4+158^4=133^4+134^4=635318657
+\]
+have distinct positive entries and distinct unordered pairs. Multiplying all four entries by any positive integer gives infinitely many collisions for the corresponding monomial, so finite initial deletions cannot repair either example. These identities also rule out $At^d+D$ with $A\ne0$ for $d=3,4$, since multiplication by $A$ and addition of $2D$ preserve the equalities. They do not rule out all mixed-term quartics.
+
+\section*{Why finitely many modular obstructions do not decide the question}
+For an integer polynomial and a modulus $q$, the value $f(n)\pmod q$ depends only on $n\pmod q$. Thus any fixed finite set of modulus tests supplies only finitely many residue patterns for an infinite set of index pairs; many different pairs necessarily pass the same tests. Congruence equality is a necessary condition for an integer equality, but passing those tests does not produce a collision, while a bounded search finding none does not prove injectivity on all indices.
+
+More concretely, if $f(a)=f(c)$ for different indices, choosing a third index $b$ gives an immediate permitted pair collision. So a candidate must itself be injective on nonnegative integers. Eventual monotonicity of any nonconstant real polynomial provides only eventual injectivity of its values; (2) shows why that fact does not control equality of two-term sums.
+
+\section*{Remaining gap}
+The complete low-degree obstruction and the displayed monomial identities are proved. The known theorem excluding all cubics is recorded on the source page but is not reconstructed here. We neither construct a qualifying higher-degree integer polynomial nor rule out the suggested candidate $t^5$. The finite no-collision searches in the old draft are not used to support either conclusion.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

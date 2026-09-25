@@ -1,0 +1,124 @@
+\section*{Erd\H{o}s Problem 1217: one infinite chain attains the doubly logarithmic density}
+\subsection*{Statement and outcome}
+For $A\subseteq\mathbb N$, ignore the possible element $1$ in expressions involving $\log a$, and put
+\[
+ \Delta=\limsup_{x\to\infty}\frac1{\log\log x}
+              \sum_{\substack{a\in A\\2\le a<x}}\frac1{a\log a}.
+\]
+We prove that if $\Delta>0$, there is a strictly increasing divisibility chain in $A$ with
+\[
+ \limsup_{x\to\infty}\frac{\#\{a\text{ in the chain}:a<x\}}{\log\log x}\ge\Delta.
+ \tag{1}
+\]
+Positive lower logarithmic density, as in the question, implies $\Delta>0$, as checked below. This reconstructs Section 9 of Alexeev--Barreto--Li--Lichtman--Price--Shah--Tang--Tao. The uniform-integrability step is essential; expectations at separate scales alone do not produce one infinite chain.
+
+\subsection*{An invariant weight and an infinite random chain}
+Let $\Lambda(p^j)=\log p$ for prime powers and zero otherwise, and define
+\[
+ \nu(1)=1,\qquad
+ \nu(n)=\log n\int_1^\infty\frac{ds}{\zeta(s)n^s}\quad(n\ge2).
+\]
+The elementary identities
+$\sum_{q\mid n}\Lambda(q)=\log n$ and
+$\sum_{q\ge2}\Lambda(q)q^{-s}=-\zeta'(s)/\zeta(s)$ imply
+\[
+ \sum_{q\ge2}\nu(nq)\frac{\Lambda(q)}{\log(nq)}=\nu(n).
+ \tag{2}
+\]
+Indeed, the left side is
+$\int_1^\infty n^{-s}(-\zeta'(s))/\zeta(s)^2\,ds$.
+Integration by parts gives the claimed expression for $n\ge2$; for $n=1$ it is
+$[1/\zeta(s)]_1^\infty=1$. Tonelli applies to the nonnegative series, and the boundary terms vanish because $\zeta(s)\ge1/(s-1)$ near one.
+
+Start at $1$ and move from $n$ to $nq$ with probability
+\[
+ P(n,nq)=\frac{\nu(nq)\Lambda(q)}{\nu(n)\log(nq)}.
+\]
+Equation (2) makes this a probability distribution. It defines an infinite chain of strictly increasing finite integers. Its probability of ever visiting $n$ is exactly $\nu(n)$. Induct on $n$: if the assertion holds for proper divisors, the total probability of entering $n>1$ is
+\[
+ \sum_{\substack{d\mid n\\d<n}}\nu(d)P(d,n)
+ =\frac{\nu(n)}{\log n}\sum_{q\mid n}\Lambda(q)=\nu(n).
+ \tag{3}
+\]
+There can be no repeated visit.
+
+For $t>0$, the integral comparison
+$t^{-1}\le\zeta(1+t)\le1+t^{-1}$ gives
+$t-t^2\le1/\zeta(1+t)\le t$. Integrating against
+$(\log n)n^{-1}e^{-t\log n}$ yields
+\[
+ 0\le\frac1{n\log n}-\nu(n)\le\frac2{n(\log n)^2}.
+ \tag{4}
+\]
+In particular the difference has finite sum over $n\ge2$, and $\nu(n)\le1/(n\log n)$.
+
+\subsection*{An elementary second-moment bound}
+Let $\Omega(n)$ count prime factors with multiplicity. We first show
+\[
+ \sum_{2\le n\le x}\frac{\Omega(n)}{n\log n}
+       \ll1+(\log\log x)^2\qquad(x\ge3).
+ \tag{5}
+\]
+For $y\ge3$ take $s=1+1/\log y$. The Euler product and the zeta integral bound give
+\[
+ \sum_{p\le y}\frac1p
+ \le e\sum_p p^{-s}\le e\log\zeta(s)
+ \le e\log(1+\log y).
+\]
+The contribution of prime powers $p^j$, $j\ge2$, to
+$\sum p^{-j}$ is bounded by an absolute constant. Hence
+\[
+ \sum_{n\le y}\Omega(n)
+ =\sum_{p^j\le y}\left\lfloor\frac y{p^j}\right\rfloor
+ \ll y(1+\log\log y).
+\]
+Summation by parts against $1/(y\log y)$ proves (5), since the resulting integral is bounded by a constant times
+$\int_3^x(1+\log\log t)/(t\log t)\,dt$.
+No prime number theorem is used.
+
+Let $\mathcal C$ be the random chain with its initial element $1$ removed, and put
+$Z(x)=|\mathcal C\cap A\cap[2,x]|$.
+If $n\in\mathcal C$, the number of chain elements at most $n$ is at most $\Omega(n)$: each strict divisibility step increases $\Omega$ by at least one. Expanding the square, using (3)--(5), gives
+\[
+ \begin{split}
+ \mathbb E Z(x)^2
+ &\le2\sum_{2\le n\le x}
+       \mathbb E\bigl[1_{n\in\mathcal C}|\mathcal C\cap[2,n]|\bigr]\\
+ &\le2\sum_{2\le n\le x}\Omega(n)\nu(n)
+ \ll1+(\log\log x)^2.
+ \end{split}
+ \tag{6}
+\]
+The first inequality safely discards the restriction to $A$ and counts diagonal pairs twice.
+
+\subsection*{Passing to one chain}
+Choose $x_j\to\infty$, with $x_j\ge e^e$, along which the defining density tends to $\Delta$. The use of $a<x$ rather than $a\le x$ changes the normalized sum by a quantity tending to zero. Put
+$X_j=Z(x_j)/\log\log x_j$. Equations (3)--(4) give
+$\mathbb E X_j\to\Delta$, and (6) gives $\sup_j\mathbb E X_j^2<\infty$.
+
+Here is the needed reverse-Fatou argument in full. For each $T>0$, bounded reverse Fatou gives
+\[
+ \mathbb E\limsup_j\min(X_j,T)\ge\limsup_j\mathbb E\min(X_j,T).
+\]
+Moreover
+$\mathbb E(X_j-\min(X_j,T))\le\mathbb E X_j^2/T\le C/T$.
+Since $\limsup_j\min(X_j,T)\le\limsup_jX_j$, it follows, on letting $T\to\infty$, that
+\[
+ \mathbb E\limsup_jX_j\ge\Delta.
+\]
+Thus some realization has $\limsup_jX_j\ge\Delta$: if the random variable were strictly less than $\Delta$ almost surely, its expectation would be strictly less than $\Delta$. Intersect that realization of $\mathcal C$ with $A$. The intersection is infinite because $\Delta>0$, and any subsequence of a divisibility chain is a divisibility chain. It satisfies (1). Passing between $<$ and $\le$ in the chain count changes it by at most one.
+
+\subsection*{The original density hypothesis}
+If $H_A(t)=\sum_{a\in A,\ a\le t}1/a\ge\delta\log t$ eventually for some $\delta>0$, summation by parts gives
+\[
+ \sum_{\substack{a\in A\\2\le a\le x}}\frac1{a\log a}
+ =\frac{H_A(x)}{\log x}
+   +\int_{t_0}^{x}\frac{H_A(t)}{t(\log t)^2}\,dt+O(1)
+ \ge\delta\log\log x+O(1).
+\]
+Finite initial terms, including $1$, are absorbed into the constant. Therefore positive lower logarithmic density implies $\Delta>0$, completing the requested assertion.
+
+\subsection*{Assessment and sources}
+The chain construction, exact hitting law, uniform second moment and limit passage are all supplied. Background inputs are the absolutely convergent Euler product for real $s>1$, elementary integration, and the standard construction of a countable-state Markov chain. Source: \url{https://www.erdosproblems.com/1217}; B. Alexeev et al., \emph{Primitive sets and von Mangoldt chains: Erd\H{o}s Problem \#1196 and beyond}, Section 9 and Remark 2.8, \url{https://arxiv.org/abs/2605.00301}. The authors disclose earlier GPT-5.4 Pro contributions; this is a reconstruction of the known proof, with no novelty or Lean-verification claim.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

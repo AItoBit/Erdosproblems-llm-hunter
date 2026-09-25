@@ -1,0 +1,124 @@
+\section*{Erd\H{o}s Problem 798: covering a grid by determined lines}
+
+\paragraph{Statement and claim.}
+For the grid \([n]^2\), let \(t(n)\) be the least number of
+selected grid points whose pairwise determined lines cover
+the whole grid. We reconstruct Alon's bounds
+\[
+ c n^{2/3}\leq t(n)\leq C n^{2/3}\log n
+ \quad(n\geq2),
+\]
+so in particular \(t(n)=o(n)\).
+Source: N. Alon, \emph{Economical coverings of sets of lattice
+points}, \url{https://web.math.princeton.edu/~nalon/PDFS/lattice.pdf}.
+See \url{https://www.erdosproblems.com/798}.
+The planar argument below includes the approximation and
+probabilistic steps explicitly.
+
+\paragraph{Lower bound by separating directions.}
+Take \(t\) selected points. Write a lattice-line direction
+as a primitive integer vector \((u,v)\), identified with its
+negative, and put \(q=\max(|u|,|v|)\).
+There are at most \(4q\) directions with this value of \(q\).
+For each direction, at most \(t/2\) distinct parallel lines
+can contain two selected points, since they use disjoint
+pairs of selected points.
+Thus the number \(f_q\) of determined lines of this type
+satisfies
+\[
+ f_q\leq2tq,\qquad \sum_qf_q\leq\binom t2.
+\]
+A determined line has \(q\leq n-1\), and contains at most
+\(\lfloor(n-1)/q\rfloor+1\leq2n/q\) grid points.
+For any integer \(Q\geq1\), the number of covered points is
+at most
+\[
+ \sum_{q\leq Q}2tq\frac{2n}{q}
+ +\sum_{q>Q}f_q\frac{2n}{Q}
+ \leq4ntQ+\frac{nt^2}{Q}.
+\]
+Taking \(Q=\lceil\sqrt t\rceil\) gives \(O(nt^{3/2})\).
+Covering all \(n^2\) grid points therefore requires
+\(t\gg n^{2/3}\).
+
+\paragraph{An approximation lemma proved by pigeonhole.}
+Set \(Q=\lceil n^{1/3}\rceil\).
+For any two grid points \(x,a\), there are integers \(p_1,p_2\)
+and a real \(z\) such that
+\[
+ 1\leq q:=\max(|p_1|,|p_2|)\leq Q,\qquad
+ |x_i-a_i-p_i z|\leq Q^2/q,                                   \tag{1}
+\]
+and for one coordinate \(j\), \(p_j=q\) and
+\(x_j-a_j-p_jz=0\).
+If \(x=a\), choose \((p_1,p_2)=(1,0)\), \(z=0\).
+Otherwise choose \(j\) with maximal nonzero \(|x_j-a_j|\);
+let \(\alpha\) be the ratio of the other coordinate difference
+to this one, so \(|\alpha|\leq1\).
+Among the \(Q+1\) fractional parts of \(0,\alpha,\ldots,Q\alpha\),
+two fall in the same one of \(Q\) equal intervals.
+Their difference gives \(1\leq q\leq Q\) and an integer \(p\)
+with \(|q\alpha-p|\leq1/Q\), \(|p|\leq q\).
+Take \(p_j=q\), the other component \(p\), and
+\(z=(x_j-a_j)/q\). The nonzero error is at most
+\(n/(qQ)\leq Q^2/q\), proving (1).
+
+\paragraph{Many centres admit a small-error line.}
+Fix a grid point \(x\), and fix \(C_0=1024\).
+The number of centres \(a\) admitting data in (1) with
+\(q<Q/C_0\) is at most \(n^2/4\), for all sufficiently large \(n\).
+Indeed, for each \(q\) there are two choices of \(j\), at
+most \(n\) choices of \(a_j\), at most \(3q\) choices of the
+other integer component of \(p\), and at most
+\(3Q^2/q\) choices of the remaining coordinate of \(a\).
+The total is at most
+\[
+ (Q/C_0)\,18nQ^2
+ \leq(144/C_0)n^2<n^2/4,
+\]
+using \(Q^3\leq8n\).
+Exclude also centres within \((C_0+2)Q+1\) of the boundary;
+they number \(O(nQ)=o(n^2)\), and at most \(n^2/4\) for
+sufficiently large \(n\).
+At least half the grid points remain as interior centres
+for which the approximation has \(q\geq Q/C_0\).
+For these centres, (1) gives
+\[
+ |x_i-a_i-p_i z|\leq C_0Q,\qquad |p_i|\leq Q.                  \tag{2}
+\]
+
+\paragraph{A small square whose pairs cover the fixed point.}
+For an interior centre \(a\), let \(B(a)\) contain all grid
+points with \(|y_i-a_i|\leq(C_0+2)Q\).
+It has at most \((2(C_0+2)Q+1)^2=O(Q^2)\) points.
+Under (2), the line
+\[
+ y_i=x_i-p_iw
+\]
+passes through \(x\) at \(w=0\), and at \(w=z\) lies within
+\(C_0Q\) of \(a\) in each coordinate.
+Its two points at integer parameters
+\(\lceil z\rceil,\lceil z\rceil+1\) both lie in \(B(a)\),
+because each parameter differs from \(z\) by at most two.
+They are distinct since \(p\ne0\).
+Thus a line determined by two members of \(B(a)\) covers \(x\).
+
+\paragraph{Random centres cover every point simultaneously.}
+Choose \(r=\lceil3\log_2 n\rceil+1\) independent uniformly
+random interior centres.
+For each fixed \(x\), at least half of all interior centres
+work, by the preceding count; its probability of being
+uncovered is at most \(2^{-r}<n^{-3}\).
+The union bound over \(n^2\) grid points gives a probability
+less than one of any uncovered point.
+Some choice therefore covers the entire grid using the
+selected set \(\bigcup_{j=1}^rB(a_j)\), whose size is
+\[
+ O(rQ^2)=O(n^{2/3}\log n).
+\]
+Enlarging the absolute constant handles the finitely many
+smaller \(n\geq2\). Since \(n^{-1/3}\log n\to0\), the
+requested sublinear conclusion follows.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

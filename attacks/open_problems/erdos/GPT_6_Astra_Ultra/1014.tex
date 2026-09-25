@@ -1,0 +1,98 @@
+\section*{Erd\H{o}s Problem 1014}
+
+\paragraph{Statement and result.}
+For every fixed integer \(k\geq3\),
+\[
+ \lim_{\ell\to\infty}\frac{R(k,\ell+1)}{R(k,\ell)}=1.
+\]
+We reconstruct the dependent-random-choice proof attributed to an internal OpenAI model, proving the auxiliary estimates used here as well. No new Ramsey-number estimate or local Lean verification is claimed.
+
+\paragraph{Two elementary Ramsey estimates.}
+Use \(R(1,\ell)=1\). The neighbourhood/non-neighbourhood argument gives
+\[
+ R(a,b)\leq R(a-1,b)+R(a,b-1),
+\]
+because a vertex with at least \(R(a-1,b)\) neighbours supplies either a clique through that vertex or an independent \(b\)-set; otherwise its non-neighbours supply a clique or an independent \((b-1)\)-set to which it can be added. Induction yields
+\[
+ R(a,b)\leq\binom{a+b-2}{a-1},\qquad
+ R(a,\ell+1)=O_a(\ell^{a-1}).
+\tag{1}
+\]
+
+We also need
+\[
+ R(k,\ell)\gg_k(\ell/\log\ell)^{k/2}.
+\tag{2}
+\]
+Here is an alteration proof. Set
+\[
+ M=\left\lfloor\left(\frac{\ell}{100k\log\ell}\right)^{k/2}\right\rfloor,
+ \qquad p=\tfrac12 M^{-2/k},
+\]
+and take the random graph \(G(M,p)\). For large \(\ell\), \(M>\ell\). The expected number of \(K_k\)'s is at most
+\[
+ \frac{M^k}{k!}p^{\binom k2}
+ =\frac{2^{-\binom k2}}{k!}M<M/4.
+\]
+In fact Markov's inequality puts the probability of at least \(M/2\) such cliques below \(1/2\). The expected number of independent \(\ell\)-sets is at most
+\[
+ \binom M\ell(1-p)^{\binom\ell2}
+ \leq\exp\!\left(\ell\log(eM/\ell)-p\ell(\ell-1)/2\right)=o(1).
+\]
+To check the last inequality, \(\log(eM/\ell)\leq(k/2)\log\ell+1\), whereas \(p(\ell-1)/2\geq20k\log\ell\) for sufficiently large \(\ell\). Thus some outcome has no independent \(\ell\)-set and fewer than \(M/2\) copies of \(K_k\). Delete one vertex from each original clique. The remaining graph has at least \(M/2\) vertices, no \(K_k\), and no independent \(\ell\)-set. This proves (2).
+
+\paragraph{Dependent random choice, with proof.}
+Let a graph have \(N\) vertices and average degree \(d\). For positive integers \(q,s,m\), there is a set \(U\) such that every \(s\)-subset of \(U\) has at least \(m\) common neighbours and
+\[
+ |U|\geq \frac{d^q}{N^{q-1}}
+       -\binom Ns\left(\frac{m-1}{N}\right)^q.
+\tag{3}
+\]
+Choose \(q\) vertices independently and uniformly, allowing repetitions, and let \(X\) be their common neighbourhood. Then
+\[
+ \mathbb E|X|=\sum_v(d(v)/N)^q\geq d^q/N^{q-1}
+\]
+by convexity. Call an \(s\)-set bad if it has at most \(m-1\) common neighbours. Each bad set is contained in \(X\) with probability at most \(((m-1)/N)^q\). Subtract the number of bad sets contained in \(X\) from \(|X|\), and take an outcome achieving at least its expectation. Delete one vertex from each bad set in that outcome. The surviving \(U\) proves (3). Deletion cannot introduce a bad subset that was absent before.
+
+\paragraph{Apply this to a critical graph.}
+Fix \(k\), and write
+\[
+ s=\lceil k/2\rceil,\quad t=\lfloor k/2\rfloor,\quad q=k^2,
+ \quad N=R(k,\ell+1)-1.
+\]
+Choose an \(N\)-vertex graph \(G\) with no \(K_k\) and with independence number at most \(\ell\). For every vertex \(v\), its non-neighbours, excluding \(v\), have no independent \(\ell\)-set. Hence there are at most \(R(k,\ell)-1\) of them, and
+\[
+ d(v)\geq N-R(k,\ell)=:\Delta.
+\tag{4}
+\]
+Monotonicity is in fact strict here: adjoining an isolated vertex to a critical graph for \(R(k,\ell)\) proves \(R(k,\ell+1)\geq R(k,\ell)+1\), so \(\Delta\geq0\).
+
+Apply (3) with \(m=R(t,\ell+1)\). Its set \(U\) cannot contain \(K_s\): the common neighbourhood of such a clique has at least \(R(t,\ell+1)\) vertices and no independent \((\ell+1)\)-set, so it contains \(K_t\). The common neighbourhood is disjoint from the original clique, since there are no loops, and the two cliques form \(K_k\). Thus
+\[
+ |U|\leq R(s,\ell+1)-1.
+\]
+Equations (3)--(4) imply
+\[
+ \left(\frac{\Delta}{N}\right)^q
+ \leq\frac{R(s,\ell+1)-1}{N}
+ +\binom Ns\,\frac{(R(t,\ell+1)-1)^q}{N^{q+1}}.
+\tag{5}
+\]
+
+\paragraph{Both terms tend to zero.}
+By (1)--(2), \(N\geq\ell^{k/2-o(1)}\). The first term in (5) is at most
+\[
+ O_k(\ell^{s-1-k/2+o(1)})=o(1),
+\]
+since \(s-1-k/2\leq-1/2\). The second term is at most a constant times
+\[
+ \frac{\ell^{q(t-1)}}{N^{q-s+1}}
+ \leq \ell^{\,q(t-1-k/2)+(k/2)(s-1)+o(1)}=o(1).
+\]
+Indeed \(t-1-k/2\leq-1\), \(s-1\leq k/2\), and \(q=k^2\), so the fixed exponent is at most \(-3k^2/4\). When \(t=1\), the second term is actually zero. It follows that \(\Delta/N\to0\). Since \(R(k,\ell+1)-R(k,\ell)=\Delta+1\) and \(N\to\infty\), we obtain the desired ratio limit.
+
+\paragraph{Attribution and assessment.}
+The balanced clique split and application to a hypothetical dense critical graph are from \emph{On the ratio of \(R(k,\ell)\) and \(R(k,\ell+1)\)}, \url{https://cdn.openai.com/pdf/6dc7175d-d9e7-4b8d-96b8-48fe5798cd5b/Ramsey.pdf}. See \url{https://www.erdosproblems.com/1014}, checked 24 September 2026. The reconstruction supplies the standard probabilistic lower bound and dependent-random-choice lemma rather than assuming them. The conclusion is proved for every fixed \(k\); no uniformity for growing \(k\) is asserted.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 1211: the extremal logarithmic block construction}
+\subsection*{Statement and scope}
+For a partition $\mathbb N=A\sqcup B$, let $S(A)$ and $S(B)$ be the sets of nonempty sums of distinct elements of the corresponding part. How small can
+\[
+ \max\bigl(\overline\delta_{\log}(S(A)),
+           \overline\delta_{\log}(S(B))\bigr)
+\]
+be? Conlon--Fox--Pham proved that the optimum is $(2+\sqrt3)/4$.
+We reconstruct the sharp upper-bound construction, including its logarithmic-density calculation, and prove the elementary universal lower bound $1/2$. The stronger universal lower bound matching the construction remains unresolved in this attempt.
+
+\subsection*{A universal elementary lower bound}
+Singletons are allowed as sums, so $A\subseteq S(A)$ and $B\subseteq S(B)$. Since the two parts partition the positive integers,
+\[
+ \sum_{\substack{n\in A\\n\le x}}\frac1n+
+ \sum_{\substack{n\in B\\n\le x}}\frac1n
+ =\log x+O(1).
+\]
+Taking upper limits proves that at least one of $S(A),S(B)$ has upper logarithmic density at least $1/2$. This gives no justification for the much larger sharp constant.
+
+\subsection*{Alternating blocks on the logarithm-of-logarithm scale}
+Fix $b>2$. Assign the integers in
+\[
+ [e^{b^{2j}},e^{b^{2j+1}})\quad(j=0,1,\ldots)
+\]
+to $A$, and those in the intervening blocks to $B$. Assign the finitely many initial integers arbitrarily. Let $R_j=e^{b^{2j+1}}$ be the upper endpoint of the $j$th $A$-block and $L_{j+1}=e^{b^{2j+2}}$ the lower endpoint of the next one.
+
+Any element of $S(A)$ below $L_{j+1}$ uses only summands below $R_j$. Its value is at most the sum of all positive integers below $R_j$, which is less than $R_j^2$ for large $j$. Hence $S(A)$ avoids the entire integer interval
+\[
+ (R_j^2,L_{j+1})
+   =\bigl(e^{2b^{2j+1}},e^{b^{2j+2}}\bigr).
+ \tag{1}
+\]
+The same argument gives the shifted family of gaps for $S(B)$. All earlier blocks are automatically accounted for by bounding their total by the sum of \emph{all} integers below $R_j$.
+
+\subsection*{Computing an upper density uniformly over the cutoff}
+For a set of integer gaps $(e^u,e^v)$, the harmonic weight removed is
+$v-u+O(e^{-u})$. The errors over the gap family (1) have bounded sum.
+Thus, on the variable $t=\log x$, it suffices to examine the length proportion removed by intervals
+\[
+ (u_j,v_j)=(2b^{2j+1},b^{2j+2}).
+\]
+Their lengths are $(b-2)b^{2j+1}$, and $u_{j+1}/u_j=b^2$.
+
+The removed-length proportion decreases between gaps and increases inside a gap: during a gap its numerator is $t$ minus a fixed nonnegative covered length. Its asymptotic minimum therefore occurs immediately before a gap, at $t=u_j$. At that point the earlier removed length is
+\[
+ \sum_{h<j}(v_h-u_h)
+ =(b-2)b\,\frac{b^{2j}-1}{b^2-1},
+\]
+up to a fixed initial adjustment. Division by $u_j=2b^{2j+1}$ gives the limit
+\[
+ \frac{b-2}{2(b^2-1)}.
+\]
+The uniform-over-cutoffs conclusion is
+\[
+ \overline\delta_{\log}(S(A)),\
+ \overline\delta_{\log}(S(B))
+ \le D(b):=1-\frac{b-2}{2(b^2-1)}.
+ \tag{2}
+\]
+For $B$, multiplying all gap endpoints by $b$ leaves this limiting proportion unchanged. Integer rounding and finite initial choices contribute only $O(1)/\log x$.
+
+\subsection*{Optimizing the parameter}
+The derivative of $(b-2)/(b^2-1)$ has numerator $-b^2+4b-1$. On $b>2$ it changes from positive to negative at $b=2+\sqrt3$. Thus (2) is minimized there, and direct substitution gives
+\[
+ D(2+\sqrt3)=\frac{2+\sqrt3}{4}.
+\]
+The classical choice $b=4$ gives $D(4)=14/15$. This proves the sharp construction-side bound with no assumption that subset sums fill every interval outside the exhibited gaps. Only the proved exclusions are needed.
+
+\subsection*{What is missing}
+The construction establishes an upper bound on the optimal guarantee. To identify that guarantee exactly, one must show that \emph{every} partition has a colour whose subset sums have upper logarithmic density at least $(2+\sqrt3)/4$. The primary paper proves this using a substantial interval-of-subset-sums lemma and a further continuous optimization argument. Neither is replaced here by the elementary $1/2$ argument.
+Sources: \url{https://www.erdosproblems.com/1211}; D. Conlon, J. Fox and H. T. Pham, \emph{The upper logarithmic density of monochromatic subset sums}, Mathematika 68 (2022), 1292--1301, \url{https://arxiv.org/abs/2105.15195v3}, especially Section 1 for the construction and Sections 2--3 for the missing lower bound. No novelty is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

@@ -1,0 +1,55 @@
+\section*{Erd\H{o}s Problem 336: order versus exact order}
+\subsection*{Statement and scope}
+The order of an additive basis is the least $r$ for which every sufficiently large integer is a sum of at most $r$ elements; its exact order is the least $k$ for which exactly $k$ summands suffice. Repetitions are allowed. Let $h(r)$ be the largest finite exact order among bases of order $r$. The problem asks for $\lim_r h(r)/r^2$.
+
+We prove an explicit quadratic family and correctly verify the order-two, exact-order-three interval example. The limit question is unresolved here. The earlier GPT-5.2 proof incorrectly asserted that the interval example already represents all large integers with exactly two summands, contradicting its own claimed exact order. Source and stronger known asymptotic bounds: \url{https://www.erdosproblems.com/336}. No improvement on those bounds is claimed.
+
+\subsection*{A quadratic family with completely computed orders}
+Fix $s\ge2$, put $m=s(s+1)$, and let $A$ consist of all positive integers congruent to $s$ or $s+1$ modulo $m$. The residues of sums of exactly $j$ elements are
+\[
+ jA\bmod m=\{js,js+1,\ldots,js+j\}\bmod m. \tag{1}
+\]
+Every such residue is realized by positive summands; adding arbitrary multiples of $m$ to one summand represents all sufficiently large numbers in that residue.
+
+If $j<m-1$, (1) has fewer than $m$ residues. For $j=m-1$ it consists of $m$ consecutive integers and hence all residues. Thus the exact order is
+\[
+ k=m-1=s^2+s-1. \tag{2}
+\]
+
+The order is exactly $r=2s-1$. To prove the upper bound, write any residue $x\in[0,m-1]$ as $x=su+v$, $0\le u\le s$, $0\le v<s$. If $u\ge v$ and $x\ne0$, use $j=u$ in (1), with $v$ of the summands equal to $s+1$. If $u<v$, replace $x$ by $x+m=s(u+s+1)+v$ and use $j=u+s+1\le2s-1$. Residue zero is represented by $s$ copies of $s+1$. Thus at most $2s-1$ summands suffice eventually in every residue.
+
+For the lower bound consider $x=s^2-s-1$. It lies in no interval $[js,j(s+1)]$, since
+\[
+ \left\lceil\frac{x}{s+1}\right\rceil=s-1>
+ s-2=\left\lfloor\frac{x}{s}\right\rfloor.
+\]
+For $j\le2s-2$, the largest sum of the small representatives is
+$(2s-2)(s+1)=2s^2-2<x+m=2s^2-1$; it therefore cannot reach the next integer congruent to $x$ either. This residue is absent from all sums of at most $2s-2$ elements. Equations (1)--(2) prove
+\[
+ h(2s-1)\ge s^2+s-1,
+\]
+and in particular a quadratic lower bound with leading constant $1/4$ along these orders. This is weaker than the known leading lower constant $1/3$.
+
+\subsection*{The interval example, with the distinction preserved}
+Let
+$B=\bigcup_{j\ge0}(4^j,2\cdot4^j]\cap\mathbb N$.
+We first determine its two-term sumset:
+\[
+ \{n\ge1:n\notin B+B\}
+ =\{1,2,3\}\cup\{4^j+1,4^j+2:j\ge1\}. \tag{3}
+\]
+For $q=4^j$, $j\ge1$, numbers in $[q+3,2q]$ equal $2+(n-2)$ with both terms in $B$. The number $2q+1$ equals $2+(2q-1)$, and the whole interval $[2q+2,4q]$ is the sum of two copies of the integer interval $[q+1,2q]$. Together with $4=2+2$, this proves all claimed inclusions.
+
+For $n=q+1$ or $q+2$, two summands below $q$ have sum at most $q$, because the preceding block ends at $q/2$. Any summand from the next block is at least $q+1$, leaving at most one for the other summand, whereas the least element of $B$ is two. This proves the omissions in (3).
+
+All omissions $q+1,q+2$ belong to $B$ itself, so $B$ is a basis of order two, but not exact order two. It has exact order three. Indeed $2+(B+B)$ represents every $n\ge9$ except possibly $q+3,q+4$ with $q=4^j\ge16$. Those two exceptions are
+\[
+ q+3=(q/2-1)+(q/2-1)+5,\qquad
+ q+4=(q/2-1)+(q/2-1)+6,
+\]
+and all the summands belong to $B$. The basis does not have order one, since its block gaps are infinite in number.
+
+\subsection*{Remaining gap}
+These families prove genuine separation between the two orders and provide explicit quadratic growth. They do not determine the extremal leading constant or establish a matching upper bound for arbitrary bases.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

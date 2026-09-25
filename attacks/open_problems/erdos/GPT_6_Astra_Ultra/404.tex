@@ -1,0 +1,49 @@
+\section*{Erd\H{o}s Problem 404: finite congruences and an infinite factorial sum}
+\subsection*{Statement and outcome}
+Fix $a\ge1$ and a prime $p$. Let $f(a,p)$ be the supremum of attainable $v_p(\sum_{b\in B}b!)$ over finite sets $B$ of distinct integers with $\min B=a$. Is it finite? Does some infinite increasing sequence have factorial partial sums whose valuations tend to infinity?
+
+We prove an exact finite residue test, the equivalence between unbounded $f(a,p)$ and an infinite sequence starting at $a$, and the exact family $f(a,p)=v_p(a!)$ when $a\equiv-1\pmod p$. No pair with unbounded $f(a,p)$ is established here, and the general problem remains unresolved. Source: \url{https://www.erdosproblems.com/404}. These are elementary structural deductions, not a claimed resolution of the known difficult pair $(2,2)$.
+
+\subsection*{A finite test for each valuation threshold}
+For $h\ge1$, let $M_h$ be the least $m$ with $v_p(m!)\ge h$. It exists and satisfies $M_h\le ph$. Every factorial with index at least $M_h$ vanishes modulo $p^h$. Therefore, if $M_h>a$, a valuation at least $h$ is attainable exactly when zero belongs to
+\[
+ R_{a,h}=a!+\left\{\sum_{b\in B}b!:
+        B\subseteq\{a+1,\ldots,M_h-1\}\right\}\pmod{p^h}. \tag{1}
+\]
+If $M_h\le a$, this threshold is automatically reached by the singleton $\{a\}$. All sets in (1) are finite. Their residues can be computed exactly starting from $R=\{a!\bmod p^h\}$ and successively replacing $R$ by $R\cup(R+b!)$ modulo $p^h$.
+
+Thus failure of (1) is a complete certificate that $f(a,p)<h$, not merely failure of a search with an arbitrary cutoff. Conversely a successful residue supplies a finite witnessing sum. Testing $h=1,2,\ldots$ determines $f(a,p)$ exactly if it is finite; the first failing test is $h=f(a,p)+1$. Nontermination alone would not prove infinity.
+
+\subsection*{Unbounded finite cancellation is equivalent to infinite cancellation}
+We prove the equivalence
+\[
+ f(a,p)=\infty
+ \quad\Longleftrightarrow\quad
+ \exists\ a=a_1<a_2<\cdots:\
+ v_p\left(\sum_{i=1}^j a_i!\right)\longrightarrow\infty. \tag{2}
+\]
+The reverse direction follows by taking finite prefixes.
+For the forward direction, encode a selected factorial by a bit $\epsilon_b\in\{0,1\}$, with $\epsilon_a=1$. For a cutoff $N\ge a$, call a finite bit string admissible when
+\[
+ \sum_{b=a}^N\epsilon_b b!\equiv0\pmod{p^h}
+ \quad\hbox{whenever }M_h\le N+1. \tag{3}
+\]
+There are only finitely many conditions at each level. Admissible strings exist for every $N$: take a finite sum divisible by $p^H$ with $H$ large enough to include all those conditions, and truncate after $N$. All discarded factorials vanish in each of the required moduli.
+
+Deleting the last bit of an admissible string leaves an admissible string at the previous level. Indeed every condition required there has $M_h\le N$, and $N!$ vanishes modulo $p^h$. Since each string has at most two extensions, there is an infinite branch: at each step choose a child having descendants at arbitrarily large levels, which exists by finite branching. This proves the compactness step explicitly.
+
+The branch has infinitely many one-bits. Otherwise its eventually fixed positive integer sum would, by (3), be divisible by every power of $p$, impossible. Enumerate its one-bit indices as $a=a_1<a_2<\cdots$. For each fixed $h$, all sufficiently long such prefixes contain every selected index below $M_h$, while each further selected factorial vanishes modulo $p^h$. Condition (3) therefore makes all sufficiently long partial sums divisible by $p^h$. This is precisely the limit in (2).
+
+In particular the existence question about an infinite sequence is equivalent to asking whether \emph{some} pair $(a,p)$ has $f(a,p)=\infty$. Choosing unrelated finite witnesses without the preceding compactness argument would not justify this equivalence.
+
+\subsection*{An exact infinite family of finite values}
+Suppose $p\mid a+1$, and put $u=v_p(a!)$. Every factorial with index greater than $a$ is divisible by $p^{u+1}$, whereas $a!$ is not. Every permitted sum consequently has valuation exactly $u$, proving
+\[
+ f(a,p)=v_p(a!)\quad(a\equiv-1\pmod p). \tag{4}
+\]
+This includes $f(p-1,p)=0$ from the older local attempt, and arbitrarily large exact finite values as $a$ grows in that residue class.
+For all $a$, the two-term identity $a!+(a+1)!=a!(a+2)$ also gives the lower bound $f(a,p)\ge v_p(a!)+v_p(a+2)$.
+
+\subsection*{Remaining gap}
+Formula (1) is finite for each fixed modulus, but its state space can be enormous. The equivalence (2) supplies no admissible infinite branch unless arbitrarily high valuations have first been established. Outside the exact family (4), this argument does not classify finite versus infinite behavior; in particular it neither reconstructs Lin's upper bound for $(2,2)$ nor constructs any infinite cancelling sequence. No unverified subset-sum computation from the previous draft is used.
+\textbf{Completion rate estimate: 40\%.}

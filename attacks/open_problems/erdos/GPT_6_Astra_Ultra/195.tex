@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 195: integer permutations and the three-versus-four gap}
+
+\subsection*{1. Statement and the indexing convention}
+A permutation of $\mathbb Z$ here is a one-sided enumeration $p_1,p_2,\ldots$ containing every integer exactly once, as in the cited primary paper. Determine the largest $k$ for which every such enumeration contains a monotone $k$-term arithmetic progression as a subsequence. We prove that the answer is either three or four: a triple is unavoidable, and we reconstruct Adenwalla's explicit enumeration avoiding five-term progressions. The four-term question remains unresolved.
+
+A doubly infinite ordering indexed by $\mathbb Z$ is a separate convention. In particular, a subsequence of such an ordering need not be an enumeration indexed by $\mathbb N$. The earlier draft's reduction using those incompatible conventions is not retained.
+
+\subsection*{2. An increasing triple is unavoidable}
+Let $x=p_1$, and let $y$ be the first later entry larger than $x$. Such an entry exists since the values are unbounded above. The integer $z=2y-x$ is larger than $y$ and must occur somewhere. It could not occur before $y$, because all those entries are at most $x$. Hence $x,y,z$ occur in that order and form an increasing arithmetic progression. This elementary argument also applies to a permutation of $\mathbb N$; it is the Davis--Entringer--Graham--Simmons observation.
+
+\subsection*{3. The explicit avoiding enumeration}
+Let
+\[
+ p=(0,4,2,6,1,5,3,7),\qquad q=(7,3,5,1,6,2,4,0)
+\]
+be reverse orders of the residues modulo eight. Start with
+\[
+ X_1=(-8,-4,4,-6,2,-2,6,-7,1,-3,5,-5,3,7).
+\]
+For $i\ge1$, obtain $X_{i+1}$ by concatenating the eight lists $8X_i+r$, in residue order $p$ if $i+1$ is odd and $q$ if $i+1$ is even. Then $X_i$ enumerates exactly
+\[
+ [-8^i,-8^{i-1}-1]\ \cup\ [8^{i-1},8^i-1].\tag{1}
+\]
+This follows inductively by taking all residues after multiplying the endpoints by eight. The disjoint blocks in (1), together with $0,-1$, cover the integers. Therefore
+\[
+ P=(0,X_1,-1,X_2,X_3,X_4,\ldots)\tag{2}
+\]
+is an enumeration of $\mathbb Z$.
+
+We will show it has no five-term arithmetic progression in subsequence order, allowing either sign of the common difference.
+
+\subsection*{4. A binary comparison that controls the residue orders}
+In the order $p$, a residue's rank is obtained by reading its three binary digits from lowest to highest. If $8\nmid d$ and $s=v_2(d)\in\{0,1,2\}$, comparison of $a$ and $a+d$ modulo eight is decided by bit $s$: the first comes earlier in $p$ exactly when this bit of $a$ is zero. Adding $d$ flips that bit, while adding $2d$ leaves it unchanged. Thus the two comparisons
+\[
+ a\ \text{versus}\ a+d,
+ \qquad a+2d\ \text{versus}\ a+3d
+\tag{3}
+\]
+have the same direction in $p$, whereas consecutive comparisons in a three-term progression have opposite directions. Reversing the residue order reverses every comparison, so the same latter property holds in $q$.
+
+It follows that every $X_i$ avoids three-term progressions. For $X_1$, its residue groups are in order $p$ and have at most two entries each, so a progression with $8\mid d$ cannot fit in a group, and the binary comparison excludes all other $d$. Inductively, a three-term progression in $X_{i+1}$ with $8\nmid d$ is again excluded by the residue comparisons. If $8\mid d$, all three terms are in one subblock $8X_i+r$ and would give such a progression in $X_i$ after subtracting $r$ and dividing by eight.
+
+\subsection*{5. Adjacent blocks cannot support a two-plus-two progression}
+We claim that there is no four-term progression with its first two terms in $X_i$ and its last two in $X_{i+1}$, in subsequence order. If $8\nmid d$, the first comparison and the last comparison in (3) have the same direction in $p$, but the two blocks use opposite residue orders. They therefore cannot both be forward comparisons in their respective blocks.
+
+If $8\mid d$ and $i\ge2$, all four terms have a common residue $r$. The first two lie in $8X_{i-1}+r$ and the last two in $8X_i+r$. Subtracting $r$ and dividing by eight preserves their order and produces the same forbidden pattern one block earlier. This reduces the issue to $i=1$.
+
+The only ordered pairs in $X_1$ whose nonzero difference is divisible by eight are
+\[
+ (-4,4),\ (-6,2),\ (-2,6),\ (-7,1),\ (-3,5),\ (-5,3).
+\]
+Each is $(x,x+8)$ with $-7\le x\le-2$. Its forced continuation is $(x+16,x+24)$, lying in one residue subblock of $X_2$ and corresponding there to the entries $1,2$ of $X_1$. But $2$ precedes $1$ in $X_1$, so this continuation is reversed. This checks the base case and proves the claim for every adjacent pair of blocks.
+
+\subsection*{6. Exceptional entries and the global five-term argument}
+There is no three-term progression ending at the final $-1$ of the finite prefix $(0,X_1,-1)$. In a proposed ordered triple $(a,b,-1)$, $a$ must be odd. All even entries of $X_1$ precede its odd entries, so $b$ would also have to be odd. Then $a\equiv3\pmod4$, leaving only
+\[
+ (-5,-3,-1),\quad(3,1,-1),\quad(7,3,-1).
+\]
+In each case the displayed middle entry actually precedes the first one in $X_1$. Thus $-1$ cannot be the third, fourth or fifth term of any five-term progression in (2), since its two immediate preceding progression terms would give such a triple in the prefix. The entry zero cannot be any term after the first, because it is the first entry of the enumeration.
+
+If $-1$ is the second term, its predecessor lies in $[-8,7]$, so the common difference has absolute value at most eight. The final three terms have absolute value at most $25$ and appear after $-1$. They must all lie in $X_2$, contradicting its three-term avoidance.
+
+It remains to consider a putative five-term progression $a_1,\ldots,a_5$ whose second and third terms lie in blocks. If $a_2\in X_i$ and $a_3$ is in a later block, then $a_1,a_2\in[-8^i,8^i-1]$, so $|d|<2\cdot8^i$. Consequently $|a_3|,|a_4|,|a_5|<7\cdot8^i$. All three occur after $X_i$, and the next block after $X_{i+1}$ has every absolute value at least $8^{i+1}$. Thus all three lie in $X_{i+1}$, a contradiction.
+
+Finally, if $a_2,a_3\in X_i$, then $a_4$ cannot lie in $X_i$. The same bounds give $|a_4|<3\cdot8^i$ and $|a_5|<5\cdot8^i$, forcing both into $X_{i+1}$. This contradicts the adjacent-block claim. All cases are excluded, so (2) avoids five-term progressions.
+
+\subsection*{7. Assessment and attribution}
+The unavoidable triple and the five-term avoiding construction are fully proved, including residue comparisons and the exceptional entries. They leave exactly the four-term case. The construction is Adenwalla's, with its finite residue checks expressed through binary ranks; no novelty is claimed.
+
+Sources: \url{https://www.erdosproblems.com/195}; S. Adenwalla, \emph{Avoiding Monotone Arithmetic Progressions in Permutations of Integers}, Theorem 1, \url{https://arxiv.org/abs/2211.04451}; J. A. Davis, R. C. Entringer, R. L. Graham and G. J. Simmons, \emph{On permutations containing no long arithmetic progressions}, Fact 3, \url{https://doi.org/10.4064/aa-34-1-81-90}.
+
+\textbf{Completion rate estimate: 45\%.}
+

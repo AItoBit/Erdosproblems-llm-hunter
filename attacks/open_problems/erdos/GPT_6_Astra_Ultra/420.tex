@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 420: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Put
+\[
+ F(f,n)=\frac{\tau((n+\lfloor f(n)\rfloor)!)}{\tau(n!)}.
+\]
+Does $F((\log n)^C,n)\to\infty$ for some fixed large $C$? Is $F(\log n,n)$ dense in $(1,\infty)$, or more generally is the same true for each increasing $f\le\log n$ with $f(n)\to\infty$? Source: \url{https://www.erdosproblems.com/420}.
+
+We prove the classical square-root-window divergence with a quantitative lower bound, reconstruct the bounded-prime-cluster limsup argument, and give the precise conditional consequence of a Cram\'er-type prime-gap bound. The fixed-polylogarithmic uniform limit and density questions remain unresolved here. The latter two deductions are recorded on the problem page as observations of Wouter van Doorn; no novelty is claimed.
+
+\section*{The exact prime-exponent formula}
+For integers $h\ge0$ write $F_h(n)=\tau((n+h)!)/\tau(n!)$. Put $a_p=v_p(n!)$ and $b_p=v_p((n+h)!)-a_p$. Unique factorization gives
+\[
+ F_h(n)=\prod_{p\le n+h}\left(1+\frac{b_p}{a_p+1}\right). \tag{1}
+\]
+Every factor is at least one. A new prime $n<p\le n+h$ contributes a factor at least two, so
+\[
+ F_h(n)\ge2^{\pi(n+h)-\pi(n)}. \tag{2}
+\]
+For arbitrary $h$ the new-prime factor need not be exactly two: several multiples or prime powers can enter. This corrects the earlier GPT-5.2 draft. Exact equality at that factor follows, for example, when $h\le n$ and $n$ is large enough.
+
+\section*{A proved square-root-window bound}
+Set $h=\lfloor\sqrt n\rfloor$ and $N=n+h$. We will show that for some absolute $c_0>0$ and all sufficiently large $n$,
+\[
+ \log F_h(n)\ge c_0\log n. \tag{3}
+\]
+Use the classical elementary Chebyshev upper bound $\pi(y)\le A y/\log y$ for large $y$, with a fixed constant $A$. Choose $c=1/(16A)$ and put $P=ch\log h$. Then, for all sufficiently large $n$,
+\[
+ h<\sqrt N<P<n,\qquad \pi(P)\le h/8. \tag{4}
+\]
+The second inequality follows because $\log P/\log h\to1$.
+
+For the integer binomial coefficient, the product formula gives
+\[
+ \binom Nh=\prod_{i=0}^{h-1}\frac{N-i}{h-i}\ge(N/h)^h,
+ \qquad\log\binom Nh\ge\tfrac13 h\log N \tag{5}
+\]
+eventually, since $\log(N/h)/\log N\to1/2$. Legendre's formula gives
+\[
+ v_p\binom Nh
+ =\sum_{j\ge1}\left(\left\lfloor\frac N{p^j}\right\rfloor
+ -\left\lfloor\frac n{p^j}\right\rfloor
+ -\left\lfloor\frac h{p^j}\right\rfloor\right).
+\]
+Every summand is zero or one, and it vanishes for $p^j>N$. Thus each prime contributes at most $\log N$ to the logarithm of the binomial coefficient. By (4), primes at most $P$ contribute at most $(h/8)\log N$. Equations (4)--(5) leave more than $(h/6)\log N$ from primes larger than $P$.
+
+Every such prime has $p^2>N$ and $p>h$, so its binomial exponent is at most one. As its contribution is at most $\log N$, there are at least $h/6$ distinct primes $p>P$ dividing $\binom Nh$. Each of them divides exactly one member of $n+1,\ldots,n+h$, and no prime square occurs in either factorial's prime-power valuation. Its factor in (1) is therefore
+\[
+ 1+\frac1{\lfloor n/p\rfloor+1}.
+\]
+Using $\log(1+t)\ge t/(1+t)$ for $t\ge0$,
+\[
+ \log\left(1+\frac1{\lfloor n/p\rfloor+1}\right)
+ \ge\frac1{\lfloor n/p\rfloor+2}
+ \ge\frac1{n/P+2}\ge\frac P{3n}.
+\]
+Summing over those primes yields
+\[
+ \log F_h(n)\ge\frac h6\frac P{3n}
+ =\frac c{18}\frac{h^2}{n}\log h\gg\log n.
+\]
+This proves (3), and hence the uniform square-root divergence. It is much weaker in window size than the known $n^{4/9}$ result; it is included as a complete reconstruction, not an improvement on that result. It gives no uniform bound at logarithmic window lengths.
+
+\section*{Unbounded limsup from an explicit deep input}
+Maynard's bounded-cluster theorem states that for every positive integer $r$ there is a finite $H_r$ such that infinitely many intervals of length $H_r$ contain at least $r$ primes. Primary source: \emph{Small gaps between primes}, \url{https://arxiv.org/abs/1311.4600}. We use this theorem as external input and do not reconstruct its sieve proof.
+
+Let $g(n)\to\infty$, without needing monotonicity. For each of those clusters let $q$ be its first prime and put $n=q-1$. For all sufficiently large such $q$, $\lfloor g(n)\rfloor\ge H_r+1$, so $(n,n+\lfloor g(n)\rfloor]$ contains at least $r$ new primes. Equation (2) gives $F(g,n)\ge2^r$ at infinitely many $n$. Since $r$ is arbitrary,
+\[
+ \limsup_{n\to\infty}F(g,n)=\infty. \tag{6}
+\]
+This uses clusters of every fixed size, not merely infinitely many pairs of primes with one bounded gap.
+
+\section*{A conditional logarithmic-square conclusion}
+Suppose the prime gaps satisfy $p_{j+1}-p_j\le K(\log p_j)^2$ for every sufficiently large prime $p_j$, with a fixed $K$. Let $g(n)\to\infty$, put $h=\lfloor g(n)(\log n)^2\rfloor$ and $L=\min(h,n)$. Every gap relevant to the interval $(n,n+L]$ is at most $K(\log(2n))^2$ for large $n$, including the gap crossing the left endpoint. Covering the interval by gaps gives
+\[
+ \pi(n+L)-\pi(n)\ge\frac{L}{K(\log(2n))^2}-1\longrightarrow\infty.
+\]
+Indeed $L/(\log n)^2$ tends to infinity whether $h\le n$ or $h>n$. By monotonicity in $h$ and (2), the conditional conclusion is
+\[
+ F(g(n)(\log n)^2,n)\longrightarrow\infty. \tag{7}
+\]
+For example a fixed exponent $C>2$ follows conditionally by taking $g(n)=(\log n)^{C-2}$. The gap hypothesis is not proved here.
+
+\section*{Remaining gap}
+The proved uniform result (3), the external-theorem consequence (6), and the conditional result (7) are different assertions. An unbounded limsup does not give a divergent limit, and neither endpoint behaviour nor the exact product formula makes the values dense in an interval. No unconditional fixed logarithmic exponent or interval-density theorem is established by this attempt.
+
+\textbf{Completion rate estimate: 40\%.}
+\end{document}

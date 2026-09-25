@@ -1,0 +1,61 @@
+\section*{Erd\H{o}s Problem 334: a sum of two smooth numbers}
+\subsection*{Statement and scope}
+Put $P^+(1)=1$ and let $P^+(n)$ be the largest prime divisor of $n>1$. Define
+\[
+ g(n)=\min_{1\le a<n}\max(P^+(a),P^+(n-a)).
+\]
+The question asks for the best uniform growth bound on $g$. We prove the elementary bounds
+\[
+ g(n)\le\lfloor\sqrt n\rfloor+1,\qquad
+ g(n)>(\log n)^{2-\epsilon}\quad\hbox{for a density-one set of }n
+ \tag{1}
+\]
+for each fixed $0<\epsilon<2$. The optimal asymptotic bound is unresolved here.
+
+These replace the earlier GPT-5.2 attempt's essentially tautological estimates. They do not improve the known uniform bound: \url{https://www.erdosproblems.com/334} records Balog's stronger exponent $4/(9\sqrt e)+\epsilon$. That result is context and is not used below. The proof consists of elementary factorization and the standard Rankin counting method.
+
+\subsection*{An explicit square-root decomposition}
+For $n\ge4$, put $m=\lfloor\sqrt n\rfloor\ge2$ and write $n=mq+r$, $0\le r<m$. Then $m\le q\le m+2$. If $r>0$, use
+\[
+ n=m(q-r)+(m+1)r. \tag{2}
+\]
+Both summands are positive: $q-r\ge m-(m-1)=1$. Also $q-r\le q-1\le m+1$, so every factor displayed in (2) is at most $m+1$. Each summand is therefore $(m+1)$-smooth.
+
+If $r=0$, use $n=m+m(q-1)$. Here $q-1\ge1$ and $q-1\le m+1$, giving the same bound. The cases $n=2,3$ follow from $1+1$ and $1+2$.
+
+\subsection*{A counting obstruction near the logarithmic-square scale}
+Let $\Psi(X,y)$ count the positive $y$-smooth integers at most $X$. For $0<\sigma<1$, positivity and unique factorization give
+\[
+ \Psi(X,y)
+ \le X^\sigma\sum_{P^+(a)\le y}a^{-\sigma}
+ =X^\sigma\prod_{p\le y}(1-p^{-\sigma})^{-1}.
+\]
+Using $-\log(1-t)\le t/(1-t)$ and summing over all integers instead of just primes,
+\[
+ \log\prod_{p\le y}(1-p^{-\sigma})^{-1}
+ \le\frac1{1-2^{-\sigma}}\sum_{p\le y}p^{-\sigma}
+ \ll_\sigma y^{1-\sigma}. \tag{3}
+\]
+
+Fix $0<\epsilon<2$, take $y=(\log X)^{2-\epsilon}$ and
+$\sigma=1/2-\epsilon/8>0$. Since
+\[
+ (2-\epsilon)(1-\sigma)
+ =(2-\epsilon)(1/2+\epsilon/8)
+ =1-\epsilon/4-\epsilon^2/8<1,
+\]
+equation (3) is $o(\log X)$. Consequently
+\[
+ \Psi(X,y)\le X^{1/2-\epsilon/8+o(1)}.
+\]
+There are at most $\Psi(X,y)^2$ sums of two such smooth integers, so
+\[
+ \#\{n\le X:g(n)\le(\log X)^{2-\epsilon}\}
+ \le X^{1-\epsilon/4+o(1)}=o(X). \tag{4}
+\]
+For all sufficiently large $n\le X$, $(\log n)^{2-\epsilon}\le(\log X)^{2-\epsilon}$. Thus (4) proves the density-one lower assertion in (1). In particular no fixed smoothness threshold can work for every large integer.
+
+\subsection*{Remaining gap}
+The lower estimate is a density-one obstruction to very small thresholds; it supplies no matching upper bound, and it does not hold for every $n$ (powers of two have very small $g(n)$). The square-root construction is uniform but much weaker than the known analytic bound. Determining whether a subpower threshold works for all large integers remains beyond these arguments.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

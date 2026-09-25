@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 176: exact low-threshold values and an exponential obstruction}
+
+\subsection*{1. Statement and scope}
+Let $N(k,\ell)$ be the least interval length forcing a $k$-term arithmetic progression whose sum in every $\{-1,1\}$-colouring has absolute value at least $\ell$. The interesting range is $0<\ell\le k$: for $\ell>k$ the value is infinite. In particular a proposed bound for $\ell=ck$ must restrict to $0<c\le1$.
+
+We reconstruct the exact formula for $N(k,1)$ attributed to Spencer, including a matching colouring, and a local-lemma exponential lower bound for linear thresholds. The general exponential upper-bound questions remain unresolved. For finiteness alone, van der Waerden's theorem is an explicit standard input: $N(k,\ell)\le W(k)$ when $\ell\le k$.
+
+\subsection*{2. Exact formula at the smallest positive threshold}
+Write $k=cm$, where $c=2^t$ and $m$ is odd. We prove
+\[
+ N(k,1)=c(k-1)+1.\tag{1}
+\]
+For the upper bound let $N=c(k-1)+1$ and suppose every $k$-term progression has sum zero. Comparing consecutive length-$k$ intervals shows
+\[
+ f(i+k)=f(i)\qquad(1\le i\le N-k).
+\]
+Thus $f$ is $k$-periodic wherever the two arguments lie in $[1,N]$. The progression $1,1+c,\ldots,1+(k-1)c$ is contained in this interval. Modulo $k$, it visits the $m$ residue classes $1,1+c,\ldots,1+(m-1)c$ exactly $c$ times each. Its sum is therefore $c$ times a sum of $m$ signs, which is nonzero because $m$ is odd. This contradiction proves the upper bound. When $c=1$, the same argument is simply the parity of the sum on $[k]$.
+
+For the lower bound consider $[1,c(k-1)]$. If $c=1$ there is no $k$-term progression. Otherwise colour $n$ by $(-1)$ raised to the sum of the lowest $t$ binary digits of $n-1$. This colouring is $c$-periodic. Any $k$-term progression in the interval has positive difference $d<c$. Put $g=\gcd(d,c)$; then $g<c$, and addition of $d$ modulo $c$ traverses one whole residue class modulo $g$, with period $c/g$. Since $g$ is a power of two, the low binary digits fixed by that residue class stay fixed, while at least one higher digit ranges freely. Pairing residues by flipping that digit proves that the signs on the cycle sum to zero. Since $k$ is a multiple of $c/g$, the progression consists of complete cycles and has sum zero. This proves (1).
+
+For even $k$, every progression sum is even, so the thresholds one and two coincide:
+\[
+ N(k,2)=N(k,1)\le k(k-1)+1\qquad(k\text{ even}).\tag{2}
+\]
+For odd $k$, $N(k,1)=k$ but threshold two means an absolute sum at least three. It is not covered by (2). In particular there is no monotonicity in $k$ of the kind asserted in the earlier draft: $N(4,1)=13$ but $N(5,1)=5$.
+
+\subsection*{3. A finite local lemma, with the needed justification}
+We use the following elementary probability lemma. If events $E_i$ have a dependency graph, and numbers $0<x_i<1$ satisfy
+\[
+ \mathbb P(E_i)\le x_i\prod_{j\sim i}(1-x_j),\tag{3}
+\]
+then there is positive probability that none occurs. Here nonadjacency means independence from the entire collection of nonneighbour events, as holds for events depending on disjoint sets of independent signs.
+
+For completeness, induction on $|S|$ proves
+$\mathbb P(E_i\mid\bigcap_{j\in S}E_j^c)\le x_i$.
+Split $S$ into neighbours of $i$ and nonneighbours. Conditioning on the latter does not change the probability of $E_i$. Introducing the neighbour conditions divides by a probability at least the product of their $1-x_j$, using the induction hypothesis successively. Inequality (3) bounds the resulting quotient by $x_i$. If there are no neighbours in $S$, independence gives the result directly. The same induction guarantees all conditioning probabilities are positive. Multiplying the successive probabilities of avoiding the events now gives a positive product.
+
+In particular, if each event has at most $B-1$ neighbours, with integer $B\ge2$, and probability at most $1/(4B)$, choose $x_i=1/B$. The inequality
+$(1-1/B)^{B-1}\ge1/4$ verifies (3).
+
+\subsection*{4. Applying it to progression discrepancies}
+Assume $k\ge2$ in this section and choose independent uniform signs on $[1,N]$. For a fixed $k$-term progression, the probability that its absolute sum is at least $\ell$, for $0<\ell\le k$, is exactly
+\[
+ q=2^{1-k}\sum_{i=\lceil(k+\ell)/2\rceil}^k\binom ki.\tag{4}
+\]
+The two tails are disjoint and symmetric, including the correct parity cutoff.
+A point lies in at most $kN/(k-1)\le2N$ $k$-term progressions: choose its position among the $k$ terms and a positive difference at most $(N-1)/(k-1)$. A progression therefore meets at most $2kN-1$ others. With $B=2kN$, the lemma implies an avoiding colouring whenever $qB\le1/4$. Consequently, if the integer on the right is at least $k$,
+\[
+ N(k,\ell)>\left\lfloor\frac1{8kq}\right\rfloor.\tag{5}
+\]
+For $\ell=ck$ with fixed $0<c<1$, the moment-generating function $(\cosh\lambda)^k$ and Markov's inequality give
+\[
+ q\le2e^{-kI(c)},\qquad
+ I(c)=\frac{1+c}{2}\log(1+c)+\frac{1-c}{2}\log(1-c).
+\]
+Indeed minimise $e^{-\lambda ck}(\cosh\lambda)^k$ at $\lambda=\tfrac12\log((1+c)/(1-c))$ and use symmetry for the other tail. Thus (5) gives an exponential lower bound with rate $I(c)$, up to a factor $16k$. At $c=1$, the exact probability is $2^{1-k}$ and the same argument gives $N(k,k)>\lfloor2^k/(16k)\rfloor$. The limiting exponential base as $c\uparrow1$ is two.
+
+\subsection*{5. Assessment and attribution}
+The exact low-threshold values, their matching binary colouring and the probabilistic lower bound are completely justified. They do not yield the requested exponential upper bounds for odd $k$ at threshold two, for $\sqrt k$, or for a fixed positive fraction of $k$. The exact formula is Spencer's result; the local-lemma improvement is recorded in Hunter's comment on the source page. These are reconstructions, not novelty claims.
+
+Source: \url{https://www.erdosproblems.com/176}.
+
+\textbf{Completion rate estimate: 40\%.}
+

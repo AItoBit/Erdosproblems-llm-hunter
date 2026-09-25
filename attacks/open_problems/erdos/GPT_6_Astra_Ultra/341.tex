@@ -1,0 +1,59 @@
+\section*{Erd\H{o}s Problem 341: a greedy sum-avoiding sequence}
+\subsection*{Statement and scope}
+From a finite positive seed, repeatedly append the least integer larger than the current maximum which is not a sum of two already present elements, allowing equal summands. Must the successive differences eventually be periodic?
+
+We prove a finite certification criterion, settle all seeds $\{1,\ldots,k\}$, and give an exact finite certificate for the stated seed $\{1,4,9,16,25\}$. The assertion for every seed is unresolved here. Source: \url{https://www.erdosproblems.com/341}. This extends the earlier GPT-5.2 examples; the particular periodicity is known experimental context, and no new general theorem is claimed.
+
+\subsection*{All initial-interval seeds}
+For seed $\{1,\ldots,k\}$, the completed sequence is
+\[
+ \{1,\ldots,k\}\ \cup\ \{2k+1+j(k+1):j\ge0\}. \tag{1}
+\]
+Initially every integer from $k+1$ through $2k$ is a sum of two seed elements, so $2k+1$ is next. Suppose the current last tail element is $b$. The next $k$ integers $b+1,\ldots,b+k$ are forbidden by adding the seed elements. The following number $b+k+1$ has residue $k\bmod(k+1)$. A seed plus a tail element has any residue except $k$; two tail elements have residue $k-1$. Two seed elements have sum at most $2k$. Thus $b+k+1$ is admissible. Induction proves (1), with eventual constant gap $k+1$.
+
+\subsection*{A finite certificate that implies infinite periodicity}
+Fix $T$ above the seed maximum, a positive integer $p$, a finite $F\subset[1,T-1]$, and $R\subset\mathbb Z/p\mathbb Z$. Consider
+\[
+ E=F\cup\{n\ge T:n\bmod p\in R\}.
+\]
+Put $Q=(R+R)\cup(F+R)\bmod p$ and $N_0=2(T+p)$. If
+\[
+ Q=(\mathbb Z/p\mathbb Z)\setminus R \tag{2}
+\]
+and the actual greedy sequence agrees with $E$ below $N_0$, then it agrees forever.
+
+To prove this, for every $n\ge N_0$ we have $n\in E+E$ exactly when its residue lies in $Q$. Two finite members sum to less than $2T$. A tail residue has a positive representative in $[T,T+p-1]$; thus every residue of $R+R$ has a two-tail representation of size below $N_0$, and adding multiples of $p$ to one tail summand represents every larger integer of that residue. The same argument works for $F+R$. This proves the equivalence.
+
+Now induct on $n\ge N_0$. Both positive summands in a representation of $n$ are smaller than $n$, so previous agreement determines its admissibility exactly. Equation (2) says that the greedy rule includes precisely the residues in $R$. This completes the induction. The resulting differences have a repeating word of $|R|$ gaps, whose sum is $p$.
+
+\subsection*{An exact certificate for the five-square seed}
+For $\{1,4,9,16,25\}$, take
+\[
+ T=440,\qquad p=1176,\qquad N_0=3232.
+\]
+Let $F$ be the generated terms below $440$, and let $R$ be the residues of the generated terms in $[440,1616)$. Exact finite arithmetic gives $|F|=86$, $|R|=224$, and verifies both hypotheses of the criterion. The following self-contained code specifies and checks the certificate; it generates only the finite prefix needed for the proof.
+\begin{verbatim}
+T, p = 440, 1176
+N0 = 2*(T+p)
+chosen = {1, 4, 9, 16, 25}
+sums = {a+b for a in chosen for b in chosen}
+for n in range(26, N0):
+    if n not in sums:
+        sums.update(n+a for a in chosen)
+        sums.add(2*n)
+        chosen.add(n)
+F = {n for n in chosen if n < T}
+R = {n % p for n in chosen if T <= n < T+p}
+Q = {(r+s) % p for r in R for s in R}
+Q |= {(f+r) % p for f in F for r in R}
+assert len(F) == 86 and len(R) == 224
+assert Q == set(range(p)) - R
+assert chosen == F | {n for n in range(T, N0)
+                       if n % p in R}
+\end{verbatim}
+These checks were run successfully. By the proved criterion, membership repeats modulo $1176$ from $440$ onward. Thus $224$ is a period of the eventual gap word, and the sequence has density $224/1176=4/21$. A finite repetition alone would not prove this conclusion; equation (2) is the additional invariant.
+
+\subsection*{Remaining gap}
+The certificate is sufficient once a periodic model is supplied. Nothing above ensures that every seed eventually supplies one, which is precisely the general problem.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 60\%}

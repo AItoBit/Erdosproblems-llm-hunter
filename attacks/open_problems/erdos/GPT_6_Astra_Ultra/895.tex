@@ -1,0 +1,111 @@
+\section*{Erd\H{o}s Problem 895: a checked finite proof}
+
+\paragraph{Statement and result.}
+Every triangle-free graph on \(\{1,\ldots,n\}\), for \(n\geq18\),
+has three distinct independent vertices \(a,b,a+b\).
+The threshold 18 is sharp. This is a computer-assisted
+reconstruction of the finite result attributed to Ben Barber
+at \url{https://www.erdosproblems.com/895}, checked
+24 September 2026. The encoding and the logical certificate
+check are described below. No extension to the open general
+Hindman-set question is claimed.
+
+\paragraph{An exact Boolean formulation.}
+For \(1\leq i<j\leq18\), let \(e_{ij}\) mean that \(ij\)
+is an edge. There are \(\binom{18}{2}=153\) variables.
+For every \(i<j<k\) impose the clause
+\[
+ \neg e_{ij}\ \vee\ \neg e_{ik}\ \vee\ \neg e_{jk}.
+\tag{1}
+\]
+These \(\binom{18}{3}=816\) clauses assert triangle-freeness.
+For every \(1\leq a<b\) with \(a+b\leq18\), impose
+\[
+ e_{ab}\ \vee\ e_{a,a+b}\ \vee\ e_{b,a+b}.
+\tag{2}
+\]
+There are \(\sum_{a=1}^8(18-2a)=72\) such clauses.
+They assert that none of the distinct Schur triples is
+independent. A counterexample on 18 vertices is therefore
+equivalent to a satisfying assignment of these 888 clauses.
+
+\paragraph{Certificate and an independent logical check.}
+Glucose3 generated an unsatisfiability certificate consisting
+of 2,524 clause additions and 1,688 deletion instructions.
+A separate checker, using only Python's standard library,
+verified every addition by reverse unit propagation (RUP).
+It retained deleted clauses, which is sound because each
+retained clause had already been proved a logical consequence.
+The final verified addition was the empty clause.
+
+The verification rule is particularly simple. To check a
+proposed clause \(C\), assume the negation of every literal
+in \(C\). Repeatedly, whenever an existing clause has all
+but one literal false, assign its remaining literal true.
+Accept \(C\) only if this derives a contradiction.
+If the original formula and the previously checked clauses
+were satisfiable with \(C\) false, each unit assignment
+would be forced in that satisfying assignment, so a
+contradiction would be impossible. Induction therefore
+justifies every addition. Deriving the empty clause proves
+unsatisfiability, independently of trusting the SAT solver.
+
+Variables are numbered by lexicographic order of \((i,j)\);
+clauses (1) are followed by clauses (2), with \(a\) then \(b\)
+in increasing order. The certificate was checked against
+this independently regenerated encoding, not merely against
+a solver-exported formula.
+The DIMACS formula has SHA-256
+\begin{verbatim}
+260b7c50fac4fcc4525f7253eb37a8750bf744cff5bb41e92a314cdea1ccab45
+\end{verbatim}
+and the checked DRUP certificate has SHA-256
+\begin{verbatim}
+b3831970238b5a1fcbb91165609756d25c4bcfcb04a28813b07f67686d7cc2db
+\end{verbatim}
+The complete generator, certificate, independent checker,
+and check report are retained in the offline verification
+materials for this attempt. The conclusion depends on this
+executed finite certificate check; it is not presented as
+a short human-only proof or as Lean verification.
+
+\paragraph{A sharp counterexample on 17 vertices.}
+Here is an explicit lower-bound example. List each edge
+only at its smaller endpoint; unlisted pairs are nonedges:
+\[
+\begin{array}{c|l}
+1&3,5,10,12,14,16\\
+2&5,6,9,12,13,16\\
+3&7,9,11,13\\
+4&5,10,11,12,13,14\\
+5&8,17\\
+6&7,10,11,14\\
+7&8,12,16,17\\
+8&9,10,13\\
+9&14,15\\
+10&15\\
+11&16,17\\
+12&15\\
+13&17\\
+14&17\\
+15&16,17
+\end{array}
+\]
+Direct enumeration verifies that none of the
+\(\binom{17}{3}=680\) triples spans a triangle, and each
+of the 64 triples \(a<b<a+b\leq17\) contains an edge.
+These two checks were also executed independently of the
+optimization program which found the example.
+
+\paragraph{Passing to all larger orders.}
+For \(n\geq18\), restrict a triangle-free graph to its
+first 18 labelled vertices. That induced graph remains
+triangle-free, so the verified result supplies an
+independent triple \(a,b,a+b\) in it, hence in the original
+graph. This proves the stated eventual assertion and,
+together with the displayed example, the sharp threshold.
+
+\paragraph{Completion estimate.}
+The full assertion is established by the specified
+computer-assisted finite proof and the elementary restriction argument.
+\textbf{COMPLETION: 100\%}

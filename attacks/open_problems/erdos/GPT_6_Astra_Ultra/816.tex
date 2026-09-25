@@ -1,0 +1,149 @@
+\section*{Erd\H{o}s Problem 816}
+
+\paragraph{Statement and result.}
+Does every graph on \(2n+1\) vertices with \(n^2+n+1\) edges contain a path of length three whose endpoints have equal degrees in the original graph? The answer is yes for \(n\geq2\). The restriction matters: when \(n=1\), the triangle has the prescribed three edges and no path on four distinct vertices.
+
+We reconstruct the main degree-counting argument of Liu and Zeng, with a technical degree-balance lemma of Chen and Ma explicitly assumed, and give the small-order arguments for \(n=2,3,4\). The proof works with at least \(n^2+n+1\) edges. Degrees always mean degrees in the full graph, not in the path.
+
+\paragraph{Setup and forced missing edges.}
+Suppose, for a contradiction, that \(G\) has no such path. Let \(\beta\) be the largest degree occurring at least twice. This exists because a graph on \(2n+1\) vertices cannot have all degrees distinct: degrees zero and \(2n\) cannot both occur.
+
+Take vertices \(u,v\) of degree \(\beta\). Put \(\varepsilon=1\) if they are adjacent and zero otherwise, and define
+\[
+ B=N(u)\cap N(v),\quad
+ A_u=N(u)\setminus(B\cup\{v\}),\quad
+ A_v=N(v)\setminus(B\cup\{u\}),
+\]
+with \(D\) the remaining vertices. Write \(x=|B|\) and \(c=\beta-n-\varepsilon\). Then
+\[
+ |A_u|=|A_v|=\beta-x-\varepsilon,
+ \qquad |D|=x-2c-1.
+\tag{1}
+\]
+There are no edges inside \(B\), between \(B\) and either \(A\)-set, or between \(A_u\) and \(A_v\): each would supply a path \(u\)--\(\cdot\)--\(\cdot\)--\(v\).
+
+Let \(\overline e(S)\) count missing edges inside \(S\), and \(\overline e(S,T)\) those between disjoint sets. Counting only these forced missing edges, and then those incident with \(D\), gives
+\[
+ \begin{split}
+ e(\overline G)\geq{}&(\beta-1-\varepsilon)^2+4n-2-\varepsilon
+       -\frac{x(x+1)}2\\
+ &+\overline e(B,D)+\overline e(D).
+ \end{split}
+\tag{2}
+\]
+For completeness, before adding \(D\), the count is
+\(2a+a^2+2ax+\binom x2+1-\varepsilon\), where \(a=\beta-x-\varepsilon\). Add the \(2|D|\) missing edges from \(\{u,v\}\) to \(D\) and simplify to obtain (2). Additional missing edges only strengthen the inequality. The edge assumption also gives
+\[
+ e(\overline G)\leq n^2-1.
+\tag{3}
+\]
+
+\paragraph{A bound when the repeated degree is large.}
+We prove that if \(c\geq1\), then
+\[
+ e(\overline G)\geq n^2+c^2-c-\varepsilon.
+\tag{4}
+\]
+By (1), \(|B|=|D|+2c+1>|D|+1\). Vertices of \(B\) have no neighbours outside \(D\cup\{u,v\}\). There are therefore two of equal degree in \(B\). Let \(\gamma\) be the largest repeated value of their numbers of neighbours in \(D\), and choose two realizing it.
+
+For these two vertices, partition their neighbours in \(D\) into the common part of size \(y\) and the two exclusive parts of size \(\gamma-y\). Again the absence of a three-edge path forces all edges between the exclusive parts, from either exclusive part to the common part, and inside the common part to be missing. Thus
+\[
+ \overline e(D)\geq\gamma^2-\frac{y(y+1)}2
+ \geq\binom\gamma2.
+\tag{5}
+\]
+Every value larger than \(\gamma\) occurs at most once among the \(D\)-degrees of vertices of \(B\). With \(d=|D|\), it follows that
+\[
+ e(B,D)\leq\gamma x+\sum_{j=\gamma+1}^{d}(j-\gamma)
+ =\gamma x+\frac{(d-\gamma)(d-\gamma+1)}2.
+\]
+Substitute \(d=x-2c-1\) and use \(\gamma\leq d\). Rearrangement gives
+\[
+ \overline e(B,D)\geq
+ \binom{x+1}{2}-\binom\gamma2
+ +2c^2+3c+1-2(c+1)x.
+\tag{6}
+\]
+Combining (2), (5), and (6), and then using \(x\leq\beta-\varepsilon=n+c\), proves
+\[
+ \begin{split}
+ e(\overline G)&\geq
+ (n+c-1)^2+4n-1-\varepsilon
+       +2c^2+3c-2(c+1)x\\
+ &\geq n^2+c^2-c-\varepsilon,
+ \end{split}
+\]
+as claimed.
+
+\paragraph{Consequently \(\beta\leq n\).}
+Suppose \(\beta\geq n+1\). If \(uv\) is absent, then \(c\geq1\), and (4) gives \(e(\overline G)\geq n^2\), contrary to (3).
+
+If \(uv\) is present and \(c\geq1\), the pigeonhole argument just used gives equal-degree vertices \(b,b'\in B\); the path \(buvb'\) is forbidden. The only remaining possibility is \(uv\in E(G)\) and \(c=0\), so \(\beta=n+1\) and \(|D|=x-1\). The \(D\)-degrees of the \(x\) vertices of \(B\) must all differ, again because of the path through \(uv\). They are therefore exactly \(0,1,\ldots,x-1\), giving \(\overline e(B,D)=\binom x2\). By (2),
+\[
+ e(\overline G)\geq n^2+2n-x-2
+ \geq n^2+n-2\geq n^2,
+\]
+where \(x\leq n\) and \(n\geq2\). This again contradicts (3).
+
+\paragraph{The external lemma and the proof for \(n\geq5\).}
+We use the following precise input: if a graph on \(2n+1\) vertices, \(n\geq5\), has at least \(n^2+n\) edges and has no equal-degree endpoints of a three-edge path, then its maximum degree \(\Delta\) and largest repeated degree \(\beta\) satisfy
+\[
+ \beta\geq\Delta-1\quad\text{or}\quad\Delta\leq n+1.
+\tag{7}
+\]
+This is Chen and Ma's degree-balance lemma, stated with the \(n\geq5\) range as Lemma 2.3 of Liu and Zeng. Its optimization proof is an external dependency here.
+
+Since we have proved \(\beta\leq n\), either alternative in (7) gives \(\Delta\leq n+1\). At most one vertex has degree \(n+1\), because that degree is greater than \(\beta\). Therefore
+\[
+ 2e(G)\leq2n\cdot n+(n+1)<2(n^2+n+1),
+\]
+the desired contradiction for \(n\geq5\).
+
+\paragraph{Small orders: first \(\beta=n\).}
+Consider \(n\in\{2,3,4\}\). If \(\beta\leq1\), the largest possible degree sum is at most
+\(2+\sum_{j=2}^{2n}j=2n^2+n+1<2(n^2+n+1)\), so \(\beta\geq2\). If \(\beta\leq n-2\), the only remaining possibility is \(n=4,\beta=2\); its degree sum is at most \(3\cdot2+\sum_{j=3}^{8}j=39<42\).
+
+If \(\beta=n-1\), then \(n=3\) or 4. Unless both degrees \(2n\) and \(2n-1\) occur, the degree sum is at most
+\[
+ (n+1)(n-1)+\sum_{j=n}^{2n}j-(2n-1)
+ =\frac{5n^2-n}{2}<2(n^2+n+1).
+\]
+If both occur, let their vertices be \(z_1,z_2\), with \(z_1\) universal. For equal-degree vertices \(w_1,w_2\) of degree \(\beta\), at least one is adjacent to \(z_2\). One of \(w_1z_1z_2w_2\) and \(w_2z_1z_2w_1\) is then forbidden. Thus \(\beta=n\).
+
+\paragraph{Small orders: nonadjacent \(u,v\).}
+If \(\varepsilon=0\) and \(x<n\), (2) gives
+\[
+ e(\overline G)\geq\frac{n^2+5n-2}{2}>n^2-1
+ \quad(n=2,3,4).
+\]
+So \(x=n\), \(A_u=A_v=\varnothing\), and \(|D|=n-1\). All edges other than the \(2n\) from \(u,v\) to \(B\) are inside \(D\) or between \(B,D\). Thus
+\[
+ e(B,D)+e(D)\geq n^2-n+1.
+\tag{8}
+\]
+For \(n=2\), this exceeds the two possible such edges. For \(n=3\), it forces all seven possible edges, making every vertex of \(B\) have degree four, contrary to \(\beta=3\). For \(n=4\), at most two of the fifteen possible edges can be missing. At least two vertices of \(B\) are then adjacent to all three vertices of \(D\), giving repeated degree five, contrary to \(\beta=4\).
+
+\paragraph{Small orders: adjacent \(u,v\).}
+Now \(\varepsilon=1\), \(|D|=x+1\), and \(x\leq n-1\). Equations (2)--(3) imply
+\[
+ e(B,D)+e(D)\geq x^2+x+2.
+\tag{9}
+\]
+For \(x=0,1\), there are respectively at most zero or three such edges, fewer than (9).
+
+If \(n=4,x=2\), each of \(A_u,A_v\) is a singleton. Any two of the four vertices in \(A_u\cup A_v\cup B\) are joined by a three-edge path through \(u,v\). Their degrees are thus distinct and at most five, with total at most \(5+4+3+2=14\). No edges lie inside that four-vertex set; counting all edges incident with it, together with \(uv\) and the at most three edges inside \(D\), yields \(e(G)\leq14+1+3=18<21\).
+
+The remaining cases have \(x=n-1\in\{2,3\}\) and \(A_u=A_v=\varnothing\). The degrees of the \(x\) vertices in \(B\) are distinct, by the paths through \(uv\), and none equals \(n=x+1\): if \(b\in B\) had that degree, a different \(b'\in B\) would give the forbidden path \(bub'v\). Each degree lies between two and \(x+3\). For \(x=2\) their maximum sum is \(5+4=9\), and for \(x=3\) it is \(6+5+3=14\). Thus
+\(e(B,D)\leq3x-1\) in both cases. Comparing this with (9) and \(e(D)\leq\binom{x+1}{2}\) forces equality throughout: \(D\) is complete and the degrees of \(B\) are the displayed maximizing values.
+
+In particular, both possible degrees greater than \(\beta=x+1\), namely \(x+2,x+3\), are already used in \(B\). A vertex in \(D\) has degree at most \(2x\leq x+3\), so it must have degree at most \(x+1\), or create a repeated larger degree. But
+\[
+ \sum_{d\in D}d(d)=2e(D)+e(B,D)
+ =x(x+1)+3x-1>(x+1)^2,
+\]
+contradicting that bound on the \(x+1\) vertices of \(D\). This finishes the small orders.
+
+\paragraph{Sharpness, attribution, and assessment.}
+The graph \(K_{n,n+1}\) has \(n^2+n\) edges. Every three-edge path has endpoints in opposite parts, of degrees \(n+1\) and \(n\), so the threshold is sharp. The argument is reconstructed from Z. Liu and Q. Zeng, \emph{A complement of the Erd\H{o}s--Hajnal problem on paths with equal-degree endpoints}, \url{https://arxiv.org/abs/2505.00523}, following the original work of K. Chen and J. Ma, \url{https://arxiv.org/abs/2503.19569}. The stronger uniqueness theorem at the extremal edge count is not needed here. The statement at \url{https://www.erdosproblems.com/816} was checked 24 September 2026. The answer for \(n\geq2\) is proved relative to the explicit external lemma (7); the literal \(n=1\) exception is recorded. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

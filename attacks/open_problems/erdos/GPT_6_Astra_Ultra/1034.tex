@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1034: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and a stronger counterexample}
+The proposed half-of-the-vertices bound is false, even for $K_4$-free graphs. We reconstruct Ma and Tang's explicit construction from \url{https://www.erdosproblems.com/forum/thread/1034}: for every sufficiently large $n$, it gives
+\[
+ e(G)>n^2/4,\qquad G\text{ has no }K_4,\qquad
+ |Y(T)|\le(2\sqrt3-3)n+O(1)
+\tag{1}
+\]
+for every triangle $T$, where $Y(T)$ consists of vertices outside $T$ adjacent to at least two of its vertices. Since $2\sqrt3-3<1/2$, this settles the original negative answer. The better unrestricted constant recorded on the problem page is not needed.
+
+\section*{An almost regular bipartite graph with any prescribed edge count}
+For integers $s\le s'$, label the two sides of $K_{s,s'}$ by $i=0,\ldots,s-1$ and $j=0,\ldots,s'-1$. For $h=0,\ldots,s'-1$, let
+\[
+ M_h=\{(i,i+h\pmod{s'}):0\le i<s\}.
+\]
+Each $M_h$ is a matching of size $s$, and the matchings partition all edges. For any integer $0\le E\le ss'$, write $E=rs+t$, $0\le t<s$. Take $r$ entire matchings and $t$ edges of the next one, omitting the last instruction if $t=0$. The resulting bipartite graph $H$ has exactly $E$ edges and
+\[
+ \Delta(H)\le r+1\le E/s+1.
+\tag{2}
+\]
+This also handles the unequal-side case $s'=s+1$ without assuming a perfect matching on both sides.
+
+\section*{Build the host}
+Put
+\[
+ a=\lfloor n/\sqrt3\rfloor+2,\qquad b=n-a,
+ \qquad E=\lfloor n^2/4-ab\rfloor+1.
+\]
+For all sufficiently large $n$, both parts are positive and
+\[
+ 0<E\le n^2/4-ab+1<\lfloor a/2\rfloor\lceil a/2\rceil.
+\]
+For the last inequality one can divide by $n^2$: its two limits are $(1/\sqrt3-1/2)^2$ and $1/12$, and the former is strictly smaller. Make every edge between disjoint parts $A,B$ of sizes $a,b$ present, leave $B$ independent, and put inside $A$ the graph $H$ from (2), with sides of sizes $s=\lfloor a/2\rfloor$, $s'=\lceil a/2\rceil$ and exactly $E$ edges. Then $e(G)=ab+E>n^2/4$.
+
+Every clique contains at most one vertex of $B$ and at most two vertices of $A$, since $H$ is bipartite. Thus $G$ is $K_4$-free. Every triangle has the form $T=\{u,v,w\}$ with $uv\in E(H)$ and $w\in B$.
+
+\section*{Count every triangle's two-neighbour vertices}
+All $b-1$ other vertices of $B$ meet both $u,v$. A vertex of $A\setminus\{u,v\}$ already meets $w$, so it belongs to $Y(T)$ precisely when it meets $u$ or $v$ in $H$. Those two neighbourhoods lie on opposite sides of the bipartition, so are disjoint. After excluding $u,v$ themselves, the number contributed is $d_H(u)+d_H(v)-2$. Consequently
+\[
+ |Y(T)|=b+d_H(u)+d_H(v)-3
+ \le b+2\Delta(H)-3
+ \le b+\frac{2E}{s}-1.
+\]
+Since $s\ge(a-2)/2$ and $E\le n^2/4-ab+1$,
+\[
+ |Y(T)|\le b+\frac{n^2-4ab+4}{a-2}-1
+ \le\frac{n^2}{a-2}-3b+O(1).
+\]
+The omitted term $-8b/(a-2)$ is nonpositive, and $4/(a-2)-1$ is bounded. Set $c=a-2=\lfloor n/\sqrt3\rfloor$. Then $b=n-c-2$, so the final bound is
+\[
+ \frac{n^2}{c}+3c-3n+O(1)=(2\sqrt3-3)n+O(1),
+\]
+using $c=n/\sqrt3+O(1)$. This proves (1) uniformly over all triangles.
+
+\section*{Assessment}
+The construction works for every sufficiently large integer order, and its edge count, matching decomposition, $K_4$ exclusion and complete triangle classification are proved. Since $2\sqrt3-3<1/2$ is equivalent to $3<49/16$, there is a fixed positive gap from the conjectured coefficient. This answers the stated conjecture without asserting the exact optimal general threshold $h(n)$.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

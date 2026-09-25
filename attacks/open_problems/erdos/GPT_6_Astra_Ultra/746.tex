@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem 746: the Hamiltonicity threshold}
+\subsection*{1. Statement and result}
+For fixed $\epsilon>0$, is a uniform graph with $n$ vertices and at least $(1/2+\epsilon)n\log n$ edges Hamiltonian with probability tending to one? Yes. We derive this and the sharper critical-window limit from an explicitly stated hitting-time theorem, proving the necessary probability estimates in the fixed-edge model.
+\subsection*{2. External input: the Hamiltonicity hitting time}
+Expose all $M=\binom n2$ possible edges in a uniformly random order and let $G_t$ consist of the first $t$. The Bollob\'as--Frieze hitting-time theorem (their Theorem 1.2 with parameter $k=2$) states that with probability $1-o(1)$ the first time of minimum degree at least two equals the first time of Hamiltonicity. This is the deep external input; its rotation-extension proof is not reproduced here.
+Consequently, simultaneously for every deterministic time $m$, Hamiltonicity and minimum degree at least two agree except on an event of probability $o(1)$. A Hamilton cycle requires minimum degree two, and after the coinciding hitting times both properties persist. Thus it remains to calculate the latter probability.
+\subsection*{3. Exact sampling probabilities near the window}
+Fix $c\in\mathbb R$ and set
+\[
+ m=\left\lfloor\frac n2(\log n+\log\log n+c)\right\rfloor,
+ \quad p=m/M,\quad \lambda_n=2m/n.
+\]
+Let $X_0,X_1$ count vertices of degree zero and one in $G_m$. Sampling without replacement gives
+\[
+ \mathbb P(v\text{ isolated})=
+ \frac{\binom{M-(n-1)}m}{\binom Mm}
+ =\exp(-\lambda_n+o(1)).
+\]
+Indeed, take logarithms of the product over $0\le j<m$ of $1-(n-1)/(M-j)$. The quadratic terms contribute $O(m/n^2)=o(1)$ and replacing $M-j$ by $M$ incurs $O(m^2/n^3)=o(1)$. Therefore
+\[
+ \mathbb EX_0=n e^{-\lambda_n+o(1)}\sim e^{-c}/\log n\longrightarrow0. \tag{1}
+\]
+For fixed $r\ge1$, consider specified distinct vertices $v_1,\ldots,v_r$. Their degree-one event can be counted according to the matching of edges with both endpoints among these vertices. First suppose there are no such edges. Each vertex chooses its sole neighbor outside the specified set, giving exactly $(n-r)^r$ choices; repeated outside neighbors are allowed. These choices prescribe $r$ distinct present edges and forbid all other edges incident with the specified set. There are $b=rn+O_r(1)$ forbidden edges.
+For $a=O_r(1)$ prescribed present edges and $b=rn+O_r(1)$ disjoint forbidden edges, the exact probability is
+\[
+ \frac{(m)_a}{(M)_a}
+ \frac{\binom{M-a-b}{m-a}}{\binom{M-a}{m-a}}
+ =p^a\exp(-r\lambda_n+o(1)). \tag{2}
+\]
+The product expansion used for (1) proves (2) uniformly over these choices. Thus the no-internal-edge contribution is
+\[
+ (n-r)^rp^r e^{-r\lambda_n+o(1)}
+ =(1+o(1))\lambda_n^r e^{-r\lambda_n}. \tag{3}
+\]
+If there are $j\ge1$ internal matching edges, their endpoints have no outside neighbor. There are $O_r(n^{r-2j})$ patterns, each prescribing $r-j$ present edges and again $rn+O_r(1)$ forbidden edges. By (2) their total, divided by (3), is
+\[
+ O_r\bigl(n^{-2j}p^{-j}\bigr)
+ =O_r((n\log n)^{-j})=o(1).
+\]
+Summing the finitely many possibilities proves
+\[
+ \mathbb E(X_1)_r=(n)_r\mathbb P(\deg v_1=\cdots=\deg v_r=1)
+ \longrightarrow(e^{-c})^r. \tag{4}
+\]
+\subsection*{4. The limiting probability and the requested range}
+Bonferroni's inequalities express lower and upper bounds for $\mathbb P(X_1=0)$ using successive odd and even truncations of
+\[
+ \sum_{r\ge0}\frac{(-1)^r}{r!}\mathbb E(X_1)_r.
+\]
+For each fixed truncation use (4), then let the truncation length tend to infinity. The limiting series is $\exp(-e^{-c})$, so
+\[
+ \mathbb P(X_1=0)\longrightarrow\exp(-e^{-c}).
+\]
+By (1), excluding isolated vertices changes this probability by $o(1)$. The hitting-time theorem now gives
+\[
+ \mathbb P(G_m\text{ Hamiltonian})\longrightarrow\exp(-e^{-c}). \tag{5}
+\]
+For $m\ge(1/2+\epsilon)n\log n$, the corresponding parameter $2m/n-\log n-\log\log n$ tends to $+\infty$. Given any fixed $c$, such an $m$ eventually exceeds the time in (5). Coupling all graphs through the same edge order and using monotonicity gives a limiting lower bound $\exp(-e^{-c})$. Letting $c\to+\infty$ proves probability tending to one. The same comparison with $c\to-\infty$ gives the lower side of the sharp threshold.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/746}; B. Bollob\'as and A. M. Frieze, \emph{On matchings and Hamiltonian cycles in random graphs}, Annals of Discrete Mathematics 28 (1985), 23--46, Theorem 1.2, \url{https://www.math.cmu.edu/~af1p/Texfiles/MatchHamBoll.pdf}. The critical limit was established by Koml\'os and Szemer\'edi in 1983. Their convention $m=\tfrac12n\log n+\tfrac12n\log\log n+cn$ gives $\exp(-e^{-2c})$, consistently with (5).
+This is a complete deduction relative to the stated hitting-time theorem, not a new Hamiltonicity proof. In particular the calculation uses sampling without replacement, not an unproved substitution of the independent-edge model.
+\textbf{SOLVED:} the proposed edge range is Hamiltonian with probability tending to one, and the sharper fixed-window probability is proved relative to the declared external input.
+\textbf{Completion rate estimate: 100\%.}

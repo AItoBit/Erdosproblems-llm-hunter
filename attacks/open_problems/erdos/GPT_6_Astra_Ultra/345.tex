@@ -1,0 +1,94 @@
+\section*{Erd\H{o}s Problem \#345: completeness thresholds of powers}
+\subsection*{1. Statement and scope}
+For $A_k=\{j^k:j\ge1\}$ let $P(A_k)$ consist of finite sums of distinct
+members, including the empty sum, and use the inclusive convention
+\[
+ T_k=\min\{m\ge1:[m,\infty)\cap\mathbb Z\subseteq P(A_k)\}.
+\]
+The question is whether $T_k>T_{k+1}$ for infinitely many $k$.
+This attempt proves exact small thresholds by finite certificates with an
+infinite continuation argument, and an explicit obstruction when $k$ is
+a power of two. The comparison for infinitely many $k$ remains unresolved.
+
+\subsection*{2. An interval certificate that really proves completeness}
+Suppose the subset sums of $1^k,\ldots,m^k$ contain the integer interval
+$[L,U]$, of cardinality $W=U-L+1$, where
+\[
+ m\ge2k,\qquad W\ge(m+1)^k.
+\]
+Adding the unused term $j^k$, initially $j=m+1$, supplies both the old
+interval and its translate by $j^k$. They overlap or are adjacent when
+$W\ge j^k$, yielding $[L,U+j^k]$ and new width $W+j^k\ge2j^k$.
+For $j\ge2k$,
+\[
+ (j+1)^k/j^k=(1+1/j)^k\le e^{1/2}<2.
+\]
+Thus the width condition propagates indefinitely. The right endpoints
+tend to infinity, so every integer at least $L$ is representable.
+Merely testing a large finite range would not supply this conclusion.
+
+Here are two exact certificates:
+\[
+\begin{array}{c|r|r|r|r|r}
+ k&m&\sum_{j\le m}j^k&L&U&W\\ \hline
+ 2&12&650&129&521&393\\
+ 3&24&90000&12759&77241&64483
+\end{array}
+\]
+They can be checked without any heuristic search: start with $R_0=\{0\}$
+and repeat
+\[
+ R_j=R_{j-1}\cup\{x+j^k:x\in R_{j-1}\}\quad(1\le j\le m).
+\]
+Exact integer bitset evaluation gives $[L,U]\subseteq R_m$ and
+$L-1\notin R_m$ in both rows. Equivalently, start with the integer $b=1$
+and replace $b$ by the bitwise union of $b$ and $b$ shifted left by $j^k$;
+bit $s$ then records membership of $s$. This specifies the entire finite
+certificate algorithm. Independent set enumeration gives the same
+outputs. Since $13^2>128$ and $25^3>12758$, later terms cannot repair
+the two missing integers. The interval lemma therefore proves
+\[
+ \boxed{T_2=129,\qquad T_3=12759.}
+\]
+The commonly quoted values $128$ and $12758$ are the largest missing
+integers, so differ by one from the inclusive threshold defined above.
+This convention issue does not change comparisons between exponents.
+
+\subsection*{3. A large modular obstruction for powers of two}
+Let $k=2^t$ with $t\ge2$, and put $q=2^{t+2}=4k$. Every odd integer $a$
+satisfies $a^k\equiv1\pmod q$. Indeed, odd squares are $1$ modulo $8$,
+and squaring a number congruent to $1$ modulo $2^u$ raises this
+divisibility to $2^{u+1}$. Every even $a$ satisfies $a^k\equiv0\pmod q$,
+since $k\ge t+2$.
+
+Set
+\[
+ S=\sum_{j=1}^{q-1}(2j-1)^k,\qquad N=S-q.
+\]
+Then $N\equiv q-1\pmod q$. Any representation of $N$ by distinct
+$k$th powers must use a number of odd bases congruent to $q-1$ modulo
+$q$, hence at least $q-1$ odd bases. Their least possible total is
+precisely $S$, exceeding $N$. Consequently
+\[
+ N\notin P(A_k),\qquad
+ T_{2^t}\ge\sum_{j=1}^{2^{t+2}-1}(2j-1)^{2^t}-2^{t+2}+1.
+\]
+This proves the obstruction directly; it is not a probabilistic
+expectation about residues.
+
+\subsection*{4. Assessment and provenance}
+The modular bound explains why powers of two are plausible exponents
+at which the threshold is unusually large. It gives no sufficiently
+small upper bound for $T_{2^t+1}$, which is the missing comparison.
+Neither infinitely many descents nor eventual monotonicity is proved.
+The estimate below measures partial proof coverage, not a probability
+that an answer is correct.
+
+The statement and the suggested power-of-two obstruction are from
+Erd\H{o}s--Graham, as recorded at
+\texttt{https://www.erdosproblems.com/345} (checked 2026-09-25).
+The earlier GPT Pro 5.2 attempt noticed the threshold convention;
+the explicit interval certificates and continuation argument here
+verify the correction. No novelty or formal Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

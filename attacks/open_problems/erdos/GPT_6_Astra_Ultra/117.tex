@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 117: covering groups by abelian subgroups}
+\subsection*{Statement and scope}
+Let $\omega(G)$ be the maximum size of a pairwise noncommuting set. Let $h(n)$ be the least uniform number of abelian subgroups needed to cover every group with $\omega(G)\le n$. Groups may be infinite. The problem asks for good estimates of $h(n)$.
+
+This attempt proves $h(1)=h(2)=1$, $h(3)=3$, and an explicit, very weak bound for every $n$. The sharp estimation problem is unresolved here. These elementary reconstructions revise the earlier GPT-5.2 attempt's restriction to finite groups. The current page \url{https://www.erdosproblems.com/117} records Pyber's much stronger exponential bounds; our general bound does not improve them. The centralizer construction below follows the method of B.\ H.\ Neumann, \emph{A problem of Paul Erd\H{o}s on groups}, \url{https://doi.org/10.1017/S1446788700019303}.
+
+\subsection*{Small parameters}
+If $x,y$ do not commute, then $x,y,xy$ are pairwise noncommuting. Therefore $\omega(G)\le2$ implies that $G$ is abelian, proving $h(1)=h(2)=1$.
+
+Suppose $\omega(G)\le3$ and $G$ is nonabelian. Choose a maximal noncommuting triple $s_1,s_2,s_3$ and put $H_i=C_G(s_i)$. Maximality gives $G=H_1\cup H_2\cup H_3$, and $s_i$ belongs only to $H_i$.
+
+We first check the elementary three-subgroup structure. For $x\in H_1\cap H_2$, both $s_1s_2$ and $xs_1s_2$ lie in $H_3$, since neither lies in $H_1$ or $H_2$. Their quotient shows $x\in H_3$. Cyclically, all pairwise intersections equal $K=H_1\cap H_2\cap H_3$. If $a,a'\in H_1\setminus K$, then $as_2,a's_2\in H_3$, so $aa'^{-1}\in H_1\cap H_3=K$. Hence $H_1=K\cup Ks_1$; the other two subgroups have the corresponding form.
+
+Every element of $K$ commutes with all $s_i$. If $a,b\in K$ failed to commute, the four elements
+\[
+ as_1,\ as_2,\ as_3,\ b
+\]
+would be pairwise noncommuting: among the first three the commutation test reduces to that for $s_i,s_j$, and with $b$ it reduces to that for $a,b$. This contradicts $\omega(G)\le3$. Thus $K$ is abelian. Each $H_i=K\cup Ks_i$ is now abelian, so three abelian subgroups cover $G$.
+
+In the quaternion group $Q_8$, the three pairs $\{\pm i\},\{\pm j\},\{\pm k\}$ commute internally and fail to commute across pairs. Thus $\omega(Q_8)=3$, and any abelian cover needs at least three members. This proves $h(3)=3$.
+
+\subsection*{A quantitative finite bound, including infinite groups}
+Fix $n\ge2$ and put $D=\binom{2n}{n}-1$. Every element $g$ has at most $D$ conjugates. Otherwise choose $\binom{2n}{n}$ elements $t$ with distinct $t^{-1}gt$. The elementary Ramsey bound
+$R(n+1,n+1)\le\binom{2n}{n}$ gives either $n+1$ pairwise noncommuting $t$'s, or $n+1$ pairwise commuting $t$'s. The first is impossible. In the second case their elements $gt$ are pairwise noncommuting: for commuting $u,v$, the equality $(gu)(gv)=(gv)(gu)$ implies $v^{-1}gv=u^{-1}gu$, a contradiction. Consequently
+\[
+ [G:C_G(g)]\le D. \tag{1}
+\]
+The Ramsey bound used here follows from $R(a,b)\le R(a-1,b)+R(a,b-1)$ and its boundary values.
+
+There is an abelian common centralizer of at most $2n$ elements. To prove this, inductively maintain pairs $a_i,b_i$ with the $a_i$ pairwise noncommuting, the $b_i$ pairwise commuting, $a_i$ commuting with $b_j$ for $i\ne j$, and $a_i$ not commuting with $b_i$. If their common centralizer $H_j$ is nonabelian, choose noncommuting $a,b\in H_j$ and set
+\[
+ a_{j+1}=a b_1\cdots b_j,\qquad b_{j+1}=b.
+\]
+All stated conditions persist: in testing commutation with an old $a_i$, the only noncommuting factor is $b_i$, and all other factors commute with both it and $a_i$. Commutation with the old $b_i$ and the new $b$ follows directly. If $H_j$ were nonabelian for every $j\le n$, this would create $n+1$ pairwise noncommuting elements. Thus some $A=H_j$, $j\le n$, is abelian, and (1) gives
+\[
+ q=[G:A]\le D^{2n}.
+\]
+Choose $q$ right-coset representatives $R$ for $A$. The subgroup $A\cap C_G(R)$ centralizes both $A$ and $R$, which generate $G$, so it lies in $Z(G)$. Applying (1) once more,
+\[
+ [G:Z(G)]\le qD^q\le D^{\,2n+D^{2n}}. \tag{2}
+\]
+Each coset $gZ(G)$ lies in the abelian subgroup $\langle g,Z(G)\rangle$. Therefore (2) is also an explicit uniform bound for $h(n)$.
+
+\subsection*{Remaining gap}
+The exact small cases and the general finite cover are proved without assuming $G$ finite. Bound (2) is far worse than the known exponential estimates. Determining better constants or sharper asymptotics for $h(n)$ remains outside this argument.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

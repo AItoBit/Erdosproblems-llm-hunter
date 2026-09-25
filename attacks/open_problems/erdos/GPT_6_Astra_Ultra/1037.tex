@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 1037: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and quantitative counterexample}
+The proposed conclusion is false. We construct arbitrarily large graphs with every degree appearing at most twice, at least $(3/4-o(1))n$ distinct degrees, and no clique or independent set larger than $O(\log n)$. In particular one can fix $\varepsilon=1/5$ in the hypothesis for all sufficiently large members of this sequence. This reconstructs the four-copy construction of Cambie, Chan and Hunter in \url{https://www.erdosproblems.com/forum/thread/1037}, using a concentration estimate to make the degree count explicit. It suffices to give the sequence $n=4q$ to disprove the universal large-order claim.
+
+\section*{Choose one graph with controlled internal degrees}
+For every sufficiently large $q$, there is a graph $J$ on $q$ vertices such that
+\[
+ \omega(J),\alpha(J)<K:=\lceil4\log_2q\rceil,
+ \qquad \Delta(J)-\delta(J)\le2s,
+ \quad s=\sqrt{3q\log q}.
+\tag{1}
+\]
+Here $\omega$ and $\alpha$ are the clique and independence numbers. To prove existence, use $G(q,1/2)$. The expected total number of homogeneous $K$-sets is at most
+\[
+ 2\binom qK2^{-\binom K2}\le2q^K2^{-K(K-1)/2}=o(1).
+\]
+For each vertex, its degree is a sum of $q-1$ independent fair Bernoulli variables. The elementary Hoeffding bound gives probability at most $2\exp(-2s^2/(q-1))$ that it differs from $(q-1)/2$ by more than $s$. A union bound over the $q$ vertices tends to zero. The two desirable events therefore hold simultaneously for some $J$.
+
+\section*{Four copies and a staircase of cross edges}
+Take four disjoint copies $A,B,C,D$ of $J$. Order the vertices in $A\cup B$ as $v_1,\ldots,v_{2q}$ in nonincreasing order of their internal-copy degrees, and order $C\cup D$ identically as $w_1,\ldots,w_{2q}$. Let these degree lists be
+\[
+ d_1\ge d_2\ge\cdots\ge d_{2q};
+\]
+they are equal because both halves contain two copies of the same graph. Add all edges between $A$ and $B$, no edges between $C$ and $D$, and, between the two halves, add $v_iw_j$ exactly when $i+j\le2q$.
+
+The resulting graph $G$ has exact degrees
+\[
+ d_G(v_i)=d_i+3q-i,\qquad d_G(w_i)=d_i+2q-i. \tag{2}
+\]
+Both lists are strictly decreasing, because $d_i$ is nonincreasing and the index is subtracted. Thus any particular degree occurs at most once in each half, hence at most twice altogether.
+
+Let $D_0=d_1-d_{2q}\le2s$. The smallest degree in the $v$-half is $d_{2q}+q$. If $i>q+D_0$, then
+\[
+ d_G(w_i)\le d_1+2q-i<d_{2q}+q.
+\]
+These $q-D_0$ vertices, for large $q$ when $D_0<q$, therefore have degrees absent from the $v$-half. Combining them with all $2q$ distinct degrees there shows
+\[
+ \#\{d_G(x):x\in V(G)\}\ge3q-D_0\ge3q-2\sqrt{3q\log q}
+ =(3/4-o(1))n. \tag{3}
+\]
+This explicit estimate avoids assuming that the arbitrary internal degrees are exactly regular.
+
+\section*{Homogeneous sets remain small}
+Any clique in $G$ meets each of $A,B,C,D$ in a clique of the original graph $J$, so it has fewer than $4K$ vertices. The same argument applies to an independent set. It uses only the induced graphs within the four copies, and is unaffected by the engineered cross edges. Since $4K=O(\log n)$, the claimed homogeneous-set growth fails while (2)--(3) meet the degree requirements.
+
+\section*{Assessment}
+The probabilistic existence of the internal graph, all degree multiplicities, the number of distinct degrees and the homogeneous-set bound are proved. The construction disproves any demand for homogeneous sets growing faster than a fixed multiple of $\log n$ under these hypotheses. No novelty or local formal verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

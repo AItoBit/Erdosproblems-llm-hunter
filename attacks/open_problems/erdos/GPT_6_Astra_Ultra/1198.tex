@@ -1,0 +1,29 @@
+\section*{Erd\H{o}s Problem 1198: reducing multilinear monochromaticity to block systems}
+\subsection*{1. Statement and scope}
+Given a two-colouring of $\mathbb N$, must there be an infinite increasing sequence $A=(a_i)$ for which every expression
+\[
+ \sum_{j=1}^k\prod_{i\in S_j}a_i
+\]
+has the same colour, where the $S_j$ are finite, nonempty and pairwise disjoint, and the single-variable expressions $a_i$ are excluded? The answer is known to be negative by Smith's work. This attempt gives a precise reduction to a published separation theorem, proves how to remove the single-variable exception by blocking, and rules out all eventually periodic colourings as possible counterexamples. It does not reconstruct Smith's separating colouring.
+
+\subsection*{2. A verified theorem implication}
+For a sequence $x=(x_i)$ let $SP_m(x)$ consist of sums of $m$ nonempty finite products whose index sets satisfy $\max S_j<\min S_{j+1}$. Smith's two-cell separation theorem supplies, for distinct $m,n$, a two-colouring in which no colour contains $SP_m(x)\cup SP_n(y)$ for any infinite sequences $x,y$. We use this as an external theorem, in the form stated in the abstract of his 2001 SIAM paper.
+
+Apply it with $m=2$ and $n=3$. If the sequence in the question existed for that colouring, its common colour would contain both $SP_2(A)$ and $SP_3(A)$: increasing block index sets are disjoint, and these expressions each have at least two summands. None is a forbidden single-variable expression. Taking $x=y=A$ contradicts the separation theorem. This establishes the negative answer relative to the named input, with all restrictions on index sets and trivial expressions accounted for.
+
+\subsection*{3. A blocking lemma for the omitted individual terms}
+There is also a useful elementary equivalence. In any fixed colouring, existence of a sequence with all the nontrivial multilinear expressions in one colour implies existence of a sequence with \emph{all} multilinear expressions, including its individual terms, in that colour.
+
+To prove this, replace $A$ by $b_j=a_{2j-1}a_{2j}$. The sequence $b_j$ is strictly increasing: both positive factors increase from one pair to the next. A product $\prod_{j\in T}b_j$ expands to a product of the $a_i$ over the union of the disjoint pairs $\{2j-1,2j\}$, $j\in T$. If several nonempty sets $T$ are disjoint, their expanded index sets are disjoint too. Every multilinear expression in the $b_j$ therefore expands to an allowed expression in the $a_i$, using at least two original variables even when it is just $b_j$. It has the prescribed colour. Conversely, a sequence with all expressions monochromatic plainly has the required nontrivial subfamily monochromatic.
+
+This is an equivalence of existence statements, not permission to assume the original $a_i$ have the same colour. It clarifies exactly where grouping variables removes the apparent exception.
+
+\subsection*{4. An obstruction to elementary periodic counterexamples}
+Suppose a colouring is eventually periodic: there are $M,N_0\ge1$ such that, for every $n\ge N_0$, its colour depends only on $n\bmod M$. Take any increasing infinite sequence of multiples of $M$, all at least $N_0$. Every nonempty product is a multiple of $M$ and is at least $N_0$; so is any sum of such products. All the multilinear expressions have the eventual colour of residue zero. Thus every eventually periodic colouring admits the desired sequence, even including the individual terms. A counterexample must use information beyond a fixed modulus.
+
+\subsection*{5. Assessment and attribution}
+The reduction proves the known disproof if Smith's separation theorem is accepted. The blocking and periodic-colouring claims are proved directly here. What remains unresolved in this attempt is the main self-contained construction: an explicit two-colouring together with a proof that it separates the infinite block systems. The estimate below reflects that substantial missing construction; it is not an estimate of whether the already settled problem is true.
+
+Sources: \url{https://www.erdosproblems.com/1198}; G. L. Smith, \emph{Partitions and ($m$ and $n$) sums of products}, J. Combin. Theory Ser. A 72 (1995), 77--94; his \emph{Partitions and ($m$ and $n$) sums of products---Two cell partition}, SIAM J. Discrete Math. 14 (2001), 356--369, \url{https://doi.org/10.1137/S0895480198349014}. The block-system reduction and pair-grouping idea are also discussed by Aron Bhalla and Wouter van Doorn at \url{https://www.erdosproblems.com/forum/thread/1198}. No novelty or local formal verification is claimed.
+
+\textbf{Completion rate estimate: 65\%.}

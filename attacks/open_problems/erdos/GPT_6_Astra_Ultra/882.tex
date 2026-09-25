@@ -1,0 +1,56 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 882: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and target estimate}
+Let $g(n)$ be the largest $|A|$ for $A\subseteq[1,n]$ such that its set of nonempty subset sums is primitive: no two distinct values in that sumset divide one another. We prove
+\[
+ \log_2 n-O(1)\le g(n)\le\log_2 n+\tfrac12\log_2\log_2 n+O(1),
+\]
+so in particular $g(n)\sim\log_2 n$. The construction $\{2^m-2^j:0\le j<m\}$ and this order of estimate are recorded in Erd\H{o}s--Lev--Rauzy--S\'andor--S\'ark\"ozy, \emph{Greedy algorithm, arithmetic progressions, subset sums and divisibility}, Discrete Mathematics (1999), and the current statement \url{https://www.erdosproblems.com/882}. We supply elementary proofs of both bounds.
+
+\section*{A binary construction and its carry proof}
+Fix $M=2^m$ and $A_m=\{M-2^j:0\le j<m\}$. A nonempty subset has sum
+\[
+ kM-u,\qquad 0<u<M,\quad k=\operatorname{popcount}(u).
+\]
+Suppose a multiple $\ell\ge2$ of one such sum is another: $\ell(kM-u)=hM-v$, with $h=\operatorname{popcount}(v)$, $0<v<M$. Then
+\[
+ \ell u=qM+v,\qquad q=\ell k-h\ge0.\tag{1}
+\]
+Write $u=\sum_{j=0}^{m-1}u_j2^j$, $v=\sum_{j=0}^{m-1}v_j2^j$, and perform multiplication by $\ell$ using carries $c_0=0,c_m=q$:
+\[
+ \ell u_j+c_j=v_j+2c_{j+1}\quad(0\le j<m).
+\]
+Summing these equations without binary weights gives
+\[
+ \ell k-h=2q+\sum_{j=1}^{m-1}c_j.
+\]
+Together with (1) this forces $q+\sum_{j=1}^{m-1}c_j=0$. But all carries are nonnegative, and at the least occupied bit of $u$ multiplication by $\ell\ge2$ creates a positive carry. This contradiction proves primitivity. As $\max A_m=2^m-1$, taking $m=\lfloor\log_2(n+1)\rfloor$ yields the lower bound.
+
+\section*{Primitivity forces distinct subset sums}
+If two different subsets had equal sum, cancel their common elements. Positivity leaves two disjoint nonempty subsets of equal sum $z$. Their union has sum $2z$, so the subset-sum set contains distinct values $z$ and $2z$, contradicting primitivity. Thus all $2^m$ subset sums, including zero, are distinct for an admissible set of size $m$.
+
+Select each of its elements independently with probability $1/2$, and let $X$ be the resulting subset sum. Its $2^m$ values are distinct and equiprobable. Moreover
+\[
+ \operatorname{Var}(X)=\tfrac14\sum_{a\in A}a^2\le mn^2/4.
+\]
+Chebyshev's inequality puts at least $3/4$ of its probability in the interval $|X-\mathbb EX|<n\sqrt m$ (using a closed interval would only enlarge it). This interval contains at most $2n\sqrt m+1$ integers. Consequently
+\[
+ \tfrac34\,2^m\le2n\sqrt m+1,\qquad
+ m\le\log_2 n+\tfrac12\log_2 m+O(1).\tag{2}
+\]
+For completeness the implicit $m$ can be removed without circularity. Since $\log_2 m\le m$ for $m\ge1$, (2) first gives $m\le2\log_2 n+O(1)$. Substituting this back into its logarithmic term gives the asserted upper bound.
+
+\section*{Assessment}
+The asymptotic estimate is proved without importing a distinct-subset-sums theorem. The remaining $O(\log\log n)$ width is explicitly visible; no exact extremal formula or bounded-error sharpening is claimed. The binary family and the probabilistic concentration argument are credited as a reconstruction of the known estimates.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

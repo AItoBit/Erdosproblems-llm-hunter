@@ -1,0 +1,58 @@
+\section*{Erd\H{o}s Problem 1078}
+
+\paragraph{Statement and result.}
+Fix an integer \(r\geq2\). An \(r\)-partite graph \(G\), with each part of size \(n\), contains \(K_r\) whenever
+\[
+ \delta(G)\geq(r-\tfrac32-\varepsilon_n)n,\qquad
+ \varepsilon_n\longrightarrow0,
+\]
+for all sufficiently large \(n\). The number \(r\) is fixed before the limit in \(n\); the proof below makes the required tolerance explicit.
+
+\paragraph{The external independent-transversal theorem.}
+Put \(s=\lfloor r/2\rfloor\). The combined exact theorem of Haxell--Szab\'o--Tardos for even \(r\), and Haxell--Szab\'o for odd \(r\), is the following: if an \(r\)-partite graph \(H\) has \(n\) vertices in each part and
+\[
+ \Delta(H)<\left\lceil\frac{s n}{2s-1}\right\rceil,
+ \tag{1}
+\]
+then it has an independent transversal, namely one vertex from each part with no edges among them. This threshold is sharp. The strict inequality is part of the theorem. For odd \(r\), it is Theorem 1.1 of Haxell--Szab\'o, \emph{Odd independent transversals are odd}; their introduction records the even case. The structural proof of this theorem is an external input here.
+
+\paragraph{Complementing only between different parts.}
+Construct \(H\) on the same vertex classes by putting an edge between two vertices from different classes exactly when they are not adjacent in \(G\). Put no edges inside a class. Each vertex has exactly \((r-1)n\) possible neighbours outside its own class, so
+\[
+ d_H(v)=(r-1)n-d_G(v),\qquad
+ \Delta(H)=(r-1)n-\delta(G).
+ \tag{2}
+\]
+An independent transversal in \(H\) is precisely a clique of order \(r\) in \(G\). Thus (1)--(2) prove the following exact sufficient condition:
+\[
+ \delta(G)\geq
+ (r-1)n-\left\lceil\frac{s n}{2s-1}\right\rceil+1.
+ \tag{3}
+\]
+The \(+1\) cannot be dropped merely by translating a theorem whose hypothesis is strict.
+
+\paragraph{The asymptotic assertion.}
+The gap between the independent-transversal threshold and \(n/2\) is positive for every fixed \(r\):
+\[
+ \frac{s}{2s-1}-\frac12=\frac1{4s-2}>0.
+\]
+Under the proposed minimum-degree hypothesis, (2) gives
+\[
+ \Delta(H)\leq(\tfrac12+\varepsilon_n)n.
+\]
+For sufficiently large \(n\), we have
+\(\varepsilon_n<1/(4s-2)\), and therefore
+\[
+ \Delta(H)<\frac{s n}{2s-1}
+ \leq\left\lceil\frac{s n}{2s-1}\right\rceil.
+\]
+The theorem applies and supplies \(K_r\). This establishes the requested assertion even when the error approaches zero from the less favourable side.
+
+\paragraph{Boundary cases and the strict threshold.}
+For \(r=2\), formula (3) is simply \(\delta(G)\geq1\), which certainly forces an edge. For \(r=3\), it gives \(\delta(G)\geq n+1\). Equality at the preceding integer \(n\) need not force a triangle: take all edges from the third part to the first two parts, and none between the first two. The minimum degree is \(n\), and the graph is bipartite and triangle-free. More generally the sharpness clause in the external theorem, followed by the same complement operation, supplies the extremal examples for (3).
+
+\paragraph{Attribution and assessment.}
+This is a complete reduction to the stated exact independent-transversal theorem, including the integer threshold and the fixed-\(r\) quantifiers; it is not a new proof of that theorem. Sources checked 24 September 2026: \url{https://www.erdosproblems.com/1078} and the authors' primary paper, \url{https://page.mi.fu-berlin.de/szabo/PDF/oddtransversal.pdf}. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

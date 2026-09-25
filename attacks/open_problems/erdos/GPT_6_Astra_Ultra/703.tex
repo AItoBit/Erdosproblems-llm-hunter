@@ -1,0 +1,112 @@
+\section*{Erd\H{o}s Problem 703: a forbidden intersection size}
+
+\paragraph{Statement and claim.}
+Let \(T(n,r)\) be the largest size of a family
+\(\mathcal F\subseteq2^{[n]}\) for which \(|A\cap B|\ne r\).
+We give the known exact answer for fixed \(r\geq2\) and
+sufficiently large \(n\), and the exponential upper bound
+when \(r\) is bounded away from \(0\) and \(n/2\).
+The upper bounds are established external theorems of
+Frankl--F\"uredi and Frankl--R\"odl. We reconstruct the matching
+families, check parity and quantifiers, and derive their
+asymptotic consequences. No new solution is claimed.
+See \url{https://www.erdosproblems.com/703}.
+
+\paragraph{The external upper-bound inputs.}
+For every fixed \(r\), Frankl--F\"uredi determine the maximum
+for all \(n\geq n_0(r)\). Their theorem is stated, together
+with the extremal families, on page 261 of
+P. Frankl and V. R\"odl, \emph{Forbidden intersections},
+Trans. Amer. Math. Soc. 300 (1987), 259--286:
+\url{https://users.renyi.hu/~pfrankl/1987-3.pdf}.
+Theorem 1.1 of that same primary paper gives: for every
+\(0<\varepsilon<1/4\) there exists \(\delta>0\), depending
+only on \(\varepsilon\), such that
+\[
+ \varepsilon n<r<(1/2-\varepsilon)n
+ \quad\Longrightarrow\quad
+ T(n,r)<(2-\delta)^n.                                          \tag{1}
+\]
+These structural upper bounds are used as external inputs,
+not reproved below. The fixed-\(r\) threshold \(n_0(r)\) does
+not itself imply the uniform linear-range statement (1).
+For \(\varepsilon\geq1/4\) the requested interval is empty.
+
+\paragraph{The exact fixed-\(r\) answer and its constructions.}
+For \(n\geq n_0(r)\), the cited fixed-\(r\) theorem gives
+\[
+ T(n,r)=\sum_{j=0}^{r-1}\binom nj+
+ \begin{cases}
+ \displaystyle\sum_{j=(n+r+1)/2}^{n}\binom nj,&n+r\text{ odd},\\[6pt]
+ \displaystyle2\sum_{j=(n+r)/2}^{n-1}\binom{n-1}j,&n+r\text{ even}.
+ \end{cases}                                                   \tag{2}
+\]
+Here is a direct verification of the matching lower bounds.
+Include every set of size less than \(r\).
+Such a set has intersection less than \(r\) with every set,
+so these members cause no obstruction.
+If \(n+r\) is odd, also include every set of size at least
+\((n+r+1)/2\). Any two of these have intersection at least
+\[
+ 2\cdot\frac{n+r+1}{2}-n=r+1.
+\]
+This proves the first case in (2).
+
+If \(n+r\) is even, fix a point \(x\) and also include every
+set \(A\) with \(|A\setminus\{x\}|\geq(n+r)/2\).
+Two such sets have intersection outside \(x\) of size at least
+\[
+ 2\cdot\frac{n+r}{2}-(n-1)=r+1.
+\]
+Their number is twice the indicated upper binomial tail
+on \(n-1\) points, because membership of \(x\) is free.
+For sufficiently large \(n\), these upper families are
+disjoint from the sets of size less than \(r\), which
+justifies adding the two counts.
+
+The published extremal theorems constrain distinct members.
+If the displayed problem is read as also allowing \(A=B\),
+its upper bound still follows by restriction, and the
+constructions above still work: none of their sets has
+size \(r\). Thus (2) is valid under either convention
+in this fixed-\(r\), large-\(n\) range.
+
+\paragraph{Consequences of the formula.}
+For fixed \(r\), the lower tail in (2) is \(O_r(n^{r-1})\).
+By symmetry, each upper tail is half the full binomial sum,
+apart from a bounded number of central terms. Each such term
+is \(O(2^n/\sqrt n)\), by the central binomial estimate.
+Therefore
+\[
+ T(n,r)=\left(\frac12+O_r(n^{-1/2})\right)2^n
+ \qquad(r\text{ fixed},\ n\longrightarrow\infty).               \tag{3}
+\]
+This does not conflict with (1), where \(r\) grows linearly
+with \(n\).
+
+\paragraph{A quantitative lower bound in the linear range.}
+For any \(r\), the union of all sets of size less than \(r\)
+and all sets of size greater than \((n+r)/2\) avoids
+intersection \(r\), by the same two intersection estimates.
+For fixed \(0<\rho<1/2\) and \(r=\lfloor\rho n\rfloor\),
+Stirling's formula applied to single layers of this family gives
+\[
+ \log_2 T(n,r)\geq
+ n\max\left\{H_2(\rho),H_2\left(\frac{1+\rho}{2}\right)\right\}
+ +o(n),
+\]
+where \(H_2(t)=-t\log_2t-(1-t)\log_2(1-t)\).
+The upper bound (1), with any
+\(\varepsilon<\min(\rho,1/2-\rho)\), gives
+\(\log_2 T(n,r)<n\log_2(2-\delta)\).
+These bounds establish exponential behavior strictly below
+\(2^n\) throughout the requested interior range.
+
+\paragraph{Scope.}
+The explicit exponential question is answered completely
+relative to Frankl--R\"odl's theorem. Formula (2) also supplies
+the exact fixed-\(r\) answer, relative to Frankl--F\"uredi's
+theorem. An exact value for every pair \(n,r\) is not claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

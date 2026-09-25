@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 869: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and approach}
+Must a union of two disjoint asymptotic bases of order two contain a minimal subbasis? No. We reconstruct the relevant case of Daniel Larsen's \emph{Three Questions of Erd\H{o}s--Nathanson on Asymptotic Bases of Order 2}, \url{https://raw.githubusercontent.com/Larsen-Daniel/Erdos-869/main/869.pdf}. The block construction and its probabilistic verification are included. Representations are unordered; a balanced pair has ratio at most $100$.
+
+\section*{A flexible block construction}
+Put $N_j=4^{j+1}$. Partition the positive integers independently and uniformly into $X_1,X_2,X_3$. At stage $j$ let $N=N_j$ and let $B_{<j},C_{<j}$ be the already constructed disjoint sets below $N$; write $A_{<j}=B_{<j}\cup C_{<j}$. Choose disjoint sets $G_j\subseteq B_{<j}$, $H_j\subseteq C_{<j}$ by any rule depending on the past. Set
+\[
+ V_j=(4N/3,2N)\cup(8N/3,3N)\cup
+       \bigl(4N-((0,N)\setminus A_{<j})\bigr),
+\]
+and add $(V_j\cap X_1)\cup(4N-G_j)$ to $B$ and $(V_j\cap X_2)\cup(4N-H_j)$ to $C$. Intervals denote their integer points. The new additions lie strictly between $N$ and $4N$. They are disjoint: the planted complements have partners in $A_{<j}$, whereas the random upper additions have partners outside it. In particular $B\cap C=\varnothing$ throughout.
+
+The complete representations of $4N$ in $B\cup C$ are exactly
+\[
+ \{f,4N-f\}\quad(f\in G_j\cup H_j).\tag{1}
+\]
+Indeed two old elements sum below $2N$. Among new lower elements, the first interval added to itself sums below $4N$, the first plus the second sums above $4N$, and two from the second are still larger. An old element and either lower interval sum below $4N$. Finally the upper interval's partner lies below $N$, and its membership rule leaves exactly the planted pairs. Future stages cannot affect this list.
+
+We now prove that, for a suitable realization, both colors have at least $c n$ balanced representations of every sufficiently large $n\notin\{N_j\}$, with an absolute $c>0$, irrespective of the selection rule. At stage $j$ the set $B$ contains $X_1\cap I$ for
+\[
+ I_0=(N/24,3N/64),\ I_1=(2N/3,3N/4),\
+ I_2=(4N/3,2N),\ I_3=(8N/3,3N).
+\]
+The first two come from stages $j-3,j-1$. It also contains
+\[
+ X_1\cap(4N-(X_3\cap J)),\qquad J=(N/4,3N/4).
+\]
+To see the latter, no earlier planted complement lies in $J$: the immediately previous ones lie in $(3N/4,N)$ and all older ones below $N/4$. Every random addition in $J$ lies in $X_1\cup X_2$, so $X_3\cap J$ is absent from $A_{<j}$.
+
+For two of these ordinary intervals, each integer in the sum interval with one percent of its length trimmed from each end has $\gg N$ candidate unordered pairs, with an absolute constant (all interval lengths are at least $N/192$). Distinct candidate pairs use disjoint coordinates, apart from at most one diagonal candidate, which we discard. Their probability of being in $X_1$ is $1/9$, independently. For $I+(4N-J)$ and a sum $4N+\Delta\ne4N$, there are $\gg N$ candidates $y\in J$, $y+\Delta\in I$. The required colors are $y\in X_3$, $y+\Delta,4N-y\in X_1$. After discarding at most one candidate with coincident coordinates, a greedy selection leaves $\gg N$ triples whose coordinate sets are disjoint: each triple conflicts with at most eight other triples, because its three affine coordinates are injective functions of $y$. Their success probability is $1/27$ independently. Chernoff's inequality gives failure probability $\exp(-c_0N)$ for a fixed target in either case, and the same argument applies to $C$.
+
+For completeness, the following open intervals, written in units of $N$, lie in the trimmed sum intervals just described:
+\[
+\begin{array}{c|c}
+I_0+I_2&(1.39,2.04)\\
+I_1+I_2&(2.01,2.74)\\
+I_2+I_2&(2.69,3.98)\\
+I_1+(4N-J)&(3.93,4.49)\setminus\{4\}\\
+I_3+I_2&(4.02,4.98)\\
+I_2+(4N-J)&(4.60,5.48)\\
+I_3+I_3&(5.35,5.99)\\
+I_3+(4N-J)&(5.93,6.70)\setminus\{4\}.
+\end{array}
+\]
+They cover $[1.5,6]\setminus\{4\}$ with overlap. All summands are between $N/24$ and $15N/4$, so their ratio is at most $90<100$. The union bound over $O(N)$ integer targets and the summability of $N_j\exp(-c_0N_j)$ prove the assertion for all sufficiently large stages. The ranges $[3N_j/2,6N_j]$ meet consecutively and cover a tail. This establishes the claimed uniform density of balanced representations without assuming independence of the adaptively selected sets.
+
+\section*{Selecting pairs to prevent minimality}
+At stage $j$, call a pair $\{b,c\}$ eligible if $b\in B_{<j}$, $c\in C_{<j}$, and $\min(b,c)\ge j$. Retain every pair once it becomes eligible. Select a previously unselected eligible pair with smallest maximum (break ties deterministically), and take $G_j=\{b\}$, $H_j=\{c\}$. If none exists use empty sets. Eventually a pair always exists: the representation bound at $N_j-1$ implies that each old color has $\gg N_j$ elements, so even after deleting elements below $j$ it supplies far more than $j$ eligible pairs, while only $j-1$ pairs have been used. Every eligible pair is eventually selected, since only finitely many pairs have bounded maximum.
+
+Consequently each color represents all large nonspecial integers by the block estimate, and each large $N_{j+1}$ by its planted pair. Thus $B,C$ are disjoint bases. Moreover the least element of the selected pair tends to infinity. For any fixed $T$, a pair containing an element at most $T$ must have become eligible by stage $T$, hence has maximum at most $N_T$; only finitely many such pairs exist.
+
+Let $D\subseteq B\cup C$ be any subbasis. The set $D$ must meet every eligible pair whose maximum is sufficiently large, regardless of when it first became eligible. Indeed, when a pair $\{b,c\}$ is selected at stage $i$, its witness satisfies $N_{i+1}>4\max(b,c)$; if $D$ omitted both endpoints, this sufficiently large witness would have no representation, by (1). For a large integer $M$, take the least $j$ with $N_j>100M$. Since $j=O(\log M)<M$, every pair consisting of one element of each color in $[M,100M]$ is eligible at stage $j$. It follows that at least one of the two colors is retained in its entirety by $D$ on this interval.
+
+For any large nonspecial $u$, put $M=\lceil u/101\rceil$. Every balanced representation of $u$ has both summands in $[M,100M]$: the smaller is at least $u/101$ and the larger at most $100u/101\le100M$. Therefore $D$ has $\gg u$ representations of $u$. Removing any fixed $d\in D$ loses at most one of them. For special integers $N_{j+1}$, all summands in (1) tend to infinity (the planted large summands exceed $3N_j$), so removing $d$ eventually loses none. Thus $D\setminus\{d\}$ remains a basis. No subbasis $D$ is minimal.
+
+\section*{Assessment}
+The counterexample is completely reconstructed from the attributed block strategy. The probability estimates use only independent finite-coordinate trials, Chernoff's inequality and a summable union bound. No novel-resolution claim is made.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

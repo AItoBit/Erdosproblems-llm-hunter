@@ -1,0 +1,78 @@
+\section*{Erd\H{o}s Problem 1001}
+
+\paragraph{Statement and scope.}
+Let \(A>0,c>1\), and let \(S(N,A,c)\) be the measure of the \(\alpha\in(0,1)\) for which
+\[
+ \left|\alpha-\frac pq\right|<\frac A{q^2}
+ \quad\text{for some }N\leq q\leq cN,\quad (p,q)=1.
+\]
+The problem asks for the existence and explicit value of its limit for arbitrary fixed \(A,c\). This write-up proves the exact formula
+\[
+ S(N,A,c)=\frac{12A\log c}{\pi^2}
+       +O_{A,c}\!\left(\frac{\log N}{N}\right)
+ \quad\text{if }0<A\leq\frac{c}{1+c^2}.
+\tag{1}
+\]
+It also gives rigorous bounds for all \(A\). The overlapping-interval regime, and therefore the general problem, remains unresolved in this write-up.
+
+\paragraph{When the approximation intervals are disjoint.}
+For two different reduced fractions \(p/q,r/s\),
+\[
+ \left|\frac pq-\frac rs\right|
+ =\frac{|ps-rq|}{qs}\geq\frac1{qs}.
+\]
+If \(N\leq q,s\leq cN\), their ratio lies between \(1/c\) and \(c\), so
+\[
+ A\left(\frac1{q^2}+\frac1{s^2}\right)
+ \leq\frac1{qs}
+ \quad\text{whenever}\quad A\leq\frac1{c+1/c}.
+\]
+The open approximation intervals are consequently disjoint; equality can at most make their endpoints touch.
+
+For \(N>\max(A,1)\), every relevant centre in \((0,1)\) is \(p/q\) with \(1\leq p<q\), and its radius is smaller than its distance from both endpoints. Fractions outside \((0,1)\) cannot contribute for such \(N\): \(0,1\) are not reduced fractions with denominator greater than one, and other fractions are at distance at least \(1/q>A/q^2\) from that interval. Therefore disjointness gives the exact identity
+\[
+ S(N,A,c)=2A\sum_{N\leq q\leq cN}\frac{\varphi(q)}{q^2}.
+\tag{2}
+\]
+
+\paragraph{Evaluate the weighted totient sum.}
+The elementary divisor identity
+\(\varphi(q)/q=\sum_{d\mid q}\mu(d)/d\) yields
+\[
+ \sum_{N\leq q\leq cN}\frac{\varphi(q)}{q^2}
+ =\sum_{d\leq cN}\frac{\mu(d)}{d^2}
+       \sum_{N/d\leq r\leq cN/d}\frac1r.
+\]
+For \(d\leq N\), comparison of a harmonic sum with its integral gives the inner sum as
+\(\log c+O_c(d/N)\), uniformly in \(d\). The total error is
+\[
+ O_c\!\left(\frac1N\sum_{d\leq N}\frac1d\right)
+ =O_c(\log N/N).
+\]
+For \(N<d\leq cN\), the inner sum is bounded by a constant depending only on \(c\), and the total contribution is \(O_c(1/N)\). Finally
+\[
+ \sum_{d\leq N}\frac{\mu(d)}{d^2}
+ =\frac1{\zeta(2)}+O(1/N)=\frac6{\pi^2}+O(1/N).
+\]
+Absolute convergence justifies the Euler-product identity here. Inserting these estimates in (2) proves (1), including the boundary value \(A=c/(1+c^2)\).
+
+\paragraph{Bounds without disjointness.}
+The union bound and the same totient estimate give, for arbitrary fixed \(A>0\),
+\[
+ \limsup_{N\to\infty}S(N,A,c)
+ \leq\min\left(1,\frac{12A\log c}{\pi^2}\right).
+\]
+Monotonicity in \(A\), followed by (1) with
+\(A_0=\min(A,c/(1+c^2))\), gives
+\[
+ \liminf_{N\to\infty}S(N,A,c)
+ \geq\frac{12\log c}{\pi^2}
+          \min\left(A,\frac{c}{1+c^2}\right)>0.
+\]
+These bounds do not prove that the upper and lower limits coincide for larger \(A\). If \(c=1\), at most one denominator occurs and the total interval length is \(O_A(1/N)\); if \(0<c<1\), no denominator occurs. The limit is zero in both cases.
+
+\paragraph{Remaining gap and attribution.}
+The small-\(A\) formula is the classical result of Erd\H{o}s, Sz\"usz, and Tur\'an. The current page \url{https://www.erdosproblems.com/1001}, checked 24 September 2026, records the general existence theorem of Kesten--S\'os and explicit treatments by Boca and by Xiong--Zaharescu. Those general theorems are not being substituted for a proof here. The missing step is a uniform treatment of overlapping intervals sufficient to evaluate the union measure and prove its convergence for every \(A,c\). The proof above establishes the stated regime and bounds only; no novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 45\%}

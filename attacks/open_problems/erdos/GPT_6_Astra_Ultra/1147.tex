@@ -1,0 +1,49 @@
+\section*{Erd\H{o}s Problem 1147: an explicit irrational counterexample}
+
+\paragraph{Statement and scope.}
+Must \(A=\{n\geq2:\|\alpha n^2\|<1/\log n\}\), for irrational \(\alpha>0\), be an asymptotic additive basis of order two?
+No. We construct an irrational \(\alpha\) for which infinitely many integers are absent from \(A+A\). The convention at \(n=1\) does not matter. The known negative resolution is due to Konieczny; see \url{https://www.erdosproblems.com/1147} and \url{https://arxiv.org/abs/1504.02410}. The elementary example below addresses the universal question, without claiming Konieczny's stronger almost-everywhere conclusions.
+
+\paragraph{A parity-preserving approximation.}
+Let
+\[
+ \alpha=\frac12+\sum_{r=1}^{\infty}3^{-r!},
+ \qquad N_j=3^{j!}.
+\]
+Its \(j\)-th truncation is \(a_j/(2N_j)\), where \(a_j\) is odd. For \(j\geq2\) the positive error \(e_j\) satisfies
+\[
+ 0<e_j<2\cdot3^{-(j+1)!},\qquad
+ e_jN_j^2<2\cdot3^{(1-j)j!}\longrightarrow0.
+\]
+The number \(\alpha\) is irrational: if \(\alpha=u/v\), its nonzero difference from \(a_j/(2N_j)\) is at least \(1/(2vN_j)\), contradicting the displayed error bound for large \(j\).
+
+\paragraph{An obstruction uniform over all decompositions.}
+Whenever positive integers \(n,m\) satisfy \(n+m=N_j\),
+\[
+ \alpha n^2-\alpha m^2
+ =\alpha N_j(2n-N_j)
+ =a_j n-\frac{a_jN_j}{2}+e_jN_j(2n-N_j).
+\]
+Both \(a_j,N_j\) are odd and the last term has absolute value at most \(e_jN_j^2\). Thus, uniformly in such decompositions,
+\[
+ \|\alpha n^2-\alpha m^2\|\geq\frac12-e_jN_j^2.
+\]
+Choose \(K\) so that \(1/\log t<1/8\) for \(t\geq K\).
+If both summands are at least \(K\) and belong to \(A\), the triangle inequality for distance modulo one gives
+\(\|\alpha n^2-\alpha m^2\|<1/4\), contradicting the preceding bound for large \(j\).
+
+It remains to exclude a small summand. For each fixed \(1\leq s<K\), the identity above gives
+\[
+ \alpha(N_j-s)^2\equiv \alpha s^2+\tfrac12+o(1)\pmod1.
+\]
+Irrationality implies \(\delta_s=\|\alpha s^2+1/2\|>0\).
+There are only finitely many such \(s\), so for all sufficiently large \(j\),
+\(\|\alpha(N_j-s)^2\|>\delta_s/2>1/\log(N_j-s)\).
+Thus the large companion is not in \(A\).
+Every possible decomposition has now been excluded, proving \(N_j\notin A+A\) for all sufficiently large \(j\).
+
+The same proof works for any prescribed positive threshold \(\varepsilon(n)\to0\) in place of \(1/\log n\), and tolerates any finite changes to \(A\). No external Diophantine approximation theorem is needed.
+
+\paragraph{Completion estimate.}
+An explicit irrational counterexample and all summand-size cases are proved.
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,93 @@
+\section*{Erd\H{o}s Problem 800: a linear Ramsey bound for subdivided graphs}
+
+\paragraph{Statement and claim.}
+If an \(n\)-vertex graph \(G\) has no adjacent pair of vertices
+both of degree at least three, then \(R(G)\leq12n\).
+We reconstruct Alon's proof:
+\url{https://www.cs.tau.ac.il/~nogaa/PDFS/rams.pdf},
+\emph{Subdivided graphs have linear Ramsey numbers},
+Proposition 1.3. See \url{https://www.erdosproblems.com/800}.
+The external input is the following theorem of
+Sidorenko and, independently, Goddard--Kleitman:
+every graph on \(2e+1\) vertices with independence number
+at most two contains every \(e\)-edge graph without
+isolated vertices as a subgraph.
+It is stated as Theorem 2.1 in the cited primary source.
+
+\paragraph{Separating the high-degree vertices.}
+The vertices of degree at least three are independent.
+Extend them to an inclusion-maximal independent set \(W\).
+Every vertex outside \(W\) has a neighbour in \(W\) and
+total degree at most two. Consequently each component
+of \(G-W\) is either an isolated vertex or one edge.
+An isolated vertex has one or two neighbours in \(W\);
+each endpoint of a component edge has exactly one neighbour
+in \(W\). The two neighbours may coincide.
+
+Form a simple auxiliary graph \(H\) on \(W\):
+join different \(w,w'\) whenever a component of \(G-W\)
+provides a path between them with one or two internal vertices.
+Distinct components have disjoint internal vertices,
+so \(e(H)\leq n-|W|\leq n\).
+Several components may provide the same auxiliary edge;
+we keep only one copy in \(H\).
+
+\paragraph{Finding a compatible image of \(W\).}
+Consider any red-blue colouring of \(K_{12n}\).
+Call a vertex red if its red degree is at least \(6n\),
+and blue otherwise; a blue vertex has blue degree at least
+\(6n\), since its red degree is at most \(6n-1\).
+After interchanging colours, choose \(6n\) red vertices
+and call their set \(U\).
+On \(U\), form a graph \(T\) joining pairs with at least
+\(2n\) common red neighbours in the original complete graph.
+
+There cannot be three mutually nonadjacent vertices
+\(u_1,u_2,u_3\) in \(T\). Otherwise their red neighbourhoods
+would have union of size at least
+\[
+ 3(6n)-3(2n-1)>12n,
+\]
+by the elementary lower inclusion--exclusion bound.
+Thus \(\alpha(T)\leq2\).
+Apply the external theorem to the nonisolated part of \(H\),
+which has at most \(n\) edges.
+There is ample room in \(T\) for its \(2e(H)+1\) required
+vertices, and afterwards for all isolated vertices of \(H\).
+We obtain distinct images \(w''\in U\) for all \(w\in W\),
+such that every auxiliary edge has endpoints with
+at least \(2n\) common red neighbours.
+
+\paragraph{Embedding each remaining component.}
+Process the components of \(G-W\) one by one.
+Fewer than \(n\) vertices have been used at each stage.
+An isolated component vertex with one neighbour \(w\in W\)
+can be placed at any unused red neighbour of \(w''\);
+there are at least \(6n\) before removing used vertices.
+With two neighbours in \(W\), use an unused common red
+neighbour, from a set of size at least \(2n\).
+
+For an edge component \(uv\), let its neighbours in \(W\)
+be \(w,w'\).
+If \(w\ne w'\), more than \(n\) unused common red neighbours
+of \(w'',w'''\) remain.
+If this set has a red edge, use its ends for \(u,v\).
+If it has no red edge, it contains a blue \(K_n\),
+and hence a blue copy of \(G\).
+If \(w=w'\), use instead at least \(n\) unused red neighbours
+of \(w''\), with the same red-edge-or-blue-clique conclusion.
+The additional red adjacencies possibly created by this
+procedure are harmless: Ramsey copies are subgraphs,
+not induced subgraphs.
+
+\paragraph{Conclusion.}
+Either the procedure finishes a red copy of \(G\), or it
+finds a blue \(K_n\) and therefore a blue copy of \(G\).
+Thus every colouring of \(K_{12n}\) contains the required
+monochromatic graph. Isolated vertices of \(G\) are already
+included in \(W\), so no connectedness assumption was used.
+This proves the full assertion relative to the stated
+triangle-versus-graph Ramsey theorem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,42 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 867: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and result}
+A consecutive-sum-free set $A=\{a_1<\cdots<a_t\}\subseteq[1,N]$ has no sum $a_i+\cdots+a_j\in A$ with $i<j$. The length-at-least-two qualification is essential. The proposed bound $|A|\le N/2+O(1)$ is false. We reconstruct Freud's $19/36$ construction with a bounded number of boundary deletions, rather than pursue the stronger subsequent $13/24$ result.
+
+Sources: R. Freud, \emph{Adding numbers---on a problem of P. Erd\H{o}s}, James Cook Mathematical Notes (1993), pp. 6199--6202, in \url{https://webhomes.maths.ed.ac.uk/cook/iss_no60.PDF}; and the explicit Freud construction formalized by Pietro Monticone and Aristotle at \url{https://gist.github.com/pitmonticone/5c1b173e3140f869d7425d8f1003ac70}. The elementary verification below is independent of running that formalization.
+
+\section*{Construction and verification}
+Let $y\ge1$, $N=144y$, and form three lower blocks
+\[
+ L_1=[32y,36y],\quad L_2=\{n\in[48y,54y]:3\nmid n\},\quad
+ L_3=\{n\in[64y,72y]:2\mid n\}.
+\]
+Initially take the upper block $U=[72y+1,144y]$. From $U$ remove all multiples of $3$ in $[96y,108y]$ and all numbers congruent to $2\pmod4$ in $[128y,144y]$. Also remove the sums of all runs of length two, three or four in the ordered set $L_1\cup L_2\cup L_3$ which cross a boundary between lower blocks. There are at most twelve such sums: for either boundary, a run of length $\ell$ has at most $\ell-1$ possible starting positions, and $1+2+3=6$. Define $A$ to be the three lower blocks together with the remaining upper block.
+
+We verify every possible run. Five or more terms have sum at least $5(32y)>N$. A run wholly in $L_1$ of length two has odd sum strictly between $64y$ and $72y$, hence misses $L_3$ and all other blocks. Length three has sum divisible by $3$ in $[96y,108y]$. Length four has sum congruent to $2\pmod4$ in $[128y,144y]$. These latter sums were removed.
+
+Two consecutive terms of $L_2$ have residues $1,2$ or $2,1$ modulo $3$, so their sum is a removed multiple of $3$ in $[96y,108y]$. Three terms already have sum greater than $144y$, because each is greater than $48y$. In $L_3$, two consecutive even terms sum to $2\pmod4$ in the second deleted interval; three exceed $N$. A run meeting two lower blocks and having sum at most $N$ has length at most four and was deleted by definition. Its sum is in $U$: even the two terms at the first boundary sum to $36y+(48y+1)>72y$.
+
+A run containing an upper-block element cannot cause a problem. If it lies in that block, its first two terms already sum above $N$. If it crosses into that block, it contains the last term $72y$ of $L_3$ and an integer at least $72y+1$, again exceeding $N$. Deleting upper elements cannot alter the order or adjacency of any lower-block terms. This also checks that the deletions do not create new forbidden runs.
+
+The lower block sizes are $4y+1,4y,4y+1$ and $|U|=72y$. The two periodic deletion sets have sizes $4y+1$ and $4y$, and there are at most twelve additional deletions. Therefore
+\[
+ |A|\ge76y-11=\frac{19}{36}N-11,
+ \qquad |A|-N/2\ge4y-11\longrightarrow\infty.
+\]
+This alone disproves the requested uniform $O(1)$ bound. For every sufficiently large $N$, using $y=\lfloor N/144\rfloor$ also gives $|A|\ge19N/36-O(1)$.
+
+\section*{Assessment}
+The explicit counterexample, its cardinality, and all possible consecutive runs are proved. This is a reconstruction of the classical negative resolution, with simplified boundary bookkeeping, not a claim of a new density record.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

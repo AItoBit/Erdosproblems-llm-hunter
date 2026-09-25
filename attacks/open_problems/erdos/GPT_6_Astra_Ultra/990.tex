@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 990: a sparse polynomial counterexample}
+\subsection*{Statement and scope}
+For a polynomial $f(z)=\sum_{j=0}^{d}a_jz^j$ with $a_0a_d\ne0$, let $\nu(f)$ be its number of nonzero coefficients and
+\[
+ M(f)=\frac{\sum_j|a_j|}{\sqrt{|a_0a_d|}}.
+\]
+The proposed angular discrepancy bound $O(\sqrt{\nu(f)\log M(f)})$ is false. We reconstruct the complete counterexample in Section 5 of Alexeev--Putterman--Sawhney--Sellke--Valiant, arXiv:2604.06609, which credits an internal OpenAI model. No novelty is claimed.
+
+\subsection*{An interpolation identity}
+For distinct real numbers $\lambda_0<\cdots<\lambda_{s-1}$, put
+$P_j=\prod_{\ell\ne j}(\lambda_j-\lambda_\ell)$ and $\Delta_j=|P_j|$.
+Comparing the coefficient of $X^{s-1}$ in the Lagrange interpolation formula for $X^m$ gives
+\[
+ \sum_{j=0}^{s-1}\frac{\lambda_j^m}{P_j}
+ =
+ \begin{cases}0,&0\le m<s-1,\\1,&m=s-1.\end{cases}
+ \tag{1}
+\]
+This identity will prescribe the multiplicity exactly.
+
+\subsection*{Exponents and coefficients}
+Fix $N\ge1$ and let an integer $K\to\infty$. Set $s=N+2$, $d=K^N$, and choose the $s$ exponents
+\[
+ m_0=0,\quad m_i=K^{i-1}\ (1\le i\le N),\quad m_{N+1}=d,
+ \qquad \lambda_j=m_j/d.
+\]
+Define
+\[
+ \tau=-\log(2\Delta_{N+1}/\Delta_0),\qquad
+ f_{N,K}(z)=\sum_{j=0}^{N+1}
+ \frac{(-1)^{N+1-j}\Delta_0}{\Delta_j}e^{-\lambda_j\tau}z^{m_j}.
+ \tag{2}
+\]
+Every coefficient is nonzero, the constant coefficient has modulus $1$, and the leading coefficient is exactly $2$.
+The exponential polynomial $F(u)=f_{N,K}(e^{u/d})$ satisfies, by (1),
+$F^{(m)}(\tau)=0$ for $0\le m\le N$ and $F^{(N+1)}(\tau)=\Delta_0\ne0$.
+Because $z=e^{u/d}$ is locally invertible at $u=\tau$, the positive number
+$z_0=e^{\tau/d}$ is a root of multiplicity exactly $N+1$.
+
+\subsection*{The coefficient height stays below three}
+Put $\varepsilon=K^{-1}$ and $x_i=\lambda_i=\varepsilon^{N+1-i}$ for $1\le i\le N$.
+For fixed $N$,
+\[
+ \Delta_0=\prod_{i=1}^{N}x_i=\varepsilon^{N(N+1)/2},
+ \qquad \Delta_{N+1}=\prod_{i=1}^{N}(1-x_i)=1+O_N(\varepsilon).
+\]
+Factoring the differences $x_i-x_j$ according to $j<i$ and $j>i$ gives
+\[
+ \Delta_i=x_i^i\prod_{j>i}x_j\,(1+O_N(\varepsilon)),\qquad
+ \frac{\Delta_0}{\Delta_i}
+ =\varepsilon^{i(i-1)/2}(1+O_N(\varepsilon)).
+\]
+Also $|\tau|=O_N(|\log\varepsilon|)$ and $x_i\le\varepsilon$, so
+$e^{-x_i\tau}=1+o_N(1)$ for every middle coefficient.
+The coefficient for $m_1=1$ consequently has modulus tending to $1$, while each middle coefficient with $i\ge2$ has modulus tending to zero. Including the two endpoints,
+\[
+ \sum_j|a_j|\longrightarrow 1+1+2=4,\qquad
+ M(f_{N,K})\longrightarrow 2\sqrt2<3.
+\]
+Choose $K=K(N)$ sufficiently large that $M(f_{N,K})<3$; no uniform choice of $K$ in $N$ is needed.
+
+\subsection*{Angular discrepancy}
+Take arguments in $[0,2\pi)$ and the interval $I_N=[0,\pi/d)$.
+All $N+1$ copies of the positive root lie in this interval, while the uniform prediction is $d|I_N|/(2\pi)=1/2$. Thus the discrepancy is at least $N+1/2$. Were the proposed inequality true with an absolute constant $C$, it would imply
+\[
+ N+\tfrac12\le C\sqrt{(N+2)\log3}
+\]
+for every $N$, a contradiction.
+
+\subsection*{Conclusion and verification scope}
+The conjecture is disproved by an explicit family, including a proof of exact root multiplicity and bounded height. Taking a positive-length interval subtracts its expected count; the argument does not incorrectly claim discrepancy at least the full multiplicity. Sources: \url{https://www.erdosproblems.com/990} and \url{https://arxiv.org/abs/2604.06609}. No local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

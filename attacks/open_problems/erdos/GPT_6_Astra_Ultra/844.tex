@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 844: products which are never squarefree}
+\subsection*{1. Statement and precise convention}
+Let $A\subseteq\{1,\ldots,N\}$ satisfy that $ab$ is not squarefree for every $a,b\in A$, including $a=b$. We prove that the maximum size is attained by all even integers and all odd nonsquarefree integers. We reconstruct Weisenberg's deduction from Chv\'atal's theorem for hereditary compressed families, stating that external combinatorial input precisely. We also derive the extremal density.
+\subsection*{2. The external set-family theorem}
+The needed Chv\'atal theorem is the following. Let $\mathcal F\subseteq2^{[s]}$ satisfy: if $U\in\mathcal F$ and there is an injection $f:V\to U$ with $j\le f(j)$ for every $j\in V$, then $V\in\mathcal F$. Every intersecting subfamily $\mathcal I\subseteq\mathcal F$ then satisfies
+\[
+ |\mathcal I|\le|\{U\in\mathcal F:1\in U\}|.             \tag{1}
+\]
+Intersecting includes the requirement that each member is nonempty. This theorem combines downward closure with compression toward smaller indices. Its proof is external here; its exact formulation is Proposition 3 in the Alexeev--Mixon--Sawin paper.
+\subsection*{3. Translating the arithmetic conditions}
+Any nonsquarefree integer may be adjoined to an admissible set: a prime square dividing it also divides its product with every other integer. Thus an extremal set contains all nonsquarefree integers. For two squarefree integers $a,b$, their product is nonsquarefree precisely when they have a common prime divisor. Also $1$ cannot occur, because $1\cdot1$ is squarefree.
+Assume now $N\ge2$. List the primes up to $N$ as $p_1=2<p_2<\cdots<p_s$, and set
+\[
+ \mathcal F=\left\{U\subseteq[s]:\prod_{i\in U}p_i\le N\right\}.
+\]
+It satisfies the hypothesis of (1): for the stipulated injection,
+\[
+ \prod_{j\in V}p_j\le\prod_{j\in V}p_{f(j)}\le\prod_{i\in U}p_i\le N.
+\]
+Unique prime factorization identifies the squarefree members of $A$ with an intersecting subfamily of $\mathcal F$. The star on index one in (1) corresponds exactly to even squarefree integers at most $N$. Consequently
+\[
+ |A|\le\#\{n\le N:n\text{ is nonsquarefree}\}
+       +\#\{n\le N:n\text{ is even and squarefree}\}.    \tag{2}
+\]
+The union on the right is admissible: two even squarefree numbers have product divisible by four, and any product involving a nonsquarefree number has a square factor. It is precisely the set of all even integers together with all odd nonsquarefree integers. This proves sharpness, without claiming uniqueness of the maximizing set. For $N=1$ the maximum is zero under the stated diagonal convention, also matching the proposed construction.
+\subsection*{4. The resulting extremal density}
+Let $Q_o(N)$ count odd squarefree integers up to $N$. The exact maximum is $N-Q_o(N)$. Using the M\"obius identity $1_{\mathrm{squarefree}}(n)=\sum_{d^2\mid n}\mu(d)$,
+\[
+ Q_o(N)=\sum_{\substack{d\le\sqrt N\\d\text{ odd}}}\mu(d)
+        \#\{m\le N/d^2:m\text{ odd}\}
+ =\frac N2\sum_{\substack{d\le\sqrt N\\d\text{ odd}}}\frac{\mu(d)}{d^2}
+   +O(\sqrt N).
+\]
+The tail of the absolutely convergent series is $O(N^{-1/2})$. Its Euler product is
+\[
+ \prod_{p>2}(1-p^{-2})=\frac{1/\zeta(2)}{1-2^{-2}}=\frac8{\pi^2}.
+\]
+Therefore
+\[
+ Q_o(N)=\frac4{\pi^2}N+O(\sqrt N),\qquad
+ \max|A|=\left(1-\frac4{\pi^2}\right)N+O(\sqrt N).
+\]
+This density computation is independent of any unverified greedy clique-cover procedure.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/844}; V. Chv\'atal, \emph{Intersecting families of edges in hypergraphs having the hereditary property} (1974), 61--66; B. Alexeev, D. G. Mixon and W. Sawin, \emph{The independence and clique cover numbers of the squarefree graph}, Section 1.1, \url{https://arxiv.org/abs/2507.01928}. The reduction through (1) is attributed there to Desmond Weisenberg. Besides (1), the density calculation uses the standard identity $\zeta(2)=\pi^2/6$.
+\textbf{SOLVED relative to the stated Chv\'atal theorem.} The arithmetic-to-set-family correspondence, all compression hypotheses, the extremal construction, the small diagonal case and the density calculation are proved. This is a reconstruction of a known resolution and makes no novelty or local formal-verification claim.
+\textbf{Completion rate estimate: 100\%.}

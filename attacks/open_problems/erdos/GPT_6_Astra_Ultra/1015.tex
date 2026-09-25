@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 1015}
+
+\paragraph{Statement, interpretation, and answer.}
+We seek vertex-disjoint monochromatic \(K_t\)'s in a red-blue colouring of \(K_n\), with as few uncovered vertices as possible. The phrase \emph{partition the edges into vertex disjoint copies} must be read as this vertex-packing question; edges between different copies are not being partitioned. For fixed \(t\geq2\), let \(F(n,t)\) be the largest, over all colourings, of the minimum number of uncovered vertices. Put \(R=R(t,t-1)\), and let \(\operatorname{rem}(a,t)\in\{0,\ldots,t-1\}\) denote the residue of \(a\) modulo \(t\). For sufficiently large \(n\),
+\[
+ \boxed{F(n,t)=R-1+\operatorname{rem}(n-R+1,t).}
+\tag{1}
+\]
+We reconstruct Burr--Erd\H{o}s--Spencer's proof. Their original Theorem 6 has the \(-1\) in (1). The problem page's displayed \(R+x\), with \(n+1\equiv R+x\pmod t\), omits that \(-1\); any actual leftover count must instead be congruent to \(n\pmod t\).
+
+\paragraph{A colouring attaining the lower bound.}
+Take a set \(B\) of \(R-1\) vertices with a colouring containing no red \(K_t\) and no blue \(K_{t-1}\), which exists by the definition of \(R\). Let all remaining vertices form \(A\). Colour all edges within \(A\) red and all edges between \(A,B\) blue.
+
+No monochromatic \(K_t\) meets \(B\). A red one cannot cross between the parts or lie in \(B\). A blue one contains at most one vertex of \(A\), so would require at least \(t-1\) vertices of \(B\) forming a blue clique. Thus only \(t\)-sets within \(A\) can be removed, and the optimum leftover count is exactly
+\[
+ |B|+\operatorname{rem}(|A|,t)=R-1+\operatorname{rem}(n-R+1,t).
+\]
+
+\paragraph{Keep a monochromatic reservoir.}
+Write \(Q=R(t,t)\) and take
+\[
+ u=(t-1)(Q-R)+(t-1)(t-2)+1.
+\]
+For \(n\geq R(u,u)\), Ramsey's theorem supplies a monochromatic clique \(C\) of order \(u\); exchange colour names so that it is red. Outside \(C\), greedily remove disjoint monochromatic \(K_t\)'s until the remaining set \(D\) contains neither colour of \(K_t\). In particular \(|D|\leq Q-1\).
+
+As long as \(|D|\geq R\), it contains a blue \(K_{t-1}\), say \(E\), because it has no red \(K_t\). If some \(x\in E\) has at least \(t-1\) red neighbours in \(C\), remove \(x\) together with \(t-1\) such neighbours as a red \(K_t\). Otherwise each \(x\in E\) has at most \(t-2\) red neighbours in \(C\). At most \((t-1)(t-2)\) vertices of \(C\) have any red edge to \(E\). Provided \(|C|>(t-1)(t-2)\), there is a vertex joined in blue to every vertex of \(E\); remove this vertex and \(E\) as a blue \(K_t\).
+
+Every step removes at least one vertex from \(D\) and at most \(t-1\) from \(C\). There are at most \(Q-R\) steps before \(|D|\leq R-1\). The initial value of \(u\) ensures that the reservoir remains larger than \((t-1)(t-2)\) whenever the procedure needs another step. Throughout, the surviving \(C\) is still a red clique, and the surviving \(D\) still has no monochromatic \(K_t\).
+
+\paragraph{The residue completes the upper bound.}
+At the end let \(d=|D|\leq R-1\). Remove as many red \(K_t\)'s from the remaining \(C\) as possible. Since every removal so far had exactly \(t\) vertices, the final leftover count is
+\[
+ d+\operatorname{rem}(n-d,t).
+\]
+As a function of the integer \(d\), this equals
+\(n-t\lfloor(n-d)/t\rfloor\) and is nondecreasing. It is therefore at most its value at \(d=R-1\), proving (1).
+
+\paragraph{Consequences for the proposed growth rates.}
+If \(f(t)\) means the smallest uniform bound valid for every sufficiently large \(n\), (1) gives
+\[
+ f(t)=R(t,t-1)+t-2.
+\tag{2}
+\]
+Every residue class of \(n\) occurs arbitrarily far out, so the maximum residue \(t-1\) is required.
+
+For completeness, the ordinary first-moment argument makes (2) exponential. Set \(M=\lfloor2^{(t-2)/2}\rfloor\), and colour the edges of \(K_M\) independently and fairly. For \(t\geq3\), the expected number of red \(K_t\)'s plus blue \(K_{t-1}\)'s is at most
+\[
+ \frac{M^t}{t!}2^{-\binom t2}
+ +\frac{M^{t-1}}{(t-1)!}2^{-\binom{t-1}2}
+ \leq\frac{2^{-t/2}}{t!}+\frac1{(t-1)!}<1.
+\]
+Hence \(R(t,t-1)>M\), and
+\(\liminf_{t\to\infty}f(t)^{1/t}\geq\sqrt2\). Both suggested assertions, \(f(t)^{1/t}\to1\) and \(f(t)=O(t)\), are false. The standard Ramsey recurrence gives
+\(R(t,t-1)\leq\binom{2t-3}{t-1}<4^t\), so the scale is indeed exponential. Equation (2) does not purport to evaluate the numerical Ramsey numbers whose exact values are unknown.
+
+\paragraph{Attribution and assessment.}
+The exact formula and reservoir argument are due to S. A. Burr, P. Erd\H{o}s, and J. H. Spencer, \emph{Ramsey theorems for multiple copies of graphs}, Section 5, Theorem 6, \url{https://users.renyi.hu/~p_erdos/1975-35.pdf}. The current problem page is \url{https://www.erdosproblems.com/1015}, checked 24 September 2026. The proof above includes the bookkeeping and corrects the displayed residue offset using the original paper. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

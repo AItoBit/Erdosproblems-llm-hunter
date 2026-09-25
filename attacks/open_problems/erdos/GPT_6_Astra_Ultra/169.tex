@@ -1,0 +1,53 @@
+\section*{Erd\H{o}s Problem 169: reciprocal sums of progression-free sets}
+\subsection*{Statement and outcome}
+For $k\ge3$, let $f(k)$ be the supremum of $\sum_{n\in A}1/n$ over subsets of the positive integers with no nonconstant $k$-term arithmetic progression. Let $W(k)$ be the two-colour van der Waerden number. The problem asks for estimates and whether $f(k)/\log W(k)\to\infty$.
+
+We prove the basic Ramsey lower bound, construct an explicit infinite admissible set, and establish a uniform vanishing reciprocal tail for $k=3$ using one explicitly external quantitative Roth theorem. The comparison as $k\to\infty$ remains unresolved in this attempt.
+
+\subsection*{Finite truncations and the Ramsey comparison}
+Every nonnegative reciprocal sum is the supremum of its finite truncations. Consequently
+$f(k)=\sup_N F_k(N)$, where $F_k(N)$ maximizes the weighted sum on admissible subsets of $[1,N]$. Also $f(k)\le f(k+1)$, since a $(k+1)$-term progression contains a $k$-term one.
+
+A colouring of $[1,W(k)-1]$ with neither colour containing a $k$-term progression partitions $H_{W(k)-1}$ into two admissible sums. Thus
+\[
+ f(k)\ge \frac12H_{W(k)-1}\ge\frac12\log W(k).
+ \tag{1}
+\]
+The last step follows by comparing each $1/j$ with
+$\int_j^{j+1}dt/t$. Independently, $f(k)\ge H_{k-1}$.
+These elementary arguments also appeared in the earlier local attempt and have been checked.
+
+\subsection*{A digit construction with a rigorous tail}
+Let $B$ consist of the nonnegative integers whose ternary digits all lie in $\{0,1\}$, and put $A=1+B$. Suppose $x+z=2y$ with $x,y,z\in B$. Modulo three, the allowed digits force the last digits of all three numbers to agree: unequal endpoint digits give residue one, which $2y$ cannot have. Subtract the common digit and divide by three. Repetition through all digits gives $x=y=z$. Hence $B$, and its translate $A$, are three-term-free.
+
+For $m\ge1$, let $B_m$ restrict to the first $m$ ternary places. Then
+\[
+ \sum_{b\in B_m}\frac1{b+1}
+ \le \sum_{a\in A}\frac1a
+ \le \sum_{b\in B_m}\frac1{b+1}
+       +3(2/3)^m.
+ \tag{2}
+\]
+Indeed, numbers of $B$ whose highest nonzero place is $j\ge m$ number $2^j$ and are at least $3^j$. Summing their reciprocal bounds gives the geometric tail. This is an explicit, effectively evaluated lower construction for every $f(k)$, $k\ge3$, not a claim to the known numerical records.
+
+\subsection*{Uniform reciprocal tails when $k=3$}
+We now use the following external input, not proved here: Bloom--Sisask, Theorem 1.1, gives absolute $c,C>0$ such that every three-term-free subset of an interval of length $X\ge3$ has size at most
+$CX/(\log X)^{1+c}$. Translation preserves the hypothesis.
+
+For any three-term-free $A$ and integer $M\ge3$, partition its elements at least $M$ into the intervals
+$[2^jM,2^{j+1}M)$, $j\ge0$. Each contributes at most
+$C/(\log M+j\log2)^{1+c}$ to the reciprocal sum. Comparing this decreasing series with an integral gives
+\[
+ \sup_{A\text{ three-term-free}}\ 
+ \sum_{\substack{a\in A\\a\ge M}}\frac1a
+ \le C\left((\log M)^{-1-c}
+       +\frac{(\log M)^{-c}}{c\log2}\right).
+ \tag{3}
+\]
+In particular $f(3)<\infty$, and the sufficiently-large-minimum question recorded on the problem page has an affirmative answer for $k=3$. Moreover
+$0\le f(3)-F_3(M-1)$ is bounded by the right side of (3). This uniform statement supplies a genuine truncation error; convergence separately for each admissible set would not by itself give it.
+
+\subsection*{Assessment and attribution}
+Source: \url{https://www.erdosproblems.com/169}. External theorem: T. F. Bloom and O. Sisask, \emph{Breaking the logarithmic barrier in Roth's theorem on arithmetic progressions}, \url{https://arxiv.org/abs/2007.03528}. The old \texttt{gpt\_pro\_5.2/169.tex} correctly derived (1), but treated even finiteness for $k=3$ as unavailable; (3) records precisely what follows from the primary theorem. Neither this input nor the digit construction addresses general $k$ or improves the factor $1/2$ in (1) uniformly. No novelty claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 35\%}

@@ -1,0 +1,103 @@
+\section*{Erd\H{o}s Problem \#914: an equitable-colouring proof}
+\subsection*{Statement and plan}
+A graph on \(rm\) vertices with minimum degree at least \(m(r-1)\) has \(m\) vertex-disjoint copies of \(K_r\).
+Taking complements reduces this to the following assertion: if \(F\) has \(cs\) vertices and maximum degree at most \(c-1\), its vertices can be partitioned into \(c\) independent sets of size \(s\). We reconstruct the discharging proof of Kierstead and Kostochka, including the recolouring step.
+
+\subsection*{Nearly equal classes and moves}
+A nearly equitable proper colouring has one class \(V_-\) of size \(s-1\), one class \(V_+\) of size \(s+1\), and all others of size \(s\). Draw an arc from class \(V\) to a different class \(W\) if some vertex of \(V\) has no neighbour in \(W\); that vertex is movable to \(W\).
+If there is a directed path from \(V_+\) to \(V_-\), move one witnessing vertex along each arc, processing backwards along a simple path. This fills the small class and empties the surplus, preserving properness.
+
+Let \(\mathcal A\) be the classes from which \(V_-\) is reachable, and let \(A\) be their union. Write
+\[
+a=|\mathcal A|,\qquad q=c-a,\qquad B=V(F)\setminus A.
+\]
+Suppose \(V_+\) is not accessible. Then
+\[
+|A|=as-1,\quad |B|=qs+1,\quad
+d_A(y)\geq a,\quad d_B(y)\leq q-1\quad(y\in B). \tag{1}
+\]
+Otherwise \(y\) could move into an accessible class.
+Also \(a\geq2\): if \(a=1\), the lower bound
+\(e(A,B)\geq|B|=(c-1)s+1\) contradicts
+\(e(A,B)\leq(c-1)(s-1)\).
+
+\subsection*{A terminal block of accessible classes}
+Call an accessible class \(W\ne V_-\) terminal if every other accessible class still reaches \(V_-\) after \(W\) is removed from the auxiliary digraph.
+For any nonterminal \(U\), including \(U=V_-\), let \(T_U\) be the nonempty set of other accessible classes that cannot reach \(V_-\) without passing through \(U\).
+Choose \(U\) so that \(T_U\) is inclusion-minimal, and put
+\(\mathcal T=T_U\), \(t=|\mathcal T|\).
+
+Every class in \(\mathcal T\) is terminal. Indeed, if \(W\in T_U\) were nonterminal, every class in \(T_W\) would also be in \(T_U\), while \(W\notin T_W\); a simple path from \(U\) to the root avoids \(W\), so \(U\notin T_W\) as well. This gives the strictly smaller nonempty set \(T_W\), a contradiction.
+Moreover, no class in \(\mathcal T\) has an arc to an accessible class outside \(\mathcal T\cup\{U\}\): such an arc followed by a path avoiding \(U\) would contradict the definition of \(T_U\).
+Consequently, for \(x\) in a class of \(\mathcal T\),
+\[
+d_A(x)\geq a-t-1,\qquad d_B(x)\leq q+t. \tag{2}
+\]
+Every class in \(\mathcal T\) has size \(s\).
+
+\subsection*{Solo neighbours and the discharging lemma}
+An edge \(zy\), with \(z\in W\in\mathcal T\) and \(y\in B\), is solo if \(z\) is the only neighbour of \(y\) in \(W\). Write \(S_z\subseteq B\) for the solo neighbours of \(z\), and \(S_y\subseteq A\) for the solo neighbours of \(y\) in classes of \(\mathcal T\).
+A vertex \(y\in B\) already has at least one neighbour in each accessible class. Its extra neighbours in \(A\) number at most \(q-1-d_B(y)\). Hence
+\[
+|S_y|\geq t-q+1+d_B(y). \tag{3}
+\]
+
+We claim that some solo vertex \(z\in W\in\mathcal T\) either is movable to another accessible class, or has two nonadjacent vertices in \(S_z\).
+
+First suppose, for one \(W\in\mathcal T\), that none of its solo vertices is movable in \(A\). Let \(S\) be those solo vertices and \(D=W\setminus S\).
+A vertex of \(S\) has a neighbour in every other accessible class, so \(d_B(z)\leq q\). Thus \(|N_B(S)|\leq q|S|\).
+Each vertex of \(B\setminus N_B(S)\) has at least two neighbours in \(W\), while each vertex of \(N_B(S)\) has at least one. Using (2), we obtain
+\[
+2|B|-q|S|\leq e(W,B)
+\leq q|S|+(q+t)|D|=qs+t|D|.
+\]
+Since \(|B|=qs+1\) and \(|S|=s-|D|\), this says
+\[
+q|D|+2\leq t|D|.
+\]
+In particular \(D\ne\varnothing\) and \(t\geq q+1\).
+
+If the claim were false, this conclusion would hold, every \(y\in B\) would have \(S_y\ne\varnothing\) by (3), and every \(S_z\) would be a clique. Give a solo edge \(zy\) weight \(q/|S_z|\), and other edges weight zero.
+The total weight leaving the \(ts\) vertices in \(\mathcal T\) is at most \(qts\).
+
+For \(y\in B\), let \(c_y=\max_{z\in S_y}|S_z|\). Since \(S_z\) is a clique containing \(y\), we have \(c_y-1\leq d_B(y)\leq q-1\). Thus \(1\leq c_y\leq q\), and (3) gives incoming weight at least
+\[
+|S_y|\frac q{c_y}
+\geq(t-q+c_y)\frac q{c_y}
+\geq t,
+\]
+where the last inequality uses \(t\geq q+1\).
+The total weight is therefore at least \(t|B|=t(qs+1)>qts\), a contradiction. The claim is proved.
+
+\subsection*{Completing a nearly equitable colouring}
+We prove the equitable-colouring assertion by induction on the number of edges, simultaneously for all numbers of colours. The empty graph is immediate. Delete one edge \(uv\), and equitably colour the result by induction. If \(u,v\) have different colours, we are done. Otherwise \(u\) has at most \(c-2\) neighbours in the other \(c-1\) classes, so moving \(u\) into a class with no neighbour produces a nearly equitable proper colouring.
+
+For such a colouring, if \(V_+\) is accessible, use the path moves. Otherwise choose \(W,z\) from the discharging lemma, and \(y_1\in S_z\).
+The graph on \(B^-=B\setminus\{y_1\}\) has \(qs\) vertices and maximum degree at most \(q-1\), by (1). It has fewer edges than \(F\), since edges between \(A\) and \(B\) exist. The outer induction gives an equitable \(q\)-colouring \(g\) of \(B^-\).
+
+If \(z\) is movable to an accessible class \(X\ne W\), move \(z\) to \(X\) and \(y_1\) into \(W\setminus\{z\}\). This is proper because \(y_1\) had just the neighbour \(z\) in \(W\). Within \(A\cup\{y_1\}\), either the classes are already equal, or \(X\) is large and \(V_-\) is small.
+Since \(W\) is terminal, \(X\) has a path to \(V_-\) avoiding \(W\); its original witnesses remain available. The path moves balance these \(a\) classes. Together with \(g\), they give the desired colouring.
+
+Otherwise \(z\) is not movable within \(A\), and choose nonadjacent \(y_1,y_2\in S_z\). The vertex \(z\) has at least \(a-1\) neighbours in \(A\), and also the neighbour \(y_1\). Thus it has at most \(q-1\) neighbours in \(B^-\), and can be inserted into some one of the \(q\) classes of \(g\).
+Replace \(z\) by \(y_1\) in \(W\). This yields another nearly equitable colouring: the \(a\) classes on \(A\setminus\{z\}\cup\{y_1\}\) retain the same deficit, and one of the \(q\) other classes has the surplus.
+
+All the former \(a\) classes remain accessible. Those other than \(W\) use paths avoiding \(W\), by terminality. A path from \(W\) itself still starts with a witnessing vertex different from \(z\), since \(z\) was not movable to any other accessible class. Finally \(y_2\) has no neighbour in the modified class \(W\): its unique old neighbour was \(z\), and \(y_1y_2\) is not an edge. The new class containing \(y_2\) is therefore accessible as well.
+The number \(q\) of inaccessible classes strictly decreases.
+
+Repeating this last step terminates, or formally applying a secondary induction on \(q\), proves the equitable-colouring assertion.
+
+\subsection*{Returning to clique factors and checking sharpness}
+For the original graph \(G\),
+\[
+\Delta(\overline G)\leq rm-1-m(r-1)=m-1.
+\]
+Apply the result with \(c=m,s=r\). Its independent classes in \(\overline G\) are the required disjoint \(r\)-cliques in \(G\).
+
+For \(r\geq2\), the degree threshold cannot be lowered by one. Take a set \(A\) of \(m+1\) independent vertices, a clique \(B\) of \(rm-m-1\) vertices, and every edge between them. Its minimum degree is \(m(r-1)-1\), but \(m\) disjoint \(r\)-cliques can cover at most \(m\) vertices of \(A\).
+
+\subsection*{Attribution and scope}
+This reconstructs H. A. Kierstead and A. V. Kostochka, \emph{A short proof of the Hajnal--Szemer\'edi theorem on equitable colouring}, Combinatorics, Probability and Computing 17 (2008), 265--270; primary manuscript:
+\url{https://kam.mff.cuni.cz/~matousek/cla/kierstead-kostochka.pdf}.
+The terminal-class justification and the preserved reachability after recolouring are included explicitly. No external clique-factor theorem is assumed. Statement checked at \url{https://www.erdosproblems.com/914} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

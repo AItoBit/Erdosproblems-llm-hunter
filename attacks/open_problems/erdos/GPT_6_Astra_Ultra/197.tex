@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem 197: a complete three-part construction and a two-part obstruction}
+
+\subsection*{1. Statement and scope}
+Can $\mathbb N$ be partitioned into two sets, each of which has an enumeration avoiding monotone three-term arithmetic progressions? The two-part question remains unresolved. We reconstruct the known three-part construction in full and prove a necessary condition that excludes periodic candidate partitions. Contrary to the earlier draft, the three-part version is established, not open.
+
+\subsection*{2. Finite blocks can always be ordered safely}
+Every finite integer set can be ordered to avoid monotone triples. Split it into its even and odd classes, place one class before the other, and recursively apply the same procedure after scaling each class down by two and translating if needed. A three-term progression of odd difference has its endpoints in one class and its middle in the other, so its middle cannot occur between its endpoints. For even difference, all three terms lie in one class and division by two reduces the difference. Repeating reaches the odd case. This proves avoidance, and also gives a terminating construction by induction on the diameter of the finite set.
+
+\subsection*{3. Three classes formed from consecutive intervals}
+Partition $\mathbb N$ into consecutive intervals $I_1,I_2,\ldots$ of lengths
+\[
+ L_1=100,\qquad L_{j+1}=\lfloor3L_j/2\rfloor.
+\]
+Put $b_j=L_1+\cdots+L_j$, so $I_j=[b_{j-1}+1,b_j]$, with $b_0=0$. Since all lengths are at least $100$,
+\[
+ \frac{149}{100}L_j\le L_{j+1}\le\frac32L_j.\tag{1}
+\]
+For each residue class of $j$ modulo three, take the union of the corresponding intervals, and enumerate its intervals in increasing index order, using within each interval an avoiding order from Section 2. Each class is infinite and every element occurs exactly once at a finite position.
+
+We prove each enumeration avoids a monotone triple. A decreasing progression crossing distinct blocks is impossible, since every value in a later block is larger than every value in an earlier one. A triple lying entirely inside a block is excluded by construction. It remains to exclude an increasing progression $x<y<z$ crossing blocks, with common difference $d$.
+
+If $x,y\in I_i$, then $d\le L_i-1$. The next permitted block of the same class is at least $I_{i+3}$, so
+\[
+ z-y\ge L_{i+1}+L_{i+2}+1>L_i,
+\]
+a contradiction.
+
+If $y,z\in I_j$ and $x$ is in an earlier block of this class, then $j\ge4$ and
+\[
+ y-x\ge L_{j-2}+L_{j-1}+1
+ \ge\left(\frac49+\frac23\right)L_j+1>L_j,
+\]
+using the upper ratio bound in (1) backwards. This contradicts $z-y\le L_j-1$.
+
+Finally suppose all three lie in different blocks and $y\in I_j$. Since $x\ge1$,
+\[
+ d=y-x\le b_j-1
+ \le\frac{149}{49}L_j-1,\tag{2}
+\]
+where the last bound follows by summing the backwards geometric estimates from the lower ratio in (1). But the next possible block for $z$ is at least $I_{j+3}$, whence
+\[
+ d=z-y\ge L_{j+1}+L_{j+2}+1
+ \ge\left(\frac{149}{100}+\left(\frac{149}{100}\right)^2\right)L_j+1.
+\tag{3}
+\]
+The coefficient in (3) is $3.7101$, larger than $149/49<3.041$, contradicting (2). All cases are excluded. Thus these three classes admit the required avoiding enumerations.
+
+\subsection*{4. A necessary condition for either class in a two-part construction}
+An avoidable infinite set cannot contain an entire one-sided infinite arithmetic progression $a,a+d,a+2d,\ldots$, where $d>0$. Restrict its alleged avoiding enumeration to that progression and apply the affine map $a+jd\mapsto j+1$. The result would be an enumeration of $\mathbb N$ avoiding monotone triples.
+
+Here is a short proof that this is impossible. If its first entry is $u$, choose the first later entry $v>u$. The number $2v-u$ is larger than $v$ and occurs later, because every entry before $v$ was at most $u$. These three entries form an increasing arithmetic progression. Restriction and affine rescaling preserve the property, proving the necessary condition.
+
+In particular, a periodic partition cannot answer the two-part question: every nonempty periodic class contains all sufficiently large integers in one residue class modulo its period, hence an infinite arithmetic progression. Simple residue-class splits such as the even and odd integers therefore fail. This obstruction does not exclude nonperiodic classes such as the three unions of intervals constructed above.
+
+\subsection*{5. Assessment and attribution}
+The three-class construction and all its cross-block inequalities are proved. It is the Davis--Entringer--Graham--Simmons construction, with the separation checks expanded. The necessary condition rules out a natural family of proposed two-class examples. It does not rule out every partition into two sets, and no such two-class construction is supplied.
+
+Finite partition searches alone provide no evidence of an eventual obstruction: every finite set already admits an avoiding order by Section 2, even before splitting it into classes. An infinite solution must also ensure that every assigned integer appears at a finite position in its class's enumeration.
+
+Sources: \url{https://www.erdosproblems.com/197}; J. A. Davis, R. C. Entringer, R. L. Graham and G. J. Simmons, \emph{On permutations containing no long arithmetic progressions}, concluding remark 3, p. 89, \url{https://doi.org/10.4064/aa-34-1-81-90}. No novelty is claimed.
+
+\textbf{Completion rate estimate: 40\%.}
+

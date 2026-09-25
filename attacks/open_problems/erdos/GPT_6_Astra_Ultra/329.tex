@@ -1,0 +1,54 @@
+\section*{Erd\H{o}s Problem 329: the upper density of an infinite Sidon set}
+\subsection*{Statement and scope}
+For an infinite Sidon set $A\subset\mathbb N$, how large can
+$\limsup_{N\to\infty}|A\cap[1,N]|/\sqrt N$ be? Here all unordered sums, including $a+a$, must be distinct. We reconstruct the known bounds $1/\sqrt2$ and $1$; equality with the upper bound is unresolved here.
+
+This substantially strengthens the earlier GPT-5.2 write-up's $\sqrt2$ upper constant. The bounds and attribution to Erd\H{o}s--Tur\'an and Kr\"uckeberg are recorded at \url{https://www.erdosproblems.com/329}. The proof uses the classical Bose--Chowla construction, established below from the standard algebraic facts that finite fields of order $q^2$ exist and their multiplicative groups are cyclic. No novelty is claimed.
+
+\subsection*{A sharp leading constant in the finite upper bound}
+Let $a_1<\cdots<a_m\le N$ be Sidon. All positive differences $a_j-a_i$ are distinct: equality rearranges to a collision of unordered sums, and its trivial case gives the same ordered difference.
+
+Fix $1\le u<m$ and consider differences $a_{i+h}-a_i$ for $1\le h\le u$. Their number is
+$D=um-u(u+1)/2$. Being distinct positive integers, their sum is at least $D(D+1)/2$. On the other hand, telescoping for each $h$ gives
+\[
+ \sum_{i=1}^{m-h}(a_{i+h}-a_i)
+ =\sum_{i=m-h+1}^m a_i-\sum_{i=1}^h a_i\le hN.
+\]
+Consequently $D^2\le Nu(u+1)$, and
+\[
+ m\le\sqrt{N(1+1/u)}+\frac{u+1}{2}. \tag{1}
+\]
+Take $u=\lceil N^{1/4}\rceil$ if $m>u$; otherwise the desired estimate is immediate. Since $\sqrt{1+t}\le1+t/2$, (1) gives
+\[
+ m\le\sqrt N+N^{1/4}+O(1).
+\]
+Applying this to every initial segment proves the universal limsup upper bound $1$.
+
+\subsection*{Finite Sidon sets of size $q$ in length $q^2-1$}
+Let $\theta$ generate $\mathbb F_{q^2}^{\,\times}$ and put $Q=q^2-1$. Let $B$ be the set of exponents $b\bmod Q$ for which $\theta^b=\theta+t$ with $t\in\mathbb F_q$. There are $q$ such exponents, none zero.
+
+If $b_1+b_2\equiv b_3+b_4\pmod Q$, then
+\[
+ (\theta+t_1)(\theta+t_2)=(\theta+t_3)(\theta+t_4).
+\]
+The elements $1,\theta$ are linearly independent over $\mathbb F_q$, so
+$t_1+t_2=t_3+t_4$ and $t_1t_2=t_3t_4$. The two unordered pairs are roots of the same monic quadratic, hence are equal. Thus $B$ is Sidon modulo $Q$. Taking its representatives in $[1,Q]$ gives an integer Sidon set of size $q$.
+
+\subsection*{Extending a finite prefix by a dense distant block}
+Suppose $F$ is a finite Sidon set, with $m$ elements and maximum $M$. Take a prime $q$ so large that $Q=q^2-1>M$, and choose $B\subset[1,Q]$ as above. Delete at most $\binom m2$ points from $B$ so that none of its positive differences is a positive difference of $F$. This is possible because each prescribed difference occurs in at most one pair of $B$; delete one endpoint of each offending pair. Call the remaining set $B'$.
+
+Let $L=Q+M$ and put $F'=F\cup(L+B')$. This is Sidon. Sums of two old points are at most $2M$; mixed sums lie between $L+2$ and $L+Q+M=2L$; sums of two new points are at least $2L+2$. These three ranges are disjoint. Old and new sums are individually unique, and equality of two mixed sums would give an old positive difference equal to a new one, which was excluded.
+
+Iterate this operation, choosing successive primes so large that, for the current $m,M$,
+$m^2/q\to0$ and $M/q^2\to0$ along the construction. Such choices are possible because primes are unbounded. The increasing union $A$ is infinite and Sidon: every proposed collision would already lie in a finite stage. At the endpoint
+$N=L+Q=2(q^2-1)+M$ of a stage,
+\[
+ |A\cap[1,N]|\ge q-\binom m2,\qquad
+ \frac{|A\cap[1,N]|}{\sqrt N}\ge\frac1{\sqrt2}-o(1).
+\]
+Later blocks start beyond $N$, so the finite-prefix argument is consistent. This proves the lower limsup bound $1/\sqrt2$.
+
+\subsection*{Remaining gap}
+The distant-block construction spends roughly half its ambient length separating the new block from old--new sums. Reaching limsup $1$ requires overcoming that loss while maintaining compatibility across infinitely many stages. Neither the upper bound nor the block argument does so.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

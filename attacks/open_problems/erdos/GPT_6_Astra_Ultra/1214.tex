@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 1214: prime supports determine the base}
+\subsection*{Statement and outcome}
+Suppose positive integers $x,y$ satisfy
+\[
+ p\mid x^n-1\quad\Longleftrightarrow\quad p\mid y^n-1
+ \qquad\text{for every prime }p\text{ and }n\ge1.
+ \tag{1}
+\]
+Then $x=y$. We give a proof for positive rational integers, using standard Kummer theory and Chebotarev as explicit external inputs. The general number-field support theorem of Corrales-Rodrig\'a\~nez--Schoof is stronger; we do not use that target theorem as a black box.
+
+\subsection*{Orders and the independent case}
+If $x=1$, all primes divide $x^n-1=0$. If $y>1$, any prime divisor of $y$ fails to divide $y-1$, contradicting (1). Thus this case gives $y=1$, and similarly with $x,y$ reversed. Assume henceforth $x,y>1$.
+For every $p\nmid xy$, the sets of positive multiples of $\operatorname{ord}_p(x)$ and $\operatorname{ord}_p(y)$ agree by (1). Therefore
+\[
+ \operatorname{ord}_p(x)=\operatorname{ord}_p(y).
+ \tag{2}
+\]
+
+Suppose the two finite prime-exponent vectors $(v_q(x))_q$ and $(v_q(y))_q$ are linearly independent over $\mathbb Q$. Some two-by-two determinant of their entries is a nonzero integer $D$. Choose an odd prime $\ell$ not dividing $xyD$, and let $K=\mathbb Q(\zeta_\ell)$.
+The classes of $x,y$ are independent in $K^\times/(K^\times)^\ell$.
+Indeed, if $x^ay^b=z^\ell$ in $K$, take valuations at primes of $K$ above the two rational primes used in $D$. They are unramified in $K$, since neither is $\ell$. Reducing the resulting two equations modulo $\ell$ and using $D\not\equiv0$ forces $a\equiv b\equiv0\pmod\ell$.
+
+We use the following standard Kummer theorem: if a characteristic-zero field contains $\zeta_\ell$ and two classes are independent modulo $\ell$th powers, adjoining their $\ell$th roots gives Galois group $(\mathbb Z/\ell\mathbb Z)^2$, acting by independent multiplication of the roots by powers of $\zeta_\ell$.
+Thus in
+\[
+ L=K(x^{1/\ell},y^{1/\ell})
+\]
+there is an automorphism $\sigma$ fixing $K$ and $x^{1/\ell}$ but sending $y^{1/\ell}$ to $\zeta_\ell y^{1/\ell}$.
+
+The field $L$ is Galois over $\mathbb Q$: it is the splitting field of
+$(T^\ell-x)(T^\ell-y)$. By the Chebotarev theorem, there is an unramified rational prime $p\nmid xy\ell$ whose Frobenius conjugacy class is that of $\sigma$. Its restriction to $K$ is trivial, so $p\equiv1\pmod\ell$. Every conjugate of $\sigma$ fixes the roots of $T^\ell-x$ and acts without fixed points on the roots of $T^\ell-y$: conjugation only replaces its nonzero exponent on $y^{1/\ell}$ by another nonzero exponent.
+The Frobenius factorization criterion therefore says that $x$ is an $\ell$th power modulo $p$ and $y$ is not. As $\mathbb F_p^\times$ is cyclic, this means
+\[
+ x^{(p-1)/\ell}\equiv1\pmod p,\qquad
+ y^{(p-1)/\ell}\not\equiv1\pmod p,
+\]
+contradicting (1). This proves multiplicative dependence. The named Galois-theoretic inputs, including Chebotarev, are external; the required independence and Frobenius application have been verified here.
+
+\subsection*{An elementary supply of large prime-power orders}
+We next prove that for every integer $t\ge2$, every prime $\ell$, and every $h\ge2$, some prime $p$ has
+\[
+ \operatorname{ord}_p(t)=\ell^h.
+ \tag{3}
+\]
+Set $u=t^{\ell^{h-1}}$ and $C=1+u+\cdots+u^{\ell-1}$.
+Any prime divisor $p$ of $C$ does not divide $t$, and its order divides $\ell^h$. If that order is smaller than $\ell^h$, then $u\equiv1\pmod p$, so $C\equiv\ell\pmod p$ and $p=\ell$.
+
+Moreover the exponent of $\ell$ in $C$ is at most one. For odd $\ell$, reduction modulo $\ell$ gives
+$C\equiv(u-1)^{\ell-1}$, so $\ell\mid C$ forces $u=1+\ell v$. Expanding modulo $\ell^2$ gives
+\[
+ C\equiv\ell+\ell v\sum_{j=0}^{\ell-1}j\equiv\ell\pmod{\ell^2}.
+\]
+For $\ell=2$, if $t$ is even then $C$ is odd; if $t$ is odd, $h\ge2$ implies $u\equiv1\pmod8$, whence $C=u+1\equiv2\pmod8$.
+Since $C>\ell$, it cannot have only $\ell$ as a prime divisor. A prime $p\ne\ell$ dividing it has the exact order in (3). This proves (3) without importing a primitive-divisor theorem.
+
+\subsection*{Dependent bases must have the same exponent}
+Dependence of the nonnegative prime-exponent vectors implies
+\[
+ x=t^r,\qquad y=t^s
+\]
+for an integer $t\ge2$ and positive integers $r,s$. To see the integrality, divide the vector for $x$ by the gcd of its entries, obtaining a primitive integer vector $w$. The vector for $y$ is a rational multiple of $w$; a Bezout combination of the entries of $w$ shows that this multiple is an integer. Form $t$ from the exponents $w$.
+
+If $r\ne s$, choose a prime $\ell$ with $v_\ell(r)\ne v_\ell(s)$, and take $h>\max(v_\ell(r),v_\ell(s),1)$. A prime given by (3) satisfies
+\[
+ \operatorname{ord}_p(t^r)=\ell^{h-v_\ell(r)},\qquad
+ \operatorname{ord}_p(t^s)=\ell^{h-v_\ell(s)}.
+\]
+These are different, contradicting (2). Hence $r=s$ and $x=y$.
+
+\subsection*{Assessment and sources}
+The implication is fully proved relative to Kummer theory, cyclotomic ramification, the Frobenius factorization criterion and Chebotarev. The dependent case is elementary and includes an explicit proof of the needed prime-order supply. Source: \url{https://www.erdosproblems.com/1214}; C. Corrales-Rodrig\'a\~nez and R. Schoof, \emph{The support problem and its elliptic analogue}, J. Number Theory 64 (1997), 276--290, especially Section 2, \url{https://reneschoof.github.io/supp.pdf}. The author's linked erratum concerns the elliptic diagram on page 283 and does not affect these inputs. This is exposition of a known resolution, not a novelty claim.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

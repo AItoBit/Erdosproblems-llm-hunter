@@ -1,0 +1,63 @@
+\section*{Erd\H{o}s Problem \#926: a common-neighbour embedding}
+\subsection*{Statement and result}
+Let \(H_k\) consist of vertices \(x,y_1,\ldots,y_k\) and \(z_{ij}\) for \(1\leq i<j\leq k\), with edges \(xy_i,y_iz_{ij},y_jz_{ij}\). For every fixed \(k\geq4\),
+\[
+\mathrm{ex}(n,H_k)=\Theta_k(n^{3/2}).
+\]
+We prove the requested upper exponent directly by dependent random choice, including the common centre \(x\). Our constant is \(O(k^2)\), whereas the stronger known bound is \(O(kn^{3/2})\).
+
+\subsection*{A random common neighbourhood}
+Put
+\[
+h=k+\binom{k}{2}+1,
+\]
+and suppose that \(G\) has average degree \(d\geq(h+k)\sqrt n\). Choose two vertices \(a,b\) independently and uniformly, allowing \(a=b\), and let
+\(A=N(a)\cap N(b)\). Then
+\[
+\mathbb E|A|=\sum_{v\in V(G)}\left(\frac{d(v)}n\right)^2
+\geq\frac{d^2}{n}, \tag{1}
+\]
+by the elementary mean-square inequality.
+
+Call a pair \(\{u,v\}\) bad if it has fewer than \(h\) common neighbours in \(G\). The probability that this pair belongs to \(A\) is
+\[
+\left(\frac{|N(u)\cap N(v)|}{n}\right)^2
+\leq\left(\frac{h-1}{n}\right)^2.
+\]
+If \(B\) counts the bad pairs in \(A\), then
+\[
+\mathbb E(|A|-B)\geq\frac{d^2}{n}
+-\binom n2\left(\frac{h-1}{n}\right)^2
+\geq(h+k)^2-\frac{(h-1)^2}{2}>k. \tag{2}
+\]
+Some choice of \(a,b\) therefore has \(|A|-B\geq k\).
+Delete one endpoint of each bad pair, skipping pairs already destroyed. At most \(B\) vertices are deleted, so the remaining set contains distinct \(y_1,\ldots,y_k\), every pair of which has at least \(h\) common neighbours.
+
+\subsection*{Keeping the common centre and distinct subdivision vertices}
+Set \(x=a\). Since every \(y_i\in A\subseteq N(a)\), the edges \(xy_i\) are present, and \(x\) is different from every \(y_i\) because the graph has no loops.
+
+Choose the vertices \(z_{ij}\) one pair at a time. At any step exclude \(x\), all \(k\) vertices \(y_i\), and all previously chosen subdivision vertices. There are at most
+\[
+1+k+\binom{k}{2}-1=h-1
+\]
+excluded vertices. The current pair has at least \(h\) common neighbours, so an unused one exists. This constructs all the required edges and distinct vertices of \(H_k\); additional edges are immaterial.
+
+It follows that
+\[
+\mathrm{ex}(n,H_k)<\frac{h+k}{2}\,n^{3/2},
+\]
+with harmless rounding at equality. In particular the required \(O_k(n^{3/2})\) upper bound is proved. The use of a common neighbourhood, rather than merely a set of pairs with large codegree, is what preserves the single centre \(x\).
+
+\subsection*{A matching lower exponent}
+For completeness take a finite field \(\mathbb F_q\), and form the incidence graph of the projective plane over it. Its two parts are the one-dimensional and two-dimensional linear subspaces of \(\mathbb F_q^3\), joined by containment. Each part has \(q^2+q+1\) vertices, and every vertex has degree \(q+1\). Thus
+\[
+n_q=2(q^2+q+1),\qquad e_q=(q+1)(q^2+q+1).
+\]
+Two different projective points lie on a unique projective line: their representing one-dimensional subspaces span a unique two-dimensional subspace. Consequently the incidence graph has no \(C_4\).
+
+The graph \(H_k\) contains the four-cycle \(x,y_1,z_{12},y_2,x\), so every such incidence graph avoids \(H_k\). Taking \(q\) to be the largest power of two for which \(n_q\leq n\), and adding isolated vertices, supplies examples for all sufficiently large \(n\). Indeed \(n_{2q}<4n_q\), hence \(n_q>n/4\), and \(e_q\asymp n_q^{3/2}\gg n^{3/2}\). Finite fields of prime-power order are the standard algebraic existence input here.
+
+\subsection*{Attribution and scope}
+The upper proof uses the dependent-random-choice method of N. Alon, M. Krivelevich and B. Sudakov, \emph{Tur\'an numbers of bipartite graphs and related Ramsey-type questions}, Combinatorics, Probability and Computing 12 (2003), 477--494, \url{https://doi.org/10.1017/S0963548303005741}, author copy \url{https://web.math.princeton.edu/~nalon/PDFS/akstr6.pdf}. All probabilistic and embedding steps needed here are supplied; the sharper dependence on \(k\) is not claimed. Statement checked at \url{https://www.erdosproblems.com/926} on 24 September 2026. No novelty or formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

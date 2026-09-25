@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 416: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $\mathcal V=\{\varphi(m):m\ge1\}$ and $V(x)=|\mathcal V\cap[1,x]|$. Must $V(2x)/V(x)\to2$? Source: \url{https://www.erdosproblems.com/416}. We give an exact decomposition into doubling chains and identify the regularity missing from the known order-of-magnitude theorem. The limit remains unresolved here.
+
+The earlier GPT-5.2 draft's basic prime-value bound is retained. No asymptotic ratio is inferred from coarse estimates, and no novelty is claimed for the deductions below.
+
+\section*{Doubling chains and an exact identity}
+Every doubled totient is a totient. If $t=\varphi(m)$ with $m$ even, then $\varphi(2m)=2t$. If $m$ is odd, multiplicativity gives $\varphi(4m)=2t$. Define the primitive totients
+\[
+ \mathcal B=\{t\in\mathcal V:t/2\notin\mathcal V\},
+ \qquad B(x)=|\mathcal B\cap[1,x]|,
+\]
+where nonintegers are not in $\mathcal V$. Each totient can be halved repeatedly until it reaches a unique member of $\mathcal B$. Conversely every repeated doubling of a member of $\mathcal B$ remains a totient. Thus there is a disjoint decomposition
+\[
+ \mathcal V=\bigsqcup_{j\ge0}2^j\mathcal B,
+ \qquad V(x)=\sum_{j\ge0} B(x/2^j). \tag{1}
+\]
+The sum is finite for each $x$. Subtracting the version with $x$ from the version with $2x$ gives
+\[
+ V(2x)-V(x)=B(2x),\qquad
+ \frac{V(2x)}{V(x)}=1+\frac{B(2x)}{V(x)}. \tag{2}
+\]
+Equivalently, for each odd part that occurs among totients, there is a minimum exponent of two and then every larger exponent occurs. The question is exactly whether primitive chains are initiated at the rate $B(2x)\sim V(x)$.
+
+Primes give distinct totients $p-1$, while $\varphi(m)$ is even for $m>2$, so the elementary bounds are
+\[
+ \pi(x+1)\le V(x)\le1+\lfloor x/2\rfloor. \tag{3}
+\]
+They do not control the quotient in (2).
+
+\section*{The precise known estimate and its limitation}
+Ford's \emph{The distribution of totients}, Theorem 1, gives $V(x)\asymp Z(x)$, where
+\[
+ Z(x)=\frac{x}{\log x}
+ \exp\!\left(C(\log_3 x-\log_4 x)^2+D\log_3 x
+ -(D+\tfrac12-2C)\log_4 x\right). \tag{4}
+\]
+Here $\log_j$ denotes the $j$fold iterated natural logarithm, and the constants are $C=0.817814\ldots$ and $D=2.176968\ldots$, defined precisely in equations (1.3)--(1.6) of the paper. Primary source: \url{https://arxiv.org/abs/1104.3264v2}. The notation $\asymp$ means bounds above and below by fixed positive constant multiples, not a ratio tending to one. Ford's theorem is imported, not reproved here.
+
+Direct differentiation of (4) gives
+\[
+ \frac{xZ'(x)}{Z(x)}=1+o(1),\qquad
+ \frac{Z(2x)}{Z(x)}\to2,
+ \qquad \frac{Z(x)}x\to0. \tag{5}
+\]
+For example $x(\log_j x)'=(\log x\cdots\log_{j-1}x)^{-1}$ for $j\ge2$; every derivative term other than $x(\log x)'=1$ vanishes, even after the displayed iterated-log factors. Integrating the first relation over $[x,2x]$ proves the middle one. The last follows because the exponent in (4) is $o(\log_2 x)$.
+
+But (4) by itself cannot transfer (5) to $V$. To demonstrate the logical gap, consider the comparison function
+\[
+ H(x)=Z(x)\left(1+\tfrac14\sin(\log x)\right)
+\]
+for sufficiently large $x$. It is positive and comparable to $Z$. It is eventually strictly increasing, since, with $L=xZ'/Z\to1$,
+\[
+ \frac{xH'(x)}{Z(x)}
+ =L\left(1+\tfrac14\sin\log x\right)
+       +\tfrac14\cos\log x
+ \ge1-\tfrac{\sqrt2}{4}+o(1)>0.
+\]
+Nevertheless
+\[
+ \frac{H(2x)}{H(x)}
+ =\frac{Z(2x)}{Z(x)}
+   \frac{1+\tfrac14\sin(\log x+\log2)}
+        {1+\tfrac14\sin\log x}
+\]
+has different subsequential limits: take phases $\log x\equiv0$ and $\pi$ modulo $2\pi$. The limits are $2(1+\tfrac14\sin\log2)$ and $2(1-\tfrac14\sin\log2)$, which differ.
+
+This is not a counterexample involving actual totients. It shows that comparability and monotonicity, even for the exact scale in Ford's theorem, do not imply the desired limit. An integer-valued counting model has the same obstruction: (5) gives $H'(x)\to0$, so for large integral $N$ the increments of $\lfloor H(N)\rfloor$ are zero or one, and rounding has no effect on these ratios.
+
+\section*{Remaining gap}
+The chain identity (2) is exact. The established order of magnitude (4) still permits bounded oscillation in a multiplicative factor. One needs finer information on primitive-chain counts, or suitable control of $V(x)/Z(x)$ between $x$ and $2x$. No such control is proved here.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

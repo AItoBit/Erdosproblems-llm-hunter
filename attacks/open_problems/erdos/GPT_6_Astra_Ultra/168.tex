@@ -1,0 +1,79 @@
+\section*{Erd\H{o}s Problem 168: an effective formula for avoiding $\{n,2n,3n\}$}
+\subsection*{Statement and outcome}
+Let $F(N)$ be the largest size of a subset of $[1,N]$ containing no triple $\{n,2n,3n\}$. The problem asks for the limit $L=\lim F(N)/N$ and whether it is irrational.
+We reconstruct the Graham--Spencer--Witsenhausen series and give an exact finite algorithm with a certified tail bound. This proves existence and effective approximation of the limit, but does not decide its arithmetic nature.
+
+\subsection*{Split into independent multiplicative components}
+List the $3$-smooth numbers as $d_1<d_2<\cdots$, namely the numbers $2^a3^b$ with $a,b\ge0$. Every positive integer has a unique representation $m2^a3^b$ with $(m,6)=1$. Multiplication by two or three preserves $m$, so every forbidden triple lies in one such component.
+
+Let $f(k)$ be the maximum admissible size in $\{d_1,\ldots,d_k\}$, with $f(0)=0$. Adding one point can increase an optimum by at most one and cannot decrease it, so
+$\Delta_k=f(k)-f(k-1)\in\{0,1\}$.
+Put
+\[
+ C(x)=\#\{m\le x:(m,6)=1\}
+ =\lfloor x\rfloor-\lfloor x/2\rfloor-\lfloor x/3\rfloor+\lfloor x/6\rfloor.
+\]
+Independence of the components, followed by summing the increments of $f$, gives the exact identity
+\[
+ F(N)=\sum_{\substack{m\le N\\(m,6)=1}}
+ f\bigl(\#\{k:d_k\le N/m\}\bigr)
+ =\sum_{d_k\le N}\Delta_k C(N/d_k).
+ \tag{1}
+\]
+No compatibility choices between optimal component subsets are required.
+
+\subsection*{Convergence and a computable enclosure}
+We have $C(x)=x/3+O(1)$ with error at most four, and
+\[
+ \sum_k\frac1{d_k}
+ =\left(\sum_{a\ge0}2^{-a}\right)
+  \left(\sum_{b\ge0}3^{-b}\right)=3.
+\]
+For each fixed $k$, $C(N/d_k)/N\to1/(3d_k)$, while it is bounded above by $1/d_k$. Dominated convergence in (1) proves
+\[
+ L=\frac13\sum_{k\ge1}\frac{\Delta_k}{d_k}. \tag{2}
+\]
+For any cutoff $B$, write $K=\#\{d_k\le B\}$ and define the exact rationals
+\[
+ S_B=\frac13\sum_{d_k\le B}\frac{\Delta_k}{d_k},
+ \qquad T_B=3-\sum_{d_k\le B}\frac1{d_k}.
+\]
+Then
+\[
+ S_B\le L\le S_B+T_B/3,\qquad
+ \left|\frac{F(N)}N-L\right|
+ \le \frac{4K}{N}+\frac43T_B.
+ \tag{3}
+\]
+The second inequality separates the first $K$ terms of (1) from the two nonnegative tails. In particular these are rigorous approximations, not a decimal guess.
+
+\subsection*{An exact finite dynamic programme}
+For a smooth cutoff $d_k$, draw the lattice points $(a,b)$ with $2^a3^b\le d_k$. Forbidden triples become
+$\{(a,b),(a+1,b),(a,b+1)\}$.
+Process rows of fixed $a$. The row widths $w_a$ are nonincreasing. Encode its selected points by a binary mask $M$, with bit $b$ representing $(a,b)$.
+
+If consecutive row masks are $M$ and $S$, the only new forbidden triples occur when bits $b,b+1$ of $M$ and bit $b$ of $S$ are all one. Thus the exact transition is
+\[
+ D_{a+1}(S)=|S|+
+ \max_{\;S\,\&\,M\,\&\,(M\!>\!>1)=0}D_a(M),
+ \qquad D_0(M)=|M|.
+ \tag{4}
+\]
+Here $|S|$ is its number of one-bits, $\&$ is bitwise intersection, and
+$M\!>\!>1$ shifts the mask one place down. The maximum of the final row values is $f(k)$. Each forbidden triple uses just two consecutive rows, so (4) checks every constraint.
+
+The offline exact-integer calculation through $B=10^6$, containing $142$ smooth numbers, gives
+\[
+ \frac{669510837305}{835884417024}
+ \le L\le
+ \frac{9298841555}{11609505792}.
+ \tag{5}
+\]
+These endpoints are approximately $0.80096102244$ and $0.80096790696$.
+The computation uses (4) and rational arithmetic in (3); separate brute-force checks on small diagrams verify the recurrence.
+
+\subsection*{Assessment and attribution}
+Formula (2) is the known Graham--Witsenhausen--Spencer result, reconstructed here rather than claimed as new: \emph{On Extremal Density Theorems for Linear Forms}, 1977, Section 4, \url{https://mathweb.ucsd.edu/~ronspubs/77_05_extremal_density.pdf}. Problem: \url{https://www.erdosproblems.com/168}. The earlier local \texttt{gpt\_pro\_5.2/168.tex} contains weaker interval bounds; its unchecked numerical table is not used.
+The exact formula, convergence and enclosure are established. Irrationality, or a simplification deciding it, remains unresolved in this attempt.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

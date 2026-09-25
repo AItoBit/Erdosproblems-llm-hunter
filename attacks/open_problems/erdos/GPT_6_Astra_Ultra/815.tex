@@ -1,0 +1,67 @@
+\section*{Erd\H{o}s Problem 815}
+
+\paragraph{Statement and result.}
+If an \(n\)-vertex graph has \(2n-2\) edges and every proper nonempty induced subgraph has minimum degree at most two, must it contain \(C_k\) for each fixed \(k\geq3\) once \(n\) is large enough? No. We reconstruct the Narins--Pokrovskiy--Szab\'o construction of arbitrarily large such graphs with no \(C_{23}\).
+
+\paragraph{A periodic sequence with a forbidden equation.}
+Let \((a_i)_{i\in\mathbb Z}\) repeat the following block of length 24, with its first entry indexed by 1:
+\[
+ 1,2,1,4,3,2,7,6,5,6,7,2,
+ 3,4,1,2,1,8,9,6,5,6,9,8.
+\tag{1}
+\]
+Every \(a_i\) is positive, at most nine, and satisfies \(a_i\equiv i\pmod2\). Moreover, for distinct indices,
+\[
+ a_i+a_j+|i-j|\ne20.
+\tag{2}
+\]
+Here is a finite arithmetic verification valid for the entire infinite sequence. Directly from the 24 entries,
+\[
+ \{i-a_i\pmod{24}\}=\{0,2,4,10,14,16\},
+\]
+whereas
+\[
+ \{i+a_i-20\pmod{24}\}=\{6,8,12,18,20,22\}.
+\]
+The sets are disjoint. If \(i<j\) violated (2), then \(i-a_i=j+a_j-20\), giving the same residue in both sets, a contradiction.
+
+\paragraph{Trees with no leaf-to-leaf path of length 20.}
+For any \(s\geq2\), take a path \(v_1\ldots v_s\). At each internal vertex \(v_i\), attach by a new edge the root of a perfect binary tree of depth \(a_i-1\). At each endpoint \(v_1,v_s\), attach two such binary trees instead of one. A perfect binary tree of depth zero consists of a single vertex. Call the resulting tree \(T_s\).
+
+Every nonleaf vertex has degree three, and every leaf has degree one. A leaf belonging to the attachment at \(v_i\) is at distance \(a_i\) from \(v_i\). All leaves belong to the same class of the tree's bipartition: the parity of the position of a leaf is \(i+a_i\), which is always even.
+
+Classify the paths between two leaves. Within the same attached binary tree, their distance is at most \(2(a_i-1)\leq16\). Between the two attachments at an endpoint it is \(2a_i\leq18\). Between attachments at different spine positions \(i,j\), it is exactly
+\[
+ a_i+|i-j|+a_j,
+\]
+which is not 20 by (2). Thus \(T_s\) has no leaf-to-leaf path of length 20.
+
+\paragraph{The graph and its edge count.}
+Adjoin two vertices \(x,y\) to \(T_s\), the edge \(xy\), and both edges \(x\ell,y\ell\) for every leaf \(\ell\) of the tree. Denote this graph by \(G_s\).
+
+If a tree with degrees only one and three has \(L\) leaves and \(I\) internal vertices, the degree sum gives
+\(L+3I=2(L+I-1)\), so \(I=L-2\). Therefore
+\[
+ |V(G_s)|=2L=:n_s,
+ \qquad
+ e(G_s)=(2L-3)+2L+1=4L-2=2n_s-2.
+\tag{3}
+\]
+Every tree vertex has degree exactly three in \(G_s\). The two new vertices have degree \(L+1\), at least three.
+
+\paragraph{Why every proper induced subgraph has small minimum degree.}
+Suppose \(G_s[W]\) has minimum degree at least three. It cannot use only \(x,y\), so it contains a tree vertex. Since each tree vertex has exactly three neighbours in \(G_s\), all three must be in \(W\). Repeating this along the connected tree forces every tree vertex into \(W\). The neighbours of any leaf then force \(x,y\in W\). Thus \(W=V(G_s)\). This proves the required criticality for every proper nonempty induced subgraph.
+
+\paragraph{Why there is no cycle of length 23.}
+All leaves lie in one bipartition class of \(T_s\). Placing both \(x,y\) in the other class shows that \(G_s-xy\) is bipartite. Hence every odd cycle uses \(xy\).
+
+Delete \(xy\) from such a simple odd cycle. Its remaining path from \(x\) to \(y\) first visits a leaf, follows the unique tree path to another leaf, and then reaches \(y\). It cannot use \(x\) or \(y\) internally. If the two leaves coincide this is the triangle; otherwise they are distinct. Thus the odd cycle has length
+\[
+ 3+\text{(length of a leaf-to-leaf path in }T_s).
+\]
+A cycle of length 23 would require the forbidden path of length 20. Therefore \(G_s\) contains no \(C_{23}\). Finally \(n_s\geq s+2\to\infty\), so the counterexamples have arbitrarily large orders, disproving the assertion for the fixed value \(k=23\).
+
+\paragraph{Attribution and assessment.}
+The sequence and graph construction are due to L. Narins, A. Pokrovskiy, and T. Szab\'o, \emph{Graphs without proper subgraphs of minimum degree 3 and short cycles}, Theorem 1.2 and Section 2, \url{https://arxiv.org/abs/1408.5289}. The residue calculation above verifies their sequence directly. See also \url{https://www.erdosproblems.com/815}, checked 24 September 2026. This proves the known negative answer; it makes no claim concerning the separate question restricted to even cycle lengths, and no claim of novelty or local Lean verification.
+
+\textbf{Completion rate estimate: 100\%.}

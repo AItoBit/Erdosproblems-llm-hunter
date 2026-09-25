@@ -1,0 +1,80 @@
+\section*{Erd\H{o}s Problem 1118: finite-area tracts force rapid growth}
+\subsection*{Statement and scope}
+Suppose $f$ is a nonconstant entire function and $E(c)=\{z:|f(z)|>c\}$ has finite planar area for some $c$. Necessarily $c>0$. The known sharp growth condition is convergence, for sufficiently large $R_0$, of
+\[
+ \int_{R_0}^{\infty}\frac{r}{\log\log M(r,f)}\,dr.
+ \tag{1}
+\]
+Writing the lower endpoint as zero is shorthand: the denominator need not even be positive at small radii. Camera and Gol'dberg proved the sharp theorem. We prove necessity of (1) from a precisely stated Carleman--Tsuji estimate, and show the stronger pointwise consequence $\log\log M(r,f)/r^2\to\infty$. The sharp converse and threshold examples remain unresolved in this attempt.
+
+\subsection*{The external tract inequality}
+Choose $c_1>c$ which is not the modulus of a critical value of $f$, and let $U$ be a component of $\{|f|>c_1\}$. Such a component exists by Liouville's theorem and is unbounded: a bounded one contradicts the maximum modulus principle with boundary modulus $c_1$. Its complement is unbounded because it has finite area. The regular choice of level gives the usual smooth local boundary condition for a direct tract.
+
+Let $\theta(t)$ be the angular measure of $U\cap\{|z|=t\}$. Since $U$ is open, connected and unbounded, $\theta(t)>0$ for all sufficiently large $t$. Put $\theta^*(t)=\theta(t)$ unless the whole circle lies in $U$, in which case put $\theta^*(t)=\infty$.
+We use the standard estimate
+\[
+ \log\log M(r,f)\ge
+ \pi\int_{r_0}^{r/2}\frac{dt}{t\theta^*(t)}-C
+ \qquad(r\text{ sufficiently large}).
+ \tag{2}
+\]
+This is the Carleman--Tsuji direct-tract inequality, in the form (1.7) of the revised Aspenberg--Bergweiler paper (equation (1.6) in the original arXiv version), \emph{Entire functions with Julia sets of positive measure},
+\url{https://analysis.math.uni-kiel.de/bergweiler/papers/89.pdf}.
+Applying their formula to $f/c_1$ changes only a bounded term at large $r$. Inequality (2) is external; it is not the sharp finite-area theorem being investigated.
+
+\subsection*{Controlling the exceptional full circles}
+Polar coordinates give
+\[
+ A:=\int_{r_0}^{\infty}t\theta(t)\,dt<\infty.
+\]
+Let $B$ be the set of radii $t\ge r_0$ whose entire circles belong to $U$. Then
+$\int_B t\,dt\le A/(2\pi)$.
+For large $r$, the set
+\[
+ J_r=[r/4,r/2]\setminus B
+\]
+has length at least $r/8$, since the removed length is at most
+$4A/(2\pi r)$. Define
+\[
+ a(r)=\int_{r/4}^{r/2}t\theta(t)\,dt.
+\]
+Cauchy--Schwarz, applied only on $J_r$, yields
+\[
+ \int_{r/4}^{r/2}\frac{dt}{t\theta^*(t)}
+ =\int_{J_r}\frac{dt}{t\theta(t)}
+ \ge\frac{|J_r|^2}{\int_{J_r}t\theta(t)\,dt}
+ \ge\frac{r^2}{64a(r)}.
+\]
+Therefore (2) implies, after increasing the lower threshold,
+\[
+ \log\log M(r,f)\ge c_0\frac{r^2}{a(r)}
+ \tag{3}
+\]
+for some positive constant $c_0$. The fixed subtractive constant in (2) is absorbed because $a(r)\le A$ and $r^2/A\to\infty$.
+Since $a(r)\to0$, (3) proves
+\[
+ \frac{\log\log M(r,f)}{r^2}\longrightarrow\infty.
+\]
+In particular such a function has infinite order. The treatment of $B$ matters: replacing $\theta^*$ by $\theta$ without checking full circles would not be justified.
+
+\subsection*{The integral necessity}
+From (3), nonnegativity and Tonelli's theorem,
+\[
+ \begin{split}
+ \int_{R_0}^{\infty}\frac{r}{\log\log M(r,f)}\,dr
+ &\le c_0^{-1}\int_{R_0}^{\infty}\frac{a(r)}r\,dr\\
+ &\le c_0^{-1}\int_{R_0/4}^{\infty}
+       t\theta(t)\left(\int_{2t}^{4t}\frac{dr}r\right)dt\\
+ &\le c_0^{-1}(\log2)A<\infty.
+ \end{split}
+\]
+Changing $R_0$ only changes a finite initial integral. This establishes the full necessary growth condition, relative to (2).
+
+\subsection*{What the threshold question requires}
+The set $T=\{c>0:|E(c)|<\infty\}$ is upward closed, since $E(c')\subseteq E(c)$ when $c'>c$. Thus a nonempty $T$ is $(m,\infty)$ or $[m,\infty)$ for some $m\ge0$, intersected with $(0,\infty)$. This elementary classification does not determine whether the endpoint can belong to $T$.
+Gol'dberg's construction realizes both alternatives for every $m>0$, so a smaller level need not exist. That construction, and examples demonstrating sharpness of (1), are not supplied here. In particular the necessity proof cannot be presented as a proof of either existence assertion.
+
+\subsection*{Assessment and sources}
+The finite-area growth obstruction, its pointwise strengthening and the integral necessity are proved from the stated analytic input. The two existence portions remain missing. Sources: \url{https://www.erdosproblems.com/1118}; G. Camera, \emph{On the minimum rate of growth of certain classes of integral and subharmonic functions}, PhD thesis (1977); A. A. Gol'dberg, \emph{Sets on which the modulus of an entire function has a lower bound}, Sibirsk. Mat. Zh. 20 (1979), 512--518; and the primary Carleman--Tsuji formulation linked above. No novelty is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 65\%}

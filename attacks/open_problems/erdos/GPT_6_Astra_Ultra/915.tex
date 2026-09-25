@@ -1,0 +1,89 @@
+\section*{Erd\H{o}s Problem \#915: the two meanings of disjoint paths}
+\subsection*{Statement and answer}
+Let \(G\) have \(1+n(m-1)\) vertices and \(1+n\binom m2\) edges. Must two vertices be joined by \(m\) disjoint paths?
+The answer depends on the intended meaning: yes for edge-disjoint paths, and no for internally vertex-disjoint paths. We reconstruct Leonard's explicit counterexample for the latter meaning and use a precisely stated theorem of Mader for the former.
+
+\subsection*{A link construction with a verifiable invariant}
+Call a pair of distinguished vertices \(u,v\) of a graph \(L\) ports. We use links satisfying
+\[
+ d_L(u),d_L(v)\leq3,\qquad
+ L+uv\text{ contains no five internally vertex-disjoint paths between any pair}. \tag{1}
+\]
+Here \(L+uv\) means that the port edge is added if absent.
+A basic link is \(K_5-uv\), with the missing-edge endpoints as ports; (1) holds because \(L+uv=K_5\) has maximum degree \(4\).
+
+Start with vertices \(a,b,c,d,e,f\). On \(a,b,c,d,e\) put every edge except \(de\), and add \(cf,df,ef\). This core has six vertices and twelve edges.
+For any of \(i=c,d,e\), optionally add a chain of at least two links from \(i\) to \(f\): identify consecutive ports to make junctions, identify the two end ports with \(i,f\), and keep all other vertices distinct. Retain the direct edge \(if\).
+The restriction to zero or at least two links is essential.
+
+We show this framework has no five internally vertex-disjoint paths.
+If both endpoints lie in a link and are not its two ports, at most one path can leave that link: it must pass through the two ports, and disjointness prevents two such excursions. Replace the excursion by the edge joining the ports. This would give five disjoint paths in \(L+uv\), contradicting (1).
+If one endpoint lies strictly inside a link and the other outside it, its two ports form a separator of size at most two, unless the other endpoint is a port, which was already covered.
+
+For the two ports of a single link, at most three paths stay inside it, by their degrees in \(L\).
+Every exterior path between those ports passes through a common end of the full chain, \(i\) or \(f\), distinct from the two ports. Such an end exists because the chain has at least two links. Hence at most one path goes outside, giving at most four in total.
+
+Internal junctions of chains cause no new exception. Two junctions in a common link were just handled. For two other junctions on the same chain, delete an intermediate junction and a core endpoint of the chain; these two vertices separate them. For junctions on different chains, the two ends of one chain separate them.
+For a junction and a core vertex, either they share a link, or an intermediate junction together with the opposite end of the chain gives a two-vertex separator; when the core vertex is not an endpoint of that chain, its two endpoints suffice.
+Thus the only remaining possible endpoints are core vertices.
+
+The vertices \(a,b\) have degree four. It remains to check pairs from \(\{c,d,e,f\}\).
+For \(c,d\), delete the edge \(cd\); the set \(\{a,b,f\}\) separates the endpoints. The same applies to \(c,e\).
+For the nonadjacent pair \(d,e\), the set \(\{a,b,c,f\}\) separates them.
+For \(c,f\), delete \(cf\), then delete \(d,e\) and one internal junction of the \(c\)-chain, if that chain is present.
+For \(d,f\), use \(c,e\) and a junction of the \(d\)-chain after deleting \(df\); the \(e,f\) case is symmetric.
+Each adjacent pair therefore has its direct edge and at most three other disjoint paths. This completes the proof of the invariant for the framework.
+
+\subsection*{The 57-vertex counterexample}
+Make a graph \(F_1\) by adding a two-link chain of basic links at each of \(c,d,e\).
+Each such chain adds \(2\cdot5-3=7\) vertices and \(2\cdot9=18\) edges, so
+\[
+ |V(F_1)|=6+3\cdot7=27,\qquad |E(F_1)|=12+3\cdot18=66.
+\]
+Delete \(ab\) to form \(F_2\). Its ports are \(a,b\), both now of degree three, and
+\(F_2+ab=F_1\). Thus \(F_2\) satisfies (1).
+
+Use two copies of \(F_2\) as a chain from \(e\) to \(f\) in a fresh core, and add no chains at \(c,d\).
+The resulting \(F_3\) has
+\[
+ |V(F_3)|=6+(2\cdot27-3)=57,\qquad
+ |E(F_3)|=12+2\cdot65=142.
+\]
+By the proved framework invariant it contains no five internally vertex-disjoint paths between any two vertices.
+Delete the core edge \(ab\), obtaining \(G\) with 57 vertices and 141 edges.
+These are exactly
+\[
+ 57=1+14(5-1),\qquad 141=1+14\binom52.
+\]
+Deleting an edge cannot create paths, so \(G\) disproves the vertex-disjoint version for \(m=5,n=14\).
+The construction is specified entirely by graph operations; no geometric interpretation of a drawing is needed.
+
+\subsection*{The edge-disjoint version and sharpness}
+Mader's corollary in \emph{Ein Extremalproblem des Zusammenhangs von Graphen} states:
+a finite simple graph on \(N\) vertices with
+\[
+ e(G)>\frac m2(N-1)
+\]
+has two vertices joined by at least \(m\) edge-disjoint paths.
+We take this general theorem as an explicit external input.
+For the parameters in the question,
+\[
+ e(G)=1+n\binom m2=1+\frac m2(N-1),
+\]
+so it applies directly.
+
+The threshold is sharp at these orders for either interpretation.
+Take \(n\) copies of \(K_m\) sharing one common vertex and otherwise disjoint.
+The graph has \(1+n(m-1)\) vertices and \(n\binom m2\) edges.
+Every vertex except the common vertex has degree \(m-1\); every pair has at least one such endpoint, so even \(m\) edge-disjoint paths are impossible.
+
+\subsection*{Attribution and remaining gap}
+The counterexample and the recursive idea are Leonard's, \emph{On a conjecture of Bollob\'as and Erd\H{o}s}, Periodica Mathematica Hungarica 3 (1973), 281--284, DOI \(10.1007/BF02018594\).
+The strengthened link invariant (1) makes explicit the property needed when a link is inserted into a larger graph.
+The edge-disjoint theorem is Mader's, Mathematische Zeitschrift 131 (1973), 223--231, corollary on pp. 226--227, DOI \(10.1007/BF01187240\).
+Sources: \url{https://www.erdosproblems.com/915};
+\url{https://link.springer.com/content/pdf/10.1007/BF02018594.pdf};
+\url{https://link.springer.com/content/pdf/10.1007/BF01187240.pdf}.
+No novelty is claimed. The vertex-disjoint counterexample is proved here; the positive edge-disjoint answer depends on the named external theorem. Attempt status: solved for both interpretations with that dependency explicit.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

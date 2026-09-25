@@ -1,0 +1,48 @@
+\section*{Erd\H{o}s Problem 340: growth of the greedy Sidon sequence}
+\subsection*{Statement and scope}
+Starting with $a_1=1$, repeatedly choose the least larger integer preserving distinct unordered pair sums, including repeated summands. For the resulting greedy Sidon set $A$, is
+$|A\cap[1,N]|\gg_\epsilon N^{1/2-\epsilon}$ for every $\epsilon>0$? What can be said about $A-A$?
+
+We prove the classical cubic greedy bound and the sharp leading constant in the general Sidon upper bound. The requested near-square-root growth and general difference-set questions are unresolved here. This repairs the earlier GPT-5.2 attempt's unnecessary summation of local gap bounds, which only gave exponent $1/4$. Source: \url{https://www.erdosproblems.com/340}. No novelty is claimed.
+
+\subsection*{Count all rejected values at once}
+Put $B=A\cap[1,N]$ and $k=|B|$. If $x\in[1,N]\setminus B$, it was rejected when all previously selected elements were smaller than $x$. Adding $x$ cannot cause a collision involving $2x$ and an old sum, because every old summand is smaller than $x$. The sums $x+a$ are mutually distinct, and none equals $2x$. Thus rejection means
+\[
+ x+a=b+c
+\]
+for some old $a,b,c$, allowing $b=c$. These elements all belong to $B$, so $x\in B+B-B$. Every chosen $x\in B$ also lies there, since $x=x+1-1$. Consequently
+\[
+ [1,N]\subset B+B-B,\qquad
+ N\le k\,|B+B|=\frac{k^2(k+1)}2. \tag{1}
+\]
+In particular
+\[
+ |A\cap[1,N]|\ge(2N)^{1/3}-1. \tag{2}
+\]
+The same argument at $N=a_{k+1}-1$ gives
+$a_{k+1}\le k^2(k+1)/2+1$ directly, without accumulating a new cubic error at every step.
+
+The sequence is infinite: a candidate larger than twice the current maximum has all its new sums above the old sumset, so some admissible next value always exists.
+
+\subsection*{The matching general upper exponent}
+For any Sidon subset $b_1<\cdots<b_k\le N$, all positive differences are distinct. For $1\le u<k$, the
+$D=uk-u(u+1)/2$ differences $b_{i+h}-b_i$ with $h\le u$ have total at least $D(D+1)/2$. Telescoping for each $h$ bounds their total by $N u(u+1)/2$. Hence
+\[
+ k\le \sqrt{N(1+1/u)}+\frac{u+1}2.
+\]
+Taking $u=\lceil N^{1/4}\rceil$ when $k>u$, and treating $k\le u$ directly, yields
+\[
+ |A\cap[1,N]|\le\sqrt N+N^{1/4}+O(1). \tag{3}
+\]
+
+\subsection*{A checked finite difference}
+Exact generation gives the first fifteen terms
+\[
+ 1,2,4,8,13,21,31,45,66,81,97,123,148,182,204.
+\]
+Thus $22=204-182$ belongs to $A-A$. This is a finite verified fact. Absence of a difference from any computed prefix would not establish its absence from the infinite sequence, so no such inference is used.
+
+\subsection*{Remaining gap}
+Bounds (2)--(3) leave an exponent gap from $1/3$ to $1/2$. Formula (1) only counts possible forbidden triples and does not show that their values overlap enough to obtain the conjectured denser sequence. The proof also gives no positive-density or completeness theorem for $A-A$.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

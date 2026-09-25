@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 980: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement, convention and scope}
+For fixed $k\ge2$, the question asks for an asymptotic mean of the least $k$th-power nonresidue. Elliott's original convention is essential: define $n_k(p)$ as that least positive nonresidue when $p\equiv1\pmod k$, and put $n_k(p)=0$ for all other primes. This is explicitly the first paragraph of \emph{A problem of Erd\H{o}s concerning power residue sums}, Acta Arithmetica 13 (1967), \url{https://doi.org/10.4064/aa-13-2-131-149}. Without a convention, the unrestricted definition can fail even to exist, since if $\gcd(k,p-1)=1$, every nonzero residue is a $k$th power. We use Elliott's convention throughout.
+
+The known result is affirmative. This attempt proves all fixed-value densities, constructs the finite positive candidate constant, and proves the corresponding lower limit. It explicitly leaves the uniform prime-average tail estimate unproved, so does not claim a complete reconstruction of Elliott's analytic theorem.
+
+\section*{Fixed-value densities}
+List the rational primes as $q_1<q_2<\cdots$. Put
+\[
+ L_j=\mathbb Q(\zeta_k,q_1^{1/k},\ldots,q_j^{1/k}),\qquad
+ D_j=[L_j:\mathbb Q],\qquad L_0=\mathbb Q(\zeta_k).
+\]
+We use the standard Chebotarev theorem that the primes splitting completely in a finite Galois extension $L/\mathbb Q$ have density $1/[L:\mathbb Q]$ among primes. Apart from the finite ramified set, splitting completely in $L_j$ means precisely that $p\equiv1\pmod k$ and every $q_i$, $i\le j$, is a $k$th power modulo $p$: all $k$th roots of unity then belong to $\mathbb F_p$, so the indicated polynomials split if and only if one root of each exists.
+
+The least nonresidue is prime. Indeed, if a composite integer were least, its smaller prime factors would all be $k$th powers, and so would their product. It follows that, for every fixed $j$,
+\[
+ \lim_{x\to\infty}\frac{\#\{p<x:n_k(p)=q_j\}}{\pi(x)}
+ =\frac1{D_{j-1}}-\frac1{D_j}=:\delta_j. \tag{1}
+\]
+The finite exceptional primes do not affect these limits.
+
+\section*{Convergence and a concrete constant}
+We also use the standard number-field facts that a splitting field of $X^k-q$ ramifies only over primes dividing $kq$, and that an Eisenstein polynomial over a discrete valuation is irreducible. If $q_j\nmid k$, it is unramified in $L_{j-1}$, since the preceding primes are different. At any prime of $L_{j-1}$ over $q_j$ its valuation is one. Thus $X^k-q_j$ is Eisenstein there, and
+\[
+ [L_j:L_{j-1}]=k\qquad(q_j\nmid k).
+\]
+Only the at most $\omega(k)$ primes dividing $k$ are exceptions. Consequently
+\[
+ D_j\ge\varphi(k)k^{j-\omega(k)},
+\]
+so $D_j\to\infty$ exponentially. Together with the standard prime-number estimate $q_j=O(j\log(j+1))$, this proves that
+\[
+ C_k=\sum_{j\ge1}q_j\delta_j \tag{2}
+\]
+converges. It is positive: the nonnegative $\delta_j$ telescope to $1/D_0=1/\varphi(k)>0$.
+
+For prime $k=\ell$, the constant simplifies further to
+\[
+ C_\ell=\sum_{j\ge1}\frac{q_j}{\ell^j}. \tag{3}
+\]
+Here the elementary Kummer degree formula is the additional stated algebraic input: independent classes in $F^\times/(F^\times)^\ell$, for a field containing $\zeta_\ell$, give independent degree-$\ell$ radical extensions. The prime classes are independent in $F=\mathbb Q(\zeta_\ell)$. Valuations over $q\ne\ell$ read off their exponents directly; the valuation of $\ell$ is $\ell-1$, also invertible modulo $\ell$. Thus $D_j=(\ell-1)\ell^j$, and (1) gives $\delta_j=\ell^{-j}$. This also covers $\ell=2$.
+
+\section*{What follows, and what does not}
+For each fixed $J$, equation (1) gives
+\[
+ \lim_{x\to\infty}\frac1{\pi(x)}
+ \sum_{\substack{p<x\\n_k(p)\le q_J}}n_k(p)
+ =\sum_{j\le J}q_j\delta_j.
+\]
+All summands are nonnegative, so letting $J\to\infty$ proves
+\[
+ \liminf_{x\to\infty}\frac1{\pi(x)}\sum_{p<x}n_k(p)\ge C_k. \tag{4}
+\]
+To obtain equality, it would suffice to prove
+\[
+ \lim_{J\to\infty}\limsup_{x\to\infty}
+ \frac1{\pi(x)}\sum_{\substack{p<x\\n_k(p)>q_J}}n_k(p)=0. \tag{5}
+\]
+The exponential decay of the fixed limiting densities does not by itself imply (5): exceptional primes whose least nonresidue grows with $x$ can be invisible to every fixed-value limit. This is exactly the analytic uniformity not supplied by the algebraic calculation above. Elliott's paper provides a substantially stronger moment result, but its proof is not imported as if it were established here.
+
+\section*{Assessment}
+The candidate constant, its convergence and positivity, the explicit prime-$k$ series and the lower asymptotic bound are proved relative to the stated standard algebraic and prime-distribution inputs. The uniform tail estimate (5), and hence the matching upper bound for this attempt, is unresolved.
+
+\textbf{Completion rate estimate: 70\%.}
+
+\end{document}

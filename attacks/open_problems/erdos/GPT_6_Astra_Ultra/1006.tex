@@ -1,0 +1,65 @@
+\section*{Erd\H{o}s Problem 1006}
+
+\paragraph{Statement and answer.}
+Does every graph of girth greater than four admit an acyclic orientation that remains acyclic after reversing any one edge? No. We reconstruct the Ne\v{s}et\v{r}il--R\"odl probabilistic method, proving that for every fixed \(g\geq5\) there is a graph of girth exactly \(g\) with no such orientation.
+
+\paragraph{What an obstruction looks like.}
+In an acyclic orientation, reversing \(uv\), originally directed from \(u\) to \(v\), creates a directed cycle precisely when there is another directed path from \(u\) to \(v\). Thus it suffices to force a cycle
+\[
+ v_1v_2\cdots v_gv_1
+\]
+whose edges \(v_iv_{i+1}\) all point forwards and whose closing edge points from \(v_1\) to \(v_g\).
+
+Every finite acyclic digraph has a topological ordering: it has a vertex of indegree zero, since following incoming edges otherwise produces a directed cycle; remove such a vertex and induct. Therefore we will build an undirected graph such that \emph{every} ordering of its vertices contains the displayed cycle with \(v_1<\cdots<v_g\).
+
+\paragraph{Sparse hypergraph containers for the cycles.}
+A Berge cycle of length \(j\geq2\) in a hypergraph consists of distinct vertices \(x_1,\ldots,x_j\) and distinct hyperedges \(E_1,\ldots,E_j\), with \(x_i,x_{i+1}\in E_i\), indices cyclically. In particular, forbidding Berge two-cycles makes different hyperedges intersect in at most one vertex.
+
+For sufficiently large \(N\), there is a \(g\)-uniform hypergraph on \(N\) vertices with no Berge cycles of lengths \(2,\ldots,g-1\) and with
+\[
+ M\geq c_gN^{1+1/g}
+\tag{1}
+\]
+hyperedges, where \(c_g>0\) is fixed. To prove this, select each \(g\)-set independently with probability
+\[
+ \rho=N^{-(g-1)+1/g}.
+\]
+The expected number of selected hyperedges is
+\(\binom Ng\rho=(1/g!+o(1))N^{1+1/g}\), and its variance is at most its mean. With probability tending to one, at least half that asymptotic number are selected.
+
+For a possible Berge \(j\)-cycle, there are at most \(N^j\) choices for its designated vertices and at most \(N^{(g-2)j}\) choices for its distinct hyperedges containing the designated pairs. Its probability of being present is \(\rho^j\). Consequently the expected total number \(Z\) of forbidden Berge cycles is at most
+\[
+ \sum_{j=2}^{g-1}N^{(g-1)j}\rho^j
+ =O_g(N^{(g-1)/g})=o(N^{1+1/g}).
+\]
+Counting a cycle multiple times only makes this upper bound larger. Markov's inequality and the preceding edge concentration give an outcome in which deleting one hyperedge from each forbidden cycle leaves (1), for example with \(c_g=1/(4g!)\) once \(N\) is sufficiently large.
+
+\paragraph{Choose one polygon inside each hyperedge.}
+Independently in each hyperedge, choose uniformly one of its
+\[
+ h=(g-1)!/2
+\]
+unoriented Hamiltonian cycles, and let \(G\) be the union of these graph edges. Linearity of the hypergraph means that no graph edge belongs to two different hyperedges.
+
+The resulting graph has no cycle of length less than \(g\). Here are details for mixed cycles. If all edges of a graph cycle lie in one hyperedge, they lie in its single chosen \(g\)-cycle, so that cycle has length \(g\). Otherwise group cyclically consecutive edges that come from the same hyperedge. The transition vertices and the corresponding hyperedges form a closed walk in the hypergraph's incidence graph. It has no immediate reversal: successive hyperedge labels differ, and the two transition vertices of each run are distinct because the graph cycle is simple. Any closed walk without immediate reversals contains a simple cycle. A graph cycle of length \(j<g\) would therefore give an incidence cycle of length at most \(2j\), hence a forbidden Berge cycle of length at most \(j\). This is impossible. Since (1) ensures that there is at least one hyperedge, \(G\) has girth exactly \(g\).
+
+\paragraph{Simultaneous control of every vertex ordering.}
+Fix an ordering of the \(N\) vertices. In any hyperedge, list its vertices in increasing order as \(v_1,\ldots,v_g\). Exactly one of its \(h\) possible polygons is
+\[
+ v_1v_2,\ v_2v_3,\ldots,v_{g-1}v_g,\ v_gv_1.
+\]
+Thus the probability that no hyperedge supplies the desired ordered cycle is
+\((1-1/h)^M\leq e^{-M/h}\). There are \(N!\leq N^N\) orderings, so the probability that any ordering fails is at most
+\[
+ N!\,e^{-M/h}\leq
+ \exp\!\left(N\log N-(c_g/h)N^{1+1/g}\right)<1
+\]
+for sufficiently large \(N\). Some choice of polygons therefore works for all orderings.
+
+If an orientation of this \(G\) has a directed cycle, it already fails the requirement. Otherwise take a topological ordering and the ordered polygon forced above. Its path from \(v_1\) to \(v_g\) is directed forwards, as is the closing edge \(v_1v_g\). Reversing that closing edge creates a directed cycle. This completes the counterexample.
+
+\paragraph{Attribution and assessment.}
+The hypergraph placement and union bound over vertex orderings reconstruct the method of J. Ne\v{s}et\v{r}il and V. R\"odl, \emph{On a probabilistic graph-theoretical method}, Theorem 2 and Corollaries 3--4, \url{https://doi.org/10.1090/S0002-9939-1978-0507350-7}. The author's publicly available copy is \url{https://www.researchgate.net/publication/239285245_On_a_probabilistic_graph-theoretical_method}. See \url{https://www.erdosproblems.com/1006}, checked 24 September 2026. All probabilistic and orientation steps needed for the negative answer are supplied here; no novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,76 @@
+\section*{Erd\H{o}s Problem 1195: exact eventual growth for an integer-ratio-free set}
+\subsection*{1. Statement and outcome}
+How quickly can $M_S(x)=|S\cap(0,x)|$ grow if $S\subset(0,\infty)$ is measurable, has infinite measure, and no quotient of two distinct elements is an integer? We reconstruct the known sharp answer: for a finite-valued non-decreasing $F:[1,\infty)\to[0,\infty)$ tending to infinity, such a set with $M_S(x)\ge F(x)$ for all sufficiently large $x$ exists exactly when
+\[
+ \int_1^\infty\frac{F(x)}{x^2}\,dx<\infty. \tag{1}
+\]
+The eventual qualifier matters: an arbitrary target may exceed $x$ on a bounded initial interval. The sharp criterion is due to Boon Suan Ho, whose paper discloses substantial GPT-5.4 Pro assistance. The logarithmic construction below follows the streamlined argument in Terence Tao's discussion of that work, with the estimates supplied explicitly.
+
+\subsection*{2. The necessary condition}
+For every integer $j$, fold $S\cap[2^j,2^{j+1})$ into $[1,2)$ by dilation $2^{-j}$, obtaining $D_j$. Distinct $D_j$ are disjoint: a common point would give two elements of $S$ with ratio a positive power of two. Dilation invariance of $dt/t$ and countable additivity therefore give
+\[
+ \int_S\frac{dt}{t}=\sum_{j\in\mathbb Z}\int_{D_j}\frac{du}{u}\le\log2.
+\]
+Tonelli's theorem yields
+\[
+ \int_0^\infty\frac{M_S(x)}{x^2}\,dx
+ =\int_S\left(\int_t^\infty x^{-2}\,dx\right)dt
+ =\int_S\frac{dt}{t}\le\log2. \tag{2}
+\]
+Thus eventual domination forces (1). Also $M_S(x)/(2x)\le\int_x^{2x}M_S(t)t^{-2}\,dt\to0$, so every such set has density zero.
+
+\subsection*{3. Two elementary approximation facts}
+For any finite list $\theta_1,\ldots,\theta_m$ and any $\rho>0$, there are arbitrarily large positive integers $q$ with $\|q\theta_i\|_{\mathbb R/\mathbb Z}<\rho$ for all $i$. Indeed pigeonholing $0,\theta,\ldots,Q^m\theta$ into $Q^m$ cubes gives a positive $q\le Q^m$ with all errors at most $1/Q$. As $Q\to\infty$, either these $q$ are unbounded, or a fixed nonzero $q$ recurs with errors tending to zero; in the latter case it is an exact common period, and its multiples suffice.
+
+Second, for a measurable bounded set $B\subset\mathbb R$ and $0<\alpha<1/2$,
+\[
+ \big|B\cap\{u:\|qu\|_{\mathbb R/\mathbb Z}\le\alpha\}\big|
+ \longrightarrow 2\alpha|B|\qquad(q\to\infty). \tag{3}
+\]
+For intervals this follows by counting complete periods, with error at most $2/q$. Finite unions of intervals follow by addition, and approximation in measure proves the assertion for $B$. The same proof gives convergence when integrating against any fixed integrable function.
+
+\subsection*{4. A construction in logarithmic coordinates}
+Let $\Lambda=\{\log_2 n:n\ge2\}$. It is locally finite and contained in $[1,\infty)$. Choose $J\ge1$ and positive numbers $\rho_j$ for $j\ge J$ with $\sum\rho_j\le1/16$. Inductively choose arbitrarily large integer frequencies $q_j$ such that
+\[
+ \|q_j\lambda\|<\rho_j\quad(\lambda\in\Lambda\cap[1,j]),
+ \qquad B_j=\{u\in[j,j+1):\|q_ju\|\le\rho_j\}
+\]
+satisfies $|B_j|\ge\rho_j$ and, for every earlier $i$,
+\[
+ |B_i\cap\{u:\|q_ju\|\le2\rho_j\}|\le5\rho_j|B_i|. \tag{4}
+\]
+There are only finitely many earlier sets. The approximation facts allow the recurrence condition and all these averaging conditions simultaneously: sufficiently large frequencies satisfy the averaging conditions, and arbitrarily large recurrent frequencies exist. Each $B_i$ has positive measure.
+
+Now remove the future thick combs:
+\[
+ E_i=B_i\setminus\bigcup_{j>i}\{u:\|q_ju\|\le2\rho_j\},
+ \qquad E=\bigcup_{i\ge J}E_i.
+\]
+By (4) and subadditivity,
+\[
+ |E_i|\ge |B_i|\left(1-5\sum_{j>i}\rho_j\right)\ge\rho_i/2. \tag{5}
+\]
+No difference between two distinct elements of $E$ belongs to $\Lambda$. Within one block the positive difference is less than one. Otherwise, if $u\in E_i$, $v\in E_j$, $i<j$, and $v-u=\lambda\in\Lambda$, then $1\le\lambda<j$ because $u\ge1$ and $v<j+1$. Consequently
+\[
+ \|q_ju\|\le\|q_jv\|+\|q_j\lambda\|<2\rho_j,
+\]
+contradicting the definition of $E_i$. It follows that $S=\{2^u:u\in E\}$ avoids every integer ratio greater than one. Measurability follows block by block from the bi-Lipschitz exponential change of variable. Moreover,
+\[
+ |S\cap[2^i,2^{i+1})|=\int_{E_i}(\log2)2^u\,du
+ \ge\tfrac12(\log2)2^i\rho_i. \tag{6}
+\]
+
+\subsection*{5. Choosing the masses and concluding}
+Condition (1) and monotonicity imply $\sum_j2^{-j}F(2^j)<\infty$: integrate over $[2^j,2^{j+1}]$ to bound the corresponding summand. Since $F$ tends to infinity, it is positive on a tail. On that tail put
+\[
+ \rho_j=\frac{2F(2^{j+2})}{(\log2)2^j}.
+\]
+Its sum is finite; choose $J$ so large that the tail sum is at most $1/16$. For $2^N\le x<2^{N+1}$, $N\ge J+1$, the preceding block alone gives, by (6),
+\[
+ M_S(x)\ge |S\cap[2^{N-1},2^N)|\ge F(2^{N+1})\ge F(x).
+\]
+Thus $S$ has infinite measure and the required eventual growth. For example, $x/(\log x)^{1+\delta}$ is attainable for every $\delta>0$, after harmless changes near one, whereas $x/\log x$ is not. Strict domination is obtained by applying the argument to $F+1$. The full eventual-growth criterion is proved; no new discovery is claimed.
+
+Sources: \url{https://www.erdosproblems.com/1195}; B. S. Ho, \emph{Erd\H{o}s's ratio-growth problem and a quantitative Haight-type theorem}, \url{https://boonsuan.github.io/erdos1195.pdf}; Tao's construction in \url{https://www.erdosproblems.com/forum/thread/1195}.
+
+\textbf{Completion rate estimate: 100\%.}

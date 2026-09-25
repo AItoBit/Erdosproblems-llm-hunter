@@ -1,0 +1,59 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\begin{document}
+\title{Erd\H{o}s Problem 960: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and current result}
+For $r,k\ge2$, let $f_{r,k}(n)$ be the ordinary-line threshold forcing $r$ points whose pair-lines are ordinary in the entire ambient set, under the condition that no $k$ points are collinear. We reconstruct the negative answer for every $r\ge3,k\ge4$: there are $n$-point sets with no four collinear, no ordinary triangle, and at least $n^2/12-O(n)$ ordinary lines. The source is Alexeev, Putterman, Sawhney, Sellke and Valiant, \emph{Short proofs in combinatorics, probability, and number theory II}, Section 2, \url{https://arxiv.org/abs/2604.06609}. Its construction is attributed there to an internal OpenAI model.
+
+\section*{Geometric input and the residue construction}
+Use the smooth real cubic $E:y^2=x^3-x+1$, with identity $O$ at infinity. We explicitly use the standard elliptic-curve facts that its real points form a circle group, and that three intersections with a line, counted with multiplicity, add to $O$. For this curve the polynomial discriminant is $-23$, so it has one real root and the real locus is connected; the circle-group classification therefore supplies a cyclic subgroup of every finite order. An affine line has at most three intersections with this cubic: a nonvertical substitution gives a cubic polynomial, and a vertical line gives at most two affine points. Thus finite subsets have no four collinear.
+
+Choose a cyclic subgroup $C=\langle g\rangle$ of order $7m$, let $H=\langle7g\rangle$, and take
+\[
+ A_0=C\setminus H=\bigsqcup_{i=1}^6(ig+H).
+\]
+It has $6m$ affine points, because $O\in H$ was removed. For distinct $x,y\in A_0$ the third cubic intersection is $z=-x-y\in C$. Their line is ordinary precisely when $z\in H$, $z=x$, or $z=y$. The latter two alternatives include the tangent cases and cannot be discarded.
+
+If $x\in ig+H$ and $y\in jg+H$, these alternatives require
+\[
+ j=-i,\qquad j=-2i,\qquad j=3i\pmod7,
+\]
+respectively. Each of the multipliers $-1,-2,3$ exchanges the two sets of nonzero residues
+\[
+ U=\{1,2,4\},\qquad V=\{3,5,6\}.
+\]
+Therefore the ordinary-line graph is bipartite. In particular it contains no triangle and hence no $K_r$ for $r\ge3$. Each of the three opposite coset pairs $(1,6),(2,5),(4,3)$ contributes all $m^2$ pair-lines as ordinary edges, giving at least $3m^2$ ordinary lines. Distinct ordinary edges determine distinct ordinary lines by definition.
+
+\section*{Every sufficiently large cardinality}
+Write $n=6m+s$, $0\le s\le5$, and assume $m\ge12$. Let $h$ generate $H$, and add the following $s$ points:
+\[
+ T_0=\varnothing,\ T_1=\{h\},\ T_2=\{h,2h\},\
+ T_3=\{h,2h,-3h\},\ T_4=T_3\cup\{3h\},\
+ T_5=T_4\cup\{-4h\}.
+\]
+They are distinct and nonzero modulo $m$. There are no ordinary edges between $T_s$ and $A_0$: for $t\in H$, $x\in ig+H$, the point $-t-x\in-ig+H\subset A_0$ is distinct from both endpoints. For equality with $x$ one would need $2i=0\pmod7$, impossible.
+
+The graph inside $T_s$ is bipartite as well. For $s\le2$ this is immediate. For $s=3$ all three points lie on one line. For $s=4$ its only ordinary edges are $\{h,3h\},\{2h,3h\},\{-3h,3h\}$, a star. For $s=5$ they are
+\[
+ \{2h,3h\},\quad\{2h,-4h\},\quad\{3h,-3h\},\quad\{-4h,-3h\},
+\]
+a four-cycle with $h$ isolated. These lists follow simply by testing whether the negative sum of the two endpoints is a third distinct listed point. The listed integer coefficients range from $-4$ to $3$, so $m\ge12$ introduces no additional three-distinct-point coincidences. Adding $T_s$ can only delete ordinary edges between old points, preserving their bipartition.
+
+For a fixed added $t$ and each opposite coset pair, exactly $m$ previously counted edges disappear: for every $x$ in one coset, the unique partner is $y=-t-x$ in the opposite coset. Thus at least
+\[
+ 3m^2-3ms=\frac{n^2}{12}-\frac{2s}{3}n+\frac{7s^2}{12}
+ \ge\frac{n^2}{12}-\frac{10}{3}n
+\]
+ordinary lines remain. This disproves both a subquadratic and a linear forcing threshold in all these parameter regimes. If $k=3$ and $n\ge r$, all pair-lines are ordinary already, so the forcing conclusion is automatic; if $r=2$, any ordinary line itself is the required pair.
+
+\section*{Assessment}
+The counterexample, tangent exceptions, all-size adjustment and quadratic line count are fully reconstructed relative to the standard real elliptic-curve group facts stated above. The ordinary-line graph is measured in the full point set throughout.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

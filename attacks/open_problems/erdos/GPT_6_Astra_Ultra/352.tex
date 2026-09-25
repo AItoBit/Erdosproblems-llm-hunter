@@ -1,0 +1,119 @@
+\section*{Erd\H{o}s Problem \#352: an exact unit-area triangle}
+\subsection*{1. Statement and proof scope}
+Does there exist an absolute $c>0$ such that every Lebesgue-measurable
+$A\subseteq\mathbb R^2$ of measure at least $c$ contains three points
+forming a triangle of area exactly $1$?
+We reconstruct Erd\H{o}s's known affirmative answer for unbounded
+sets of positive measure, using the Lebesgue density theorem explicitly.
+We also prove a sufficient bound for connected sets and the disk
+obstruction to a sharp constant. The general finite-measure question
+remains unresolved.
+
+\subsection*{2. Unbounded sets of positive measure: a complete proof}
+Choose a density point of $A$ and translate it to the origin. The
+Lebesgue density theorem supplies $r>0$ such that, writing $B_\rho$
+for the open disk of radius $\rho$,
+\[
+ |B_{2r}\setminus A|<\frac{\pi r^2}{16}.            \tag{1}
+\]
+The density point need not itself belong to $A$. Since $A$ is unbounded,
+choose $z\in A$, $D=|z|$, with
+\[
+ D-r\ge\max(3,2/r).
+\]
+Let $J$ be rotation through $90$ degrees. For $x\in B_r$, define
+\[
+ T(x)=x+\frac{2J(x-z)}{|x-z|^2}.
+\]
+The displacement is at most $2/(D-r)\le r$, so $T(B_r)\subseteq B_{2r}$.
+More importantly,
+\[
+ \det(x-z,T(x)-z)=2,
+\]
+and hence $z,x,T(x)$ form a triangle of area exactly $1$ for every $x$.
+It remains to ensure that both variable vertices belong to $A$.
+
+The map $v\mapsto v/|v|^2$ has derivative of operator norm $|v|^{-2}$.
+Consequently every singular value of $DT(x)$ is at least
+$1-2/(D-r)^2>1/2$, and
+\[
+ |\det DT(x)|\ge1/4.                              \tag{2}
+\]
+The map is also injective on $B_r$. Indeed, if
+$v=\rho e^{i\theta}$ in complex coordinates, then
+\[
+ T(x)-z=v(1+2i/\rho^2),\qquad
+ |T(x)-z|=\sqrt{\rho^2+4/\rho^2}.
+\]
+The last expression is strictly increasing for $\rho>\sqrt2$.
+Its value determines $\rho$, after which the argument determines
+$\theta$. Here every $\rho=|x-z|$ exceeds $\sqrt2$.
+The inverse function theorem and injectivity justify the usual
+change-of-variables formula on this image.
+
+By (1)--(2),
+\[
+ \big|\{x\in B_r:T(x)\notin A\}\big|
+ \le4|B_{2r}\setminus A|<\pi r^2/4.
+\]
+Also $|B_r\setminus A|<\pi r^2/16$. These two exceptional sets do not
+cover $B_r$. Choose $x$ outside both. Then $z,x,T(x)\in A$ give the
+required triangle. All three vertices are distinct by the nonzero
+determinant. This also proves the infinite-measure case, since a
+bounded planar set has finite measure.
+
+\subsection*{3. An elementary connected-set bound}
+Suppose next that $A$ is bounded, connected, measurable, and has area
+$M>4$. Write $D>0$ for its diameter. Choose $p,q\in A$ at distance
+$d$ as close to $D$ as desired. Relative to the line $pq$, let $W$ be
+the width of the orthogonal projection of $A$ in the normal direction.
+The tangential projection has length at most $D$, so containment in
+the corresponding rectangle gives $M\le DW$.
+Since the line contains points of $A$, at least one side has points
+at distances approaching $W/2$ or greater. Thus
+\[
+ \sup_{x\in A}\operatorname{area}(p,q,x)\ge dW/4\ge dM/(4D).
+\]
+Taking $d$ close enough to $D$ supplies an actual triangle of area
+greater than $1$; attainment of the diameter or width was not assumed.
+The set $A^3$ is connected, and its continuous image under the
+unsigned area function is an interval. This interval contains $0$
+(use a repeated vertex) and a value greater than $1$, so it contains
+$1$. This proves the assertion for connected sets of area greater
+than $4$, including the already-treated unbounded case.
+
+\subsection*{4. The sharp-constant obstruction from a disk}
+In a disk of radius $R$, the largest triangle has area
+$3\sqrt3 R^2/4$. To verify the maximization, fix two vertices:
+unsigned area is the absolute value of an affine function of the
+third, so its maximum over the disk is attained on the circle.
+Successively maximizing each vertex reduces the problem to an
+inscribed triangle. If its angles are $A,B,C$, its area is
+$2R^2\sin A\sin B\sin C$. Concavity of $\log\sin$ on $(0,\pi)$ and
+$A+B+C=\pi$ give the equilateral maximum.
+
+Disks of radius less than $2\,3^{-3/4}$ therefore contain no unit-area
+triangle, while their areas approach
+\[
+ \frac{4\pi}{\sqrt{27}}.
+\]
+Any universal threshold $c$ in the question must be at least this value.
+The connected-set proof above gives a weaker sufficient bound and does
+not establish the conjectured sharp one.
+
+\subsection*{5. Assessment and references}
+The missing case is a bounded measurable set with unrestricted
+disconnectedness. A triangle of area greater than $1$ alone does not
+yield one of area exactly $1$ without an additional continuity
+argument. The proof above does not silently interpolate outside $A$.
+
+Source: \texttt{https://www.erdosproblems.com/352}, checked 2026-09-25,
+which attributes the unbounded positive-measure result to Erd\H{o}s
+and identifies the density-theorem method.
+The earlier GPT Pro 5.2 and Claude Opus 4.5 files were reviewed.
+External standard inputs used here are the Lebesgue density theorem,
+change of variables for injective smooth maps, and preservation of
+connectedness by products and continuous maps; the geometric deductions
+are proved above. No novelty or formal verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

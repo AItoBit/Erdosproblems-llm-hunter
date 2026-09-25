@@ -1,0 +1,62 @@
+\section*{Erd\H{o}s Problem \#920: chromatic growth without a fixed clique}
+\subsection*{Statement and current result}
+Let \(f_k(n)\) be the largest chromatic number of an \(n\)-vertex \(K_k\)-free graph. For each fixed \(k\geq4\), the requested lower bound holds. More precisely,
+\[
+f_k(n)\gg_k
+\frac{n^{1-1/(k-1)}}{(\log n)^{(2k-4)/(k-1)}}. \tag{1}
+\]
+We give an elementary probabilistic construction first, then prove (1) from the exact current Ramsey input, with constants and rounding controlled. This updates the older local attempt, which preceded the relevant 2026 theorem.
+
+\subsection*{A self-contained, weaker construction}
+Fix \(k\geq4\), write \(b=\binom{k}{2}\), and choose a constant \(c>0\) so small that \(2^kc^b\leq1/8\). In the random graph on \(2n\) vertices with edge probability
+\(p=cn^{-2/k}\), the expected number of copies of \(K_k\) is at most
+\[
+(2n)^kp^b\leq n/8.
+\]
+By Markov's inequality, the probability of more than \(n\) such cliques is at most \(1/8\).
+
+Set \(t=\lceil6p^{-1}\log(2n)\rceil\). For large \(n\), \(t\leq2n\), and the expected number of independent \(t\)-sets is at most
+\[
+\binom{2n}{t}(1-p)^{\binom t2}
+\leq \exp\left(t\log\frac{2en}{t}-\frac p2t(t-1)\right)=o(1).
+\]
+For example, \(p(t-1)\geq6\log(2n)-p\), while
+\(\log(2en/t)\leq\log(2en)\), so the exponent tends to negative infinity.
+Some graph has at most \(n\) forbidden cliques and no independent \(t\)-set. Delete one vertex from each surviving forbidden clique. At least \(n\) vertices remain, the graph is \(K_k\)-free, and its independence number is still less than \(t\). Restrict to exactly \(n\) vertices. Every proper colour class has at most \(t-1\) vertices, and therefore
+\[
+f_k(n)\geq\frac{n}{t-1}\gg_k\frac{n^{1-2/k}}{\log n}. \tag{2}
+\]
+This proof is independent of the deeper input below, but its exponent does not yet give (1).
+
+\subsection*{The exact external Ramsey theorem}
+Theorem 1.1 of D. Brada\v{c}, \emph{Off-diagonal Ramsey numbers}, arXiv:2605.28793v3, dated 16 June 2026, states that for each fixed \(s\geq3\) there is \(c_s>0\) such that
+\[
+R(s,t)\geq c_s\frac{t^{s-1}}{(\log t)^{2s-4}}\qquad(t\geq2). \tag{3}
+\]
+Source: \url{https://arxiv.org/html/2605.28793v3}.
+Version 1 had a smaller exponent; the version and formula in (3) are essential. The construction and container estimates proving (3) are external inputs, not reproved here.
+
+\subsection*{An exact-size transfer lemma}
+If \(n<R(k,t)\), there is a \(K_k\)-free graph on exactly \(n\) vertices with independence number less than \(t\). Indeed, the definition gives such a graph on \(R(k,t)-1\) vertices, and taking an induced \(n\)-vertex subgraph preserves both restrictions. Counting vertices in proper colour classes then gives
+\[
+f_k(n)\geq\left\lceil\frac{n}{t-1}\right\rceil. \tag{4}
+\]
+
+Put \(a=k-1\), \(b=2k-4\), and choose \(D>0\) with \(c_kD^a\geq2\). For sufficiently large \(n\), define
+\[
+t=\left\lceil D n^{1/a}(\log n)^{b/a}\right\rceil.
+\]
+Then \(t\leq n\), so \(\log t\leq\log n\), and the ceiling gives
+\[
+R(k,t)\geq c_k\frac{t^a}{(\log t)^b}
+\geq c_kD^a n\geq2n>n.
+\]
+Also \(t-1<D n^{1/a}(\log n)^{b/a}\). Applying (4) proves (1).
+The spare factor two ensures the strict Ramsey inequality; a bound \(R(k,t)\geq c n\) with \(c<1\) would not justify (4).
+
+For \(k=4\), this gives \(f_4(n)\gg n^{2/3}/(\log n)^{4/3}\). For general \(k\), one may take \(c_k\) in the problem's logarithmic exponent to be \((2k-4)/(k-1)\); this exponent notation is unrelated to the positive constant named \(c_k\) in (3).
+
+\subsection*{Attribution and scope}
+The random-deletion argument is classical, and the sharp-exponent deduction uses Brada\v{c}'s explicitly stated theorem. The current problem page is \url{https://www.erdosproblems.com/920}, checked 24 September 2026. The requested statement is completely derived relative to (3); neither that theorem nor its construction is claimed as new, and no local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

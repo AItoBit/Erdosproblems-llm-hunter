@@ -1,0 +1,42 @@
+\section*{Erd\H{o}s Problem 1134: a collision gives density zero}
+
+\paragraph{Statement and scope.}
+Let \(A\) be the least set of positive integers containing \(1\) and closed under \(x\mapsto2x+1,3x+1,6x+1\). Does \(A\) have positive lower density? No: we prove the quantitative bound \(A(X)=O(X^{99/100})\). This is a reconstruction of the known negative resolution, not a claim to improve the published exponent. See \url{https://www.erdosproblems.com/1134}.
+
+\paragraph{A shortening identity.}
+Write a word in the alphabet \(\{2,3,6\}\) in the order in which its maps \(F_m(x)=mx+1\) are applied. Then
+\[
+ F_2(F_2(F_3(x)))=12x+7=F_6(F_2(x)).
+\]
+Consequently the consecutive subword \(322\) may be replaced by \(26\) without changing the represented integer or the product of its letters. Every value in \(A\) therefore has a representing word with no occurrence of \(322\): repeated replacements terminate because they shorten the word. The empty word represents \(1\).
+
+\paragraph{A convergent word sum.}
+Put \(\sigma=99/100\) and \(S=2^{-\sigma}+3^{-\sigma}+6^{-\sigma}\). A word avoiding \(322\) avoids it in particular in each of its disjoint blocks of three letters. If \(P(w)\) is the product of the letters, this gives
+\[
+ \sum_{\substack{w:\,322\text{ absent}}}P(w)^{-\sigma}
+ \leq (1+S+S^2)\sum_{j\geq0}(S^3-12^{-\sigma})^j.
+\]
+The right side is finite. Indeed
+\[
+ S\leq6^{1/100}(1/2+1/3+1/6)=6^{1/100},
+ \qquad 6^{3/100}<13/12,\qquad 12^{-\sigma}>1/12.
+\]
+The middle strict inequality is equivalently the exact integer inequality
+\(216\cdot12^{100}<13^{100}\). Thus \(S^3-12^{-\sigma}<1\).
+
+\paragraph{Counting distinct integers.}
+Starting from \(1\), each operation increases the value at least by its multiplicative factor, so the value represented by \(w\) is at least \(P(w)\).
+Choose one shortened word for each member of \(A\cap[1,X]\). These words are distinct and satisfy \(P(w)\leq X\). Therefore, writing \(C\) for the finite word sum above,
+\[
+ A(X)\leq\sum_{\substack{w:\,322\text{ absent}\\P(w)\leq X}}1
+ \leq X^\sigma\sum_{w:\,322\text{ absent}}P(w)^{-\sigma}
+ \leq CX^\sigma.
+\]
+In particular the natural density exists and is zero.
+
+\paragraph{Attribution and dependencies.}
+The problem page reports the Crampin--Hilton resolution and a sharper exponent, also discussed in Lagarias's account. This proof uses the same basic phenomenon of coincident affine words, with an elementary block estimate; it needs no external counting theorem.
+
+\paragraph{Completion estimate.}
+The requested positive-density assertion is completely disproved.
+\textbf{COMPLETION: 100\%}

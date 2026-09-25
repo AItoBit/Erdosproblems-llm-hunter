@@ -1,0 +1,49 @@
+\section*{Erd\H{o}s Problem 87: Ramsey numbers versus chromatic number}
+
+\subsection*{1. Statement and scope}
+For each fixed $0<\epsilon<1$, must all sufficiently large $k$ and every $k$-chromatic graph $G$ satisfy $R(G)>(1-\epsilon)^kR(K_k)$? Must there even be a fixed positive lower bound for $R(G)/R(K_k)$? We prove a uniform exponential estimate with explicit constants, obtain the first assertion for a definite range of $\epsilon$, and isolate the stronger comparison gap. The full question remains unresolved.
+
+\subsection*{2. A critical subgraph and a uniform random-coloring estimate}
+Choose an induced subgraph $H\subseteq G$ of minimum order among those with chromatic number $k$. Every vertex of $H$ has degree at least $k-1$: otherwise a $(k-1)$-coloring of $H-v$ could be extended to $v$ using a color absent from its at most $k-2$ neighbors. Write $v=|H|\ge k$ and $e=e(H)$. Then
+\[
+ e\ge(k-1)v/2.\tag{1}
+\]
+Set $N=\lfloor2^{(k-1)/2-2/k}\rfloor$ for $k\ge3$, and color the edges of $K_N$ independently red or blue with equal probability. For any fixed injective map of $V(H)$ into these vertices, all its $e$ edges have one color with probability $2^{1-e}$. There are at most $N^v$ such maps. Thus the expected number of monochromatic labeled copies is at most
+\[
+ N^v2^{1-e}\le2^{1-2v/k}\le1/2.
+\]
+Some coloring has none, so it also has no monochromatic $G$. If $N<v$ there are no embeddings at all, and the conclusion is still valid. Therefore
+\[
+ R(G)>N,\qquad R(G)>2^{(k-1)/2-2/k}.\tag{2}
+\]
+The second inequality follows from integrality, $R(G)\ge\lfloor x\rfloor+1>x$ with $x=2^{(k-1)/2-2/k}$. It does not use the false inequality $\lfloor x\rfloor\ge x$ appearing in an older write-up.
+
+\subsection*{3. An explicit range of the requested comparison}
+For completeness the neighborhood recurrence $R(s,t)\le R(s-1,t)+R(s,t-1)$ follows by choosing a vertex: if its red neighborhood is smaller than $R(s-1,t)$, its blue neighborhood in a complete graph of the displayed order has at least $R(s,t-1)$ vertices. Induction with $R(1,t)=R(s,1)=1$ gives
+\[
+ R(K_k)\le\binom{2k-2}{k-1}\le4^{k-1}.
+\]
+Combining with (2),
+\[
+ \frac{R(G)}{R(K_k)}>
+ 2^{-3k/2+3/2-2/k}.\tag{3}
+\]
+For $k\ge3$ the last constant factor $2^{3/2-2/k}$ exceeds one. Hence the desired inequality holds, uniformly in $G$, whenever
+\[
+ 1-\epsilon\le2^{-3/2},\quad\text{or equivalently}\quad
+ \epsilon\ge1-\frac1{2\sqrt2}.
+\]
+This range is a consequence of the classical bounds alone. It leaves all sufficiently small positive $\epsilon$ untreated.
+
+A useful conditional implication is also precise: if $\limsup_kR(K_k)^{1/k}=\sqrt2$, then the first question has an affirmative answer. Indeed, for any fixed $\epsilon>0$ choose $\eta>0$ so that $\sqrt2/(\sqrt2+\eta)>1-\epsilon$. Eventually $R(K_k)\le(\sqrt2+\eta)^k$, while (2) is a fixed positive factor times $(\sqrt2)^k$. Their ratio exceeds $(1-\epsilon)^k$ for all sufficiently large $k$. The hypothesis on diagonal Ramsey numbers is not assumed known.
+
+\subsection*{4. Scope of the missing argument}
+If $G$ contains $K_k$, subgraph monotonicity immediately gives $R(G)\ge R(K_k)$, settling both questions in that restricted class. General $k$-chromatic graphs need not contain $K_k$, and their critical-subgraph minimum degree is all that (1) exploits.
+A lower bound on $R(K_k)$ cannot repair the comparison in (3): to make a proved lower bound for the numerator yield a ratio lower bound, one needs an upper bound for the denominator. Nor does a finite example with $R(G)<R(K_k)$ contradict either eventual question. No sequence of large-chromatic-number counterexamples is produced here.
+
+\subsection*{5. Assessment and attribution}
+The explicit uniform lower bound, the stated $\epsilon$ range and the conditional implication are proved directly. The small-$\epsilon$ question and the fixed-factor version remain open in this attempt. The random-coloring observation is credited to Wigderson on the problem page; this is a checked reconstruction and extension of earlier GPT-5.2 attempts, with their rounding and comparison directions corrected.
+Source: \url{https://www.erdosproblems.com/87}.
+
+\textbf{Completion rate estimate: 25\%.}
+

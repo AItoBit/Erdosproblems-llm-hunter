@@ -1,0 +1,107 @@
+\section*{Erd\H{o}s Problem \#357: distinct consecutive sums}
+\subsection*{1. Statement and scope}
+Let $f(n)$ be the largest $k$ for which some
+$1\le a_1<\cdots<a_k\le n$ has all sums
+$\sum_{i=u}^v a_i$, $1\le u\le v\le k$, distinct.
+How does $f(n)$ grow, and is $f(n)=o(n)$?
+Related questions ask whether an infinite such sequence has density
+zero and whether its reciprocal sum converges.
+We prove explicit lower and upper bounds and an infinite-sequence
+growth obstruction. The sublinear upper bound and reciprocal-sum
+questions remain unresolved.
+
+\subsection*{2. An explicit lower bound of order $2\sqrt n$}
+Put $m=\lfloor\sqrt n\rfloor$, $k=2m-1$, and take the last $k$ integers
+up to $n$, namely $a_i=n-k+i$. These are positive since
+$m^2\ge2m-1$. Sums of a fixed length $r$ strictly increase with the
+starting index. Their minimum and maximum are
+\[
+ L_r=r(n-k)+r(r+1)/2,\qquad U_r=rn-r(r-1)/2.
+\]
+For $1\le r<k$,
+\[
+ L_{r+1}-U_r
+ =n-(r+1)(k-1)+r^2
+ =(r-m+1)^2+n-m^2+1\ge1.
+\]
+Thus the ranges of different lengths are disjoint, proving
+\[
+ f(n)\ge2\lfloor\sqrt n\rfloor-1.
+\]
+This is the familiar interval construction also checked in the
+earlier GPT Pro 5.2 attempt.
+
+\subsection*{3. An elementary upper bound with controlled error}
+Write $S=\sum_{i=1}^k a_i$. For $1\le h\le k$, there are
+\[
+ M=\sum_{r=1}^h(k-r+1)=hk-h(h-1)/2
+\]
+short consecutive sums of lengths at most $h$. They are distinct
+positive integers, so their total is at least $M(M+1)/2$.
+Each $a_i$ occurs in at most $r$ sums of length $r$, so the total is
+at most $h(h+1)S/2$. Therefore
+\[
+ M^2\le h(h+1)S,\qquad
+ (k-h/2)^2\le(1+1/h)S.                            \tag{1}
+\]
+Choose $h=\lfloor\sqrt k\rfloor$. If $S\ge k^2$ there is nothing
+to prove; otherwise (1) implies
+\[
+ k^2\le S+kh+k^2/h=S+O(k^{3/2}).
+\]
+The individual $a_i$ are distinct and bounded by $n$, giving
+$S\le kn-k(k-1)/2$. Combining these inequalities yields
+\[
+ f(n)\le\frac23 n+O(\sqrt n).                      \tag{2}
+\]
+The argument even permits a nonmonotone ordering, because distinct
+length-one sums still force distinct entries. It reconstructs a
+classical weaker upper bound; it is not asserted to be the best
+published constant.
+
+\subsection*{4. A quantitative obstruction for an infinite sequence}
+For any infinite increasing sequence with the stated property,
+\[
+ \limsup_{j\to\infty}\frac{a_j}{j\log j}\ge\frac12.                  \tag{3}
+\]
+Suppose instead that $a_j\le c j\log j$ for all sufficiently large
+$j$, with $c<1/2$. Choose a fixed small $\lambda>0$ so that
+$1/(c(1+\lambda))>2$.
+For large starting indices $j\le N/(1+\lambda)$ and
+$1\le r\le\lfloor\lambda j\rfloor$, monotonicity gives
+\[
+ \sum_{i=j}^{j+r-1}a_i
+ \le c(1+\lambda)rj\log((1+\lambda)j).
+\]
+All these sums are distinct positive integers at most
+$S_N=a_1+\cdots+a_N=O(N^2\log N)$. Their reciprocal sum is therefore
+at most the harmonic sum $H_{S_N}=(2+o(1))\log N$. On the other hand
+it is at least
+\[
+ \frac1{c(1+\lambda)}
+ \sum_{j_0\le j\le N/(1+\lambda)}
+ \frac{H_{\lfloor\lambda j\rfloor}}{j\log((1+\lambda)j)}
+ =\left(\frac1{c(1+\lambda)}+o(1)\right)\log N.
+\]
+The last equality follows from
+$H_{\lfloor\lambda j\rfloor}=\log j+O_\lambda(1)$; the accumulated
+error is $O_\lambda(\log\log N)$.
+The two bounds contradict the choice of $\lambda$, proving (3).
+In particular $j/a_j$ tends to zero along a subsequence, so the
+set of terms has lower asymptotic density zero.
+
+\subsection*{5. Assessment and references}
+The interval construction and (2) leave a large gap between
+$\sqrt n$ and $n$. Statement (3) concerns a subsequence in one fixed
+infinite example and does not yield a uniform bound for all finite
+examples. Lower density zero is not density zero; nor does (3)
+imply convergence of $\sum1/a_j$.
+
+Source: \texttt{https://www.erdosproblems.com/357}, checked 2026-09-25,
+which credits Erd\H{o}s--Harzheim for the question and records the
+averaging obstruction and Hegyv\'ari's bounds.
+The prior GPT Pro 5.2 constructions were checked and retained with
+explicit attribution. The arguments here use no unproved external
+theorem, and no novelty or formal Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 50\%}

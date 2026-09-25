@@ -1,0 +1,64 @@
+\section*{Erd\H{o}s Problem 841: when an interval supplies a square product}
+\subsection*{1. Statement, scope and a necessary correction}
+Let $t_n$ be the least $t\ge0$ such that $n$ times the product of some subset of $\{n+1,\ldots,n+t\}$ is a square; set $t_n=0$ for square $n$. It is finite since $n(4n)=(2n)^2$ gives $t_n\le3n$. We reconstruct the distributional resolution of Bui--Pratt--Zaharescu:
+\[
+ \lim_{X\to\infty}\frac{\#\{n\le X:t_n\le n^c\}}X
+ =\rho(1/c)\quad(0<c\le1),                              \tag{1}
+\]
+where $\rho$ is the Dickman function. This also answers the original density-zero question for $t_n\ge n^{1-o(1)}$.
+The unqualified editorial statement $t_n\ge P(n)$, with $P(n)$ the largest prime factor, needs correction. Indeed
+\[
+ 242\cdot245\cdot250=3850^2,
+\]
+so $t_{242}\le8<11=P(242)$. The primary paper correctly uses the hypothesis $P(n)^2\nmid n$. We include the valid version and show its exceptions have density zero.
+The sole asymptotic inputs are the standard prime-counting bound $\pi(Y)=O(Y/\log Y)$ and the Dickman smooth-number theorem
+\[
+ \Psi(X,X^{c+o(1)})/X\longrightarrow\rho(1/c)
+ \quad\hbox{for fixed }0<c<1,                            \tag{2}
+\]
+where $\Psi(X,Y)=\#\{n\le X:P(n)\le Y\}$. We also use the standard continuity of $\rho$ and $\rho(1)=1$. The square-product counting argument itself is proved below.
+\subsection*{2. The valid prime obstruction and its exceptions}
+If $v_p(n)$ is odd and $t<p$, none of $n+1,\ldots,n+t$ is divisible by $p$. Its odd exponent in $n$ cannot be corrected, so $t_n\ge p$. In particular $t_n\ge P(n)$ whenever $P(n)^2\nmid n$.
+Let $\mathcal E_X=\{n\le X:P(n)^2\mid n\}$, with $n=1$ excluded. We prove $|\mathcal E_X|=o(X)$ without a quantitative smooth-number estimate. Fix an integer $z\ge2$. Those exceptional $n$ with $P(n)\le z$ are $z$-smooth; there are at most $(1+\log_2 X)^{\pi(z)}=o(X)$ of them for fixed $z$, by recording all their prime exponents. All remaining exceptions are divisible by $p^2$ for some prime $p>z$, and therefore number at most
+\[
+ X\sum_{p>z}\frac1{p^2}\le X\sum_{j>z}\frac1{j^2}\le X/z.
+\]
+First let $X\to\infty$, then $z\to\infty$, proving the claim. Thus, uniformly in $Y$,
+\[
+ F_X(Y):=\#\{n\le X:t_n\le Y\}\le\Psi(X,Y)+o(X).          \tag{3}
+\]
+The possible integer $1$ is already included on both sides by the convention $P(1)=1$.
+\subsection*{3. Rank and nullity in a short interval}
+For each positive integer $a$, let $v(a)$ be its vector of prime-exponent parities over $\mathbb F_2$. For a finite interval $I$ of integers, write $W_I$ for the matrix with these vectors as columns, ordered by increasing $a$. A subset has square product exactly when its indicator vector belongs to $\ker W_I$.
+Process columns in decreasing order. A column $v(a)$ fails to increase the rank exactly when it is a linear combination of the columns with larger indices still in $I$. This is equivalent to $a$ times a subset of those larger integers being a square, or $a+t_a\le\max I$. It includes a zero column, corresponding to square $a$ and $t_a=0$. The rank increases once for every other column. Hence
+\[
+ \dim\ker W_I=\#\{a\in I:a+t_a\le\max I\}.              \tag{4}
+\]
+Now suppose $I$ has at most $Y$ consecutive integers, where $Y\ge2$ is an integer, and let $M$ count its $Y$-smooth elements. The submatrix restricted to these $M$ columns has at most $\pi(Y)$ nonzero coordinate rows. Its kernel has dimension at least $M-\pi(Y)$, and embeds into the kernel of the full matrix by adjoining zero coordinates. By (4), at least $M-\pi(Y)$ members of $I$ satisfy $a+t_a\le\max I$, and in particular $t_a\le Y$.
+Partition $\{1,\ldots,\lfloor X\rfloor\}$ into intervals of $Y$ consecutive integers, allowing the last to be shorter. Summing this bound proves
+\[
+ F_X(Y)\ge\Psi(X,Y)-\left\lceil X/Y\right\rceil\pi(Y).    \tag{5}
+\]
+This argument counts dependent columns, not merely one square-product subset, and is why it yields a distributional comparison.
+\subsection*{4. From fixed cutoffs to the cutoff $n^c$}
+Fix $0<c<1$ and take integer $Y=X^{c+o(1)}$. The error in (5) is
+\[
+ O\left(\frac{X+Y}{\log Y}\right)=o(X).
+\]
+Combining (2), (3) and (5) gives $F_X(Y)/X\to\rho(1/c)$.
+For fixed $0<\eta<1$ and $\eta X\le n\le X$, we have $(\eta X)^c\le n^c\le X^c$. It follows that
+\[
+ F_X(\lfloor(\eta X)^c\rfloor)-\eta X-O(1)
+ \le\#\{n\le X:t_n\le n^c\}\le F_X(\lfloor X^c\rfloor).
+\]
+Both outer counts, divided by $X$, converge to $\rho(1/c)$; then let $\eta\downarrow0$. This proves (1) for $c<1$.
+For $c=1$, fix $d<1$ and restrict to $n\ge\eta X$. For large $X$, $X^d\le\eta X\le n$, so the proportion with $t_n\le n$ is at least $F_X(\lfloor X^d\rfloor)/X-\eta-o(1)$. Let $X\to\infty$, then $d\uparrow1$ and $\eta\downarrow0$. The limiting proportion is one. The same sandwich using $\Psi$ instead of $F_X$ proves the equal limiting distribution for $P(n)\le n^c$.
+Finally, let $\varepsilon(n)\to0$. For any fixed $c<1$, eventually $1-\varepsilon(n)>c$, so
+\[
+ \{n:t_n\ge n^{1-\varepsilon(n)}\}\subseteq\{n:t_n>n^c\}
+\]
+apart from finitely many integers. Its upper density is at most $1-\rho(1/c)$, which tends to zero as $c\uparrow1$. This proves the original density-zero assertion.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/841}; H. M. Bui, K. Pratt and A. Zaharescu, \emph{A problem of Erd\H{o}s--Graham--Granville--Selfridge on integral points on hyperelliptic curves}, Section 3, \url{https://arxiv.org/abs/2211.12467}. The rank argument reconstructs the mechanism of their Lemmas 3.6--3.7; the proof above uses only a density-zero exceptional-set estimate because the target is a limiting distribution. Their stronger quantitative errors, subexponential examples and height-theoretic pointwise lower bounds are separate refinements and are not asserted as proved here.
+\textbf{SOLVED for the distributional resolution and the original density question, relative to (2).} All square-product, exceptional-set and variable-cutoff arguments are supplied. The estimate measures this stated proof scope, not the additional refinements or a new discovery; no local formal verification is claimed.
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,52 @@
+\section*{Erd\H{o}s Problem \#781: monochromatic descending waves}
+\subsection*{Statement and partial outcome}
+Let \(f(k)\) be the smallest \(N\) such that every two-colouring of \([1,N]\) contains
+\[
+x_1<\cdots<x_k,\qquad
+x_{j+1}-x_j\leq x_j-x_{j-1}\quad(1<j<k)
+\]
+in one colour. Is \(f(k)=k^2-k+1\), and what is its order of growth?
+The known answer is \(f(k)=\Theta(k^3)\), due to Alon and Spencer. Here we prove the quadratic lower bound by an explicit block colouring and a cubic upper bound by a complete greedy argument:
+\[
+k^2-k+1\leq f(k)\leq k^3\qquad(k\geq2). \tag{1}
+\]
+Attempt status: unresolved. The cubic lower bound, which disproves the proposed exact quadratic formula, is not reconstructed here.
+
+\subsection*{A quadratic-length colouring without a \(k\)-wave}
+Colour consecutive blocks with lengths
+\[
+k-1,\ k-1,\ k-2,\ k-2,\ \ldots,\ 1,\ 1,
+\]
+alternately red and blue, beginning with red. There are \(k(k-1)\) integers.
+
+A descending wave which later leaves one of its monochromatic blocks cannot have used two vertices of that block. Indeed, those two vertices would be consecutive members of the wave while it is inside the block, with gap at most \(\ell-1\), where \(\ell\) is the block length. Any jump from that block to a later block of the same colour crosses an intervening opposite-colour block. After a red block of length \(\ell\), that intervening blue block has length \(\ell\), so the jump is at least \(\ell+1\). After a blue block of length \(\ell\), the next red block has length \(\ell-1\), so the jump is at least \(\ell\). Either jump is larger than the earlier gap, contrary to the descending condition. Skipping additional blocks only increases the jump.
+
+Suppose a monochromatic descending wave ends in the \(j\)-th block of its colour. There are only \(j-1\) earlier blocks of that colour, contributing at most one vertex each; the last block has length \(k-j\). Thus its total length is at most
+\[
+(j-1)+(k-j)=k-1.
+\]
+The colouring has no \(k\)-wave, proving the lower bound in (1).
+
+\subsection*{A greedy cubic upper bound}
+Reflection reverses the gap sequence. More precisely, if
+\(a_1<\cdots<a_k\) has nondecreasing gaps in the reflected colouring of \([1,N]\), then \(x_j=N+1-a_{k+1-j}\) is a descending wave in the original colouring. It therefore suffices to find an ascending wave, whose successive gaps are nondecreasing.
+
+Let \(N=k^3\), and assume after exchanging colours that 1 is red. If there is a block of \(k\) consecutive blue integers, it itself is a monochromatic wave. Otherwise every length-\(k\) interval contains a red integer.
+
+Set \(a_1=1\). Choose \(a_2\) red in \([2,k+1]\). Having chosen \(a_{i-1}<a_i\), write \(d_i=a_i-a_{i-1}\), and choose \(a_{i+1}\) red in
+\[
+[a_i+d_i,\ a_i+d_i+k-1].
+\]
+This guarantees \(d_i\leq d_{i+1}\leq d_i+k-1\), so induction gives \(d_i\leq(i-1)k\) and
+\[
+a_j\leq1+k\sum_{i=1}^{j-1}i
+=1+\frac{k j(j-1)}2.
+\]
+All intervals used up to \(a_k\) lie inside \([1,k^3]\): their right endpoint is bounded by the same displayed expression with \(j\leq k\), which is at most \(k^3\). Thus the recursion cannot fail and produces a red ascending \(k\)-wave. Reflecting proves the desired upper bound.
+
+\subsection*{What remains}
+The lower construction reaches only order \(k^2\). It does not imply a cubic obstruction, nor does the upper proof decide the proposed exact formula. The primary Alon--Spencer proof uses a correlated random block colouring and controls the number of rounded real ascending waves; those estimates are the missing part here.
+
+Reference: N. Alon and J. Spencer, \emph{Ascending waves}, J. Combin. Theory Ser. A 52 (1989), 275--287, especially the introduction and Section 1, \url{https://www.cs.tau.ac.il/~nogaa/PDFS/Publications1/Ascending%20waves.pdf}. The upper construction is reconstructed from that paper; the quadratic obstruction is verified directly above. Statement checked at \url{https://www.erdosproblems.com/781} on 24 September 2026. No novelty or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 55\%}

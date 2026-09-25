@@ -1,0 +1,42 @@
+\section*{Erd\H{o}s Problem 181: an elementary exponential cube Ramsey bound}
+
+\subsection*{1. Statement and scope}
+The question is whether the diagonal Ramsey number of the $n$-dimensional cube satisfies $R(Q_n)=O(2^n)$. We prove, for $n\ge2$,
+\[
+ 3\cdot2^{n-1}-1\le R(Q_n)\le2^{3n+3}.\tag{1}
+\]
+The upper estimate is much weaker than the best published bounds recorded on the source page, but is a completely proved improvement over the doubly exponential clique bound. It does not settle the requested linear dependence on the number of cube vertices; that remains unresolved.
+
+\subsection*{2. A lower colouring using the balanced bipartition}
+Put $v=2^n$ and $m=2^{n-1}$. Split $v+m-2$ vertices into classes of sizes $v-1$ and $m-1$, colour edges within each class red and edges between classes blue. The red graph has no copy of the connected graph $Q_n$, since each component has fewer than $v$ vertices.
+The two bipartition classes of a cube both have size $m$. A connected bipartite graph embedded in a complete bipartite graph must send its two classes into the two host classes, up to interchanging them: choose the image side of one vertex and follow paths to all others. The smaller blue host class has only $m-1$ vertices. Thus there is no blue cube either, proving the lower bound in (1). For $n=1$ the separate exact value is $R(Q_1)=2$.
+
+\subsection*{3. A common-neighbour set from random sampling}
+Let $n\ge2$ and $N=2^{3n+3}$. In any red-blue colouring of $K_N$, one colour has average degree at least $(N-1)/2$; call that graph $G$. Choose $t=2n$ vertices independently and uniformly, with replacement, and let $S$ be their common neighbourhood. By convexity,
+\[
+ \mathbb E|S|=\sum_{x\in V(G)}\left(\frac{\deg(x)}N\right)^t
+ \ge N\left(\frac{N-1}{2N}\right)^t
+ \ge \frac{N}{2^{t+1}}=8m.\tag{2}
+\]
+The last step follows from $(1-1/N)^t\ge1-t/N\ge1/2$.
+
+Call an $n$-element vertex set bad if it has fewer than $2m$ common neighbours in $G$. If $B$ is bad, the probability that $B\subseteq S$ is at most $(2m/N)^t$: all sampled vertices must lie in the common neighbourhood of $B$. Let $Z$ count the bad $n$-sets contained in $S$. Then
+\[
+ \mathbb EZ\le N^n(2m/N)^{2n}
+ =\left(\frac{(2m)^2}{N}\right)^n
+ =2^{-n(n+3)}<1.\tag{3}
+\]
+Hence some choice has $|S|-Z\ge m$. From this $S$, remove one vertex from each of its bad $n$-subsets. At most $Z$ vertices are removed, and no bad $n$-subset survives. We obtain $A$ of size at least $m$ such that every $n$-subset of $A$ has at least $2m$ common neighbours in the original graph $G$.
+
+\subsection*{4. Embedding the cube without vertex collisions}
+The cube is bipartite with $m$ vertices in each class and maximum degree $n$. Embed the first class injectively into $A$. Here $m\ge n$ for $n\ge2$. Each vertex of the second class has $n$ neighbours in the first, whose images have at least $2m$ common neighbours. Embed these second-class vertices one at a time. At a given step at most $m+(m-1)=2m-1$ host vertices have already been used, so a new common neighbour is available.
+
+The bound $2m$, rather than $m$, explicitly reserves room to avoid the images of the first class as well as the previously embedded second-class vertices. All cube edges are now edges of $G$; extra host edges are harmless because the required copy need not be induced. This proves the upper bound of (1).
+
+\subsection*{5. Remaining gap and attribution}
+The argument is the standard random-common-neighbour method, reconstructed with explicit parameters and the collision count included. It uses the cube's degree and bipartition but loses an exponential factor: $2^{3n+3}/2^n$ is unbounded. Known results on the source page are substantially better still, and their proof is not claimed here. A method embedding a cube in every two-colouring of a complete graph on only $C2^n$ vertices is missing.
+
+Source: \url{https://www.erdosproblems.com/181}. The earlier draft's unreproduced tiny Ramsey searches are not used.
+
+\textbf{Completion rate estimate: 30\%.}
+

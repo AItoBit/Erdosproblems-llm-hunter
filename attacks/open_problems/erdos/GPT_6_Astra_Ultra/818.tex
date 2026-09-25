@@ -1,0 +1,37 @@
+\section*{Erd\H{o}s Problem 818: small sumset, large product set}
+\subsection*{1. Statement and scope}
+For a finite set $A$ of integers, suppose $|A+A|\le K|A|$, with $K$ fixed. Prove that $|AA|\gg_K |A|^2/\log(2|A|)$. This is the affirmative resolution of Solymosi. The proof below reconstructs his multiplicative-energy argument, with deliberately unoptimized constants and with the reduction from arbitrary signs included. No sum--product theorem is assumed as an external input.
+\subsection*{2. Multiplicative energy}
+First let $B$ be a set of $m\ge1$ positive real numbers, and put $S=|B+B|$, $P=|BB|$. Define
+\[
+ E=|\{(a,b,c,d)\in B^4:ab=cd\}|.
+\]
+If $r(z)$ counts representations $z=ab$, Cauchy--Schwarz gives
+\[
+ E=\sum_zr(z)^2\ge \frac{m^4}{P}.                 \tag{1}
+\]
+The same quantity counts pairs of points of $B\times B$ on the same ray from the origin: the equation $a/b=c/d$ is $ad=bc$, and interchanging coordinates identifies the two counts. If $r_\lambda$ is the number of points on the ray of slope $\lambda$, then
+\[
+ E=\sum_\lambda r_\lambda^2,\qquad 1\le r_\lambda\le m.
+\]
+\subsection*{3. Disjoint wedges bound the energy}
+Partition the occupied rays into the $J=1+\lfloor\log_2m\rfloor$ classes $2^j\le r_\lambda<2^{j+1}$. Fix one class, containing $h$ rays in increasing angular order, and put $u=2^j$.
+If $h\ge2$, add every point on one ray to every point on the next ray in this ordered class. For a fixed pair of distinct rays the addition map is injective: if $x+y=x'+y'$, then $x-x'=y'-y$ lies on two different one-dimensional subspaces, and is therefore zero. All resulting sums lie strictly inside the wedge between the two rays, because both coefficients are positive. Wedges from different consecutive pairs have disjoint interiors. All sums also belong to $(B+B)\times(B+B)$. Consequently
+\[
+ (h-1)u^2\le S^2.
+\]
+The energy contribution of this class is less than $4hu^2\le8S^2$, using $h\le2(h-1)$. If $h=1$, its contribution is at most $m^2\le S^2$; the last inequality follows by fixing one summand in $B+B$. Empty classes contribute zero. Summing yields
+\[
+ E\le8J S^2,\qquad |BB|\ge\frac{m^4}{8J|B+B|^2}.       \tag{2}
+\]
+This explicitly handles a class consisting of just one ray, which otherwise leaves an endpoint gap in the consecutive-ray count.
+\subsection*{4. Integers of either sign}
+Write $n=|A|$. For $n\ge3$, either the positive or negative elements of $A$ form a subset of size $m\ge(n-1)/2\ge n/3$. Let $B$ be that subset, negated if necessary. Then $B$ is positive, $|B+B|\le|A+A|\le Kn$, and $BB\subseteq AA$. Thus (2) gives the explicit estimate
+\[
+ |AA|\ge\frac{n^2}{648K^2(1+\lfloor\log_2 n\rfloor)}.
+\]
+The cases $n=1,2$ are absorbed by changing the absolute constant; the empty set has no substantive assertion. This proves the requested bound with logarithmic exponent $C=1$. In particular the implied constant depends on the doubling constant $K$, as it must.
+\subsection*{5. Sources and assessment}
+Sources: \url{https://www.erdosproblems.com/818}; J. Solymosi, \emph{Bounding multiplicative energy by the sumset}, Advances in Mathematics 222 (2009), 402--408, \url{https://arxiv.org/abs/0806.1040}. The ray geometry and energy method are attributed to that work; this is a reconstruction of its known resolution, not a novelty claim.
+\textbf{SOLVED in this reconstruction.} The complete argument, including signs, singleton dyadic classes and the quantitative dependence on $K$, is supplied. No local formal-proof verification is claimed.
+\textbf{Completion rate estimate: 100\%.}

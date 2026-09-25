@@ -1,0 +1,60 @@
+\section*{Erd\H{o}s Problem 335: equality in the density of a sumset}
+\subsection*{Statement and scope}
+Characterize positive-density sets $A,B\subset\mathbb N$ with
+$d(A+B)=d(A)+d(B)$. We prove periodic, irrational-rotation, and random examples, including examples separated in density from every periodic set. A general characterization is unresolved here.
+
+The periodic reduction retains a valid part of the earlier GPT-5.2 attempt. Its proposed periodic-only direction is insufficient, as the rotation examples show. Source and current structural results: \url{https://www.erdosproblems.com/335}. No new classification is claimed.
+
+\subsection*{Periodic sets}
+If $A$ and $B$ are unions of residue classes $R,S$ modulo $q$, then
+\[
+ d(A)=|R|/q,\quad d(B)=|S|/q,\quad d(A+B)=|R+S|/q.
+\]
+The last statement is eventual: each residue in $R+S$ has a representation by two fixed positive representatives, and adding sufficiently many multiples of $q$ to one summand represents every sufficiently large integer of that residue. There can be finitely many initial omissions.
+
+Thus the equality reduces exactly to $|R+S|=|R|+|S|$. For example $R=\{0,1\}$ and $S=\{0,2\}$ give equality for every $q\ge4$, since their sumset has four residues.
+
+\subsection*{Irrational rotations}
+Fix irrational $\theta$ and positive $\alpha,\beta$ with $\alpha+\beta<1$. Put
+\[
+ A=\{n\ge1:\{n\theta\}\in(0,\alpha)\},\qquad
+ B=\{n\ge1:\{n\theta\}\in(0,\beta)\}.
+\]
+Irrational rotation is uniformly distributed: for every nonzero integer $h$, the mean of $e^{2\pi i h n\theta}$ tends to zero by the geometric-series formula, and trigonometric approximation of interval indicators gives the interval frequency. Hence $d(A)=\alpha$, $d(B)=\beta$.
+
+Every sum belongs to $C=\{n:\{n\theta\}\in(0,\alpha+\beta)\}$, so the upper density of $A+B$ is at most $\alpha+\beta$. For the reverse inequality fix $0<\delta<(\alpha+\beta)/2$. If
+$t=\{n\theta\}\in[\delta,\alpha+\beta-\delta]$, the interval
+\[
+ J_t=(\max(0,t-\beta),\min(\alpha,t))
+\]
+has length at least $\min(\alpha,\beta,\delta)>0$. A finite prefix of the dense orbit $\{\{j\theta\}:j\ge1\}$ meets every interval of this fixed minimum length: take a sufficiently fine finite net from the orbit. Therefore one fixed $K$ works for every such $t$. For $n>K$, choose $1\le j\le K$ with $\{j\theta\}\in J_t$. Then $j\in A$, $n-j\in B$, since $t-\{j\theta\}\in(0,\beta)$ with no wrap around the circle.
+
+It follows that the lower density of $A+B$ is at least $\alpha+\beta-2\delta$. Let $\delta\downarrow0$ to obtain
+\[
+ d(A+B)=\alpha+\beta.
+\]
+These $A$ cannot even be approximated arbitrarily well in density by periodic sets. On every residue class modulo $q$, irrationality of $q\theta$ gives frequency $\alpha$. Thus for any union $P$ of residue classes with density $\gamma$,
+\[
+ d(A\mathbin{\triangle}P)=\alpha+\gamma-2\alpha\gamma
+ \ge\min(\alpha,1-\alpha)>0. \tag{1}
+\]
+
+\subsection*{A random example supported on the even integers}
+Choose each positive even integer independently with probability $1/2$, forming $A=B$. With probability one, $d(A)=1/4$. For completeness, if $S_n$ counts selected numbers among the first $n$ even integers, Chebyshev's inequality along $n=k^2$ gives
+\[
+ \Pr(|S_{k^2}-k^2/2|>\varepsilon k^2)\le(4\varepsilon^2 k^2)^{-1}.
+\]
+The sum converges, so the union bound on tails implies that only finitely many such deviations occur. Apply this for rational $\varepsilon>0$, and interpolate using monotonicity between consecutive squares, to get $S_n/n\to1/2$.
+
+For each $n$, the integer $2n$ has $\lfloor(n-1)/2\rfloor$ pairs of distinct positive even summands
+$\{2j,2(n-j)\}$. These pairs use disjoint selected variables. Therefore
+\[
+ \Pr(2n\notin A+A)\le(3/4)^{\lfloor(n-1)/2\rfloor}.
+\]
+Again the sum converges, so almost surely every sufficiently large even integer is in $A+A$. No odd integer is in it. Consequently
+$d(A+A)=1/2=2d(A)$ almost surely. This verifies that equality can coexist with arbitrary independent choices inside a residue class.
+
+\subsection*{Remaining gap}
+These are rigorously established families, not an exhaustive list. Formula (1) rules out an exclusively periodic characterization, and the random construction warns against imposing rigid internal structure on every residue class. The general necessary and sufficient conditions are not proved here.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 40\%}

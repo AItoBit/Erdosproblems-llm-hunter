@@ -1,0 +1,57 @@
+\section*{Erd\H{o}s Problem 1077}
+
+\paragraph{Statement and negative answer.}
+The literal question asks whether, for fixed \(\epsilon,\alpha>0\) and sufficiently large \(D,n\), every \(n\)-vertex graph with at least \(n^{1+\alpha}\) edges has a \(D\)-balanced subgraph \(H\) on
+\[
+ m>n^{1-\alpha}\quad\hbox{vertices},\qquad
+ e(H)\geq\epsilon m^{1+\alpha}.
+\]
+Here \(D\)-balanced means \(\Delta(H)\leq D\delta(H)\). We disprove this for every fixed \(0<\alpha<1/2\), every \(\epsilon>0\), and every fixed finite \(D\geq1\). The counterexample addresses the vertex-order requirement, even allowing arbitrary, non-induced subgraphs.
+
+\paragraph{The host graph.}
+For sufficiently large \(n\), put
+\[
+ a=\lceil2n^\alpha\rceil,\qquad G=K_{a,n-a}.
+\]
+Since \(a=o(n)\), we eventually have \(a\leq n/2\). Therefore
+\[
+ e(G)=a(n-a)\geq(2n^\alpha)(n/2)=n^{1+\alpha}.
+\]
+Thus these graphs meet the question's edge hypothesis with coefficient one.
+
+\paragraph{Every balanced subgraph is small.}
+Let \(H\subseteq G\) be a \(D\)-balanced subgraph with at least one edge. Its minimum degree is positive: otherwise balancedness would force its maximum degree to be zero, contradicting the edge. In particular, isolated vertices cannot be added to enlarge its order.
+
+Let \(x,y\) be the numbers of its vertices in the two parts of \(G\), with \(x\leq a\), and let \(E=e(H)>0\). Summing degrees in each part gives
+\[
+ \Delta(H)\geq E/x,\qquad \delta(H)\leq E/y.
+\]
+Hence
+\[
+ E/x\leq D E/y,\qquad y\leq Dx,
+\]
+and consequently
+\[
+ |V(H)|=x+y\leq(D+1)a
+ \leq(D+1)(2n^\alpha+1). \tag{1}
+\]
+This calculation uses only bipartiteness and the bound on one host part, so it applies to every choice of retained edges.
+
+\paragraph{Contradicting the proposed exponent.}
+Because \(1-2\alpha>0\),
+\[
+ \frac{(D+1)(2n^\alpha+1)}{n^{1-\alpha}}\longrightarrow0.
+\]
+Thus (1) is smaller than \(n^{1-\alpha}\) for every sufficiently large \(n\). Any subgraph meeting the proposed positive edge lower bound has at least one edge and hence is covered by (1). No such subgraph can meet the required order.
+
+For a single concrete parameter choice, take \(\alpha=1/3\) and any \(\epsilon>0\). For every proposed fixed \(D\), arbitrarily large hosts of the displayed form violate the conclusion. Increasing the allowed constant \(D\) therefore does not repair the original assertion. Allowing \(D\) to grow with \(n\) would be a different statement.
+
+\paragraph{What the construction does and does not say.}
+The same examples show, for every \(0<\alpha<1\), that a general theorem cannot guarantee balanced subgraphs of order larger than a constant multiple of \(n^\alpha\), when \(D\) is fixed. This observation by itself is an obstruction, not a matching general existence theorem.
+The current page discusses corrected regularization formulations and later results of Jiang--Longbrake; these are not needed for the negative answer proved above. In particular, this write-up makes no deduction of an optimal order lower bound from an average-degree estimate with a logarithmic loss.
+
+\paragraph{Attribution and assessment.}
+The complete-bipartite obstruction is the example discussed by JunGao at \url{https://www.erdosproblems.com/forum/thread/1077}. The statement and its ambiguity are recorded at \url{https://www.erdosproblems.com/1077}, checked 24 September 2026. The background regularization paper is T. Jiang and S. Longbrake, \emph{Regularization and asymmetric extremal numbers of subdivisions}, \url{https://arxiv.org/abs/2507.03261}. The disproof above is self-contained and does not import that theorem. No novelty or local Lean verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,60 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 880: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and source}
+If every large integer is a sum of at most $h$ elements of $A$, must the sums of at most $h$ distinct elements have bounded gaps? The answer is yes for $h=2$ and no for every $h\ge3$. We reconstruct the block counterexample of Hegyv\'ari, Hennecart and Plagne, \emph{Answer to a question of Burr and Erd\H{o}s on restricted addition and related results}, \url{https://hegyvari.web.elte.hu/artEB4.pdf}, including the role of earlier blocks.
+
+\section*{Order two}
+Every sufficiently large odd integer represented by at most two elements of $A$ is either itself in $A$, or a sum of two distinct elements: a repeated pair has even sum. Thus the restricted sumset contains every sufficiently large odd integer. Consecutive gaps are at most two. The bound is valid with the ``at most'' convention in the question.
+
+\section*{An explicit construction for every higher order}
+Fix $h\ge3$, put $P=2^{h-2}$, $C=3P-1$, and define
+\[
+ x_0=1,\quad x_{j+1}=Cx_j^2+hx_j,\quad
+ E_j=[0,x_j^2]\cup\{2x_j^2,4x_j^2,\ldots,Px_j^2\},
+ \qquad A=\bigcup_{j\ge0}(x_j+E_j).
+\]
+We allow zero as padding when discussing sums of at most $h$ terms; zero need not belong to $A$. The blocks are disjoint and increasing, since their largest element $x_j+Px_j^2$ is below $x_{j+1}$.
+
+For any positive integer $M$, the set $E=[0,M]\cup\{2M,4M,\ldots,2^{h-2}M\}$ satisfies
+\[
+ (h-1)E\supseteq[0,(2^{h-1}-1)M],\qquad hE\supseteq[0,(3\cdot2^{h-2}-1)M].\tag{1}
+\]
+For the first assertion induct on $h$. The case $h=2$ is $E=[0,M]$. From the preceding order, adding either $[0,M]$ or the new largest point $2^{h-2}M$ gives the adjoining intervals $[0,2^{h-2}M]$ and $[2^{h-2}M,(2^{h-1}-1)M]$. For the second assertion, add $[0,M]$ and then the largest point to the first interval; the two resulting intervals overlap and cover the stated range.
+
+Taking $M=x_j^2$, (1) shows that $h(x_j+E_j)$ contains $[hx_j,x_{j+1}]$. The single-term interval $[x_j,x_j+x_j^2]$ overlaps it for all large $j$. Thus every sufficiently large integer in $[x_j,x_{j+1}]$ is a sum of at most $h$ terms of $A$. These intervals cover a tail, proving the basis property.
+
+Let $R$ consist of sums of at most $h$ distinct elements of $A$. Any such sum below $x_{j+1}$ uses only blocks through $j$. Its largest possible value is no larger than the sum of the $h$ largest elements of that entire initial part. For large $j$ all these elements are in the current block, since its ordinary interval contains more than $h$ elements and every older element is below $x_j$. There are $h-2$ spike elements; bounding the remaining two by $x_j+x_j^2$ gives
+\[
+ \sum\text{(the $h$ largest elements)}
+ \le hx_j+\bigl(2+4+\cdots+P+2\bigr)x_j^2
+ =hx_j+2P x_j^2.
+\]
+All future elements are at least $x_{j+1}$. Hence the interval
+\[
+ (hx_j+2P x_j^2,\quad x_{j+1})
+\]
+contains no element of $R$. Its length is $(P-1)x_j^2\to\infty$. Since $x_{j+1}\in R$ and $R$ is unbounded, these empty intervals imply unbounded consecutive gaps.
+
+\section*{If ``order'' means the least possible order}
+The same construction has least order $h$, not merely order at most $h$. Put $M=x_j^2$ and $q=3P-2$, and take an integer $n_j=qM+\lfloor M/2\rfloor$. It lies below $x_{j+1}$, so a representation with at most $h-1$ terms uses no future block. Relax all earlier and ordinary current elements to the interval $[0,M+x_j]$. If $r$ terms are from this interval and the remaining terms are spikes, their sum lies in
+\[
+ [sM,\ (s+r)M+(h-1)x_j],
+\]
+where $s$ is a sum of at most $h-1-r$ powers $2,4,\ldots,P$. For large $j$, $(h-1)x_j<M/3$. To contain $n_j$, this interval must have $s\le q$ and $s+r\ge q+1$.
+
+Let $w(s)$ be the minimum number of coins of values $1,2,4,\ldots,P$ needed for $s$. Binary carrying proves $w(s)=\lfloor s/P\rfloor+\operatorname{popcount}(s\bmod P)$: whenever two equal nonmaximal coins occur, replace them by the next coin. In particular $w(q)=h-1$. Also $w(s+1)\le w(s)+1$. Writing $d=q-s\ge0$, we obtain $w(s)\ge h-1-d$, whereas $r\ge d+1$. Thus the required number of summands is at least $w(s)+r\ge h$, a contradiction. The sequence $n_j\to\infty$ proves that order $h-1$ does not suffice.
+
+\section*{Assessment}
+Both the affirmative order-two case and every higher-order counterexample are proved completely, including exact order and the exclusion of sums mixing different blocks. No external theorem is needed beyond the attributed construction idea.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

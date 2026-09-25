@@ -1,0 +1,76 @@
+\section*{Erd\H{o}s Problem 807}
+
+\paragraph{Statement and result.}
+Let \(\tau(G)\) be the least number of complete bipartite subgraphs whose edge sets partition \(E(G)\). Is \(\tau(G)=n-\alpha(G)\) with probability tending to one for \(G\sim G(n,1/2)\)? No. We reconstruct the three-stage exposure argument of Alon, Bohman, and Huang, which gives
+\[
+ \tau(G)\leq n-\alpha(G)-\Omega(\log\log n)
+ \quad\text{with probability tending to one}.
+\tag{1}
+\]
+Their stronger constant-factor improvement is not needed to disprove the proposed equality. Here ``almost surely'' in the problem means this asymptotic high-probability statement.
+
+\paragraph{The external random-graph input.}
+We use the classical independence-number estimate: for fixed \(0<p<1\), with \(b=(1-p)^{-1}\),
+\[
+ \alpha(G(N,p))=2\log_bN-2\log_b\log_bN+O(1)
+\tag{2}
+\]
+with probability tending to one. The \(O(1)\) can be bounded by a fixed constant depending on \(p\). We explicitly assume (2); its second-moment proof is not reproduced. We use it for \(p=1/2\) and \(p=15/16\).
+
+\paragraph{The baseline partition and its improvement.}
+For any independent set \(I\), order the remaining vertices and assign each edge to its first endpoint outside \(I\). Each nonempty assigned set is a star, giving \(\tau(G)\leq n-|I|\).
+
+Suppose now that outside \(I\) there are \(t\) disjoint pairs \(\{a_i,b_i\}\) whose union is independent, and
+\[
+ N(a_i)\cap I=N(b_i)\cap I=:I_i.
+\tag{3}
+\]
+All edges within \(I\cup\bigcup_i\{a_i,b_i\}\) are partitioned by the at most \(t\) bicliques \(\{a_i,b_i\}\times I_i\). Stars centred at the remaining vertices cover the other edges without overlap. Consequently
+\[
+ \tau(G)\leq n-|I|-2t+t=n-|I|-t.
+\tag{4}
+\]
+
+\paragraph{Stage one: the independent set.}
+Split the vertex set into two parts \(X,Y\) of sizes differing by at most one. Reveal only the edges within \(X\). Write \(L=\log_2 n\). By (2), for a sufficiently large absolute constant \(C\), with high probability \(X\) has an independent set of size
+\[
+ k=\lfloor2L-2\log_2L-C\rfloor.
+\]
+Choose such a set \(I\) by a deterministic rule based only on the revealed graph. Also (2) applied to the whole graph gives, with high probability,
+\[
+ \alpha(G)\leq2L-2\log_2L+C',
+ \qquad \alpha(G)-k=O(1).
+\tag{5}
+\]
+No independence between these two high-probability events is required.
+
+\paragraph{Stage two: pairs with the same neighbourhood.}
+Partition \(Y\) into \(r=\lfloor L^{1/3}\rfloor\) parts of sizes differing by at most one and reveal the edges between \(X\) and \(Y\). Conditional on the first stage, the neighbourhoods in \(I\) of distinct vertices of \(Y\) are independent uniform elements of a set of size \(2^k\).
+
+For \(q\) independent uniform choices from \(M\) objects, the probability of no repetition is
+\[
+ \prod_{j=0}^{q-1}(1-j/M)
+ \leq\exp\!\left(-\frac{q(q-1)}{2M}\right)
+\]
+when \(q\leq M\); it is zero otherwise. Each part of \(Y\) has \(q=\Theta(n/r)\), whereas \(2^k=O(n^2/L^2)\). Thus its probability of having no repeated neighbourhood is at most
+\[
+ \exp(-cL^{4/3}).
+\]
+The union bound shows that with high probability every part supplies a pair \(a_i,b_i\) satisfying (3). Select one pair from each part by a fixed rule. These choices have not inspected any edge inside \(Y\).
+
+\paragraph{Stage three: making the pairs mutually independent.}
+Now reveal the edges within the chosen pairs. Their indicators are independent fair bits, so with high probability at least \(r/3\) pairs are nonedges. This follows, for example, from the variance bound for a binomial variable, since \(r\to\infty\).
+
+Keep \(s=\lfloor r/3\rfloor\) such pairs. Form an auxiliary graph on these pairs, joining two when at least one of the four edges between their vertices is present. Conditional on all earlier choices, this is exactly \(G(s,15/16)\): the probability of no intervening edge is \((1/2)^4=1/16\), and different auxiliary edges inspect disjoint original edges. By (2), it has an independent set of \(\Omega(\log s)=\Omega(\log\log n)\) vertices with high probability. The corresponding original pairs have independent union and retain (3).
+
+Insert them in (4), and use (5). This yields
+\[
+ \tau(G)\leq n-k-\Omega(\log\log n)
+ =n-\alpha(G)-\Omega(\log\log n),
+\]
+which proves (1) and disproves the proposed equality.
+
+\paragraph{Attribution and assessment.}
+The construction is the argument in Section 2 of N. Alon, T. Bohman, and H. Huang, \emph{More on the bipartite decomposition of random graphs}, \url{https://arxiv.org/abs/1409.6165}, author manuscript \url{https://web.math.princeton.edu/~nalon/PDFS/biclique4.pdf}. Their Theorem 1.1 gives the stronger bound \(\tau(G)\leq n-(1+c)\alpha(G)\). We prove the weaker, already decisive disproof relative to the explicitly stated standard input (2). The earlier Alon argument has a qualification concerning exceptional values of \(n\); the three-stage argument here applies along all sufficiently large orders in the high-probability sense. See \url{https://www.erdosproblems.com/807}, checked 24 September 2026. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}

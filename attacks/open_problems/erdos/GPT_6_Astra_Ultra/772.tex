@@ -1,0 +1,42 @@
+\section*{Erd\H{o}s Problem \#772: extracting a Sidon subset}
+\subsection*{Statement and outcome}
+For fixed \(k\), suppose \(|A|=n\), \(A\subset\mathbb N\), and the ordered representation function \(r_A(s)=1_A*1_A(s)\) is at most \(k\) for every \(s\). Must \(A\) contain a Sidon subset of size larger than \(n^{1/2+c}\) for some \(c>0\)?
+We prove the stronger bound
+\[
+\max_{\substack{B\subseteq A\\B\ {\rm Sidon}}}|B|
+\geq \frac{3}{4(4k)^{1/3}}n^{2/3}-\frac14. \tag{1}
+\]
+Thus for every fixed \(k\), any fixed \(c<1/6\) works for sufficiently large \(n\). Attempt status: solved for both questions. A Sidon set here requires equality of two unordered pairs, allowing a repeated element, to be trivial.
+
+\subsection*{Counting both kinds of obstruction}
+A nontrivial equality \(a+b=c+d\) has either four distinct elements, or three distinct elements with one the midpoint of the other two. Indeed, if two distinct unordered pairs share an element, cancellation makes them equal; and \(2a=2b\) forces \(a=b\).
+
+The number of four-element subsets containing an additive obstruction is at most
+\[
+\sum_s r_A(s)^2\leq k\sum_s r_A(s)=kn^2. \tag{2}
+\]
+This deliberately loose bound avoids ordering conventions: every bad four-set has at least one ordered witness counted on the left.
+
+The number of bad three-sets is at most \(kn\). To see this, choose the midpoint \(b\in A\); there are at most \(r_A(2b)\leq k\) ordered endpoint pairs. Each bad triple is counted at least once. In particular, these three-element obstructions cannot be assigned survival probability \(p^4\).
+
+\subsection*{Random selection and deletion}
+Independently retain each element of \(A\) with probability
+\[
+p=(4kn)^{-1/3}\leq1.
+\]
+Let \(X\) be the number retained, \(Y_4\) the number of retained bad four-sets, and \(Y_3\) the number of retained bad three-sets. Then
+\[
+\mathbb E(X-Y_4-Y_3)
+\geq np-kn^2p^4-knp^3
+=\frac34np-\frac14.
+\]
+Some outcome has at least this value. For that outcome, repeatedly delete one vertex from any remaining bad set. Deleting vertices creates no new obstruction, so at most \(Y_4+Y_3\) deletions are needed. The remaining set is Sidon and has size at least \(X-Y_4-Y_3\). This proves (1).
+
+For fixed \(k\), dividing (1) by \(\sqrt n\) tends to infinity. Moreover, if \(0<c<1/6\), dividing (1) by \(n^{1/2+c}\) also tends to infinity. This verifies the strict inequality requested in the problem, not just an unspecified improvement in a constant.
+
+\subsection*{Boundary cases and attribution}
+If \(k=1\), there is no admissible \(A\) of size \(n\geq2\), because two distinct elements give two ordered representations of their sum. The asymptotic question is substantive for the nonvacuous fixed values of \(k\); the proved conditional statement covers every admissible \(A\). For \(k=2\), every admissible set is already Sidon, since a nontrivial repeated-pair coincidence would give at least three ordered representations. No universal \(n^{2/3}\) upper bound for this exceptional parameter is asserted.
+
+The alteration method is the known Alon--Erd\H{o}s argument; the proof above includes the three-element obstruction correction explicitly. Reference: N. Alon and P. Erd\H{o}s, \emph{An application of graph theory to additive number theory}, European J. Combin. 6 (1985), 201--203. Statement and reference checked at \url{https://www.erdosproblems.com/772} and \url{https://www.erdosproblems.com/latex/772} on 24 September 2026. No external Sidon extraction theorem, novelty, or local Lean verification is claimed.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

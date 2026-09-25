@@ -1,0 +1,56 @@
+\section*{Erd\H{o}s Problem 1096: gaps between sums of powers}
+\subsection*{1. Statement and explicit external inputs}
+For $q>1$, let
+\[
+ X(q)=\left\{\sum_{i\ge0}\epsilon_iq^i:\epsilon_i\in\{0,1\},\ \epsilon_i=0\text{ eventually}\right\}
+ =\{0=x_1<x_2<\cdots\}.
+\]
+Does $x_{j+1}-x_j\to0$ for every $q$ in some fixed interval $(1,1+\epsilon)$? Yes. We prove this for $1<q<\sqrt{q_0}$, where $q_0\approx1.324717957$ is the real root of $q_0^3=q_0+1$. This is a sufficient interval, not a claimed optimal threshold.
+We explicitly use three established inputs. First, $q_0$ is the smallest Pisot number, where a Pisot number is a real algebraic integer greater than one whose other conjugates have modulus less than one. Second, Feng's Theorem 1.2 states that the signed spectrum
+\[
+ Y(Q)=\left\{\sum_i e_iQ^i:e_i\in\{-1,0,1\},\ e_i=0\text{ eventually}\right\}
+\]
+is dense in $\mathbb R$ whenever $1<Q<2$ is not Pisot. Third, the small-gap block lemma, stated as Lemma 2.2 by Akiyama--Komornik, says that if the successive gaps in $X(Q)$ have lower limit zero, then for every $0<\delta<\Delta$ some consecutive finite block has every gap less than $\delta$ and total span greater than $\Delta$. The density theorem and this block lemma are external inputs; a small gap alone must not be substituted for the entire block conclusion.
+Sources: De-Jun Feng, \emph{On the topology of polynomials with bounded integer coefficients}, J. Eur. Math. Soc. 18 (2016), \url{https://doi.org/10.4171/JEMS/587}; Akiyama--Komornik, \emph{Discrete spectra and Pisot numbers}, \url{https://arxiv.org/abs/1103.4508}, Lemmas 2.2--2.5 and the discussion of the smallest Pisot number. The following gives the remaining gap-transfer argument explicitly.
+
+\subsection*{2. Local finiteness and a uniform elementary gap bound}
+Below a fixed height $T$, a nonzero digit at position $i$ forces $q^i\le T$, so there are only finitely many possible digit strings. Thus $X(q)$ is locally finite, unbounded, and has the indicated increasing enumeration.
+For $1<q\le2$, every successive gap is at most one. To prove this, let $S_N$ use positions $0,\ldots,N$, with largest element $M_N=(q^{N+1}-1)/(q-1)$. Starting from $S_0=\{0,1\}$, use
+\[
+ S_{N+1}=S_N\cup(q^{N+1}+S_N).
+\]
+Both translated pieces have internal gaps at most one by induction. If their enclosing intervals overlap, their union also has gaps at most one; otherwise the only extra gap is
+\[
+ q^{N+1}-M_N=\frac{q^{N+1}(q-2)+1}{q-1}\le1.
+\]
+Every pair of consecutive elements of $X(q)$ appears in a sufficiently large $S_N$, proving the assertion.
+
+\subsection*{3. Small even-position gaps imply small gaps everywhere}
+Suppose $1<q<\sqrt2$ and $q^2$ is not Pisot, and put $Q=q^2$. Since $Y(Q)=X(Q)-X(Q)$ is dense, there are arbitrarily close distinct points of $X(Q)$. Its local finiteness ensures that such pairs cannot all stay in a bounded interval; consequently its consecutive gaps have lower limit zero.
+Write $X(Q)=\{u_0<u_1<\cdots\}$ and $v_j=qu_j$. The preceding uniform bound gives $v_{j+1}-v_j\le q$, and $v_j\to\infty$. Also
+\[
+ X(Q)+qX(Q)\subseteq X(q),
+\]
+because the first summand uses even digit positions and the second odd positions, without any overlap.
+Fix $0<\delta<q$. By the block lemma, choose $u_n,\ldots,u_N$ with all intervening gaps less than $\delta$ and $u_N-u_n>q$. For any real $a\ge u_n$, choose $j$ such that
+\[
+ u_n+v_j\le a<u_n+v_{j+1}.
+\]
+Then $u_n\le a-v_j<u_n+q<u_N$. Within the chosen block, the first point strictly exceeding $a-v_j$ differs from it by less than $\delta$, including when $a-v_j$ itself is a block point. Thus $(a,a+\delta)$ contains an element of $X(Q)+qX(Q)$, and hence of $X(q)$. This holds for every $a\ge u_n$, so all sufficiently late gaps of $X(q)$ are less than $\delta$. Letting $\delta\downarrow0$ proves convergence to zero.
+Finally, if $1<q<\sqrt{q_0}$, then $1<q^2<q_0<2$, so $q^2$ cannot be Pisot. The preceding argument applies uniformly to every $q$ in that interval. Therefore $\epsilon=\sqrt{q_0}-1>0$ answers the stated existence question.
+
+\subsection*{4. Why Pisot numbers obstruct the conclusion}
+For completeness, the obstruction has a short independent proof. Suppose $q$ is Pisot with other conjugates $q_2,\ldots,q_d$. A nonzero difference of elements of $X(q)$ is $P(q)$ for an integer polynomial with coefficients in $\{-1,0,1\}$. Its algebraic norm is a nonzero integer, and
+\[
+ |P(q_j)|\le\frac1{1-|q_j|}\quad(j\ge2).
+\]
+Hence
+\[
+ |P(q)|\ge\prod_{j=2}^d(1-|q_j|)>0.
+\]
+All distinct points are uniformly separated, so their successive gaps cannot tend to zero. This does not identify the exact non-Pisot threshold for the stronger gap-limit property.
+
+\subsection*{5. Assessment}
+The requested affirmative answer is derived with an explicit positive interval. Local finiteness, the unit gap bound, the full even/odd-position transfer and the Pisot obstruction are proved here. The smallest-Pisot theorem, Feng's signed-spectrum density theorem and the stated small-gap block lemma remain explicit external dependencies; no independent proof of those inputs or local Lean verification is claimed. Source statement: \url{https://www.erdosproblems.com/1096}.
+
+\textbf{Completion rate estimate: 100\%.}

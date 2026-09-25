@@ -1,0 +1,50 @@
+\section*{Erd\H{o}s Problem 1081: counting sums of two squarefull numbers}
+\subsection*{1. Statement and known answer}
+Let $A(x)$ count the positive integers at most $x$ expressible as the sum of two positive squarefull numbers. A positive integer is squarefull if every prime dividing it has exponent at least two. The proposed asymptotic $A(x)\sim cx/\sqrt{\log x}$ is false. Blomer and Granville's Corollary 2 in \emph{Estimates for representation numbers of quadratic forms}, Duke Math. J. 135 (2006), gives constants $B_1,B_2$ such that
+\[
+ \frac{x(\log\log x)^{B_1}}{(\log x)^\alpha}\ll A(x)\ll
+ \frac{x(\log\log x)^{B_2}}{(\log x)^\alpha},\qquad \alpha=1-2^{-1/3}<\frac12.
+\]
+Their primary text is \url{https://dms.umontreal.ca/~andrew/PDF/quadraticforms.pdf}; the source problem is \url{https://www.erdosproblems.com/1081}. The lower bound makes $A(x)/(x/\sqrt{\log x})$ tend to infinity, since a positive power of $\log x$ dominates any fixed power of $\log\log x$.
+That deep distinct-value estimate is background, not a proof supplied by this attempt. Below we prove an exact parametrization and an asymptotic for the number of representations, then identify why these do not yet reconstruct the disproof.
+
+\subsection*{2. Counting squarefull integers}
+Every squarefull integer has a unique representation $a^2b^3$ with $a\ge1$ and $b\ge1$ squarefree. At a prime, an even exponent is $2u$; an odd exponent, necessarily at least three, is $2u+3$. Choosing whether the prime divides $b$ according to the exponent's parity gives existence and uniqueness.
+Writing $Q(y)$ for the number of positive squarefull integers at most $y$, we obtain
+\[
+ Q(y)=\sum_{b\le y^{1/3}}\mu^2(b)\left\lfloor\frac{\sqrt y}{b^{3/2}}\right\rfloor
+ =C\sqrt y+O(y^{1/3}),\qquad C=\sum_{b\ge1}\frac{\mu^2(b)}{b^{3/2}}=\frac{\zeta(3/2)}{\zeta(3)}.
+\]
+The floor errors total $O(y^{1/3})$, while the omitted tail is bounded by $\sqrt y\sum_{b>y^{1/3}}b^{-3/2}=O(y^{1/3})$. The Euler product identity for $C$ follows from $1+p^{-3/2}=(1-p^{-3})/(1-p^{-3/2})$. This also proves $Q(y)=O(\sqrt y)$ for $y\ge1$.
+
+\subsection*{3. An asymptotic for ordered representations}
+Let $R(x)$ count ordered pairs of positive squarefull integers $(u,v)$ with $u+v\le x$, counting every representation separately. For real $x\ge2$,
+\[
+ R(x)=\sum_{\substack{u\le x\\u\text{ squarefull}}}Q(x-u)
+ =C\sum_{\substack{u\le x\\u\text{ squarefull}}}\sqrt{x-u}+O(x^{5/6}).
+\]
+For $0\le y<1$ the estimate $Q(y)=C\sqrt y+O(y^{1/3})$ still holds after enlarging its constant; at zero both sides vanish. Thus the error bound follows by bounding each summand by $O(x^{1/3})$ and using $Q(x)=O(\sqrt x)$.
+Stieltjes integration by parts gives
+\[
+ \sum_{u\le x,\ u\text{ squarefull}}\sqrt{x-u}
+ =\frac12\int_0^x\frac{Q(t)}{\sqrt{x-t}}\,dt
+ =\frac C2\int_0^x\frac{\sqrt t}{\sqrt{x-t}}\,dt+O(x^{5/6}).
+\]
+One may first integrate to $x-h$ and let $h\downarrow0$; the endpoint term tends to zero and the displayed integrals converge. Substitution $t=x\sin^2\theta$ evaluates the main integral as $\pi x/2$. The error integral is $O(x^{5/6})$ by $t=xs$. Hence
+\[
+ \boxed{R(x)=\frac{\pi C^2}{4}x+O(x^{5/6}).}
+\]
+This is a representation-count theorem, not an asymptotic for $A(x)$.
+
+\subsection*{4. Distinct values and the remaining obstruction}
+The parametrization makes the support being counted by $A(x)$ the union of the values
+\[
+ b^3a^2+d^3c^2\le x,\qquad a,c\ge1,\quad b,d\ge1\text{ squarefree}.
+\]
+These binary quadratic forms overlap, and a single value may have many representations. Even knowing their total number to an $o(x)$ error does not control the size of this union. For a baseline, the subfamily $b=d=1$ contains all sums of two positive squares. The classical Landau--Ramanujan theorem, if used as a stated external input, gives $A(x)\gg x/\sqrt{\log x}$: excluding representations with a zero square removes at most $O(\sqrt x)$ values. This reaches the originally guessed scale but does not exceed it.
+The missing step is a sufficiently uniform lower bound for the distinct union over a growing collection of squarefree parameters, including control of overlaps. Blomer--Granville address this through representation numbers and varying discriminants; their Corollary 2 resolves it, but that analytic argument is not reproduced above. It would be invalid to replace $A(x)$ by $R(x)$ or to infer the disproof solely from the boxed formula.
+
+\subsection*{5. Assessment}
+The squarefull counting formula, its error term, the quadratic-form reduction and the ordered-representation asymptotic are proved. The known negative answer is correctly identified and its implication explained. A reconstruction of the distinct-value lower bound needed for the negative answer remains unresolved in this attempt.
+
+\textbf{Completion rate estimate: 55\%.}

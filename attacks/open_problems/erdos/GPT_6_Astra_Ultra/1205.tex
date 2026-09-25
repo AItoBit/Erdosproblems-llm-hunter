@@ -1,0 +1,56 @@
+\section*{Erd\H{o}s Problem 1205: almost uniform covering and a repair step}
+\subsection*{Statement and outcome}
+Put $N=\lfloor x\rfloor$. For each modulus $1\le n\le N$, choose one residue class, and maximize the minimum number of chosen classes containing an integer $1\le m\le N$. Denote this optimum by $F(N)$. We prove
+\[
+ \log N-O(\sqrt{\log N\log\log N})\le F(N)\le\log N+O(1),
+\]
+and hence $F(x)\sim\log x$. This reconstructs the random-choice argument recorded with the problem, with the exceptional-point repair and finite-interval averaging made explicit.
+
+\subsection*{The finite-interval upper bound}
+Let $C(m)$ be the coverage of $m$. A residue class modulo $n$ contains at most $\lceil N/n\rceil$ members of $[1,N]$. Thus
+\[
+ NF(N)\le\sum_{m=1}^NC(m)
+ \le\sum_{n=1}^N\lceil N/n\rceil
+ \le N H_N+N,
+\]
+where $H_N=\sum_{n\le N}1/n$. Consequently $F(N)\le H_N+1=\log N+O(1)$.
+
+For this finite domain the stronger intermediate assertion $F(N)\le H_N$ need not hold. At $N=3$, choose the obligatory class modulo one, the odd class modulo two, and the class $2$ modulo three. Each of $1,2,3$ is covered twice, so $F(3)\ge2>H_3$. This does not affect the asymptotic theorem.
+
+\subsection*{Randomly cover almost all points}
+Let $M=\lfloor N/2\rfloor$, and independently choose a uniformly random class for each $n\le M$. For every fixed $m\in[1,N]$ its initial coverage is a sum $X_m$ of independent Bernoulli variables with
+\[
+ \mu=\mathbb E X_m=H_M.
+\]
+The distribution does not depend on $m$, even for $m>M$. The standard lower-tail Chernoff bound says, for $0<t<\mu$,
+\[
+ \mathbb P(X_m<\mu-t)\le\exp\left(-\frac{t^2}{2\mu}\right).
+ \tag{1}
+\]
+For completeness, exponential Markov gives
+$\mathbb P(X_m\le\mu-t)\le\exp(s(\mu-t)+\mu(e^{-s}-1))$ for $s>0$; the inequality $e^{-s}\le1-s+s^2/2$ and $s=t/\mu$ give (1).
+
+For sufficiently large $N$ take
+\[
+ t=\sqrt{8\mu\log\log N},\qquad K=\lfloor\mu-t\rfloor.
+\]
+Then $t<\mu$, $K>0$, and a point with $X_m<K$ has probability at most $(\log N)^{-4}$. By linearity of expectation there is a choice of the first $M$ classes with at most
+\[
+ B\le N(\log N)^{-4}
+\]
+such bad points. Independence between different points is unnecessary.
+
+\subsection*{Use the unused moduli to repair every exception}
+Assign $K$ distinct unused moduli to each bad point, making the assignments for different bad points disjoint. For a modulus assigned to $m$, choose the class $m$ modulo that modulus. This is possible because
+\[
+ BK\le \frac{N(\log N+1)}{(\log N)^4}<N-M
+\]
+for all sufficiently large $N$. Every bad point now receives at least $K$ additional covers, and every good point retains its initial $K$ covers. Set the remaining classes arbitrarily. We have constructed a system covering all $N$ points at least $K$ times.
+
+Finally $\mu=\log N+O(1)$ and
+$t=O(\sqrt{\log N\log\log N})$, so the displayed lower bound follows. The repair uses each modulus once, and there is no requirement that its residue class cover only its assigned point. Extra coverage is harmless.
+
+\subsection*{Assessment and attribution}
+Both asymptotic bounds are proved, including $F(x)\to\infty$. The only probabilistic estimate was derived above. Source: \url{https://www.erdosproblems.com/1205}; P. Erd\H{o}s, \emph{A survey of problems in combinatorial number theory}, Ann. Discrete Math. 6 (1980), 89--115, p.~108. No novelty or formal-verification claim is made.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

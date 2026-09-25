@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 406: a complete sparse-exponent bound}
+\subsection*{Statement and scope}
+Are there only finitely many $n\ge0$ for which the ternary expansion of $2^n$ uses only $0,1$? Let $N(X)$ count such exponents with $0\le n\le X$. We prove
+\[
+ N(X)\ll X^{\log_3 2}, \tag{1}
+\]
+with an explicit constant, and analogous density-zero statements for omitting either of the other ternary digits. Finiteness remains unresolved. This reconstructs the classical Narkiewicz counting method and the specialization of Lagarias' Theorem 1.4; see \url{https://arxiv.org/abs/math/0512006}, Section 3. No new exponent or record is claimed. Problem: \url{https://www.erdosproblems.com/406}.
+
+\subsection*{The exact order of two modulo powers of three}
+For every $r\ge1$,
+\[
+ \operatorname{ord}_{3^r}(2)=q_r:=2\cdot3^{r-1}. \tag{2}
+\]
+First $v_3(4^{3^j}-1)=j+1$: the case $j=0$ is $4-1=3$, and cubing a number of the form $1+c3^t$, with $3\nmid c$ and $t\ge1$, raises the valuation of its difference from one by exactly one. Its expansion has first term $c3^{t+1}$ and all subsequent terms divisible by $3^{t+2}$.
+
+More generally, raising $1+c3^t$ to an exponent coprime to $3$ leaves that valuation $t$. Hence $v_3(4^u-1)=1+v_3(u)$. An exponent $v$ with $2^v\equiv1\pmod{3^r}$ must be even, by reduction modulo $3$; writing $v=2u$, the preceding identity shows it must be divisible by $2\cdot3^{r-1}$. That exponent works, proving (2). Since it equals the number of invertible residues modulo $3^r$, the powers of two traverse every such residue once per period.
+
+\subsection*{Counting permitted low digits}
+Exactly $2^{r-1}$ invertible residues modulo $3^r$ have their first $r$ ternary digits in $\{0,1\}$: the lowest digit must be $1$, and the other $r-1$ digits have two choices. Let $E_r$ be the corresponding exponent residues modulo $q_r$. Equation (2) gives $|E_r|=2^{r-1}$.
+
+For an integer $X\ge2$, choose $r$ minimally with $q_r>X$. Then $q_r\le3X$, and $0,1,\ldots,X$ occupy distinct exponent residues. Any fully admissible exponent belongs to $E_r$, even when leading zero digits have to be appended. With $\alpha=\log_3 2$, this proves
+\[
+ N(X)\le2^{r-1}=(q_r/2)^\alpha
+ \le(3X/2)^\alpha. \tag{3}
+\]
+The constant is inessential; the important point is $\alpha<1$. An infinite set can obey (3), so it cannot be interpreted as a finiteness proof.
+
+The residue sets also admit an exact recursive sieve. Above each residue modulo $q_r$ there are three exponent lifts modulo $q_{r+1}$. Since $2^{q_r}\equiv1+c3^r\pmod{3^{r+1}}$ with $3\nmid c$, those lifts give all three possibilities for the next ternary digit. Exactly two survive, explaining the doubling $|E_{r+1}|=2|E_r|$. A coherent infinite branch describes a compatible system of exponent residues, not necessarily a single nonnegative integer exponent; compactness cannot turn this sieve into infinitely many integer solutions.
+
+\subsection*{The other omitted digits and the carry interpretation}
+To omit $1$, the lowest digit of an invertible residue must be $2$, and the remaining low digits may be $0$ or $2$. The same $2^{r-1}$ count proves the same upper order.
+To omit $0$, there are $2^r$ low-digit residues using $1,2$. Leading padding is now forbidden, so first discard the $O(r)$ exponents with $2^n<3^{r-1}$. Every other fully zero-free expansion satisfies the low-digit condition. Consequently the number of exponents up to $X$ omitting $0$ is $O(X^\alpha+\log X)$. A union bound proves that almost all powers $2^n$, in exponent density, contain all three digits. This is still compatible with infinitely many exceptional exponents.
+
+There is an exact binomial reformulation of the main question:
+\[
+ 3\nmid\binom{2^{n+1}}{2^n}
+ \quad\Longleftrightarrow\quad
+ 2^n\hbox{ has only ternary digits }0,1. \tag{4}
+\]
+Indeed Legendre's formula gives $v_3\binom{2m}{m}=(2s_3(m)-s_3(2m))/2$, which is the number of carries in adding $m$ to itself in base three. No carry occurs precisely when every digit of $m$ is $0$ or $1$; the lowest digit equal to $2$, if present, starts a carry. Put $m=2^n$ to obtain (4).
+
+\subsection*{Assessment and remaining gap}
+The known examples $2^0=1$, $2^2=1+3$ and $2^8=1+3+9+243$ are exact. The older local parity observation is subsumed by $E_1=\{0\}\pmod2$. The complete counting proof is substantial quantitative progress beyond parity, but gives no absolute last exponent. Excluding every further exceptional exponent, rather than merely a density-one set, is the remaining gap.
+\textbf{Completion rate estimate: 40\%.}

@@ -1,0 +1,68 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 414: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $T(n)=n+\tau(n)$, where $\tau(n)$ is the number of positive divisors. Must the forward orbits of any two positive integers eventually meet? Source: \url{https://www.erdosproblems.com/414}. We prove common near-linear growth and a subpower bound on the number of different eventual-orbit classes represented by small starts. The assertion that there is only one class remains unresolved here.
+
+The earlier GPT-5.2 draft reported finite merger counts without enough information to certify an infinite-orbit conclusion. We do not use those counts. All bounds below are proved, and no novelty is claimed for them.
+
+\section*{An elementary divisor bound}
+For every $\delta>0$ there is a constant $C_\delta$ such that
+\[
+ \tau(m)\le C_\delta m^\delta\quad(m\ge1). \tag{1}
+\]
+To prove this from unique factorization, write $m=\prod p^{a_p}$. If $p^\delta\ge2$, then $a+1\le2^a\le p^{\delta a}$ for every $a\ge0$. Only finitely many primes have $p^\delta<2$. For each of those primes, the quantity $(a+1)p^{-\delta a}$ is bounded over $a\ge0$, since exponential decay dominates a linear factor. Multiplying these finitely many bounds gives (1).
+
+\section*{Every orbit has the same logarithmic growth exponent}
+For a start $n\ge2$, let $x_k=T^{\circ k}(n)$. Since $\tau(m)\ge2$ for $m\ge2$,
+\[
+ x_k\ge n+2k. \tag{2}
+\]
+Fix $0<\delta<1$. The function $t^{1-\delta}$ is concave, so (1) gives
+\[
+ x_{k+1}^{1-\delta}-x_k^{1-\delta}
+ \le(1-\delta)x_k^{-\delta}(x_{k+1}-x_k)
+ \le(1-\delta)C_\delta.
+\]
+Summation proves
+\[
+ x_k\le\big(n^{1-\delta}+(1-\delta)C_\delta k\big)^{1/(1-\delta)}. \tag{3}
+\]
+In particular, for every $\eta>0$ take $\delta=\eta/(1+\eta)$ to get $x_k=O_{n,\eta}(k^{1+\eta})$. Together with (2), this yields
+\[
+ \lim_{k\to\infty}\frac{\log x_k}{\log k}=1. \tag{4}
+\]
+The orbit of one enters two after one step, so it has the same limit. Equal growth exponents do not imply that two integer sequences intersect.
+
+\section*{Few classes among small starting values}
+Define two starting values to be equivalent if their orbits meet. This is an equivalence relation: after meeting they have the same tail, and strict increase makes intersections permanent in this sense. Let $C(X)$ be the number of equivalence classes represented by starts in $[1,X]\cap\mathbb N$, and put
+\[
+ D(X)=\max_{1\le t\le2X}\tau(t)
+\]
+for integral $X\ge1$. Select one starting value from each of the $C(X)$ different classes. Its orbit strictly increases and eventually exceeds $2X$. If its terms at most $2X$ are $x_0,\ldots,x_{q-1}$, then $x_0\le X$ and each of the first $q$ increments is at most $D(X)$. Thus
+\[
+ qD(X)\ge x_q-x_0>X,
+\]
+so the orbit supplies more than $X/D(X)$ distinct integers in $[1,2X]$. The selected orbits are disjoint, because any intersection would put two starts in the same class. Counting these integers gives
+\[
+ C(X)\frac{X}{D(X)}<2X,
+ \qquad C(X)<2D(X)\ll_\eta X^\eta
+ \quad\hbox{for every fixed }\eta>0. \tag{5}
+\]
+Thus the number of classes grows more slowly than every fixed positive power of the cutoff. Formula (5) does not establish boundedness: an unbounded function such as $\log X$ has the same property. Even a uniform finite bound would still not prove that the bound is one.
+
+\section*{Parity and a finite recognition procedure}
+Pairing divisors $d$ and $m/d$ shows that $\tau(m)$ is odd exactly at squares. Therefore $T$ flips parity exactly when the current term is a square. Parity supplies no invariant separating all even and odd starts; for instance $T(4)=7=T(5)$.
+
+To search for a meeting of two orbits, keep their current terms and advance whichever is smaller, stopping at equality. Because both maps strictly increase, this procedure detects every actual common term after finitely many advances. If the orbits never meet, it runs forever. Failure to find a meeting before any fixed cutoff therefore proves no counterexample.
+
+\section*{Remaining gap}
+Equations (4)--(5) constrain every orbit and the number of possible classes. They neither force intersections nor furnish an invariant separating a pair of classes. A proof that $C(X)=1$ for every $X$, or a rigorous pair of permanently disjoint orbits, is still missing.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

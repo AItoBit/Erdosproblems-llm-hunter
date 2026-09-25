@@ -1,0 +1,107 @@
+\section*{Erd\H{o}s Problem 999: Duffin--Schaeffer approximation}
+\subsection*{Statement, printed domain, and scope}
+The classical statement allows an arbitrary function $\psi:\mathbb N\to[0,\infty)$:
+\[
+ \left|\alpha-\frac aq\right|<\frac{\psi(q)}q,\quad (a,q)=1
+ \tag{1}
+\]
+has infinitely many solutions for almost every $\alpha$ if and only if
+$\sum_q\phi(q)\psi(q)/q=\infty$.
+The current page prints $\mathbb N\to\mathbb N$. If $\mathbb N$ means positive integers in that display, then $\psi\ge1$, the sum dominates the harmonic series, and continued-fraction convergents already give infinitely many solutions for every irrational $\alpha$. We address the intended real-valued statement instead.
+
+Koukoulopoulos and Maynard proved it in \emph{On the Duffin--Schaeffer conjecture}, Ann. of Math. 192 (2020), 251--307.
+The proof below reconstructs the reduction from their weighted exceptional-pair estimate, including the summation over exceptional scales. That deep estimate and the classical auxiliary results are explicitly imported; their full GCD-graph proof is not reproduced. No novelty is claimed.
+
+\subsection*{The convergence direction}
+Work on $[0,1]$, since the problem is invariant under integer translations of $\alpha$.
+Let $A_q$ be the union of intervals in (1) with reduced numerator $a$.
+For $q\ge2$, $\lambda(A_q)\le2\phi(q)\psi(q)/q$; this follows by viewing the intervals on the circle and using its $\phi(q)$ reduced residue classes.
+If the series converges, the first Borel--Cantelli lemma gives
+$\lambda(\limsup_q A_q)=0$. This proves the necessary direction without any independence assumption.
+
+\subsection*{Explicit external inputs for divergence}
+We use the following results, in the forms recorded as Lemmas 5.1--5.3 and Proposition 5.4, with the harmless half-radius normalization below of the cited paper.
+First, Gallagher's zero-one law says $\lambda(\limsup A_q)$ is either $0$ or $1$.
+Second, the divergent-series assertion is known if every value of $\psi$ is either zero or at least $1/2$ (the large-value case).
+Third, for $0\le\psi\le1/2$, write
+\[
+ w(q)=\frac{\phi(q)\psi(q)}q,\quad
+ M(q,r)=\max(r\psi(q),q\psi(r)),\quad g=\gcd(q,r),\quad
+ L_t(q,r)=\sum_{\substack{p\mid qr/g^2\\p\ge t}}\frac1p.
+\]
+For the divergence proof use the smaller sets
+$B_q=\bigcup_{(a,q)=1}((a-\psi(q)/2)/q,(a+\psi(q)/2)/q)\cap[0,1]$.
+The Pollington--Vaughan prime-product overlap bound gives
+\[
+ \lambda(B_q\cap B_r)\ll
+ w(q)w(r)\,1_{M(q,r)\ge g}
+ \prod_{\substack{p\mid qr/g^2\\p>M(q,r)/g}}(1+1/p)
+ \qquad(q\ne r).
+ \tag{2}
+\]
+The half-radius convention makes the vanishing condition explicit: distinct reduced centers have separation at least $g/(qr)$, while the sum of the two radii is at most $M/(qr)$. In the prime-product bound, replacing the threshold $M/(2g)$ by $M/g$ costs only an absolute constant, since $\prod_{u/2<p\le u}(1+1/p)$ is uniformly bounded by Mertens' estimate. Thus no incorrect claim of disjointness for the full-radius intervals when merely $M<g$ is needed.
+Finally, if $1\le\sum_{X\le q\le Y}w(q)\le2$, then, uniformly for $t\ge1$,
+\[
+ \sum_{\substack{X\le q,r\le Y\\
+ g\ge M(q,r)/t\\L_t(q,r)\ge10}}w(q)w(r)\ll\frac1t.
+ \tag{3}
+\]
+Estimate (3) is the main external Koukoulopoulos--Maynard input, not an elementary assertion proved here. We also use Mertens' standard prime-product estimate.
+
+\subsection*{Reduction to bounded values and a finite mass block}
+Split $\psi$ into its parts supported on $\psi>1/2$ and on $\psi\le1/2$.
+If the former weighted sum diverges, the large-value theorem resolves the problem. Otherwise the latter sum diverges, and shrinking $\psi$ to that part suffices.
+We may therefore assume $0\le\psi\le1/2$.
+For each large $X$, choose the first $Y\ge X$ for which
+$\sum_{X\le q\le Y}w(q)\ge1$. Each summand is at most $1/2$, so the sum is at most $3/2$, in particular at most $2$.
+Set $Z=\sum_{X\le q\le Y}1_{B_q}$. The intervals for each fixed $q$ are disjoint apart from endpoints and, for $q\ge2$, lie inside $[0,1]$. Thus
+\[
+ 1\le\int Z=\sum w(q)\le2,\qquad
+ \int Z^2=\sum_{q,r}\lambda(B_q\cap B_r).
+ \tag{4}
+\]
+The diagonal part is at most $2$. It remains to bound the off-diagonal part uniformly.
+
+\subsection*{Summing the exceptional overlaps}
+Ignore pairs with $M<g$, which contribute zero in (2).
+Write $u=M/g\ge1$ and $P(q,r)=\prod_{p\mid qr/g^2,\ p>u}(1+1/p)$.
+Pairs for which $P(q,r)$ is bounded by a sufficiently large absolute constant contribute $O(1)$, because $\sum w(q)\le2$.
+
+For all remaining pairs, choose the largest integer $j\ge0$ with
+\[
+ L_{\exp(\exp j)}(q,r)\ge10.
+\]
+Such a $j$ exists: otherwise the total reciprocal-prime sum above $e$ is less than $10$, forcing $P$ to be bounded; only finitely many primes divide $qr/g^2$, so a largest $j$ also exists.
+By maximality and Mertens' estimate,
+\[
+ L_{\exp(\exp j)}(q,r)
+ \le\sum_{\exp(\exp j)\le p<\exp(\exp(j+1))}\frac1p+10=O(1).
+\]
+If $u\ge\exp(\exp j)$, this again makes $P=O(1)$.
+In the remaining case $u<\exp(\exp j)$, split the product at this threshold. The upper portion is bounded by the preceding display, and Mertens bounds the lower portion by $O(e^j)$. Thus $P(q,r)\ll e^j$.
+Moreover this pair is counted in (3) with $t=\exp(\exp j)$.
+Summing (2) over all such pairs and then using (3) gives
+\[
+ \sum_{q\ne r}\lambda(B_q\cap B_r)
+ \ll1+\sum_{j\ge0}e^j
+ \sum_{\substack{g\ge M/\exp(\exp j)\\L_{\exp(\exp j)}\ge10}}w(q)w(r)
+ \ll1+\sum_{j\ge0}e^{j-\exp j}<\infty.
+ \tag{5}
+\]
+Every constant is independent of the chosen mass block $[X,Y]$.
+
+\subsection*{Positive measure, then full measure}
+Cauchy--Schwarz applied on the support of $Z$, with (4)--(5), yields
+\[
+ \lambda\left(\bigcup_{q=X}^{Y}B_q\right)
+ \ge\frac{(\int Z)^2}{\int Z^2}\ge c>0.
+\]
+Every tail union $\bigcup_{q\ge X}B_q$ therefore has measure at least $c$.
+Continuity of measure for decreasing sets gives
+$\lambda(\limsup_qB_q)\ge c$.
+Gallagher's zero-one law, applied to the function $\psi/2$, upgrades this to measure $1$. Since $B_q\subseteq A_q$, the divergent direction follows.
+
+\subsection*{Conclusion and dependency boundary}
+Both directions are established relative to the precise external estimates (2)--(3), Gallagher's law, the large-value case, and Mertens' theorem. The finite mass normalization, exceptional-scale summation, and measure-theoretic passage are proved here; no claim is made to reprove the deep GCD-graph estimate. Sources: \url{https://www.erdosproblems.com/999}; \url{https://arxiv.org/abs/1907.04593}, Section 5; \url{https://doi.org/10.4007/annals.2020.192.1.5}.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 100\%}

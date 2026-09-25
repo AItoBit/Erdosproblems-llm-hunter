@@ -1,0 +1,31 @@
+\section*{Erd\H{o}s Problem 65: reciprocal cycle lengths and the bipartite candidate}
+\subsection*{1. Statement and scope}
+Write $S(G)=\sum_{\ell\in\mathcal C(G)}1/\ell$, with each distinct cycle length counted once. The question asks for $S(G)\gg\log k$ when $G$ has $n$ vertices and $kn$ edges, and asks whether complete bipartite graphs minimize the sum. The first assertion is known by Gy\'arf\'as, Koml\'os and Szemer\'edi, with asymptotically sharp strengthening by Liu and Montgomery. The remaining exact extremal question is not proved here. We analyze the candidate and establish the exact bound within the class of disjoint unions of complete bipartite graphs.
+
+\subsection*{2. The candidate and the distinction between parameters}
+For positive integers $a\le b$, a cycle in $K_{a,b}$ alternates between the parts, and every even length $2j$, $2\le j\le a$, occurs by selecting $j$ vertices from each part. Hence
+\[
+ S(K_{a,b})=\tfrac12(H_a-1),\qquad H_a=\sum_{j=1}^a\frac1j.
+\]
+In the exact-edge formulation the graph has $n$ vertices and $t(n-t)$ edges, with $1\le t\le n/2$. Its density parameter in the first question is $k=t(1-t/n)$, lying between $t/2$ and $t$. Thus the candidate gives $S=\tfrac12\log k+O(1)$ as $t\to\infty$. The symbols $t$ and $k$ should not be identified exactly.
+
+\subsection*{3. A complete restricted extremal result}
+Suppose $G$ is a disjoint union of complete bipartite components $K_{a_i,b_i}$, $1\le a_i\le b_i$, together with possible isolated vertices. Let $r=\max_i a_i$. Then the union of their cycle-length sets is precisely $\{4,6,\ldots,2r\}$, with the empty interpretation when $r=1$, and
+\[
+ e(G)=\sum_i a_i b_i\le r\sum_i b_i
+ \le r\left(n-\sum_i a_i\right)\le r(n-r). \tag{1}
+\]
+If $e(G)\ge t(n-t)$, $1\le t\le n/2$, then $r\le n/2$ and the function $u(n-u)$ is strictly increasing on $[0,n/2]$. Equation (1) therefore forces $r\ge t$. It follows that
+\[
+ S(G)=\tfrac12(H_r-1)\ge\tfrac12(H_t-1)=S(K_{t,n-t}). \tag{2}
+\]
+For equality in (2), strict increase of $H_r$ gives $r=t$. All inequalities in (1) must then be equalities. There are no isolated vertices, and $\sum_i a_i=r$, although one component already has $a_i=r$. Thus there is only one component and it is $K_{t,n-t}$. This proves the exact statement, including uniqueness, in the specified restricted class.
+
+\subsection*{4. Why a parameter swap does not settle the problem}
+Montgomery's survey announces a forthcoming exact theorem for large $d$ using the expression $d(n-d)$. The short announcement is not a license to replace the smaller part $t$ by $d=n-t$ and infer every fixed-$t$ case for large $n$. In particular, the unrestricted uniqueness statement quoted in an earlier imported attempt would be false: set $d=n-1$. The threshold is then $n-1$, and both a path $P_n$ and the star $K_{1,n-1}$ have that many edges and reciprocal cycle sum zero. For $n\ge4$ they are not isomorphic. Thus some restriction or qualification is essential before such a uniqueness theorem can be applied with the larger part. The previous claimed finite reduction is not used here.
+
+\subsection*{5. Assessment and attribution}
+The candidate's exact sum and the restricted extremal theorem are fully proved. The logarithmic general lower bound and its asymptotic sharpening are background results, not reconstructed proofs in this attempt. The unresolved step is to compare arbitrary graphs with the bipartite candidate; the edge estimate (1) depends on the special component structure and gives no such comparison. This is a checked replacement for earlier GPT-5.2/GPT-5.4 write-ups, without a novelty claim.
+Sources: \url{https://www.erdosproblems.com/65}; R. Montgomery, \emph{Cycles and expansion in graphs}, EMS Magazine 138 (2025), 5--12, \url{https://ems.press/journals/mag/articles/14299467}.
+
+\textbf{Completion rate estimate: 20\%.}

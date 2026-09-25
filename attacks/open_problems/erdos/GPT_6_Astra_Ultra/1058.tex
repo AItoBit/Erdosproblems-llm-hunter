@@ -1,0 +1,73 @@
+\section*{Erd\H{o}s Problem 1058}
+
+\paragraph{Statement and scope.}
+Let \(p<q\) be the first two primes greater than \(n\). Are \(n=1,2,3,4,5\) the only positive integers for which every prime factor of \(n!+1\) belongs to \(\{p,q\}\)?
+The published answer is yes, by Luca. This write-up gives a partial reconstruction: it checks the small cases and proves that any putative example with \(n\geq32\) must use both primes with positive exponents. Excluding those mixed products is unresolved in this write-up.
+
+\paragraph{The five positive examples.}
+The values for \(n=1,\ldots,5\) are respectively
+\[
+ n!+1=2,\quad3,\quad7,\quad25,\quad121.
+\]
+Their prime factors belong respectively to
+\(\{2,3\},\{3,5\},\{5,7\},\{5,7\},\{7,11\}\).
+For an arbitrary \(n\), the proposed condition is equivalent, by unique factorization, to
+\[
+ n!+1=p^a q^b,\qquad a,b\in\mathbb Z_{\geq0}.
+ \tag{1}
+\]
+Notice that zero exponents are allowed in the question.
+
+\paragraph{Eliminating every pure prime power for large \(n\).}
+Bertrand's postulate, applied twice, gives \(q<4n\) for \(n\geq2\). Suppose \(n\geq32\) and \(n!+1=\ell^a\), where \(\ell\) is either \(p\) or \(q\). Then \(\ell>n\), \(\ell<4n\), and
+\[
+ \ell^a=n!+1<(n+1)^n.
+\]
+Since \(\ell\geq n+1\), we have \(1\leq a<n\).
+Write \(v_2(u)\) for the exponent of \(2\) in \(u\). For odd \(\ell\), elementary factorization gives
+\[
+ v_2(\ell^a-1)=
+ \begin{cases}
+ v_2(\ell-1),&a\ \hbox{odd},\\
+ v_2(\ell-1)+v_2(\ell+1)+v_2(a)-1,&a\ \hbox{even}.
+ \end{cases}
+ \tag{2}
+\]
+To see the second identity, write \(a=2^t u\) with \(u\) odd. Factoring the odd power leaves the valuation unchanged. Factor \(\ell^{2^t}-1\) into \(\ell-1,\ell+1\), and the \(t-1\) factors \(\ell^{2^j}+1\), each of the latter having valuation one. The first identity follows from the odd sum of \(a\) odd terms.
+Exactly one of the consecutive even integers \(\ell-1,\ell+1\) has valuation one. Thus in either case
+\[
+ v_2(\ell^a-1)
+ \leq\log_2(4n+1)+\log_2 n
+ <2\log_2 n+3.
+ \tag{3}
+\]
+But Legendre's formula, or summing the binary digits of \(n\), gives
+\[
+ v_2(n!)=n-s_2(n)\geq n-\lfloor\log_2 n\rfloor-1
+ \geq n-\log_2 n-1.
+ \tag{4}
+\]
+For every real \(n\geq32\), we have \(n>3\log_2n+4\): it holds at \(32\), and the derivative of \(n-3\log_2n-4\) is positive there and thereafter. Consequently (4) exceeds the upper bound (3), contradicting \(n!=\ell^a-1\). This eliminates \(a=0\) or \(b=0\) in (1) for \(n\geq32\).
+
+\paragraph{An exact finite check.}
+For completeness, the following integer-only procedure checks any specified finite range. It does not require factoring \(n!+1\): divide out just the two allowed primes.
+\begin{verbatim}
+F = 1
+for n in range(1, 1001):
+    F *= n
+    p = least_prime_greater_than(n)
+    q = least_prime_greater_than(p)
+    R = F + 1
+    for ell in (p, q):
+        while R % ell == 0:
+            R //= ell
+    if R == 1:
+        record(n)
+\end{verbatim}
+Trial division suffices to determine the small primes in this range. The exact check records only \(1,2,3,4,5\). In particular it disposes of \(6\leq n<32\), but a finite search cannot settle arbitrary \(n\).
+
+\paragraph{Remaining gap and attribution.}
+The mixed case \(p^a q^b\), with \(a,b\geq1\), is the substantive gap. The valuation calculation for one prime does not extend by separately adding the valuations of \(p^a-1\) and \(q^b-1\), and no such invalid step is used here. Luca's paper \emph{On a conjecture of Erd\H{o}s and Stewart} (Mathematics of Computation 70 (2001), 893--896) proves the full statement; its result is reported for context rather than substituted for the missing mixed-product proof. Source statement and reference checked 24 September 2026: \url{https://www.erdosproblems.com/1058}. The numerical estimate below rates the proof supplied here, not the established status of the original problem.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 25\%}

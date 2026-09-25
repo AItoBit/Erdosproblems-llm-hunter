@@ -1,0 +1,67 @@
+\section*{Erd\H{o}s Problem 1125: Kemperman's inequality}
+
+\paragraph{Statement and answer.}
+If \(f:\mathbb R\to\mathbb R\) satisfies
+\[
+ 2f(x)\leq f(x+h)+f(x+2h)\qquad(x\in\mathbb R,\ h>0),
+\]
+then \(f\) is nondecreasing, without any measurability hypothesis.
+This is Laczkovich's established theorem, \emph{On Kemperman's inequality}, Colloquium Mathematicum 49 (1984), 109--115, \url{https://doi.org/10.4064/cm-49-1-109-115}.
+We reconstruct its final reduction while isolating the two technical inputs. Source statement: \url{https://www.erdosproblems.com/1125}.
+
+\paragraph{Explicit external lemmas.}
+Put \(H=\mathbb Z+\sqrt2\,\mathbb Z\).
+We use the following two lemmas from Laczkovich's method, also stated as \texttt{lemma1} and \texttt{lemma2} in the formalization linked by its author from the problem's discussion:
+\url{https://gist.github.com/ster-oc/18384e6202ffe054cbc76ff2d0b1afde}.
+
+First, if \(u_0,\ldots,u_N\) have \(|u_i|\leq K\) and
+\[
+ 2u_i\leq u_{i+j}+u_{i+2j}\quad(j\geq1,\ i+2j\leq N),
+\]
+then \(u_0\leq u_N+10K/N\).
+Second, for each real \(b\) there is a finite subset \(F\subset H\) whose closure under the rule
+\[
+ x+h,\ x+2h\text{ already present},\quad h>0
+ \quad\Longrightarrow\quad x\text{ present}
+\]
+contains \(H\cap(-\infty,b]\).
+The second lemma exploits bounded-ratio alternating rational approximants to \(\sqrt2\); it is the nonregularity-removal input. Neither lemma is being asserted merely from density of \(H\), and their technical proofs are external dependencies of this write-up.
+The source's Pell sequences start with \(p_0=1,p_1=3,q_0=1,q_1=2\), each obeying \(v_{j+2}=2v_{j+1}+v_j\); they give the required alternating errors and bounded growth. No local formal-proof compilation is claimed.
+
+\paragraph{Boundedness on the dense subgroup.}
+Suppose first that \(f\) is restricted to \(H\) and satisfies the inequality whenever its three arguments are in \(H\).
+For a fixed upper endpoint \(b\), let \(F\) be the finite set from the covering lemma and \(M=\max_{F}f\). Each closure step preserves the bound \(f\leq M\), by the original inequality. Thus \(f\leq M\) on \(H\cap(-\infty,b]\).
+
+Fix \(a<b\) in \(H\), and set \(g(x)=\max\{f(x),f(b)\}\).
+This truncation still satisfies the same inequality. If the maximum at \(x\) is \(f(x)\), use the original inequality and increase its right side; if it is \(f(b)\), both right-side terms are at least \(f(b)\).
+On \(H\cap[a,b]\), we therefore have \(|g|\leq K\) for a finite positive \(K\), for example \(K=1+|M|+|f(b)|\).
+
+\paragraph{Joining the endpoints by two arithmetic grids.}
+For any integer \(N\geq2\), choose \(t\in H\) in the nonempty interval
+\[
+ -\frac{b-a}{N}<t<-\frac{b-a}{N+1}.
+\]
+This is possible because \(H\) is dense. Set
+\[
+ c=-(b-a)-(N+1)t,\qquad d=(b-a)+Nt.
+\]
+Then \(c,d\in H\), both are positive, and \(Nc+(N+1)d=b-a\).
+The grids
+\[
+ a,\ a+c,\ldots,a+Nc,\qquad
+ a+Nc,\ a+Nc+d,\ldots,a+Nc+(N+1)d=b
+\]
+are entirely in \(H\cap[a,b]\).
+Apply the finite-sequence lemma to \(g\) on each grid. It yields
+\[
+ g(a)\leq g(b)+10K\left(\frac1N+\frac1{N+1}\right).
+\]
+Letting \(N\to\infty\) gives \(f(a)\leq g(a)\leq g(b)=f(b)\). Thus \(f\) is nondecreasing on \(H\).
+
+\paragraph{Returning to arbitrary real endpoints.}
+For arbitrary real \(a<b\), define \(F(t)=f(a+(b-a)t)\). Since \(b-a>0\), \(F\) satisfies the same inequality, in particular on \(H\). The preceding conclusion at \(0<1\) gives \(f(a)=F(0)\leq F(1)=f(b)\).
+This handles every pair of real endpoints without trying to extend a monotone restriction by an unjustified continuity argument.
+
+\paragraph{Completion estimate.}
+The full theorem follows from the two explicit established lemmas, with boundedness propagation, truncation, interpolation, and the arbitrary-endpoint reduction proved here.
+\textbf{COMPLETION: 100\%}

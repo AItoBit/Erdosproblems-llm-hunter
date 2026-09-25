@@ -1,0 +1,140 @@
+\section*{Erd\H{o}s Problem 896: uniquely represented products}
+
+\paragraph{Statement and result.}
+For \(A,B\subseteq[1,N]\), let \(F(A,B)\) count products
+having exactly one ordered representation \(ab\) with
+\((a,b)\in A\times B\). Write
+\[
+ \delta=1-\frac{1+\log\log2}{\log2},\qquad
+ \Phi(x)=(\log x)^\delta(\log\log x)^{3/2}.
+\]
+We reconstruct the known order-of-magnitude answer
+\[
+ \max_{A,B\subseteq[1,N]}F(A,B)\asymp N^2/\Phi(N).
+\tag{1}
+\]
+The analytic inputs below are explicit external theorems;
+the collision-avoidance construction is proved in detail.
+
+\paragraph{Ford's inputs and their applicable ranges.}
+Ford's multiplication-table theorem, Corollary 3 of
+\emph{The distribution of integers with a divisor in a given
+interval}, gives
+\[
+ |\{ab:1\leq a,b\leq N\}|\asymp N^2/\Phi(N).
+\tag{2}
+\]
+This immediately bounds \(F(A,B)\) from above.
+Let \(H_1(x,y,z)\) count integers at most \(x\) having
+exactly one divisor in \((y,z]\), and let \(H\) count those
+having at least one. Ford's Corollary 2 and Theorem 4 imply,
+uniformly for sufficiently large \(y\leq N^{1/3}\),
+\[
+ H_1(Ny,y,2y)\gg Ny/\Phi(y).
+\tag{3}
+\]
+Here Corollary 2 gives the estimate for \(H\).
+For Theorem 4 choose its fixed parameter \(c=1/4\).
+Its additional conditions are
+\[
+ y+1\leq2y\leq(Ny)^{5/8},
+ \qquad 2y^2\leq(Ny)^{3/4},
+\]
+which hold uniformly in that range for large \(N\).
+The ratio \(H_1/H\) is then bounded below by a positive
+constant because \(z/y=2\).
+These analytic theorems are not reproved here.
+
+\paragraph{Prime labels and their scale.}
+Take the primes
+\[
+ {\cal Q}=\{p:N^{2/3}<p\leq N^{3/4}\},
+ \quad y_p=N/(2p),\quad
+ R_p=(y_p,2y_p]\cap\mathbb N.
+\]
+Then \(y_p\) lies between \(N^{1/4}/2\) and \(N^{1/3}/2\),
+so \(\Phi(y_p)\asymp\Phi(N)\) uniformly, and (3) applies.
+Every \(r\in R_p\) satisfies \(r<N^{1/3}<q\) for all
+\(q\in{\cal Q}\), and \(pr\leq N\).
+The label representation \(pr\) is unique: if
+\(pr=qs\) with distinct labels, then \(p\mid s<p\),
+which is impossible.
+The standard prime reciprocal estimate gives
+\[
+ \sum_{p\in{\cal Q}}\frac1p
+ =\log(9/8)+o(1).
+\tag{4}
+\]
+For example, (4) follows from Mertens' theorem for primes.
+
+\paragraph{Candidates with a unique divisor.}
+For each \(p\in{\cal Q}\), consider the integers \(v\leq Ny_p\)
+having exactly one divisor \(r_p(v)\in R_p\).
+Set \(b_p(v)=v/r_p(v)\); then \(b_p(v)\leq N\).
+Discard those with \(p\mid b_p(v)\).
+The discarded number is \(O(y_p^2)\), because
+\(b_p(v)=pt\) with \(t\leq N/p=2y_p\), and there are
+only \(O(y_p)\) possibilities for \(r_p(v)\).
+By (3), the retained family \({\cal V}_p\) satisfies
+\[
+ |{\cal V}_p|\gg Ny_p/\Phi(N).
+\tag{5}
+\]
+Indeed \(y_p^2=o(Ny_p/\Phi(N))\) uniformly over the range.
+
+\paragraph{Random thinning and uniqueness.}
+Keep each prime of \({\cal Q}\) independently with
+probability \(1/2\), obtaining \({\cal P}\), and define
+\[
+ A=\{pr:p\in{\cal P},r\in R_p\},\qquad
+ B=\{b\leq N:\text{no }p\in{\cal P}\text{ divides }b\}.
+\]
+Both sets lie in \([1,N]\).
+For a retained candidate \((p,v)\), the event
+\(p\in{\cal P}\) and \(b_p(v)\in B\) has probability
+at least \(1/4\). In fact \(b_p(v)\leq N\) has at most
+one prime factor from \({\cal Q}\), all of which exceed
+\(\sqrt N\); if that prime exists it differs from \(p\).
+
+On this event the product
+\[
+ pv=(p r_p(v))b_p(v)
+\]
+has a unique representation in \(A\times B\).
+For if \(pv=qsc\), with \(q\in{\cal P},s\in R_q,c\in B\),
+then \(q\ne p\) would force \(p\mid c\), because \(s<p\).
+This contradicts the definition of \(B\).
+Thus \(q=p\); cancelling it makes \(s\) the unique divisor
+of \(v\) in \(R_p\), determining both factors.
+This also proves that successful pairs \((p,v)\) yield
+distinct products: equality would give the same unique
+factorization and hence the same label and the same \(v\).
+
+\paragraph{Counting the successful products.}
+Taking expectations and using (4)--(5) gives
+\[
+ \mathbb E F(A,B)
+ \geq\frac14\sum_{p\in{\cal Q}}|{\cal V}_p|
+ \gg\frac{N}{\Phi(N)}\sum_{p\in{\cal Q}}y_p
+ =\frac{N^2}{2\Phi(N)}
+       \sum_{p\in{\cal Q}}\frac1p
+ \gg N^2/\Phi(N).
+\]
+Some choice realizes this bound, proving the lower half
+of (1). Together with (2) it proves the full order of magnitude.
+
+\paragraph{Attribution and assessment.}
+The prime-label construction follows the GPT-5.5 Pro
+write-up prompted by Chojecki, as attributed on
+\url{https://www.erdosproblems.com/896}:
+\url{https://www.ulam.ai/research/erdos896.pdf}.
+The narrower prime range above makes the reciprocal
+sum immediate. Ford's primary paper is
+\url{https://annals.math.princeton.edu/2008/168-2/p01}.
+All sources were checked 24 September 2026.
+This is a complete reconstruction relative to the stated
+analytic inputs. A leading asymptotic constant is neither
+claimed nor needed for the known resolution.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

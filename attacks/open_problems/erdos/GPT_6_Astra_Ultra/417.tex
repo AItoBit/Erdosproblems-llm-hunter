@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 417: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $V'(x)=\#\{\varphi(m):1\le m\le x\}$, and let $V(x)$ count all totient values at most $x$, with preimages unrestricted. Does $V(x)/V'(x)$ tend to a limit, and is the limit greater than one? Source: \url{https://www.erdosproblems.com/417}.
+
+We give a complete finite preimage bound and a precise reformulation in terms of the least preimage. We also identify an existing theorem which keeps the ratio bounded. Its convergence and a strict limiting gap remain unresolved here. The finite inverse-totient argument repairs the scope of the earlier GPT-5.2 discussion; the analytic comparison is explicitly imported.
+
+\section*{A uniform finite bound for all preimages}
+The totient product formula gives
+\[
+ \frac{\varphi(m)^2}{m}
+ =\prod_{p^a\parallel m}p^{a-2}(p-1)^2\ge\frac12. \tag{1}
+\]
+For an odd prime $p$ and $a\ge1$, the factor is at least $(p-1)^2/p\ge1$. For $p=2$ it is $2^{a-2}\ge1/2$. There is at most one such factor; the empty product for $m=1$ also satisfies (1). Thus
+\[
+ \varphi(m)\ge\sqrt{m/2}.
+\]
+Every preimage of a totient $v$ is therefore at most $2v^2$. In particular, each totient has a finite, nonempty set of preimages.
+
+There is also a factorization-based exhaustive method. If $p^a\parallel m$ and $\varphi(m)=v$, then
+\[
+ p-1\mid v,\qquad 1\le a\le v_p(v)+1. \tag{2}
+\]
+Enumerate the finitely many primes with $p-1\mid v$, choose either exponent zero or an exponent in (2), and retain exactly those products whose totient equals $v$. The list is finite and exhaustive by the product formula. It does not assume that every allowable combination is a solution.
+
+\section*{The least-preimage reformulation}
+For $v\in\mathcal V$, write $\mu(v)=\min\{m:\varphi(m)=v\}$. Since $\varphi(m)\le m$, all values counted by $V'(x)$ are at most $x$, and
+\[
+ V'(x)=\#\{v\in\mathcal V:v\le x,\ \mu(v)\le x\}.
+\]
+Hence, with $D(x)=\#\{v\in\mathcal V:v\le x,\mu(v)>x\}$,
+\[
+ V(x)-V'(x)=D(x),\qquad
+ \frac{V(x)}{V'(x)}=\frac1{1-D(x)/V(x)}. \tag{3}
+\]
+A finite limit greater than one exists exactly when $D(x)/V(x)$ tends to some $\rho\in(0,1)$; the resulting limit is $(1-\rho)^{-1}$. Establishing infinitely many omitted values alone would not give a positive limiting fraction.
+
+The elementary preimage bound also yields
+\[
+ V'(x)\le V(x)\le V'(2x^2), \tag{4}
+\]
+but (4) compares different scales and does not bound the ratio at the same $x$.
+
+\section*{A known same-scale comparison}
+Pollack, Pomerance and Trevi\~no, \emph{Sets of monotonicity for Euler's totient function}, Section 4, explicitly state the consequence of Ford's estimates
+\[
+ V(x)\asymp W(x)\asymp Z(x), \tag{5}
+\]
+where their $W(x)=\#\{\varphi(m):m\le x\}$ is exactly our $V'(x)$. The common positive scale $Z$ is displayed there; its particular formula is not needed for this implication. Primary sources are
+\url{https://campus.lakeforest.edu/trevino/monotone4.pdf}
+and Ford, \emph{The distribution of totients}, especially the lower-bound construction in Section 5,
+\url{https://arxiv.org/abs/1104.3264v2}.
+The quoted comparison is a deep external input, not an independently reconstructed proof in this attempt.
+
+It follows from (5) and $V'(x)\le V(x)$ that for some fixed finite $K$ and all sufficiently large $x$,
+\[
+ 1\le\frac{V(x)}{V'(x)}\le K. \tag{6}
+\]
+Thus the suggestion in the historical problem description that the ratio might tend to infinity is incompatible with this known same-scale comparison. Equation (6) does not assert a convergent ratio, and it does not place its lower limit strictly above one. In terms of (3), it bounds the omitted fraction away from one, but does not determine it.
+
+\section*{Remaining gap}
+The finite search bound, the exact omission identity, and the deduction (6) have distinct roles. None supplies an asymptotic distribution for least preimages relative to their totient values. In particular no numerical trend, coarse common order of magnitude, or existence of isolated omitted values proves the proposed finite limit or its strict inequality.
+
+\textbf{Completion rate estimate: 35\%.}
+\end{document}

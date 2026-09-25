@@ -1,0 +1,49 @@
+\section*{Erd\H{o}s Problem 1018}
+
+\paragraph{Statement and result.}
+For every fixed \(\epsilon>0\), all sufficiently large graphs with \(n\) vertices and at least \(n^{1+\epsilon}\) edges contain a nonplanar subgraph on at most \(C_\epsilon\) vertices. We derive this from Janzer's subdivision theorem, obtaining a possible bound
+\[
+ C_\epsilon\leq 20/\epsilon+15\qquad(0<\epsilon<1).
+\]
+We also give a probabilistic construction proving that no absolute bound on \(C_\epsilon\) can work as \(\epsilon\) decreases to zero. The main subdivision theorem is an explicit external dependency.
+
+\paragraph{The external input and the parameter choice.}
+For a fixed graph \(F\) and a fixed even integer \(k\geq2\), let \(F^{k-1}\) mean the graph formed by replacing every edge of \(F\) by a path of exactly \(k\) edges, with mutually disjoint internal vertices. Janzer's Theorem 1.6 states
+\[
+ \operatorname{ex}(n,F^{k-1})=O_{F,k}(n^{1+1/k}).
+\tag{1}
+\]
+The source permits multigraphs \(F\); the simple graph \(F=K_5\) suffices. Equation (1), proved by the source's path-counting argument, is used as a theorem, not reproved here.
+
+Given \(0<\epsilon<1\), take \(k=2\lceil1/\epsilon\rceil\). Then \(1/k\leq\epsilon/2<\epsilon\), and (1) gives a constant \(D_k\) such that
+\[
+ \operatorname{ex}(n,K_5^{k-1})\leq D_k n^{1+1/k}
+\]
+for all sufficiently large \(n\). Once \(n^{\epsilon-1/k}>D_k\), the edge count \(n^{1+\epsilon}\) exceeds this bound. Thus the host contains \(K_5^{k-1}\), whose vertex count is
+\[
+ 5+10(k-1)=10k-5\leq20/\epsilon+15.
+\]
+All constants are fixed before letting \(n\) grow; the unknown size of \(D_k\) affects the threshold on \(n\), not the displayed bound on the subgraph's order.
+
+\paragraph{Why this subgraph is nonplanar.}
+The graph \(K_5\) is nonplanar because a simple planar graph on five vertices has at most \(3\cdot5-6=9\) edges, whereas \(K_5\) has ten. Subdividing its edges cannot make it planar: from a hypothetical plane drawing of the subdivision, concatenate the arcs along each replacement path and suppress its internal degree-two vertices. Internally disjoint paths then give a plane drawing of \(K_5\), a contradiction. This verifies precisely the nonplanarity required by the question.
+
+When \(\epsilon\geq1\), a simple graph cannot have \(n^{1+\epsilon}\) edges for large \(n\), so the implication is vacuous.
+
+\paragraph{The bound must depend on \(\epsilon\).}
+Fix any integer \(L\geq3\), and take \(0<\epsilon<1/(2L)\). In the random graph \(G(n,p)\), set \(p=n^{-1+2\epsilon}\). The expected number of edges is \((1/2+o(1))n^{1+2\epsilon}\), and its variance is at most its expectation. Chebyshev's inequality therefore implies that, with probability tending to one,
+\[
+ e(G)\geq\tfrac14n^{1+2\epsilon}.
+\]
+The expected number \(Z\) of cycles of lengths \(3,\ldots,L\) is at most
+\[
+ \sum_{j=3}^{L}\frac{(np)^j}{2j}
+ =O_L(n^{2\epsilon L})=o(n^{1+2\epsilon}).
+\]
+Markov's inequality gives \(Z\leq\tfrac18n^{1+2\epsilon}\) with probability tending to one. Choose an outcome satisfying both bounds and remove one edge from each short cycle. At least \(\tfrac18n^{1+2\epsilon}>n^{1+\epsilon}\) edges remain for large \(n\), while the girth exceeds \(L\). Every subgraph on at most \(L\) vertices is then a forest and is planar. Thus, for every fixed \(L\), all sufficiently small positive \(\epsilon\) require \(C_\epsilon>L\).
+
+\paragraph{Attribution and assessment.}
+Kostochka and Pyber originally answered the problem. The deduction above uses O. Janzer, \emph{The extremal number of longer subdivisions}, Theorem 1.6, \url{https://arxiv.org/abs/1905.08001}; the original result is also described in its introduction. See \url{https://www.erdosproblems.com/1018}, checked 24 September 2026. This is a complete deduction relative to the explicitly stated subdivision theorem, supplemented by the supplied dependence obstruction. No novelty or local formal verification is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

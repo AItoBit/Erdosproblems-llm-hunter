@@ -1,0 +1,47 @@
+\section*{Erd\H{o}s Problem 1197: failure of eventual rational-dilate covering}
+\subsection*{1. Statement and outcome}
+If $E\subset(0,\infty)$ has positive Lebesgue measure, must almost every $x>0$ satisfy $nx\in\bigcup_{r\ge1}rE$ for every sufficiently large integer $n$? No. We construct such an $E$ and a nondegenerate interval $J$ on which every $x$ has infinitely many failures. The proof reconstructs Enrique Barschkis's known counterexample through a tail-truncation argument. Its external input is the Buczolich--Mauldin theorem stated next; that theorem is not reproved here.
+
+\subsection*{2. The published input and a tail lemma}
+Buczolich and Mauldin proved that there is an open $U\subset(0,\infty)$ and intervals $I,J\subset[1/2,1)$ of positive length such that
+\[
+ \#\{n\ge1:nx\in U\}<\infty\quad\text{for almost every }x\in I,
+ \qquad
+ \#\{n\ge1:nx\in U\}=\infty\quad\text{for every }x\in J. \tag{1}
+\]
+Their construction permits $I=(8/9,1)$ and $J=[16/25,2/3]$. These quantifiers, including ``every'' on $J$, are the input needed here.
+
+For $R>0$, let $U_R=U\cap(R,\infty)$ and
+\[
+ D_R=I\cap\bigcup_{n\ge1}\frac1nU_R.
+\]
+Each $D_R$ is measurable, and the sets decrease as $R$ increases. For almost every fixed $x\in I$, (1) gives only finitely many hits $nx\in U$, so all of their locations lie below some finite threshold depending on $x$. Thus $x\notin D_R$ for all sufficiently large $R$. Since $I$ has finite measure, continuity of measure from above, or dominated convergence along integer $R$, implies
+\[
+ |D_R|\longrightarrow0. \tag{2}
+\]
+Notice that finite hits almost everywhere suffice; a uniform upper bound for the number of hits is unnecessary.
+
+\subsection*{3. Constructing and verifying the counterexample}
+Choose $R$ with $|D_R|<|I|/2$, and set
+\[
+ E=I\setminus D_R.
+\]
+Then $E$ is measurable and $|E|>|I|/2>0$. Its multiplicative saturation avoids $U_R$:
+\[
+ U_R\cap\bigcup_{r\ge1}rE=\varnothing. \tag{3}
+\]
+Indeed, if $y=re\in U_R$ with $e\in E$ and $r\ge1$, then $e\in I\cap r^{-1}U_R\subset D_R$, contradicting $e\in E$.
+
+Fix any $x\in J$. By (1) there are infinitely many integers $n$ with $nx\in U$. Only finitely many integers can satisfy $nx\le R$, since $x>0$. Hence infinitely many of those hits lie in $U_R$. For every such $n$, (3) gives
+\[
+ nx\notin rE\quad\text{for all integers }r\ge1.
+\]
+The integers in this infinite set are unbounded, so no eventual threshold works for that $x$. Since $J$ has positive length (in the explicit choice, $2/75$), the almost-everywhere assertion is false.
+
+\subsection*{4. Why positive measure is the relevant distinction}
+If $E$ contains an interval $(a,b)$ with $0<a<b$, the conclusion in the question does hold for every $x>0$: once $nx(1/a-1/b)>1$, the interval $(nx/b,nx/a)$ contains a positive integer $r$, giving $nx/r\in E$. Thus an arbitrary open set of positive measure would not itself be a counterexample. The construction uses the positive-measure complement of reciprocal tails inside $I$, which need not contain any interval. This also explains why the open set in the external theorem plays the role of a forbidden target, rather than the final $E$.
+
+The negative answer is fully established relative to (1). No construction of the Buczolich--Mauldin open set and no independent Lean verification is claimed. Barschkis's original proof uses the quantitative shell lemma underlying (1); the argument above only needs its stated theorem and elementary measure continuity.
+Sources: \url{https://www.erdosproblems.com/1197}; E. Barschkis, \url{https://github.com/ebarschkis/ErdosProblem/blob/main/Problem1197/Solution.tex}; Z. Buczolich and R. D. Mauldin, \emph{On the convergence of $\sum_{n=1}^{\infty}f(nx)$ for measurable functions}, Mathematika 46 (1999), 337--341, Theorem 1, \url{https://doi.org/10.1112/S0025579300007804}, author preprint \url{https://buczo.web.elte.hu/papers/fnx.ps}.
+
+\textbf{Completion rate estimate: 100\% relative to the explicitly stated Buczolich--Mauldin theorem.}

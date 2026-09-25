@@ -1,0 +1,86 @@
+\section*{Erd\H{o}s Problem 784: the reciprocal budget in a small sieve}
+
+\paragraph{Statement and claim.}
+For \(A\subseteq[1,x]\cap\mathbb N\), assume
+\(\sum_{a\in A}1/a\leq C\), and count integers up to \(x\)
+divisible by no element of \(A\).
+The answer depends on both \(C\) and whether \(1\) is allowed.
+Literally, the proposed conclusion holds for \(0<C<1\) and
+fails for \(C\geq1\).
+With the intended additional condition \(1\notin A\), it holds
+for \(0<C\leq1\) and fails for every \(C>1\).
+We give the elementary part and derive the complete classification
+from an explicitly stated established sieve theorem.
+See \url{https://www.erdosproblems.com/784}.
+
+\paragraph{The literal statement.}
+Write \(X=\lfloor x\rfloor\). The union bound gives
+\[
+ \#\{m\leq X:\exists a\in A,\ a\mid m\}
+ \leq\sum_{a\in A}\lfloor X/a\rfloor\leq CX.
+\]
+For \(0<C<1\), at least \((1-C)X\gg_C x\) integers survive,
+which is stronger than any requested fixed logarithmic loss.
+For \(C\geq1\), the choice \(A=\{1\}\) has admissible reciprocal
+sum and leaves no survivors. Thus the literal statement
+cannot include \(C=1\).
+
+\paragraph{The intended convention \(1\notin A\).}
+Define \(H_C(x)\) as the minimum survivor count over
+\(A\subseteq\{2,\ldots,\lfloor x\rfloor\}\) with reciprocal
+sum at most \(C\).
+The external input is Weingartner's Theorem 5, incorporating
+and sharpening results of Ruzsa and Saias:
+for every fixed \(Z>1\), uniformly for \(1\leq C\leq Z\),
+\[
+ H_C(x)\asymp_Z\frac{x^{\exp(1-C)}}{\log x}.                    \tag{1}
+\]
+Source: A. Weingartner, \emph{The Schinzel--Szekeres function},
+Research in Number Theory 11 (2025), Paper 63,
+\url{https://arxiv.org/abs/2310.13038}.
+The theorem uses exactly the reciprocal constraint and
+excludes \(1\). Its minimum may equivalently range over
+larger sets, because elements exceeding \(x\) affect neither
+the survivor count nor the usefulness of the budget.
+The substantial sieve estimates behind (1) are external,
+not reproved here.
+
+At \(C=1\), (1) gives \(H_1(x)\asymp x/\log x\), so \(c=1\)
+works. For \(C<1\), the earlier union bound still applies.
+For fixed \(C>1\), set \(\theta=\exp(1-C)<1\).
+The upper bound in (1) supplies admissible sets with
+at most \(K_Cx^\theta/\log x\) survivors.
+For every fixed real \(c>0\),
+\[
+ \frac{K_Cx^\theta/\log x}{x/(\log x)^c}
+ =K_Cx^{-(1-\theta)}(\log x)^{c-1}\longrightarrow0.
+\]
+Consequently no exponent depending only on this \(C\)
+can give the proposed universal lower bound.
+The minimizing set may depend on \(x\); this is allowed
+by the quantifiers in the question.
+
+\paragraph{Why a prime-only intuition is insufficient.}
+For a finite set of primes \(P\), the density of integers
+not divisible by any of them is
+\(\prod_{p\in P}(1-1/p)\).
+If \(\sum_{p\in P}1/p\leq C\), then
+\[
+ \prod_{p\in P}(1-1/p)
+ \geq\exp\left(-2\sum_{p\in P}1/p\right)\geq e^{-2C},
+\]
+using \(-\log(1-u)\leq2u\) for \(0\leq u\leq1/2\).
+This calculation concerns a fixed periodic sieve. It is
+not by itself a uniform finite-\(x\) bound when the prime
+set varies with \(x\). It nevertheless identifies the
+independence property that one must not impose on the
+composite-divisor sets in (1).
+
+\paragraph{Scope.}
+Both conventions are completely classified relative to the
+stated Weingartner theorem. The elementary union bound,
+the obstruction from \(1\), and the comparison of powers
+with logarithms are proved directly.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

@@ -1,0 +1,57 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 155: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $F(N)$ be the largest size of a Sidon subset of $\{1,\ldots,N\}$. Does every fixed $k\ge1$ satisfy $F(N+k)\le F(N)+1$ for all sufficiently large $N$? Source: \url{https://www.erdosproblems.com/155}.
+We prove that even $F(N+k)=F(N)$ holds for a density-one set of $N$, and reformulate the eventual assertion using optimal Sidon diameters. The eventual assertion remains unresolved.
+
+\section*{Most intervals have no jump}
+Heredity and deleting the last element give
+\[
+ 0\le F(N+1)-F(N)\le1.
+\]
+Distinct positive differences give $\binom{F(N)}2\le N-1$, hence $F(N)=O(\sqrt N)$.
+Writing the $k$-step increment as a sum of one-step increments and interchanging the finite sums,
+\[
+ \sum_{N=1}^X(F(N+k)-F(N))
+ \le k\sum_{j=1}^{X+k-1}(F(j+1)-F(j))
+ \le kF(X+k).
+\]
+Every positive $k$-step increment contributes at least one, so the number of $N\le X$ with $F(N+k)\ne F(N)$ is $O_k(\sqrt X)$. In particular the proposed inequality fails on at most $\tfrac{k}{2}F(X+k)=O_k(\sqrt X)$ such $N$. This quantitative exceptional-set bound does not show that there are finitely many exceptions.
+
+\section*{An exact equivalent formulation}
+Let $L_m$ be the smallest diameter of an integer Sidon set of size $m$. It exists, since sufficiently separated powers give Sidon sets and the possible diameters are nonnegative integers. Translate a minimizing set to start at zero. Then
+\[
+ F(N)=\max\{m:L_m\le N-1\}.
+\]
+Also $L_{m+1}\ge L_m+1$: deleting the largest point reduces diameter by at least one and leaves an $m$-element Sidon set.
+We claim that the requested statement for every fixed $k$ is equivalent to
+\[
+ L_{m+1}-L_m\longrightarrow\infty.\tag{1}
+\]
+If these gaps fail to diverge, some integer $B$ bounds infinitely many of them. Put $k=B+1$ and $N=L_m$. Then $F(N)=m-1$, while
+$L_{m+1}\le L_m+B=N+k-1$, so $F(N+k)\ge m+1$. This supplies infinitely many violations.
+Conversely, if $F(N+k)\ge F(N)+2$ and $m=F(N)+1$, then
+\[
+ N\le L_m<L_{m+1}\le N+k-1,
+\]
+so $L_{m+1}-L_m\le k-1$. As $N\to\infty$, the relevant $m$ also tends to infinity because finite Sidon sets of arbitrary size exist. Thus (1) excludes all sufficiently late violations.
+
+\section*{Why some attractive shortcuts are insufficient}
+It is not necessary that every maximum set in $[1,N+k]$ have at most one point in its final $k$ positions: the extremal-size inequality could be witnessed by a different Sidon set in $[1,N]$. That structural assertion is therefore stronger than the problem and is not an equivalent reformulation.
+Nor would an asymptotic $L_m\sim m^2$ alone imply (1). The abstract strictly increasing sequence
+\[
+ u_{2j}=4j^2,\qquad u_{2j+1}=4j^2+1
+\]
+has $u_m\sim m^2$ but infinitely many consecutive gaps equal to one. This is a numerical illustration of a logical limitation, not a sequence of optimal Sidon diameters or a counterexample.
+
+\section*{Assessment and provenance}
+The old GPT-Pro-5.2 draft's deletion and difference counts are retained with proofs, while its purported exact tables and the stronger tail condition are not used. The new deductions here isolate the distinction between a density-one conclusion and eventual stability. Proving (1), or producing infinitely many bounded optimal-diameter gaps, is the remaining task.
+
+\textbf{Completion rate estimate: 20\%.}
+\end{document}

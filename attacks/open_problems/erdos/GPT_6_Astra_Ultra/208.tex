@@ -1,0 +1,58 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\begin{document}
+\title{Erd\H{o}s Problem 208: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{25 September 2026}
+\maketitle
+
+\section*{Current statement and scope}
+For successive squarefree integers $s_n<s_{n+1}$, is $s_{n+1}-s_n\ll_\epsilon s_n^\epsilon$ for every $\epsilon>0$? More sharply, is the gap at most
+\[
+ (1+o(1))\frac{\pi^2}{6}\frac{\log s_n}{\log\log s_n}?
+\]
+Source: \url{https://www.erdosproblems.com/208}. Both assertions remain unresolved here. The older GPT-5.2 and GPT-Pro-5.4 drafts instead targeted $o(s_n^{1/5})$. That weaker assertion follows from Pandey's theorem and does not settle the present questions.
+
+We retain the elementary counting method, repair the CRT size argument, and prove a logarithmic lower bound with constant $1/2$. This is weaker than the known constant $\pi^2/6$ recorded on the problem page and carries no novelty claim.
+
+\section*{An elementary uniform upper bound}
+The identity $\mu(m)^2=\sum_{d^2\mid m}\mu(d)$ gives
+\[
+ Q(x):=\sum_{m\le x}\mu(m)^2
+ =\sum_{d\le\sqrt x}\mu(d)\left\lfloor\frac{x}{d^2}\right\rfloor
+ =\frac{x}{\zeta(2)}+O(\sqrt x).
+\]
+Indeed the floor errors total $O(\sqrt x)$, and the omitted absolutely convergent tail contributes at most $x\sum_{d>\sqrt x}d^{-2}=O(\sqrt x)$. The Euler product gives $\zeta(2)^{-1}=6/\pi^2$.
+For a sufficiently large fixed $C$, subtraction at $x$ and $x+C\sqrt x$ now gives $Q(x+C\sqrt x)-Q(x)>0$ for all large $x$. Hence
+\[
+ s_{n+1}-s_n=O(\sqrt{s_n}). \tag{1}
+\]
+The same subtraction shows that every sufficiently long interval immediately to the left of $x$, of length $C\sqrt x$, also contains a squarefree number.
+
+\section*{Long gaps with controlled location}
+Let $p_1,\ldots,p_h$ be the first $h$ primes and put $P_h=\prod_{j=1}^h p_j^2$. The Chinese remainder theorem supplies $r\in[0,P_h)$ satisfying $r\equiv-j\pmod{p_j^2}$. Set $x=P_h+r$, rather than making an unsupported lower bound on the least residue. Then
+\[
+ P_h\le x<2P_h,\qquad p_j^2\mid x+j\quad(1\le j\le h).
+\]
+Thus $x+1,\ldots,x+h$ contain no squarefree integer.
+
+Use the prime number theorem in the form $p_h\sim h\log h$ and $\sum_{p\le y}\log p\sim y$, an explicit external input. It gives
+\[
+ \log x=(2+o(1))h\log h,\qquad
+ h=\left(\frac12+o(1)\right)\frac{\log x}{\log\log x}.
+\]
+Let $s$ be the last squarefree integer at most $x$, and $t$ its successor. Then $t-s\ge h+1$. The left-interval consequence of (1) gives $s=x-O(\sqrt x)$, so $s\to\infty$ and $\log s\sim\log x$. Consequently infinitely many consecutive squarefree pairs satisfy
+\[
+ t-s\ge\left(\frac12+o(1)\right)\frac{\log s}{\log\log s}. \tag{2}
+\]
+Distinct pairs occur because their left endpoints tend to infinity. Only an upper bound on a CRT representative would not justify the old draft's assertion $\log x\asymp h\log h$; choosing the representative in $[P_h,2P_h)$ supplies both bounds.
+
+\section*{The older target and the remaining gap}
+Pandey's primary theorem, \url{https://arxiv.org/abs/2401.13981}, states that for some $\eta>0$ every sufficiently large $[X,X+X^{1/5-\eta}]$ contains a squarefree number. With $X=s_n+1$, this implies
+\[
+ s_{n+1}-s_n\le1+(s_n+1)^{1/5-\eta}=o(s_n^{1/5}).
+\]
+This implication is complete relative to the named external theorem; its proof is not reconstructed. A single fixed exponent improvement does not give bounds for every positive exponent, much less the proposed logarithmic upper bound. Those two current targets are the remaining gaps.
+
+\textbf{Completion rate estimate: 25\%.}
+\end{document}

@@ -1,0 +1,44 @@
+\section*{Erd\H{o}s Problem 1089: the fixed-distance limit}
+\subsection*{1. Statement and outcome}
+Let $g_d(n)$ be the least number of distinct points in $\mathbb R^d$ that always determine at least $n$ distinct positive distances. For each fixed $n\ge2$ we prove
+\[
+ \binom{d+1}{n-1}+1\le g_d(n)\le\binom{d+n-1}{n-1}+1,
+ \qquad \lim_{d\to\infty}\frac{g_d(n)}{d^{n-1}}=\frac1{(n-1)!}.
+\]
+The lower bound is relevant when $d+1\ge n-1$; otherwise the displayed binomial coefficient is interpreted as zero. The proof gives both bounds explicitly. The known upper bound is due to Bannai, Bannai and Stanton; the problem page credits the matching construction to Aletheia. This is a reconstruction, with no claim of novelty.
+
+\subsection*{2. A large set with few distances}
+Put $s=n-1$ and suppose $d+1\ge s$. For every $s$-element subset $S$ of $\{1,\ldots,d+1\}$ take its incidence vector $v_S\in\{0,1\}^{d+1}$. All these vectors lie in the affine hyperplane $\sum x_i=s$, which is isometric to $\mathbb R^d$. For distinct $S,T$,
+\[
+ \|v_S-v_T\|^2=|S\triangle T|=2(s-|S\cap T|)\in\{2,4,\ldots,2s\}.
+\]
+Thus $\binom{d+1}{s}$ points can have at most $s$ distances, proving the lower bound, including the necessary extra one in the definition of $g_d(n)$.
+
+\subsection*{3. A polynomial upper bound}
+Let $A=\{a_1,\ldots,a_N\}\subset\mathbb R^d$ determine exactly $t\le s$ positive distances $r_1,\ldots,r_t$. If $N=1$ the claimed bound is immediate, so assume $t\ge1$. Define the polynomial in two vector variables
+\[
+ F(x,y)=\prod_{j=1}^t\bigl(r_j^2-\|x-y\|^2\bigr).
+\]
+Its total degree in all $2d$ scalar variables is $2t$. On the chosen points,
+\[
+ F(a_i,a_j)=0\quad(i\ne j),\qquad F(a_i,a_i)=D:=\prod_{j=1}^t r_j^2>0.
+\]
+There are $\binom{d+t}{t}$ monomials in $d$ variables of degree at most $t$, by the stars-and-bars count. Suppose $N$ exceeds this number. Linear algebra then supplies real numbers $c_i$, not all zero, such that
+\[
+ \sum_{i=1}^N c_i a_i^\alpha=0\qquad\text{for every multi-index }\alpha\text{ with }|\alpha|\le t.
+\]
+Expand $F(x,y)$ as a sum of terms $b_{\alpha,\beta}x^\alpha y^\beta$. Each nonzero term has $|\alpha|+|\beta|\le2t$, so at least one of its two degrees is at most $t$. Consequently every term vanishes after summing against $c_i c_j$, and
+\[
+ \sum_{i,j}c_i c_j F(a_i,a_j)=0.
+\]
+But the diagonal formula makes the same quantity $D\sum_i c_i^2>0$, a contradiction. Therefore
+\[
+ N\le\binom{d+t}{t}\le\binom{d+s}{s}.
+\]
+Any larger point set has at least $s+1=n$ distances. This establishes the desired upper bound without assuming the few-distance theorem as an external input.
+
+\subsection*{4. Limit and assessment}
+For fixed $s$, both $\binom{d+1}{s}$ and $\binom{d+s}{s}$ equal $d^s/s!+O_s(d^{s-1})$. The bounds therefore squeeze $g_d(s+1)/d^s$ to $1/s!$. The two-parameter bounds and the requested fixed-$n$ limit are proved; no exact formula for every small pair $(d,n)$ is asserted.
+Source and attribution: \url{https://www.erdosproblems.com/1089}, including its references to Bannai--Bannai--Stanton (1983) and Aletheia (2026).
+
+\textbf{Completion rate estimate: 100\%.}

@@ -1,0 +1,82 @@
+\section*{Erd\H{o}s Problem 905: an edge in many triangles}
+
+\paragraph{Statement and result.}
+Every \(n\)-vertex graph with \(m>n^2/4\) edges has an
+edge belonging to more than \(n/6\) triangles.
+We prove this by elementary counting, in the form of
+the booksize inequality used by Bollob\'as and Nikiforov.
+
+\paragraph{Notation and two local bounds.}
+For an edge \(uv\), let
+\(t_{uv}=|N(u)\cap N(v)|\), and put
+\[
+ b=\max_{uv\in E}t_{uv},\qquad T=\text{number of triangles}.
+\]
+Then \(\sum_{uv\in E}t_{uv}=3T\).
+Since \(|N(u)\cup N(v)|\leq n\), every edge satisfies
+\[
+ d(u)+d(v)-n\leq t_{uv}.
+\tag{1}
+\]
+For a triangle \(uvw\), inclusion--exclusion gives
+\[
+ d(u)+d(v)+d(w)
+ \leq n+t_{uv}+t_{uw}+t_{vw}.
+\]
+Summing over triangles yields
+\[
+ \sum_{uv\in E}t_{uv}(d(u)+d(v))
+ \leq2nT+2\sum_{uv\in E}t_{uv}^2.
+\tag{2}
+\]
+Indeed each triangle's degree sum occurs twice on the
+left before summing, whereas an edge contributes its
+codegree once for each of its \(t_{uv}\) triangles on
+the right.
+
+\paragraph{A global booksize inequality.}
+Set
+\[
+ S=\sum_{uv\in E}(d(u)+d(v)-n)
+   =\sum_vd(v)^2-nm.
+\]
+Multiply (1) by the nonnegative number \(b-t_{uv}\),
+and sum. Using (2) gives
+\[
+ \begin{split}
+ bS
+ &\leq\sum_{uv\in E}
+       \{t_{uv}(d(u)+d(v)-n)+(b-t_{uv})t_{uv}\}\\
+ &=\sum_{uv\in E}t_{uv}(d(u)+d(v))
+       +3(b-n)T-\sum_{uv\in E}t_{uv}^2\\
+ &\leq(3b-n)T+\sum_{uv\in E}t_{uv}^2\\
+ &\leq(6b-n)T.
+ \end{split}
+\tag{3}
+\]
+All terms and directions are valid even when an individual
+edge has \(d(u)+d(v)-n<0\).
+
+\paragraph{The density assumption forces a large book.}
+Cauchy--Schwarz and \(2m=\sum_vd(v)\) give
+\[
+ S\geq4m^2/n-nm=m(4m/n-n)>0.
+\]
+If \(b=0\), (1) would give \(S\leq0\), a contradiction.
+Thus \(b>0\), and consequently \(T>0\).
+Equation (3) now has positive left-hand side, so
+\(6b-n>0\). An edge attaining \(b\) is the required edge.
+
+\paragraph{Attribution and scope.}
+Edwards and Khadzhiivanov--Nikiforov independently
+established the result. A primary exposition of its
+booksize formulation is B. Bollob\'as and V. Nikiforov,
+\emph{Books in graphs}, \url{https://arxiv.org/abs/math/0405080}.
+See also \url{https://www.erdosproblems.com/905}, checked
+24 September 2026. The displayed counting proof is complete
+and uses no external extremal-graph theorem. It is a
+reconstruction of a known result; no local Lean verification
+is claimed.
+
+\paragraph{Completion estimate.}
+\textbf{COMPLETION: 100\%}

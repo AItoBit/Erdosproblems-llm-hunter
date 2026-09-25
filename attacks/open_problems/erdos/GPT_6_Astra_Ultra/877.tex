@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\title{Erd\H{o}s Problem 877: a checked attempt}
+\author{GPT\_6\_Astra\_Ultra}
+\date{24 September 2026}
+\maketitle
+
+\section*{Statement and scope}
+Let $f_{\max}(n)$ count maximal sum-free subsets of $[1,n]$, where $x+x=y$ is forbidden too. Is $f_{\max}(n)=o(2^{n/2})$? We prove the stronger bound
+\[
+ f_{\max}(n)\le3^{n/6+o(n)}=2^{((\log_2 3)/6+o(1))n}.
+\]
+This suffices for the question. Balogh, Liu, Sharifzadeh and Treglown obtain the sharper exponent $1/4$ in \url{https://web.mat.bham.ac.uk/~treglowa/sumfreepaper.pdf}; we reconstruct the simpler container-and-link-graph argument rather than claim their sharper analysis.
+
+\section*{Explicit external inputs}
+We use Green's two results, stated as Lemmas 2.1 and 2.3 in that paper: there are $2^{o(n)}$ containers covering every sum-free subset of $[1,n]$, each having $o(n^2)$ Schur triples; and every such container can be written $B\cup C$, where $B$ is sum-free and $|C|=o(n)$. The error estimates are uniform across the container family. Replace $C$ by $C\setminus B$, making the union disjoint. These two structural results are the only external combinatorial inputs.
+
+\section*{Counting extensions inside a container}
+First $|B|\le(n+1)/2$. If $m=\max B$, the two sets $B$ and $\{m-b:b\in B,b<m\}$ are disjoint subsets of $[1,m]$; otherwise two elements of $B$ would sum to $m\in B$. Their combined size is $2|B|-1$, proving the bound. The empty case is trivial.
+
+Fix $S\subseteq C$; only sum-free $S$ need be considered. Construct a graph on $B$ as follows. Join distinct $x,y$ if $S\cup\{x,y\}$ contains a Schur triple using both of them. Put a loop at $x$ if $S\cup\{x\}$ contains a Schur triple. This includes repeated-variable triples, such as $2x=s$ and $2s=x$. Since $B$ and $S$ are individually sum-free,
+\[
+ S\cup I\text{ is sum-free}\quad\Longleftrightarrow\quad I\subseteq B\text{ is independent in this looped graph}.
+\]
+If $S\cup I$ is maximal in $[1,n]$, then $I$ is maximal independent: an additional permissible vertex of $B$ would extend the original set. Removing looped vertices reduces the problem to an ordinary graph on at most $|B|$ vertices; maximal independent sets correspond exactly under that deletion.
+
+Here is a proof of the needed graph bound. For a graph on $v$ vertices write $m(G)$ for its number of maximal independent sets. Induct on $v$, with the empty graph having one. Choose a vertex of minimum degree $d$. Every maximal independent set contains some $u$ in its closed neighborhood. For fixed $u$, deleting $u$ from a maximal independent set containing it leaves a maximal independent set in $G-N[u]$; otherwise it could be extended in $G$. Thus, by induction,
+\[
+ m(G)\le\sum_{u\in N[v]}3^{(v-\deg(u)-1)/3}
+ \le(d+1)3^{(v-d-1)/3}\le3^{v/3}.
+\]
+The final inequality is $t\le3^{t/3}$ for positive integers $t$; check $t=1,2,3$ and then note that $(t+1)/t\le4/3<3^{1/3}$ for $t\ge3$.
+
+There are at most $2^{|C|}$ choices of $S$. Therefore the maximal sum-free sets in one container number at most $2^{o(n)}3^{(n+1)/6}$. Summing over $2^{o(n)}$ containers proves the displayed bound. Its exponent in base two is about $0.2642<1/2$, giving the required little-$o$ conclusion.
+
+\section*{A lower bound and assessment}
+Let $m\in\{n-1,n\}$ be even. Include $m$, and choose exactly one odd number from each pair $\{x,m-x\}$ with $x<m/2$. There are $\lfloor n/4\rfloor$ pairs. Each chosen set is sum-free: the only possible even sum lying in the set would be $m$, and the pair choices exclude it. Extend it to any maximal sum-free subset of $[1,n]$. Its unchosen odd partners can never be added, so different choices give different maximal extensions. Hence $f_{\max}(n)\ge2^{\lfloor n/4\rfloor}$.
+
+The original question is fully answered relative to the two explicitly stated Green inputs. The proof includes the maximality transfer, loop convention and graph-counting bound; the stronger sharp exponent from the cited paper is not claimed as established here.
+
+\textbf{Completion rate estimate: 100\%.}
+
+\end{document}

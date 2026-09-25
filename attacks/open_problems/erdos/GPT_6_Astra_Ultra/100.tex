@@ -1,0 +1,61 @@
+\section*{Erd\H{o}s Problem 100: separated distance levels and diameter}
+
+\subsection*{1. Statement and scope}
+Let $P$ consist of $n$ planar points with every mutual distance at least one. Suppose also that any two distinct distance values differ by at least one. Must its diameter be at least $cn$ for an absolute $c>0$? This remains unresolved. We give the known $n/\log n$ lower bound with its exact external input, a scale-invariant reformulation, and a calculation showing why a standard grid does not furnish a sublinear counterexample after the required rescaling.
+
+\subsection*{2. Two lower bounds}
+Let $1\le\rho_1<\cdots<\rho_s=D$ be the distance values, where $D=\operatorname{diam}(P)$. Since $\rho_{j+1}-\rho_j\ge1$, induction gives $\rho_j\ge j$, and hence
+\[
+ D\ge s.\tag{1}
+\]
+The external Guth--Katz distinct-distance theorem states that every $n$-point planar set, for $n\ge2$, has at least $c_0 n/\log n$ distinct distances, for an absolute $c_0>0$. Its application here is immediate and gives
+\[
+ D\ge c_0 n/\log n.\tag{2}
+\]
+This theorem, not its deep proof, is an explicit input; it does not use the additional separation of our distance levels.
+
+There is also a fully elementary bound. The open radius-$1/2$ disks about the points are disjoint. Fix $p\in P$; all these disks lie in the radius-$(D+1/2)$ disk about $p$. Comparing areas gives
+\[
+ n\pi/4\le\pi(D+1/2)^2,
+ \qquad D\ge(\sqrt n-1)/2.\tag{3}
+\]
+This uses only the minimum point separation and is weaker than (2) for large $n$.
+
+\subsection*{3. An equivalent spacing inequality for arbitrary point sets}
+Now let $P$ be any finite set of $n\ge2$ distinct planar points, without a normalization. With its distinct distance values ordered as above, define
+\[
+ \sigma(P)=\min\bigl(\{\rho_1\}\cup
+             \{\rho_{j+1}-\rho_j:1\le j<s\}\bigr)>0.\tag{4}
+\]
+For $s=1$ this minimum is just $\rho_1$. A dilation by a factor $\lambda>0$ satisfies both separation requirements in the problem exactly when $\lambda\sigma(P)\ge1$. Its least possible admissible diameter is therefore
+\[
+ \frac{\operatorname{diam}(P)}{\sigma(P)}.\tag{5}
+\]
+It follows that the original conjecture is equivalent to the existence of an absolute constant $C$ such that every finite planar point set satisfies
+\[
+ \sigma(P)\le\frac{C\operatorname{diam}(P)}{n}.\tag{6}
+\]
+Indeed, applying the conjecture to the dilation with factor $1/\sigma(P)$ proves (6) with $C=1/c$. Conversely (6) applied to an admissible set, for which $\sigma(P)\ge1$, gives diameter at least $n/C$. This reformulation shows exactly how the spacing condition might improve the general distinct-distance theorem.
+
+\subsection*{4. Collinear sets and the square grid}
+For collinear admissible points, order them along the line. Consecutive gaps are at least one, so the diameter is at least $n-1$, achieved by $n$ equally spaced points. Thus the desired order is sharp and holds in this case.
+
+For the $N\times N$ integer grid with $N\ge2$, put $m=N-1$. Its diameter is $\sqrt2\,m$, and both $m$ and $\sqrt{m^2+1}$ occur as distances, from the vectors $(m,0)$ and $(m,1)$. Even if other distance values intervene, the minimum adjacent gap obeys
+\[
+ \sigma(P)\le\sqrt{m^2+1}-m
+ =\frac1{\sqrt{m^2+1}+m}.
+\]
+Consequently its least admissible rescaled diameter is at least
+\[
+ \sqrt2\,m\bigl(\sqrt{m^2+1}+m\bigr)
+ \ge2\sqrt2\,m^2.
+\]
+Since $n=N^2$, this is of linear order in $n$. The grid's relatively small number of distance values therefore does not, by uniform rescaling, disprove the conjecture. This calculation does not exclude other configurations or other constructions.
+
+\subsection*{5. Assessment and attribution}
+The spacing reformulation, packing estimate, collinear case and grid calculation are proved in full. The general estimate (2) uses the stated Guth--Katz theorem. An argument exploiting the extra spacing to remove the remaining logarithm is missing.
+
+Sources: \url{https://www.erdosproblems.com/100}; L. Guth and N. H. Katz, \emph{On the Erd\H{o}s distinct distance problem in the plane}, Theorem 1.1, \url{https://arxiv.org/abs/1011.4105}.
+
+\textbf{Completion rate estimate: 25\%.}
+

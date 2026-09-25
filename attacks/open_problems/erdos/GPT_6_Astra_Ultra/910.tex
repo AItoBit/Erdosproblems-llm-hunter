@@ -1,0 +1,70 @@
+\section*{Erd\H{o}s Problem \#910: connected subsets and their number}
+\subsection*{Statement and a wording distinction}
+The current problem page asks whether every connected subset of Euclidean space contains a nondegenerate connected subset not homeomorphic to itself, and whether a connected subset of \(\mathbb R^n\), \(n\geq2\), must contain more than continuum many connected subsets.
+For the first question the original set must also be nondegenerate; a singleton would otherwise be a trivial exception.
+
+There is an important distinction in the second question. Erd\H{o}s's original 1982 discussion says that the connected set itself has dimension greater than one. This is stronger than merely lying in an ambient space of dimension at least two.
+Below we settle the literal ambient-dimension version, prove a positive result for sets with interior, and extract a precise cardinality consequence of Rudin's construction. We do not silently transfer these conclusions to the intrinsic-dimension version or to the homeomorphism question.
+
+\subsection*{The literal ambient-dimension version}
+Embed \([0,1]\) as a line segment in \(\mathbb R^n\), \(n\geq2\).
+Every connected subset of the line is an interval, possibly a point and with either endpoint included or excluded.
+To see this, if \(x<z<y\), with \(x,y\) in the set and \(z\) missing, the two intersections with \((-\infty,z)\) and \((z,\infty)\) separate the set.
+An interval is determined by its two endpoints and two inclusion choices.
+There are at most \(\mathfrak c^2\cdot4=\mathfrak c\) such subsets, and the singletons already give \(\mathfrak c\).
+Thus the literal version has a negative answer without additional set-theoretic assumptions.
+This example has intrinsic dimension one and does not refute the original higher-dimensional formulation.
+
+\subsection*{A positive result when the set has interior}
+If \(A\subseteq\mathbb R^n\), \(n\geq2\), contains an open ball \(B\), then it has exactly \(2^{\mathfrak c}\) connected subsets.
+Choose a closed line segment \(L\) strictly inside \(B\), and let \(D=B\setminus L\).
+The set \(D\) is path connected: polygonal paths in the ball can be detoured around the segment in a two-dimensional plane; endpoints of the segment lie strictly inside the ball, so the detour can go around an endpoint if necessary.
+Also \(D\) is dense in \(B\).
+For every subset \(T\subseteq L\),
+\[
+ D\subseteq D\cup T\subseteq B\subseteq\overline D
+\]
+implies \(D\cup T\) is connected.
+Indeed, a separation of an intermediate set would restrict to a separation of \(D\), and a nonempty side missing \(D\) contradicts density.
+The \(2^{\mathfrak c}\) choices of \(T\) give distinct connected subsets of \(A\).
+The reverse bound follows from \(|A|\leq\mathfrak c\).
+Hence any difficult example for the counting question must have empty interior.
+
+\subsection*{The exact consequence of Rudin's theorem}
+The primary theorem of M. E. Rudin (1958), under the continuum hypothesis, constructs a nondegenerate connected plane set \(M\) with this property:
+\[
+ N\subseteq M,\quad N\text{ connected and nondegenerate}
+ \quad\Longrightarrow\quad M\setminus N\text{ is countable}. \tag{R}
+\]
+We use (R) as an explicit external theorem; its transfinite construction and separation lemmas are not claimed proved here.
+
+It follows that \(M\) has exactly \(\mathfrak c\) connected subsets.
+First, \(|M|=\mathfrak c\): choose distinct \(p,q\in M\); the continuous map
+\(x\mapsto\|x-p\|\) maps \(M\) onto a connected subset of the line containing \(0\) and \(\|q-p\|\), and hence onto an interval of cardinality \(\mathfrak c\).
+The opposite inequality follows from \(M\subseteq\mathbb R^2\).
+
+Every nondegenerate connected subset is determined by a countable complement. The collection of countable subsets of \(M\) has cardinality at most
+\[
+ |M|^{\aleph_0}
+ =\mathfrak c^{\aleph_0}
+ =(2^{\aleph_0})^{\aleph_0}
+ =\mathfrak c.
+\]
+Adding the empty set and all singletons does not increase this bound, while the singletons give the matching lower bound.
+Notice that the cardinal arithmetic in this deduction does not use CH; CH enters through the construction of \(M\).
+
+Property (R) is a cardinality statement, not a statement that every nondegenerate connected subset is homeomorphic to \(M\).
+Such a homeomorphism conclusion would require an additional proof.
+Likewise, applying \(M\) to the original intrinsic-dimension version requires the relevant dimension assertion; it has not been established by the argument above.
+
+\subsection*{Attribution and remaining gap}
+The sources report known negative resolutions, but this attempt claims only the explicit results proved above and the deduction from (R).
+Sources: \url{https://www.erdosproblems.com/910};
+Erd\H{o}s, \emph{Some of my favourite problems}, section 4,
+\url{https://users.renyi.hu/~p_erdos/1982-33.pdf};
+Rudin, \emph{A connected subset of the plane}, Fundamenta Mathematicae 46 (1958), 15--24,
+\url{https://matwbn.icm.edu.pl/ksiazki/fm/fm46/fm4612.pdf}.
+No novelty is claimed.
+The homeomorphism question, the intrinsic-dimension qualification in the original counting question, and a reconstruction of Rudin's transfinite construction remain outside the established argument. Attempt status: unresolved for the complete pair of intended questions.
+\subsection*{COMPLETION ESTIMATE}
+\textbf{COMPLETION: 45\%}

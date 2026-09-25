@@ -1,0 +1,112 @@
+\section*{Erd\H{o}s Problem 858}
+
+\paragraph{Statement and result.}
+Let \(M(N)\) be the maximum of \(\sum_{a\in A}1/a\) over \(A\subseteq\{1,\ldots,N\}\) having no pair \(a,b\) with \(b=at\), \(t>1\), and least prime factor \(P^-(t)>a\). We reconstruct the known asymptotic solution
+\[
+ M(N)=(c+o(1))\log N,\qquad c=0.6187712111\ldots,
+\]
+with an integral definition of \(c\) below. The restriction \(t>1\) excludes the meaningless self-pair. The argument follows the note linked by the problem page and credited there to Przemys\l aw Chojecki and GPT-5.4 Pro.
+
+\paragraph{The divisibility tree.}
+Write \(a\prec b\) when \(b=at\), \(t>1\), and every prime divisor of \(t\) exceeds \(a\). This relation is transitive: in a product of two successive quotients, the primes of the first exceed \(a\), and those of the second exceed the intermediate integer and hence \(a\).
+
+Factor \(n=p_1\cdots p_s\) with \(p_1\leq\cdots\leq p_s\), and let \(P_j=p_1\cdots p_j\), \(P_0=1\). The proper ancestors of \(n\) are exactly those \(P_j\), \(j<s\), for which \(p_{j+1}>P_j\). Indeed, if \(a\prec n\), every prime factor of \(n\) at most \(a\), with its full multiplicity in \(n\), belongs to \(a\). All prime factors of \(a\) are at most \(a\), so \(a\) is precisely an initial prefix product. The converse is immediate.
+
+These ancestors form a chain. Let \(\pi(n)\) be the largest proper ancestor of \(n>1\); every such \(n\) has ancestor 1. Joining \(n\) to \(\pi(n)\) gives a rooted tree on \(\{1,\ldots,N\}\), and the admissible sets in the question are exactly its antichains.
+
+Let \(F_N(a)\) be the maximum reciprocal weight of an antichain in the subtree rooted at \(a\). Distinct child subtrees are incomparable, so
+\[
+ F_N(a)=\max\left\{\frac1a,\ \sum_{\pi(b)=a}F_N(b)\right\},
+ \qquad B_N(a)=a\sum_{\pi(b)=a}F_N(b). \tag{1}
+\]
+In particular \(M(N)=F_N(1)\). At \(a\), continuing to the children is optimal exactly when \(B_N(a)\geq1\), with continuation chosen at a tie.
+
+\paragraph{A threshold is eventually optimal.}
+Every \(ap\leq N\) with prime \(p>a\) is a child of \(a\): the prefix characterization leaves no ancestor strictly between them. Define
+\[
+ P_N(a)=\sum_{a<p\leq N/a}\frac1p,
+ \qquad
+ Q_N(a)=\sum_{\substack{a<p\leq q\\p,q\text{ prime}\\apq\leq N}}\frac1{pq}.
+\]
+Let \(L=\lfloor N^{1/4}\rfloor\). For \(a\leq L\), (1) and the prime children give
+\[
+ B_N(a)\geq P_N(a)\geq P_N(L)=\log3+o(1)>1,
+ \tag{2}
+\]
+by Mertens' estimate for reciprocal primes.
+
+If \(a>L\), then \(a>N^{1/4}\). For any child \(n=at\), the quotient \(t\leq N/a<a^3\) has every prime factor above \(a\), so it is either a prime or a product of two primes, with repetition allowed. Conversely every \(apq\leq N\) with \(a<p\leq q\) is a child. Its only possible intermediate ancestor is \(ap\), but
+\(ap>a^2>\sqrt N\) and \(q\leq N/(ap)<\sqrt N<ap\), which rules that out. All these children exceed \(a^2>\sqrt N\) and are leaves: any proper descendant of \(b\) exceeds \(b^2\). Hence
+\[
+ B_N(a)=P_N(a)+Q_N(a)\qquad(a>L). \tag{3}
+\]
+The right-hand side is nonincreasing in the integer \(a\), because both summation domains shrink, and is zero for \(a\geq\sqrt N\). Equations (2)--(3) imply that, for all sufficiently large \(N\), there is an integer \(K_N\geq L\) for which
+\[
+ B_N(a)\geq1\ (a\leq K_N),\qquad B_N(a)<1\ (a>K_N).
+\]
+Thus the optimal policy continues below this threshold and stops above it. In particular, with \(\pi(1)=0\), the frontier
+\[
+ A_N(K)=\{n\leq N:\pi(n)\leq K<n\}
+\]
+has maximum weight when \(K=K_N\). This establishes eventual exact frontier optimality; it does not assert an exact frontier theorem for every small \(N\).
+
+\paragraph{Sweeping the frontier.}
+Set \(A_N(0)=\{1\}\), \(S_N(K)=\sum_{n\in A_N(K)}1/n\), and
+\(C_N(a)=\sum_{\pi(b)=a}1/b\). Passing from \(K-1\) to \(K\) removes \(K\) and inserts its children, so
+\[
+ S_N(K)-S_N(K-1)=C_N(K)-1/K.
+\]
+Every \(n>1\) is exactly one child, whence \(\sum_a C_N(a)=H_N-1\). Also \(C_N(a)=0\) for \(a\geq\sqrt N\). Writing \(J=\lfloor\sqrt N\rfloor\), we obtain, for \(L\leq K\leq J\),
+\[
+ S_N(K)=H_N-H_J+
+ \sum_{K<a\leq J}\frac{1-P_N(a)-Q_N(a)}a. \tag{4}
+\]
+Here \(a>K\geq L\), so (3) applies.
+
+\paragraph{Uniform asymptotics above the quarter-power layer.}
+For \(u\in[1/4,1/2]\), define
+\[
+ \Phi(u)=\log\frac{1-u}{u}+
+ \begin{cases}
+ \displaystyle\int_u^{(1-u)/2}\frac1v
+       \log\frac{1-u-v}{v}\,dv,&u<1/3,\\[4pt]
+ 0,&u\geq1/3.
+ \end{cases} \tag{5}
+\]
+Uniformly for integers \(a\in(N^{1/4},\sqrt N]\), with \(u=\log a/\log N\), Mertens' estimate gives
+\[
+ P_N(a)=\log\frac{1-u}{u}+o(1),\qquad
+ P_N(a)+Q_N(a)=\Phi(u)+o(1). \tag{6}
+\]
+For clarity, the second estimate follows by summing first over the smaller prime \(p\), with \(v=\log p/\log N\). The inner prime sum is
+\[
+ \sum_{p\leq q\leq N/(ap)}\frac1q
+ =\log\frac{1-u-v}{v}+o(1),
+ \qquad u<v\leq(1-u)/2.
+\]
+The lower-endpoint correction \(1/p\) tends uniformly to zero. Mertens' formula and partial summation convert the outer reciprocal-prime sum to the integral in (5). Uniformity follows because all logarithmic coordinates lie in the compact interval \([1/4,1/2]\), the integrand and its first derivatives are bounded there on the stated domain, and the total outer reciprocal-prime weight is bounded. If \(u\geq1/3\), no such semiprime quotient exists and \(Q_N(a)=0\).
+
+The function \(\Phi\) is continuous and strictly decreasing. Its first term is strictly decreasing; on the integral's domain its positive integrand decreases as \(u\) increases, while the integration interval shrinks. Moreover
+\[
+ \Phi(1/4)\geq\log3>1,\qquad \Phi(1/3)=\log2<1.
+\]
+There is therefore a unique \(\alpha\in(1/4,1/3)\) with \(\Phi(\alpha)=1\). Equation (6), the threshold property, and strict monotonicity imply
+\[
+ \frac{\log K_N}{\log N}\longrightarrow\alpha.
+\]
+Indeed, at exponents at least a fixed distance below or above \(\alpha\), (6) puts \(B_N\) uniformly above or below 1.
+
+\paragraph{The extremal constant.}
+Insert \(K=K_N\) into (4). The uniform error in (6), summed against \(1/a\), is \(o(\log N)\). Since \(H_N-H_J=\tfrac12\log N+O(1)\), the remaining harmonic Riemann sum gives
+\[
+ \boxed{\quad
+ M(N)=(c+o(1))\log N,\qquad
+ c=\frac12+\int_\alpha^{1/2}(1-\Phi(u))\,du,
+ \quad\Phi(\alpha)=1.\quad}
+\]
+Numerical quadrature yields \(\alpha\approx0.28043830989\) and \(c\approx0.6187712111\). These decimal values are illustrative; the integral and unique-root characterization define the constant rigorously.
+
+\paragraph{Attribution and assessment.}
+This reconstructs the Bellman-recursion and quarter-power-layer proof in \emph{The asymptotic constant in Erd\H{o}s problem \#858}, \url{https://www.ulam.ai/research/erdos858-asymptotic.pdf}, linked and credited on \url{https://www.erdosproblems.com/858}, checked 24 September 2026. Mertens' reciprocal-prime estimate is the standard external analytic input; the tree structure, threshold argument, frontier identity, and deduction of the asymptotic are supplied above. No novelty or local Lean verification is claimed.
+
+\textbf{Completion rate estimate: 100\%.}
