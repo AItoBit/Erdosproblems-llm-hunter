@@ -12,6 +12,7 @@ import html
 import re
 import subprocess
 from datetime import datetime
+from functools import lru_cache
 from pathlib import Path
 
 # Directories
@@ -156,36 +157,45 @@ def extract_completion(content):
     return last_value
 
 
+@lru_cache(maxsize=None)
+def load_first_posted_dates(repo_dir):
+    """Read first additions once, avoiding one history scan per attempt."""
+    result = subprocess.run(
+        ['git', '-c', 'core.quotePath=false', 'log', '--no-renames',
+         '--diff-filter=A', '--format=POSTED:%aI', '--name-only', '--', 'attacks'],
+        capture_output=True, text=True, cwd=repo_dir
+    )
+    if result.returncode != 0:
+        return {}
+    dates = {}
+    date = None
+    for line in result.stdout.splitlines():
+        if line.startswith('POSTED:'):
+            date = datetime.fromisoformat(line[7:].replace('Z', '+00:00')).date().isoformat()
+        elif line.startswith('attacks/') and date:
+            dates[line] = min(date, dates.get(line, date))
+    return dates
+
+
 def get_file_date(filepath):
-    """Get the date when a file was last updated.
+    """First recorded repository posting, not the last edit or checkout time.
 
-    First tries to get the latest git commit date, then falls back to
-    file modification time.
-
-    Returns date in YYYY-MM-DD format.
+    Preserve the known Erdos directory migration even when substantial rewrites
+    prevent Git's similarity-based rename detection. Model/version filenames
+    remain separate; an Astra copy does not inherit another model's date.
+    Files without repository history have no inferred posting date.
     """
     try:
-        # Try to get the latest git commit date for this file
-        result = subprocess.run(
-            ['git', 'log', '-1', '--format=%aI', '--', str(filepath)],
-            capture_output=True,
-            text=True,
-            cwd=filepath.parent
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            # Parse ISO format date and extract just the date part
-            git_date = result.stdout.strip().split('\n')[0]
-            return datetime.fromisoformat(git_date.replace('Z', '+00:00')).strftime('%Y-%m-%d')
-    except Exception as e:
-        pass
-    
-    # Fall back to file modification time
-    try:
-        mtime = os.path.getmtime(filepath)
-        return datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
-    except Exception as e:
-        print(f"Warning: Could not get date for {filepath}: {e}")
-        return datetime.now().strftime('%Y-%m-%d')
+        relative = Path(filepath).resolve().relative_to(BASE_DIR.resolve()).as_posix()
+        dates = load_first_posted_dates(str(BASE_DIR.resolve()))
+        candidates = [relative]
+        prefix = 'attacks/open_problems/erdos/'
+        if relative.startswith(prefix):
+            candidates.append('attacks/erdos/' + relative[len(prefix):])
+        known = [dates[path] for path in candidates if path in dates]
+        return min(known) if known else None
+    except (OSError, ValueError):
+        return None
 
 
 def parse_collection_metadata(content):
