@@ -60,7 +60,11 @@ jobs:
           done
 
       - name: Refresh Erdos problem statuses
-        run: python scripts/sync_erdos_status.py
+        run: |
+          if ! python scripts/sync_erdos_status.py; then
+            echo "::warning::Status refresh failed; building with the checked-in Erdos status snapshot."
+            test -s lists/erdos_status.json
+          fi
 
       - name: Build site data
         run: python build_site.py
