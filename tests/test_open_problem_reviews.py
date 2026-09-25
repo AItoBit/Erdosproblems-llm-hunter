@@ -19,14 +19,14 @@ class OpenProblemReviewTests(unittest.TestCase):
         self.lists = self.root / "lists"
         self.output = self.root / "reviews"
         self.lists.mkdir()
-        (self.lists / "top500-v22.json").write_text(json.dumps({
-            "records": [{"problemId": "problem.p-versus-np"},
-                        {"problemId": "problem.example.with-period"}],
-            "resolvedRecords": [{"problemId": "problem.historical"}],
-        }), encoding="utf-8")
+        self.definitions = self.root / "attacks/open_problems/top_problems"
+        self.definitions.mkdir(parents=True)
+        for number, problem_id in enumerate(["problem.p-versus-np", "problem.example.with-period"], 1):
+            (self.definitions / f"{number}.tex").write_text(
+                '% TOP_PROBLEM: ' + json.dumps({"problemId": problem_id}) + '\n', encoding="utf-8")
         (self.lists / "erdos_problems.csv").write_text("number\n665\n", encoding="utf-8")
         (self.lists / "mo_problems.csv").write_text("question_id\n123\n", encoding="utf-8")
-        for name, value in [("LISTS_DIR", self.lists), ("REVIEWS_DIR", self.output)]:
+        for name, value in [("LISTS_DIR", self.lists), ("REVIEWS_DIR", self.output), ("TOP_PROBLEMS_DIR", self.definitions)]:
             patcher = patch.object(reviews, name, value)
             patcher.start()
             self.addCleanup(patcher.stop)

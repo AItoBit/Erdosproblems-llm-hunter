@@ -24,9 +24,10 @@ var siteStats = {
     "total_problems": 600,
     "ranked_total": 500,
     "mo_total": 100,
-    "with_attacks": 93,
-    "ranked_with_attacks": 0,
+    "with_attacks": 107,
+    "ranked_with_attacks": 14,
     "models": [
+      "Research notebook",
       "gpt pro 5.2"
     ]
   }

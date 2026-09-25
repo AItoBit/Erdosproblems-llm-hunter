@@ -193,7 +193,7 @@ function filterOpenProblems(problems, filters = {}) {
         if (!search) return true;
         const sourceText = (problem.sources || []).map(source => `${source.citation || ''} ${source.url || ''}`).join(' ');
         return [problem.id, problem.mo_id, problem.rank, problem.title, problem.exact_target,
-            problem.domain_label, ...(problem.catalog_record?.aliases || []), sourceText]
+            problem.definition_tex, problem.domain_label, ...(problem.aliases || []), sourceText]
             .filter(value => value !== null && value !== undefined).join(' ').toLowerCase().includes(search);
     });
 }

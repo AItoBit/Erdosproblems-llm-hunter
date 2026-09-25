@@ -17,8 +17,8 @@ The Erdos index and the [GPT_6_Astra_Ultra collection](attacks/open_problems/erd
   - Problem statements: [erdosproblems.com](https://www.erdosproblems.com/)
   - Latest status and formalization links: [Terry Tao's Erdos Problems Database](https://teorth.github.io/erdosproblems/)
 
-- **Top Open Problems**: The 500 ranked records in [lists/top500-v22.json](lists/top500-v22.json), imported from the local `_Local/open_problems/top500-v22.json` publication (edition 2026-09-22).
-  - Each record supplies its stable ID, exact target, domain, source references, and qualified status. Rankings and status qualifications are attributed to that saved publication.
+- **Top Open Problems**: [500 numbered TeX definitions](attacks/open_problems/top_problems/), each with mathematical definitions, an English summary, and cited sources.
+  - The build reads these TeX files and the website displays their mathematical definitions, summaries, and sources, with a link to each original `.tex` file. Research-attempt subsections appear as separate research notebooks. LLM-judged ranking numbers are by [ProofAtlas](https://www.proofatlas.ai/). Stable IDs preserve problem links and reviews; catalog quotations are excluded from the page display.
   - The existing 100 [MathOverflow](https://mathoverflow.net/) problems remain available as a separate source subset within this collection, preserving their attempts and links. The combined listing therefore contains 600 catalog entries; entries from different sources may refer to related mathematical questions.
   - Catalog inclusion does not count as an LLM attempt. A ranked problem with no submitted mathematical writeup is shown without an attempt.
 
@@ -39,10 +39,10 @@ Erdosproblems-llm-hunter/
 ├── attacks/
 │   └── open_problems/
 │       ├── erdos/<model>/  # Numbered Erdos TeX attempts
-│       ├── <model>/        # Ranked attempts named <problemId>.tex
-│       └── mo/<model>/     # Existing MathOverflow TeX attempts
+│       ├── top_problems/   # 1.tex through 500.tex: definitions and sources
+│       │   └── <model>/   # Numbered ranked attempts, e.g. 15.tex or 15_v2.tex
+│       └── mo/<model>/    # Existing MathOverflow TeX attempts
 ├── lists/
-│   ├── top500-v22.json     # Saved Top Open Problems publication
 │   ├── erdos_problems.csv
 │   ├── erdos_status.json  # Saved collaborative database status
 │   └── mo_problems.csv
@@ -69,9 +69,9 @@ Erdosproblems-llm-hunter/
 
 1. **Problem Statements**: Every new writeup includes the mathematical statement, definitions, and relevant source citations:
    - Erdos problems: [erdosproblems.com/X](https://www.erdosproblems.com/) for problem X
-   - Ranked open problems: Exact targets and references from `lists/top500-v22.json`, with primary sources checked when preparing an attempt
+   - Ranked open problems: Definitions and references from `attacks/open_problems/top_problems/<number>.tex`, with primary sources checked when preparing an attempt
    - MathOverflow subset: Original MathOverflow question links
-2. **LLM Attempts**: Stored as TeX files in `attacks/`. New ranked writeups use `attacks/open_problems/<model>/<problemId>.tex` (or `<problemId>_v2.tex`). Each must contain actual mathematical work, references for definitions and concepts, citations for results used in the attempt, and an honest account of remaining gaps. A statement or research plan alone is not an attempt.
+2. **LLM Attempts**: Stored as TeX files in `attacks/`. New ranked writeups use `attacks/open_problems/top_problems/<model>/<number>.tex` (or `<number>_v2.tex`). Definition-only files do not count as attempts; a root file containing a `Research attempt` subsection also supplies a research notebook, displayed as unresolved. Legacy stable-ID filenames remain supported. Each must contain actual mathematical work, references for definitions and concepts, citations for results used in the attempt, and an honest account of remaining gaps. A statement or research plan alone is not an attempt.
 3. **Build Process**: `build_site.py` processes the catalogs, attempts, and reviews into JSON and JavaScript data in `docs/data/`
 4. **Auto-Update**: GitHub Actions automatically rebuilds the site when:
    - Files in `attacks/`, `lists/`, or `reviews/` are modified

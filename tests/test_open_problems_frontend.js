@@ -43,7 +43,7 @@ const records = {
         attacks: [attempt], sources: [{ citation: 'Question', url: 'https://mathoverflow.net/questions/23' }] },
     'problem.alpha': { id: 'problem.alpha', title: 'Alpha', collection: 'ranked', rank: 1,
         domain: 'number_theory', domain_label: 'Number theory', exact_target: 'A target involving primes',
-        catalog_record: { aliases: ['Prime problem'] }, status: 'open', llm_status: 'none', attacks: [statement] },
+        aliases: ['Prime problem'], status: 'open', llm_status: 'none', attacks: [statement] },
     'mo:40': { id: 'mo:40', title: 'Older MO question', collection: 'mo', rank: null, score: 40,
         status: 'unreviewed', llm_status: 'none', attacks: [] }
 };

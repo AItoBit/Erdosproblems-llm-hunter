@@ -23,16 +23,14 @@ for (const plain of [
     'H^(unfinished prose', 'Q_',
 ]) assert.equal(prepare(plain), plain);
 
-const records = JSON.parse(fs.readFileSync(path.join(root, 'lists/top500-v22.json'), 'utf8')).records;
+// Already-delimited TeX from the numbered definitions must stay unchanged.
+const definitions = path.join(root, 'attacks/open_problems/top_problems');
 let withMath = 0;
-for (const record of records) {
-    const before = record.exactTarget;
-    const output = prepare(before);
-    assert.equal(record.exactTarget, before, 'The canonical catalog statement stays unchanged.');
-    assert.ok(output.length >= before.length / 2, record.problemId);
-    assert.doesNotMatch(output, /\[object Object\]/, record.problemId);
-    assert.equal((output.match(/undefined/g) || []).length, (before.match(/undefined/g) || []).length, record.problemId);
-    if (output.includes('\\(')) withMath++;
+for (let number = 1; number <= 500; number++) {
+    const source = fs.readFileSync(path.join(definitions, `${number}.tex`), 'utf8');
+    const fragments = source.match(/\\\[[\s\S]*?\\\]|(?<!\\)\$(?:\\.|[^$])*?\$/g) || [];
+    for (const fragment of fragments) assert.equal(prepare(fragment), fragment, `Definition ${number}`);
+    if (fragments.length) withMath++;
 }
-assert.ok(withMath > 300, 'Catalog formatting must cover the collection, not only Tate.');
-console.log(`Catalog notation tests passed; ${withMath}/500 statements contain rendered math.`);
+assert.ok(withMath > 300);
+console.log(`Catalog notation tests passed; protected TeX checked in ${withMath}/500 definitions.`);

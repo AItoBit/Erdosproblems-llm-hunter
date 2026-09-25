@@ -22,7 +22,7 @@ LISTS_DIR = BASE_DIR / "lists"
 DATA_DIR = BASE_DIR / "docs" / "data"
 REVIEWS_DIR = BASE_DIR / "reviews"
 ERDOS_STATUS_PATH = LISTS_DIR / "erdos_status.json"
-OPEN_PROBLEMS_PATH = LISTS_DIR / "top500-v22.json"
+OPEN_PROBLEMS_PATH = ATTACKS_DIR / "open_problems" / "top_problems"
 # Tao's database includes independence results in its total solved count.
 RESOLVED_ERDOS_STATUSES = {'proved', 'disproved', 'solved', 'independent'}
 # Requested display rule for the Erdos LLM Claim column. This deliberately
@@ -337,14 +337,129 @@ def load_mo_problems_list():
     return problems
 
 
-def load_open_problems_catalog():
-    """Read and validate the versioned ranking without requiring local-only data.
+def replace_tex_command(text, command, count, replacement):
+    """Replace a known TeX command without truncating nested or escaped braces."""
+    pattern = re.compile(r'\\' + re.escape(command) + r'\b')
+    parts, cursor = [], 0
+    for match in pattern.finditer(text):
+        if match.start() < cursor:
+            continue
+        end = match.end()
+        arguments = []
+        for _ in range(count):
+            while end < len(text) and text[end].isspace():
+                end += 1
+            if end == len(text) or text[end] != '{':
+                raise ValueError(f'Missing argument for TeX command {command}')
+            start, depth = end + 1, 1
+            end += 1
+            while end < len(text) and depth:
+                if text[end] == '\\':
+                    end += 2
+                    continue
+                if text[end] == '{':
+                    depth += 1
+                elif text[end] == '}':
+                    depth -= 1
+                end += 1
+            if depth:
+                raise ValueError(f'Unclosed argument for TeX command {command}')
+            arguments.append(text[start:end - 1])
+        parts.extend((text[cursor:match.start()], replacement(*arguments)))
+        cursor = end
+    return ''.join(parts) + text[cursor:]
 
-    The supplied edition is evidence about its dated status, not an independent
-    verification of any problem's current mathematical status.
-    """
-    with OPEN_PROBLEMS_PATH.open(encoding='utf-8') as f:
-        snapshot = json.load(f)
+
+def parse_numbered_problem_tex(content):
+    """Extract display content while leaving the downloadable source untouched."""
+    document = re.search(r'\\begin\{document\}(.*?)\\end\{document\}\s*$',
+                         content, re.DOTALL)
+    if not document:
+        raise ValueError('Expected one complete TeX document')
+    body = re.sub(r'^[ \t]*%[^\n]*(?:\n|$)', '', document[1], flags=re.MULTILINE)
+    headings = list(re.finditer(r'^[ \t]*\\subsection\{([^}\n]+)\}', body, re.MULTILINE))
+    sections = {}
+    for index, heading in enumerate(headings):
+        end = headings[index + 1].start() if index + 1 < len(headings) else len(body)
+        if heading[1] in sections:
+            raise ValueError(f'Duplicate TeX subsection: {heading[1]}')
+        sections[heading[1]] = body[heading.end():end].strip()
+    required = ['Definitions and mathematical statement', 'Short English statement', 'Sources']
+    if any(not sections.get(name) for name in required):
+        raise ValueError('Missing definition, summary, or sources')
+
+    # Both the original standalone files and verbatim notebook sections use
+    # local S/E source labels; the latter wrap them in textnormal/hypertarget.
+    sources_tex = re.sub(r'\\item\[\\textnormal\{\[([SE]\d+)\]\}\]',
+                         r'\\item[\1]', sections['Sources'])
+    sources_tex = replace_tex_command(sources_tex, 'hypertarget', 2, lambda key, text: text)
+    sources, urls = [], {}
+    for item in re.finditer(r'\\item\[([SE]\d+)\]\s*(.*?)(?=\\item\[|\\end\{itemize\}|\Z)',
+                            sources_tex, re.DOTALL):
+        url = re.search(r'\\url\{([^}]+)\}', item[2])
+        if not url:
+            raise ValueError(f'Missing URL for source {item[1]}')
+        urls[item[1]] = url[1]
+        sources.append({'citation': item[2][:url.start()].strip(), 'url': url[1]})
+
+    macros = {'N': r'{\mathbb{N}}', 'Z': r'{\mathbb{Z}}', 'Q': r'{\mathbb{Q}}',
+              'R': r'{\mathbb{R}}', 'C': r'{\mathbb{C}}', 'F': r'{\mathbb{F}}',
+              'A': r'{\mathbb{A}}', 'PP': r'{\mathbb{P}}', 'E': r'{\mathbb{E}}',
+              'eps': r'\varepsilon', 'dd': r'\,\mathrm d'}
+
+    def display(text):
+        # The website uses the mathematical exposition, not the repeated
+        # catalogue quotation. Keep that quotation in the original .tex file.
+        text = replace_tex_command(text, 'cataloguescope', 1, lambda quote: '')
+        for command, prefix in [('sref', 'S'), ('eref', 'E')]:
+            def source_link(rank, number, prefix=prefix):
+                label = prefix + number
+                if label not in urls:
+                    raise ValueError(f'Missing local source {label}')
+                return r'\href{' + urls[label] + '}{[' + label + ']}'
+            text = replace_tex_command(text, command, 2, source_link)
+        text = replace_tex_command(text, 'needspace', 1, lambda space: '')
+        text = re.sub(r'\\raggedright\b', '', text)
+        return re.sub(r'\\(' + '|'.join(macros) + r')\b',
+                      lambda match: macros[match[1]], text).strip()
+
+    sections['Sources'] = sources_tex
+    definition = '\n\n'.join(r'\subsection{' + name + '}\n' + display(sections[name])
+                             for name in required)
+    research = sections.get('Research attempt')
+    if research:
+        research = (r'\subsection{Research attempt}' + '\n' + display(research)
+                    + '\n\n' + r'\subsection{Sources}' + '\n' + display(sources_tex))
+    return {'definitionTeX': definition, 'exactTarget': display(sections['Short English statement']),
+            'sources': sources, 'researchTeX': research}
+
+
+def load_open_problems_catalog():
+    """Build the ranked collection from its numbered, source-annotated TeX files."""
+    records = []
+    for path in sorted(OPEN_PROBLEMS_PATH.glob('*.tex')):
+        content = path.read_text(encoding='utf-8')
+        header = re.search(r'^% TOP_PROBLEM: (.+)$', content, re.MULTILINE)
+        if not header:
+            raise ValueError(f'Missing TOP_PROBLEM metadata: {path}')
+        record = json.loads(header[1])
+        if path.stem != str(record.get('releaseRank')):
+            raise ValueError(f'Definition filename must match its rank: {path}')
+        try:
+            record.update(parse_numbered_problem_tex(content))
+        except ValueError as error:
+            raise ValueError(f'{path}: {error}') from error
+        record['definitionFile'] = f'attacks/open_problems/top_problems/{path.name}'
+        records.append(record)
+    snapshot = {'records': records, 'recordCount': len(records)}
+    validate_open_problems_catalog(snapshot)
+    if len(records) != 500:
+        raise ValueError('The ranked collection requires all 500 numbered definitions')
+    return snapshot
+
+
+def validate_open_problems_catalog(snapshot):
+    """Validate identities, ranks, mathematical content and source links."""
     if not isinstance(snapshot, dict) or not isinstance(snapshot.get('records'), list):
         raise ValueError('Open problems catalog requires a records array')
     records = snapshot['records']
@@ -370,8 +485,7 @@ def load_open_problems_catalog():
             raise ValueError(f'Duplicate open problem rank: {rank}')
         ranks.add(rank)
         for key in ('canonicalTitle', 'exactTarget', 'primaryDomain',
-                    'primaryDomainLabel', 'displayStatus', 'releaseStatus',
-                    'statusQualification'):
+                    'primaryDomainLabel', 'displayStatus', 'releaseStatus'):
             if not isinstance(record.get(key), str) or not record[key].strip():
                 raise ValueError(f'Open problem {problem_id} requires {key}')
         sources = record.get('sources')
@@ -384,7 +498,6 @@ def load_open_problems_catalog():
             raise ValueError(f'Open problem {problem_id} requires attributed sources')
     if ranks != set(range(1, count + 1)):
         raise ValueError('Open problems catalog ranks must be contiguous from 1 to recordCount')
-    return snapshot
 
 
 def load_review(problem_type, problem_id):
@@ -584,10 +697,10 @@ def summarize_open_problem_attempts(problem):
 
 
 def build_open_problems_data(mo_problems=None, snapshot=None):
-    """Join the ranked edition and legacy MO collection without asserting overlap.
+    """Join numbered definitions, their attempts, and the legacy MO collection.
 
-    A rank identifies a position in one edition; the stable problemId identifies
-    its attempts. MO IDs occupy a separate namespace and receive no ranking.
+    Stable problem IDs preserve existing URLs and reviews. Numbered files in
+    top_problems/<model>/ follow the same convention as the Erdos collection.
     """
     if snapshot is None:
         snapshot = load_open_problems_catalog()
@@ -605,40 +718,55 @@ def build_open_problems_data(mo_problems=None, snapshot=None):
             'domain': record['primaryDomain'],
             'domain_label': record['primaryDomainLabel'],
             'exact_target': record['exactTarget'],
+            'definition_tex': record.get('definitionTeX'),
+            'definition_file': record.get('definitionFile'),
             'link': formal_source.get('url') or record['sources'][0]['url'],
             'sources': record['sources'],
             'status': record['displayStatus'],
             'release_status': record['releaseStatus'],
             'status_statement': record.get('statusStatement'),
-            'status_qualification': record['statusQualification'],
+            'status_qualification': record.get('statusQualification'),
             'status_reviewed_at': record.get('statusReviewedAt') or None,
-            'edition_date': snapshot.get('editionDate'),
-            'publication_id': snapshot.get('publicationId'),
-            'reader_question': record.get('readerQuestion'),
-            'why_it_matters': record.get('whyItMatters'),
-            'family_label': record.get('familyLabel'),
-            # Preserve exact scope, dated evidence and ranking provenance.
-            'catalog_record': record,
             'attacks': [],
         }
+        if record.get('researchTeX'):
+            notebook = parse_attack(record['researchTeX'], 'Research notebook')
+            # Notebook reductions and exploratory work are not declarations
+            # that the original open problem has been solved.
+            notebook['status'] = 'unresolved'
+            notebook['file_path'] = record['definitionFile']
+            notebook['version'] = 1
+            problems[problem_id]['attacks'].append(notebook)
 
     attacks_dir = ATTACKS_DIR / 'open_problems'
     if attacks_dir.exists():
+        model_dirs = []
         for model_dir in sorted(attacks_dir.iterdir()):
-            if not model_dir.is_dir() or model_dir.name.startswith('.') or model_dir.name in {'mo', 'erdos'}:
+            if not model_dir.is_dir() or model_dir.name.startswith('.') or model_dir.name in {'mo', 'erdos', 'top_problems'}:
                 continue
+            model_dirs.append((model_dir, False))
+        numbered_dir = attacks_dir / 'top_problems'
+        if numbered_dir.exists():
+            model_dirs.extend((directory, True) for directory in sorted(numbered_dir.iterdir())
+                              if directory.is_dir() and not directory.name.startswith('.'))
+        ids_by_number = {str(problem['rank']): problem_id for problem_id, problem in problems.items()}
+        for model_dir, numbered in model_dirs:
             for tex_file in sorted(model_dir.glob('*.tex')):
-                match = re.fullmatch(r'(?P<id>problem\.[a-z0-9.-]+)(?:_v(?P<ver>[1-9]\d*))?', tex_file.stem)
-                if not match or match.group('id') not in problems:
+                pattern = r'(?P<id>[1-9]\d*)' if numbered else r'(?P<id>problem\.[a-z0-9.-]+)'
+                match = re.fullmatch(pattern + r'(?:_v(?P<ver>[1-9]\d*))?', tex_file.stem)
+                problem_id = match.group('id') if match else None
+                if numbered:
+                    problem_id = ids_by_number.get(problem_id)
+                if problem_id not in problems:
                     raise ValueError(
                         f'Unknown ranked open problem attempt: {tex_file}. '
-                        'Use a catalog problemId, optionally followed by _vN.'
+                        'Use a numbered file in top_problems/<model>/, or a stable problemId in <model>/.'
                     )
                 parsed = parse_attack(read_tex_file(tex_file), model_dir.name.replace('_', ' '),
                                       get_file_date(tex_file))
                 parsed['file_path'] = tex_file.relative_to(BASE_DIR).as_posix()
                 parsed['version'] = int(match.group('ver') or 1)
-                problems[match.group('id')]['attacks'].append(parsed)
+                problems[problem_id]['attacks'].append(parsed)
 
     for problem_id, problem in problems.items():
         review = load_review('open_problems', problem_id)
@@ -722,12 +850,8 @@ def generate_js_data(erdos_problems, mo_problems, open_problems=None, open_catal
         f.write(f'var openProblems = {json.dumps(open_problems, indent=2)};\n')
         f.write('window.OPEN_PROBLEMS_DATA = openProblems;\n')
         catalog_info = {
-            'edition_date': open_catalog.get('editionDate'),
-            'publication_id': open_catalog.get('publicationId'),
-            'release_version': open_catalog.get('releaseVersion'),
-            'published_at': open_catalog.get('publishedAt'),
-            'public_boundary': open_catalog.get('publicBoundary'),
-            'source_path': 'lists/top500-v22.json',
+            'ranking_source': 'https://www.proofatlas.ai/',
+            'source_path': 'attacks/open_problems/top_problems',
         }
         f.write(f'var openProblemsCatalog = {json.dumps(catalog_info, indent=2)};\n')
         f.write('window.OPEN_PROBLEMS_CATALOG = openProblemsCatalog;\n')

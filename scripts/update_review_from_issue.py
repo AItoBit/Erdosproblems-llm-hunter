@@ -9,6 +9,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 LISTS_DIR = BASE_DIR / "lists"
 REVIEWS_DIR = BASE_DIR / "reviews"
+TOP_PROBLEMS_DIR = BASE_DIR / "attacks" / "open_problems" / "top_problems"
 
 
 FIELD_LABELS = {
@@ -45,9 +46,12 @@ def extract_field(body, label):
 
 def load_problem_ids(problem_type):
     if problem_type == "open_problems":
-        with open(LISTS_DIR / "top500-v22.json", "r", encoding="utf-8") as f:
-            catalog = json.load(f)
-        return {record["problemId"] for record in catalog["records"]}
+        ids = set()
+        for path in TOP_PROBLEMS_DIR.glob("*.tex"):
+            header = re.search(r'^% TOP_PROBLEM: (.+)$', path.read_text(encoding="utf-8"), re.MULTILINE)
+            if header:
+                ids.add(json.loads(header[1])["problemId"])
+        return ids
     if problem_type == "erdos":
         path = LISTS_DIR / "erdos_problems.csv"
         key = "number"

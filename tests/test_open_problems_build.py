@@ -48,18 +48,55 @@ def mo_info():
 
 class OpenCatalogValidationTests(unittest.TestCase):
     def load(self, snapshot):
-        with TemporaryDirectory() as directory:
-            path = Path(directory) / 'catalog.json'
-            path.write_text(json.dumps(snapshot), encoding='utf-8')
-            with patch.object(build_site, 'OPEN_PROBLEMS_PATH', path):
-                return build_site.load_open_problems_catalog()
+        build_site.validate_open_problems_catalog(snapshot)
+        return snapshot
 
     def test_shipped_catalog_has_500_unique_stable_ids_and_complete_ranks(self):
         snapshot = build_site.load_open_problems_catalog()
         self.assertEqual(snapshot['recordCount'], 500)
-        self.assertEqual(snapshot['publicationId'], 'proofatlas.open-problem-ranking.top500.v22')
+        self.assertTrue(all(r['definitionTeX'] and r['definitionFile'].endswith('.tex') for r in snapshot['records']))
         self.assertEqual({r['releaseRank'] for r in snapshot['records']}, set(range(1, 501)))
         self.assertEqual(len({r['problemId'] for r in snapshot['records']}), 500)
+
+    def test_missing_definitions_mismatched_numbers_and_incomplete_documents_fail(self):
+        original = (build_site.OPEN_PROBLEMS_PATH / '1.tex').read_text()
+        for content, filename in [(original.replace('TOP_PROBLEM:', 'OTHER:'), '1.tex'),
+                                  (original, '2.tex'),
+                                  (original.replace('\\subsection{Definitions', '\\subsection{Missing'), '1.tex'),
+                                  (original.replace('\\end{document}', ''), '1.tex')]:
+            with self.subTest(filename=filename), TemporaryDirectory() as directory:
+                folder = Path(directory)
+                (folder / filename).write_text(content)
+                with patch.object(build_site, 'OPEN_PROBLEMS_PATH', folder), self.assertRaises(ValueError):
+                    build_site.load_open_problems_catalog()
+
+    def test_verbatim_notebook_definitions_sources_and_research_are_separate(self):
+        source = (build_site.OPEN_PROBLEMS_PATH / '1.tex').read_text()
+        record = build_site.parse_numbered_problem_tex(source)
+        self.assertIn('A language is a set $L', record['definitionTeX'])
+        self.assertIn(r'\exists y\in\{0,1\}^{\le p(|x|)}', record['definitionTeX'])
+        self.assertNotIn('cataloguescope', record['definitionTeX'])
+        self.assertNotIn('Research attempt', record['definitionTeX'])
+        self.assertNotIn('Current frontier', record['exactTarget'])
+        self.assertEqual(record['exactTarget'],
+                         'Does an efficient way to check a proposed yes-answer always imply an efficient way to decide whether the answer is yes?')
+        self.assertIn('Current frontier and source audit', record['researchTeX'])
+        self.assertIn('Exploratory approach with unresolved gap', record['researchTeX'])
+        self.assertGreater(len(record['sources']), 4)
+        self.assertEqual(record['sources'][0]['url'], 'https://www.claymath.org/library/monographs/MPPc.pdf')
+        self.assertIn(r'\href{https://www.claymath.org/library/monographs/MPPc.pdf}{[S1]}', record['definitionTeX'])
+        self.assertNotRegex(record['definitionTeX'] + record['researchTeX'],
+                            r'\\(?:sref|eref|hypertarget|needspace|raggedright)\b')
+
+    def test_catalogue_quotation_with_nested_and_escaped_braces_is_omitted(self):
+        source = (build_site.OPEN_PROBLEMS_PATH / '15.tex').read_text()
+        source = source.replace(r'\subsection{Short English statement}',
+                                r'\cataloguescope{Hidden {nested} quotation with \{escaped\} sets.}'
+                                '\n' + r'\subsection{Short English statement}')
+        record = build_site.parse_numbered_problem_tex(source)
+        self.assertNotIn('Hidden', record['definitionTeX'])
+        self.assertIn('Short English statement', record['definitionTeX'])
+        self.assertIsNone(record['researchTeX'])
 
     def test_empty_review_date_is_preserved_without_inventing_evidence(self):
         snapshot = catalog()
@@ -137,10 +174,40 @@ class OpenProblemsBuildTests(unittest.TestCase):
         self.assertEqual(result['attacks'][1]['file_path'],
                          'attacks/open_problems/Example_Model/problem.example_v2.tex')
         self.assertEqual(result['review']['status'], 'incorrect')
-        self.assertEqual(result['catalog_record'], snapshot['records'][0])
+        self.assertNotIn('catalog_record', result)
         self.assertEqual(result['link'], 'https://example.org/formal')
-        self.assertEqual(result['edition_date'], snapshot['editionDate'])
+        self.assertNotIn('edition_date', result)
         self.assertEqual(result['status_reviewed_at'], '2026-09-22')
+
+    def test_numbered_definitions_are_not_attempts_but_model_writeups_are(self):
+        self.write('attacks/open_problems/top_problems/1.tex', 'Definition only')
+        self.write('attacks/open_problems/top_problems/Example_Model/1_v2.tex',
+                   'UNRESOLVED\nCOMPLETION ESTIMATE: 15%')
+        self.write('attacks/open_problems/erdos/Example_Model/1.tex', 'UNRESOLVED')
+        result = build_site.build_open_problems_data({}, catalog())
+        self.assertEqual(len(result['problem.example']['attacks']), 1)
+        self.assertEqual(result['problem.example']['attacks'][0]['version'], 2)
+        self.assertEqual(result['problem.example']['completion'], 15)
+        self.assertEqual(result['problem.example.second']['attacks'], [])
+        self.assertEqual(result['problem.example.second']['llm_status'], 'none')
+
+    def test_unknown_numbered_attempt_fails_explicitly(self):
+        self.write('attacks/open_problems/top_problems/Model/501.tex', 'UNRESOLVED')
+        with self.assertRaisesRegex(ValueError, 'Unknown ranked'):
+            build_site.build_open_problems_data({}, catalog())
+
+    def test_research_from_numbered_tex_is_shown_as_an_unresolved_notebook(self):
+        snapshot = catalog()
+        snapshot['records'][0].update({
+            'researchTeX': r'\subsection{Research attempt} Conditional reduction.',
+            'definitionFile': 'attacks/open_problems/top_problems/1.tex',
+        })
+        result = build_site.build_open_problems_data({}, snapshot)['problem.example']
+        self.assertEqual(result['llm_status'], 'unresolved')
+        self.assertEqual(len(result['attacks']), 1)
+        self.assertEqual(result['attacks'][0]['model'], 'Research notebook')
+        self.assertEqual(result['attacks'][0]['file_path'], snapshot['records'][0]['definitionFile'])
+        self.assertNotIn('completion', result)
 
     def test_statement_only_records_and_no_attempts_have_no_claim_or_completion(self):
         self.write('attacks/open_problems/Statement_Model/problem.example.tex', self.statement_only())

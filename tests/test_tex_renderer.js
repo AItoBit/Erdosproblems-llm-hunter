@@ -13,6 +13,9 @@ vm.runInContext(scripts.find(script => script.includes('function formatTeX')), c
 const render = context.formatTeX;
 const tex = String.raw;
 
+assert.equal(render(tex`C\textasciicircum{}r and O\textasciitilde{}(n)`, false, false),
+             '<p>C^r and O~(n)</p>');
+
 // Source-defined diameter and the Tate--Shafarevich symbol need browser aliases.
 assert.equal(context.window.MathJax.tex.macros.diam, tex`{\operatorname{diam}}`);
 assert.equal(context.window.MathJax.tex.macros.Sha, tex`{\unicode{x0428}}`);

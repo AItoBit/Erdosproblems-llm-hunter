@@ -32,9 +32,9 @@ Most current attempts are by GPT Pro 5.2.
 
 ### For Top Open Problems Attempts
 
-1. **Choose the Target**: Use an active record from `lists/top500-v22.json`, preserving its exact mathematical target and stable `problemId`.
-2. **File Location**: Place your TeX file in `attacks/open_problems/<MODEL_NAME>/`.
-3. **File Naming**: Use `<problemId>.tex`, for example `problem.p-versus-np.tex`. Further versions use `<problemId>_v2.tex`, `<problemId>_v3.tex`, and so on.
+1. **Choose the Target**: Use the numbered definition in `attacks/open_problems/top_problems/<number>.tex`, preserving its mathematical scope and cited sources. The `TOP_PROBLEM` comment provides the stable ID used by URLs and reviews.
+2. **File Location**: Place your TeX file in `attacks/open_problems/top_problems/<MODEL_NAME>/`.
+3. **File Naming**: Use `<number>.tex`, for example `1.tex` for P versus NP. Further versions use `1_v2.tex`, `1_v3.tex`, and so on. Keep the root definition file separate from model attempts. Existing stable-ID filenames in `attacks/open_problems/<MODEL_NAME>/` remain supported.
 4. **Mathematical Content**: Include a precise statement, definitions and conventions, a literature check, the actual mathematical attempt, verification, and a final status. Cite relevant sources for the definition and concepts as well as theorems, reductions, or prior work used during the attempt. Use identifiable bibliographic references and source URLs; do not invent citations.
 5. **Honest Scope**: Identify what is proved, what is known, and the first remaining gap. An unresolved attempt is welcome. Do not present a statement, generic plan, untested idea, or restatement of known results as a new solution.
 
@@ -46,7 +46,7 @@ Most current attempts are by GPT Pro 5.2.
 4. **Content**: Follow the same statement, definition, citation, mathematical work, and verification requirements as ranked open-problem attempts.
 
 The website groups ranked problems and MathOverflow records under **Top Open Problems**.
-Ranked stable IDs are independent of their rank, which may change between editions.
+The numbered definitions contain stable IDs for existing problem links and reviews. Keep the number-to-ID mapping consistent with any numbered model attempts.
 MathOverflow entries retain their numeric source IDs and existing links.
 
 ## Pull Request Process

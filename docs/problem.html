@@ -316,19 +316,23 @@
                     </ul>
                 `;
             } else if (type === 'open_problems') {
-                const escapeHtml = window.ProblemHunting.escapeHtml;
-                const sourceLinks = (problem.sources || []).map(source => {
-                    const label = escapeHtml(source.citation || source.url || 'Source');
-                    const role = source.role ? ` (${escapeHtml(source.role.replace(/_/g, ' '))})` : '';
-                    return /^https?:\/\//i.test(source.url || '')
-                        ? `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${label}</a>${role}</li>`
-                        : `<li>${label}${role}</li>`;
-                }).join('');
-                linksDiv.innerHTML = `
-                    <div class="problem-statement-text tex-content">${formatTeX(window.ProblemHunting.catalogMath(problem.exact_target), false, false)}</div>
-                    <h3>Definition and context sources</h3>
-                    <ul>${sourceLinks}</ul>
-                `;
+                const definitionFile = problem.definition_file ||
+                    (Number.isInteger(problem.rank) && problem.rank > 0
+                        ? `attacks/open_problems/top_problems/${problem.rank}.tex` : '');
+                const definitionLink = /^attacks\/open_problems\/top_problems\/[1-9]\d*\.tex$/.test(definitionFile)
+                    ? `<p><a href="https://github.com/mehmetmars7/Erdosproblems-llm-hunter/blob/main/${definitionFile}" target="_blank" rel="noopener">View TeX definition (${definitionFile.split('/').pop()})</a></p>`
+                    : '';
+                if (problem.definition_tex) {
+                    linksDiv.innerHTML = `
+                        ${definitionLink}
+                        <div class="problem-statement-text tex-content">${formatTeX(problem.definition_tex, false, false)}</div>
+                    `;
+                } else {
+                    linksDiv.innerHTML = `
+                        ${definitionLink}
+                        <p>The TeX definition could not be loaded. Open the source file above to read it.</p>
+                    `;
+                }
             } else {
                 linksDiv.innerHTML = `
                     <p>For the full problem statement, see:</p>
@@ -1030,6 +1034,8 @@
             text = text.replace(/\\hrule\b/g, '<hr>');
             text = text.replace(/\\newline\b|\\\\(?:\[[^\]]*\])?/g, '<br>');
             text = text.replace(/\\LaTeX\b(?:\{\})?/g, 'LaTeX');
+            text = text.replace(/\\textasciicircum\b(?:\{\})?/g, '^');
+            text = text.replace(/\\textasciitilde\b(?:\{\})?/g, () => protectHTML('~'));
             text = text.replace(/\\(?:small|normalsize|newpage)\b[ \t]*/g, '');
             text = text.replace(/\\date\{\s*\}/g, '');
             text = text.replace(/\\allowbreak\b/g, '<wbr>');
